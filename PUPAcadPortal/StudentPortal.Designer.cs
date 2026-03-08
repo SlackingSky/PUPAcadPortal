@@ -67,7 +67,6 @@
             panel12.SuspendLayout();
             panel13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
-            panel2.SuspendLayout();
             panel3.SuspendLayout();
             SuspendLayout();
             // 
@@ -75,6 +74,7 @@
             // 
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             panel1.BackColor = Color.Maroon;
+            panel1.Controls.Add(pictureBox2);
             panel1.Controls.Add(flowLayoutPanel1);
             panel1.Controls.Add(panel4);
             panel1.Controls.Add(panel12);
@@ -340,7 +340,7 @@
             // pictureBox2
             // 
             pictureBox2.Image = Properties.Resources.pup48x48;
-            pictureBox2.Location = new Point(104, 40);
+            pictureBox2.Location = new Point(192, 8);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(48, 48);
             pictureBox2.SizeMode = PictureBoxSizeMode.AutoSize;
@@ -352,7 +352,6 @@
             panel2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel2.AutoScroll = true;
             panel2.AutoSize = true;
-            panel2.Controls.Add(pictureBox2);
             panel2.Location = new Point(256, 0);
             panel2.Name = "panel2";
             panel2.Size = new Size(1272, 1061);
@@ -380,6 +379,7 @@
             Text = "StudentPortal";
             FormClosing += StudentPortal_Closing;
             panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             flowLayoutPanel1.ResumeLayout(false);
             panel7.ResumeLayout(false);
             panel8.ResumeLayout(false);
@@ -394,8 +394,6 @@
             panel12.ResumeLayout(false);
             panel13.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
             ResumeLayout(false);
