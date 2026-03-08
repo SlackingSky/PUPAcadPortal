@@ -27,5 +27,19 @@ namespace PUPAcadPortal
                     Application.Exit();
             }
         }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnLMS_Click(object sender, EventArgs e)
+        {
+            pnllmsSubmenu.Visible = !pnllmsSubmenu.Visible;
+            if (pnllmsSubmenu.Visible)
+                btnLMS.Text = " LMS                                       v";
+            else
+                btnLMS.Text = " LMS                                       >";
+        }
     }
 }

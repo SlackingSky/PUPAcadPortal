@@ -41,6 +41,7 @@
             btnAccounts = new Button();
             panel11 = new Panel();
             btnLMS = new Button();
+            pnllmsSubmenu = new Panel();
             panel4 = new Panel();
             panel5 = new Panel();
             panel6 = new Panel();
@@ -49,10 +50,15 @@
             pictureBox1 = new PictureBox();
             panel12 = new Panel();
             panel13 = new Panel();
-            button5 = new Button();
-            pictureBox2 = new PictureBox();
+            btnLogout = new Button();
             panel2 = new Panel();
             panel3 = new Panel();
+            panel14 = new Panel();
+            panel15 = new Panel();
+            panel16 = new Panel();
+            label3 = new Label();
+            label4 = new Label();
+            pictureBox2 = new PictureBox();
             panel1.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             panel7.SuspendLayout();
@@ -66,15 +72,17 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel12.SuspendLayout();
             panel13.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             panel3.SuspendLayout();
+            panel14.SuspendLayout();
+            panel15.SuspendLayout();
+            panel16.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
             // 
             // panel1
             // 
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             panel1.BackColor = Color.Maroon;
-            panel1.Controls.Add(pictureBox2);
             panel1.Controls.Add(flowLayoutPanel1);
             panel1.Controls.Add(panel4);
             panel1.Controls.Add(panel12);
@@ -90,10 +98,11 @@
             flowLayoutPanel1.Controls.Add(panel9);
             flowLayoutPanel1.Controls.Add(panel10);
             flowLayoutPanel1.Controls.Add(panel11);
+            flowLayoutPanel1.Controls.Add(pnllmsSubmenu);
             flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
             flowLayoutPanel1.Location = new Point(0, 142);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(256, 843);
+            flowLayoutPanel1.Size = new Size(256, 762);
             flowLayoutPanel1.TabIndex = 1;
             // 
             // panel7
@@ -111,6 +120,7 @@
             btnDahsboard.Cursor = Cursors.Hand;
             btnDahsboard.FlatAppearance.BorderSize = 0;
             btnDahsboard.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnDahsboard.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
             btnDahsboard.FlatStyle = FlatStyle.Flat;
             btnDahsboard.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
             btnDahsboard.ForeColor = Color.White;
@@ -140,6 +150,7 @@
             btnEnrollment.Cursor = Cursors.Hand;
             btnEnrollment.FlatAppearance.BorderSize = 0;
             btnEnrollment.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnEnrollment.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
             btnEnrollment.FlatStyle = FlatStyle.Flat;
             btnEnrollment.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
             btnEnrollment.ForeColor = Color.White;
@@ -169,6 +180,7 @@
             btnCourse.Cursor = Cursors.Hand;
             btnCourse.FlatAppearance.BorderSize = 0;
             btnCourse.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnCourse.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
             btnCourse.FlatStyle = FlatStyle.Flat;
             btnCourse.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
             btnCourse.ForeColor = Color.White;
@@ -198,6 +210,7 @@
             btnAccounts.Cursor = Cursors.Hand;
             btnAccounts.FlatAppearance.BorderSize = 0;
             btnAccounts.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnAccounts.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
             btnAccounts.FlatStyle = FlatStyle.Flat;
             btnAccounts.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
             btnAccounts.ForeColor = Color.White;
@@ -227,6 +240,7 @@
             btnLMS.Cursor = Cursors.Hand;
             btnLMS.FlatAppearance.BorderSize = 0;
             btnLMS.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnLMS.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
             btnLMS.FlatStyle = FlatStyle.Flat;
             btnLMS.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
             btnLMS.ForeColor = Color.White;
@@ -237,9 +251,19 @@
             btnLMS.Padding = new Padding(16, 0, 0, 0);
             btnLMS.Size = new Size(256, 48);
             btnLMS.TabIndex = 3;
-            btnLMS.Text = " LMS";
+            btnLMS.Text = " LMS                                       >";
             btnLMS.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnLMS.UseVisualStyleBackColor = true;
+            btnLMS.Click += btnLMS_Click;
+            // 
+            // pnllmsSubmenu
+            // 
+            pnllmsSubmenu.BackColor = Color.FromArgb(109, 0, 0);
+            pnllmsSubmenu.Location = new Point(3, 259);
+            pnllmsSubmenu.Name = "pnllmsSubmenu";
+            pnllmsSubmenu.Size = new Size(253, 100);
+            pnllmsSubmenu.TabIndex = 5;
+            pnllmsSubmenu.Visible = false;
             // 
             // panel4
             // 
@@ -302,50 +326,41 @@
             // panel12
             // 
             panel12.Controls.Add(panel13);
-            panel12.Dock = DockStyle.Bottom;
-            panel12.Location = new Point(0, 984);
+            panel12.Location = new Point(0, 904);
             panel12.Name = "panel12";
             panel12.Size = new Size(256, 81);
             panel12.TabIndex = 0;
             // 
             // panel13
             // 
-            panel13.Controls.Add(button5);
+            panel13.Controls.Add(btnLogout);
             panel13.Location = new Point(16, 16);
             panel13.Margin = new Padding(0);
             panel13.Name = "panel13";
             panel13.Size = new Size(224, 48);
             panel13.TabIndex = 4;
             // 
-            // button5
+            // btnLogout
             // 
-            button5.BackgroundImageLayout = ImageLayout.None;
-            button5.Cursor = Cursors.Hand;
-            button5.FlatAppearance.BorderSize = 0;
-            button5.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            button5.FlatStyle = FlatStyle.Flat;
-            button5.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            button5.ForeColor = Color.White;
-            button5.Image = Properties.Resources.LogOut;
-            button5.ImageAlign = ContentAlignment.MiddleLeft;
-            button5.Location = new Point(0, 0);
-            button5.Name = "button5";
-            button5.Padding = new Padding(16, 0, 0, 0);
-            button5.Size = new Size(224, 48);
-            button5.TabIndex = 3;
-            button5.Text = " Logout";
-            button5.TextImageRelation = TextImageRelation.ImageBeforeText;
-            button5.UseVisualStyleBackColor = true;
-            // 
-            // pictureBox2
-            // 
-            pictureBox2.Image = Properties.Resources.pup48x48;
-            pictureBox2.Location = new Point(192, 8);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(48, 48);
-            pictureBox2.SizeMode = PictureBoxSizeMode.AutoSize;
-            pictureBox2.TabIndex = 4;
-            pictureBox2.TabStop = false;
+            btnLogout.BackgroundImageLayout = ImageLayout.None;
+            btnLogout.Cursor = Cursors.Hand;
+            btnLogout.FlatAppearance.BorderSize = 0;
+            btnLogout.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnLogout.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            btnLogout.FlatStyle = FlatStyle.Flat;
+            btnLogout.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            btnLogout.ForeColor = Color.White;
+            btnLogout.Image = Properties.Resources.LogOut;
+            btnLogout.ImageAlign = ContentAlignment.MiddleLeft;
+            btnLogout.Location = new Point(0, 0);
+            btnLogout.Name = "btnLogout";
+            btnLogout.Padding = new Padding(16, 0, 0, 0);
+            btnLogout.Size = new Size(224, 48);
+            btnLogout.TabIndex = 3;
+            btnLogout.Text = " Logout";
+            btnLogout.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnLogout.UseVisualStyleBackColor = true;
+            btnLogout.Click += btnLogout_Click;
             // 
             // panel2
             // 
@@ -360,12 +375,74 @@
             // panel3
             // 
             panel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panel3.Controls.Add(panel14);
             panel3.Controls.Add(panel1);
             panel3.Controls.Add(panel2);
             panel3.Location = new Point(0, 0);
             panel3.Name = "panel3";
             panel3.Size = new Size(1528, 1061);
             panel3.TabIndex = 0;
+            // 
+            // panel14
+            // 
+            panel14.BackColor = Color.FromArgb(42, 42, 42);
+            panel14.Controls.Add(panel15);
+            panel14.Dock = DockStyle.Top;
+            panel14.Location = new Point(0, 0);
+            panel14.Name = "panel14";
+            panel14.Size = new Size(1528, 72);
+            panel14.TabIndex = 2;
+            // 
+            // panel15
+            // 
+            panel15.Controls.Add(panel16);
+            panel15.Controls.Add(pictureBox2);
+            panel15.Location = new Point(16, 8);
+            panel15.Name = "panel15";
+            panel15.Size = new Size(384, 48);
+            panel15.TabIndex = 1;
+            // 
+            // panel16
+            // 
+            panel16.Controls.Add(label3);
+            panel16.Controls.Add(label4);
+            panel16.Location = new Point(64, 6);
+            panel16.Name = "panel16";
+            panel16.Size = new Size(320, 36);
+            panel16.TabIndex = 1;
+            // 
+            // label3
+            // 
+            label3.Font = new Font("Arial", 16F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
+            label3.ForeColor = Color.White;
+            label3.Location = new Point(0, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(320, 24);
+            label3.TabIndex = 2;
+            label3.Text = "Polytechnic University of the Philippines";
+            label3.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // label4
+            // 
+            label4.BackColor = Color.Transparent;
+            label4.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Pixel);
+            label4.ForeColor = Color.FromArgb(255, 193, 7);
+            label4.Location = new Point(0, 20);
+            label4.Name = "label4";
+            label4.Size = new Size(320, 16);
+            label4.TabIndex = 2;
+            label4.Text = "Learning Management System";
+            label4.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // pictureBox2
+            // 
+            pictureBox2.Image = Properties.Resources.pup48x48;
+            pictureBox2.Location = new Point(0, 0);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(48, 48);
+            pictureBox2.SizeMode = PictureBoxSizeMode.AutoSize;
+            pictureBox2.TabIndex = 0;
+            pictureBox2.TabStop = false;
             // 
             // StudentPortal
             // 
@@ -379,7 +456,6 @@
             Text = "StudentPortal";
             FormClosing += StudentPortal_Closing;
             panel1.ResumeLayout(false);
-            panel1.PerformLayout();
             flowLayoutPanel1.ResumeLayout(false);
             panel7.ResumeLayout(false);
             panel8.ResumeLayout(false);
@@ -393,9 +469,13 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel12.ResumeLayout(false);
             panel13.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
+            panel14.ResumeLayout(false);
+            panel15.ResumeLayout(false);
+            panel15.PerformLayout();
+            panel16.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ResumeLayout(false);
         }
 
@@ -421,9 +501,15 @@
         private Button btnAccounts;
         private Panel panel11;
         private Button btnLMS;
-        private PictureBox pictureBox2;
         private Panel panel12;
         private Panel panel13;
-        private Button button5;
+        private Button btnLogout;
+        private Panel panel14;
+        private Panel panel15;
+        private Panel panel16;
+        private PictureBox pictureBox2;
+        private Label label3;
+        private Label label4;
+        private Panel pnllmsSubmenu;
     }
 }
