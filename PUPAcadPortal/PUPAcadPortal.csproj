@@ -24,6 +24,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Update="InstructoPortal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="AdminPortal.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>

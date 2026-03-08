@@ -8,12 +8,12 @@ using System.Windows.Forms;
 
 namespace PUPAcadPortal
 {
-    public partial class StudentPortal : Form
+    public partial class AdminPortal : Form
     {
         private Button clickedButton;
         private Color defaultColor = Color.Maroon;
         private Color selectedColor = Color.FromArgb(109, 0, 0);
-        public StudentPortal()
+        public AdminPortal()
         {
             InitializeComponent();
         }
@@ -32,9 +32,8 @@ namespace PUPAcadPortal
         {
             Dictionary<Button, Panel> contents = new Dictionary<Button, Panel> { };
             contents.Add(btnDashboard, pnlDashboardContent);
-            contents.Add(btnEnrollment, pnlEnrollContent);
-            contents.Add(btnCourses, pnlCoursesContent);
-            contents.Add(btnAccounts, pnlAccountsContent);
+            contents.Add(btnEnrollments, pnlEnrollContent);
+            contents.Add(btnSubjectOffering, pnlSubOfferingContent);
             foreach (KeyValuePair<Button, Panel> content in contents)
             {
                 if (content.Key == clickedButton)
@@ -67,23 +66,18 @@ namespace PUPAcadPortal
             showContent(clickedButton);
         }
 
-        private void btnEnrollment_Click(object sender, EventArgs e)
+        private void btnEnrollments_Click(object sender, EventArgs e)
         {
             changeButtonColor(sender as Button);
             showContent(clickedButton);
         }
 
-        private void btnCourses_Click(object sender, EventArgs e)
+        private void btnSubjectOffering_Click(object sender, EventArgs e)
         {
             changeButtonColor(sender as Button);
             showContent(clickedButton);
         }
 
-        private void btnAccounts_Click(object sender, EventArgs e)
-        {
-            changeButtonColor(sender as Button);
-            showContent(clickedButton);
-        }
         private void btnLMS_Click(object sender, EventArgs e)
         {
             changeButtonColor(sender as Button);
