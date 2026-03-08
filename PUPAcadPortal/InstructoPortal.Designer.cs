@@ -1,6 +1,6 @@
 ﻿namespace PUPAcadPortal
 {
-    partial class StudentPortal
+    partial class InstructorPortal
     {
         /// <summary>
         /// Required designer variable.
@@ -28,17 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StudentPortal));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InstructorPortal));
             panel1 = new Panel();
             flowLayoutPanel1 = new FlowLayoutPanel();
             panel7 = new Panel();
             btnDashboard = new Button();
             panel8 = new Panel();
-            btnEnrollment = new Button();
+            btnGrades = new Button();
             panel9 = new Panel();
             btnCourses = new Button();
-            panel10 = new Panel();
-            btnAccounts = new Button();
             panel11 = new Panel();
             btnLMS = new Button();
             pnllmsSubmenu = new Panel();
@@ -52,9 +50,8 @@
             panel13 = new Panel();
             btnLogout = new Button();
             pnlCoursesContent = new Panel();
-            pnlEnrollContent = new Panel();
+            pnlGradesContent = new Panel();
             panel3 = new Panel();
-            pnlAccountsContent = new Panel();
             pnlDashboardContent = new Panel();
             panel14 = new Panel();
             panel15 = new Panel();
@@ -67,7 +64,6 @@
             panel7.SuspendLayout();
             panel8.SuspendLayout();
             panel9.SuspendLayout();
-            panel10.SuspendLayout();
             panel11.SuspendLayout();
             panel4.SuspendLayout();
             panel5.SuspendLayout();
@@ -101,7 +97,6 @@
             flowLayoutPanel1.Controls.Add(panel7);
             flowLayoutPanel1.Controls.Add(panel8);
             flowLayoutPanel1.Controls.Add(panel9);
-            flowLayoutPanel1.Controls.Add(panel10);
             flowLayoutPanel1.Controls.Add(panel11);
             flowLayoutPanel1.Controls.Add(pnllmsSubmenu);
             flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
@@ -143,34 +138,34 @@
             // 
             // panel8
             // 
-            panel8.Controls.Add(btnEnrollment);
+            panel8.Controls.Add(btnGrades);
             panel8.Location = new Point(0, 64);
             panel8.Margin = new Padding(0);
             panel8.Name = "panel8";
             panel8.Size = new Size(256, 48);
             panel8.TabIndex = 1;
             // 
-            // btnEnrollment
+            // btnGrades
             // 
-            btnEnrollment.BackgroundImageLayout = ImageLayout.None;
-            btnEnrollment.Cursor = Cursors.Hand;
-            btnEnrollment.FlatAppearance.BorderSize = 0;
-            btnEnrollment.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            btnEnrollment.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            btnEnrollment.FlatStyle = FlatStyle.Flat;
-            btnEnrollment.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            btnEnrollment.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            btnEnrollment.Image = Properties.Resources.Enrollment;
-            btnEnrollment.ImageAlign = ContentAlignment.MiddleLeft;
-            btnEnrollment.Location = new Point(0, 0);
-            btnEnrollment.Name = "btnEnrollment";
-            btnEnrollment.Padding = new Padding(16, 0, 0, 0);
-            btnEnrollment.Size = new Size(256, 48);
-            btnEnrollment.TabIndex = 3;
-            btnEnrollment.Text = " My Enrollment";
-            btnEnrollment.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnEnrollment.UseVisualStyleBackColor = true;
-            btnEnrollment.Click += btnEnrollment_Click;
+            btnGrades.BackgroundImageLayout = ImageLayout.None;
+            btnGrades.Cursor = Cursors.Hand;
+            btnGrades.FlatAppearance.BorderSize = 0;
+            btnGrades.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnGrades.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            btnGrades.FlatStyle = FlatStyle.Flat;
+            btnGrades.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            btnGrades.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            btnGrades.Image = Properties.Resources.item_icon__1_;
+            btnGrades.ImageAlign = ContentAlignment.MiddleLeft;
+            btnGrades.Location = new Point(0, 0);
+            btnGrades.Name = "btnGrades";
+            btnGrades.Padding = new Padding(16, 0, 0, 0);
+            btnGrades.Size = new Size(256, 48);
+            btnGrades.TabIndex = 3;
+            btnGrades.Text = " Grades";
+            btnGrades.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnGrades.UseVisualStyleBackColor = true;
+            btnGrades.Click += btnGrades_Click;
             // 
             // panel9
             // 
@@ -203,41 +198,10 @@
             btnCourses.UseVisualStyleBackColor = true;
             btnCourses.Click += btnCourses_Click;
             // 
-            // panel10
-            // 
-            panel10.Controls.Add(btnAccounts);
-            panel10.Location = new Point(0, 160);
-            panel10.Margin = new Padding(0);
-            panel10.Name = "panel10";
-            panel10.Size = new Size(256, 48);
-            panel10.TabIndex = 3;
-            // 
-            // btnAccounts
-            // 
-            btnAccounts.BackgroundImageLayout = ImageLayout.None;
-            btnAccounts.Cursor = Cursors.Hand;
-            btnAccounts.FlatAppearance.BorderSize = 0;
-            btnAccounts.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            btnAccounts.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            btnAccounts.FlatStyle = FlatStyle.Flat;
-            btnAccounts.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            btnAccounts.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            btnAccounts.Image = Properties.Resources.Accounts;
-            btnAccounts.ImageAlign = ContentAlignment.MiddleLeft;
-            btnAccounts.Location = new Point(0, 0);
-            btnAccounts.Name = "btnAccounts";
-            btnAccounts.Padding = new Padding(16, 0, 0, 0);
-            btnAccounts.Size = new Size(256, 48);
-            btnAccounts.TabIndex = 3;
-            btnAccounts.Text = " Accounts";
-            btnAccounts.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnAccounts.UseVisualStyleBackColor = true;
-            btnAccounts.Click += btnAccounts_Click;
-            // 
             // panel11
             // 
             panel11.Controls.Add(btnLMS);
-            panel11.Location = new Point(0, 208);
+            panel11.Location = new Point(0, 160);
             panel11.Margin = new Padding(0);
             panel11.Name = "panel11";
             panel11.Size = new Size(256, 48);
@@ -268,7 +232,7 @@
             // pnllmsSubmenu
             // 
             pnllmsSubmenu.BackColor = Color.FromArgb(128, 109, 0, 0);
-            pnllmsSubmenu.Location = new Point(0, 256);
+            pnllmsSubmenu.Location = new Point(0, 208);
             pnllmsSubmenu.Margin = new Padding(0);
             pnllmsSubmenu.Name = "pnllmsSubmenu";
             pnllmsSubmenu.Size = new Size(256, 100);
@@ -387,23 +351,22 @@
             pnlCoursesContent.Visible = false;
             pnlCoursesContent.Paint += pnlCoursesContent_Paint;
             // 
-            // pnlEnrollContent
+            // pnlGradesContent
             // 
-            pnlEnrollContent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            pnlEnrollContent.AutoScroll = true;
-            pnlEnrollContent.Location = new Point(328, 136);
-            pnlEnrollContent.Margin = new Padding(0);
-            pnlEnrollContent.Name = "pnlEnrollContent";
-            pnlEnrollContent.Size = new Size(1272, 989);
-            pnlEnrollContent.TabIndex = 5;
-            pnlEnrollContent.Visible = false;
+            pnlGradesContent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pnlGradesContent.AutoScroll = true;
+            pnlGradesContent.Location = new Point(328, 136);
+            pnlGradesContent.Margin = new Padding(0);
+            pnlGradesContent.Name = "pnlGradesContent";
+            pnlGradesContent.Size = new Size(1272, 989);
+            pnlGradesContent.TabIndex = 5;
+            pnlGradesContent.Visible = false;
             // 
             // panel3
             // 
             panel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel3.Controls.Add(pnlCoursesContent);
-            panel3.Controls.Add(pnlAccountsContent);
-            panel3.Controls.Add(pnlEnrollContent);
+            panel3.Controls.Add(pnlGradesContent);
             panel3.Controls.Add(pnlDashboardContent);
             panel3.Controls.Add(panel14);
             panel3.Controls.Add(panel1);
@@ -411,17 +374,6 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(1528, 1061);
             panel3.TabIndex = 0;
-            // 
-            // pnlAccountsContent
-            // 
-            pnlAccountsContent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            pnlAccountsContent.AutoScroll = true;
-            pnlAccountsContent.Location = new Point(288, 272);
-            pnlAccountsContent.Margin = new Padding(0);
-            pnlAccountsContent.Name = "pnlAccountsContent";
-            pnlAccountsContent.Size = new Size(1272, 989);
-            pnlAccountsContent.TabIndex = 5;
-            pnlAccountsContent.Visible = false;
             // 
             // pnlDashboardContent
             // 
@@ -496,14 +448,14 @@
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
             // 
-            // StudentPortal
+            // InstructorPortal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1528, 1061);
             Controls.Add(panel3);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Name = "StudentPortal";
+            Name = "InstructorPortal";
             StartPosition = FormStartPosition.CenterParent;
             Text = "StudentPortal";
             FormClosing += StudentPortal_Closing;
@@ -512,7 +464,6 @@
             panel7.ResumeLayout(false);
             panel8.ResumeLayout(false);
             panel9.ResumeLayout(false);
-            panel10.ResumeLayout(false);
             panel11.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel5.ResumeLayout(false);
@@ -544,11 +495,9 @@
         private Panel panel7;
         private Button btnDashboard;
         private Panel panel8;
-        private Button btnEnrollment;
+        private Button btnGrades;
         private Panel panel9;
         private Button btnCourses;
-        private Panel panel10;
-        private Button btnAccounts;
         private Panel panel11;
         private Button btnLMS;
         private Panel panel12;
@@ -562,8 +511,7 @@
         private Label label4;
         private Panel pnllmsSubmenu;
         private Panel pnlDashboardContent;
-        private Panel pnlEnrollContent;
+        private Panel pnlGradesContent;
         private Panel pnlCoursesContent;
-        private Panel pnlAccountsContent;
     }
 }

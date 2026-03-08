@@ -1,6 +1,6 @@
 ﻿namespace PUPAcadPortal
 {
-    partial class StudentPortal
+    partial class AdminPortal
     {
         /// <summary>
         /// Required designer variable.
@@ -28,17 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StudentPortal));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminPortal));
             panel1 = new Panel();
             flowLayoutPanel1 = new FlowLayoutPanel();
             panel7 = new Panel();
             btnDashboard = new Button();
             panel8 = new Panel();
-            btnEnrollment = new Button();
+            btnEnrollments = new Button();
             panel9 = new Panel();
-            btnCourses = new Button();
-            panel10 = new Panel();
-            btnAccounts = new Button();
+            btnSubjectOffering = new Button();
             panel11 = new Panel();
             btnLMS = new Button();
             pnllmsSubmenu = new Panel();
@@ -51,7 +49,7 @@
             panel12 = new Panel();
             panel13 = new Panel();
             btnLogout = new Button();
-            pnlCoursesContent = new Panel();
+            pnlSubOfferingContent = new Panel();
             pnlEnrollContent = new Panel();
             panel3 = new Panel();
             pnlAccountsContent = new Panel();
@@ -67,7 +65,6 @@
             panel7.SuspendLayout();
             panel8.SuspendLayout();
             panel9.SuspendLayout();
-            panel10.SuspendLayout();
             panel11.SuspendLayout();
             panel4.SuspendLayout();
             panel5.SuspendLayout();
@@ -101,7 +98,6 @@
             flowLayoutPanel1.Controls.Add(panel7);
             flowLayoutPanel1.Controls.Add(panel8);
             flowLayoutPanel1.Controls.Add(panel9);
-            flowLayoutPanel1.Controls.Add(panel10);
             flowLayoutPanel1.Controls.Add(panel11);
             flowLayoutPanel1.Controls.Add(pnllmsSubmenu);
             flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
@@ -143,101 +139,70 @@
             // 
             // panel8
             // 
-            panel8.Controls.Add(btnEnrollment);
+            panel8.Controls.Add(btnEnrollments);
             panel8.Location = new Point(0, 64);
             panel8.Margin = new Padding(0);
             panel8.Name = "panel8";
             panel8.Size = new Size(256, 48);
             panel8.TabIndex = 1;
             // 
-            // btnEnrollment
+            // btnEnrollments
             // 
-            btnEnrollment.BackgroundImageLayout = ImageLayout.None;
-            btnEnrollment.Cursor = Cursors.Hand;
-            btnEnrollment.FlatAppearance.BorderSize = 0;
-            btnEnrollment.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            btnEnrollment.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            btnEnrollment.FlatStyle = FlatStyle.Flat;
-            btnEnrollment.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            btnEnrollment.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            btnEnrollment.Image = Properties.Resources.Enrollment;
-            btnEnrollment.ImageAlign = ContentAlignment.MiddleLeft;
-            btnEnrollment.Location = new Point(0, 0);
-            btnEnrollment.Name = "btnEnrollment";
-            btnEnrollment.Padding = new Padding(16, 0, 0, 0);
-            btnEnrollment.Size = new Size(256, 48);
-            btnEnrollment.TabIndex = 3;
-            btnEnrollment.Text = " My Enrollment";
-            btnEnrollment.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnEnrollment.UseVisualStyleBackColor = true;
-            btnEnrollment.Click += btnEnrollment_Click;
+            btnEnrollments.BackgroundImageLayout = ImageLayout.None;
+            btnEnrollments.Cursor = Cursors.Hand;
+            btnEnrollments.FlatAppearance.BorderSize = 0;
+            btnEnrollments.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnEnrollments.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            btnEnrollments.FlatStyle = FlatStyle.Flat;
+            btnEnrollments.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            btnEnrollments.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            btnEnrollments.Image = Properties.Resources.Enrollment;
+            btnEnrollments.ImageAlign = ContentAlignment.MiddleLeft;
+            btnEnrollments.Location = new Point(0, 0);
+            btnEnrollments.Name = "btnEnrollments";
+            btnEnrollments.Padding = new Padding(16, 0, 0, 0);
+            btnEnrollments.Size = new Size(256, 48);
+            btnEnrollments.TabIndex = 3;
+            btnEnrollments.Text = " Enrollments";
+            btnEnrollments.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnEnrollments.UseVisualStyleBackColor = true;
+            btnEnrollments.Click += btnEnrollments_Click;
             // 
             // panel9
             // 
-            panel9.Controls.Add(btnCourses);
+            panel9.Controls.Add(btnSubjectOffering);
             panel9.Location = new Point(0, 112);
             panel9.Margin = new Padding(0);
             panel9.Name = "panel9";
             panel9.Size = new Size(256, 48);
             panel9.TabIndex = 2;
             // 
-            // btnCourses
+            // btnSubjectOffering
             // 
-            btnCourses.BackgroundImageLayout = ImageLayout.None;
-            btnCourses.Cursor = Cursors.Hand;
-            btnCourses.FlatAppearance.BorderSize = 0;
-            btnCourses.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            btnCourses.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            btnCourses.FlatStyle = FlatStyle.Flat;
-            btnCourses.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            btnCourses.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            btnCourses.Image = Properties.Resources.Course;
-            btnCourses.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCourses.Location = new Point(0, 0);
-            btnCourses.Name = "btnCourses";
-            btnCourses.Padding = new Padding(16, 0, 0, 0);
-            btnCourses.Size = new Size(256, 48);
-            btnCourses.TabIndex = 3;
-            btnCourses.Text = " Courses";
-            btnCourses.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnCourses.UseVisualStyleBackColor = true;
-            btnCourses.Click += btnCourses_Click;
-            // 
-            // panel10
-            // 
-            panel10.Controls.Add(btnAccounts);
-            panel10.Location = new Point(0, 160);
-            panel10.Margin = new Padding(0);
-            panel10.Name = "panel10";
-            panel10.Size = new Size(256, 48);
-            panel10.TabIndex = 3;
-            // 
-            // btnAccounts
-            // 
-            btnAccounts.BackgroundImageLayout = ImageLayout.None;
-            btnAccounts.Cursor = Cursors.Hand;
-            btnAccounts.FlatAppearance.BorderSize = 0;
-            btnAccounts.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            btnAccounts.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            btnAccounts.FlatStyle = FlatStyle.Flat;
-            btnAccounts.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            btnAccounts.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            btnAccounts.Image = Properties.Resources.Accounts;
-            btnAccounts.ImageAlign = ContentAlignment.MiddleLeft;
-            btnAccounts.Location = new Point(0, 0);
-            btnAccounts.Name = "btnAccounts";
-            btnAccounts.Padding = new Padding(16, 0, 0, 0);
-            btnAccounts.Size = new Size(256, 48);
-            btnAccounts.TabIndex = 3;
-            btnAccounts.Text = " Accounts";
-            btnAccounts.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnAccounts.UseVisualStyleBackColor = true;
-            btnAccounts.Click += btnAccounts_Click;
+            btnSubjectOffering.BackgroundImageLayout = ImageLayout.None;
+            btnSubjectOffering.Cursor = Cursors.Hand;
+            btnSubjectOffering.FlatAppearance.BorderSize = 0;
+            btnSubjectOffering.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnSubjectOffering.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            btnSubjectOffering.FlatStyle = FlatStyle.Flat;
+            btnSubjectOffering.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            btnSubjectOffering.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            btnSubjectOffering.Image = Properties.Resources.SubOffering;
+            btnSubjectOffering.ImageAlign = ContentAlignment.MiddleLeft;
+            btnSubjectOffering.Location = new Point(0, 0);
+            btnSubjectOffering.Name = "btnSubjectOffering";
+            btnSubjectOffering.Padding = new Padding(16, 0, 0, 0);
+            btnSubjectOffering.Size = new Size(256, 48);
+            btnSubjectOffering.TabIndex = 3;
+            btnSubjectOffering.Text = " Subject Offering";
+            btnSubjectOffering.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnSubjectOffering.UseVisualStyleBackColor = true;
+            btnSubjectOffering.Click += btnSubjectOffering_Click;
             // 
             // panel11
             // 
             panel11.Controls.Add(btnLMS);
-            panel11.Location = new Point(0, 208);
+            panel11.Location = new Point(0, 160);
             panel11.Margin = new Padding(0);
             panel11.Name = "panel11";
             panel11.Size = new Size(256, 48);
@@ -268,7 +233,7 @@
             // pnllmsSubmenu
             // 
             pnllmsSubmenu.BackColor = Color.FromArgb(128, 109, 0, 0);
-            pnllmsSubmenu.Location = new Point(0, 256);
+            pnllmsSubmenu.Location = new Point(0, 208);
             pnllmsSubmenu.Margin = new Padding(0);
             pnllmsSubmenu.Name = "pnllmsSubmenu";
             pnllmsSubmenu.Size = new Size(256, 100);
@@ -374,18 +339,18 @@
             btnLogout.UseVisualStyleBackColor = true;
             btnLogout.Click += btnLogout_Click;
             // 
-            // pnlCoursesContent
+            // pnlSubOfferingContent
             // 
-            pnlCoursesContent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            pnlCoursesContent.AutoScroll = true;
-            pnlCoursesContent.CausesValidation = false;
-            pnlCoursesContent.Location = new Point(312, 200);
-            pnlCoursesContent.Margin = new Padding(0);
-            pnlCoursesContent.Name = "pnlCoursesContent";
-            pnlCoursesContent.Size = new Size(1272, 989);
-            pnlCoursesContent.TabIndex = 6;
-            pnlCoursesContent.Visible = false;
-            pnlCoursesContent.Paint += pnlCoursesContent_Paint;
+            pnlSubOfferingContent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pnlSubOfferingContent.AutoScroll = true;
+            pnlSubOfferingContent.CausesValidation = false;
+            pnlSubOfferingContent.Location = new Point(312, 200);
+            pnlSubOfferingContent.Margin = new Padding(0);
+            pnlSubOfferingContent.Name = "pnlSubOfferingContent";
+            pnlSubOfferingContent.Size = new Size(1272, 989);
+            pnlSubOfferingContent.TabIndex = 6;
+            pnlSubOfferingContent.Visible = false;
+            pnlSubOfferingContent.Paint += pnlCoursesContent_Paint;
             // 
             // pnlEnrollContent
             // 
@@ -401,7 +366,7 @@
             // panel3
             // 
             panel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panel3.Controls.Add(pnlCoursesContent);
+            panel3.Controls.Add(pnlSubOfferingContent);
             panel3.Controls.Add(pnlAccountsContent);
             panel3.Controls.Add(pnlEnrollContent);
             panel3.Controls.Add(pnlDashboardContent);
@@ -496,14 +461,14 @@
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
             // 
-            // StudentPortal
+            // AdminPortal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1528, 1061);
             Controls.Add(panel3);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Name = "StudentPortal";
+            Name = "AdminPortal";
             StartPosition = FormStartPosition.CenterParent;
             Text = "StudentPortal";
             FormClosing += StudentPortal_Closing;
@@ -512,7 +477,6 @@
             panel7.ResumeLayout(false);
             panel8.ResumeLayout(false);
             panel9.ResumeLayout(false);
-            panel10.ResumeLayout(false);
             panel11.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel5.ResumeLayout(false);
@@ -544,11 +508,7 @@
         private Panel panel7;
         private Button btnDashboard;
         private Panel panel8;
-        private Button btnEnrollment;
-        private Panel panel9;
-        private Button btnCourses;
-        private Panel panel10;
-        private Button btnAccounts;
+        private Button btnEnrollments;
         private Panel panel11;
         private Button btnLMS;
         private Panel panel12;
@@ -563,7 +523,9 @@
         private Panel pnllmsSubmenu;
         private Panel pnlDashboardContent;
         private Panel pnlEnrollContent;
-        private Panel pnlCoursesContent;
+        private Panel pnlSubOfferingContent;
         private Panel pnlAccountsContent;
+        private Panel panel9;
+        private Button btnSubjectOffering;
     }
 }

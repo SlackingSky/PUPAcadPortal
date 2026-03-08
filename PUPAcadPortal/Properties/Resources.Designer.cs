@@ -173,6 +173,16 @@ namespace PUPAcadPortal.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap item_icon__1_ {
+            get {
+                object obj = ResourceManager.GetObject("item.icon (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap LMS {
             get {
                 object obj = ResourceManager.GetObject("LMS", resourceCulture);
@@ -237,6 +247,16 @@ namespace PUPAcadPortal.Properties {
             get {
                 object obj = ResourceManager.GetObject("Roboto-VariableFont_wdth,wght", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SubOffering {
+            get {
+                object obj = ResourceManager.GetObject("SubOffering", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

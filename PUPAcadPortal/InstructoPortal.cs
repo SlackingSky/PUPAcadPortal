@@ -8,12 +8,12 @@ using System.Windows.Forms;
 
 namespace PUPAcadPortal
 {
-    public partial class StudentPortal : Form
+    public partial class InstructorPortal : Form
     {
         private Button clickedButton;
         private Color defaultColor = Color.Maroon;
         private Color selectedColor = Color.FromArgb(109, 0, 0);
-        public StudentPortal()
+        public InstructorPortal()
         {
             InitializeComponent();
         }
@@ -32,9 +32,8 @@ namespace PUPAcadPortal
         {
             Dictionary<Button, Panel> contents = new Dictionary<Button, Panel> { };
             contents.Add(btnDashboard, pnlDashboardContent);
-            contents.Add(btnEnrollment, pnlEnrollContent);
+            contents.Add(btnGrades, pnlGradesContent);
             contents.Add(btnCourses, pnlCoursesContent);
-            contents.Add(btnAccounts, pnlAccountsContent);
             foreach (KeyValuePair<Button, Panel> content in contents)
             {
                 if (content.Key == clickedButton)
@@ -67,19 +66,13 @@ namespace PUPAcadPortal
             showContent(clickedButton);
         }
 
-        private void btnEnrollment_Click(object sender, EventArgs e)
+        private void btnGrades_Click(object sender, EventArgs e)
         {
             changeButtonColor(sender as Button);
             showContent(clickedButton);
         }
 
         private void btnCourses_Click(object sender, EventArgs e)
-        {
-            changeButtonColor(sender as Button);
-            showContent(clickedButton);
-        }
-
-        private void btnAccounts_Click(object sender, EventArgs e)
         {
             changeButtonColor(sender as Button);
             showContent(clickedButton);
