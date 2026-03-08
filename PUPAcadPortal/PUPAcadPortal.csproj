@@ -9,6 +9,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\PUPLogo.ico" />
+    <None Remove="Resources\Roboto-VariableFont_wdth,wght.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\PUPLogo.ico" />
+    <Resource Include="Resources\Roboto-VariableFont_wdth,wght.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

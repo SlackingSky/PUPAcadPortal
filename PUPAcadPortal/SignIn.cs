@@ -14,5 +14,12 @@ namespace PUPAcadPortal
         {
             txtPassword.UseSystemPasswordChar = !txtPassword.UseSystemPasswordChar;
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            StudentPortal studentPortal = new StudentPortal();
+            studentPortal.Show();
+        }
     }
 }

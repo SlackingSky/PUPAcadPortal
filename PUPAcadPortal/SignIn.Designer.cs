@@ -172,6 +172,7 @@ namespace PUPAcadPortal
             button1.TabIndex = 1;
             button1.Text = "Sign In";
             button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // panel6
             // 
