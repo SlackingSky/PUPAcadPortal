@@ -385,7 +385,6 @@
             pnlCoursesContent.Size = new Size(1272, 989);
             pnlCoursesContent.TabIndex = 6;
             pnlCoursesContent.Visible = false;
-            pnlCoursesContent.Paint += pnlCoursesContent_Paint;
             // 
             // pnlEnrollContent
             // 
