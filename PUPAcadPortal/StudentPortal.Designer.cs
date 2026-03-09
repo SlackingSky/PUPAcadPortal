@@ -62,6 +62,7 @@
             label3 = new Label();
             label4 = new Label();
             pictureBox2 = new PictureBox();
+            pnlYellow = new Panel();
             panel1.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             panel7.SuspendLayout();
@@ -260,7 +261,7 @@
             btnLMS.Padding = new Padding(16, 0, 0, 0);
             btnLMS.Size = new Size(256, 48);
             btnLMS.TabIndex = 3;
-            btnLMS.Text = " LMS                                       >";
+            btnLMS.Text = " LMS                                        ›";
             btnLMS.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnLMS.UseVisualStyleBackColor = true;
             btnLMS.Click += btnLMS_Click;
@@ -437,6 +438,7 @@
             // 
             panel14.BackColor = Color.FromArgb(42, 42, 42);
             panel14.Controls.Add(panel15);
+            panel14.Controls.Add(pnlYellow);
             panel14.Dock = DockStyle.Top;
             panel14.Location = new Point(0, 0);
             panel14.Margin = new Padding(0);
@@ -494,6 +496,16 @@
             pictureBox2.SizeMode = PictureBoxSizeMode.AutoSize;
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
+            // 
+            // pnlYellow
+            // 
+            pnlYellow.BackColor = Color.FromArgb(255, 193, 7);
+            pnlYellow.Location = new Point(0, 0);
+            pnlYellow.Margin = new Padding(0);
+            pnlYellow.Name = "pnlYellow";
+            pnlYellow.Size = new Size(4, 48);
+            pnlYellow.TabIndex = 6;
+            pnlYellow.Visible = false;
             // 
             // StudentPortal
             // 
@@ -564,5 +576,6 @@
         private Panel pnlEnrollContent;
         private Panel pnlCoursesContent;
         private Panel pnlAccountsContent;
+        private Panel pnlYellow;
     }
 }

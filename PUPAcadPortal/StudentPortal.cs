@@ -25,6 +25,9 @@ namespace PUPAcadPortal
                 clickedButton.BackColor = defaultColor;
             }
             clickedButton = button;
+            pnlYellow.Visible = true;
+            pnlYellow.Parent = clickedButton.Parent;
+            pnlYellow.BringToFront();
             clickedButton.BackColor = selectedColor;
         }
 
@@ -98,7 +101,7 @@ namespace PUPAcadPortal
             if (pnllmsSubmenu.Visible)
                 btnLMS.Text = " LMS                                       ⌄";
             else
-                btnLMS.Text = " LMS                                       >";
+                btnLMS.Text = " LMS                                        ›";
         }
         private void btnLogout_Click(object sender, EventArgs e)
         {
