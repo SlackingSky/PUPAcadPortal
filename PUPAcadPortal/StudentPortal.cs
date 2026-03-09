@@ -28,6 +28,7 @@ namespace PUPAcadPortal
             clickedButton.BackColor = selectedColor;
         }
 
+        //Method na nagpapakita ng content ng bawat button, wala akong maisip na iba kaya eto
         private void showContent(Button button)
         {
             Dictionary<Button, Panel> contents = new Dictionary<Button, Panel> { };
@@ -35,10 +36,12 @@ namespace PUPAcadPortal
             contents.Add(btnEnrollment, pnlEnrollContent);
             contents.Add(btnCourses, pnlCoursesContent);
             contents.Add(btnAccounts, pnlAccountsContent);
+            //Kada button na aadd, maglagay ng panel sa form at lagay dito
             foreach (KeyValuePair<Button, Panel> content in contents)
             {
                 if (content.Key == clickedButton)
                 {
+                    //Automatic positioning, wag pakialaman maliban nalang kung binago ang position ng sidebar
                     content.Value.Location = new Point(256, 72);
                     content.Value.Visible = true;
                 }
@@ -48,6 +51,9 @@ namespace PUPAcadPortal
                 }
             }
         }
+
+        //Method para pag pinindot yung X sa taas o mag alt-F4, icclose lahat ng forms para di magerror pag ni run uli
+        //Lagay to sa bawat form na iaadd, Step 1: Hanapin sa properties ng form yung event na FormClosing, Step 2: Double click para gumawa ng method, Step 3: Copy paste code na nasa loob nito
         private void StudentPortal_Closing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
@@ -97,11 +103,6 @@ namespace PUPAcadPortal
         private void btnLogout_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void pnlCoursesContent_Paint(object sender, PaintEventArgs e)
-        {
-
         }
     }
 }
