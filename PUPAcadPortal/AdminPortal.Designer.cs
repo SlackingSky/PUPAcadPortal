@@ -55,6 +55,7 @@
             pnlAccountsContent = new Panel();
             pnlDashboardContent = new Panel();
             panel14 = new Panel();
+            pnlYellow = new Panel();
             panel15 = new Panel();
             panel16 = new Panel();
             label3 = new Label();
@@ -225,7 +226,7 @@
             btnLMS.Padding = new Padding(16, 0, 0, 0);
             btnLMS.Size = new Size(256, 48);
             btnLMS.TabIndex = 3;
-            btnLMS.Text = " LMS                                       >";
+            btnLMS.Text = " LMS                                        ›";
             btnLMS.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnLMS.UseVisualStyleBackColor = true;
             btnLMS.Click += btnLMS_Click;
@@ -402,6 +403,7 @@
             // panel14
             // 
             panel14.BackColor = Color.FromArgb(42, 42, 42);
+            panel14.Controls.Add(pnlYellow);
             panel14.Controls.Add(panel15);
             panel14.Dock = DockStyle.Top;
             panel14.Location = new Point(0, 0);
@@ -409,6 +411,16 @@
             panel14.Name = "panel14";
             panel14.Size = new Size(1528, 72);
             panel14.TabIndex = 2;
+            // 
+            // pnlYellow
+            // 
+            pnlYellow.BackColor = Color.FromArgb(255, 193, 7);
+            pnlYellow.Location = new Point(0, 0);
+            pnlYellow.Margin = new Padding(0);
+            pnlYellow.Name = "pnlYellow";
+            pnlYellow.Size = new Size(4, 48);
+            pnlYellow.TabIndex = 7;
+            pnlYellow.Visible = false;
             // 
             // panel15
             // 
@@ -527,5 +539,6 @@
         private Panel pnlAccountsContent;
         private Panel panel9;
         private Button btnSubjectOffering;
+        private Panel pnlYellow;
     }
 }
