@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InstructorPortal));
-            panel1 = new Panel();
+            pnlSidebar = new Panel();
             flowLayoutPanel1 = new FlowLayoutPanel();
             panel7 = new Panel();
             btnDashboard = new Button();
@@ -52,15 +52,15 @@
             pnlCoursesContent = new Panel();
             pnlGradesContent = new Panel();
             panel3 = new Panel();
-            pnlDashboardContent = new Panel();
-            panel14 = new Panel();
+            pnlHeader = new Panel();
             pnlYellow = new Panel();
             panel15 = new Panel();
             panel16 = new Panel();
             label3 = new Label();
             label4 = new Label();
             pictureBox2 = new PictureBox();
-            panel1.SuspendLayout();
+            pnlDashboardContent = new Panel();
+            pnlSidebar.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             panel7.SuspendLayout();
             panel8.SuspendLayout();
@@ -73,24 +73,24 @@
             panel12.SuspendLayout();
             panel13.SuspendLayout();
             panel3.SuspendLayout();
-            panel14.SuspendLayout();
+            pnlHeader.SuspendLayout();
             panel15.SuspendLayout();
             panel16.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
             // 
-            // panel1
+            // pnlSidebar
             // 
-            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            panel1.BackColor = Color.Maroon;
-            panel1.Controls.Add(flowLayoutPanel1);
-            panel1.Controls.Add(panel4);
-            panel1.Controls.Add(panel12);
-            panel1.Location = new Point(0, 0);
-            panel1.Margin = new Padding(0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(256, 1065);
-            panel1.TabIndex = 0;
+            pnlSidebar.BackColor = Color.Maroon;
+            pnlSidebar.Controls.Add(flowLayoutPanel1);
+            pnlSidebar.Controls.Add(panel4);
+            pnlSidebar.Controls.Add(panel12);
+            pnlSidebar.Dock = DockStyle.Left;
+            pnlSidebar.Location = new Point(0, 0);
+            pnlSidebar.Margin = new Padding(0);
+            pnlSidebar.Name = "pnlSidebar";
+            pnlSidebar.Size = new Size(256, 1061);
+            pnlSidebar.TabIndex = 0;
             // 
             // flowLayoutPanel1
             // 
@@ -366,38 +366,27 @@
             // panel3
             // 
             panel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panel3.Controls.Add(pnlHeader);
             panel3.Controls.Add(pnlCoursesContent);
             panel3.Controls.Add(pnlGradesContent);
             panel3.Controls.Add(pnlDashboardContent);
-            panel3.Controls.Add(panel14);
-            panel3.Controls.Add(panel1);
+            panel3.Controls.Add(pnlSidebar);
             panel3.Location = new Point(0, 0);
             panel3.Name = "panel3";
             panel3.Size = new Size(1528, 1061);
             panel3.TabIndex = 0;
             // 
-            // pnlDashboardContent
+            // pnlHeader
             // 
-            pnlDashboardContent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            pnlDashboardContent.AutoScroll = true;
-            pnlDashboardContent.Location = new Point(352, 104);
-            pnlDashboardContent.Margin = new Padding(0);
-            pnlDashboardContent.Name = "pnlDashboardContent";
-            pnlDashboardContent.Size = new Size(1272, 989);
-            pnlDashboardContent.TabIndex = 4;
-            pnlDashboardContent.Visible = false;
-            // 
-            // panel14
-            // 
-            panel14.BackColor = Color.FromArgb(42, 42, 42);
-            panel14.Controls.Add(pnlYellow);
-            panel14.Controls.Add(panel15);
-            panel14.Dock = DockStyle.Top;
-            panel14.Location = new Point(0, 0);
-            panel14.Margin = new Padding(0);
-            panel14.Name = "panel14";
-            panel14.Size = new Size(1528, 72);
-            panel14.TabIndex = 2;
+            pnlHeader.BackColor = Color.FromArgb(42, 42, 42);
+            pnlHeader.Controls.Add(pnlYellow);
+            pnlHeader.Controls.Add(panel15);
+            pnlHeader.Dock = DockStyle.Top;
+            pnlHeader.Location = new Point(256, 0);
+            pnlHeader.Margin = new Padding(0);
+            pnlHeader.Name = "pnlHeader";
+            pnlHeader.Size = new Size(1272, 72);
+            pnlHeader.TabIndex = 2;
             // 
             // pnlYellow
             // 
@@ -460,6 +449,17 @@
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
             // 
+            // pnlDashboardContent
+            // 
+            pnlDashboardContent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pnlDashboardContent.AutoScroll = true;
+            pnlDashboardContent.Location = new Point(352, 104);
+            pnlDashboardContent.Margin = new Padding(0);
+            pnlDashboardContent.Name = "pnlDashboardContent";
+            pnlDashboardContent.Size = new Size(1272, 989);
+            pnlDashboardContent.TabIndex = 4;
+            pnlDashboardContent.Visible = false;
+            // 
             // InstructorPortal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -471,7 +471,7 @@
             StartPosition = FormStartPosition.CenterParent;
             Text = "StudentPortal";
             FormClosing += StudentPortal_Closing;
-            panel1.ResumeLayout(false);
+            pnlSidebar.ResumeLayout(false);
             flowLayoutPanel1.ResumeLayout(false);
             panel7.ResumeLayout(false);
             panel8.ResumeLayout(false);
@@ -485,7 +485,7 @@
             panel12.ResumeLayout(false);
             panel13.ResumeLayout(false);
             panel3.ResumeLayout(false);
-            panel14.ResumeLayout(false);
+            pnlHeader.ResumeLayout(false);
             panel15.ResumeLayout(false);
             panel15.PerformLayout();
             panel16.ResumeLayout(false);
@@ -495,7 +495,7 @@
 
         #endregion
 
-        private Panel panel1;
+        private Panel pnlSidebar;
         private Panel panel3;
         private Panel panel4;
         private Panel panel5;
@@ -515,7 +515,7 @@
         private Panel panel12;
         private Panel panel13;
         private Button btnLogout;
-        private Panel panel14;
+        private Panel pnlHeader;
         private Panel panel15;
         private Panel panel16;
         private PictureBox pictureBox2;

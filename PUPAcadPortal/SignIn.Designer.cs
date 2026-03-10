@@ -92,7 +92,7 @@ namespace PUPAcadPortal
             // 
             // panel1
             // 
-            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
+            panel1.Anchor = AnchorStyles.None;
             panel1.BackColor = Color.Transparent;
             panel1.Controls.Add(panel9);
             panel1.Controls.Add(panel3);
@@ -104,9 +104,9 @@ namespace PUPAcadPortal
             // 
             // panel9
             // 
+            panel9.Anchor = AnchorStyles.Bottom;
             panel9.Controls.Add(label7);
             panel9.Controls.Add(label6);
-            panel9.Dock = DockStyle.Bottom;
             panel9.Location = new Point(0, 747);
             panel9.Name = "panel9";
             panel9.Size = new Size(448, 44);
@@ -114,6 +114,7 @@ namespace PUPAcadPortal
             // 
             // label7
             // 
+            label7.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             label7.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
             label7.ForeColor = Color.White;
             label7.Location = new Point(0, 24);
@@ -125,6 +126,7 @@ namespace PUPAcadPortal
             // 
             // label6
             // 
+            label6.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             label6.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
             label6.ForeColor = Color.White;
             label6.Location = new Point(0, 0);
@@ -136,9 +138,10 @@ namespace PUPAcadPortal
             // 
             // panel3
             // 
-            panel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
+            panel3.Anchor = AnchorStyles.None;
+            panel3.BackColor = Color.Transparent;
             panel3.BackgroundImage = Properties.Resources.Container__2_;
-            panel3.BackgroundImageLayout = ImageLayout.None;
+            panel3.BackgroundImageLayout = ImageLayout.Center;
             panel3.Controls.Add(panel4);
             panel3.Controls.Add(label3);
             panel3.Location = new Point(0, 212);
@@ -149,6 +152,8 @@ namespace PUPAcadPortal
             // 
             // panel4
             // 
+            panel4.Anchor = AnchorStyles.None;
+            panel4.BackColor = Color.Transparent;
             panel4.Controls.Add(button1);
             panel4.Controls.Add(panel6);
             panel4.Controls.Add(panel5);
@@ -159,6 +164,7 @@ namespace PUPAcadPortal
             // 
             // button1
             // 
+            button1.Anchor = AnchorStyles.None;
             button1.BackColor = Color.Transparent;
             button1.Cursor = Cursors.Hand;
             button1.FlatAppearance.BorderSize = 0;
@@ -185,6 +191,7 @@ namespace PUPAcadPortal
             // 
             // panel8
             // 
+            panel8.Anchor = AnchorStyles.None;
             panel8.BackgroundImage = Properties.Resources.input;
             panel8.Controls.Add(btnShowPass);
             panel8.Controls.Add(pictureBox3);
@@ -232,6 +239,7 @@ namespace PUPAcadPortal
             // 
             // label5
             // 
+            label5.Anchor = AnchorStyles.None;
             label5.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
             label5.Location = new Point(0, 0);
             label5.Name = "label5";
@@ -250,6 +258,7 @@ namespace PUPAcadPortal
             // 
             // panel7
             // 
+            panel7.Anchor = AnchorStyles.None;
             panel7.BackgroundImage = Properties.Resources.input;
             panel7.Controls.Add(pictureBox2);
             panel7.Controls.Add(txtUsername);
@@ -282,6 +291,7 @@ namespace PUPAcadPortal
             // 
             // label4
             // 
+            label4.Anchor = AnchorStyles.None;
             label4.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
             label4.Location = new Point(0, 0);
             label4.Name = "label4";
@@ -291,6 +301,7 @@ namespace PUPAcadPortal
             // 
             // label3
             // 
+            label3.Anchor = AnchorStyles.None;
             label3.Font = new Font("Arial", 24F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             label3.ForeColor = Color.Maroon;
             label3.Location = new Point(32, 32);
@@ -302,6 +313,7 @@ namespace PUPAcadPortal
             // 
             // panel2
             // 
+            panel2.Anchor = AnchorStyles.None;
             panel2.Controls.Add(label2);
             panel2.Controls.Add(label1);
             panel2.Controls.Add(pictureBox1);

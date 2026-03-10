@@ -45,7 +45,7 @@ namespace PUPAcadPortal
                 if (content.Key == clickedButton)
                 {
                     //Automatic positioning, wag pakialaman maliban nalang kung binago ang position ng sidebar
-                    content.Value.Location = new Point(256, 72);
+                    content.Value.Location = new Point(pnlSidebar.Size.Width, pnlHeader.Size.Height);
                     content.Value.Visible = true;
                 }
                 else
