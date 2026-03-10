@@ -19,6 +19,7 @@ namespace PUPAcadPortal
         {
             this.Hide();
             StudentPortal studentPortal = new StudentPortal();
+            studentPortal.WindowState = this.WindowState;
             studentPortal.Show();
         }
     }
