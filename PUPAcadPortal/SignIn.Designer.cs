@@ -141,7 +141,7 @@ namespace PUPAcadPortal
             panel3.Anchor = AnchorStyles.None;
             panel3.BackColor = Color.Transparent;
             panel3.BackgroundImage = Properties.Resources.Container__2_;
-            panel3.BackgroundImageLayout = ImageLayout.Center;
+            panel3.BackgroundImageLayout = ImageLayout.Stretch;
             panel3.Controls.Add(panel4);
             panel3.Controls.Add(label3);
             panel3.Location = new Point(0, 212);
@@ -182,6 +182,7 @@ namespace PUPAcadPortal
             // 
             // panel6
             // 
+            panel6.Anchor = AnchorStyles.None;
             panel6.Controls.Add(panel8);
             panel6.Controls.Add(label5);
             panel6.Location = new Point(0, 94);
@@ -193,6 +194,7 @@ namespace PUPAcadPortal
             // 
             panel8.Anchor = AnchorStyles.None;
             panel8.BackgroundImage = Properties.Resources.input;
+            panel8.BackgroundImageLayout = ImageLayout.Stretch;
             panel8.Controls.Add(btnShowPass);
             panel8.Controls.Add(pictureBox3);
             panel8.Controls.Add(txtPassword);
@@ -249,6 +251,7 @@ namespace PUPAcadPortal
             // 
             // panel5
             // 
+            panel5.Anchor = AnchorStyles.None;
             panel5.Controls.Add(panel7);
             panel5.Controls.Add(label4);
             panel5.Location = new Point(0, 0);
@@ -260,6 +263,7 @@ namespace PUPAcadPortal
             // 
             panel7.Anchor = AnchorStyles.None;
             panel7.BackgroundImage = Properties.Resources.input;
+            panel7.BackgroundImageLayout = ImageLayout.Stretch;
             panel7.Controls.Add(pictureBox2);
             panel7.Controls.Add(txtUsername);
             panel7.Location = new Point(0, 28);
