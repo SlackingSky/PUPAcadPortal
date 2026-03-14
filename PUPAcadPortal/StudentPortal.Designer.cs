@@ -94,11 +94,6 @@
             panel15.SuspendLayout();
             panel16.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
-            pnlAnnounce.SuspendLayout();
-            pnlCalendar.SuspendLayout();
-            pnlSubject.SuspendLayout();
-            pnlActivities.SuspendLayout();
-            pnlAttendance.SuspendLayout();
             SuspendLayout();
             // 
             // pnlSidebar
@@ -588,6 +583,11 @@
             // panel3
             // 
             panel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panel3.Controls.Add(pnlGrades);
+            panel3.Controls.Add(pnlAttendance);
+            panel3.Controls.Add(pnlActivities);
+            panel3.Controls.Add(pnlSubject);
+            panel3.Controls.Add(pnlCalendar);
             panel3.Controls.Add(pnlAnnounce);
             panel3.Controls.Add(pnlCoursesContent);
             panel3.Controls.Add(pnlAccountsContent);
@@ -695,7 +695,6 @@
             pnlAnnounce.AutoScroll = true;
             pnlAnnounce.BackColor = SystemColors.Control;
             pnlAnnounce.CausesValidation = false;
-            pnlAnnounce.Controls.Add(pnlCalendar);
             pnlAnnounce.Dock = DockStyle.Fill;
             pnlAnnounce.Location = new Point(293, 96);
             pnlAnnounce.Margin = new Padding(0);
@@ -709,9 +708,8 @@
             pnlCalendar.AutoScroll = true;
             pnlCalendar.BackColor = SystemColors.Control;
             pnlCalendar.CausesValidation = false;
-            pnlCalendar.Controls.Add(pnlSubject);
             pnlCalendar.Dock = DockStyle.Fill;
-            pnlCalendar.Location = new Point(0, 0);
+            pnlCalendar.Location = new Point(293, 96);
             pnlCalendar.Margin = new Padding(0);
             pnlCalendar.Name = "pnlCalendar";
             pnlCalendar.Size = new Size(1453, 1319);
@@ -723,9 +721,8 @@
             pnlSubject.AutoScroll = true;
             pnlSubject.BackColor = SystemColors.Control;
             pnlSubject.CausesValidation = false;
-            pnlSubject.Controls.Add(pnlActivities);
             pnlSubject.Dock = DockStyle.Fill;
-            pnlSubject.Location = new Point(0, 0);
+            pnlSubject.Location = new Point(293, 96);
             pnlSubject.Margin = new Padding(0);
             pnlSubject.Name = "pnlSubject";
             pnlSubject.Size = new Size(1453, 1319);
@@ -737,9 +734,8 @@
             pnlActivities.AutoScroll = true;
             pnlActivities.BackColor = SystemColors.Control;
             pnlActivities.CausesValidation = false;
-            pnlActivities.Controls.Add(pnlAttendance);
             pnlActivities.Dock = DockStyle.Fill;
-            pnlActivities.Location = new Point(0, 0);
+            pnlActivities.Location = new Point(293, 96);
             pnlActivities.Margin = new Padding(0);
             pnlActivities.Name = "pnlActivities";
             pnlActivities.Size = new Size(1453, 1319);
@@ -751,9 +747,8 @@
             pnlAttendance.AutoScroll = true;
             pnlAttendance.BackColor = SystemColors.Control;
             pnlAttendance.CausesValidation = false;
-            pnlAttendance.Controls.Add(pnlGrades);
             pnlAttendance.Dock = DockStyle.Fill;
-            pnlAttendance.Location = new Point(0, 0);
+            pnlAttendance.Location = new Point(293, 96);
             pnlAttendance.Margin = new Padding(0);
             pnlAttendance.Name = "pnlAttendance";
             pnlAttendance.Size = new Size(1453, 1319);
@@ -766,7 +761,7 @@
             pnlGrades.BackColor = SystemColors.Control;
             pnlGrades.CausesValidation = false;
             pnlGrades.Dock = DockStyle.Fill;
-            pnlGrades.Location = new Point(0, 0);
+            pnlGrades.Location = new Point(293, 96);
             pnlGrades.Margin = new Padding(0);
             pnlGrades.Name = "pnlGrades";
             pnlGrades.Size = new Size(1453, 1319);
@@ -806,11 +801,6 @@
             panel15.PerformLayout();
             panel16.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
-            pnlAnnounce.ResumeLayout(false);
-            pnlCalendar.ResumeLayout(false);
-            pnlSubject.ResumeLayout(false);
-            pnlActivities.ResumeLayout(false);
-            pnlAttendance.ResumeLayout(false);
             ResumeLayout(false);
         }
 
