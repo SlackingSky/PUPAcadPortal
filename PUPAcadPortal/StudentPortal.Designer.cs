@@ -324,7 +324,7 @@
             button5.Padding = new Padding(18, 0, 0, 0);
             button5.Size = new Size(293, 64);
             button5.TabIndex = 9;
-            button5.Text = " Grades";
+            button5.Text = "  Grades";
             button5.TextAlign = ContentAlignment.MiddleLeft;
             button5.TextImageRelation = TextImageRelation.ImageBeforeText;
             button5.UseVisualStyleBackColor = true;
@@ -347,7 +347,7 @@
             button6.Padding = new Padding(18, 0, 0, 0);
             button6.Size = new Size(293, 64);
             button6.TabIndex = 8;
-            button6.Text = " Attendance";
+            button6.Text = "  Attendance";
             button6.TextAlign = ContentAlignment.MiddleLeft;
             button6.TextImageRelation = TextImageRelation.ImageBeforeText;
             button6.UseVisualStyleBackColor = true;
@@ -393,7 +393,7 @@
             button3.Padding = new Padding(18, 0, 0, 0);
             button3.Size = new Size(293, 64);
             button3.TabIndex = 6;
-            button3.Text = " Activities";
+            button3.Text = "  Activities";
             button3.TextAlign = ContentAlignment.MiddleLeft;
             button3.TextImageRelation = TextImageRelation.ImageBeforeText;
             button3.UseVisualStyleBackColor = true;
@@ -413,10 +413,10 @@
             button2.Location = new Point(1, 128);
             button2.Margin = new Padding(3, 4, 3, 4);
             button2.Name = "button2";
-            button2.Padding = new Padding(18, 0, 0, 0);
+            button2.Padding = new Padding(15, 0, 0, 0);
             button2.Size = new Size(293, 64);
             button2.TabIndex = 5;
-            button2.Text = " Courses";
+            button2.Text = "Courses";
             button2.TextAlign = ContentAlignment.MiddleLeft;
             button2.TextImageRelation = TextImageRelation.ImageBeforeText;
             button2.UseVisualStyleBackColor = true;
