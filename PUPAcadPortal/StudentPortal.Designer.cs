@@ -61,12 +61,18 @@
             pnlCoursesContent = new Panel();
             pnlEnrollContent = new Panel();
             panel3 = new Panel();
-            pnlGrades = new Panel();
-            pnlAttendance = new Panel();
-            pnlActivities = new Panel();
-            pnlSubject = new Panel();
-            pnlCalendar = new Panel();
             pnlAnnounce = new Panel();
+            label10 = new Label();
+            pnlCalendar = new Panel();
+            label9 = new Label();
+            pnlSubject = new Panel();
+            label8 = new Label();
+            pnlActivities = new Panel();
+            label7 = new Label();
+            pnlAttendance = new Panel();
+            label6 = new Label();
+            pnlGrades = new Panel();
+            label5 = new Label();
             pnlAccountsContent = new Panel();
             pnlDashboardContent = new Panel();
             pnlHeader = new Panel();
@@ -75,12 +81,6 @@
             label3 = new Label();
             label4 = new Label();
             pictureBox2 = new PictureBox();
-            label5 = new Label();
-            label6 = new Label();
-            label7 = new Label();
-            label8 = new Label();
-            label9 = new Label();
-            label10 = new Label();
             pnlSidebar.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             panel7.SuspendLayout();
@@ -96,12 +96,12 @@
             panel12.SuspendLayout();
             panel13.SuspendLayout();
             panel3.SuspendLayout();
-            pnlGrades.SuspendLayout();
-            pnlAttendance.SuspendLayout();
-            pnlActivities.SuspendLayout();
-            pnlSubject.SuspendLayout();
-            pnlCalendar.SuspendLayout();
             pnlAnnounce.SuspendLayout();
+            pnlCalendar.SuspendLayout();
+            pnlSubject.SuspendLayout();
+            pnlActivities.SuspendLayout();
+            pnlAttendance.SuspendLayout();
+            pnlGrades.SuspendLayout();
             pnlHeader.SuspendLayout();
             panel15.SuspendLayout();
             panel16.SuspendLayout();
@@ -346,6 +346,7 @@
             btnGrade.TextAlign = ContentAlignment.MiddleLeft;
             btnGrade.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnGrade.UseVisualStyleBackColor = true;
+            btnGrade.Click += btnGrade_Click;
             // 
             // btnAttendance
             // 
@@ -369,6 +370,7 @@
             btnAttendance.TextAlign = ContentAlignment.MiddleLeft;
             btnAttendance.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnAttendance.UseVisualStyleBackColor = true;
+            btnAttendance.Click += btnAttendance_Click;
             // 
             // btnCalendar
             // 
@@ -392,6 +394,7 @@
             btnCalendar.TextAlign = ContentAlignment.MiddleLeft;
             btnCalendar.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnCalendar.UseVisualStyleBackColor = true;
+            btnCalendar.Click += btnCalendar_Click;
             // 
             // btnActivities
             // 
@@ -415,6 +418,7 @@
             btnActivities.TextAlign = ContentAlignment.MiddleLeft;
             btnActivities.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnActivities.UseVisualStyleBackColor = true;
+            btnActivities.Click += btnActivities_Click;
             // 
             // btnSubject
             // 
@@ -438,6 +442,7 @@
             btnSubject.TextAlign = ContentAlignment.MiddleLeft;
             btnSubject.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnSubject.UseVisualStyleBackColor = true;
+            btnSubject.Click += btnSubject_Click;
             // 
             // btnAnnounce
             // 
@@ -461,6 +466,7 @@
             btnAnnounce.TextAlign = ContentAlignment.MiddleLeft;
             btnAnnounce.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnAnnounce.UseVisualStyleBackColor = true;
+            btnAnnounce.Click += btnAnnounce_Click;
             // 
             // panel4
             // 
@@ -613,61 +619,28 @@
             panel3.Size = new Size(1746, 1415);
             panel3.TabIndex = 0;
             // 
-            // pnlGrades
+            // pnlAnnounce
             // 
-            pnlGrades.AutoScroll = true;
-            pnlGrades.BackColor = SystemColors.Control;
-            pnlGrades.CausesValidation = false;
-            pnlGrades.Controls.Add(label5);
-            pnlGrades.Dock = DockStyle.Fill;
-            pnlGrades.Location = new Point(293, 96);
-            pnlGrades.Margin = new Padding(0);
-            pnlGrades.Name = "pnlGrades";
-            pnlGrades.Size = new Size(1453, 1319);
-            pnlGrades.TabIndex = 12;
-            pnlGrades.Visible = false;
+            pnlAnnounce.AutoScroll = true;
+            pnlAnnounce.BackColor = SystemColors.Control;
+            pnlAnnounce.CausesValidation = false;
+            pnlAnnounce.Controls.Add(label10);
+            pnlAnnounce.Dock = DockStyle.Fill;
+            pnlAnnounce.Location = new Point(293, 96);
+            pnlAnnounce.Margin = new Padding(0);
+            pnlAnnounce.Name = "pnlAnnounce";
+            pnlAnnounce.Size = new Size(1453, 1319);
+            pnlAnnounce.TabIndex = 7;
+            pnlAnnounce.Visible = false;
             // 
-            // pnlAttendance
+            // label10
             // 
-            pnlAttendance.AutoScroll = true;
-            pnlAttendance.BackColor = SystemColors.Control;
-            pnlAttendance.CausesValidation = false;
-            pnlAttendance.Controls.Add(label6);
-            pnlAttendance.Dock = DockStyle.Fill;
-            pnlAttendance.Location = new Point(293, 96);
-            pnlAttendance.Margin = new Padding(0);
-            pnlAttendance.Name = "pnlAttendance";
-            pnlAttendance.Size = new Size(1453, 1319);
-            pnlAttendance.TabIndex = 11;
-            pnlAttendance.Visible = false;
-            // 
-            // pnlActivities
-            // 
-            pnlActivities.AutoScroll = true;
-            pnlActivities.BackColor = SystemColors.Control;
-            pnlActivities.CausesValidation = false;
-            pnlActivities.Controls.Add(label7);
-            pnlActivities.Dock = DockStyle.Fill;
-            pnlActivities.Location = new Point(293, 96);
-            pnlActivities.Margin = new Padding(0);
-            pnlActivities.Name = "pnlActivities";
-            pnlActivities.Size = new Size(1453, 1319);
-            pnlActivities.TabIndex = 10;
-            pnlActivities.Visible = false;
-            // 
-            // pnlSubject
-            // 
-            pnlSubject.AutoScroll = true;
-            pnlSubject.BackColor = SystemColors.Control;
-            pnlSubject.CausesValidation = false;
-            pnlSubject.Controls.Add(label8);
-            pnlSubject.Dock = DockStyle.Fill;
-            pnlSubject.Location = new Point(293, 96);
-            pnlSubject.Margin = new Padding(0);
-            pnlSubject.Name = "pnlSubject";
-            pnlSubject.Size = new Size(1453, 1319);
-            pnlSubject.TabIndex = 9;
-            pnlSubject.Visible = false;
+            label10.AutoSize = true;
+            label10.Location = new Point(31, 24);
+            label10.Name = "label10";
+            label10.Size = new Size(115, 20);
+            label10.TabIndex = 0;
+            label10.Text = "Announcements";
             // 
             // pnlCalendar
             // 
@@ -683,19 +656,106 @@
             pnlCalendar.TabIndex = 8;
             pnlCalendar.Visible = false;
             // 
-            // pnlAnnounce
+            // label9
             // 
-            pnlAnnounce.AutoScroll = true;
-            pnlAnnounce.BackColor = SystemColors.Control;
-            pnlAnnounce.CausesValidation = false;
-            pnlAnnounce.Controls.Add(label10);
-            pnlAnnounce.Dock = DockStyle.Fill;
-            pnlAnnounce.Location = new Point(293, 96);
-            pnlAnnounce.Margin = new Padding(0);
-            pnlAnnounce.Name = "pnlAnnounce";
-            pnlAnnounce.Size = new Size(1453, 1319);
-            pnlAnnounce.TabIndex = 7;
-            pnlAnnounce.Visible = false;
+            label9.AutoSize = true;
+            label9.Location = new Point(51, 45);
+            label9.Name = "label9";
+            label9.Size = new Size(68, 20);
+            label9.TabIndex = 0;
+            label9.Text = "Calendar";
+            // 
+            // pnlSubject
+            // 
+            pnlSubject.AutoScroll = true;
+            pnlSubject.BackColor = SystemColors.Control;
+            pnlSubject.CausesValidation = false;
+            pnlSubject.Controls.Add(label8);
+            pnlSubject.Dock = DockStyle.Fill;
+            pnlSubject.Location = new Point(293, 96);
+            pnlSubject.Margin = new Padding(0);
+            pnlSubject.Name = "pnlSubject";
+            pnlSubject.Size = new Size(1453, 1319);
+            pnlSubject.TabIndex = 9;
+            pnlSubject.Visible = false;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(62, 17);
+            label8.Name = "label8";
+            label8.Size = new Size(60, 20);
+            label8.TabIndex = 0;
+            label8.Text = "Courses";
+            // 
+            // pnlActivities
+            // 
+            pnlActivities.AutoScroll = true;
+            pnlActivities.BackColor = SystemColors.Control;
+            pnlActivities.CausesValidation = false;
+            pnlActivities.Controls.Add(label7);
+            pnlActivities.Dock = DockStyle.Fill;
+            pnlActivities.Location = new Point(293, 96);
+            pnlActivities.Margin = new Padding(0);
+            pnlActivities.Name = "pnlActivities";
+            pnlActivities.Size = new Size(1453, 1319);
+            pnlActivities.TabIndex = 10;
+            pnlActivities.Visible = false;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(8, 25);
+            label7.Name = "label7";
+            label7.Size = new Size(69, 20);
+            label7.TabIndex = 0;
+            label7.Text = "Activities";
+            // 
+            // pnlAttendance
+            // 
+            pnlAttendance.AutoScroll = true;
+            pnlAttendance.BackColor = SystemColors.Control;
+            pnlAttendance.CausesValidation = false;
+            pnlAttendance.Controls.Add(label6);
+            pnlAttendance.Dock = DockStyle.Fill;
+            pnlAttendance.Location = new Point(293, 96);
+            pnlAttendance.Margin = new Padding(0);
+            pnlAttendance.Name = "pnlAttendance";
+            pnlAttendance.Size = new Size(1453, 1319);
+            pnlAttendance.TabIndex = 11;
+            pnlAttendance.Visible = false;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(47, 59);
+            label6.Name = "label6";
+            label6.Size = new Size(85, 20);
+            label6.TabIndex = 0;
+            label6.Text = "Attendance";
+            // 
+            // pnlGrades
+            // 
+            pnlGrades.AutoScroll = true;
+            pnlGrades.BackColor = SystemColors.Control;
+            pnlGrades.CausesValidation = false;
+            pnlGrades.Controls.Add(label5);
+            pnlGrades.Dock = DockStyle.Fill;
+            pnlGrades.Location = new Point(293, 96);
+            pnlGrades.Margin = new Padding(0);
+            pnlGrades.Name = "pnlGrades";
+            pnlGrades.Size = new Size(1453, 1319);
+            pnlGrades.TabIndex = 12;
+            pnlGrades.Visible = false;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(140, 29);
+            label5.Name = "label5";
+            label5.Size = new Size(55, 20);
+            label5.TabIndex = 0;
+            label5.Text = "Grades";
             // 
             // pnlAccountsContent
             // 
@@ -786,60 +846,6 @@
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
             // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(140, 29);
-            label5.Name = "label5";
-            label5.Size = new Size(55, 20);
-            label5.TabIndex = 0;
-            label5.Text = "Grades";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(47, 59);
-            label6.Name = "label6";
-            label6.Size = new Size(85, 20);
-            label6.TabIndex = 0;
-            label6.Text = "Attendance";
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Location = new Point(8, 25);
-            label7.Name = "label7";
-            label7.Size = new Size(69, 20);
-            label7.TabIndex = 0;
-            label7.Text = "Activities";
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Location = new Point(62, 17);
-            label8.Name = "label8";
-            label8.Size = new Size(60, 20);
-            label8.TabIndex = 0;
-            label8.Text = "Courses";
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Location = new Point(51, 45);
-            label9.Name = "label9";
-            label9.Size = new Size(68, 20);
-            label9.TabIndex = 0;
-            label9.Text = "Calendar";
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Location = new Point(31, 24);
-            label10.Name = "label10";
-            label10.Size = new Size(115, 20);
-            label10.TabIndex = 0;
-            label10.Text = "Announcements";
-            // 
             // StudentPortal
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -868,18 +874,18 @@
             panel12.ResumeLayout(false);
             panel13.ResumeLayout(false);
             panel3.ResumeLayout(false);
-            pnlGrades.ResumeLayout(false);
-            pnlGrades.PerformLayout();
-            pnlAttendance.ResumeLayout(false);
-            pnlAttendance.PerformLayout();
-            pnlActivities.ResumeLayout(false);
-            pnlActivities.PerformLayout();
-            pnlSubject.ResumeLayout(false);
-            pnlSubject.PerformLayout();
-            pnlCalendar.ResumeLayout(false);
-            pnlCalendar.PerformLayout();
             pnlAnnounce.ResumeLayout(false);
             pnlAnnounce.PerformLayout();
+            pnlCalendar.ResumeLayout(false);
+            pnlCalendar.PerformLayout();
+            pnlSubject.ResumeLayout(false);
+            pnlSubject.PerformLayout();
+            pnlActivities.ResumeLayout(false);
+            pnlActivities.PerformLayout();
+            pnlAttendance.ResumeLayout(false);
+            pnlAttendance.PerformLayout();
+            pnlGrades.ResumeLayout(false);
+            pnlGrades.PerformLayout();
             pnlHeader.ResumeLayout(false);
             panel15.ResumeLayout(false);
             panel15.PerformLayout();
