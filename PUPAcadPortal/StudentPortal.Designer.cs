@@ -316,6 +316,7 @@
             button5.FlatStyle = FlatStyle.Flat;
             button5.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
             button5.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            button5.Image = Properties.Resources.report;
             button5.ImageAlign = ContentAlignment.MiddleLeft;
             button5.Location = new Point(1, 320);
             button5.Margin = new Padding(3, 4, 3, 4);
@@ -338,6 +339,7 @@
             button6.FlatStyle = FlatStyle.Flat;
             button6.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
             button6.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            button6.Image = Properties.Resources.user_check;
             button6.ImageAlign = ContentAlignment.MiddleLeft;
             button6.Location = new Point(1, 256);
             button6.Margin = new Padding(3, 4, 3, 4);
@@ -360,6 +362,7 @@
             button4.FlatStyle = FlatStyle.Flat;
             button4.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
             button4.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            button4.Image = Properties.Resources.calendar__4_;
             button4.ImageAlign = ContentAlignment.MiddleLeft;
             button4.Location = new Point(1, 64);
             button4.Margin = new Padding(3, 4, 3, 4);
@@ -382,6 +385,7 @@
             button3.FlatStyle = FlatStyle.Flat;
             button3.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
             button3.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            button3.Image = Properties.Resources.checklist;
             button3.ImageAlign = ContentAlignment.MiddleLeft;
             button3.Location = new Point(1, 192);
             button3.Margin = new Padding(3, 4, 3, 4);
@@ -404,6 +408,7 @@
             button2.FlatStyle = FlatStyle.Flat;
             button2.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
             button2.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            button2.Image = Properties.Resources.group_chat__1_;
             button2.ImageAlign = ContentAlignment.MiddleLeft;
             button2.Location = new Point(1, 128);
             button2.Margin = new Padding(3, 4, 3, 4);
