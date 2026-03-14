@@ -43,6 +43,12 @@
             panel11 = new Panel();
             btnLMS = new Button();
             pnllmsSubmenu = new Panel();
+            button5 = new Button();
+            button6 = new Button();
+            button4 = new Button();
+            button3 = new Button();
+            button2 = new Button();
+            button1 = new Button();
             panel4 = new Panel();
             panel5 = new Panel();
             panel6 = new Panel();
@@ -63,12 +69,6 @@
             label3 = new Label();
             label4 = new Label();
             pictureBox2 = new PictureBox();
-            button1 = new Button();
-            button2 = new Button();
-            button3 = new Button();
-            button4 = new Button();
-            button5 = new Button();
-            button6 = new Button();
             pnlSidebar.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             panel7.SuspendLayout();
@@ -306,6 +306,138 @@
             pnllmsSubmenu.TabIndex = 5;
             pnllmsSubmenu.Visible = false;
             // 
+            // button5
+            // 
+            button5.BackgroundImageLayout = ImageLayout.None;
+            button5.Cursor = Cursors.Hand;
+            button5.FlatAppearance.BorderSize = 0;
+            button5.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            button5.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            button5.FlatStyle = FlatStyle.Flat;
+            button5.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            button5.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            button5.Image = Properties.Resources.Course;
+            button5.ImageAlign = ContentAlignment.MiddleLeft;
+            button5.Location = new Point(1, 320);
+            button5.Margin = new Padding(3, 4, 3, 4);
+            button5.Name = "button5";
+            button5.Padding = new Padding(18, 0, 0, 0);
+            button5.Size = new Size(293, 64);
+            button5.TabIndex = 9;
+            button5.Text = " Grades";
+            button5.TextImageRelation = TextImageRelation.ImageBeforeText;
+            button5.UseVisualStyleBackColor = true;
+            // 
+            // button6
+            // 
+            button6.BackgroundImageLayout = ImageLayout.None;
+            button6.Cursor = Cursors.Hand;
+            button6.FlatAppearance.BorderSize = 0;
+            button6.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            button6.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            button6.FlatStyle = FlatStyle.Flat;
+            button6.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            button6.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            button6.Image = Properties.Resources.Course;
+            button6.ImageAlign = ContentAlignment.MiddleLeft;
+            button6.Location = new Point(1, 256);
+            button6.Margin = new Padding(3, 4, 3, 4);
+            button6.Name = "button6";
+            button6.Padding = new Padding(18, 0, 0, 0);
+            button6.Size = new Size(293, 64);
+            button6.TabIndex = 8;
+            button6.Text = " Attendance";
+            button6.TextImageRelation = TextImageRelation.ImageBeforeText;
+            button6.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            button4.BackgroundImageLayout = ImageLayout.None;
+            button4.Cursor = Cursors.Hand;
+            button4.FlatAppearance.BorderSize = 0;
+            button4.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            button4.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            button4.FlatStyle = FlatStyle.Flat;
+            button4.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            button4.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            button4.Image = Properties.Resources.Course;
+            button4.ImageAlign = ContentAlignment.MiddleLeft;
+            button4.Location = new Point(1, 64);
+            button4.Margin = new Padding(3, 4, 3, 4);
+            button4.Name = "button4";
+            button4.Padding = new Padding(18, 0, 0, 0);
+            button4.Size = new Size(293, 64);
+            button4.TabIndex = 7;
+            button4.Text = " Calendar";
+            button4.TextImageRelation = TextImageRelation.ImageBeforeText;
+            button4.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            button3.BackgroundImageLayout = ImageLayout.None;
+            button3.Cursor = Cursors.Hand;
+            button3.FlatAppearance.BorderSize = 0;
+            button3.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            button3.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            button3.FlatStyle = FlatStyle.Flat;
+            button3.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            button3.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            button3.Image = Properties.Resources.Course;
+            button3.ImageAlign = ContentAlignment.MiddleLeft;
+            button3.Location = new Point(1, 192);
+            button3.Margin = new Padding(3, 4, 3, 4);
+            button3.Name = "button3";
+            button3.Padding = new Padding(18, 0, 0, 0);
+            button3.Size = new Size(293, 64);
+            button3.TabIndex = 6;
+            button3.Text = " Activities";
+            button3.TextImageRelation = TextImageRelation.ImageBeforeText;
+            button3.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            button2.BackgroundImageLayout = ImageLayout.None;
+            button2.Cursor = Cursors.Hand;
+            button2.FlatAppearance.BorderSize = 0;
+            button2.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            button2.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            button2.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            button2.Image = Properties.Resources.Course;
+            button2.ImageAlign = ContentAlignment.MiddleLeft;
+            button2.Location = new Point(1, 128);
+            button2.Margin = new Padding(3, 4, 3, 4);
+            button2.Name = "button2";
+            button2.Padding = new Padding(18, 0, 0, 0);
+            button2.Size = new Size(293, 64);
+            button2.TabIndex = 5;
+            button2.Text = " Courses";
+            button2.TextImageRelation = TextImageRelation.ImageBeforeText;
+            button2.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            button1.BackgroundImageLayout = ImageLayout.None;
+            button1.Cursor = Cursors.Hand;
+            button1.FlatAppearance.BorderSize = 0;
+            button1.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            button1.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            button1.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            button1.Image = Properties.Resources.Course;
+            button1.ImageAlign = ContentAlignment.MiddleLeft;
+            button1.Location = new Point(1, 0);
+            button1.Margin = new Padding(3, 4, 3, 4);
+            button1.Name = "button1";
+            button1.Padding = new Padding(18, 0, 0, 0);
+            button1.Size = new Size(293, 64);
+            button1.TabIndex = 4;
+            button1.Text = " Announcements";
+            button1.TextImageRelation = TextImageRelation.ImageBeforeText;
+            button1.UseVisualStyleBackColor = true;
+            // 
             // panel4
             // 
             panel4.BackColor = Color.FromArgb(30, 109, 0, 0);
@@ -539,138 +671,6 @@
             pictureBox2.SizeMode = PictureBoxSizeMode.AutoSize;
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
-            // 
-            // button1
-            // 
-            button1.BackgroundImageLayout = ImageLayout.None;
-            button1.Cursor = Cursors.Hand;
-            button1.FlatAppearance.BorderSize = 0;
-            button1.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            button1.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            button1.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            button1.Image = Properties.Resources.Course;
-            button1.ImageAlign = ContentAlignment.MiddleLeft;
-            button1.Location = new Point(1, 0);
-            button1.Margin = new Padding(3, 4, 3, 4);
-            button1.Name = "button1";
-            button1.Padding = new Padding(18, 0, 0, 0);
-            button1.Size = new Size(293, 64);
-            button1.TabIndex = 4;
-            button1.Text = " Courses";
-            button1.TextImageRelation = TextImageRelation.ImageBeforeText;
-            button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            button2.BackgroundImageLayout = ImageLayout.None;
-            button2.Cursor = Cursors.Hand;
-            button2.FlatAppearance.BorderSize = 0;
-            button2.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            button2.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            button2.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            button2.Image = Properties.Resources.Course;
-            button2.ImageAlign = ContentAlignment.MiddleLeft;
-            button2.Location = new Point(1, 128);
-            button2.Margin = new Padding(3, 4, 3, 4);
-            button2.Name = "button2";
-            button2.Padding = new Padding(18, 0, 0, 0);
-            button2.Size = new Size(293, 64);
-            button2.TabIndex = 5;
-            button2.Text = " Courses";
-            button2.TextImageRelation = TextImageRelation.ImageBeforeText;
-            button2.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            button3.BackgroundImageLayout = ImageLayout.None;
-            button3.Cursor = Cursors.Hand;
-            button3.FlatAppearance.BorderSize = 0;
-            button3.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            button3.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            button3.FlatStyle = FlatStyle.Flat;
-            button3.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            button3.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            button3.Image = Properties.Resources.Course;
-            button3.ImageAlign = ContentAlignment.MiddleLeft;
-            button3.Location = new Point(1, 192);
-            button3.Margin = new Padding(3, 4, 3, 4);
-            button3.Name = "button3";
-            button3.Padding = new Padding(18, 0, 0, 0);
-            button3.Size = new Size(293, 64);
-            button3.TabIndex = 6;
-            button3.Text = " Courses";
-            button3.TextImageRelation = TextImageRelation.ImageBeforeText;
-            button3.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            button4.BackgroundImageLayout = ImageLayout.None;
-            button4.Cursor = Cursors.Hand;
-            button4.FlatAppearance.BorderSize = 0;
-            button4.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            button4.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            button4.FlatStyle = FlatStyle.Flat;
-            button4.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            button4.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            button4.Image = Properties.Resources.Course;
-            button4.ImageAlign = ContentAlignment.MiddleLeft;
-            button4.Location = new Point(1, 64);
-            button4.Margin = new Padding(3, 4, 3, 4);
-            button4.Name = "button4";
-            button4.Padding = new Padding(18, 0, 0, 0);
-            button4.Size = new Size(293, 64);
-            button4.TabIndex = 7;
-            button4.Text = " Courses";
-            button4.TextImageRelation = TextImageRelation.ImageBeforeText;
-            button4.UseVisualStyleBackColor = true;
-            // 
-            // button5
-            // 
-            button5.BackgroundImageLayout = ImageLayout.None;
-            button5.Cursor = Cursors.Hand;
-            button5.FlatAppearance.BorderSize = 0;
-            button5.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            button5.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            button5.FlatStyle = FlatStyle.Flat;
-            button5.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            button5.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            button5.Image = Properties.Resources.Course;
-            button5.ImageAlign = ContentAlignment.MiddleLeft;
-            button5.Location = new Point(1, 320);
-            button5.Margin = new Padding(3, 4, 3, 4);
-            button5.Name = "button5";
-            button5.Padding = new Padding(18, 0, 0, 0);
-            button5.Size = new Size(293, 64);
-            button5.TabIndex = 9;
-            button5.Text = " Courses";
-            button5.TextImageRelation = TextImageRelation.ImageBeforeText;
-            button5.UseVisualStyleBackColor = true;
-            // 
-            // button6
-            // 
-            button6.BackgroundImageLayout = ImageLayout.None;
-            button6.Cursor = Cursors.Hand;
-            button6.FlatAppearance.BorderSize = 0;
-            button6.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            button6.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            button6.FlatStyle = FlatStyle.Flat;
-            button6.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            button6.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            button6.Image = Properties.Resources.Course;
-            button6.ImageAlign = ContentAlignment.MiddleLeft;
-            button6.Location = new Point(1, 256);
-            button6.Margin = new Padding(3, 4, 3, 4);
-            button6.Name = "button6";
-            button6.Padding = new Padding(18, 0, 0, 0);
-            button6.Size = new Size(293, 64);
-            button6.TabIndex = 8;
-            button6.Text = " Courses";
-            button6.TextImageRelation = TextImageRelation.ImageBeforeText;
-            button6.UseVisualStyleBackColor = true;
             // 
             // StudentPortal
             // 
