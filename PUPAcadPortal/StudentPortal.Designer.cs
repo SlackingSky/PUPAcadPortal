@@ -316,7 +316,6 @@
             button5.FlatStyle = FlatStyle.Flat;
             button5.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
             button5.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            button5.Image = (Image)resources.GetObject("button5.Image");
             button5.ImageAlign = ContentAlignment.MiddleLeft;
             button5.Location = new Point(1, 320);
             button5.Margin = new Padding(3, 4, 3, 4);
@@ -325,6 +324,7 @@
             button5.Size = new Size(293, 64);
             button5.TabIndex = 9;
             button5.Text = " Grades";
+            button5.TextAlign = ContentAlignment.MiddleLeft;
             button5.TextImageRelation = TextImageRelation.ImageBeforeText;
             button5.UseVisualStyleBackColor = true;
             // 
@@ -338,7 +338,6 @@
             button6.FlatStyle = FlatStyle.Flat;
             button6.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
             button6.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            button6.Image = (Image)resources.GetObject("button6.Image");
             button6.ImageAlign = ContentAlignment.MiddleLeft;
             button6.Location = new Point(1, 256);
             button6.Margin = new Padding(3, 4, 3, 4);
@@ -347,6 +346,7 @@
             button6.Size = new Size(293, 64);
             button6.TabIndex = 8;
             button6.Text = " Attendance";
+            button6.TextAlign = ContentAlignment.MiddleLeft;
             button6.TextImageRelation = TextImageRelation.ImageBeforeText;
             button6.UseVisualStyleBackColor = true;
             // 
@@ -360,7 +360,6 @@
             button4.FlatStyle = FlatStyle.Flat;
             button4.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
             button4.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            button4.Image = (Image)resources.GetObject("button4.Image");
             button4.ImageAlign = ContentAlignment.MiddleLeft;
             button4.Location = new Point(1, 64);
             button4.Margin = new Padding(3, 4, 3, 4);
@@ -369,6 +368,7 @@
             button4.Size = new Size(293, 64);
             button4.TabIndex = 7;
             button4.Text = " Calendar";
+            button4.TextAlign = ContentAlignment.MiddleLeft;
             button4.TextImageRelation = TextImageRelation.ImageBeforeText;
             button4.UseVisualStyleBackColor = true;
             // 
@@ -382,7 +382,6 @@
             button3.FlatStyle = FlatStyle.Flat;
             button3.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
             button3.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            button3.Image = (Image)resources.GetObject("button3.Image");
             button3.ImageAlign = ContentAlignment.MiddleLeft;
             button3.Location = new Point(1, 192);
             button3.Margin = new Padding(3, 4, 3, 4);
@@ -391,6 +390,7 @@
             button3.Size = new Size(293, 64);
             button3.TabIndex = 6;
             button3.Text = " Activities";
+            button3.TextAlign = ContentAlignment.MiddleLeft;
             button3.TextImageRelation = TextImageRelation.ImageBeforeText;
             button3.UseVisualStyleBackColor = true;
             // 
@@ -404,7 +404,6 @@
             button2.FlatStyle = FlatStyle.Flat;
             button2.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
             button2.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            button2.Image = (Image)resources.GetObject("button2.Image");
             button2.ImageAlign = ContentAlignment.MiddleLeft;
             button2.Location = new Point(1, 128);
             button2.Margin = new Padding(3, 4, 3, 4);
@@ -413,6 +412,7 @@
             button2.Size = new Size(293, 64);
             button2.TabIndex = 5;
             button2.Text = " Courses";
+            button2.TextAlign = ContentAlignment.MiddleLeft;
             button2.TextImageRelation = TextImageRelation.ImageBeforeText;
             button2.UseVisualStyleBackColor = true;
             // 
@@ -426,7 +426,7 @@
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
             button1.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            button1.Image = (Image)resources.GetObject("button1.Image");
+            button1.Image = Properties.Resources.marketing;
             button1.ImageAlign = ContentAlignment.MiddleLeft;
             button1.Location = new Point(1, 0);
             button1.Margin = new Padding(3, 4, 3, 4);
@@ -435,6 +435,7 @@
             button1.Size = new Size(293, 64);
             button1.TabIndex = 4;
             button1.Text = " Announcements";
+            button1.TextAlign = ContentAlignment.MiddleLeft;
             button1.TextImageRelation = TextImageRelation.ImageBeforeText;
             button1.UseVisualStyleBackColor = true;
             // 
