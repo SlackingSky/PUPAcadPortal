@@ -61,12 +61,12 @@
             pnlCoursesContent = new Panel();
             pnlEnrollContent = new Panel();
             panel3 = new Panel();
+            pnlSubject = new Panel();
+            label8 = new Label();
             pnlAnnounce = new Panel();
             label10 = new Label();
             pnlCalendar = new Panel();
             label9 = new Label();
-            pnlSubject = new Panel();
-            label8 = new Label();
             pnlActivities = new Panel();
             label7 = new Label();
             pnlAttendance = new Panel();
@@ -96,9 +96,9 @@
             panel12.SuspendLayout();
             panel13.SuspendLayout();
             panel3.SuspendLayout();
+            pnlSubject.SuspendLayout();
             pnlAnnounce.SuspendLayout();
             pnlCalendar.SuspendLayout();
-            pnlSubject.SuspendLayout();
             pnlActivities.SuspendLayout();
             pnlAttendance.SuspendLayout();
             pnlGrades.SuspendLayout();
@@ -619,6 +619,29 @@
             panel3.Size = new Size(1746, 1415);
             panel3.TabIndex = 0;
             // 
+            // pnlSubject
+            // 
+            pnlSubject.AutoScroll = true;
+            pnlSubject.BackColor = SystemColors.Control;
+            pnlSubject.CausesValidation = false;
+            pnlSubject.Controls.Add(label8);
+            pnlSubject.Dock = DockStyle.Fill;
+            pnlSubject.Location = new Point(293, 96);
+            pnlSubject.Margin = new Padding(0);
+            pnlSubject.Name = "pnlSubject";
+            pnlSubject.Size = new Size(1453, 1319);
+            pnlSubject.TabIndex = 9;
+            pnlSubject.Visible = false;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(62, 17);
+            label8.Name = "label8";
+            label8.Size = new Size(60, 20);
+            label8.TabIndex = 0;
+            label8.Text = "Courses";
+            // 
             // pnlAnnounce
             // 
             pnlAnnounce.AutoScroll = true;
@@ -664,29 +687,6 @@
             label9.Size = new Size(68, 20);
             label9.TabIndex = 0;
             label9.Text = "Calendar";
-            // 
-            // pnlSubject
-            // 
-            pnlSubject.AutoScroll = true;
-            pnlSubject.BackColor = SystemColors.Control;
-            pnlSubject.CausesValidation = false;
-            pnlSubject.Controls.Add(label8);
-            pnlSubject.Dock = DockStyle.Fill;
-            pnlSubject.Location = new Point(293, 96);
-            pnlSubject.Margin = new Padding(0);
-            pnlSubject.Name = "pnlSubject";
-            pnlSubject.Size = new Size(1453, 1319);
-            pnlSubject.TabIndex = 9;
-            pnlSubject.Visible = false;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Location = new Point(62, 17);
-            label8.Name = "label8";
-            label8.Size = new Size(60, 20);
-            label8.TabIndex = 0;
-            label8.Text = "Courses";
             // 
             // pnlActivities
             // 
@@ -874,12 +874,12 @@
             panel12.ResumeLayout(false);
             panel13.ResumeLayout(false);
             panel3.ResumeLayout(false);
+            pnlSubject.ResumeLayout(false);
+            pnlSubject.PerformLayout();
             pnlAnnounce.ResumeLayout(false);
             pnlAnnounce.PerformLayout();
             pnlCalendar.ResumeLayout(false);
             pnlCalendar.PerformLayout();
-            pnlSubject.ResumeLayout(false);
-            pnlSubject.PerformLayout();
             pnlActivities.ResumeLayout(false);
             pnlActivities.PerformLayout();
             pnlAttendance.ResumeLayout(false);

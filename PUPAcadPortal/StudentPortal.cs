@@ -125,7 +125,6 @@ namespace PUPAcadPortal
         private void btnSubject_Click(object sender, EventArgs e)
         {
             pnlSubject.BringToFront();
-
             pnlSubject.Visible = true;
         }
 
