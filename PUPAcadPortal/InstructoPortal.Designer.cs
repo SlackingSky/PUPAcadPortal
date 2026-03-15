@@ -39,7 +39,13 @@
             btnCourses = new Button();
             panel11 = new Panel();
             btnLMS = new Button();
-            pnllmsSubmenu = new Panel();
+            panel1 = new Panel();
+            btnGrade = new Button();
+            btnAttendance = new Button();
+            btnCalendar = new Button();
+            btnActivities = new Button();
+            btnSubject = new Button();
+            btnAnnounce = new Button();
             panel4 = new Panel();
             panel5 = new Panel();
             panel6 = new Panel();
@@ -66,6 +72,7 @@
             panel8.SuspendLayout();
             panel9.SuspendLayout();
             panel11.SuspendLayout();
+            panel1.SuspendLayout();
             panel4.SuspendLayout();
             panel5.SuspendLayout();
             panel6.SuspendLayout();
@@ -89,7 +96,7 @@
             pnlSidebar.Location = new Point(0, 0);
             pnlSidebar.Margin = new Padding(0);
             pnlSidebar.Name = "pnlSidebar";
-            pnlSidebar.Size = new Size(256, 1061);
+            pnlSidebar.Size = new Size(293, 1415);
             pnlSidebar.TabIndex = 0;
             // 
             // flowLayoutPanel1
@@ -99,20 +106,21 @@
             flowLayoutPanel1.Controls.Add(panel8);
             flowLayoutPanel1.Controls.Add(panel9);
             flowLayoutPanel1.Controls.Add(panel11);
-            flowLayoutPanel1.Controls.Add(pnllmsSubmenu);
+            flowLayoutPanel1.Controls.Add(panel1);
             flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
-            flowLayoutPanel1.Location = new Point(0, 142);
+            flowLayoutPanel1.Location = new Point(2, 101);
+            flowLayoutPanel1.Margin = new Padding(3, 4, 3, 4);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(256, 762);
+            flowLayoutPanel1.Size = new Size(293, 1016);
             flowLayoutPanel1.TabIndex = 1;
             // 
             // panel7
             // 
             panel7.Controls.Add(btnDashboard);
-            panel7.Location = new Point(0, 16);
-            panel7.Margin = new Padding(0, 16, 0, 0);
+            panel7.Location = new Point(0, 21);
+            panel7.Margin = new Padding(0, 21, 0, 0);
             panel7.Name = "panel7";
-            panel7.Size = new Size(256, 48);
+            panel7.Size = new Size(293, 64);
             panel7.TabIndex = 0;
             // 
             // btnDashboard
@@ -128,9 +136,10 @@
             btnDashboard.Image = Properties.Resources.item_icon;
             btnDashboard.ImageAlign = ContentAlignment.MiddleLeft;
             btnDashboard.Location = new Point(0, 0);
+            btnDashboard.Margin = new Padding(3, 4, 3, 4);
             btnDashboard.Name = "btnDashboard";
-            btnDashboard.Padding = new Padding(16, 0, 0, 0);
-            btnDashboard.Size = new Size(256, 48);
+            btnDashboard.Padding = new Padding(18, 0, 0, 0);
+            btnDashboard.Size = new Size(293, 64);
             btnDashboard.TabIndex = 3;
             btnDashboard.Text = " Dashboard";
             btnDashboard.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -140,10 +149,10 @@
             // panel8
             // 
             panel8.Controls.Add(btnGrades);
-            panel8.Location = new Point(0, 64);
+            panel8.Location = new Point(0, 85);
             panel8.Margin = new Padding(0);
             panel8.Name = "panel8";
-            panel8.Size = new Size(256, 48);
+            panel8.Size = new Size(293, 64);
             panel8.TabIndex = 1;
             // 
             // btnGrades
@@ -159,9 +168,10 @@
             btnGrades.Image = Properties.Resources.item_icon__1_;
             btnGrades.ImageAlign = ContentAlignment.MiddleLeft;
             btnGrades.Location = new Point(0, 0);
+            btnGrades.Margin = new Padding(3, 4, 3, 4);
             btnGrades.Name = "btnGrades";
-            btnGrades.Padding = new Padding(16, 0, 0, 0);
-            btnGrades.Size = new Size(256, 48);
+            btnGrades.Padding = new Padding(18, 0, 0, 0);
+            btnGrades.Size = new Size(293, 64);
             btnGrades.TabIndex = 3;
             btnGrades.Text = " Grades";
             btnGrades.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -171,10 +181,10 @@
             // panel9
             // 
             panel9.Controls.Add(btnCourses);
-            panel9.Location = new Point(0, 112);
+            panel9.Location = new Point(0, 149);
             panel9.Margin = new Padding(0);
             panel9.Name = "panel9";
-            panel9.Size = new Size(256, 48);
+            panel9.Size = new Size(293, 64);
             panel9.TabIndex = 2;
             // 
             // btnCourses
@@ -190,9 +200,10 @@
             btnCourses.Image = Properties.Resources.Course;
             btnCourses.ImageAlign = ContentAlignment.MiddleLeft;
             btnCourses.Location = new Point(0, 0);
+            btnCourses.Margin = new Padding(3, 4, 3, 4);
             btnCourses.Name = "btnCourses";
-            btnCourses.Padding = new Padding(16, 0, 0, 0);
-            btnCourses.Size = new Size(256, 48);
+            btnCourses.Padding = new Padding(18, 0, 0, 0);
+            btnCourses.Size = new Size(293, 64);
             btnCourses.TabIndex = 3;
             btnCourses.Text = " Courses";
             btnCourses.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -202,10 +213,10 @@
             // panel11
             // 
             panel11.Controls.Add(btnLMS);
-            panel11.Location = new Point(0, 160);
+            panel11.Location = new Point(0, 213);
             panel11.Margin = new Padding(0);
             panel11.Name = "panel11";
-            panel11.Size = new Size(256, 48);
+            panel11.Size = new Size(293, 64);
             panel11.TabIndex = 4;
             // 
             // btnLMS
@@ -221,70 +232,218 @@
             btnLMS.Image = Properties.Resources.LMS;
             btnLMS.ImageAlign = ContentAlignment.MiddleLeft;
             btnLMS.Location = new Point(0, 0);
+            btnLMS.Margin = new Padding(3, 4, 3, 4);
             btnLMS.Name = "btnLMS";
-            btnLMS.Padding = new Padding(16, 0, 0, 0);
-            btnLMS.Size = new Size(256, 48);
+            btnLMS.Padding = new Padding(18, 0, 0, 0);
+            btnLMS.Size = new Size(293, 64);
             btnLMS.TabIndex = 3;
             btnLMS.Text = " LMS                                        ›";
             btnLMS.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnLMS.UseVisualStyleBackColor = true;
             btnLMS.Click += btnLMS_Click;
             // 
-            // pnllmsSubmenu
+            // panel1
             // 
-            pnllmsSubmenu.BackColor = Color.FromArgb(128, 109, 0, 0);
-            pnllmsSubmenu.Location = new Point(0, 208);
-            pnllmsSubmenu.Margin = new Padding(0);
-            pnllmsSubmenu.Name = "pnllmsSubmenu";
-            pnllmsSubmenu.Size = new Size(256, 100);
-            pnllmsSubmenu.TabIndex = 5;
-            pnllmsSubmenu.Visible = false;
+            panel1.BackColor = Color.FromArgb(128, 109, 0, 0);
+            panel1.Controls.Add(btnGrade);
+            panel1.Controls.Add(btnAttendance);
+            panel1.Controls.Add(btnCalendar);
+            panel1.Controls.Add(btnActivities);
+            panel1.Controls.Add(btnSubject);
+            panel1.Controls.Add(btnAnnounce);
+            panel1.Location = new Point(0, 277);
+            panel1.Margin = new Padding(0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(293, 385);
+            panel1.TabIndex = 7;
+            panel1.Visible = false;
+            // 
+            // btnGrade
+            // 
+            btnGrade.BackgroundImageLayout = ImageLayout.None;
+            btnGrade.Cursor = Cursors.Hand;
+            btnGrade.FlatAppearance.BorderSize = 0;
+            btnGrade.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnGrade.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            btnGrade.FlatStyle = FlatStyle.Flat;
+            btnGrade.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            btnGrade.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            btnGrade.Image = Properties.Resources.report;
+            btnGrade.ImageAlign = ContentAlignment.MiddleLeft;
+            btnGrade.Location = new Point(1, 320);
+            btnGrade.Margin = new Padding(3, 4, 3, 4);
+            btnGrade.Name = "btnGrade";
+            btnGrade.Padding = new Padding(18, 0, 0, 0);
+            btnGrade.Size = new Size(293, 64);
+            btnGrade.TabIndex = 9;
+            btnGrade.Text = "  Grades";
+            btnGrade.TextAlign = ContentAlignment.MiddleLeft;
+            btnGrade.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnGrade.UseVisualStyleBackColor = true;
+            // 
+            // btnAttendance
+            // 
+            btnAttendance.BackgroundImageLayout = ImageLayout.None;
+            btnAttendance.Cursor = Cursors.Hand;
+            btnAttendance.FlatAppearance.BorderSize = 0;
+            btnAttendance.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnAttendance.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            btnAttendance.FlatStyle = FlatStyle.Flat;
+            btnAttendance.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            btnAttendance.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            btnAttendance.Image = Properties.Resources.user_check;
+            btnAttendance.ImageAlign = ContentAlignment.MiddleLeft;
+            btnAttendance.Location = new Point(1, 256);
+            btnAttendance.Margin = new Padding(3, 4, 3, 4);
+            btnAttendance.Name = "btnAttendance";
+            btnAttendance.Padding = new Padding(18, 0, 0, 0);
+            btnAttendance.Size = new Size(293, 64);
+            btnAttendance.TabIndex = 8;
+            btnAttendance.Text = "  Attendance";
+            btnAttendance.TextAlign = ContentAlignment.MiddleLeft;
+            btnAttendance.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnAttendance.UseVisualStyleBackColor = true;
+            // 
+            // btnCalendar
+            // 
+            btnCalendar.BackgroundImageLayout = ImageLayout.None;
+            btnCalendar.Cursor = Cursors.Hand;
+            btnCalendar.FlatAppearance.BorderSize = 0;
+            btnCalendar.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnCalendar.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            btnCalendar.FlatStyle = FlatStyle.Flat;
+            btnCalendar.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            btnCalendar.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            btnCalendar.Image = Properties.Resources.calendar__4_;
+            btnCalendar.ImageAlign = ContentAlignment.MiddleLeft;
+            btnCalendar.Location = new Point(1, 64);
+            btnCalendar.Margin = new Padding(3, 4, 3, 4);
+            btnCalendar.Name = "btnCalendar";
+            btnCalendar.Padding = new Padding(18, 0, 0, 0);
+            btnCalendar.Size = new Size(293, 64);
+            btnCalendar.TabIndex = 7;
+            btnCalendar.Text = " Calendar";
+            btnCalendar.TextAlign = ContentAlignment.MiddleLeft;
+            btnCalendar.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnCalendar.UseVisualStyleBackColor = true;
+            // 
+            // btnActivities
+            // 
+            btnActivities.BackgroundImageLayout = ImageLayout.None;
+            btnActivities.Cursor = Cursors.Hand;
+            btnActivities.FlatAppearance.BorderSize = 0;
+            btnActivities.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnActivities.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            btnActivities.FlatStyle = FlatStyle.Flat;
+            btnActivities.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            btnActivities.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            btnActivities.Image = Properties.Resources.checklist;
+            btnActivities.ImageAlign = ContentAlignment.MiddleLeft;
+            btnActivities.Location = new Point(1, 192);
+            btnActivities.Margin = new Padding(3, 4, 3, 4);
+            btnActivities.Name = "btnActivities";
+            btnActivities.Padding = new Padding(18, 0, 0, 0);
+            btnActivities.Size = new Size(293, 64);
+            btnActivities.TabIndex = 6;
+            btnActivities.Text = "  Activities";
+            btnActivities.TextAlign = ContentAlignment.MiddleLeft;
+            btnActivities.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnActivities.UseVisualStyleBackColor = true;
+            // 
+            // btnSubject
+            // 
+            btnSubject.BackgroundImageLayout = ImageLayout.None;
+            btnSubject.Cursor = Cursors.Hand;
+            btnSubject.FlatAppearance.BorderSize = 0;
+            btnSubject.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnSubject.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            btnSubject.FlatStyle = FlatStyle.Flat;
+            btnSubject.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            btnSubject.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            btnSubject.Image = Properties.Resources.group_chat__1_;
+            btnSubject.ImageAlign = ContentAlignment.MiddleLeft;
+            btnSubject.Location = new Point(1, 128);
+            btnSubject.Margin = new Padding(3, 4, 3, 4);
+            btnSubject.Name = "btnSubject";
+            btnSubject.Padding = new Padding(15, 0, 0, 0);
+            btnSubject.Size = new Size(293, 64);
+            btnSubject.TabIndex = 5;
+            btnSubject.Text = "Courses";
+            btnSubject.TextAlign = ContentAlignment.MiddleLeft;
+            btnSubject.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnSubject.UseVisualStyleBackColor = true;
+            // 
+            // btnAnnounce
+            // 
+            btnAnnounce.BackgroundImageLayout = ImageLayout.None;
+            btnAnnounce.Cursor = Cursors.Hand;
+            btnAnnounce.FlatAppearance.BorderSize = 0;
+            btnAnnounce.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnAnnounce.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            btnAnnounce.FlatStyle = FlatStyle.Flat;
+            btnAnnounce.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            btnAnnounce.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            btnAnnounce.Image = Properties.Resources.marketing;
+            btnAnnounce.ImageAlign = ContentAlignment.MiddleLeft;
+            btnAnnounce.Location = new Point(1, 0);
+            btnAnnounce.Margin = new Padding(3, 4, 3, 4);
+            btnAnnounce.Name = "btnAnnounce";
+            btnAnnounce.Padding = new Padding(18, 0, 0, 0);
+            btnAnnounce.Size = new Size(293, 64);
+            btnAnnounce.TabIndex = 4;
+            btnAnnounce.Text = " Announcements";
+            btnAnnounce.TextAlign = ContentAlignment.MiddleLeft;
+            btnAnnounce.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnAnnounce.UseVisualStyleBackColor = true;
             // 
             // panel4
             // 
             panel4.BackColor = Color.FromArgb(30, 109, 0, 0);
             panel4.Controls.Add(panel5);
-            panel4.Location = new Point(0, 69);
+            panel4.Location = new Point(2, 4);
+            panel4.Margin = new Padding(3, 4, 3, 4);
             panel4.Name = "panel4";
-            panel4.Size = new Size(256, 73);
+            panel4.Size = new Size(293, 97);
             panel4.TabIndex = 0;
             // 
             // panel5
             // 
             panel5.Controls.Add(panel6);
             panel5.Controls.Add(pictureBox1);
-            panel5.Location = new Point(16, 16);
+            panel5.Location = new Point(18, 21);
+            panel5.Margin = new Padding(3, 4, 3, 4);
             panel5.Name = "panel5";
-            panel5.Size = new Size(224, 40);
+            panel5.Size = new Size(256, 53);
             panel5.TabIndex = 1;
             // 
             // panel6
             // 
             panel6.Controls.Add(label2);
             panel6.Controls.Add(label1);
-            panel6.Location = new Point(52, 0);
+            panel6.Location = new Point(59, 0);
+            panel6.Margin = new Padding(3, 4, 3, 4);
             panel6.Name = "panel6";
-            panel6.Size = new Size(172, 40);
+            panel6.Size = new Size(197, 53);
             panel6.TabIndex = 2;
             // 
             // label2
             // 
             label2.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Pixel);
             label2.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            label2.Location = new Point(0, 24);
+            label2.Location = new Point(3, 32);
             label2.Name = "label2";
-            label2.Size = new Size(172, 16);
+            label2.Size = new Size(197, 21);
             label2.TabIndex = 1;
-            label2.Text = "Student";
+            label2.Text = "Professor";
             label2.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // label1
             // 
             label1.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
             label1.ForeColor = Color.White;
-            label1.Location = new Point(0, 0);
+            label1.Location = new Point(3, 0);
             label1.Name = "label1";
-            label1.Size = new Size(172, 24);
+            label1.Size = new Size(197, 32);
             label1.TabIndex = 0;
             label1.Text = "Name";
             label1.TextAlign = ContentAlignment.MiddleLeft;
@@ -292,7 +451,8 @@
             // pictureBox1
             // 
             pictureBox1.Image = Properties.Resources.UserY;
-            pictureBox1.Location = new Point(0, 0);
+            pictureBox1.Location = new Point(3, 9);
+            pictureBox1.Margin = new Padding(3, 4, 3, 4);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(40, 40);
             pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
@@ -303,18 +463,19 @@
             // 
             panel12.BackColor = Color.FromArgb(30, 109, 0, 0);
             panel12.Controls.Add(panel13);
-            panel12.Location = new Point(0, 904);
+            panel12.Location = new Point(0, 1205);
+            panel12.Margin = new Padding(3, 4, 3, 4);
             panel12.Name = "panel12";
-            panel12.Size = new Size(256, 81);
+            panel12.Size = new Size(293, 108);
             panel12.TabIndex = 0;
             // 
             // panel13
             // 
             panel13.Controls.Add(btnLogout);
-            panel13.Location = new Point(16, 16);
+            panel13.Location = new Point(18, 21);
             panel13.Margin = new Padding(0);
             panel13.Name = "panel13";
-            panel13.Size = new Size(224, 48);
+            panel13.Size = new Size(256, 64);
             panel13.TabIndex = 4;
             // 
             // btnLogout
@@ -330,9 +491,10 @@
             btnLogout.Image = Properties.Resources.LogOut;
             btnLogout.ImageAlign = ContentAlignment.MiddleLeft;
             btnLogout.Location = new Point(0, 0);
+            btnLogout.Margin = new Padding(3, 4, 3, 4);
             btnLogout.Name = "btnLogout";
-            btnLogout.Padding = new Padding(16, 0, 0, 0);
-            btnLogout.Size = new Size(224, 48);
+            btnLogout.Padding = new Padding(18, 0, 0, 0);
+            btnLogout.Size = new Size(256, 64);
             btnLogout.TabIndex = 3;
             btnLogout.Text = " Logout";
             btnLogout.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -344,10 +506,10 @@
             pnlCoursesContent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pnlCoursesContent.AutoScroll = true;
             pnlCoursesContent.CausesValidation = false;
-            pnlCoursesContent.Location = new Point(312, 200);
+            pnlCoursesContent.Location = new Point(357, 267);
             pnlCoursesContent.Margin = new Padding(0);
             pnlCoursesContent.Name = "pnlCoursesContent";
-            pnlCoursesContent.Size = new Size(1272, 989);
+            pnlCoursesContent.Size = new Size(1454, 1319);
             pnlCoursesContent.TabIndex = 6;
             pnlCoursesContent.Visible = false;
             pnlCoursesContent.Paint += pnlCoursesContent_Paint;
@@ -356,10 +518,10 @@
             // 
             pnlGradesContent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pnlGradesContent.AutoScroll = true;
-            pnlGradesContent.Location = new Point(328, 136);
+            pnlGradesContent.Location = new Point(375, 181);
             pnlGradesContent.Margin = new Padding(0);
             pnlGradesContent.Name = "pnlGradesContent";
-            pnlGradesContent.Size = new Size(1272, 989);
+            pnlGradesContent.Size = new Size(1454, 1319);
             pnlGradesContent.TabIndex = 5;
             pnlGradesContent.Visible = false;
             // 
@@ -372,8 +534,9 @@
             panel3.Controls.Add(pnlDashboardContent);
             panel3.Controls.Add(pnlSidebar);
             panel3.Location = new Point(0, 0);
+            panel3.Margin = new Padding(3, 4, 3, 4);
             panel3.Name = "panel3";
-            panel3.Size = new Size(1528, 1061);
+            panel3.Size = new Size(1746, 1415);
             panel3.TabIndex = 0;
             // 
             // pnlHeader
@@ -382,10 +545,10 @@
             pnlHeader.Controls.Add(pnlYellow);
             pnlHeader.Controls.Add(panel15);
             pnlHeader.Dock = DockStyle.Top;
-            pnlHeader.Location = new Point(256, 0);
+            pnlHeader.Location = new Point(293, 0);
             pnlHeader.Margin = new Padding(0);
             pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(1272, 72);
+            pnlHeader.Size = new Size(1453, 96);
             pnlHeader.TabIndex = 2;
             // 
             // pnlYellow
@@ -394,7 +557,7 @@
             pnlYellow.Location = new Point(0, 0);
             pnlYellow.Margin = new Padding(0);
             pnlYellow.Name = "pnlYellow";
-            pnlYellow.Size = new Size(4, 48);
+            pnlYellow.Size = new Size(5, 64);
             pnlYellow.TabIndex = 7;
             pnlYellow.Visible = false;
             // 
@@ -402,18 +565,20 @@
             // 
             panel15.Controls.Add(panel16);
             panel15.Controls.Add(pictureBox2);
-            panel15.Location = new Point(16, 8);
+            panel15.Location = new Point(18, 11);
+            panel15.Margin = new Padding(3, 4, 3, 4);
             panel15.Name = "panel15";
-            panel15.Size = new Size(384, 48);
+            panel15.Size = new Size(439, 64);
             panel15.TabIndex = 1;
             // 
             // panel16
             // 
             panel16.Controls.Add(label3);
             panel16.Controls.Add(label4);
-            panel16.Location = new Point(64, 6);
+            panel16.Location = new Point(73, 8);
+            panel16.Margin = new Padding(3, 4, 3, 4);
             panel16.Name = "panel16";
-            panel16.Size = new Size(320, 36);
+            panel16.Size = new Size(366, 48);
             panel16.TabIndex = 1;
             // 
             // label3
@@ -422,7 +587,7 @@
             label3.ForeColor = Color.White;
             label3.Location = new Point(0, 0);
             label3.Name = "label3";
-            label3.Size = new Size(320, 24);
+            label3.Size = new Size(366, 32);
             label3.TabIndex = 2;
             label3.Text = "Polytechnic University of the Philippines";
             label3.TextAlign = ContentAlignment.MiddleLeft;
@@ -432,9 +597,9 @@
             label4.BackColor = Color.Transparent;
             label4.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Pixel);
             label4.ForeColor = Color.FromArgb(255, 193, 7);
-            label4.Location = new Point(0, 20);
+            label4.Location = new Point(0, 27);
             label4.Name = "label4";
-            label4.Size = new Size(320, 16);
+            label4.Size = new Size(366, 21);
             label4.TabIndex = 2;
             label4.Text = "Academic Portal";
             label4.TextAlign = ContentAlignment.MiddleLeft;
@@ -443,6 +608,7 @@
             // 
             pictureBox2.Image = Properties.Resources.pup48x48;
             pictureBox2.Location = new Point(0, 0);
+            pictureBox2.Margin = new Padding(3, 4, 3, 4);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(48, 48);
             pictureBox2.SizeMode = PictureBoxSizeMode.AutoSize;
@@ -453,20 +619,21 @@
             // 
             pnlDashboardContent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pnlDashboardContent.AutoScroll = true;
-            pnlDashboardContent.Location = new Point(352, 104);
+            pnlDashboardContent.Location = new Point(402, 139);
             pnlDashboardContent.Margin = new Padding(0);
             pnlDashboardContent.Name = "pnlDashboardContent";
-            pnlDashboardContent.Size = new Size(1272, 989);
+            pnlDashboardContent.Size = new Size(1454, 1319);
             pnlDashboardContent.TabIndex = 4;
             pnlDashboardContent.Visible = false;
             // 
             // InstructorPortal
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1528, 1061);
+            ClientSize = new Size(1746, 1055);
             Controls.Add(panel3);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(3, 4, 3, 4);
             Name = "InstructorPortal";
             StartPosition = FormStartPosition.CenterParent;
             Text = "StudentPortal";
@@ -477,6 +644,7 @@
             panel8.ResumeLayout(false);
             panel9.ResumeLayout(false);
             panel11.ResumeLayout(false);
+            panel1.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel5.ResumeLayout(false);
             panel5.PerformLayout();
@@ -521,10 +689,16 @@
         private PictureBox pictureBox2;
         private Label label3;
         private Label label4;
-        private Panel pnllmsSubmenu;
         private Panel pnlDashboardContent;
         private Panel pnlGradesContent;
         private Panel pnlCoursesContent;
         private Panel pnlYellow;
+        private Panel panel1;
+        private Button btnGrade;
+        private Button btnAttendance;
+        private Button btnCalendar;
+        private Button btnActivities;
+        private Button btnSubject;
+        private Button btnAnnounce;
     }
 }
