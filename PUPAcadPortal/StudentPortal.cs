@@ -131,21 +131,18 @@ namespace PUPAcadPortal
         private void btnActivities_Click(object sender, EventArgs e)
         {
             pnlActivities.BringToFront();
-
             pnlActivities.Visible = true;
         }
 
         private void btnAttendance_Click(object sender, EventArgs e)
         {
             pnlAttendance.BringToFront();
-
             pnlAttendance.Visible = true;
         }
 
         private void btnGrade_Click(object sender, EventArgs e)
         {
             pnlGrades.BringToFront();
-
             pnlGrades.Visible = true;
         }
     }

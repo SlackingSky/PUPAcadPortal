@@ -40,10 +40,10 @@
             panel11 = new Panel();
             btnLMS = new Button();
             panel1 = new Panel();
-            this.btnGradeIns = new Button();
-            this.btnAttendanceIns = new Button();
-            this.btnCalendarIns = new Button();
-            this.btnActivitiesIns = new Button();
+            btnGradeIns = new Button();
+            btnAttendanceIns = new Button();
+            btnCalendarIns = new Button();
+            btnActivitiesIns = new Button();
             btnSubjectIns = new Button();
             btnAnnounceIns = new Button();
             panel4 = new Panel();
@@ -58,6 +58,18 @@
             pnlCoursesContent = new Panel();
             pnlGradesContent = new Panel();
             panel3 = new Panel();
+            pnlGrades = new Panel();
+            label5 = new Label();
+            pnlAttendance = new Panel();
+            label6 = new Label();
+            pnlActivities = new Panel();
+            label7 = new Label();
+            pnlCalendar = new Panel();
+            label9 = new Label();
+            pnlAnnounce = new Panel();
+            label10 = new Label();
+            pnlSubject = new Panel();
+            label8 = new Label();
             pnlHeader = new Panel();
             pnlYellow = new Panel();
             panel15 = new Panel();
@@ -66,18 +78,6 @@
             label4 = new Label();
             pictureBox2 = new PictureBox();
             pnlDashboardContent = new Panel();
-            pnlSubject = new Panel();
-            label8 = new Label();
-            pnlAnnounce = new Panel();
-            label10 = new Label();
-            pnlCalendar = new Panel();
-            label9 = new Label();
-            pnlActivities = new Panel();
-            label7 = new Label();
-            pnlAttendance = new Panel();
-            label6 = new Label();
-            pnlGrades = new Panel();
-            label5 = new Label();
             pnlSidebar.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             panel7.SuspendLayout();
@@ -92,16 +92,16 @@
             panel12.SuspendLayout();
             panel13.SuspendLayout();
             panel3.SuspendLayout();
+            pnlGrades.SuspendLayout();
+            pnlAttendance.SuspendLayout();
+            pnlActivities.SuspendLayout();
+            pnlCalendar.SuspendLayout();
+            pnlAnnounce.SuspendLayout();
+            pnlSubject.SuspendLayout();
             pnlHeader.SuspendLayout();
             panel15.SuspendLayout();
             panel16.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
-            pnlSubject.SuspendLayout();
-            pnlAnnounce.SuspendLayout();
-            pnlCalendar.SuspendLayout();
-            pnlActivities.SuspendLayout();
-            pnlAttendance.SuspendLayout();
-            pnlGrades.SuspendLayout();
             SuspendLayout();
             // 
             // pnlSidebar
@@ -263,10 +263,10 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(128, 109, 0, 0);
-            panel1.Controls.Add(this.btnGradeIns);
-            panel1.Controls.Add(this.btnAttendanceIns);
-            panel1.Controls.Add(this.btnCalendarIns);
-            panel1.Controls.Add(this.btnActivitiesIns);
+            panel1.Controls.Add(btnGradeIns);
+            panel1.Controls.Add(btnAttendanceIns);
+            panel1.Controls.Add(btnCalendarIns);
+            panel1.Controls.Add(btnActivitiesIns);
             panel1.Controls.Add(btnSubjectIns);
             panel1.Controls.Add(btnAnnounceIns);
             panel1.Location = new Point(0, 277);
@@ -278,95 +278,99 @@
             // 
             // btnGradeIns
             // 
-            this.btnGradeIns.BackgroundImageLayout = ImageLayout.None;
-            this.btnGradeIns.Cursor = Cursors.Hand;
-            this.btnGradeIns.FlatAppearance.BorderSize = 0;
-            this.btnGradeIns.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            this.btnGradeIns.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            this.btnGradeIns.FlatStyle = FlatStyle.Flat;
-            this.btnGradeIns.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            this.btnGradeIns.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            this.btnGradeIns.Image = Properties.Resources.report;
-            this.btnGradeIns.ImageAlign = ContentAlignment.MiddleLeft;
-            this.btnGradeIns.Location = new Point(1, 320);
-            this.btnGradeIns.Margin = new Padding(3, 4, 3, 4);
-            this.btnGradeIns.Name = "btnGradeIns";
-            this.btnGradeIns.Padding = new Padding(18, 0, 0, 0);
-            this.btnGradeIns.Size = new Size(293, 64);
-            this.btnGradeIns.TabIndex = 9;
-            this.btnGradeIns.Text = "  Grades";
-            this.btnGradeIns.TextAlign = ContentAlignment.MiddleLeft;
-            this.btnGradeIns.TextImageRelation = TextImageRelation.ImageBeforeText;
-            this.btnGradeIns.UseVisualStyleBackColor = true;
+            btnGradeIns.BackgroundImageLayout = ImageLayout.None;
+            btnGradeIns.Cursor = Cursors.Hand;
+            btnGradeIns.FlatAppearance.BorderSize = 0;
+            btnGradeIns.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnGradeIns.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            btnGradeIns.FlatStyle = FlatStyle.Flat;
+            btnGradeIns.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            btnGradeIns.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            btnGradeIns.Image = Properties.Resources.report;
+            btnGradeIns.ImageAlign = ContentAlignment.MiddleLeft;
+            btnGradeIns.Location = new Point(1, 320);
+            btnGradeIns.Margin = new Padding(3, 4, 3, 4);
+            btnGradeIns.Name = "btnGradeIns";
+            btnGradeIns.Padding = new Padding(18, 0, 0, 0);
+            btnGradeIns.Size = new Size(293, 64);
+            btnGradeIns.TabIndex = 9;
+            btnGradeIns.Text = "  Grades";
+            btnGradeIns.TextAlign = ContentAlignment.MiddleLeft;
+            btnGradeIns.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnGradeIns.UseVisualStyleBackColor = true;
+            btnGradeIns.Click += btnGradeIns_Click;
             // 
             // btnAttendanceIns
             // 
-            this.btnAttendanceIns.BackgroundImageLayout = ImageLayout.None;
-            this.btnAttendanceIns.Cursor = Cursors.Hand;
-            this.btnAttendanceIns.FlatAppearance.BorderSize = 0;
-            this.btnAttendanceIns.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            this.btnAttendanceIns.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            this.btnAttendanceIns.FlatStyle = FlatStyle.Flat;
-            this.btnAttendanceIns.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            this.btnAttendanceIns.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            this.btnAttendanceIns.Image = Properties.Resources.user_check;
-            this.btnAttendanceIns.ImageAlign = ContentAlignment.MiddleLeft;
-            this.btnAttendanceIns.Location = new Point(1, 256);
-            this.btnAttendanceIns.Margin = new Padding(3, 4, 3, 4);
-            this.btnAttendanceIns.Name = "btnAttendanceIns";
-            this.btnAttendanceIns.Padding = new Padding(18, 0, 0, 0);
-            this.btnAttendanceIns.Size = new Size(293, 64);
-            this.btnAttendanceIns.TabIndex = 8;
-            this.btnAttendanceIns.Text = "  Attendance";
-            this.btnAttendanceIns.TextAlign = ContentAlignment.MiddleLeft;
-            this.btnAttendanceIns.TextImageRelation = TextImageRelation.ImageBeforeText;
-            this.btnAttendanceIns.UseVisualStyleBackColor = true;
+            btnAttendanceIns.BackgroundImageLayout = ImageLayout.None;
+            btnAttendanceIns.Cursor = Cursors.Hand;
+            btnAttendanceIns.FlatAppearance.BorderSize = 0;
+            btnAttendanceIns.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnAttendanceIns.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            btnAttendanceIns.FlatStyle = FlatStyle.Flat;
+            btnAttendanceIns.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            btnAttendanceIns.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            btnAttendanceIns.Image = Properties.Resources.user_check;
+            btnAttendanceIns.ImageAlign = ContentAlignment.MiddleLeft;
+            btnAttendanceIns.Location = new Point(1, 256);
+            btnAttendanceIns.Margin = new Padding(3, 4, 3, 4);
+            btnAttendanceIns.Name = "btnAttendanceIns";
+            btnAttendanceIns.Padding = new Padding(18, 0, 0, 0);
+            btnAttendanceIns.Size = new Size(293, 64);
+            btnAttendanceIns.TabIndex = 8;
+            btnAttendanceIns.Text = "  Attendance";
+            btnAttendanceIns.TextAlign = ContentAlignment.MiddleLeft;
+            btnAttendanceIns.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnAttendanceIns.UseVisualStyleBackColor = true;
+            btnAttendanceIns.Click += btnAttendanceIns_Click;
             // 
             // btnCalendarIns
             // 
-            this.btnCalendarIns.BackgroundImageLayout = ImageLayout.None;
-            this.btnCalendarIns.Cursor = Cursors.Hand;
-            this.btnCalendarIns.FlatAppearance.BorderSize = 0;
-            this.btnCalendarIns.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            this.btnCalendarIns.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            this.btnCalendarIns.FlatStyle = FlatStyle.Flat;
-            this.btnCalendarIns.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            this.btnCalendarIns.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            this.btnCalendarIns.Image = Properties.Resources.calendar__4_;
-            this.btnCalendarIns.ImageAlign = ContentAlignment.MiddleLeft;
-            this.btnCalendarIns.Location = new Point(1, 64);
-            this.btnCalendarIns.Margin = new Padding(3, 4, 3, 4);
-            this.btnCalendarIns.Name = "btnCalendarIns";
-            this.btnCalendarIns.Padding = new Padding(18, 0, 0, 0);
-            this.btnCalendarIns.Size = new Size(293, 64);
-            this.btnCalendarIns.TabIndex = 7;
-            this.btnCalendarIns.Text = " Calendar";
-            this.btnCalendarIns.TextAlign = ContentAlignment.MiddleLeft;
-            this.btnCalendarIns.TextImageRelation = TextImageRelation.ImageBeforeText;
-            this.btnCalendarIns.UseVisualStyleBackColor = true;
+            btnCalendarIns.BackgroundImageLayout = ImageLayout.None;
+            btnCalendarIns.Cursor = Cursors.Hand;
+            btnCalendarIns.FlatAppearance.BorderSize = 0;
+            btnCalendarIns.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnCalendarIns.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            btnCalendarIns.FlatStyle = FlatStyle.Flat;
+            btnCalendarIns.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            btnCalendarIns.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            btnCalendarIns.Image = Properties.Resources.calendar__4_;
+            btnCalendarIns.ImageAlign = ContentAlignment.MiddleLeft;
+            btnCalendarIns.Location = new Point(1, 64);
+            btnCalendarIns.Margin = new Padding(3, 4, 3, 4);
+            btnCalendarIns.Name = "btnCalendarIns";
+            btnCalendarIns.Padding = new Padding(18, 0, 0, 0);
+            btnCalendarIns.Size = new Size(293, 64);
+            btnCalendarIns.TabIndex = 7;
+            btnCalendarIns.Text = " Calendar";
+            btnCalendarIns.TextAlign = ContentAlignment.MiddleLeft;
+            btnCalendarIns.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnCalendarIns.UseVisualStyleBackColor = true;
+            btnCalendarIns.Click += btnCalendarIns_Click;
             // 
             // btnActivitiesIns
             // 
-            this.btnActivitiesIns.BackgroundImageLayout = ImageLayout.None;
-            this.btnActivitiesIns.Cursor = Cursors.Hand;
-            this.btnActivitiesIns.FlatAppearance.BorderSize = 0;
-            this.btnActivitiesIns.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            this.btnActivitiesIns.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            this.btnActivitiesIns.FlatStyle = FlatStyle.Flat;
-            this.btnActivitiesIns.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            this.btnActivitiesIns.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            this.btnActivitiesIns.Image = Properties.Resources.checklist;
-            this.btnActivitiesIns.ImageAlign = ContentAlignment.MiddleLeft;
-            this.btnActivitiesIns.Location = new Point(1, 192);
-            this.btnActivitiesIns.Margin = new Padding(3, 4, 3, 4);
-            this.btnActivitiesIns.Name = "btnActivitiesIns";
-            this.btnActivitiesIns.Padding = new Padding(18, 0, 0, 0);
-            this.btnActivitiesIns.Size = new Size(293, 64);
-            this.btnActivitiesIns.TabIndex = 6;
-            this.btnActivitiesIns.Text = "  Activities";
-            this.btnActivitiesIns.TextAlign = ContentAlignment.MiddleLeft;
-            this.btnActivitiesIns.TextImageRelation = TextImageRelation.ImageBeforeText;
-            this.btnActivitiesIns.UseVisualStyleBackColor = true;
+            btnActivitiesIns.BackgroundImageLayout = ImageLayout.None;
+            btnActivitiesIns.Cursor = Cursors.Hand;
+            btnActivitiesIns.FlatAppearance.BorderSize = 0;
+            btnActivitiesIns.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnActivitiesIns.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            btnActivitiesIns.FlatStyle = FlatStyle.Flat;
+            btnActivitiesIns.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            btnActivitiesIns.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            btnActivitiesIns.Image = Properties.Resources.checklist;
+            btnActivitiesIns.ImageAlign = ContentAlignment.MiddleLeft;
+            btnActivitiesIns.Location = new Point(1, 192);
+            btnActivitiesIns.Margin = new Padding(3, 4, 3, 4);
+            btnActivitiesIns.Name = "btnActivitiesIns";
+            btnActivitiesIns.Padding = new Padding(18, 0, 0, 0);
+            btnActivitiesIns.Size = new Size(293, 64);
+            btnActivitiesIns.TabIndex = 6;
+            btnActivitiesIns.Text = "  Activities";
+            btnActivitiesIns.TextAlign = ContentAlignment.MiddleLeft;
+            btnActivitiesIns.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnActivitiesIns.UseVisualStyleBackColor = true;
+            btnActivitiesIns.Click += btnActivitiesIns_Click;
             // 
             // btnSubjectIns
             // 
@@ -390,6 +394,7 @@
             btnSubjectIns.TextAlign = ContentAlignment.MiddleLeft;
             btnSubjectIns.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnSubjectIns.UseVisualStyleBackColor = true;
+            btnSubjectIns.Click += btnSubjectIns_Click;
             // 
             // btnAnnounceIns
             // 
@@ -413,6 +418,7 @@
             btnAnnounceIns.TextAlign = ContentAlignment.MiddleLeft;
             btnAnnounceIns.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnAnnounceIns.UseVisualStyleBackColor = true;
+            btnAnnounceIns.Click += btnAnnounceIns_Click;
             // 
             // panel4
             // 
@@ -563,6 +569,144 @@
             panel3.Size = new Size(1746, 1415);
             panel3.TabIndex = 0;
             // 
+            // pnlGrades
+            // 
+            pnlGrades.AutoScroll = true;
+            pnlGrades.BackColor = SystemColors.Control;
+            pnlGrades.CausesValidation = false;
+            pnlGrades.Controls.Add(label5);
+            pnlGrades.Dock = DockStyle.Fill;
+            pnlGrades.Location = new Point(293, 96);
+            pnlGrades.Margin = new Padding(0);
+            pnlGrades.Name = "pnlGrades";
+            pnlGrades.Size = new Size(1453, 1319);
+            pnlGrades.TabIndex = 15;
+            pnlGrades.Visible = false;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(140, 29);
+            label5.Name = "label5";
+            label5.Size = new Size(55, 20);
+            label5.TabIndex = 0;
+            label5.Text = "Grades";
+            // 
+            // pnlAttendance
+            // 
+            pnlAttendance.AutoScroll = true;
+            pnlAttendance.BackColor = SystemColors.Control;
+            pnlAttendance.CausesValidation = false;
+            pnlAttendance.Controls.Add(label6);
+            pnlAttendance.Dock = DockStyle.Fill;
+            pnlAttendance.Location = new Point(293, 96);
+            pnlAttendance.Margin = new Padding(0);
+            pnlAttendance.Name = "pnlAttendance";
+            pnlAttendance.Size = new Size(1453, 1319);
+            pnlAttendance.TabIndex = 14;
+            pnlAttendance.Visible = false;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(47, 59);
+            label6.Name = "label6";
+            label6.Size = new Size(85, 20);
+            label6.TabIndex = 0;
+            label6.Text = "Attendance";
+            // 
+            // pnlActivities
+            // 
+            pnlActivities.AutoScroll = true;
+            pnlActivities.BackColor = SystemColors.Control;
+            pnlActivities.CausesValidation = false;
+            pnlActivities.Controls.Add(label7);
+            pnlActivities.Dock = DockStyle.Fill;
+            pnlActivities.Location = new Point(293, 96);
+            pnlActivities.Margin = new Padding(0);
+            pnlActivities.Name = "pnlActivities";
+            pnlActivities.Size = new Size(1453, 1319);
+            pnlActivities.TabIndex = 13;
+            pnlActivities.Visible = false;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(8, 25);
+            label7.Name = "label7";
+            label7.Size = new Size(69, 20);
+            label7.TabIndex = 0;
+            label7.Text = "Activities";
+            // 
+            // pnlCalendar
+            // 
+            pnlCalendar.AutoScroll = true;
+            pnlCalendar.BackColor = SystemColors.Control;
+            pnlCalendar.CausesValidation = false;
+            pnlCalendar.Controls.Add(label9);
+            pnlCalendar.Dock = DockStyle.Fill;
+            pnlCalendar.Location = new Point(293, 96);
+            pnlCalendar.Margin = new Padding(0);
+            pnlCalendar.Name = "pnlCalendar";
+            pnlCalendar.Size = new Size(1453, 1319);
+            pnlCalendar.TabIndex = 12;
+            pnlCalendar.Visible = false;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(51, 45);
+            label9.Name = "label9";
+            label9.Size = new Size(68, 20);
+            label9.TabIndex = 0;
+            label9.Text = "Calendar";
+            // 
+            // pnlAnnounce
+            // 
+            pnlAnnounce.AutoScroll = true;
+            pnlAnnounce.BackColor = SystemColors.Control;
+            pnlAnnounce.CausesValidation = false;
+            pnlAnnounce.Controls.Add(label10);
+            pnlAnnounce.Dock = DockStyle.Fill;
+            pnlAnnounce.Location = new Point(293, 96);
+            pnlAnnounce.Margin = new Padding(0);
+            pnlAnnounce.Name = "pnlAnnounce";
+            pnlAnnounce.Size = new Size(1453, 1319);
+            pnlAnnounce.TabIndex = 11;
+            pnlAnnounce.Visible = false;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(31, 24);
+            label10.Name = "label10";
+            label10.Size = new Size(115, 20);
+            label10.TabIndex = 0;
+            label10.Text = "Announcements";
+            // 
+            // pnlSubject
+            // 
+            pnlSubject.AutoScroll = true;
+            pnlSubject.BackColor = SystemColors.Control;
+            pnlSubject.CausesValidation = false;
+            pnlSubject.Controls.Add(label8);
+            pnlSubject.Dock = DockStyle.Fill;
+            pnlSubject.Location = new Point(293, 96);
+            pnlSubject.Margin = new Padding(0);
+            pnlSubject.Name = "pnlSubject";
+            pnlSubject.Size = new Size(1453, 1319);
+            pnlSubject.TabIndex = 10;
+            pnlSubject.Visible = false;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(62, 17);
+            label8.Name = "label8";
+            label8.Size = new Size(60, 20);
+            label8.TabIndex = 0;
+            label8.Text = "Courses";
+            // 
             // pnlHeader
             // 
             pnlHeader.BackColor = Color.FromArgb(42, 42, 42);
@@ -650,144 +794,6 @@
             pnlDashboardContent.TabIndex = 4;
             pnlDashboardContent.Visible = false;
             // 
-            // pnlSubject
-            // 
-            pnlSubject.AutoScroll = true;
-            pnlSubject.BackColor = SystemColors.Control;
-            pnlSubject.CausesValidation = false;
-            pnlSubject.Controls.Add(label8);
-            pnlSubject.Dock = DockStyle.Fill;
-            pnlSubject.Location = new Point(293, 96);
-            pnlSubject.Margin = new Padding(0);
-            pnlSubject.Name = "pnlSubject";
-            pnlSubject.Size = new Size(1453, 1319);
-            pnlSubject.TabIndex = 10;
-            pnlSubject.Visible = false;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Location = new Point(62, 17);
-            label8.Name = "label8";
-            label8.Size = new Size(60, 20);
-            label8.TabIndex = 0;
-            label8.Text = "Courses";
-            // 
-            // pnlAnnounce
-            // 
-            pnlAnnounce.AutoScroll = true;
-            pnlAnnounce.BackColor = SystemColors.Control;
-            pnlAnnounce.CausesValidation = false;
-            pnlAnnounce.Controls.Add(label10);
-            pnlAnnounce.Dock = DockStyle.Fill;
-            pnlAnnounce.Location = new Point(293, 96);
-            pnlAnnounce.Margin = new Padding(0);
-            pnlAnnounce.Name = "pnlAnnounce";
-            pnlAnnounce.Size = new Size(1453, 1319);
-            pnlAnnounce.TabIndex = 11;
-            pnlAnnounce.Visible = false;
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Location = new Point(31, 24);
-            label10.Name = "label10";
-            label10.Size = new Size(115, 20);
-            label10.TabIndex = 0;
-            label10.Text = "Announcements";
-            // 
-            // pnlCalendar
-            // 
-            pnlCalendar.AutoScroll = true;
-            pnlCalendar.BackColor = SystemColors.Control;
-            pnlCalendar.CausesValidation = false;
-            pnlCalendar.Controls.Add(label9);
-            pnlCalendar.Dock = DockStyle.Fill;
-            pnlCalendar.Location = new Point(293, 96);
-            pnlCalendar.Margin = new Padding(0);
-            pnlCalendar.Name = "pnlCalendar";
-            pnlCalendar.Size = new Size(1453, 1319);
-            pnlCalendar.TabIndex = 12;
-            pnlCalendar.Visible = false;
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Location = new Point(51, 45);
-            label9.Name = "label9";
-            label9.Size = new Size(68, 20);
-            label9.TabIndex = 0;
-            label9.Text = "Calendar";
-            // 
-            // pnlActivities
-            // 
-            pnlActivities.AutoScroll = true;
-            pnlActivities.BackColor = SystemColors.Control;
-            pnlActivities.CausesValidation = false;
-            pnlActivities.Controls.Add(label7);
-            pnlActivities.Dock = DockStyle.Fill;
-            pnlActivities.Location = new Point(293, 96);
-            pnlActivities.Margin = new Padding(0);
-            pnlActivities.Name = "pnlActivities";
-            pnlActivities.Size = new Size(1453, 1319);
-            pnlActivities.TabIndex = 13;
-            pnlActivities.Visible = false;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Location = new Point(8, 25);
-            label7.Name = "label7";
-            label7.Size = new Size(69, 20);
-            label7.TabIndex = 0;
-            label7.Text = "Activities";
-            // 
-            // pnlAttendance
-            // 
-            pnlAttendance.AutoScroll = true;
-            pnlAttendance.BackColor = SystemColors.Control;
-            pnlAttendance.CausesValidation = false;
-            pnlAttendance.Controls.Add(label6);
-            pnlAttendance.Dock = DockStyle.Fill;
-            pnlAttendance.Location = new Point(293, 96);
-            pnlAttendance.Margin = new Padding(0);
-            pnlAttendance.Name = "pnlAttendance";
-            pnlAttendance.Size = new Size(1453, 1319);
-            pnlAttendance.TabIndex = 14;
-            pnlAttendance.Visible = false;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(47, 59);
-            label6.Name = "label6";
-            label6.Size = new Size(85, 20);
-            label6.TabIndex = 0;
-            label6.Text = "Attendance";
-            // 
-            // pnlGrades
-            // 
-            pnlGrades.AutoScroll = true;
-            pnlGrades.BackColor = SystemColors.Control;
-            pnlGrades.CausesValidation = false;
-            pnlGrades.Controls.Add(label5);
-            pnlGrades.Dock = DockStyle.Fill;
-            pnlGrades.Location = new Point(293, 96);
-            pnlGrades.Margin = new Padding(0);
-            pnlGrades.Name = "pnlGrades";
-            pnlGrades.Size = new Size(1453, 1319);
-            pnlGrades.TabIndex = 15;
-            pnlGrades.Visible = false;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(140, 29);
-            label5.Name = "label5";
-            label5.Size = new Size(55, 20);
-            label5.TabIndex = 0;
-            label5.Text = "Grades";
-            // 
             // InstructorPortal
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -814,23 +820,23 @@
             panel12.ResumeLayout(false);
             panel13.ResumeLayout(false);
             panel3.ResumeLayout(false);
+            pnlGrades.ResumeLayout(false);
+            pnlGrades.PerformLayout();
+            pnlAttendance.ResumeLayout(false);
+            pnlAttendance.PerformLayout();
+            pnlActivities.ResumeLayout(false);
+            pnlActivities.PerformLayout();
+            pnlCalendar.ResumeLayout(false);
+            pnlCalendar.PerformLayout();
+            pnlAnnounce.ResumeLayout(false);
+            pnlAnnounce.PerformLayout();
+            pnlSubject.ResumeLayout(false);
+            pnlSubject.PerformLayout();
             pnlHeader.ResumeLayout(false);
             panel15.ResumeLayout(false);
             panel15.PerformLayout();
             panel16.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
-            pnlSubject.ResumeLayout(false);
-            pnlSubject.PerformLayout();
-            pnlAnnounce.ResumeLayout(false);
-            pnlAnnounce.PerformLayout();
-            pnlCalendar.ResumeLayout(false);
-            pnlCalendar.PerformLayout();
-            pnlActivities.ResumeLayout(false);
-            pnlActivities.PerformLayout();
-            pnlAttendance.ResumeLayout(false);
-            pnlAttendance.PerformLayout();
-            pnlGrades.ResumeLayout(false);
-            pnlGrades.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -867,6 +873,10 @@
         private Panel pnlCoursesContent;
         private Panel pnlYellow;
         private Panel panel1;
+        private Button btnGradeIns;
+        private Button btnAttendanceIns;
+        private Button btnCalendarIns;
+        private Button btnActivitiesIns;
         private Button btnGrade;
         private Button btnAttendance;
         private Button btnCalendar;

@@ -105,5 +105,41 @@ namespace PUPAcadPortal
         {
 
         }
+
+        private void btnAnnounceIns_Click(object sender, EventArgs e)
+        {
+            pnlAnnounce.BringToFront();
+            pnlAnnounce.Visible = true;
+        }
+
+        private void btnCalendarIns_Click(object sender, EventArgs e)
+        {
+            pnlCalendar.BringToFront();
+            pnlCalendar.Visible = true;
+        }
+
+        private void btnSubjectIns_Click(object sender, EventArgs e)
+        {
+            pnlSubject.BringToFront();
+            pnlSubject.Visible = true;
+        }
+
+        private void btnActivitiesIns_Click(object sender, EventArgs e)
+        {
+            pnlActivities.BringToFront();
+            pnlActivities.Visible = true;
+        }
+
+        private void btnAttendanceIns_Click(object sender, EventArgs e)
+        {
+            pnlAttendance.BringToFront();
+            pnlAttendance.Visible = true;
+        }
+
+        private void btnGradeIns_Click(object sender, EventArgs e)
+        {
+            pnlGrades.BringToFront();
+            pnlGrades.Visible = true;
+        }
     }
 }
