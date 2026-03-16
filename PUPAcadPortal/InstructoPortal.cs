@@ -175,6 +175,22 @@ namespace PUPAcadPortal
             timer1.Start();
         }
 
-       
+        private void CreateAnnounce_Click(object sender, EventArgs e)
+        {
+            pnlCreateAnnounce.Visible = !pnlCreateAnnounce.Visible;
+
+            if (pnlCreateAnnounce.Visible)
+            {
+                // Ensure it sits on top of all other controls/panels
+                pnlCreateAnnounce.BringToFront();
+
+
+                pnlCreateAnnounce.Location = new Point(
+                (this.Width - pnlCreateAnnounce.Width) / 2,
+                (this.Height - pnlCreateAnnounce.Height) / 2
+                );
+            }
+        }
+
     }
 }

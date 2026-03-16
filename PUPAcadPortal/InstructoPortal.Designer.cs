@@ -61,6 +61,12 @@
             panel3 = new Panel();
             pnlAnnounce = new Panel();
             pnlCreateAnnounce = new RoundedPanel();
+            roundedPanel19 = new RoundedPanel();
+            label45 = new Label();
+            textBox10 = new TextBox();
+            textBox9 = new TextBox();
+            label44 = new Label();
+            label10 = new Label();
             CreateAnnounce = new Button();
             panel2 = new Panel();
             label43 = new Label();
@@ -200,6 +206,7 @@
             panel13.SuspendLayout();
             panel3.SuspendLayout();
             pnlAnnounce.SuspendLayout();
+            pnlCreateAnnounce.SuspendLayout();
             panel2.SuspendLayout();
             roundedPanel13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox14).BeginInit();
@@ -739,12 +746,73 @@
             // 
             // pnlCreateAnnounce
             // 
-            pnlCreateAnnounce.BackColor = Color.WhiteSmoke;
+            pnlCreateAnnounce.BackColor = Color.Maroon;
             pnlCreateAnnounce.BorderRadius = 10;
-            pnlCreateAnnounce.Location = new Point(240, 205);
+            pnlCreateAnnounce.Controls.Add(roundedPanel19);
+            pnlCreateAnnounce.Controls.Add(label45);
+            pnlCreateAnnounce.Controls.Add(textBox10);
+            pnlCreateAnnounce.Controls.Add(textBox9);
+            pnlCreateAnnounce.Controls.Add(label44);
+            pnlCreateAnnounce.Controls.Add(label10);
+            pnlCreateAnnounce.Location = new Point(82, 52);
             pnlCreateAnnounce.Name = "pnlCreateAnnounce";
             pnlCreateAnnounce.Size = new Size(897, 601);
             pnlCreateAnnounce.TabIndex = 5;
+            pnlCreateAnnounce.Visible = false;
+            // 
+            // roundedPanel19
+            // 
+            roundedPanel19.BackColor = Color.White;
+            roundedPanel19.BorderRadius = 10;
+            roundedPanel19.Location = new Point(27, 431);
+            roundedPanel19.Name = "roundedPanel19";
+            roundedPanel19.Size = new Size(490, 125);
+            roundedPanel19.TabIndex = 5;
+            // 
+            // label45
+            // 
+            label45.AutoSize = true;
+            label45.ForeColor = Color.White;
+            label45.Location = new Point(25, 390);
+            label45.Name = "label45";
+            label45.Size = new Size(86, 20);
+            label45.TabIndex = 4;
+            label45.Text = "Attachment";
+            // 
+            // textBox10
+            // 
+            textBox10.Location = new Point(25, 133);
+            textBox10.Multiline = true;
+            textBox10.Name = "textBox10";
+            textBox10.Size = new Size(492, 202);
+            textBox10.TabIndex = 3;
+            // 
+            // textBox9
+            // 
+            textBox9.Location = new Point(25, 78);
+            textBox9.Name = "textBox9";
+            textBox9.Size = new Size(492, 27);
+            textBox9.TabIndex = 2;
+            // 
+            // label44
+            // 
+            label44.AutoSize = true;
+            label44.ForeColor = Color.White;
+            label44.Location = new Point(25, 53);
+            label44.Name = "label44";
+            label44.Size = new Size(38, 20);
+            label44.TabIndex = 1;
+            label44.Text = "Title";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.ForeColor = Color.White;
+            label10.Location = new Point(21, 18);
+            label10.Name = "label10";
+            label10.Size = new Size(156, 20);
+            label10.TabIndex = 0;
+            label10.Text = "Create Announcement";
             // 
             // CreateAnnounce
             // 
@@ -769,6 +837,7 @@
             CreateAnnounce.Text = "    Create Announcement";
             CreateAnnounce.TextImageRelation = TextImageRelation.ImageBeforeText;
             CreateAnnounce.UseVisualStyleBackColor = false;
+            CreateAnnounce.Click += CreateAnnounce_Click;
             // 
             // panel2
             // 
@@ -2229,6 +2298,8 @@
             panel13.ResumeLayout(false);
             panel3.ResumeLayout(false);
             pnlAnnounce.ResumeLayout(false);
+            pnlCreateAnnounce.ResumeLayout(false);
+            pnlCreateAnnounce.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             roundedPanel13.ResumeLayout(false);
@@ -2461,5 +2532,11 @@
         private Label label43;
         private Button CreateAnnounce;
         private RoundedPanel pnlCreateAnnounce;
+        private Label label10;
+        private Label label45;
+        private TextBox textBox10;
+        private TextBox textBox9;
+        private Label label44;
+        private RoundedPanel roundedPanel19;
     }
 }
