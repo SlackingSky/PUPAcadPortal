@@ -10,7 +10,7 @@ namespace PUPAcadPortal
     {
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         [Category("Appearance")]
-        public int BorderRadius { get; set; } = 30;
+        public int BorderRadius { get; set; } = 10;
 
         public RoundedPanel()
         {
