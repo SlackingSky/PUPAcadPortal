@@ -704,8 +704,8 @@
             // panel3
             // 
             panel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panel3.Controls.Add(pnlSubject);
             panel3.Controls.Add(pnlAnnounce);
+            panel3.Controls.Add(pnlSubject);
             panel3.Controls.Add(pnlAttendance);
             panel3.Controls.Add(pnlCalendar);
             panel3.Controls.Add(pnlActivities);
@@ -1788,7 +1788,6 @@
         private Panel pnlCoursesContent;
         private Panel pnlAccountsContent;
         private Panel pnlYellow;
-        private Button button5;
         private Button button6;
         private Button button4;
         private Button button3;
