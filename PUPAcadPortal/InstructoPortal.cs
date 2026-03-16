@@ -173,12 +173,8 @@ namespace PUPAcadPortal
         private void StatusBtn_Click(object sender, EventArgs e)
         {
             timer1.Start();
-
         }
 
-        private void button4_Click(object sender, EventArgs e)
-        {
-         
-        }
+       
     }
 }
