@@ -152,8 +152,8 @@ namespace PUPAcadPortal
         {
             if (expand == false)
             {
-                StatusDropDown.Height += 15;
-                if (StatusDropDown.Height >= StatusDropDown.MaximumSize.Height)
+                flowLayoutPanel3.Height += 15;
+                if (flowLayoutPanel3.Height >= flowLayoutPanel3.MaximumSize.Height)
                 {
                     timer1.Stop();
                     expand = true;
@@ -161,8 +161,8 @@ namespace PUPAcadPortal
             }
             else
             {
-                StatusDropDown.Height -= 15;
-                if (StatusDropDown.Height <= StatusDropDown.MinimumSize.Height)
+                flowLayoutPanel3.Height -= 15;
+                if (flowLayoutPanel3.Height <= flowLayoutPanel3.MinimumSize.Height)
                 {
                     timer1.Stop();
                     expand = false;
@@ -186,11 +186,15 @@ namespace PUPAcadPortal
 
 
                 pnlCreateAnnounce.Location = new Point(
-                (this.Width - pnlCreateAnnounce.Width) / 2,
-                (this.Height - pnlCreateAnnounce.Height) / 2
-                );
+                (this.Width - pnlCreateAnnounce.Width) / 4,
+                (this.Height - pnlCreateAnnounce.Height) / 4);
+
             }
         }
 
+        private void StatusBtn2_Click(object sender, EventArgs e)
+        {
+            timer1.Start();
+        }
     }
 }
