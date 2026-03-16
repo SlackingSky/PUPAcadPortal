@@ -58,6 +58,8 @@
             pnlCoursesContent = new Panel();
             pnlGradesContent = new Panel();
             panel3 = new Panel();
+            pnlSubject = new Panel();
+            label8 = new Label();
             pnlGrades = new Panel();
             label5 = new Label();
             pnlAttendance = new Panel();
@@ -68,8 +70,6 @@
             label9 = new Label();
             pnlAnnounce = new Panel();
             label10 = new Label();
-            pnlSubject = new Panel();
-            label8 = new Label();
             pnlHeader = new Panel();
             pnlYellow = new Panel();
             panel15 = new Panel();
@@ -78,6 +78,7 @@
             label4 = new Label();
             pictureBox2 = new PictureBox();
             pnlDashboardContent = new Panel();
+            roundedPanel1 = new RoundedPanel();
             pnlSidebar.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             panel7.SuspendLayout();
@@ -92,12 +93,12 @@
             panel12.SuspendLayout();
             panel13.SuspendLayout();
             panel3.SuspendLayout();
+            pnlSubject.SuspendLayout();
             pnlGrades.SuspendLayout();
             pnlAttendance.SuspendLayout();
             pnlActivities.SuspendLayout();
             pnlCalendar.SuspendLayout();
             pnlAnnounce.SuspendLayout();
-            pnlSubject.SuspendLayout();
             pnlHeader.SuspendLayout();
             panel15.SuspendLayout();
             panel16.SuspendLayout();
@@ -552,12 +553,12 @@
             // panel3
             // 
             panel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panel3.Controls.Add(pnlSubject);
             panel3.Controls.Add(pnlGrades);
             panel3.Controls.Add(pnlAttendance);
             panel3.Controls.Add(pnlActivities);
             panel3.Controls.Add(pnlCalendar);
             panel3.Controls.Add(pnlAnnounce);
-            panel3.Controls.Add(pnlSubject);
             panel3.Controls.Add(pnlHeader);
             panel3.Controls.Add(pnlCoursesContent);
             panel3.Controls.Add(pnlGradesContent);
@@ -568,6 +569,30 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(1746, 1415);
             panel3.TabIndex = 0;
+            // 
+            // pnlSubject
+            // 
+            pnlSubject.AutoScroll = true;
+            pnlSubject.BackColor = SystemColors.Control;
+            pnlSubject.CausesValidation = false;
+            pnlSubject.Controls.Add(roundedPanel1);
+            pnlSubject.Controls.Add(label8);
+            pnlSubject.Dock = DockStyle.Fill;
+            pnlSubject.Location = new Point(293, 96);
+            pnlSubject.Margin = new Padding(0);
+            pnlSubject.Name = "pnlSubject";
+            pnlSubject.Size = new Size(1453, 1319);
+            pnlSubject.TabIndex = 10;
+            pnlSubject.Visible = false;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(62, 17);
+            label8.Name = "label8";
+            label8.Size = new Size(60, 20);
+            label8.TabIndex = 0;
+            label8.Text = "Courses";
             // 
             // pnlGrades
             // 
@@ -684,29 +709,6 @@
             label10.TabIndex = 0;
             label10.Text = "Announcements";
             // 
-            // pnlSubject
-            // 
-            pnlSubject.AutoScroll = true;
-            pnlSubject.BackColor = SystemColors.Control;
-            pnlSubject.CausesValidation = false;
-            pnlSubject.Controls.Add(label8);
-            pnlSubject.Dock = DockStyle.Fill;
-            pnlSubject.Location = new Point(293, 96);
-            pnlSubject.Margin = new Padding(0);
-            pnlSubject.Name = "pnlSubject";
-            pnlSubject.Size = new Size(1453, 1319);
-            pnlSubject.TabIndex = 10;
-            pnlSubject.Visible = false;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Location = new Point(62, 17);
-            label8.Name = "label8";
-            label8.Size = new Size(60, 20);
-            label8.TabIndex = 0;
-            label8.Text = "Courses";
-            // 
             // pnlHeader
             // 
             pnlHeader.BackColor = Color.FromArgb(42, 42, 42);
@@ -794,6 +796,15 @@
             pnlDashboardContent.TabIndex = 4;
             pnlDashboardContent.Visible = false;
             // 
+            // roundedPanel1
+            // 
+            roundedPanel1.BackColor = Color.Maroon;
+            roundedPanel1.BorderRadius = 30;
+            roundedPanel1.Location = new Point(47, 59);
+            roundedPanel1.Name = "roundedPanel1";
+            roundedPanel1.Size = new Size(250, 125);
+            roundedPanel1.TabIndex = 1;
+            // 
             // InstructorPortal
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -820,6 +831,8 @@
             panel12.ResumeLayout(false);
             panel13.ResumeLayout(false);
             panel3.ResumeLayout(false);
+            pnlSubject.ResumeLayout(false);
+            pnlSubject.PerformLayout();
             pnlGrades.ResumeLayout(false);
             pnlGrades.PerformLayout();
             pnlAttendance.ResumeLayout(false);
@@ -830,8 +843,6 @@
             pnlCalendar.PerformLayout();
             pnlAnnounce.ResumeLayout(false);
             pnlAnnounce.PerformLayout();
-            pnlSubject.ResumeLayout(false);
-            pnlSubject.PerformLayout();
             pnlHeader.ResumeLayout(false);
             panel15.ResumeLayout(false);
             panel15.PerformLayout();
@@ -895,5 +906,7 @@
         private Label label6;
         private Panel pnlGrades;
         private Label label5;
+        private RoundedPanel roundedPanel2;
+        private RoundedPanel roundedPanel1;
     }
 }
