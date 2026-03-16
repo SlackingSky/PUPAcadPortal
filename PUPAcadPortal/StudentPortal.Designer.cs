@@ -62,6 +62,9 @@
             pnlCoursesContent = new Panel();
             pnlEnrollContent = new Panel();
             panel3 = new Panel();
+            pnlAttendance = new Panel();
+            panel14 = new Panel();
+            label6 = new Label();
             pnlSubject = new Panel();
             panel2 = new Panel();
             label21 = new Label();
@@ -120,8 +123,6 @@
             label9 = new Label();
             pnlActivities = new Panel();
             label7 = new Label();
-            pnlAttendance = new Panel();
-            label6 = new Label();
             pnlGrades = new Panel();
             label5 = new Label();
             pnlAccountsContent = new Panel();
@@ -148,6 +149,8 @@
             panel12.SuspendLayout();
             panel13.SuspendLayout();
             panel3.SuspendLayout();
+            pnlAttendance.SuspendLayout();
+            panel14.SuspendLayout();
             pnlSubject.SuspendLayout();
             panel2.SuspendLayout();
             roundedPanel6.SuspendLayout();
@@ -178,7 +181,6 @@
             panel1.SuspendLayout();
             pnlCalendar.SuspendLayout();
             pnlActivities.SuspendLayout();
-            pnlAttendance.SuspendLayout();
             pnlGrades.SuspendLayout();
             pnlHeader.SuspendLayout();
             panel15.SuspendLayout();
@@ -702,11 +704,11 @@
             // panel3
             // 
             panel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panel3.Controls.Add(pnlSubject);
             panel3.Controls.Add(pnlAnnounce);
+            panel3.Controls.Add(pnlAttendance);
+            panel3.Controls.Add(pnlSubject);
             panel3.Controls.Add(pnlCalendar);
             panel3.Controls.Add(pnlActivities);
-            panel3.Controls.Add(pnlAttendance);
             panel3.Controls.Add(pnlGrades);
             panel3.Controls.Add(pnlCoursesContent);
             panel3.Controls.Add(pnlAccountsContent);
@@ -719,6 +721,40 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(1746, 1415);
             panel3.TabIndex = 0;
+            // 
+            // pnlAttendance
+            // 
+            pnlAttendance.AutoScroll = true;
+            pnlAttendance.BackColor = SystemColors.Control;
+            pnlAttendance.CausesValidation = false;
+            pnlAttendance.Controls.Add(panel14);
+            pnlAttendance.Dock = DockStyle.Fill;
+            pnlAttendance.Location = new Point(293, 96);
+            pnlAttendance.Margin = new Padding(0);
+            pnlAttendance.Name = "pnlAttendance";
+            pnlAttendance.Size = new Size(1453, 1319);
+            pnlAttendance.TabIndex = 11;
+            pnlAttendance.Visible = false;
+            // 
+            // panel14
+            // 
+            panel14.BackColor = SystemColors.ButtonHighlight;
+            panel14.Controls.Add(label6);
+            panel14.Dock = DockStyle.Top;
+            panel14.Location = new Point(0, 0);
+            panel14.Name = "panel14";
+            panel14.Size = new Size(1453, 46);
+            panel14.TabIndex = 17;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label6.Location = new Point(8, 8);
+            label6.Name = "label6";
+            label6.Size = new Size(132, 31);
+            label6.TabIndex = 0;
+            label6.Text = "Attendance";
             // 
             // pnlSubject
             // 
@@ -1533,29 +1569,6 @@
             label7.TabIndex = 0;
             label7.Text = "Activities";
             // 
-            // pnlAttendance
-            // 
-            pnlAttendance.AutoScroll = true;
-            pnlAttendance.BackColor = SystemColors.Control;
-            pnlAttendance.CausesValidation = false;
-            pnlAttendance.Controls.Add(label6);
-            pnlAttendance.Dock = DockStyle.Fill;
-            pnlAttendance.Location = new Point(293, 96);
-            pnlAttendance.Margin = new Padding(0);
-            pnlAttendance.Name = "pnlAttendance";
-            pnlAttendance.Size = new Size(1453, 1319);
-            pnlAttendance.TabIndex = 11;
-            pnlAttendance.Visible = false;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(47, 59);
-            label6.Name = "label6";
-            label6.Size = new Size(85, 20);
-            label6.TabIndex = 0;
-            label6.Text = "Attendance";
-            // 
             // pnlGrades
             // 
             pnlGrades.AutoScroll = true;
@@ -1696,6 +1709,9 @@
             panel12.ResumeLayout(false);
             panel13.ResumeLayout(false);
             panel3.ResumeLayout(false);
+            pnlAttendance.ResumeLayout(false);
+            panel14.ResumeLayout(false);
+            panel14.PerformLayout();
             pnlSubject.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
@@ -1737,8 +1753,6 @@
             pnlCalendar.PerformLayout();
             pnlActivities.ResumeLayout(false);
             pnlActivities.PerformLayout();
-            pnlAttendance.ResumeLayout(false);
-            pnlAttendance.PerformLayout();
             pnlGrades.ResumeLayout(false);
             pnlGrades.PerformLayout();
             pnlHeader.ResumeLayout(false);
@@ -1805,7 +1819,6 @@
         private Label label10;
         private Label label9;
         private Label label7;
-        private Label label6;
         private Label label5;
         private RoundedPanel roundedPanel1;
         private Label lblProf1;
@@ -1857,5 +1870,7 @@
         private PictureBox pictureBox11;
         private Panel panel2;
         private Label label21;
+        private Panel panel14;
+        private Label label6;
     }
 }

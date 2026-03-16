@@ -141,5 +141,7 @@ namespace PUPAcadPortal
             pnlGrades.BringToFront();
             pnlGrades.Visible = true;
         }
+
+       
     }
 }
