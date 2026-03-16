@@ -39,7 +39,7 @@
             btnCourses = new Button();
             panel11 = new Panel();
             btnLMS = new Button();
-            panel1 = new Panel();
+            pnllmsSubmenu = new Panel();
             btnGradeIns = new Button();
             btnAttendanceIns = new Button();
             btnCalendarIns = new Button();
@@ -84,7 +84,7 @@
             panel8.SuspendLayout();
             panel9.SuspendLayout();
             panel11.SuspendLayout();
-            panel1.SuspendLayout();
+            pnllmsSubmenu.SuspendLayout();
             panel4.SuspendLayout();
             panel5.SuspendLayout();
             panel6.SuspendLayout();
@@ -124,7 +124,7 @@
             flowLayoutPanel1.Controls.Add(panel8);
             flowLayoutPanel1.Controls.Add(panel9);
             flowLayoutPanel1.Controls.Add(panel11);
-            flowLayoutPanel1.Controls.Add(panel1);
+            flowLayoutPanel1.Controls.Add(pnllmsSubmenu);
             flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
             flowLayoutPanel1.Location = new Point(2, 101);
             flowLayoutPanel1.Margin = new Padding(3, 4, 3, 4);
@@ -260,21 +260,21 @@
             btnLMS.UseVisualStyleBackColor = true;
             btnLMS.Click += btnLMS_Click;
             // 
-            // panel1
+            // pnllmsSubmenu
             // 
-            panel1.BackColor = Color.FromArgb(128, 109, 0, 0);
-            panel1.Controls.Add(btnGradeIns);
-            panel1.Controls.Add(btnAttendanceIns);
-            panel1.Controls.Add(btnCalendarIns);
-            panel1.Controls.Add(btnActivitiesIns);
-            panel1.Controls.Add(btnSubjectIns);
-            panel1.Controls.Add(btnAnnounceIns);
-            panel1.Location = new Point(0, 277);
-            panel1.Margin = new Padding(0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(293, 385);
-            panel1.TabIndex = 7;
-            panel1.Visible = false;
+            pnllmsSubmenu.BackColor = Color.FromArgb(128, 109, 0, 0);
+            pnllmsSubmenu.Controls.Add(btnGradeIns);
+            pnllmsSubmenu.Controls.Add(btnAttendanceIns);
+            pnllmsSubmenu.Controls.Add(btnCalendarIns);
+            pnllmsSubmenu.Controls.Add(btnActivitiesIns);
+            pnllmsSubmenu.Controls.Add(btnSubjectIns);
+            pnllmsSubmenu.Controls.Add(btnAnnounceIns);
+            pnllmsSubmenu.Location = new Point(0, 277);
+            pnllmsSubmenu.Margin = new Padding(0);
+            pnllmsSubmenu.Name = "pnllmsSubmenu";
+            pnllmsSubmenu.Size = new Size(293, 385);
+            pnllmsSubmenu.TabIndex = 7;
+            pnllmsSubmenu.Visible = false;
             // 
             // btnGradeIns
             // 
@@ -812,7 +812,7 @@
             panel8.ResumeLayout(false);
             panel9.ResumeLayout(false);
             panel11.ResumeLayout(false);
-            panel1.ResumeLayout(false);
+            pnllmsSubmenu.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel5.ResumeLayout(false);
             panel6.ResumeLayout(false);
@@ -872,7 +872,7 @@
         private Panel pnlGradesContent;
         private Panel pnlCoursesContent;
         private Panel pnlYellow;
-        private Panel panel1;
+        private Panel pnllmsSubmenu;
         private Button btnGradeIns;
         private Button btnAttendanceIns;
         private Button btnCalendarIns;
