@@ -81,6 +81,12 @@
             label3 = new Label();
             label4 = new Label();
             pictureBox2 = new PictureBox();
+            roundedPanel1 = new RoundedPanel();
+            pictureBox3 = new PictureBox();
+            lblSub1 = new Label();
+            lblProf1 = new Label();
+            button1 = new Button();
+            button2 = new Button();
             pnlSidebar.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             panel7.SuspendLayout();
@@ -106,6 +112,8 @@
             panel15.SuspendLayout();
             panel16.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            roundedPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             SuspendLayout();
             // 
             // pnlSidebar
@@ -624,6 +632,7 @@
             pnlSubject.AutoScroll = true;
             pnlSubject.BackColor = SystemColors.Control;
             pnlSubject.CausesValidation = false;
+            pnlSubject.Controls.Add(roundedPanel1);
             pnlSubject.Controls.Add(label8);
             pnlSubject.Dock = DockStyle.Fill;
             pnlSubject.Location = new Point(293, 96);
@@ -846,6 +855,98 @@
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
             // 
+            // roundedPanel1
+            // 
+            roundedPanel1.BackColor = Color.WhiteSmoke;
+            roundedPanel1.BorderRadius = 30;
+            roundedPanel1.Controls.Add(button2);
+            roundedPanel1.Controls.Add(button1);
+            roundedPanel1.Controls.Add(lblProf1);
+            roundedPanel1.Controls.Add(lblSub1);
+            roundedPanel1.Controls.Add(pictureBox3);
+            roundedPanel1.Location = new Point(51, 59);
+            roundedPanel1.Name = "roundedPanel1";
+            roundedPanel1.Size = new Size(378, 292);
+            roundedPanel1.TabIndex = 1;
+            // 
+            // pictureBox3
+            // 
+            pictureBox3.Image = Properties.Resources.Biology_Gen_Honors;
+            pictureBox3.Location = new Point(0, -7);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(378, 148);
+            pictureBox3.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox3.TabIndex = 0;
+            pictureBox3.TabStop = false;
+            // 
+            // lblSub1
+            // 
+            lblSub1.AutoSize = true;
+            lblSub1.Font = new Font("Arial", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblSub1.Location = new Point(11, 157);
+            lblSub1.Name = "lblSub1";
+            lblSub1.Size = new Size(141, 27);
+            lblSub1.TabIndex = 1;
+            lblSub1.Text = "Biology 101";
+            // 
+            // lblProf1
+            // 
+            lblProf1.AutoSize = true;
+            lblProf1.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblProf1.Location = new Point(13, 184);
+            lblProf1.Name = "lblProf1";
+            lblProf1.Size = new Size(166, 24);
+            lblProf1.TabIndex = 2;
+            lblProf1.Text = "Dr. Evelyn Smith";
+            // 
+            // button1
+            // 
+            button1.BackColor = Color.Black;
+            button1.BackgroundImageLayout = ImageLayout.None;
+            button1.Cursor = Cursors.Hand;
+            button1.FlatAppearance.BorderSize = 0;
+            button1.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            button1.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            button1.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            button1.Image = Properties.Resources.marketing;
+            button1.ImageAlign = ContentAlignment.MiddleLeft;
+            button1.Location = new Point(185, 224);
+            button1.Margin = new Padding(3, 4, 3, 4);
+            button1.Name = "button1";
+            button1.Padding = new Padding(18, 0, 0, 0);
+            button1.Size = new Size(195, 68);
+            button1.TabIndex = 10;
+            button1.Text = " Announcements";
+            button1.TextAlign = ContentAlignment.MiddleLeft;
+            button1.TextImageRelation = TextImageRelation.ImageBeforeText;
+            button1.UseVisualStyleBackColor = false;
+            // 
+            // button2
+            // 
+            button2.BackColor = Color.Black;
+            button2.BackgroundImageLayout = ImageLayout.None;
+            button2.Cursor = Cursors.Hand;
+            button2.FlatAppearance.BorderSize = 0;
+            button2.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            button2.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            button2.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            button2.Image = Properties.Resources.checklist;
+            button2.ImageAlign = ContentAlignment.MiddleLeft;
+            button2.Location = new Point(-1, 224);
+            button2.Margin = new Padding(3, 4, 3, 4);
+            button2.Name = "button2";
+            button2.Padding = new Padding(18, 0, 0, 0);
+            button2.Size = new Size(185, 68);
+            button2.TabIndex = 10;
+            button2.Text = "  Activities";
+            button2.TextAlign = ContentAlignment.MiddleLeft;
+            button2.TextImageRelation = TextImageRelation.ImageBeforeText;
+            button2.UseVisualStyleBackColor = false;
+            // 
             // StudentPortal
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -891,6 +992,9 @@
             panel15.PerformLayout();
             panel16.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            roundedPanel1.ResumeLayout(false);
+            roundedPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ResumeLayout(false);
         }
 
@@ -953,5 +1057,11 @@
         private Label label7;
         private Label label6;
         private Label label5;
+        private RoundedPanel roundedPanel1;
+        private Label lblProf1;
+        private Label lblSub1;
+        private PictureBox pictureBox3;
+        private Button button2;
+        private Button button1;
     }
 }
