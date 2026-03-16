@@ -142,6 +142,39 @@ namespace PUPAcadPortal
             pnlGrades.Visible = true;
         }
 
+        private void label24_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        bool expand = false;
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (expand == false)
+            {
+                StatusDropDown.Height += 15;
+                if (StatusDropDown.Height >= StatusDropDown.MaximumSize.Height)
+                {
+                    timer1.Stop();
+                    expand = true;
+                }
+            }
+            else
+            {
+                StatusDropDown.Height -= 15;
+                if (StatusDropDown.Height <= StatusDropDown.MinimumSize.Height)
+                {
+                    timer1.Stop();
+                    expand = false;
+                }
+            }
+        }
+
+        private void StatusBtn_Click(object sender, EventArgs e)
+        {
+            timer1.Start();
+        }
+
        
     }
 }

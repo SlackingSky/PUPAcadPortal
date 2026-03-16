@@ -62,9 +62,6 @@
             pnlCoursesContent = new Panel();
             pnlEnrollContent = new Panel();
             panel3 = new Panel();
-            pnlAttendance = new Panel();
-            panel14 = new Panel();
-            label6 = new Label();
             pnlSubject = new Panel();
             panel2 = new Panel();
             label21 = new Label();
@@ -119,6 +116,9 @@
             pictureBox10 = new PictureBox();
             panel1 = new Panel();
             label10 = new Label();
+            pnlAttendance = new Panel();
+            panel14 = new Panel();
+            label6 = new Label();
             pnlCalendar = new Panel();
             label9 = new Label();
             pnlActivities = new Panel();
@@ -149,8 +149,6 @@
             panel12.SuspendLayout();
             panel13.SuspendLayout();
             panel3.SuspendLayout();
-            pnlAttendance.SuspendLayout();
-            panel14.SuspendLayout();
             pnlSubject.SuspendLayout();
             panel2.SuspendLayout();
             roundedPanel6.SuspendLayout();
@@ -179,6 +177,8 @@
             roundedPanel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox10).BeginInit();
             panel1.SuspendLayout();
+            pnlAttendance.SuspendLayout();
+            panel14.SuspendLayout();
             pnlCalendar.SuspendLayout();
             pnlActivities.SuspendLayout();
             pnlGrades.SuspendLayout();
@@ -704,9 +704,9 @@
             // panel3
             // 
             panel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panel3.Controls.Add(pnlSubject);
             panel3.Controls.Add(pnlAnnounce);
             panel3.Controls.Add(pnlAttendance);
-            panel3.Controls.Add(pnlSubject);
             panel3.Controls.Add(pnlCalendar);
             panel3.Controls.Add(pnlActivities);
             panel3.Controls.Add(pnlGrades);
@@ -721,40 +721,6 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(1746, 1415);
             panel3.TabIndex = 0;
-            // 
-            // pnlAttendance
-            // 
-            pnlAttendance.AutoScroll = true;
-            pnlAttendance.BackColor = SystemColors.Control;
-            pnlAttendance.CausesValidation = false;
-            pnlAttendance.Controls.Add(panel14);
-            pnlAttendance.Dock = DockStyle.Fill;
-            pnlAttendance.Location = new Point(293, 96);
-            pnlAttendance.Margin = new Padding(0);
-            pnlAttendance.Name = "pnlAttendance";
-            pnlAttendance.Size = new Size(1453, 1319);
-            pnlAttendance.TabIndex = 11;
-            pnlAttendance.Visible = false;
-            // 
-            // panel14
-            // 
-            panel14.BackColor = SystemColors.ButtonHighlight;
-            panel14.Controls.Add(label6);
-            panel14.Dock = DockStyle.Top;
-            panel14.Location = new Point(0, 0);
-            panel14.Name = "panel14";
-            panel14.Size = new Size(1453, 46);
-            panel14.TabIndex = 17;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label6.Location = new Point(8, 8);
-            label6.Name = "label6";
-            label6.Size = new Size(132, 31);
-            label6.TabIndex = 0;
-            label6.Text = "Attendance";
             // 
             // pnlSubject
             // 
@@ -884,7 +850,6 @@
             // 
             // button11
             // 
-            button11.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             button11.BackColor = Color.FromArgb(255, 193, 7);
             button11.BackgroundImageLayout = ImageLayout.None;
             button11.Cursor = Cursors.Hand;
@@ -907,7 +872,6 @@
             // 
             // button12
             // 
-            button12.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             button12.BackColor = Color.FromArgb(255, 193, 7);
             button12.BackgroundImageLayout = ImageLayout.None;
             button12.Cursor = Cursors.Hand;
@@ -952,7 +916,6 @@
             // 
             // pictureBox7
             // 
-            pictureBox7.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pictureBox7.Image = Properties.Resources.Biology_Gen_Honors;
             pictureBox7.Location = new Point(0, -7);
             pictureBox7.Name = "pictureBox7";
@@ -978,7 +941,6 @@
             // 
             // button9
             // 
-            button9.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             button9.BackColor = Color.White;
             button9.BackgroundImageLayout = ImageLayout.None;
             button9.Cursor = Cursors.Hand;
@@ -1001,7 +963,6 @@
             // 
             // button10
             // 
-            button10.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             button10.BackColor = Color.White;
             button10.BackgroundImageLayout = ImageLayout.None;
             button10.Cursor = Cursors.Hand;
@@ -1046,7 +1007,6 @@
             // 
             // pictureBox6
             // 
-            pictureBox6.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pictureBox6.Image = Properties.Resources.Biology_Gen_Honors;
             pictureBox6.Location = new Point(0, -7);
             pictureBox6.Name = "pictureBox6";
@@ -1095,7 +1055,6 @@
             // 
             // button4
             // 
-            button4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             button4.BackColor = Color.White;
             button4.BackgroundImageLayout = ImageLayout.None;
             button4.Cursor = Cursors.Hand;
@@ -1166,7 +1125,6 @@
             // 
             // button7
             // 
-            button7.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             button7.BackColor = Color.Black;
             button7.BackgroundImageLayout = ImageLayout.None;
             button7.Cursor = Cursors.Hand;
@@ -1189,7 +1147,6 @@
             // 
             // button8
             // 
-            button8.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             button8.BackColor = Color.Black;
             button8.BackgroundImageLayout = ImageLayout.None;
             button8.Cursor = Cursors.Hand;
@@ -1260,7 +1217,6 @@
             // 
             // button2
             // 
-            button2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             button2.BackColor = Color.Black;
             button2.BackgroundImageLayout = ImageLayout.None;
             button2.Cursor = Cursors.Hand;
@@ -1285,7 +1241,6 @@
             // 
             // button1
             // 
-            button1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             button1.BackColor = Color.Black;
             button1.BackgroundImageLayout = ImageLayout.None;
             button1.Cursor = Cursors.Hand;
@@ -1523,6 +1478,40 @@
             label10.TabIndex = 0;
             label10.Text = "Announcements";
             // 
+            // pnlAttendance
+            // 
+            pnlAttendance.AutoScroll = true;
+            pnlAttendance.BackColor = SystemColors.Control;
+            pnlAttendance.CausesValidation = false;
+            pnlAttendance.Controls.Add(panel14);
+            pnlAttendance.Dock = DockStyle.Fill;
+            pnlAttendance.Location = new Point(293, 96);
+            pnlAttendance.Margin = new Padding(0);
+            pnlAttendance.Name = "pnlAttendance";
+            pnlAttendance.Size = new Size(1453, 1319);
+            pnlAttendance.TabIndex = 11;
+            pnlAttendance.Visible = false;
+            // 
+            // panel14
+            // 
+            panel14.BackColor = SystemColors.ButtonHighlight;
+            panel14.Controls.Add(label6);
+            panel14.Dock = DockStyle.Top;
+            panel14.Location = new Point(0, 0);
+            panel14.Name = "panel14";
+            panel14.Size = new Size(1453, 46);
+            panel14.TabIndex = 17;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label6.Location = new Point(8, 8);
+            label6.Name = "label6";
+            label6.Size = new Size(132, 31);
+            label6.TabIndex = 0;
+            label6.Text = "Attendance";
+            // 
             // pnlCalendar
             // 
             pnlCalendar.AutoScroll = true;
@@ -1709,9 +1698,6 @@
             panel12.ResumeLayout(false);
             panel13.ResumeLayout(false);
             panel3.ResumeLayout(false);
-            pnlAttendance.ResumeLayout(false);
-            panel14.ResumeLayout(false);
-            panel14.PerformLayout();
             pnlSubject.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
@@ -1749,6 +1735,9 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox10).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            pnlAttendance.ResumeLayout(false);
+            panel14.ResumeLayout(false);
+            panel14.PerformLayout();
             pnlCalendar.ResumeLayout(false);
             pnlCalendar.PerformLayout();
             pnlActivities.ResumeLayout(false);
