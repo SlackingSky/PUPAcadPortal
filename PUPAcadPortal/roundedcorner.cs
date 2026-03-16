@@ -14,22 +14,21 @@ namespace PUPAcadPortal
 
         public RoundedPanel()
         {
-            DoubleBuffered = true;
-            ResizeRedraw = true;
-            BackColor = Color.Maroon;
+            this.DoubleBuffered = true;
+            this.ResizeRedraw = true;
+            this.BackColor = Color.Maroon;
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-            using (SolidBrush brush = new SolidBrush(BackColor))
+            using (SolidBrush brush = new SolidBrush(this.BackColor))
             {
-                using (GraphicsPath path = GetRoundedPath(ClientRectangle, BorderRadius))
+                using (GraphicsPath path = GetRoundedPath(this.ClientRectangle, BorderRadius))
                 {
-                    Region = new Region(path);
+                    this.Region = new Region(path);
                     e.Graphics.FillPath(brush, path);
                 }
             }
