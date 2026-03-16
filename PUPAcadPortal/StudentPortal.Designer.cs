@@ -126,6 +126,7 @@
             roundedPanel10 = new RoundedPanel();
             roundedPanel11 = new RoundedPanel();
             roundedPanel12 = new RoundedPanel();
+            pictureBox10 = new PictureBox();
             button14 = new Button();
             pnlSidebar.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
@@ -145,6 +146,7 @@
             pnlAnnounce.SuspendLayout();
             roundedPanel9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
+            roundedPanel7.SuspendLayout();
             panel1.SuspendLayout();
             pnlSubject.SuspendLayout();
             roundedPanel6.SuspendLayout();
@@ -167,6 +169,7 @@
             panel15.SuspendLayout();
             panel16.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox10).BeginInit();
             SuspendLayout();
             // 
             // button14
@@ -757,6 +760,7 @@
             // 
             roundedPanel7.BackColor = Color.White;
             roundedPanel7.BorderRadius = 30;
+            roundedPanel7.Controls.Add(pictureBox10);
             roundedPanel7.Location = new Point(18, 68);
             roundedPanel7.Name = "roundedPanel7";
             roundedPanel7.Size = new Size(1402, 132);
@@ -1538,6 +1542,14 @@
             roundedPanel12.Size = new Size(1402, 132);
             roundedPanel12.TabIndex = 3;
             // 
+            // pictureBox10
+            // 
+            pictureBox10.Location = new Point(62, 37);
+            pictureBox10.Name = "pictureBox10";
+            pictureBox10.Size = new Size(125, 62);
+            pictureBox10.TabIndex = 0;
+            pictureBox10.TabStop = false;
+            // 
             // StudentPortal
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -1570,6 +1582,7 @@
             roundedPanel9.ResumeLayout(false);
             roundedPanel9.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
+            roundedPanel7.ResumeLayout(false);
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             pnlSubject.ResumeLayout(false);
@@ -1605,6 +1618,7 @@
             panel15.PerformLayout();
             panel16.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox10).EndInit();
             ResumeLayout(false);
         }
 
@@ -1710,5 +1724,6 @@
         private RoundedPanel roundedPanel11;
         private RoundedPanel roundedPanel10;
         private RoundedPanel roundedPanel8;
+        private PictureBox pictureBox10;
     }
 }
