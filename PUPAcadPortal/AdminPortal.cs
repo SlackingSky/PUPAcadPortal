@@ -1002,9 +1002,9 @@ namespace PUPAcadPortal
             showContent(clickedButton);
             pnlsubofferingSubmenu.Visible = !pnlsubofferingSubmenu.Visible;
             if (pnlsubofferingSubmenu.Visible) 
-                btnSubjectOffering.Text = " Subject Offering                                                                     ⌄";
+                btnSubjectOffering.Text = " Subject Offering                    ⌄";
             else
-                btnSubjectOffering.Text = " Subject Offering                                                                      ›";
+                btnSubjectOffering.Text = " Subject Offering                     ›";
         }
 
         private void btnLMS_Click(object sender, EventArgs e)
