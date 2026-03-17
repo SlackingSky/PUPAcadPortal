@@ -126,8 +126,8 @@ namespace PUPAcadPortal
 
         private void btnActivitiesIns_Click(object sender, EventArgs e)
         {
-            pnlActivities.BringToFront();
-            pnlActivities.Visible = true;
+            pnlLMSAct.BringToFront();
+            pnlLMSAct.Visible = true;
         }
 
         private void btnAttendanceIns_Click(object sender, EventArgs e)
@@ -199,12 +199,12 @@ namespace PUPAcadPortal
 
         private void Sub1_MouseClick(object sender, MouseEventArgs e)
         {
-            Sub1Buttons.Visible = !Sub1Buttons.Visible;
+            pnlSubMenuMain.Visible = !pnlSubMenuMain.Visible;
 
             // Optional: Bring it to the front to ensure it's not hidden behind other UI elements
-            if (Sub1Buttons.Visible)
+            if (pnlSubMenuMain.Visible)
             {
-                Sub1Buttons.BringToFront();
+                pnlSubMenuMain.BringToFront();
             }
 
 
@@ -246,13 +246,56 @@ namespace PUPAcadPortal
         private void btnAllTeams_Click(object sender, EventArgs e)
         {
             // 1. Hide the submenu container
-            Sub1Buttons.Visible = false;
+            pnlSubMenuMain.Visible = false;
 
             // 2. Ensure the target panel is visible
             pnlSubject.Visible = true;
 
             // 3. Optional: If you want pnlSubject to move to the very top of the sidebar
             pnlSubject.BringToFront();
+        }
+
+        private void btnAssign_Click(object sender, EventArgs e)
+        {
+            // 1. Show the target panel
+            pnlSubActivities.Visible = true;
+
+            // 2. Bring it to the front so it's not hidden behind other main panels
+            pnlSubActivities.BringToFront();
+
+
+        }
+
+        private void btnGeneralChat_Click(object sender, EventArgs e)
+        {
+            // 1. Show the target panel
+            pnlSubMenuMain.Visible = true;
+
+            // 2. Bring it to the front so it's not hidden behind other main panels
+            pnlSubMenuMain.BringToFront();
+        }
+
+        private void btnClassFiles_Click(object sender, EventArgs e)
+        {
+            pnlClassFiles.Visible = true;
+
+            // 2. Bring it to the front so it's not hidden behind other main panels
+            pnlClassFiles.BringToFront();
+        }
+
+        private void button38_Click(object sender, EventArgs e)
+        {
+            pnlSubMenuMain.Visible = true;
+
+            // 2. Bring it to the front so it's not hidden behind other main panels
+            pnlSubMenuMain.BringToFront();
+
+            pnlSubActivities.Visible = true;
+
+            // 2. Bring it to the front so it's not hidden behind other main panels
+            pnlSubActivities.BringToFront();
+
+            
         }
     }
 }
