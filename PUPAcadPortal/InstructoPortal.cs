@@ -196,5 +196,63 @@ namespace PUPAcadPortal
         {
             timer1.Start();
         }
+
+        private void Sub1_MouseClick(object sender, MouseEventArgs e)
+        {
+            Sub1Buttons.Visible = !Sub1Buttons.Visible;
+
+            // Optional: Bring it to the front to ensure it's not hidden behind other UI elements
+            if (Sub1Buttons.Visible)
+            {
+                Sub1Buttons.BringToFront();
+            }
+
+
+        }
+
+        private void Sub1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+        bool sidebarExpand;
+        private void sideBarTimer_Tick(object sender, EventArgs e)
+        {
+            if (sidebarExpand)
+            {
+                // if sidebar is expand, minimize
+                SubjectMenu.Width -= 10;
+                if (SubjectMenu.Width == SubjectMenu.MinimumSize.Width)
+                {
+                    sidebarExpand = false;
+                    sideBarTimer.Stop();
+                }
+            }
+            else
+            {
+                SubjectMenu.Width += 10;
+                if (SubjectMenu.Width == SubjectMenu.MaximumSize.Width)
+                {
+                    sidebarExpand = true;
+                    sideBarTimer.Stop();
+                }
+            }
+        }
+
+        private void MenuButton_Click(object sender, EventArgs e)
+        {
+            sideBarTimer.Start();
+        }
+
+        private void btnAllTeams_Click(object sender, EventArgs e)
+        {
+            // 1. Hide the submenu container
+            Sub1Buttons.Visible = false;
+
+            // 2. Ensure the target panel is visible
+            pnlSubject.Visible = true;
+
+            // 3. Optional: If you want pnlSubject to move to the very top of the sidebar
+            pnlSubject.BringToFront();
+        }
     }
 }
