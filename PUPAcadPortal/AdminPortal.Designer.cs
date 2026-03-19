@@ -37,6 +37,11 @@
             btnEnrollments = new Button();
             panel9 = new Panel();
             btnSubjectOffering = new Button();
+            pnlsubofferingSubmenu = new Panel();
+            btnSO_CurrentSemester = new Button();
+            btnSO_EditSchedule = new Button();
+            btnSO_Schedule = new Button();
+            btnSO_CurriculumArchive = new Button();
             panel11 = new Panel();
             btnLMS = new Button();
             pnllmsSubmenu = new Panel();
@@ -66,6 +71,7 @@
             panel7.SuspendLayout();
             panel8.SuspendLayout();
             panel9.SuspendLayout();
+            pnlsubofferingSubmenu.SuspendLayout();
             panel11.SuspendLayout();
             panel4.SuspendLayout();
             panel5.SuspendLayout();
@@ -99,6 +105,7 @@
             flowLayoutPanel1.Controls.Add(panel7);
             flowLayoutPanel1.Controls.Add(panel8);
             flowLayoutPanel1.Controls.Add(panel9);
+            flowLayoutPanel1.Controls.Add(pnlsubofferingSubmenu);
             flowLayoutPanel1.Controls.Add(panel11);
             flowLayoutPanel1.Controls.Add(pnllmsSubmenu);
             flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
@@ -195,15 +202,98 @@
             btnSubjectOffering.Padding = new Padding(16, 0, 0, 0);
             btnSubjectOffering.Size = new Size(256, 48);
             btnSubjectOffering.TabIndex = 3;
-            btnSubjectOffering.Text = " Subject Offering";
+            btnSubjectOffering.Text = " Subject Offering                     ›";
             btnSubjectOffering.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnSubjectOffering.UseVisualStyleBackColor = true;
             btnSubjectOffering.Click += btnSubjectOffering_Click;
             // 
+            // pnlsubofferingSubmenu
+            // 
+            pnlsubofferingSubmenu.BackColor = Color.FromArgb(109, 0, 0);
+            pnlsubofferingSubmenu.Controls.Add(btnSO_CurrentSemester);
+            pnlsubofferingSubmenu.Controls.Add(btnSO_EditSchedule);
+            pnlsubofferingSubmenu.Controls.Add(btnSO_Schedule);
+            pnlsubofferingSubmenu.Controls.Add(btnSO_CurriculumArchive);
+            pnlsubofferingSubmenu.Location = new Point(0, 160);
+            pnlsubofferingSubmenu.Margin = new Padding(0);
+            pnlsubofferingSubmenu.Name = "pnlsubofferingSubmenu";
+            pnlsubofferingSubmenu.Size = new Size(256, 120);
+            pnlsubofferingSubmenu.TabIndex = 5;
+            pnlsubofferingSubmenu.Visible = false;
+            // 
+            // btnSO_CurrentSemester
+            // 
+            btnSO_CurrentSemester.Cursor = Cursors.Hand;
+            btnSO_CurrentSemester.FlatAppearance.BorderSize = 0;
+            btnSO_CurrentSemester.FlatStyle = FlatStyle.Flat;
+            btnSO_CurrentSemester.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            btnSO_CurrentSemester.ForeColor = Color.White;
+            btnSO_CurrentSemester.Location = new Point(0, 0);
+            btnSO_CurrentSemester.Margin = new Padding(3, 2, 3, 2);
+            btnSO_CurrentSemester.Name = "btnSO_CurrentSemester";
+            btnSO_CurrentSemester.Padding = new Padding(26, 0, 0, 0);
+            btnSO_CurrentSemester.Size = new Size(256, 30);
+            btnSO_CurrentSemester.TabIndex = 0;
+            btnSO_CurrentSemester.Text = " Current Semester";
+            btnSO_CurrentSemester.TextAlign = ContentAlignment.MiddleLeft;
+            btnSO_CurrentSemester.UseVisualStyleBackColor = true;
+            btnSO_CurrentSemester.Click += btnSO_CurrentSemester_Click;
+            // 
+            // btnSO_EditSchedule
+            // 
+            btnSO_EditSchedule.Cursor = Cursors.Hand;
+            btnSO_EditSchedule.FlatAppearance.BorderSize = 0;
+            btnSO_EditSchedule.FlatStyle = FlatStyle.Flat;
+            btnSO_EditSchedule.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            btnSO_EditSchedule.ForeColor = Color.White;
+            btnSO_EditSchedule.Location = new Point(0, 30);
+            btnSO_EditSchedule.Margin = new Padding(3, 2, 3, 2);
+            btnSO_EditSchedule.Name = "btnSO_EditSchedule";
+            btnSO_EditSchedule.Padding = new Padding(26, 0, 0, 0);
+            btnSO_EditSchedule.Size = new Size(256, 30);
+            btnSO_EditSchedule.TabIndex = 1;
+            btnSO_EditSchedule.Text = " Edit Schedule";
+            btnSO_EditSchedule.TextAlign = ContentAlignment.MiddleLeft;
+            btnSO_EditSchedule.UseVisualStyleBackColor = true;
+            // 
+            // btnSO_Schedule
+            // 
+            btnSO_Schedule.Cursor = Cursors.Hand;
+            btnSO_Schedule.FlatAppearance.BorderSize = 0;
+            btnSO_Schedule.FlatStyle = FlatStyle.Flat;
+            btnSO_Schedule.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            btnSO_Schedule.ForeColor = Color.White;
+            btnSO_Schedule.Location = new Point(0, 60);
+            btnSO_Schedule.Margin = new Padding(3, 2, 3, 2);
+            btnSO_Schedule.Name = "btnSO_Schedule";
+            btnSO_Schedule.Padding = new Padding(26, 0, 0, 0);
+            btnSO_Schedule.Size = new Size(256, 30);
+            btnSO_Schedule.TabIndex = 2;
+            btnSO_Schedule.Text = " Schedule";
+            btnSO_Schedule.TextAlign = ContentAlignment.MiddleLeft;
+            btnSO_Schedule.UseVisualStyleBackColor = true;
+            // 
+            // btnSO_CurriculumArchive
+            // 
+            btnSO_CurriculumArchive.Cursor = Cursors.Hand;
+            btnSO_CurriculumArchive.FlatAppearance.BorderSize = 0;
+            btnSO_CurriculumArchive.FlatStyle = FlatStyle.Flat;
+            btnSO_CurriculumArchive.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            btnSO_CurriculumArchive.ForeColor = Color.White;
+            btnSO_CurriculumArchive.Location = new Point(0, 90);
+            btnSO_CurriculumArchive.Margin = new Padding(3, 2, 3, 2);
+            btnSO_CurriculumArchive.Name = "btnSO_CurriculumArchive";
+            btnSO_CurriculumArchive.Padding = new Padding(26, 0, 0, 0);
+            btnSO_CurriculumArchive.Size = new Size(256, 30);
+            btnSO_CurriculumArchive.TabIndex = 3;
+            btnSO_CurriculumArchive.Text = " Curriculum and Archive";
+            btnSO_CurriculumArchive.TextAlign = ContentAlignment.MiddleLeft;
+            btnSO_CurriculumArchive.UseVisualStyleBackColor = true;
+            // 
             // panel11
             // 
             panel11.Controls.Add(btnLMS);
-            panel11.Location = new Point(0, 160);
+            panel11.Location = new Point(0, 280);
             panel11.Margin = new Padding(0);
             panel11.Name = "panel11";
             panel11.Size = new Size(256, 48);
@@ -234,10 +324,10 @@
             // pnllmsSubmenu
             // 
             pnllmsSubmenu.BackColor = Color.FromArgb(128, 109, 0, 0);
-            pnllmsSubmenu.Location = new Point(0, 208);
+            pnllmsSubmenu.Location = new Point(0, 328);
             pnllmsSubmenu.Margin = new Padding(0);
             pnllmsSubmenu.Name = "pnllmsSubmenu";
-            pnllmsSubmenu.Size = new Size(256, 100);
+            pnllmsSubmenu.Size = new Size(256, 76);
             pnllmsSubmenu.TabIndex = 5;
             pnllmsSubmenu.Visible = false;
             // 
@@ -271,18 +361,18 @@
             // label2
             // 
             label2.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Pixel);
-            label2.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            label2.ForeColor = Color.Black;
             label2.Location = new Point(0, 24);
             label2.Name = "label2";
             label2.Size = new Size(172, 16);
             label2.TabIndex = 1;
-            label2.Text = "Student";
+            label2.Text = "Admin";
             label2.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // label1
             // 
             label1.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            label1.ForeColor = Color.White;
+            label1.ForeColor = Color.Black;
             label1.Location = new Point(0, 0);
             label1.Name = "label1";
             label1.Size = new Size(172, 24);
@@ -342,10 +432,10 @@
             // 
             // pnlSubOfferingContent
             // 
-            pnlSubOfferingContent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pnlSubOfferingContent.AutoScroll = true;
             pnlSubOfferingContent.CausesValidation = false;
-            pnlSubOfferingContent.Location = new Point(312, 200);
+            pnlSubOfferingContent.Dock = DockStyle.Fill;
+            pnlSubOfferingContent.Location = new Point(256, 72);
             pnlSubOfferingContent.Margin = new Padding(0);
             pnlSubOfferingContent.Name = "pnlSubOfferingContent";
             pnlSubOfferingContent.Size = new Size(1272, 989);
@@ -477,7 +567,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1528, 1061);
+            ClientSize = new Size(1528, 791);
             Controls.Add(panel3);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "AdminPortal";
@@ -489,6 +579,7 @@
             panel7.ResumeLayout(false);
             panel8.ResumeLayout(false);
             panel9.ResumeLayout(false);
+            pnlsubofferingSubmenu.ResumeLayout(false);
             panel11.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel5.ResumeLayout(false);
@@ -540,5 +631,10 @@
         private Panel panel9;
         private Button btnSubjectOffering;
         private Panel pnlYellow;
+        private Panel pnlsubofferingSubmenu;
+        private Button btnSO_CurrentSemester;
+        private Button btnSO_EditSchedule;
+        private Button btnSO_Schedule;
+        private Button btnSO_CurriculumArchive;
     }
 }
