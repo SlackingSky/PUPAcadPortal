@@ -16,6 +16,13 @@ namespace PUPAcadPortal
         public StudentPortal()
         {
             InitializeComponent();
+            // remove personal name/role shown in sidebar
+            try
+            {
+                label1.Text = string.Empty;
+                label2.Text = string.Empty;
+            }
+            catch { }
         }
 
         private void changeButtonColor(Button button)
