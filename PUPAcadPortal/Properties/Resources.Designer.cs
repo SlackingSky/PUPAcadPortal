@@ -93,6 +93,56 @@ namespace PUPAcadPortal.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap cashier_solid_two_color_icon_vector {
+            get {
+                object obj = ResourceManager.GetObject("cashier-solid-two-color-icon-vector", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Check_icon {
+            get {
+                object obj = ResourceManager.GetObject("Check_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Check_icon1 {
+            get {
+                object obj = ResourceManager.GetObject("Check_icon1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap check_mark_6_128 {
+            get {
+                object obj = ResourceManager.GetObject("check-mark-6-128", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap check_mark_6_48 {
+            get {
+                object obj = ResourceManager.GetObject("check-mark-6-48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Container {
             get {
                 object obj = ResourceManager.GetObject("Container", resourceCulture);
@@ -123,9 +173,59 @@ namespace PUPAcadPortal.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap credit_card_6_48 {
+            get {
+                object obj = ResourceManager.GetObject("credit-card-6-48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap document_icon {
+            get {
+                object obj = ResourceManager.GetObject("document_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap download_icon_ {
+            get {
+                object obj = ResourceManager.GetObject("download(icon)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Enrollment {
             get {
                 object obj = ResourceManager.GetObject("Enrollment", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap exclamation_128 {
+            get {
+                object obj = ResourceManager.GetObject("exclamation-128", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Exclamation_icon {
+            get {
+                object obj = ResourceManager.GetObject("Exclamation_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -213,6 +313,16 @@ namespace PUPAcadPortal.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap peso_icon {
+            get {
+                object obj = ResourceManager.GetObject("peso_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap pup48x48 {
             get {
                 object obj = ResourceManager.GetObject("pup48x48", resourceCulture);
@@ -276,6 +386,26 @@ namespace PUPAcadPortal.Properties {
         internal static System.Drawing.Bitmap UserY {
             get {
                 object obj = ResourceManager.GetObject("UserY", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap warning_4_128 {
+            get {
+                object obj = ResourceManager.GetObject("warning-4-128", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap warning_4_1281 {
+            get {
+                object obj = ResourceManager.GetObject("warning-4-1281", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

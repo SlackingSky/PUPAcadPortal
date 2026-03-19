@@ -28,10 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StudentPortal));
             pnlSidebar = new Panel();
             flowLayoutPanel1 = new FlowLayoutPanel();
             panel7 = new Panel();
+            pnlYellow = new Panel();
             btnDashboard = new Button();
             panel8 = new Panel();
             btnEnrollment = new Button();
@@ -43,6 +49,7 @@
             btnLMS = new Button();
             pnllmsSubmenu = new Panel();
             panel4 = new Panel();
+            pnlCoursesContent = new Panel();
             panel5 = new Panel();
             panel6 = new Panel();
             label2 = new Label();
@@ -51,10 +58,83 @@
             panel12 = new Panel();
             panel13 = new Panel();
             btnLogout = new Button();
-            pnlCoursesContent = new Panel();
             pnlEnrollContent = new Panel();
-            panel3 = new Panel();
+            btnEnrollSelectAll = new Button();
+            pnlEnrollRightCard = new Panel();
+            label12 = new Label();
+            label13 = new Label();
+            pnlEnrollMiddleCard = new Panel();
+            lblMaximumUnitsValue = new Label();
+            label11 = new Label();
+            pnlEnrollLeftCard = new Panel();
+            label8 = new Label();
+            label9 = new Label();
+            panel2 = new Panel();
+            lblEnrollTotalUnitsValue = new Label();
+            label6 = new Label();
+            dgvEnrollment = new DataGridView();
+            colSelect = new DataGridViewCheckBoxColumn();
+            colCode = new DataGridViewTextBoxColumn();
+            colTitle = new DataGridViewTextBoxColumn();
+            colUnits = new DataGridViewTextBoxColumn();
+            colSchedule = new DataGridViewTextBoxColumn();
+            colStatus = new DataGridViewTextBoxColumn();
+            colAction = new DataGridViewTextBoxColumn();
+            pnlEnrollSearchbar = new Panel();
+            cmbEnrollFilter = new ComboBox();
+            btnEnrollSearch = new Button();
+            txtEnrollSearch = new TextBox();
+            lblAcademicYear = new Label();
+            label5 = new Label();
             pnlAccountsContent = new Panel();
+            dgvAccounts = new DataGridView();
+            colAccountsRefID = new DataGridViewTextBoxColumn();
+            colAccountsDescription = new DataGridViewTextBoxColumn();
+            colAccountsAmount = new DataGridViewTextBoxColumn();
+            colAccountsDueDate = new DataGridViewTextBoxColumn();
+            colAccountsStatus = new DataGridViewTextBoxColumn();
+            colAccountsPaidDate = new DataGridViewTextBoxColumn();
+            btnAccountsDownloadStatement = new Button();
+            lblPaymentHistory = new Label();
+            pnlAccountsSelectSem = new Panel();
+            comboBox1 = new ComboBox();
+            lblSelSem = new Label();
+            panel20 = new Panel();
+            lblBalancePeso = new Label();
+            lblBalance = new Label();
+            pictureBox5 = new PictureBox();
+            panel21 = new Panel();
+            lblTPPeso = new Label();
+            lblTotalPaid = new Label();
+            pictureBox4 = new PictureBox();
+            pnlAccountsFreeEd = new Panel();
+            pictureBox6 = new PictureBox();
+            lblDescription2 = new Label();
+            lblDescription = new Label();
+            lblFreeEducProg = new Label();
+            lblViewPHAB = new Label();
+            panel1 = new Panel();
+            pictureBox3 = new PictureBox();
+            lblTAPeso = new Label();
+            lblTotalAssessment = new Label();
+            lblAccountsandPayments = new Label();
+            lblPaymentMethods2 = new Label();
+            pnlOnlinePayment = new Panel();
+            lblOnlinePayTitle = new Label();
+            lblOnlinePayDesc = new Label();
+            btnPayOnline = new Button();
+            pnlCashier = new Panel();
+            lblCashierTitle = new Label();
+            lblCashierDesc = new Label();
+            btnPaymentSlip = new Button();
+            lblEnrollStatus = new Label();
+            pnlEnrollStatusCard = new Panel();
+            lblEnrollStatusTitle = new Label();
+            lblEnrollStatusDesc = new Label();
+            pnlViewDetails = new Panel();
+            btnEnrollCloseDetails = new Button();
+            label7 = new Label();
+            panel3 = new Panel();
             pnlDashboardContent = new Panel();
             pnlHeader = new Panel();
             panel15 = new Panel();
@@ -62,7 +142,9 @@
             label3 = new Label();
             label4 = new Label();
             pictureBox2 = new PictureBox();
-            pnlYellow = new Panel();
+            cmsEnrollAction = new ContextMenuStrip(components);
+            viewDetailsToolStripMenuItem = new ToolStripMenuItem();
+            dropSubjectToolStripMenuItem = new ToolStripMenuItem();
             pnlSidebar.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             panel7.SuspendLayout();
@@ -76,11 +158,34 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel12.SuspendLayout();
             panel13.SuspendLayout();
+            pnlEnrollContent.SuspendLayout();
+            pnlEnrollRightCard.SuspendLayout();
+            pnlEnrollMiddleCard.SuspendLayout();
+            pnlEnrollLeftCard.SuspendLayout();
+            panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvEnrollment).BeginInit();
+            pnlEnrollSearchbar.SuspendLayout();
+            pnlAccountsContent.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvAccounts).BeginInit();
+            pnlAccountsSelectSem.SuspendLayout();
+            panel20.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
+            panel21.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
+            pnlAccountsFreeEd.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
+            panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
+            pnlOnlinePayment.SuspendLayout();
+            pnlCashier.SuspendLayout();
+            pnlEnrollStatusCard.SuspendLayout();
+            pnlViewDetails.SuspendLayout();
             panel3.SuspendLayout();
             pnlHeader.SuspendLayout();
             panel15.SuspendLayout();
             panel16.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            cmsEnrollAction.SuspendLayout();
             SuspendLayout();
             // 
             // pnlSidebar
@@ -93,7 +198,7 @@
             pnlSidebar.Location = new Point(0, 0);
             pnlSidebar.Margin = new Padding(0);
             pnlSidebar.Name = "pnlSidebar";
-            pnlSidebar.Size = new Size(256, 1061);
+            pnlSidebar.Size = new Size(256, 4413);
             pnlSidebar.TabIndex = 0;
             // 
             // flowLayoutPanel1
@@ -120,6 +225,16 @@
             panel7.Name = "panel7";
             panel7.Size = new Size(256, 48);
             panel7.TabIndex = 0;
+            // 
+            // pnlYellow
+            // 
+            pnlYellow.BackColor = Color.FromArgb(255, 193, 7);
+            pnlYellow.Location = new Point(0, 0);
+            pnlYellow.Margin = new Padding(0);
+            pnlYellow.Name = "pnlYellow";
+            pnlYellow.Size = new Size(4, 48);
+            pnlYellow.TabIndex = 6;
+            pnlYellow.Visible = false;
             // 
             // btnDashboard
             // 
@@ -280,11 +395,25 @@
             // panel4
             // 
             panel4.BackColor = Color.FromArgb(30, 109, 0, 0);
+            panel4.Controls.Add(pnlCoursesContent);
             panel4.Controls.Add(panel5);
             panel4.Location = new Point(0, 69);
             panel4.Name = "panel4";
             panel4.Size = new Size(256, 73);
             panel4.TabIndex = 0;
+            // 
+            // pnlCoursesContent
+            // 
+            pnlCoursesContent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pnlCoursesContent.AutoScroll = true;
+            pnlCoursesContent.BackColor = SystemColors.Control;
+            pnlCoursesContent.CausesValidation = false;
+            pnlCoursesContent.Location = new Point(256, 0);
+            pnlCoursesContent.Margin = new Padding(0);
+            pnlCoursesContent.Name = "pnlCoursesContent";
+            pnlCoursesContent.Size = new Size(1272, 989);
+            pnlCoursesContent.TabIndex = 6;
+            pnlCoursesContent.Visible = false;
             // 
             // panel5
             // 
@@ -376,56 +505,909 @@
             btnLogout.UseVisualStyleBackColor = true;
             btnLogout.Click += btnLogout_Click;
             // 
-            // pnlCoursesContent
-            // 
-            pnlCoursesContent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            pnlCoursesContent.AutoScroll = true;
-            pnlCoursesContent.BackColor = SystemColors.Control;
-            pnlCoursesContent.CausesValidation = false;
-            pnlCoursesContent.Location = new Point(312, 200);
-            pnlCoursesContent.Margin = new Padding(0);
-            pnlCoursesContent.Name = "pnlCoursesContent";
-            pnlCoursesContent.Size = new Size(1272, 989);
-            pnlCoursesContent.TabIndex = 6;
-            pnlCoursesContent.Visible = false;
-            // 
             // pnlEnrollContent
             // 
-            pnlEnrollContent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            pnlEnrollContent.AutoScroll = true;
+            pnlEnrollContent.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pnlEnrollContent.BackColor = SystemColors.Control;
-            pnlEnrollContent.Location = new Point(328, 136);
+            pnlEnrollContent.Controls.Add(btnEnrollSelectAll);
+            pnlEnrollContent.Controls.Add(pnlEnrollRightCard);
+            pnlEnrollContent.Controls.Add(pnlEnrollMiddleCard);
+            pnlEnrollContent.Controls.Add(pnlEnrollLeftCard);
+            pnlEnrollContent.Controls.Add(panel2);
+            pnlEnrollContent.Controls.Add(dgvEnrollment);
+            pnlEnrollContent.Controls.Add(pnlEnrollSearchbar);
+            pnlEnrollContent.Controls.Add(lblAcademicYear);
+            pnlEnrollContent.Controls.Add(label5);
+            pnlEnrollContent.Location = new Point(256, 72);
             pnlEnrollContent.Margin = new Padding(0);
             pnlEnrollContent.Name = "pnlEnrollContent";
-            pnlEnrollContent.Size = new Size(1272, 989);
+            pnlEnrollContent.Size = new Size(1528, 4341);
             pnlEnrollContent.TabIndex = 5;
             pnlEnrollContent.Visible = false;
             // 
+            // btnEnrollSelectAll
+            // 
+            btnEnrollSelectAll.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnEnrollSelectAll.Location = new Point(18, 3941);
+            btnEnrollSelectAll.Name = "btnEnrollSelectAll";
+            btnEnrollSelectAll.Size = new Size(75, 23);
+            btnEnrollSelectAll.TabIndex = 18;
+            btnEnrollSelectAll.Text = "Select All";
+            btnEnrollSelectAll.UseVisualStyleBackColor = true;
+            btnEnrollSelectAll.Click += btnEnrollSelectAll_Click;
+            // 
+            // pnlEnrollRightCard
+            // 
+            pnlEnrollRightCard.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            pnlEnrollRightCard.BackColor = Color.FromArgb(240, 255, 245);
+            pnlEnrollRightCard.BorderStyle = BorderStyle.Fixed3D;
+            pnlEnrollRightCard.Controls.Add(label12);
+            pnlEnrollRightCard.Controls.Add(label13);
+            pnlEnrollRightCard.Location = new Point(836, 4011);
+            pnlEnrollRightCard.Name = "pnlEnrollRightCard";
+            pnlEnrollRightCard.Size = new Size(384, 70);
+            pnlEnrollRightCard.TabIndex = 17;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold);
+            label12.ForeColor = Color.Green;
+            label12.Location = new Point(32, 22);
+            label12.Name = "label12";
+            label12.Size = new Size(105, 32);
+            label12.TabIndex = 1;
+            label12.Text = "BSIT 2-2";
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            label13.ForeColor = Color.Green;
+            label13.Location = new Point(14, 7);
+            label13.Name = "label13";
+            label13.Size = new Size(89, 15);
+            label13.TabIndex = 0;
+            label13.Text = "Current Section";
+            // 
+            // pnlEnrollMiddleCard
+            // 
+            pnlEnrollMiddleCard.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            pnlEnrollMiddleCard.BackColor = Color.FromArgb(250, 240, 255);
+            pnlEnrollMiddleCard.BorderStyle = BorderStyle.Fixed3D;
+            pnlEnrollMiddleCard.Controls.Add(lblMaximumUnitsValue);
+            pnlEnrollMiddleCard.Controls.Add(label11);
+            pnlEnrollMiddleCard.Location = new Point(434, 4011);
+            pnlEnrollMiddleCard.Name = "pnlEnrollMiddleCard";
+            pnlEnrollMiddleCard.Size = new Size(384, 70);
+            pnlEnrollMiddleCard.TabIndex = 16;
+            // 
+            // lblMaximumUnitsValue
+            // 
+            lblMaximumUnitsValue.AutoSize = true;
+            lblMaximumUnitsValue.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold);
+            lblMaximumUnitsValue.ForeColor = Color.BlueViolet;
+            lblMaximumUnitsValue.Location = new Point(32, 22);
+            lblMaximumUnitsValue.Name = "lblMaximumUnitsValue";
+            lblMaximumUnitsValue.Size = new Size(103, 32);
+            lblMaximumUnitsValue.TabIndex = 1;
+            lblMaximumUnitsValue.Text = "23 Units";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            label11.ForeColor = Color.BlueViolet;
+            label11.Location = new Point(12, 7);
+            label11.Name = "label11";
+            label11.Size = new Size(92, 15);
+            label11.TabIndex = 0;
+            label11.Text = "Maximum Units";
+            // 
+            // pnlEnrollLeftCard
+            // 
+            pnlEnrollLeftCard.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            pnlEnrollLeftCard.BackColor = Color.FromArgb(240, 242, 255);
+            pnlEnrollLeftCard.BorderStyle = BorderStyle.Fixed3D;
+            pnlEnrollLeftCard.Controls.Add(label8);
+            pnlEnrollLeftCard.Controls.Add(label9);
+            pnlEnrollLeftCard.Location = new Point(28, 4011);
+            pnlEnrollLeftCard.Name = "pnlEnrollLeftCard";
+            pnlEnrollLeftCard.Size = new Size(384, 70);
+            pnlEnrollLeftCard.TabIndex = 15;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold);
+            label8.ForeColor = Color.MidnightBlue;
+            label8.Location = new Point(32, 22);
+            label8.Name = "label8";
+            label8.Size = new Size(244, 32);
+            label8.TabIndex = 1;
+            label8.Text = "February 1 - 11,  2026";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            label9.ForeColor = Color.MidnightBlue;
+            label9.Location = new Point(15, 7);
+            label9.Name = "label9";
+            label9.Size = new Size(102, 15);
+            label9.TabIndex = 0;
+            label9.Text = "Enrollment Period";
+            // 
+            // panel2
+            // 
+            panel2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            panel2.BackColor = Color.FromArgb(255, 193, 7);
+            panel2.BorderStyle = BorderStyle.Fixed3D;
+            panel2.Controls.Add(lblEnrollTotalUnitsValue);
+            panel2.Controls.Add(label6);
+            panel2.Location = new Point(1415, 13);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(77, 70);
+            panel2.TabIndex = 14;
+            // 
+            // lblEnrollTotalUnitsValue
+            // 
+            lblEnrollTotalUnitsValue.AutoSize = true;
+            lblEnrollTotalUnitsValue.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold);
+            lblEnrollTotalUnitsValue.Location = new Point(32, 22);
+            lblEnrollTotalUnitsValue.Name = "lblEnrollTotalUnitsValue";
+            lblEnrollTotalUnitsValue.Size = new Size(34, 32);
+            lblEnrollTotalUnitsValue.TabIndex = 1;
+            lblEnrollTotalUnitsValue.Text = "11";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            label6.Location = new Point(3, 7);
+            label6.Name = "label6";
+            label6.Size = new Size(63, 15);
+            label6.TabIndex = 0;
+            label6.Text = "Total Units";
+            // 
+            // dgvEnrollment
+            // 
+            dgvEnrollment.AllowUserToAddRows = false;
+            dgvEnrollment.AllowUserToDeleteRows = false;
+            dgvEnrollment.AllowUserToResizeColumns = false;
+            dgvEnrollment.AllowUserToResizeRows = false;
+            dgvEnrollment.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            dgvEnrollment.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvEnrollment.BackgroundColor = SystemColors.ButtonHighlight;
+            dgvEnrollment.BorderStyle = BorderStyle.Fixed3D;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.Maroon;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgvEnrollment.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dgvEnrollment.ColumnHeadersHeight = 29;
+            dgvEnrollment.Columns.AddRange(new DataGridViewColumn[] { colSelect, colCode, colTitle, colUnits, colSchedule, colStatus, colAction });
+            dgvEnrollment.EnableHeadersVisualStyles = false;
+            dgvEnrollment.GridColor = Color.White;
+            dgvEnrollment.Location = new Point(16, 166);
+            dgvEnrollment.Name = "dgvEnrollment";
+            dgvEnrollment.RowHeadersVisible = false;
+            dgvEnrollment.RowHeadersWidth = 51;
+            dgvEnrollment.Size = new Size(1200, 300);
+            dgvEnrollment.TabIndex = 13;
+            dgvEnrollment.CellClick += dgvEnrollment_CellClick;
+            dgvEnrollment.CellPainting += dgvEnrollment_CellPainting;
+            dgvEnrollment.SelectionChanged += dgvEnrollment_SelectionChanged;
+            // 
+            // colSelect
+            // 
+            colSelect.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            colSelect.FillWeight = 142.131973F;
+            colSelect.HeaderText = "";
+            colSelect.MinimumWidth = 6;
+            colSelect.Name = "colSelect";
+            colSelect.Resizable = DataGridViewTriState.False;
+            colSelect.Width = 40;
+            // 
+            // colCode
+            // 
+            colCode.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            colCode.FillWeight = 92.978F;
+            colCode.HeaderText = "Code";
+            colCode.MinimumWidth = 6;
+            colCode.Name = "colCode";
+            colCode.ReadOnly = true;
+            colCode.Resizable = DataGridViewTriState.False;
+            colCode.Width = 120;
+            // 
+            // colTitle
+            // 
+            colTitle.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            colTitle.FillWeight = 92.978F;
+            colTitle.HeaderText = "Course Title";
+            colTitle.MinimumWidth = 6;
+            colTitle.Name = "colTitle";
+            colTitle.ReadOnly = true;
+            colTitle.Resizable = DataGridViewTriState.False;
+            colTitle.Width = 300;
+            // 
+            // colUnits
+            // 
+            colUnits.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            colUnits.DefaultCellStyle = dataGridViewCellStyle2;
+            colUnits.FillWeight = 92.978F;
+            colUnits.HeaderText = "Units";
+            colUnits.MinimumWidth = 6;
+            colUnits.Name = "colUnits";
+            colUnits.ReadOnly = true;
+            colUnits.Resizable = DataGridViewTriState.False;
+            colUnits.Width = 90;
+            // 
+            // colSchedule
+            // 
+            colSchedule.FillWeight = 92.978F;
+            colSchedule.HeaderText = "Schedule";
+            colSchedule.MinimumWidth = 6;
+            colSchedule.Name = "colSchedule";
+            colSchedule.ReadOnly = true;
+            colSchedule.Resizable = DataGridViewTriState.False;
+            // 
+            // colStatus
+            // 
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            colStatus.DefaultCellStyle = dataGridViewCellStyle3;
+            colStatus.FillWeight = 92.978F;
+            colStatus.HeaderText = "Status";
+            colStatus.MinimumWidth = 6;
+            colStatus.Name = "colStatus";
+            colStatus.ReadOnly = true;
+            colStatus.Resizable = DataGridViewTriState.False;
+            // 
+            // colAction
+            // 
+            colAction.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            colAction.HeaderText = "Action";
+            colAction.MinimumWidth = 6;
+            colAction.Name = "colAction";
+            colAction.ReadOnly = true;
+            colAction.Width = 125;
+            // 
+            // pnlEnrollSearchbar
+            // 
+            pnlEnrollSearchbar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            pnlEnrollSearchbar.BackColor = SystemColors.ControlLightLight;
+            pnlEnrollSearchbar.BorderStyle = BorderStyle.FixedSingle;
+            pnlEnrollSearchbar.Controls.Add(cmbEnrollFilter);
+            pnlEnrollSearchbar.Controls.Add(btnEnrollSearch);
+            pnlEnrollSearchbar.Controls.Add(txtEnrollSearch);
+            pnlEnrollSearchbar.Location = new Point(16, 105);
+            pnlEnrollSearchbar.Margin = new Padding(3, 2, 3, 2);
+            pnlEnrollSearchbar.Name = "pnlEnrollSearchbar";
+            pnlEnrollSearchbar.Size = new Size(1476, 46);
+            pnlEnrollSearchbar.TabIndex = 12;
+            // 
+            // cmbEnrollFilter
+            // 
+            cmbEnrollFilter.FormattingEnabled = true;
+            cmbEnrollFilter.Items.AddRange(new object[] { "All", "Course Code ", "Course Title" });
+            cmbEnrollFilter.Location = new Point(16, 11);
+            cmbEnrollFilter.Margin = new Padding(3, 2, 3, 2);
+            cmbEnrollFilter.Name = "cmbEnrollFilter";
+            cmbEnrollFilter.Size = new Size(133, 23);
+            cmbEnrollFilter.TabIndex = 10;
+            // 
+            // btnEnrollSearch
+            // 
+            btnEnrollSearch.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnEnrollSearch.Location = new Point(1380, 10);
+            btnEnrollSearch.Margin = new Padding(3, 2, 3, 2);
+            btnEnrollSearch.Name = "btnEnrollSearch";
+            btnEnrollSearch.Size = new Size(82, 25);
+            btnEnrollSearch.TabIndex = 11;
+            btnEnrollSearch.Text = "Search";
+            btnEnrollSearch.UseVisualStyleBackColor = true;
+            btnEnrollSearch.Click += btnEnrollSearch_Click;
+            // 
+            // txtEnrollSearch
+            // 
+            txtEnrollSearch.AccessibleDescription = "";
+            txtEnrollSearch.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtEnrollSearch.Location = new Point(155, 10);
+            txtEnrollSearch.Margin = new Padding(3, 2, 3, 2);
+            txtEnrollSearch.Name = "txtEnrollSearch";
+            txtEnrollSearch.PlaceholderText = "Search course here by code or title...";
+            txtEnrollSearch.Size = new Size(1222, 23);
+            txtEnrollSearch.TabIndex = 9;
+            txtEnrollSearch.KeyDown += txtEnrollSearch_KeyDown;
+            // 
+            // lblAcademicYear
+            // 
+            lblAcademicYear.AutoSize = true;
+            lblAcademicYear.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblAcademicYear.ForeColor = SystemColors.ControlDarkDark;
+            lblAcademicYear.Location = new Point(16, 60);
+            lblAcademicYear.Name = "lblAcademicYear";
+            lblAcademicYear.Size = new Size(221, 15);
+            lblAcademicYear.TabIndex = 7;
+            lblAcademicYear.Text = "Academic Year 2025-2026 | 2nd Semester";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5.ForeColor = Color.Maroon;
+            label5.Location = new Point(16, 23);
+            label5.Name = "label5";
+            label5.Size = new Size(206, 37);
+            label5.TabIndex = 6;
+            label5.Text = "My Enrollment";
+            // 
+            // pnlAccountsContent
+            // 
+            pnlAccountsContent.AutoScroll = true;
+            pnlAccountsContent.BackColor = Color.WhiteSmoke;
+            pnlAccountsContent.Controls.Add(dgvAccounts);
+            pnlAccountsContent.Controls.Add(btnAccountsDownloadStatement);
+            pnlAccountsContent.Controls.Add(lblPaymentHistory);
+            pnlAccountsContent.Controls.Add(pnlAccountsSelectSem);
+            pnlAccountsContent.Controls.Add(panel20);
+            pnlAccountsContent.Controls.Add(panel21);
+            pnlAccountsContent.Controls.Add(pnlAccountsFreeEd);
+            pnlAccountsContent.Controls.Add(lblViewPHAB);
+            pnlAccountsContent.Controls.Add(panel1);
+            pnlAccountsContent.Controls.Add(lblAccountsandPayments);
+            pnlAccountsContent.Controls.Add(lblPaymentMethods2);
+            pnlAccountsContent.Controls.Add(pnlOnlinePayment);
+            pnlAccountsContent.Controls.Add(pnlCashier);
+            pnlAccountsContent.Controls.Add(lblEnrollStatus);
+            pnlAccountsContent.Controls.Add(pnlEnrollStatusCard);
+            pnlAccountsContent.Location = new Point(0, 0);
+            pnlAccountsContent.Margin = new Padding(0);
+            pnlAccountsContent.Name = "pnlAccountsContent";
+            pnlAccountsContent.Size = new Size(1256, 1400);
+            pnlAccountsContent.TabIndex = 5;
+            pnlAccountsContent.Visible = false;
+            // 
+            // dgvAccounts
+            // 
+            dgvAccounts.AllowUserToAddRows = false;
+            dgvAccounts.AllowUserToDeleteRows = false;
+            dgvAccounts.AllowUserToResizeColumns = false;
+            dgvAccounts.AllowUserToResizeRows = false;
+            dgvAccounts.BackgroundColor = Color.White;
+            dgvAccounts.BorderStyle = BorderStyle.None;
+            dgvAccounts.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(245, 247, 250);
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle4.ForeColor = Color.FromArgb(60, 60, 60);
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            dgvAccounts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dgvAccounts.ColumnHeadersHeight = 45;
+            dgvAccounts.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dgvAccounts.Columns.AddRange(new DataGridViewColumn[] { colAccountsRefID, colAccountsDescription, colAccountsAmount, colAccountsDueDate, colAccountsStatus, colAccountsPaidDate });
+            dgvAccounts.EnableHeadersVisualStyles = false;
+            dgvAccounts.GridColor = Color.Gainsboro;
+            dgvAccounts.Location = new Point(19, 575);
+            dgvAccounts.Name = "dgvAccounts";
+            dgvAccounts.RowHeadersVisible = false;
+            dgvAccounts.RowHeadersWidth = 51;
+            dgvAccounts.Size = new Size(1210, 400);
+            dgvAccounts.TabIndex = 11;
+            // 
+            // colAccountsRefID
+            // 
+            colAccountsRefID.HeaderText = "Reference ID";
+            colAccountsRefID.MinimumWidth = 6;
+            colAccountsRefID.Name = "colAccountsRefID";
+            colAccountsRefID.Width = 125;
+            // 
+            // colAccountsDescription
+            // 
+            colAccountsDescription.HeaderText = "Description";
+            colAccountsDescription.MinimumWidth = 6;
+            colAccountsDescription.Name = "colAccountsDescription";
+            colAccountsDescription.Width = 125;
+            // 
+            // colAccountsAmount
+            // 
+            colAccountsAmount.HeaderText = "Amount";
+            colAccountsAmount.MinimumWidth = 6;
+            colAccountsAmount.Name = "colAccountsAmount";
+            colAccountsAmount.Width = 125;
+            // 
+            // colAccountsDueDate
+            // 
+            colAccountsDueDate.HeaderText = "Due Date";
+            colAccountsDueDate.MinimumWidth = 6;
+            colAccountsDueDate.Name = "colAccountsDueDate";
+            colAccountsDueDate.Width = 125;
+            // 
+            // colAccountsStatus
+            // 
+            colAccountsStatus.HeaderText = "Status";
+            colAccountsStatus.MinimumWidth = 6;
+            colAccountsStatus.Name = "colAccountsStatus";
+            colAccountsStatus.Width = 125;
+            // 
+            // colAccountsPaidDate
+            // 
+            colAccountsPaidDate.HeaderText = "Paid Date";
+            colAccountsPaidDate.MinimumWidth = 6;
+            colAccountsPaidDate.Name = "colAccountsPaidDate";
+            colAccountsPaidDate.Width = 125;
+            // 
+            // btnAccountsDownloadStatement
+            // 
+            btnAccountsDownloadStatement.BackColor = Color.DarkRed;
+            btnAccountsDownloadStatement.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnAccountsDownloadStatement.ForeColor = SystemColors.ControlLightLight;
+            btnAccountsDownloadStatement.Image = Properties.Resources.download_icon_;
+            btnAccountsDownloadStatement.Location = new Point(983, 515);
+            btnAccountsDownloadStatement.Name = "btnAccountsDownloadStatement";
+            btnAccountsDownloadStatement.Size = new Size(246, 41);
+            btnAccountsDownloadStatement.TabIndex = 10;
+            btnAccountsDownloadStatement.Text = "Download Statement";
+            btnAccountsDownloadStatement.TextAlign = ContentAlignment.MiddleRight;
+            btnAccountsDownloadStatement.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnAccountsDownloadStatement.UseVisualStyleBackColor = false;
+            // 
+            // lblPaymentHistory
+            // 
+            lblPaymentHistory.AutoSize = true;
+            lblPaymentHistory.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblPaymentHistory.ForeColor = Color.Maroon;
+            lblPaymentHistory.Location = new Point(14, 522);
+            lblPaymentHistory.Name = "lblPaymentHistory";
+            lblPaymentHistory.Size = new Size(161, 25);
+            lblPaymentHistory.TabIndex = 9;
+            lblPaymentHistory.Text = "Payment History";
+            // 
+            // panel17
+            // 
+            pnlAccountsSelectSem.BackColor = Color.White;
+            pnlAccountsSelectSem.BorderStyle = BorderStyle.FixedSingle;
+            pnlAccountsSelectSem.Controls.Add(comboBox1);
+            pnlAccountsSelectSem.Controls.Add(lblSelSem);
+            pnlAccountsSelectSem.Location = new Point(19, 404);
+            pnlAccountsSelectSem.Name = "panel17";
+            pnlAccountsSelectSem.Size = new Size(1210, 77);
+            pnlAccountsSelectSem.TabIndex = 8;
+            // 
+            // comboBox1
+            // 
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Items.AddRange(new object[] { "1st Semester", "2nd Semester", "3rd Semester", "4th Semester" });
+            comboBox1.Location = new Point(13, 35);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(254, 23);
+            comboBox1.TabIndex = 5;
+            comboBox1.Text = "Select...";
+            // 
+            // lblSelSem
+            // 
+            lblSelSem.AutoSize = true;
+            lblSelSem.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblSelSem.ForeColor = SystemColors.WindowFrame;
+            lblSelSem.Location = new Point(13, 11);
+            lblSelSem.Name = "lblSelSem";
+            lblSelSem.Size = new Size(128, 21);
+            lblSelSem.TabIndex = 4;
+            lblSelSem.Text = "Select Semester";
+            // 
+            // panel20
+            // 
+            panel20.BackColor = SystemColors.ControlLightLight;
+            panel20.BorderStyle = BorderStyle.FixedSingle;
+            panel20.Controls.Add(lblBalancePeso);
+            panel20.Controls.Add(lblBalance);
+            panel20.Controls.Add(pictureBox5);
+            panel20.Location = new Point(842, 111);
+            panel20.Name = "panel20";
+            panel20.Size = new Size(387, 133);
+            panel20.TabIndex = 5;
+            // 
+            // lblBalancePeso
+            // 
+            lblBalancePeso.AutoSize = true;
+            lblBalancePeso.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblBalancePeso.ForeColor = Color.Black;
+            lblBalancePeso.Location = new Point(55, 52);
+            lblBalancePeso.Name = "lblBalancePeso";
+            lblBalancePeso.Size = new Size(102, 47);
+            lblBalancePeso.TabIndex = 6;
+            lblBalancePeso.Text = "₱750";
+            // 
+            // lblBalance
+            // 
+            lblBalance.AutoSize = true;
+            lblBalance.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblBalance.ForeColor = Color.DimGray;
+            lblBalance.Location = new Point(22, 21);
+            lblBalance.Name = "lblBalance";
+            lblBalance.Size = new Size(99, 32);
+            lblBalance.TabIndex = 5;
+            lblBalance.Text = "Balance";
+            // 
+            // pictureBox5
+            // 
+            pictureBox5.BackColor = Color.Maroon;
+            pictureBox5.BorderStyle = BorderStyle.Fixed3D;
+            pictureBox5.Image = Properties.Resources.warning_4_1281;
+            pictureBox5.Location = new Point(281, 24);
+            pictureBox5.Name = "pictureBox5";
+            pictureBox5.Size = new Size(95, 81);
+            pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox5.TabIndex = 3;
+            pictureBox5.TabStop = false;
+            // 
+            // panel21
+            // 
+            panel21.BackColor = SystemColors.ControlLightLight;
+            panel21.BorderStyle = BorderStyle.FixedSingle;
+            panel21.Controls.Add(lblTPPeso);
+            panel21.Controls.Add(lblTotalPaid);
+            panel21.Controls.Add(pictureBox4);
+            panel21.Location = new Point(428, 111);
+            panel21.Name = "panel21";
+            panel21.Size = new Size(387, 133);
+            panel21.TabIndex = 5;
+            // 
+            // lblTPPeso
+            // 
+            lblTPPeso.AutoSize = true;
+            lblTPPeso.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTPPeso.ForeColor = Color.Black;
+            lblTPPeso.Location = new Point(50, 52);
+            lblTPPeso.Name = "lblTPPeso";
+            lblTPPeso.Size = new Size(102, 47);
+            lblTPPeso.TabIndex = 6;
+            lblTPPeso.Text = "₱750";
+            // 
+            // lblTotalPaid
+            // 
+            lblTotalPaid.AutoSize = true;
+            lblTotalPaid.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTotalPaid.ForeColor = Color.DimGray;
+            lblTotalPaid.Location = new Point(27, 21);
+            lblTotalPaid.Name = "lblTotalPaid";
+            lblTotalPaid.Size = new Size(120, 32);
+            lblTotalPaid.TabIndex = 5;
+            lblTotalPaid.Text = "Total Paid";
+            // 
+            // pictureBox4
+            // 
+            pictureBox4.BackColor = Color.Maroon;
+            pictureBox4.BorderStyle = BorderStyle.Fixed3D;
+            pictureBox4.Image = Properties.Resources.check_mark_6_48;
+            pictureBox4.Location = new Point(279, 22);
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.Size = new Size(88, 83);
+            pictureBox4.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox4.TabIndex = 3;
+            pictureBox4.TabStop = false;
+            // 
+            // panel19
+            // 
+            pnlAccountsFreeEd.BackColor = Color.DarkRed;
+            pnlAccountsFreeEd.BorderStyle = BorderStyle.Fixed3D;
+            pnlAccountsFreeEd.Controls.Add(pictureBox6);
+            pnlAccountsFreeEd.Controls.Add(lblDescription2);
+            pnlAccountsFreeEd.Controls.Add(lblDescription);
+            pnlAccountsFreeEd.Controls.Add(lblFreeEducProg);
+            pnlAccountsFreeEd.Location = new Point(19, 260);
+            pnlAccountsFreeEd.Name = "panel19";
+            pnlAccountsFreeEd.Size = new Size(1210, 135);
+            pnlAccountsFreeEd.TabIndex = 7;
+            // 
+            // pictureBox6
+            // 
+            pictureBox6.BackColor = Color.IndianRed;
+            pictureBox6.BorderStyle = BorderStyle.FixedSingle;
+            pictureBox6.Image = Properties.Resources.document_icon;
+            pictureBox6.Location = new Point(12, 17);
+            pictureBox6.Name = "pictureBox6";
+            pictureBox6.Size = new Size(78, 96);
+            pictureBox6.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox6.TabIndex = 10;
+            pictureBox6.TabStop = false;
+            // 
+            // lblDescription2
+            // 
+            lblDescription2.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            lblDescription2.ForeColor = Color.WhiteSmoke;
+            lblDescription2.Location = new Point(96, 91);
+            lblDescription2.Name = "lblDescription2";
+            lblDescription2.Size = new Size(1073, 35);
+            lblDescription2.TabIndex = 9;
+            lblDescription2.Text = "Note: Some laboratory fees, ID replacement, and other special fees may still apply.";
+            // 
+            // lblDescription
+            // 
+            lblDescription.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            lblDescription.ForeColor = Color.White;
+            lblDescription.Location = new Point(96, 44);
+            lblDescription.Name = "lblDescription";
+            lblDescription.Size = new Size(1092, 47);
+            lblDescription.TabIndex = 8;
+            lblDescription.Text = "As a student of Polytechnic University of the Philippines, you are covered under the Free Higher Education Act (RA 10391). Tuition and miscellaneous fees are subsidized by the government";
+            // 
+            // lblFreeEducProg
+            // 
+            lblFreeEducProg.AutoSize = true;
+            lblFreeEducProg.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblFreeEducProg.ForeColor = Color.White;
+            lblFreeEducProg.Location = new Point(96, 19);
+            lblFreeEducProg.Name = "lblFreeEducProg";
+            lblFreeEducProg.Size = new Size(228, 25);
+            lblFreeEducProg.TabIndex = 8;
+            lblFreeEducProg.Text = "Free Education Program";
+            // 
+            // lblViewPHAB
+            // 
+            lblViewPHAB.AutoSize = true;
+            lblViewPHAB.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            lblViewPHAB.ForeColor = Color.DimGray;
+            lblViewPHAB.Location = new Point(16, 56);
+            lblViewPHAB.Name = "lblViewPHAB";
+            lblViewPHAB.Size = new Size(311, 19);
+            lblViewPHAB.TabIndex = 2;
+            lblViewPHAB.Text = "View your payment history and account balance";
+            // 
+            // panel1
+            // 
+            panel1.BackColor = SystemColors.ControlLightLight;
+            panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(pictureBox3);
+            panel1.Controls.Add(lblTAPeso);
+            panel1.Controls.Add(lblTotalAssessment);
+            panel1.Location = new Point(19, 111);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(387, 133);
+            panel1.TabIndex = 1;
+            // 
+            // pictureBox3
+            // 
+            pictureBox3.BackColor = Color.Maroon;
+            pictureBox3.BorderStyle = BorderStyle.Fixed3D;
+            pictureBox3.Image = Properties.Resources.peso_icon;
+            pictureBox3.Location = new Point(269, 22);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(95, 85);
+            pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox3.TabIndex = 3;
+            pictureBox3.TabStop = false;
+            // 
+            // lblTAPeso
+            // 
+            lblTAPeso.AutoSize = true;
+            lblTAPeso.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTAPeso.ForeColor = Color.Black;
+            lblTAPeso.Location = new Point(48, 52);
+            lblTAPeso.Name = "lblTAPeso";
+            lblTAPeso.Size = new Size(102, 47);
+            lblTAPeso.TabIndex = 4;
+            lblTAPeso.Text = "₱750";
+            // 
+            // lblTotalAssessment
+            // 
+            lblTotalAssessment.AutoSize = true;
+            lblTotalAssessment.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTotalAssessment.ForeColor = Color.DimGray;
+            lblTotalAssessment.Location = new Point(23, 21);
+            lblTotalAssessment.Name = "lblTotalAssessment";
+            lblTotalAssessment.Size = new Size(200, 32);
+            lblTotalAssessment.TabIndex = 3;
+            lblTotalAssessment.Text = "Total Assessment";
+            // 
+            // lblAccountsandPayments
+            // 
+            lblAccountsandPayments.AutoSize = true;
+            lblAccountsandPayments.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblAccountsandPayments.ForeColor = Color.Maroon;
+            lblAccountsandPayments.Location = new Point(16, 24);
+            lblAccountsandPayments.Name = "lblAccountsandPayments";
+            lblAccountsandPayments.Size = new Size(287, 32);
+            lblAccountsandPayments.TabIndex = 0;
+            lblAccountsandPayments.Text = "Accounts and Payments";
+            // 
+            // lblPaymentMethods2
+            // 
+            lblPaymentMethods2.AutoSize = true;
+            lblPaymentMethods2.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            lblPaymentMethods2.ForeColor = Color.Maroon;
+            lblPaymentMethods2.Location = new Point(16, 1000);
+            lblPaymentMethods2.Name = "lblPaymentMethods2";
+            lblPaymentMethods2.Size = new Size(173, 25);
+            lblPaymentMethods2.TabIndex = 13;
+            lblPaymentMethods2.Text = "Payment Methods";
+            // 
+            // pnlOnlinePayment
+            // 
+            pnlOnlinePayment.BackColor = Color.White;
+            pnlOnlinePayment.BorderStyle = BorderStyle.FixedSingle;
+            pnlOnlinePayment.Controls.Add(lblOnlinePayTitle);
+            pnlOnlinePayment.Controls.Add(lblOnlinePayDesc);
+            pnlOnlinePayment.Controls.Add(btnPayOnline);
+            pnlOnlinePayment.Location = new Point(19, 1040);
+            pnlOnlinePayment.Name = "pnlOnlinePayment";
+            pnlOnlinePayment.Size = new Size(590, 130);
+            pnlOnlinePayment.TabIndex = 14;
+            // 
+            // lblOnlinePayTitle
+            // 
+            lblOnlinePayTitle.AutoSize = true;
+            lblOnlinePayTitle.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            lblOnlinePayTitle.Location = new Point(70, 15);
+            lblOnlinePayTitle.Name = "lblOnlinePayTitle";
+            lblOnlinePayTitle.Size = new Size(120, 20);
+            lblOnlinePayTitle.TabIndex = 0;
+            lblOnlinePayTitle.Text = "Online Payment";
+            // 
+            // lblOnlinePayDesc
+            // 
+            lblOnlinePayDesc.AutoSize = true;
+            lblOnlinePayDesc.Font = new Font("Segoe UI", 9F);
+            lblOnlinePayDesc.ForeColor = Color.Gray;
+            lblOnlinePayDesc.Location = new Point(70, 38);
+            lblOnlinePayDesc.Name = "lblOnlinePayDesc";
+            lblOnlinePayDesc.Size = new Size(231, 15);
+            lblOnlinePayDesc.TabIndex = 1;
+            lblOnlinePayDesc.Text = "Pay via credit/debit card or online banking";
+            // 
+            // btnPayOnline
+            // 
+            btnPayOnline.BackColor = Color.FromArgb(240, 240, 240);
+            btnPayOnline.FlatAppearance.BorderColor = Color.FromArgb(200, 200, 200);
+            btnPayOnline.FlatStyle = FlatStyle.Flat;
+            btnPayOnline.Font = new Font("Segoe UI", 10F);
+            btnPayOnline.Location = new Point(10, 80);
+            btnPayOnline.Name = "btnPayOnline";
+            btnPayOnline.Size = new Size(565, 35);
+            btnPayOnline.TabIndex = 2;
+            btnPayOnline.Text = "Pay Online";
+            btnPayOnline.UseVisualStyleBackColor = false;
+            // 
+            // pnlCashier
+            // 
+            pnlCashier.BackColor = Color.White;
+            pnlCashier.BorderStyle = BorderStyle.FixedSingle;
+            pnlCashier.Controls.Add(lblCashierTitle);
+            pnlCashier.Controls.Add(lblCashierDesc);
+            pnlCashier.Controls.Add(btnPaymentSlip);
+            pnlCashier.Location = new Point(625, 1040);
+            pnlCashier.Name = "pnlCashier";
+            pnlCashier.Size = new Size(590, 130);
+            pnlCashier.TabIndex = 15;
+            // 
+            // lblCashierTitle
+            // 
+            lblCashierTitle.AutoSize = true;
+            lblCashierTitle.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            lblCashierTitle.Location = new Point(70, 15);
+            lblCashierTitle.Name = "lblCashierTitle";
+            lblCashierTitle.Size = new Size(116, 20);
+            lblCashierTitle.TabIndex = 0;
+            lblCashierTitle.Text = "Cashier's Office";
+            // 
+            // lblCashierDesc
+            // 
+            lblCashierDesc.AutoSize = true;
+            lblCashierDesc.Font = new Font("Segoe UI", 9F);
+            lblCashierDesc.ForeColor = Color.Gray;
+            lblCashierDesc.Location = new Point(70, 38);
+            lblCashierDesc.Name = "lblCashierDesc";
+            lblCashierDesc.Size = new Size(196, 15);
+            lblCashierDesc.TabIndex = 1;
+            lblCashierDesc.Text = "Pay in person at the Cashier's Office";
+            // 
+            // btnPaymentSlip
+            // 
+            btnPaymentSlip.BackColor = Color.FromArgb(240, 240, 240);
+            btnPaymentSlip.FlatAppearance.BorderColor = Color.FromArgb(200, 200, 200);
+            btnPaymentSlip.FlatStyle = FlatStyle.Flat;
+            btnPaymentSlip.Font = new Font("Segoe UI", 10F);
+            btnPaymentSlip.Location = new Point(10, 80);
+            btnPaymentSlip.Name = "btnPaymentSlip";
+            btnPaymentSlip.Size = new Size(565, 35);
+            btnPaymentSlip.TabIndex = 2;
+            btnPaymentSlip.Text = "Get Payment Slip";
+            btnPaymentSlip.UseVisualStyleBackColor = false;
+            // 
+            // lblEnrollStatus
+            // 
+            lblEnrollStatus.AutoSize = true;
+            lblEnrollStatus.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            lblEnrollStatus.ForeColor = Color.Maroon;
+            lblEnrollStatus.Location = new Point(16, 1200);
+            lblEnrollStatus.Name = "lblEnrollStatus";
+            lblEnrollStatus.Size = new Size(170, 25);
+            lblEnrollStatus.TabIndex = 16;
+            lblEnrollStatus.Text = "Enrollment Status";
+            // 
+            // pnlEnrollStatusCard
+            // 
+            pnlEnrollStatusCard.BackColor = Color.FromArgb(240, 255, 245);
+            pnlEnrollStatusCard.BorderStyle = BorderStyle.FixedSingle;
+            pnlEnrollStatusCard.Controls.Add(lblEnrollStatusTitle);
+            pnlEnrollStatusCard.Controls.Add(lblEnrollStatusDesc);
+            pnlEnrollStatusCard.Location = new Point(19, 1240);
+            pnlEnrollStatusCard.Name = "pnlEnrollStatusCard";
+            pnlEnrollStatusCard.Size = new Size(1196, 80);
+            pnlEnrollStatusCard.TabIndex = 17;
+            // 
+            // lblEnrollStatusTitle
+            // 
+            lblEnrollStatusTitle.AutoSize = true;
+            lblEnrollStatusTitle.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            lblEnrollStatusTitle.ForeColor = Color.Green;
+            lblEnrollStatusTitle.Location = new Point(70, 15);
+            lblEnrollStatusTitle.Name = "lblEnrollStatusTitle";
+            lblEnrollStatusTitle.Size = new Size(132, 20);
+            lblEnrollStatusTitle.TabIndex = 0;
+            lblEnrollStatusTitle.Text = "Officially Enrolled";
+            // 
+            // lblEnrollStatusDesc
+            // 
+            lblEnrollStatusDesc.AutoSize = true;
+            lblEnrollStatusDesc.Font = new Font("Segoe UI", 9F);
+            lblEnrollStatusDesc.ForeColor = Color.Green;
+            lblEnrollStatusDesc.Location = new Point(70, 38);
+            lblEnrollStatusDesc.Name = "lblEnrollStatusDesc";
+            lblEnrollStatusDesc.Size = new Size(380, 15);
+            lblEnrollStatusDesc.TabIndex = 1;
+            lblEnrollStatusDesc.Text = "Your enrollment is confirmed. You may now proceed with your classes.";
+            // 
+            // pnlViewDetails
+            // 
+            pnlViewDetails.BackColor = Color.White;
+            pnlViewDetails.BorderStyle = BorderStyle.FixedSingle;
+            pnlViewDetails.Controls.Add(btnEnrollCloseDetails);
+            pnlViewDetails.Controls.Add(label7);
+            pnlViewDetails.Location = new Point(269, 71);
+            pnlViewDetails.Name = "pnlViewDetails";
+            pnlViewDetails.Size = new Size(498, 410);
+            pnlViewDetails.TabIndex = 0;
+            pnlViewDetails.Visible = false;
+            // 
+            // btnEnrollCloseDetails
+            // 
+            btnEnrollCloseDetails.Location = new Point(411, 365);
+            btnEnrollCloseDetails.Name = "btnEnrollCloseDetails";
+            btnEnrollCloseDetails.Size = new Size(75, 23);
+            btnEnrollCloseDetails.TabIndex = 1;
+            btnEnrollCloseDetails.Text = "Close";
+            btnEnrollCloseDetails.UseVisualStyleBackColor = true;
+            btnEnrollCloseDetails.Click += btnEnrollCloseDetails_Click;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(14, 21);
+            label7.Name = "label7";
+            label7.Size = new Size(84, 15);
+            label7.TabIndex = 0;
+            label7.Text = "Subject Details";
+            // 
             // panel3
             // 
-            panel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panel3.Controls.Add(pnlCoursesContent);
+            panel3.AutoScroll = true;
             panel3.Controls.Add(pnlAccountsContent);
             panel3.Controls.Add(pnlEnrollContent);
             panel3.Controls.Add(pnlDashboardContent);
             panel3.Controls.Add(pnlHeader);
             panel3.Controls.Add(pnlSidebar);
+            panel3.Dock = DockStyle.Fill;
             panel3.Location = new Point(0, 0);
             panel3.Name = "panel3";
-            panel3.Size = new Size(1528, 1061);
+            panel3.Size = new Size(1512, 881);
             panel3.TabIndex = 0;
-            // 
-            // pnlAccountsContent
-            // 
-            pnlAccountsContent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            pnlAccountsContent.AutoScroll = true;
-            pnlAccountsContent.BackColor = SystemColors.Control;
-            pnlAccountsContent.Location = new Point(288, 272);
-            pnlAccountsContent.Margin = new Padding(0);
-            pnlAccountsContent.Name = "pnlAccountsContent";
-            pnlAccountsContent.Size = new Size(1272, 989);
-            pnlAccountsContent.TabIndex = 5;
-            pnlAccountsContent.Visible = false;
             // 
             // pnlDashboardContent
             // 
@@ -435,7 +1417,7 @@
             pnlDashboardContent.Location = new Point(352, 104);
             pnlDashboardContent.Margin = new Padding(0);
             pnlDashboardContent.Name = "pnlDashboardContent";
-            pnlDashboardContent.Size = new Size(1272, 989);
+            pnlDashboardContent.Size = new Size(1239, 26931);
             pnlDashboardContent.TabIndex = 4;
             pnlDashboardContent.Visible = false;
             // 
@@ -447,7 +1429,7 @@
             pnlHeader.Location = new Point(256, 0);
             pnlHeader.Margin = new Padding(0);
             pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(1272, 72);
+            pnlHeader.Size = new Size(1239, 72);
             pnlHeader.TabIndex = 2;
             // 
             // panel15
@@ -501,27 +1483,40 @@
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
             // 
-            // pnlYellow
+            // cmsEnrollAction
             // 
-            pnlYellow.BackColor = Color.FromArgb(255, 193, 7);
-            pnlYellow.Location = new Point(0, 0);
-            pnlYellow.Margin = new Padding(0);
-            pnlYellow.Name = "pnlYellow";
-            pnlYellow.Size = new Size(4, 48);
-            pnlYellow.TabIndex = 6;
-            pnlYellow.Visible = false;
+            cmsEnrollAction.ImageScalingSize = new Size(20, 20);
+            cmsEnrollAction.Items.AddRange(new ToolStripItem[] { viewDetailsToolStripMenuItem, dropSubjectToolStripMenuItem });
+            cmsEnrollAction.Name = "cmsAction";
+            cmsEnrollAction.Size = new Size(143, 48);
+            // 
+            // viewDetailsToolStripMenuItem
+            // 
+            viewDetailsToolStripMenuItem.Name = "viewDetailsToolStripMenuItem";
+            viewDetailsToolStripMenuItem.Size = new Size(142, 22);
+            viewDetailsToolStripMenuItem.Text = "View Details";
+            viewDetailsToolStripMenuItem.Click += Enrollment_viewDetailsToolStripMenuItem_Click;
+            // 
+            // dropSubjectToolStripMenuItem
+            // 
+            dropSubjectToolStripMenuItem.Name = "dropSubjectToolStripMenuItem";
+            dropSubjectToolStripMenuItem.Size = new Size(142, 22);
+            dropSubjectToolStripMenuItem.Text = "Drop Subject";
             // 
             // StudentPortal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1528, 1061);
+            AutoScroll = true;
+            ClientSize = new Size(1512, 881);
             Controls.Add(panel3);
+            Controls.Add(pnlViewDetails);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "StudentPortal";
             StartPosition = FormStartPosition.CenterParent;
             Text = "StudentPortal";
             FormClosing += StudentPortal_Closing;
+            Load += StudentPortal_Load;
             pnlSidebar.ResumeLayout(false);
             flowLayoutPanel1.ResumeLayout(false);
             panel7.ResumeLayout(false);
@@ -536,12 +1531,51 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel12.ResumeLayout(false);
             panel13.ResumeLayout(false);
+            pnlEnrollContent.ResumeLayout(false);
+            pnlEnrollContent.PerformLayout();
+            pnlEnrollRightCard.ResumeLayout(false);
+            pnlEnrollRightCard.PerformLayout();
+            pnlEnrollMiddleCard.ResumeLayout(false);
+            pnlEnrollMiddleCard.PerformLayout();
+            pnlEnrollLeftCard.ResumeLayout(false);
+            pnlEnrollLeftCard.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvEnrollment).EndInit();
+            pnlEnrollSearchbar.ResumeLayout(false);
+            pnlEnrollSearchbar.PerformLayout();
+            pnlAccountsContent.ResumeLayout(false);
+            pnlAccountsContent.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvAccounts).EndInit();
+            pnlAccountsSelectSem.ResumeLayout(false);
+            pnlAccountsSelectSem.PerformLayout();
+            panel20.ResumeLayout(false);
+            panel20.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
+            panel21.ResumeLayout(false);
+            panel21.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
+            pnlAccountsFreeEd.ResumeLayout(false);
+            pnlAccountsFreeEd.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
+            pnlOnlinePayment.ResumeLayout(false);
+            pnlOnlinePayment.PerformLayout();
+            pnlCashier.ResumeLayout(false);
+            pnlCashier.PerformLayout();
+            pnlEnrollStatusCard.ResumeLayout(false);
+            pnlEnrollStatusCard.PerformLayout();
+            pnlViewDetails.ResumeLayout(false);
+            pnlViewDetails.PerformLayout();
             panel3.ResumeLayout(false);
             pnlHeader.ResumeLayout(false);
             panel15.ResumeLayout(false);
             panel15.PerformLayout();
             panel16.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            cmsEnrollAction.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -581,5 +1615,82 @@
         private Panel pnlCoursesContent;
         private Panel pnlAccountsContent;
         private Panel pnlYellow;
+        private Label label5;
+        private Label lblAcademicYear;
+        private Button btnEnrollSearch;
+        private ComboBox cmbEnrollFilter;
+        private TextBox txtEnrollSearch;
+        private Panel pnlEnrollSearchbar;
+        private DataGridView dgvEnrollment;
+        private Panel panel2;
+        private Label label6;
+        private Label lblEnrollTotalUnitsValue;
+        private Panel pnlEnrollRightCard;
+        private Label label12;
+        private Label label13;
+        private Panel pnlEnrollMiddleCard;
+        private Label lblMaximumUnitsValue;
+        private Label label11;
+        private Panel pnlEnrollLeftCard;
+        private Label label8;
+        private Label label9;
+        private Button btnEnrollSelectAll;
+        private ContextMenuStrip cmsEnrollAction;
+        private ToolStripMenuItem viewDetailsToolStripMenuItem;
+        private ToolStripMenuItem dropSubjectToolStripMenuItem;
+        private Panel pnlViewDetails;
+        private Button btnEnrollCloseDetails;
+        private Label label7;
+        private DataGridViewCheckBoxColumn colSelect;
+        private DataGridViewTextBoxColumn colCode;
+        private DataGridViewTextBoxColumn colTitle;
+        private DataGridViewTextBoxColumn colUnits;
+        private DataGridViewTextBoxColumn colSchedule;
+        private DataGridViewTextBoxColumn colStatus;
+        private DataGridViewTextBoxColumn colAction;
+        private Panel panel1;
+        private Label lblAccountsandPayments;
+        private Label lblViewPHAB;
+        private Label lblTotalAssessment;
+        private PictureBox pictureBox3;
+        private Label lblTAPeso;
+        private PictureBox pictureBox5;
+        private PictureBox pictureBox4;
+        private Panel pnlAccountsFreeEd;
+        private Label lblFreeEducProg;
+        private Label lblDescription;
+        private Panel panel20;
+        private Panel panel21;
+        private Label lblBalancePeso;
+        private Label lblBalance;
+        private Label lblTPPeso;
+        private Label lblTotalPaid;
+        private Label lblDescription2;
+        private PictureBox pictureBox6;
+        private Panel pnlAccountsSelectSem;
+        private ComboBox comboBox1;
+        private Label lblSelSem;
+        private Button btnAccountsDownloadStatement;
+        private Label lblPaymentHistory;
+        private DataGridView dgvAccounts;
+        private DataGridViewTextBoxColumn colAccountsRefID;
+        private DataGridViewTextBoxColumn colAccountsDescription;
+        private DataGridViewTextBoxColumn colAccountsAmount;
+        private DataGridViewTextBoxColumn colAccountsDueDate;
+        private DataGridViewTextBoxColumn colAccountsStatus;
+        private DataGridViewTextBoxColumn colAccountsPaidDate;
+        private Label lblPaymentMethods2;
+        private Panel pnlOnlinePayment;
+        private Label lblOnlinePayTitle;
+        private Label lblOnlinePayDesc;
+        private Button btnPayOnline;
+        private Panel pnlCashier;
+        private Label lblCashierTitle;
+        private Label lblCashierDesc;
+        private Button btnPaymentSlip;
+        private Label lblEnrollStatus;
+        private Panel pnlEnrollStatusCard;
+        private Label lblEnrollStatusTitle;
+        private Label lblEnrollStatusDesc;
     }
 }
