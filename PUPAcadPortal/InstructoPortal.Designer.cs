@@ -339,6 +339,16 @@
             panel13.Size = new Size(256, 64);
             panel13.TabIndex = 4;
             // 
+            // pnlYellow
+            // 
+            pnlYellow = new Panel();
+            pnlYellow.Name = "pnlYellow";
+            pnlYellow.Size = new Size(6, 64);
+            pnlYellow.BackColor = Color.Gold;
+            pnlYellow.Visible = false;
+            // add to sidebar initially; changeButtonColor will reparent it as needed
+            pnlSidebar.Controls.Add(pnlYellow);
+            // 
             // btnLogout
             // 
             btnLogout.BackgroundImageLayout = ImageLayout.None;

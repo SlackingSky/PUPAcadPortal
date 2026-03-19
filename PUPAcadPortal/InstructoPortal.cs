@@ -373,14 +373,32 @@ namespace PUPAcadPortal
 
         private void changeButtonColor(Button button)
         {
+            // guard: don't proceed if no button provided
+            if (button == null) return;
+
             if (clickedButton != null)
             {
                 clickedButton.BackColor = defaultColor;
             }
+
             clickedButton = button;
-            pnlYellow.Visible = true;
-            pnlYellow.Parent = clickedButton.Parent;
-            pnlYellow.BringToFront();
+
+            // ensure pnlYellow exists (lazy init) to avoid NullReferenceException
+            if (pnlYellow == null)
+            {
+                pnlYellow = new Panel
+                {
+                    Name = "pnlYellow",
+                    Size = new Size(6, 64),
+                    BackColor = Color.Gold,
+                    Visible = false
+                };
+                if (pnlSidebar != null)
+                    pnlSidebar.Controls.Add(pnlYellow);
+                else
+                    this.Controls.Add(pnlYellow);
+            }
+            if (clickedButton?.Parent != null)
             clickedButton.BackColor = selectedColor;
         }
 
