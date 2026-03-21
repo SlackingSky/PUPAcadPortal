@@ -16,7 +16,10 @@ namespace PUPAcadPortal
         public InstructorPortal()
         {
             InitializeComponent();
+            pnlAttendance.AutoScrollMinSize = new Size(0, 1000);
         }
+
+
 
         private void changeButtonColor(Button button)
         {
@@ -197,84 +200,28 @@ namespace PUPAcadPortal
             timer1.Start();
         }
 
-        private void Sub1_MouseClick(object sender, MouseEventArgs e)
-        {
-            pnlSubMenuMain.Visible = !pnlSubMenuMain.Visible;
-
-            // Optional: Bring it to the front to ensure it's not hidden behind other UI elements
-            if (pnlSubMenuMain.Visible)
-            {
-                pnlSubMenuMain.BringToFront();
-            }
-
-
-        }
 
         private void Sub1_Paint(object sender, PaintEventArgs e)
         {
 
         }
         bool sidebarExpand;
-        private void sideBarTimer_Tick(object sender, EventArgs e)
-        {
-            if (sidebarExpand)
-            {
-                // if sidebar is expand, minimize
-                SubjectMenu.Width -= 10;
-                if (SubjectMenu.Width == SubjectMenu.MinimumSize.Width)
-                {
-                    sidebarExpand = false;
-                    sideBarTimer.Stop();
-                }
-            }
-            else
-            {
-                SubjectMenu.Width += 10;
-                if (SubjectMenu.Width == SubjectMenu.MaximumSize.Width)
-                {
-                    sidebarExpand = true;
-                    sideBarTimer.Stop();
-                }
-            }
-        }
 
         private void MenuButton_Click(object sender, EventArgs e)
         {
             sideBarTimer.Start();
         }
 
-        private void btnAllTeams_Click(object sender, EventArgs e)
-        {
-            // 1. Hide the submenu container
-            pnlSubMenuMain.Visible = false;
-
-            // 2. Ensure the target panel is visible
-            pnlSubject.Visible = true;
-
-            // 3. Optional: If you want pnlSubject to move to the very top of the sidebar
-            pnlSubject.BringToFront();
-        }
-
         private void btnAssign_Click(object sender, EventArgs e)
         {
             // 1. Show the target panel
-            pnlSubActivities.Visible = true;
+            pnlLMSAct.Visible = true;
 
             // 2. Bring it to the front so it's not hidden behind other main panels
-            pnlSubActivities.BringToFront();
+            pnlLMSAct.BringToFront();
 
 
         }
-
-        private void btnGeneralChat_Click(object sender, EventArgs e)
-        {
-            // 1. Show the target panel
-            pnlSubMenuMain.Visible = true;
-
-            // 2. Bring it to the front so it's not hidden behind other main panels
-            pnlSubMenuMain.BringToFront();
-        }
-
         private void btnClassFiles_Click(object sender, EventArgs e)
         {
             pnlClassFiles.Visible = true;
@@ -283,19 +230,11 @@ namespace PUPAcadPortal
             pnlClassFiles.BringToFront();
         }
 
-        private void button38_Click(object sender, EventArgs e)
+        
+
+        private void pnlAttendance_Paint(object sender, PaintEventArgs e)
         {
-            pnlSubMenuMain.Visible = true;
-
-            // 2. Bring it to the front so it's not hidden behind other main panels
-            pnlSubMenuMain.BringToFront();
-
-            pnlSubActivities.Visible = true;
-
-            // 2. Bring it to the front so it's not hidden behind other main panels
-            pnlSubActivities.BringToFront();
-
-            
+          
         }
     }
 }
