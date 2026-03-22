@@ -60,6 +60,33 @@
             pnlCoursesContent = new Panel();
             pnlGradesContent = new Panel();
             panel3 = new Panel();
+            pnlAnnounce = new Panel();
+            pnlCreateAnnounce = new RoundedPanel();
+            roundedPanel19 = new RoundedPanel();
+            label43 = new Label();
+            textBox22 = new TextBox();
+            textBox23 = new TextBox();
+            label102 = new Label();
+            label103 = new Label();
+            CreateAnnounce = new Button();
+            panel2 = new Panel();
+            label104 = new Label();
+            roundedPanel13 = new RoundedPanel();
+            pictureBox38 = new PictureBox();
+            roundedPanel14 = new RoundedPanel();
+            pictureBox39 = new PictureBox();
+            roundedPanel15 = new RoundedPanel();
+            pictureBox40 = new PictureBox();
+            roundedPanel16 = new RoundedPanel();
+            pictureBox41 = new PictureBox();
+            roundedPanel17 = new RoundedPanel();
+            textBox24 = new TextBox();
+            pictureBox42 = new PictureBox();
+            roundedPanel18 = new RoundedPanel();
+            pictureBox43 = new PictureBox();
+            pnlSubject = new Panel();
+            panel1 = new Panel();
+            label8 = new Label();
             pnlAttendance = new Panel();
             panel19 = new Panel();
             panel28 = new Panel();
@@ -182,17 +209,10 @@
             comboBox4 = new ComboBox();
             tableLayoutPanel6 = new TableLayoutPanel();
             comboBox5 = new ComboBox();
-            pnlSubject = new Panel();
-            panel1 = new Panel();
-            label8 = new Label();
             pnlLMSAct = new Panel();
             label60 = new Label();
             pnlClassFiles = new Panel();
             label7 = new Label();
-            pnlAnnounce = new Panel();
-            CreateAnnounce = new Button();
-            panel2 = new Panel();
-            label43 = new Label();
             pnlGrades = new Panel();
             label5 = new Label();
             pnlCalendar = new Panel();
@@ -344,6 +364,23 @@
             panel12.SuspendLayout();
             panel13.SuspendLayout();
             panel3.SuspendLayout();
+            pnlAnnounce.SuspendLayout();
+            pnlCreateAnnounce.SuspendLayout();
+            panel2.SuspendLayout();
+            roundedPanel13.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox38).BeginInit();
+            roundedPanel14.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox39).BeginInit();
+            roundedPanel15.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox40).BeginInit();
+            roundedPanel16.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox41).BeginInit();
+            roundedPanel17.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox42).BeginInit();
+            roundedPanel18.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox43).BeginInit();
+            pnlSubject.SuspendLayout();
+            panel1.SuspendLayout();
             pnlAttendance.SuspendLayout();
             panel19.SuspendLayout();
             panel28.SuspendLayout();
@@ -400,12 +437,8 @@
             tableLayoutPanel2.SuspendLayout();
             tableLayoutPanel5.SuspendLayout();
             tableLayoutPanel6.SuspendLayout();
-            pnlSubject.SuspendLayout();
-            panel1.SuspendLayout();
             pnlLMSAct.SuspendLayout();
             pnlClassFiles.SuspendLayout();
-            pnlAnnounce.SuspendLayout();
-            panel2.SuspendLayout();
             pnlGrades.SuspendLayout();
             pnlCalendar.SuspendLayout();
             pnlHeader.SuspendLayout();
@@ -915,11 +948,11 @@
             // panel3
             // 
             panel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panel3.Controls.Add(pnlAttendance);
+            panel3.Controls.Add(pnlAnnounce);
             panel3.Controls.Add(pnlSubject);
+            panel3.Controls.Add(pnlAttendance);
             panel3.Controls.Add(pnlLMSAct);
             panel3.Controls.Add(pnlClassFiles);
-            panel3.Controls.Add(pnlAnnounce);
             panel3.Controls.Add(pnlGrades);
             panel3.Controls.Add(pnlCalendar);
             panel3.Controls.Add(pnlHeader);
@@ -932,6 +965,320 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(1746, 1415);
             panel3.TabIndex = 0;
+            // 
+            // pnlAnnounce
+            // 
+            pnlAnnounce.AutoScroll = true;
+            pnlAnnounce.BackColor = SystemColors.Control;
+            pnlAnnounce.CausesValidation = false;
+            pnlAnnounce.Controls.Add(CreateAnnounce);
+            pnlAnnounce.Controls.Add(pnlCreateAnnounce);
+            pnlAnnounce.Controls.Add(panel2);
+            pnlAnnounce.Controls.Add(roundedPanel13);
+            pnlAnnounce.Controls.Add(roundedPanel14);
+            pnlAnnounce.Controls.Add(roundedPanel15);
+            pnlAnnounce.Controls.Add(roundedPanel16);
+            pnlAnnounce.Controls.Add(roundedPanel17);
+            pnlAnnounce.Controls.Add(roundedPanel18);
+            pnlAnnounce.Dock = DockStyle.Fill;
+            pnlAnnounce.Location = new Point(293, 96);
+            pnlAnnounce.Margin = new Padding(0);
+            pnlAnnounce.Name = "pnlAnnounce";
+            pnlAnnounce.Size = new Size(1453, 1319);
+            pnlAnnounce.TabIndex = 17;
+            pnlAnnounce.Visible = false;
+            // 
+            // pnlCreateAnnounce
+            // 
+            pnlCreateAnnounce.BackColor = Color.Maroon;
+            pnlCreateAnnounce.BorderRadius = 10;
+            pnlCreateAnnounce.Controls.Add(roundedPanel19);
+            pnlCreateAnnounce.Controls.Add(label43);
+            pnlCreateAnnounce.Controls.Add(textBox22);
+            pnlCreateAnnounce.Controls.Add(textBox23);
+            pnlCreateAnnounce.Controls.Add(label102);
+            pnlCreateAnnounce.Controls.Add(label103);
+            pnlCreateAnnounce.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            pnlCreateAnnounce.Location = new Point(224, 210);
+            pnlCreateAnnounce.Name = "pnlCreateAnnounce";
+            pnlCreateAnnounce.Size = new Size(897, 610);
+            pnlCreateAnnounce.TabIndex = 5;
+            pnlCreateAnnounce.Visible = false;
+            // 
+            // roundedPanel19
+            // 
+            roundedPanel19.BackColor = Color.White;
+            roundedPanel19.BorderRadius = 10;
+            roundedPanel19.Location = new Point(27, 431);
+            roundedPanel19.Name = "roundedPanel19";
+            roundedPanel19.Size = new Size(490, 125);
+            roundedPanel19.TabIndex = 5;
+            // 
+            // label43
+            // 
+            label43.AutoSize = true;
+            label43.ForeColor = Color.White;
+            label43.Location = new Point(25, 390);
+            label43.Name = "label43";
+            label43.Size = new Size(100, 23);
+            label43.TabIndex = 4;
+            label43.Text = "Attachment";
+            // 
+            // textBox22
+            // 
+            textBox22.Location = new Point(25, 133);
+            textBox22.Multiline = true;
+            textBox22.Name = "textBox22";
+            textBox22.Size = new Size(492, 202);
+            textBox22.TabIndex = 3;
+            // 
+            // textBox23
+            // 
+            textBox23.Location = new Point(25, 78);
+            textBox23.Name = "textBox23";
+            textBox23.Size = new Size(492, 30);
+            textBox23.TabIndex = 2;
+            // 
+            // label102
+            // 
+            label102.AutoSize = true;
+            label102.ForeColor = Color.White;
+            label102.Location = new Point(25, 53);
+            label102.Name = "label102";
+            label102.Size = new Size(42, 23);
+            label102.TabIndex = 1;
+            label102.Text = "Title";
+            // 
+            // label103
+            // 
+            label103.AutoSize = true;
+            label103.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label103.ForeColor = Color.White;
+            label103.Location = new Point(9, 7);
+            label103.Name = "label103";
+            label103.Size = new Size(253, 31);
+            label103.TabIndex = 0;
+            label103.Text = "Create Announcement";
+            // 
+            // CreateAnnounce
+            // 
+            CreateAnnounce.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            CreateAnnounce.BackColor = Color.Maroon;
+            CreateAnnounce.BackgroundImageLayout = ImageLayout.None;
+            CreateAnnounce.Cursor = Cursors.Hand;
+            CreateAnnounce.FlatAppearance.BorderSize = 0;
+            CreateAnnounce.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            CreateAnnounce.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            CreateAnnounce.FlatStyle = FlatStyle.Flat;
+            CreateAnnounce.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            CreateAnnounce.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            CreateAnnounce.Image = (Image)resources.GetObject("CreateAnnounce.Image");
+            CreateAnnounce.ImageAlign = ContentAlignment.MiddleLeft;
+            CreateAnnounce.Location = new Point(1170, 233);
+            CreateAnnounce.Margin = new Padding(3, 4, 3, 4);
+            CreateAnnounce.MinimumSize = new Size(259, 40);
+            CreateAnnounce.Name = "CreateAnnounce";
+            CreateAnnounce.Padding = new Padding(18, 0, 20, 0);
+            CreateAnnounce.Size = new Size(259, 40);
+            CreateAnnounce.TabIndex = 4;
+            CreateAnnounce.Text = "    Create Announcement";
+            CreateAnnounce.TextImageRelation = TextImageRelation.ImageBeforeText;
+            CreateAnnounce.UseVisualStyleBackColor = false;
+            // 
+            // panel2
+            // 
+            panel2.BackColor = SystemColors.ButtonHighlight;
+            panel2.Controls.Add(label104);
+            panel2.Dock = DockStyle.Top;
+            panel2.Location = new Point(0, 0);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(1453, 46);
+            panel2.TabIndex = 1;
+            // 
+            // label104
+            // 
+            label104.AutoSize = true;
+            label104.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label104.Location = new Point(8, 8);
+            label104.Name = "label104";
+            label104.Size = new Size(181, 31);
+            label104.TabIndex = 0;
+            label104.Text = "Announcements";
+            // 
+            // roundedPanel13
+            // 
+            roundedPanel13.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            roundedPanel13.BackColor = Color.White;
+            roundedPanel13.BorderRadius = 30;
+            roundedPanel13.Controls.Add(pictureBox38);
+            roundedPanel13.Location = new Point(18, 814);
+            roundedPanel13.Name = "roundedPanel13";
+            roundedPanel13.Padding = new Padding(10);
+            roundedPanel13.Size = new Size(1411, 132);
+            roundedPanel13.TabIndex = 3;
+            // 
+            // pictureBox38
+            // 
+            pictureBox38.Image = (Image)resources.GetObject("pictureBox38.Image");
+            pictureBox38.Location = new Point(18, 38);
+            pictureBox38.Name = "pictureBox38";
+            pictureBox38.Size = new Size(71, 62);
+            pictureBox38.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox38.TabIndex = 0;
+            pictureBox38.TabStop = false;
+            // 
+            // roundedPanel14
+            // 
+            roundedPanel14.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            roundedPanel14.BackColor = Color.White;
+            roundedPanel14.BorderRadius = 30;
+            roundedPanel14.Controls.Add(pictureBox39);
+            roundedPanel14.Location = new Point(18, 647);
+            roundedPanel14.Name = "roundedPanel14";
+            roundedPanel14.Padding = new Padding(10);
+            roundedPanel14.Size = new Size(1411, 132);
+            roundedPanel14.TabIndex = 3;
+            // 
+            // pictureBox39
+            // 
+            pictureBox39.Image = (Image)resources.GetObject("pictureBox39.Image");
+            pictureBox39.Location = new Point(18, 38);
+            pictureBox39.Name = "pictureBox39";
+            pictureBox39.Size = new Size(71, 62);
+            pictureBox39.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox39.TabIndex = 0;
+            pictureBox39.TabStop = false;
+            // 
+            // roundedPanel15
+            // 
+            roundedPanel15.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            roundedPanel15.BackColor = Color.White;
+            roundedPanel15.BorderRadius = 30;
+            roundedPanel15.Controls.Add(pictureBox40);
+            roundedPanel15.Location = new Point(18, 480);
+            roundedPanel15.Name = "roundedPanel15";
+            roundedPanel15.Padding = new Padding(10);
+            roundedPanel15.Size = new Size(1411, 132);
+            roundedPanel15.TabIndex = 3;
+            // 
+            // pictureBox40
+            // 
+            pictureBox40.Image = (Image)resources.GetObject("pictureBox40.Image");
+            pictureBox40.Location = new Point(18, 38);
+            pictureBox40.Name = "pictureBox40";
+            pictureBox40.Size = new Size(71, 62);
+            pictureBox40.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox40.TabIndex = 0;
+            pictureBox40.TabStop = false;
+            // 
+            // roundedPanel16
+            // 
+            roundedPanel16.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            roundedPanel16.BackColor = Color.White;
+            roundedPanel16.BorderRadius = 30;
+            roundedPanel16.Controls.Add(pictureBox41);
+            roundedPanel16.Location = new Point(18, 313);
+            roundedPanel16.Name = "roundedPanel16";
+            roundedPanel16.Padding = new Padding(10);
+            roundedPanel16.Size = new Size(1411, 132);
+            roundedPanel16.TabIndex = 3;
+            // 
+            // pictureBox41
+            // 
+            pictureBox41.Image = (Image)resources.GetObject("pictureBox41.Image");
+            pictureBox41.Location = new Point(18, 38);
+            pictureBox41.Name = "pictureBox41";
+            pictureBox41.Size = new Size(71, 62);
+            pictureBox41.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox41.TabIndex = 0;
+            pictureBox41.TabStop = false;
+            // 
+            // roundedPanel17
+            // 
+            roundedPanel17.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            roundedPanel17.BackColor = Color.White;
+            roundedPanel17.BorderRadius = 10;
+            roundedPanel17.Controls.Add(textBox24);
+            roundedPanel17.Controls.Add(pictureBox42);
+            roundedPanel17.Location = new Point(18, 232);
+            roundedPanel17.Name = "roundedPanel17";
+            roundedPanel17.Padding = new Padding(5);
+            roundedPanel17.Size = new Size(368, 41);
+            roundedPanel17.TabIndex = 4;
+            // 
+            // textBox24
+            // 
+            textBox24.BorderStyle = BorderStyle.None;
+            textBox24.Location = new Point(44, 11);
+            textBox24.Name = "textBox24";
+            textBox24.Size = new Size(219, 20);
+            textBox24.TabIndex = 1;
+            textBox24.Text = "Search Here";
+            // 
+            // pictureBox42
+            // 
+            pictureBox42.Image = Properties.Resources.magnifier;
+            pictureBox42.Location = new Point(9, 8);
+            pictureBox42.Name = "pictureBox42";
+            pictureBox42.Size = new Size(29, 25);
+            pictureBox42.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox42.TabIndex = 0;
+            pictureBox42.TabStop = false;
+            // 
+            // roundedPanel18
+            // 
+            roundedPanel18.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            roundedPanel18.BackColor = Color.White;
+            roundedPanel18.BorderRadius = 30;
+            roundedPanel18.Controls.Add(pictureBox43);
+            roundedPanel18.Location = new Point(18, 68);
+            roundedPanel18.Name = "roundedPanel18";
+            roundedPanel18.Padding = new Padding(10);
+            roundedPanel18.Size = new Size(1411, 132);
+            roundedPanel18.TabIndex = 2;
+            // 
+            // pictureBox43
+            // 
+            pictureBox43.Image = (Image)resources.GetObject("pictureBox43.Image");
+            pictureBox43.Location = new Point(18, 38);
+            pictureBox43.Name = "pictureBox43";
+            pictureBox43.Size = new Size(71, 62);
+            pictureBox43.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox43.TabIndex = 0;
+            pictureBox43.TabStop = false;
+            // 
+            // pnlSubject
+            // 
+            pnlSubject.AutoScroll = true;
+            pnlSubject.BackColor = SystemColors.Control;
+            pnlSubject.CausesValidation = false;
+            pnlSubject.Controls.Add(panel1);
+            pnlSubject.Dock = DockStyle.Fill;
+            pnlSubject.Location = new Point(293, 96);
+            pnlSubject.Margin = new Padding(0);
+            pnlSubject.Name = "pnlSubject";
+            pnlSubject.Size = new Size(1453, 1319);
+            pnlSubject.TabIndex = 29;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = SystemColors.ButtonHighlight;
+            panel1.Controls.Add(label8);
+            panel1.Dock = DockStyle.Top;
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(1453, 46);
+            panel1.TabIndex = 16;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label8.Location = new Point(8, 8);
+            label8.Name = "label8";
+            label8.Size = new Size(135, 31);
+            label8.TabIndex = 0;
+            label8.Text = "My Courses";
             // 
             // pnlAttendance
             // 
@@ -2427,39 +2774,6 @@
             comboBox5.TabIndex = 37;
             comboBox5.Text = "Status";
             // 
-            // pnlSubject
-            // 
-            pnlSubject.AutoScroll = true;
-            pnlSubject.BackColor = SystemColors.Control;
-            pnlSubject.CausesValidation = false;
-            pnlSubject.Controls.Add(panel1);
-            pnlSubject.Dock = DockStyle.Fill;
-            pnlSubject.Location = new Point(293, 96);
-            pnlSubject.Margin = new Padding(0);
-            pnlSubject.Name = "pnlSubject";
-            pnlSubject.Size = new Size(1453, 1319);
-            pnlSubject.TabIndex = 29;
-            // 
-            // panel1
-            // 
-            panel1.BackColor = SystemColors.ButtonHighlight;
-            panel1.Controls.Add(label8);
-            panel1.Dock = DockStyle.Top;
-            panel1.Location = new Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(1453, 46);
-            panel1.TabIndex = 16;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label8.Location = new Point(8, 8);
-            label8.Name = "label8";
-            label8.Size = new Size(135, 31);
-            label8.TabIndex = 0;
-            label8.Text = "My Courses";
-            // 
             // pnlLMSAct
             // 
             pnlLMSAct.AutoScroll = true;
@@ -2496,67 +2810,6 @@
             label7.Size = new Size(75, 20);
             label7.TabIndex = 0;
             label7.Text = "Class Files";
-            // 
-            // pnlAnnounce
-            // 
-            pnlAnnounce.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            pnlAnnounce.AutoScroll = true;
-            pnlAnnounce.BackColor = SystemColors.Control;
-            pnlAnnounce.CausesValidation = false;
-            pnlAnnounce.Controls.Add(CreateAnnounce);
-            pnlAnnounce.Controls.Add(panel2);
-            pnlAnnounce.Location = new Point(293, 96);
-            pnlAnnounce.Margin = new Padding(0);
-            pnlAnnounce.Name = "pnlAnnounce";
-            pnlAnnounce.Size = new Size(1453, 1319);
-            pnlAnnounce.TabIndex = 8;
-            pnlAnnounce.Visible = false;
-            // 
-            // CreateAnnounce
-            // 
-            CreateAnnounce.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            CreateAnnounce.BackColor = Color.Maroon;
-            CreateAnnounce.BackgroundImageLayout = ImageLayout.None;
-            CreateAnnounce.Cursor = Cursors.Hand;
-            CreateAnnounce.FlatAppearance.BorderSize = 0;
-            CreateAnnounce.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            CreateAnnounce.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            CreateAnnounce.FlatStyle = FlatStyle.Flat;
-            CreateAnnounce.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            CreateAnnounce.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            CreateAnnounce.Image = (Image)resources.GetObject("CreateAnnounce.Image");
-            CreateAnnounce.ImageAlign = ContentAlignment.MiddleLeft;
-            CreateAnnounce.Location = new Point(1157, 236);
-            CreateAnnounce.Margin = new Padding(3, 4, 3, 4);
-            CreateAnnounce.MinimumSize = new Size(259, 40);
-            CreateAnnounce.Name = "CreateAnnounce";
-            CreateAnnounce.Padding = new Padding(18, 0, 20, 0);
-            CreateAnnounce.Size = new Size(259, 40);
-            CreateAnnounce.TabIndex = 4;
-            CreateAnnounce.Text = "    Create Announcement";
-            CreateAnnounce.TextImageRelation = TextImageRelation.ImageBeforeText;
-            CreateAnnounce.UseVisualStyleBackColor = false;
-            CreateAnnounce.Click += CreateAnnounce_Click;
-            // 
-            // panel2
-            // 
-            panel2.BackColor = SystemColors.ButtonHighlight;
-            panel2.Controls.Add(label43);
-            panel2.Dock = DockStyle.Top;
-            panel2.Location = new Point(0, 0);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(1453, 46);
-            panel2.TabIndex = 1;
-            // 
-            // label43
-            // 
-            label43.AutoSize = true;
-            label43.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label43.Location = new Point(8, 8);
-            label43.Name = "label43";
-            label43.Size = new Size(181, 31);
-            label43.TabIndex = 0;
-            label43.Text = "Announcements";
             // 
             // pnlGrades
             // 
@@ -4163,6 +4416,27 @@
             panel12.ResumeLayout(false);
             panel13.ResumeLayout(false);
             panel3.ResumeLayout(false);
+            pnlAnnounce.ResumeLayout(false);
+            pnlCreateAnnounce.ResumeLayout(false);
+            pnlCreateAnnounce.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
+            roundedPanel13.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox38).EndInit();
+            roundedPanel14.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox39).EndInit();
+            roundedPanel15.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox40).EndInit();
+            roundedPanel16.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox41).EndInit();
+            roundedPanel17.ResumeLayout(false);
+            roundedPanel17.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox42).EndInit();
+            roundedPanel18.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox43).EndInit();
+            pnlSubject.ResumeLayout(false);
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             pnlAttendance.ResumeLayout(false);
             panel19.ResumeLayout(false);
             panel19.PerformLayout();
@@ -4249,16 +4523,10 @@
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel5.ResumeLayout(false);
             tableLayoutPanel6.ResumeLayout(false);
-            pnlSubject.ResumeLayout(false);
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
             pnlLMSAct.ResumeLayout(false);
             pnlLMSAct.PerformLayout();
             pnlClassFiles.ResumeLayout(false);
             pnlClassFiles.PerformLayout();
-            pnlAnnounce.ResumeLayout(false);
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
             pnlGrades.ResumeLayout(false);
             pnlGrades.PerformLayout();
             pnlCalendar.ResumeLayout(false);
@@ -4350,7 +4618,6 @@
         private Panel pnlGrades;
         private Label label5;
         private System.Windows.Forms.Timer timer1;
-        private Panel pnlAnnounce;
         private RoundedPanel roundedPanel13;
         private PictureBox pictureBox14;
         private RoundedPanel roundedPanel14;
@@ -4364,9 +4631,6 @@
         private PictureBox pictureBox10;
         private RoundedPanel roundedPanel18;
         private PictureBox pictureBox15;
-        private Panel panel2;
-        private Label label43;
-        private Button CreateAnnounce;
         private RoundedPanel pnlCreateAnnounce;
         private Label label10;
         private Label label45;
@@ -4635,5 +4899,21 @@
         private ComboBox comboBox5;
         private TableLayoutPanel tableLayoutPanel23;
         private ComboBox comboBox11;
+        private Panel pnlAnnounce;
+        private Label label43;
+        private TextBox textBox22;
+        private TextBox textBox23;
+        private Label label102;
+        private Label label103;
+        private Button CreateAnnounce;
+        private Panel panel2;
+        private Label label104;
+        private PictureBox pictureBox38;
+        private PictureBox pictureBox39;
+        private PictureBox pictureBox40;
+        private PictureBox pictureBox41;
+        private TextBox textBox24;
+        private PictureBox pictureBox42;
+        private PictureBox pictureBox43;
     }
 }
