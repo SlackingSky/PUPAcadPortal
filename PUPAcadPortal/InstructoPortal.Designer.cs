@@ -94,6 +94,44 @@
             label6 = new Label();
             panel17 = new Panel();
             tableLayoutPanel1 = new TableLayoutPanel();
+            tableLayoutPanel23 = new TableLayoutPanel();
+            comboBox11 = new ComboBox();
+            tableLayoutPanel21 = new TableLayoutPanel();
+            textBox20 = new TextBox();
+            tableLayoutPanel22 = new TableLayoutPanel();
+            textBox21 = new TextBox();
+            tableLayoutPanel20 = new TableLayoutPanel();
+            textBox19 = new TextBox();
+            tableLayoutPanel19 = new TableLayoutPanel();
+            textBox18 = new TextBox();
+            tableLayoutPanel18 = new TableLayoutPanel();
+            textBox17 = new TextBox();
+            tableLayoutPanel17 = new TableLayoutPanel();
+            textBox16 = new TextBox();
+            tableLayoutPanel16 = new TableLayoutPanel();
+            textBox15 = new TextBox();
+            tableLayoutPanel15 = new TableLayoutPanel();
+            textBox14 = new TextBox();
+            tableLayoutPanel12 = new TableLayoutPanel();
+            textBox13 = new TextBox();
+            tableLayoutPanel11 = new TableLayoutPanel();
+            comboBox10 = new ComboBox();
+            tableLayoutPanel10 = new TableLayoutPanel();
+            comboBox9 = new ComboBox();
+            tableLayoutPanel9 = new TableLayoutPanel();
+            comboBox8 = new ComboBox();
+            tableLayoutPanel8 = new TableLayoutPanel();
+            comboBox7 = new ComboBox();
+            tableLayoutPanel7 = new TableLayoutPanel();
+            comboBox6 = new ComboBox();
+            tableLayoutPanel4 = new TableLayoutPanel();
+            comboBox3 = new ComboBox();
+            tableLayoutPanel14 = new TableLayoutPanel();
+            textBox12 = new TextBox();
+            tableLayoutPanel13 = new TableLayoutPanel();
+            textBox2 = new TextBox();
+            tableLayoutPanel3 = new TableLayoutPanel();
+            comboBox2 = new ComboBox();
             panel35 = new Panel();
             label100 = new Label();
             label101 = new Label();
@@ -134,17 +172,16 @@
             label68 = new Label();
             label69 = new Label();
             pictureBox27 = new PictureBox();
-            textBox2 = new TextBox();
             panel20 = new Panel();
             label67 = new Label();
             label66 = new Label();
             pictureBox26 = new PictureBox();
-            flowLayoutPanel3 = new FlowLayoutPanel();
-            StatusBtn2 = new Button();
-            button9 = new Button();
-            button10 = new Button();
-            button11 = new Button();
+            tableLayoutPanel2 = new TableLayoutPanel();
             comboBox1 = new ComboBox();
+            tableLayoutPanel5 = new TableLayoutPanel();
+            comboBox4 = new ComboBox();
+            tableLayoutPanel6 = new TableLayoutPanel();
+            comboBox5 = new ComboBox();
             pnlSubject = new Panel();
             panel1 = new Panel();
             label8 = new Label();
@@ -319,6 +356,25 @@
             panel14.SuspendLayout();
             panel17.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
+            tableLayoutPanel23.SuspendLayout();
+            tableLayoutPanel21.SuspendLayout();
+            tableLayoutPanel22.SuspendLayout();
+            tableLayoutPanel20.SuspendLayout();
+            tableLayoutPanel19.SuspendLayout();
+            tableLayoutPanel18.SuspendLayout();
+            tableLayoutPanel17.SuspendLayout();
+            tableLayoutPanel16.SuspendLayout();
+            tableLayoutPanel15.SuspendLayout();
+            tableLayoutPanel12.SuspendLayout();
+            tableLayoutPanel11.SuspendLayout();
+            tableLayoutPanel10.SuspendLayout();
+            tableLayoutPanel9.SuspendLayout();
+            tableLayoutPanel8.SuspendLayout();
+            tableLayoutPanel7.SuspendLayout();
+            tableLayoutPanel4.SuspendLayout();
+            tableLayoutPanel14.SuspendLayout();
+            tableLayoutPanel13.SuspendLayout();
+            tableLayoutPanel3.SuspendLayout();
             panel35.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox37).BeginInit();
             panel18.SuspendLayout();
@@ -341,7 +397,9 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox27).BeginInit();
             panel20.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox26).BeginInit();
-            flowLayoutPanel3.SuspendLayout();
+            tableLayoutPanel2.SuspendLayout();
+            tableLayoutPanel5.SuspendLayout();
+            tableLayoutPanel6.SuspendLayout();
             pnlSubject.SuspendLayout();
             panel1.SuspendLayout();
             pnlLMSAct.SuspendLayout();
@@ -894,6 +952,7 @@
             // 
             // panel19
             // 
+            panel19.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel19.Controls.Add(panel28);
             panel19.Controls.Add(label30);
             panel19.Controls.Add(label28);
@@ -904,7 +963,6 @@
             panel19.Controls.Add(panel25);
             panel19.Controls.Add(panel24);
             panel19.Controls.Add(panel14);
-            panel19.Dock = DockStyle.Top;
             panel19.Location = new Point(0, 0);
             panel19.Name = "panel19";
             panel19.Size = new Size(1452, 284);
@@ -1077,10 +1135,10 @@
             // 
             // label30
             // 
-            label30.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label30.Anchor = AnchorStyles.Top;
             label30.AutoSize = true;
             label30.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label30.Location = new Point(1209, 245);
+            label30.Location = new Point(1220, 245);
             label30.Name = "label30";
             label30.Size = new Size(102, 31);
             label30.TabIndex = 28;
@@ -1101,7 +1159,7 @@
             label29.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             label29.AutoSize = true;
             label29.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label29.Location = new Point(908, 245);
+            label29.Location = new Point(923, 245);
             label29.Name = "label29";
             label29.Size = new Size(77, 31);
             label29.TabIndex = 27;
@@ -1199,6 +1257,7 @@
             textBox11.Name = "textBox11";
             textBox11.Size = new Size(401, 34);
             textBox11.TabIndex = 1;
+            textBox11.Text = "Search Here";
             // 
             // pictureBox29
             // 
@@ -1262,6 +1321,25 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 770F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 329F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 29F));
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel23, 1, 10);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel21, 2, 9);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel22, 2, 10);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel20, 2, 8);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel19, 2, 7);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel18, 2, 6);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel17, 2, 5);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel16, 2, 4);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel15, 2, 3);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel12, 2, 2);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel11, 1, 9);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel10, 1, 8);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel9, 1, 7);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel8, 1, 6);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel7, 1, 5);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel4, 1, 2);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel14, 2, 0);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel13, 2, 1);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel3, 1, 0);
             tableLayoutPanel1.Controls.Add(panel35, 0, 10);
             tableLayoutPanel1.Controls.Add(panel18, 0, 9);
             tableLayoutPanel1.Controls.Add(panel34, 0, 8);
@@ -1272,10 +1350,10 @@
             tableLayoutPanel1.Controls.Add(panel29, 0, 3);
             tableLayoutPanel1.Controls.Add(panel22, 0, 2);
             tableLayoutPanel1.Controls.Add(panel21, 0, 1);
-            tableLayoutPanel1.Controls.Add(textBox2, 2, 0);
             tableLayoutPanel1.Controls.Add(panel20, 0, 0);
-            tableLayoutPanel1.Controls.Add(flowLayoutPanel3, 1, 0);
-            tableLayoutPanel1.Controls.Add(comboBox1, 1, 1);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 1, 1);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel5, 1, 3);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel6, 1, 4);
             tableLayoutPanel1.Location = new Point(38, 300);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 11;
@@ -1292,6 +1370,535 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 9.033395F));
             tableLayoutPanel1.Size = new Size(1390, 1375);
             tableLayoutPanel1.TabIndex = 22;
+            // 
+            // tableLayoutPanel23
+            // 
+            tableLayoutPanel23.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel23.ColumnCount = 3;
+            tableLayoutPanel23.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
+            tableLayoutPanel23.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
+            tableLayoutPanel23.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
+            tableLayoutPanel23.Controls.Add(comboBox11, 1, 1);
+            tableLayoutPanel23.Location = new Point(773, 1251);
+            tableLayoutPanel23.Name = "tableLayoutPanel23";
+            tableLayoutPanel23.RowCount = 3;
+            tableLayoutPanel23.RowStyles.Add(new RowStyle(SizeType.Percent, 30.03003F));
+            tableLayoutPanel23.RowStyles.Add(new RowStyle(SizeType.Percent, 39.93994F));
+            tableLayoutPanel23.RowStyles.Add(new RowStyle(SizeType.Percent, 30.0300331F));
+            tableLayoutPanel23.Size = new Size(323, 118);
+            tableLayoutPanel23.TabIndex = 42;
+            // 
+            // comboBox11
+            // 
+            comboBox11.FormattingEnabled = true;
+            comboBox11.ItemHeight = 20;
+            comboBox11.Items.AddRange(new object[] { "Present", "Absent", "Excused" });
+            comboBox11.Location = new Point(87, 38);
+            comboBox11.Name = "comboBox11";
+            comboBox11.RightToLeft = RightToLeft.No;
+            comboBox11.Size = new Size(147, 28);
+            comboBox11.TabIndex = 37;
+            comboBox11.Text = "Status";
+            // 
+            // tableLayoutPanel21
+            // 
+            tableLayoutPanel21.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel21.ColumnCount = 3;
+            tableLayoutPanel21.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel21.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
+            tableLayoutPanel21.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel21.Controls.Add(textBox20, 1, 1);
+            tableLayoutPanel21.Location = new Point(1102, 1127);
+            tableLayoutPanel21.Name = "tableLayoutPanel21";
+            tableLayoutPanel21.RowCount = 3;
+            tableLayoutPanel21.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
+            tableLayoutPanel21.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
+            tableLayoutPanel21.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
+            tableLayoutPanel21.Size = new Size(285, 118);
+            tableLayoutPanel21.TabIndex = 48;
+            // 
+            // textBox20
+            // 
+            textBox20.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBox20.BorderStyle = BorderStyle.FixedSingle;
+            textBox20.Location = new Point(26, 26);
+            textBox20.Multiline = true;
+            textBox20.Name = "textBox20";
+            textBox20.Size = new Size(232, 55);
+            textBox20.TabIndex = 33;
+            // 
+            // tableLayoutPanel22
+            // 
+            tableLayoutPanel22.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel22.ColumnCount = 3;
+            tableLayoutPanel22.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel22.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
+            tableLayoutPanel22.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel22.Controls.Add(textBox21, 1, 1);
+            tableLayoutPanel22.Location = new Point(1102, 1251);
+            tableLayoutPanel22.Name = "tableLayoutPanel22";
+            tableLayoutPanel22.RowCount = 3;
+            tableLayoutPanel22.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
+            tableLayoutPanel22.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
+            tableLayoutPanel22.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
+            tableLayoutPanel22.Size = new Size(285, 118);
+            tableLayoutPanel22.TabIndex = 49;
+            // 
+            // textBox21
+            // 
+            textBox21.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBox21.BorderStyle = BorderStyle.FixedSingle;
+            textBox21.Location = new Point(26, 26);
+            textBox21.Multiline = true;
+            textBox21.Name = "textBox21";
+            textBox21.Size = new Size(232, 55);
+            textBox21.TabIndex = 33;
+            // 
+            // tableLayoutPanel20
+            // 
+            tableLayoutPanel20.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel20.ColumnCount = 3;
+            tableLayoutPanel20.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel20.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
+            tableLayoutPanel20.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel20.Controls.Add(textBox19, 1, 1);
+            tableLayoutPanel20.Location = new Point(1102, 1003);
+            tableLayoutPanel20.Name = "tableLayoutPanel20";
+            tableLayoutPanel20.RowCount = 3;
+            tableLayoutPanel20.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
+            tableLayoutPanel20.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
+            tableLayoutPanel20.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
+            tableLayoutPanel20.Size = new Size(285, 118);
+            tableLayoutPanel20.TabIndex = 47;
+            // 
+            // textBox19
+            // 
+            textBox19.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBox19.BorderStyle = BorderStyle.FixedSingle;
+            textBox19.Location = new Point(26, 26);
+            textBox19.Multiline = true;
+            textBox19.Name = "textBox19";
+            textBox19.Size = new Size(232, 55);
+            textBox19.TabIndex = 33;
+            // 
+            // tableLayoutPanel19
+            // 
+            tableLayoutPanel19.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel19.ColumnCount = 3;
+            tableLayoutPanel19.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel19.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
+            tableLayoutPanel19.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel19.Controls.Add(textBox18, 1, 1);
+            tableLayoutPanel19.Location = new Point(1102, 879);
+            tableLayoutPanel19.Name = "tableLayoutPanel19";
+            tableLayoutPanel19.RowCount = 3;
+            tableLayoutPanel19.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
+            tableLayoutPanel19.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
+            tableLayoutPanel19.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
+            tableLayoutPanel19.Size = new Size(285, 118);
+            tableLayoutPanel19.TabIndex = 46;
+            // 
+            // textBox18
+            // 
+            textBox18.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBox18.BorderStyle = BorderStyle.FixedSingle;
+            textBox18.Location = new Point(26, 26);
+            textBox18.Multiline = true;
+            textBox18.Name = "textBox18";
+            textBox18.Size = new Size(232, 55);
+            textBox18.TabIndex = 33;
+            // 
+            // tableLayoutPanel18
+            // 
+            tableLayoutPanel18.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel18.ColumnCount = 3;
+            tableLayoutPanel18.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel18.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
+            tableLayoutPanel18.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel18.Controls.Add(textBox17, 1, 1);
+            tableLayoutPanel18.Location = new Point(1102, 755);
+            tableLayoutPanel18.Name = "tableLayoutPanel18";
+            tableLayoutPanel18.RowCount = 3;
+            tableLayoutPanel18.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
+            tableLayoutPanel18.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
+            tableLayoutPanel18.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
+            tableLayoutPanel18.Size = new Size(285, 118);
+            tableLayoutPanel18.TabIndex = 45;
+            // 
+            // textBox17
+            // 
+            textBox17.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBox17.BorderStyle = BorderStyle.FixedSingle;
+            textBox17.Location = new Point(26, 26);
+            textBox17.Multiline = true;
+            textBox17.Name = "textBox17";
+            textBox17.Size = new Size(232, 55);
+            textBox17.TabIndex = 33;
+            // 
+            // tableLayoutPanel17
+            // 
+            tableLayoutPanel17.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel17.ColumnCount = 3;
+            tableLayoutPanel17.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel17.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
+            tableLayoutPanel17.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel17.Controls.Add(textBox16, 1, 1);
+            tableLayoutPanel17.Location = new Point(1102, 631);
+            tableLayoutPanel17.Name = "tableLayoutPanel17";
+            tableLayoutPanel17.RowCount = 3;
+            tableLayoutPanel17.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
+            tableLayoutPanel17.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
+            tableLayoutPanel17.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
+            tableLayoutPanel17.Size = new Size(285, 118);
+            tableLayoutPanel17.TabIndex = 40;
+            // 
+            // textBox16
+            // 
+            textBox16.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBox16.BorderStyle = BorderStyle.FixedSingle;
+            textBox16.Location = new Point(26, 26);
+            textBox16.Multiline = true;
+            textBox16.Name = "textBox16";
+            textBox16.Size = new Size(232, 55);
+            textBox16.TabIndex = 33;
+            // 
+            // tableLayoutPanel16
+            // 
+            tableLayoutPanel16.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel16.ColumnCount = 3;
+            tableLayoutPanel16.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel16.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
+            tableLayoutPanel16.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel16.Controls.Add(textBox15, 1, 1);
+            tableLayoutPanel16.Location = new Point(1102, 507);
+            tableLayoutPanel16.Name = "tableLayoutPanel16";
+            tableLayoutPanel16.RowCount = 3;
+            tableLayoutPanel16.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
+            tableLayoutPanel16.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
+            tableLayoutPanel16.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
+            tableLayoutPanel16.Size = new Size(285, 118);
+            tableLayoutPanel16.TabIndex = 40;
+            // 
+            // textBox15
+            // 
+            textBox15.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBox15.BorderStyle = BorderStyle.FixedSingle;
+            textBox15.Location = new Point(26, 26);
+            textBox15.Multiline = true;
+            textBox15.Name = "textBox15";
+            textBox15.Size = new Size(232, 55);
+            textBox15.TabIndex = 33;
+            // 
+            // tableLayoutPanel15
+            // 
+            tableLayoutPanel15.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel15.ColumnCount = 3;
+            tableLayoutPanel15.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel15.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
+            tableLayoutPanel15.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel15.Controls.Add(textBox14, 1, 1);
+            tableLayoutPanel15.Location = new Point(1102, 383);
+            tableLayoutPanel15.Name = "tableLayoutPanel15";
+            tableLayoutPanel15.RowCount = 3;
+            tableLayoutPanel15.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
+            tableLayoutPanel15.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
+            tableLayoutPanel15.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
+            tableLayoutPanel15.Size = new Size(285, 118);
+            tableLayoutPanel15.TabIndex = 40;
+            // 
+            // textBox14
+            // 
+            textBox14.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBox14.BorderStyle = BorderStyle.FixedSingle;
+            textBox14.Location = new Point(26, 26);
+            textBox14.Multiline = true;
+            textBox14.Name = "textBox14";
+            textBox14.Size = new Size(232, 55);
+            textBox14.TabIndex = 33;
+            // 
+            // tableLayoutPanel12
+            // 
+            tableLayoutPanel12.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel12.ColumnCount = 3;
+            tableLayoutPanel12.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel12.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
+            tableLayoutPanel12.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel12.Controls.Add(textBox13, 1, 1);
+            tableLayoutPanel12.Location = new Point(1102, 259);
+            tableLayoutPanel12.Name = "tableLayoutPanel12";
+            tableLayoutPanel12.RowCount = 3;
+            tableLayoutPanel12.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
+            tableLayoutPanel12.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
+            tableLayoutPanel12.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
+            tableLayoutPanel12.Size = new Size(285, 118);
+            tableLayoutPanel12.TabIndex = 40;
+            // 
+            // textBox13
+            // 
+            textBox13.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBox13.BorderStyle = BorderStyle.FixedSingle;
+            textBox13.Location = new Point(26, 26);
+            textBox13.Multiline = true;
+            textBox13.Name = "textBox13";
+            textBox13.Size = new Size(232, 55);
+            textBox13.TabIndex = 33;
+            // 
+            // tableLayoutPanel11
+            // 
+            tableLayoutPanel11.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel11.ColumnCount = 3;
+            tableLayoutPanel11.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
+            tableLayoutPanel11.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
+            tableLayoutPanel11.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
+            tableLayoutPanel11.Controls.Add(comboBox10, 1, 1);
+            tableLayoutPanel11.Location = new Point(773, 1127);
+            tableLayoutPanel11.Name = "tableLayoutPanel11";
+            tableLayoutPanel11.RowCount = 3;
+            tableLayoutPanel11.RowStyles.Add(new RowStyle(SizeType.Percent, 30.03003F));
+            tableLayoutPanel11.RowStyles.Add(new RowStyle(SizeType.Percent, 39.93994F));
+            tableLayoutPanel11.RowStyles.Add(new RowStyle(SizeType.Percent, 30.0300331F));
+            tableLayoutPanel11.Size = new Size(323, 118);
+            tableLayoutPanel11.TabIndex = 41;
+            // 
+            // comboBox10
+            // 
+            comboBox10.FormattingEnabled = true;
+            comboBox10.ItemHeight = 20;
+            comboBox10.Items.AddRange(new object[] { "Present", "Absent", "Excused" });
+            comboBox10.Location = new Point(87, 38);
+            comboBox10.Name = "comboBox10";
+            comboBox10.RightToLeft = RightToLeft.No;
+            comboBox10.Size = new Size(147, 28);
+            comboBox10.TabIndex = 37;
+            comboBox10.Text = "Status";
+            // 
+            // tableLayoutPanel10
+            // 
+            tableLayoutPanel10.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel10.ColumnCount = 3;
+            tableLayoutPanel10.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
+            tableLayoutPanel10.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
+            tableLayoutPanel10.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
+            tableLayoutPanel10.Controls.Add(comboBox9, 1, 1);
+            tableLayoutPanel10.Location = new Point(773, 1003);
+            tableLayoutPanel10.Name = "tableLayoutPanel10";
+            tableLayoutPanel10.RowCount = 3;
+            tableLayoutPanel10.RowStyles.Add(new RowStyle(SizeType.Percent, 30.03003F));
+            tableLayoutPanel10.RowStyles.Add(new RowStyle(SizeType.Percent, 39.93994F));
+            tableLayoutPanel10.RowStyles.Add(new RowStyle(SizeType.Percent, 30.0300331F));
+            tableLayoutPanel10.Size = new Size(323, 118);
+            tableLayoutPanel10.TabIndex = 40;
+            // 
+            // comboBox9
+            // 
+            comboBox9.FormattingEnabled = true;
+            comboBox9.ItemHeight = 20;
+            comboBox9.Items.AddRange(new object[] { "Present", "Absent", "Excused" });
+            comboBox9.Location = new Point(87, 38);
+            comboBox9.Name = "comboBox9";
+            comboBox9.RightToLeft = RightToLeft.No;
+            comboBox9.Size = new Size(147, 28);
+            comboBox9.TabIndex = 37;
+            comboBox9.Text = "Status";
+            // 
+            // tableLayoutPanel9
+            // 
+            tableLayoutPanel9.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel9.ColumnCount = 3;
+            tableLayoutPanel9.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
+            tableLayoutPanel9.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
+            tableLayoutPanel9.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
+            tableLayoutPanel9.Controls.Add(comboBox8, 1, 1);
+            tableLayoutPanel9.Location = new Point(773, 879);
+            tableLayoutPanel9.Name = "tableLayoutPanel9";
+            tableLayoutPanel9.RowCount = 3;
+            tableLayoutPanel9.RowStyles.Add(new RowStyle(SizeType.Percent, 30.03003F));
+            tableLayoutPanel9.RowStyles.Add(new RowStyle(SizeType.Percent, 39.93994F));
+            tableLayoutPanel9.RowStyles.Add(new RowStyle(SizeType.Percent, 30.0300331F));
+            tableLayoutPanel9.Size = new Size(323, 118);
+            tableLayoutPanel9.TabIndex = 39;
+            // 
+            // comboBox8
+            // 
+            comboBox8.FormattingEnabled = true;
+            comboBox8.ItemHeight = 20;
+            comboBox8.Items.AddRange(new object[] { "Present", "Absent", "Excused" });
+            comboBox8.Location = new Point(87, 38);
+            comboBox8.Name = "comboBox8";
+            comboBox8.RightToLeft = RightToLeft.No;
+            comboBox8.Size = new Size(147, 28);
+            comboBox8.TabIndex = 37;
+            comboBox8.Text = "Status";
+            // 
+            // tableLayoutPanel8
+            // 
+            tableLayoutPanel8.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel8.ColumnCount = 3;
+            tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
+            tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
+            tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
+            tableLayoutPanel8.Controls.Add(comboBox7, 1, 1);
+            tableLayoutPanel8.Location = new Point(773, 755);
+            tableLayoutPanel8.Name = "tableLayoutPanel8";
+            tableLayoutPanel8.RowCount = 3;
+            tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Percent, 30.03003F));
+            tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Percent, 39.93994F));
+            tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Percent, 30.0300331F));
+            tableLayoutPanel8.Size = new Size(323, 118);
+            tableLayoutPanel8.TabIndex = 39;
+            // 
+            // comboBox7
+            // 
+            comboBox7.FormattingEnabled = true;
+            comboBox7.ItemHeight = 20;
+            comboBox7.Items.AddRange(new object[] { "Present", "Absent", "Excused" });
+            comboBox7.Location = new Point(87, 38);
+            comboBox7.Name = "comboBox7";
+            comboBox7.RightToLeft = RightToLeft.No;
+            comboBox7.Size = new Size(147, 28);
+            comboBox7.TabIndex = 37;
+            comboBox7.Text = "Status";
+            // 
+            // tableLayoutPanel7
+            // 
+            tableLayoutPanel7.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel7.ColumnCount = 3;
+            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
+            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
+            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
+            tableLayoutPanel7.Controls.Add(comboBox6, 1, 1);
+            tableLayoutPanel7.Location = new Point(773, 631);
+            tableLayoutPanel7.Name = "tableLayoutPanel7";
+            tableLayoutPanel7.RowCount = 3;
+            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 30.03003F));
+            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 39.93994F));
+            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 30.0300331F));
+            tableLayoutPanel7.Size = new Size(323, 118);
+            tableLayoutPanel7.TabIndex = 38;
+            // 
+            // comboBox6
+            // 
+            comboBox6.FormattingEnabled = true;
+            comboBox6.ItemHeight = 20;
+            comboBox6.Items.AddRange(new object[] { "Present", "Absent", "Excused" });
+            comboBox6.Location = new Point(87, 38);
+            comboBox6.Name = "comboBox6";
+            comboBox6.RightToLeft = RightToLeft.No;
+            comboBox6.Size = new Size(147, 28);
+            comboBox6.TabIndex = 37;
+            comboBox6.Text = "Status";
+            // 
+            // tableLayoutPanel4
+            // 
+            tableLayoutPanel4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel4.ColumnCount = 3;
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
+            tableLayoutPanel4.Controls.Add(comboBox3, 1, 1);
+            tableLayoutPanel4.Location = new Point(773, 259);
+            tableLayoutPanel4.Name = "tableLayoutPanel4";
+            tableLayoutPanel4.RowCount = 3;
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 30.03003F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 39.93994F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 30.0300331F));
+            tableLayoutPanel4.Size = new Size(323, 118);
+            tableLayoutPanel4.TabIndex = 42;
+            // 
+            // comboBox3
+            // 
+            comboBox3.FormattingEnabled = true;
+            comboBox3.ItemHeight = 20;
+            comboBox3.Items.AddRange(new object[] { "Present", "Absent", "Excused" });
+            comboBox3.Location = new Point(87, 38);
+            comboBox3.Name = "comboBox3";
+            comboBox3.RightToLeft = RightToLeft.No;
+            comboBox3.Size = new Size(147, 28);
+            comboBox3.TabIndex = 37;
+            comboBox3.Text = "Status";
+            // 
+            // tableLayoutPanel14
+            // 
+            tableLayoutPanel14.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel14.ColumnCount = 3;
+            tableLayoutPanel14.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel14.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
+            tableLayoutPanel14.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel14.Controls.Add(textBox12, 1, 1);
+            tableLayoutPanel14.Location = new Point(1102, 3);
+            tableLayoutPanel14.Name = "tableLayoutPanel14";
+            tableLayoutPanel14.RowCount = 3;
+            tableLayoutPanel14.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
+            tableLayoutPanel14.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
+            tableLayoutPanel14.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
+            tableLayoutPanel14.Size = new Size(285, 118);
+            tableLayoutPanel14.TabIndex = 41;
+            // 
+            // textBox12
+            // 
+            textBox12.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBox12.BorderStyle = BorderStyle.FixedSingle;
+            textBox12.Location = new Point(26, 26);
+            textBox12.Multiline = true;
+            textBox12.Name = "textBox12";
+            textBox12.Size = new Size(232, 55);
+            textBox12.TabIndex = 33;
+            // 
+            // tableLayoutPanel13
+            // 
+            tableLayoutPanel13.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel13.ColumnCount = 3;
+            tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
+            tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel13.Controls.Add(textBox2, 1, 1);
+            tableLayoutPanel13.Location = new Point(1102, 135);
+            tableLayoutPanel13.Name = "tableLayoutPanel13";
+            tableLayoutPanel13.RowCount = 3;
+            tableLayoutPanel13.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
+            tableLayoutPanel13.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
+            tableLayoutPanel13.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
+            tableLayoutPanel13.Size = new Size(285, 118);
+            tableLayoutPanel13.TabIndex = 39;
+            // 
+            // textBox2
+            // 
+            textBox2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBox2.BorderStyle = BorderStyle.FixedSingle;
+            textBox2.Location = new Point(26, 26);
+            textBox2.Multiline = true;
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(232, 55);
+            textBox2.TabIndex = 33;
+            // 
+            // tableLayoutPanel3
+            // 
+            tableLayoutPanel3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel3.ColumnCount = 3;
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
+            tableLayoutPanel3.Controls.Add(comboBox2, 1, 1);
+            tableLayoutPanel3.Location = new Point(773, 3);
+            tableLayoutPanel3.Name = "tableLayoutPanel3";
+            tableLayoutPanel3.RowCount = 3;
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 30.03003F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 39.93994F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 30.0300331F));
+            tableLayoutPanel3.Size = new Size(323, 118);
+            tableLayoutPanel3.TabIndex = 38;
+            // 
+            // comboBox2
+            // 
+            comboBox2.FormattingEnabled = true;
+            comboBox2.ItemHeight = 20;
+            comboBox2.Items.AddRange(new object[] { "Present", "Absent", "Excused" });
+            comboBox2.Location = new Point(87, 38);
+            comboBox2.Name = "comboBox2";
+            comboBox2.RightToLeft = RightToLeft.No;
+            comboBox2.Size = new Size(147, 28);
+            comboBox2.TabIndex = 37;
+            comboBox2.Text = "Status";
             // 
             // panel35
             // 
@@ -1693,16 +2300,6 @@
             pictureBox27.TabIndex = 0;
             pictureBox27.TabStop = false;
             // 
-            // textBox2
-            // 
-            textBox2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            textBox2.BorderStyle = BorderStyle.FixedSingle;
-            textBox2.Location = new Point(1102, 3);
-            textBox2.Multiline = true;
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(285, 86);
-            textBox2.TabIndex = 33;
-            // 
             // panel20
             // 
             panel20.Controls.Add(label67);
@@ -1743,83 +2340,92 @@
             pictureBox26.TabIndex = 0;
             pictureBox26.TabStop = false;
             // 
-            // flowLayoutPanel3
+            // tableLayoutPanel2
             // 
-            flowLayoutPanel3.Controls.Add(StatusBtn2);
-            flowLayoutPanel3.Controls.Add(button9);
-            flowLayoutPanel3.Controls.Add(button10);
-            flowLayoutPanel3.Controls.Add(button11);
-            flowLayoutPanel3.Location = new Point(773, 3);
-            flowLayoutPanel3.MaximumSize = new Size(172, 202);
-            flowLayoutPanel3.MinimumSize = new Size(172, 52);
-            flowLayoutPanel3.Name = "flowLayoutPanel3";
-            flowLayoutPanel3.Size = new Size(172, 52);
-            flowLayoutPanel3.TabIndex = 32;
-            // 
-            // StatusBtn2
-            // 
-            StatusBtn2.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            StatusBtn2.Image = Properties.Resources.down_arrow;
-            StatusBtn2.ImageAlign = ContentAlignment.MiddleRight;
-            StatusBtn2.Location = new Point(3, 3);
-            StatusBtn2.Name = "StatusBtn2";
-            StatusBtn2.Padding = new Padding(10, 0, 0, 0);
-            StatusBtn2.Size = new Size(165, 43);
-            StatusBtn2.TabIndex = 1;
-            StatusBtn2.Text = "Status";
-            StatusBtn2.TextAlign = ContentAlignment.MiddleLeft;
-            StatusBtn2.TextImageRelation = TextImageRelation.TextBeforeImage;
-            StatusBtn2.UseVisualStyleBackColor = true;
-            StatusBtn2.Click += StatusBtn2_Click;
-            // 
-            // button9
-            // 
-            button9.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            button9.ForeColor = Color.Green;
-            button9.Image = Properties.Resources.square_p;
-            button9.Location = new Point(3, 52);
-            button9.Name = "button9";
-            button9.Size = new Size(165, 45);
-            button9.TabIndex = 0;
-            button9.Text = "PRESENT";
-            button9.TextImageRelation = TextImageRelation.ImageBeforeText;
-            button9.UseVisualStyleBackColor = true;
-            // 
-            // button10
-            // 
-            button10.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            button10.ForeColor = Color.Firebrick;
-            button10.Image = Properties.Resources.square_a;
-            button10.Location = new Point(3, 103);
-            button10.Name = "button10";
-            button10.Size = new Size(165, 45);
-            button10.TabIndex = 0;
-            button10.Text = "ABSENT";
-            button10.TextImageRelation = TextImageRelation.ImageBeforeText;
-            button10.UseVisualStyleBackColor = true;
-            // 
-            // button11
-            // 
-            button11.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            button11.ForeColor = Color.Goldenrod;
-            button11.Image = Properties.Resources.square_e__2_;
-            button11.Location = new Point(3, 154);
-            button11.Name = "button11";
-            button11.Size = new Size(165, 45);
-            button11.TabIndex = 0;
-            button11.Text = "EXCUSED";
-            button11.TextImageRelation = TextImageRelation.ImageBeforeText;
-            button11.UseVisualStyleBackColor = true;
+            tableLayoutPanel2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel2.ColumnCount = 3;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
+            tableLayoutPanel2.Controls.Add(comboBox1, 1, 1);
+            tableLayoutPanel2.Location = new Point(773, 135);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 3;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 30.03003F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 39.93994F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 30.0300331F));
+            tableLayoutPanel2.Size = new Size(323, 118);
+            tableLayoutPanel2.TabIndex = 37;
             // 
             // comboBox1
             // 
             comboBox1.FormattingEnabled = true;
+            comboBox1.ItemHeight = 20;
             comboBox1.Items.AddRange(new object[] { "Present", "Absent", "Excused" });
-            comboBox1.Location = new Point(773, 135);
+            comboBox1.Location = new Point(87, 38);
             comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(151, 28);
+            comboBox1.RightToLeft = RightToLeft.No;
+            comboBox1.Size = new Size(147, 28);
             comboBox1.TabIndex = 37;
             comboBox1.Text = "Status";
+            // 
+            // tableLayoutPanel5
+            // 
+            tableLayoutPanel5.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel5.ColumnCount = 3;
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
+            tableLayoutPanel5.Controls.Add(comboBox4, 1, 1);
+            tableLayoutPanel5.Location = new Point(773, 383);
+            tableLayoutPanel5.Name = "tableLayoutPanel5";
+            tableLayoutPanel5.RowCount = 3;
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 30.03003F));
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 39.93994F));
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 30.0300331F));
+            tableLayoutPanel5.Size = new Size(323, 118);
+            tableLayoutPanel5.TabIndex = 43;
+            // 
+            // comboBox4
+            // 
+            comboBox4.FormattingEnabled = true;
+            comboBox4.ItemHeight = 20;
+            comboBox4.Items.AddRange(new object[] { "Present", "Absent", "Excused" });
+            comboBox4.Location = new Point(87, 38);
+            comboBox4.Name = "comboBox4";
+            comboBox4.RightToLeft = RightToLeft.No;
+            comboBox4.Size = new Size(147, 28);
+            comboBox4.TabIndex = 37;
+            comboBox4.Text = "Status";
+            // 
+            // tableLayoutPanel6
+            // 
+            tableLayoutPanel6.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel6.ColumnCount = 3;
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
+            tableLayoutPanel6.Controls.Add(comboBox5, 1, 1);
+            tableLayoutPanel6.Location = new Point(773, 507);
+            tableLayoutPanel6.Name = "tableLayoutPanel6";
+            tableLayoutPanel6.RowCount = 3;
+            tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 30.03003F));
+            tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 39.93994F));
+            tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 30.0300331F));
+            tableLayoutPanel6.Size = new Size(323, 118);
+            tableLayoutPanel6.TabIndex = 44;
+            // 
+            // comboBox5
+            // 
+            comboBox5.FormattingEnabled = true;
+            comboBox5.ItemHeight = 20;
+            comboBox5.Items.AddRange(new object[] { "Present", "Absent", "Excused" });
+            comboBox5.Location = new Point(87, 38);
+            comboBox5.Name = "comboBox5";
+            comboBox5.RightToLeft = RightToLeft.No;
+            comboBox5.Size = new Size(147, 28);
+            comboBox5.TabIndex = 37;
+            comboBox5.Text = "Status";
             // 
             // pnlSubject
             // 
@@ -3577,7 +4183,36 @@
             panel14.PerformLayout();
             panel17.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);
-            tableLayoutPanel1.PerformLayout();
+            tableLayoutPanel23.ResumeLayout(false);
+            tableLayoutPanel21.ResumeLayout(false);
+            tableLayoutPanel21.PerformLayout();
+            tableLayoutPanel22.ResumeLayout(false);
+            tableLayoutPanel22.PerformLayout();
+            tableLayoutPanel20.ResumeLayout(false);
+            tableLayoutPanel20.PerformLayout();
+            tableLayoutPanel19.ResumeLayout(false);
+            tableLayoutPanel19.PerformLayout();
+            tableLayoutPanel18.ResumeLayout(false);
+            tableLayoutPanel18.PerformLayout();
+            tableLayoutPanel17.ResumeLayout(false);
+            tableLayoutPanel17.PerformLayout();
+            tableLayoutPanel16.ResumeLayout(false);
+            tableLayoutPanel16.PerformLayout();
+            tableLayoutPanel15.ResumeLayout(false);
+            tableLayoutPanel15.PerformLayout();
+            tableLayoutPanel12.ResumeLayout(false);
+            tableLayoutPanel12.PerformLayout();
+            tableLayoutPanel11.ResumeLayout(false);
+            tableLayoutPanel10.ResumeLayout(false);
+            tableLayoutPanel9.ResumeLayout(false);
+            tableLayoutPanel8.ResumeLayout(false);
+            tableLayoutPanel7.ResumeLayout(false);
+            tableLayoutPanel4.ResumeLayout(false);
+            tableLayoutPanel14.ResumeLayout(false);
+            tableLayoutPanel14.PerformLayout();
+            tableLayoutPanel13.ResumeLayout(false);
+            tableLayoutPanel13.PerformLayout();
+            tableLayoutPanel3.ResumeLayout(false);
             panel35.ResumeLayout(false);
             panel35.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox37).EndInit();
@@ -3611,7 +4246,9 @@
             panel20.ResumeLayout(false);
             panel20.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox26).EndInit();
-            flowLayoutPanel3.ResumeLayout(false);
+            tableLayoutPanel2.ResumeLayout(false);
+            tableLayoutPanel5.ResumeLayout(false);
+            tableLayoutPanel6.ResumeLayout(false);
             pnlSubject.ResumeLayout(false);
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
@@ -3790,11 +4427,6 @@
         private Label label28;
         private Label label24;
         private TextBox textBox2;
-        private FlowLayoutPanel flowLayoutPanel3;
-        private Button StatusBtn2;
-        private Button button9;
-        private Button button10;
-        private Button button11;
         private RoundedPanel roundedPanel2;
         private RoundedPanel roundedPanel7;
         private FlowLayoutPanel flowLayoutPanel2;
@@ -3961,5 +4593,47 @@
         private PictureBox pictureBox36;
         private ComboBox comboBox1;
         private Panel panel36;
+        private TableLayoutPanel tableLayoutPanel2;
+        private TableLayoutPanel tableLayoutPanel3;
+        private ComboBox comboBox2;
+        private TableLayoutPanel tableLayoutPanel13;
+        private TableLayoutPanel tableLayoutPanel14;
+        private TextBox textBox12;
+        private TableLayoutPanel tableLayoutPanel21;
+        private TextBox textBox20;
+        private TableLayoutPanel tableLayoutPanel22;
+        private TextBox textBox21;
+        private TableLayoutPanel tableLayoutPanel20;
+        private TextBox textBox19;
+        private TableLayoutPanel tableLayoutPanel19;
+        private TextBox textBox18;
+        private TableLayoutPanel tableLayoutPanel18;
+        private TextBox textBox17;
+        private TableLayoutPanel tableLayoutPanel17;
+        private TextBox textBox16;
+        private TableLayoutPanel tableLayoutPanel16;
+        private TextBox textBox15;
+        private TableLayoutPanel tableLayoutPanel15;
+        private TextBox textBox14;
+        private TableLayoutPanel tableLayoutPanel12;
+        private TextBox textBox13;
+        private TableLayoutPanel tableLayoutPanel11;
+        private ComboBox comboBox10;
+        private TableLayoutPanel tableLayoutPanel10;
+        private ComboBox comboBox9;
+        private TableLayoutPanel tableLayoutPanel9;
+        private ComboBox comboBox8;
+        private TableLayoutPanel tableLayoutPanel8;
+        private ComboBox comboBox7;
+        private TableLayoutPanel tableLayoutPanel7;
+        private ComboBox comboBox6;
+        private TableLayoutPanel tableLayoutPanel4;
+        private ComboBox comboBox3;
+        private TableLayoutPanel tableLayoutPanel5;
+        private ComboBox comboBox4;
+        private TableLayoutPanel tableLayoutPanel6;
+        private ComboBox comboBox5;
+        private TableLayoutPanel tableLayoutPanel23;
+        private ComboBox comboBox11;
     }
 }

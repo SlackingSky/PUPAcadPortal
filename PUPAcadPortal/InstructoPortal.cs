@@ -153,24 +153,7 @@ namespace PUPAcadPortal
         bool expand = false;
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (expand == false)
-            {
-                flowLayoutPanel3.Height += 15;
-                if (flowLayoutPanel3.Height >= flowLayoutPanel3.MaximumSize.Height)
-                {
-                    timer1.Stop();
-                    expand = true;
-                }
-            }
-            else
-            {
-                flowLayoutPanel3.Height -= 15;
-                if (flowLayoutPanel3.Height <= flowLayoutPanel3.MinimumSize.Height)
-                {
-                    timer1.Stop();
-                    expand = false;
-                }
-            }
+         
         }
 
         private void StatusBtn_Click(object sender, EventArgs e)
