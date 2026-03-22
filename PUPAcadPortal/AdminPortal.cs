@@ -41,33 +41,13 @@ namespace PUPAcadPortal
 
 
             AddDuplicateButtonColumn();
+            AddRemoveButtonColumn();
 
             // Add 30 default empty rows to the edit schedule grid and Current Semester grid
             try { dgvSchedule.Rows.Add(30); } catch { }
             try { dgvEditSchedule.Rows.Add(30); } catch { }
 
-            //// Fill first 3 rows with default data
-
-            //// Row 0
-            //dgvEditSchedule.Rows[0].Cells[0].Value = "COMP 009";
-            //dgvEditSchedule.Rows[0].Cells[1].Value = "Object Oriented Programming";
-            //dgvEditSchedule.Rows[0].Cells[2].Value = "3.0";
-            //dgvEditSchedule.Rows[0].Cells[3].Value = "2.0";
-            //dgvEditSchedule.Rows[0].Cells[4].Value = "5.0";
-            //// Row 1
-            //dgvEditSchedule.Rows[1].Cells[0].Value = "COMP 010";
-            //dgvEditSchedule.Rows[1].Cells[1].Value = "Information Management";
-            //dgvEditSchedule.Rows[1].Cells[2].Value = "3.0";
-            //dgvEditSchedule.Rows[1].Cells[3].Value = "2.0";
-            //dgvEditSchedule.Rows[1].Cells[4].Value = "5.0";
-            //// Row 2
-            //dgvEditSchedule.Rows[2].Cells[0].Value = "COMP 012";
-            //dgvEditSchedule.Rows[2].Cells[1].Value = "Network Administration";
-            //dgvEditSchedule.Rows[2].Cells[2].Value = "3.0";
-            //dgvEditSchedule.Rows[2].Cells[3].Value = "2.0";
-            //dgvEditSchedule.Rows[2].Cells[4].Value = "5.0";
-
-            // Fill first 3 rows with default data for BOTH grids
+            // Fill first 3 rows with default data for edit schedule and current semester table (ito na rin gamitin sa other two submenus)
             string[,] dummyData =
             {
                 { "COMP 009", "Object Oriented Programming", "3.0", "2.0", "5.0" },
@@ -75,14 +55,24 @@ namespace PUPAcadPortal
                 { "COMP 012", "Network Administration", "3.0", "2.0", "5.0" }
             };
 
-               for (int row = 0; row < 3; row++)
-                    {
-                        for (int col = 0; col < 5; col++)
-                            {
-                                dgvEditSchedule.Rows[row].Cells[col].Value = dummyData[row, col];
-                                dgvSchedule.Rows[row].Cells[col].Value = dummyData[row, col];
-                            }
-                    }
+            for (int row = 0; row < 3; row++)
+            {
+                for (int col = 0; col < 5; col++)
+                {
+                    dgvEditSchedule.Rows[row].Cells[col].Value = dummyData[row, col];
+                    dgvSchedule.Rows[row].Cells[col].Value = dummyData[row, col];
+                }
+            }
+
+            for (int i = 0; i < 3; i++)
+            {
+                dgvSchedule.Rows[i].Cells["Year"].Value = "2";
+            }
+            // Mark original rows
+            for (int i = 0; i < 3; i++)
+            {
+                dgvEditSchedule.Rows[i].Tag = "original";
+            }
 
         }
 
@@ -94,16 +84,33 @@ namespace PUPAcadPortal
             btn.Text = "Duplicate";
             btn.UseColumnTextForButtonValue = true;
 
-            dgvEditSchedule.Columns.Insert(10, btn); // 11th column
+            dgvEditSchedule.Columns.Insert(11, btn); // 12th column
+        }
+
+        private void AddRemoveButtonColumn()
+        {
+            DataGridViewButtonColumn btn = new DataGridViewButtonColumn();
+            btn.Name = "colRemove";
+            btn.HeaderText = "";
+            btn.Text = "Remove";
+            btn.UseColumnTextForButtonValue = true;
+
+            dgvEditSchedule.Columns.Insert(12, btn); // 13th column
         }
 
         private void dgvEditSchedule_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
 
-            if (dgvEditSchedule.Columns[e.ColumnIndex].Name == "colDuplicate")
+            string colName = dgvEditSchedule.Columns[e.ColumnIndex].Name;
+
+            if (colName == "colDuplicate")
             {
                 DuplicateRow(e.RowIndex);
+            }
+            else if (colName == "colRemove") 
+            {
+                RemoveRow(e.RowIndex);
             }
         }
 
@@ -121,8 +128,27 @@ namespace PUPAcadPortal
                 dgvEditSchedule.Rows[newRowIndex].Cells[i].Value = original.Cells[i].Value;
             }
 
+            dgvEditSchedule.Rows[newRowIndex].Tag = "Duplicate"; // Mark this row as a duplicate for potential future use (like styling or preventing multiple duplicates)]
+
             // Leave other columns blank let admin edit them as needed
         }
+
+        private void RemoveRow(int rowIndex)
+        {
+            var row = dgvEditSchedule.Rows[rowIndex];
+
+            // Block original rows
+            if (row.Tag != null && row.Tag.ToString() == "original")
+            {
+                MessageBox.Show("You cannot remove original subjects.");
+                return;
+            }
+
+            // Allow deletion for duplicates
+            dgvEditSchedule.Rows.RemoveAt(rowIndex);
+        }
+
+
         //--------------------------
         private void btnSO_CurriculumArchive_Click(object sender, EventArgs e)
         {
@@ -492,7 +518,7 @@ namespace PUPAcadPortal
 
         }
 
-        //-----------------------------------------------------(Edit Schedule (allen)
+        //-----------------------------------------------------(Edit Schedule)
         private void btnSO_EditSchedule_Click(object sender, EventArgs e)
         {
             //ShowPanel(pnlEditSchedule);
@@ -625,7 +651,7 @@ namespace PUPAcadPortal
 
         private void btnSaveSchedule_Click(object sender, EventArgs e)
         {
-
+            MessageBox.Show("Schedule Saved Successfully.");
         }
 
         private void lblESCurrentSem_Click(object sender, EventArgs e)
