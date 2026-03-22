@@ -38,9 +38,6 @@ namespace PUPAcadPortal
             this.WindowState = FormWindowState.Maximized;
 
             pnlSubOfferingContent.AutoScroll = true;
-            btnSO_EditSchedule.Click += btnSO_EditSchedule_Click;
-            btnSO_Schedule.Click += btnSO_Schedule_Click;
-            btnSO_CurriculumArchive.Click += btnSO_CurriculumArchive_Click;
 
 
             AddDuplicateButtonColumn();
@@ -291,6 +288,8 @@ namespace PUPAcadPortal
             clickedButton = button;
             pnlYellow.Visible = true;
             pnlYellow.Parent = clickedButton.Parent;
+            pnlYellow.Height = clickedButton.Height;
+            pnlYellow.Location = clickedButton.Location;
             pnlYellow.BringToFront();
             clickedButton.BackColor = selectedColor;
         }
@@ -298,8 +297,7 @@ namespace PUPAcadPortal
         // Schedule panel
         private void btnSO_Schedule_Click(object sender, EventArgs e)
         {
-            changeButtonColor(btnSubjectOffering);
-            clickedButton = btnSubjectOffering;
+            changeButtonColor(sender as Button);
             showContent(clickedButton);
 
             pnlSubOfferingContent.Controls.Clear();
@@ -497,8 +495,10 @@ namespace PUPAcadPortal
         //-----------------------------------------------------(Edit Schedule (allen)
         private void btnSO_EditSchedule_Click(object sender, EventArgs e)
         {
-            ShowPanel(pnlEditSchedule);
-            MessageBox.Show("Edit Schedule clicked.");
+            //ShowPanel(pnlEditSchedule);
+            //MessageBox.Show("Edit Schedule clicked.");
+            changeButtonColor(sender as Button);
+            showContent(clickedButton);
         }
 
 
@@ -511,15 +511,16 @@ namespace PUPAcadPortal
             Dictionary<Button, Panel> contents = new Dictionary<Button, Panel> { };
             contents.Add(btnDashboard, pnlDashboardContent);
             contents.Add(btnEnrollments, pnlEnrollContent);
-            contents.Add(btnSubjectOffering, pnlSubOfferingContent);
             contents.Add(btnSO_CurrentSemester, pnlCurrentSemester);
             contents.Add(btnSO_EditSchedule, pnlEditSchedule);
             //Kada button na aadd, maglagay ng panel sa form at lagay dito
+            //Tapos, sa click event ng button, icall yung changeButtonColor(sender as Button) at showContent(clickedButton), eto lang ok na - Brylle
             foreach (KeyValuePair<Button, Panel> content in contents)
             {
                 if (content.Key == button)
                 {
                     //Automatic positioning, wag pakialaman maliban nalang kung binago ang position ng sidebar
+                    content.Value.Parent = panel3; //Nakalimutan ko ilagay kaya di mapakita - Brylle
                     content.Value.Location = new Point(pnlSidebar.Size.Width, pnlHeader.Size.Height);
                     content.Value.Visible = true;
                     content.Value.BringToFront();
@@ -583,13 +584,12 @@ namespace PUPAcadPortal
         //-------------------------------------------------------------- (1 current sem page)
         private void btnSO_CurrentSemester_Click(object sender, EventArgs e)
         {
-            changeButtonColor(btnSubjectOffering);
-            clickedButton = btnSubjectOffering;
+            changeButtonColor(sender as Button);
             showContent(clickedButton);
 
             // Show Current Semester panel
-            pnlSubOfferingContent.Visible = true;
-            pnlCurrentSemester.Visible = true;
+            //pnlSubOfferingContent.Visible = true;
+            //pnlCurrentSemester.Visible = true;
 
             // Hide other content panels
             //pnlEditSchedule.Visible = false;
@@ -619,11 +619,6 @@ namespace PUPAcadPortal
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void btnSO_CurriculumArchive_Click_1(object sender, EventArgs e)
         {
 
         }
