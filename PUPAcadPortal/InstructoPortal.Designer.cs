@@ -879,7 +879,6 @@
             // 
             // panel19
             // 
-            panel19.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel19.Controls.Add(label30);
             panel19.Controls.Add(label28);
             panel19.Controls.Add(label29);
@@ -890,6 +889,7 @@
             panel19.Controls.Add(panel25);
             panel19.Controls.Add(panel24);
             panel19.Controls.Add(panel14);
+            panel19.Dock = DockStyle.Top;
             panel19.Location = new Point(0, 0);
             panel19.Name = "panel19";
             panel19.Size = new Size(1452, 284);
@@ -1188,11 +1188,12 @@
             // 
             // panel14
             // 
+            panel14.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panel14.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             panel14.BackColor = SystemColors.ButtonHighlight;
             panel14.Controls.Add(label11);
             panel14.Controls.Add(label6);
             panel14.Location = new Point(16, 4);
-            panel14.MinimumSize = new Size(905, 46);
             panel14.Name = "panel14";
             panel14.Size = new Size(905, 46);
             panel14.TabIndex = 18;
@@ -1220,10 +1221,10 @@
             // 
             // panel17
             // 
+            panel17.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel17.AutoScroll = true;
             panel17.BackColor = SystemColors.Control;
             panel17.Controls.Add(tableLayoutPanel1);
-            panel17.Dock = DockStyle.Fill;
             panel17.Location = new Point(0, 0);
             panel17.Name = "panel17";
             panel17.Size = new Size(1452, 966);
@@ -1231,6 +1232,7 @@
             // 
             // tableLayoutPanel1
             // 
+            tableLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             tableLayoutPanel1.AutoScroll = true;
             tableLayoutPanel1.BackColor = Color.White;
             tableLayoutPanel1.ColumnCount = 3;
@@ -1246,9 +1248,9 @@
             tableLayoutPanel1.Controls.Add(panel22, 0, 2);
             tableLayoutPanel1.Controls.Add(panel21, 0, 1);
             tableLayoutPanel1.Controls.Add(textBox2, 2, 0);
-            tableLayoutPanel1.Controls.Add(flowLayoutPanel3, 1, 0);
             tableLayoutPanel1.Controls.Add(panel20, 0, 0);
-            tableLayoutPanel1.Location = new Point(17, 282);
+            tableLayoutPanel1.Controls.Add(flowLayoutPanel3, 1, 0);
+            tableLayoutPanel1.Location = new Point(17, 365);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 11;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 9.090908F));
@@ -1262,7 +1264,7 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 9.090908F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 9.090908F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 9.090908F));
-            tableLayoutPanel1.Size = new Size(1443, 1458);
+            tableLayoutPanel1.Size = new Size(1411, 1375);
             tableLayoutPanel1.TabIndex = 22;
             // 
             // panel34
@@ -1270,7 +1272,7 @@
             panel34.Controls.Add(label96);
             panel34.Controls.Add(label97);
             panel34.Controls.Add(pictureBox35);
-            panel34.Location = new Point(3, 1059);
+            panel34.Location = new Point(3, 995);
             panel34.Name = "panel34";
             panel34.Size = new Size(758, 92);
             panel34.TabIndex = 35;
@@ -1310,7 +1312,7 @@
             panel33.Controls.Add(label94);
             panel33.Controls.Add(label95);
             panel33.Controls.Add(pictureBox34);
-            panel33.Location = new Point(3, 927);
+            panel33.Location = new Point(3, 871);
             panel33.Name = "panel33";
             panel33.Size = new Size(758, 92);
             panel33.TabIndex = 35;
@@ -1350,7 +1352,7 @@
             panel32.Controls.Add(label92);
             panel32.Controls.Add(label93);
             panel32.Controls.Add(pictureBox33);
-            panel32.Location = new Point(3, 795);
+            panel32.Location = new Point(3, 747);
             panel32.Name = "panel32";
             panel32.Size = new Size(758, 92);
             panel32.TabIndex = 35;
@@ -1390,7 +1392,7 @@
             panel31.Controls.Add(label90);
             panel31.Controls.Add(label91);
             panel31.Controls.Add(pictureBox32);
-            panel31.Location = new Point(3, 663);
+            panel31.Location = new Point(3, 623);
             panel31.Name = "panel31";
             panel31.Size = new Size(758, 92);
             panel31.TabIndex = 35;
@@ -1430,7 +1432,7 @@
             panel30.Controls.Add(label88);
             panel30.Controls.Add(label89);
             panel30.Controls.Add(pictureBox31);
-            panel30.Location = new Point(3, 531);
+            panel30.Location = new Point(3, 499);
             panel30.Name = "panel30";
             panel30.Size = new Size(758, 92);
             panel30.TabIndex = 35;
@@ -1470,7 +1472,7 @@
             panel29.Controls.Add(label86);
             panel29.Controls.Add(label87);
             panel29.Controls.Add(pictureBox30);
-            panel29.Location = new Point(3, 399);
+            panel29.Location = new Point(3, 375);
             panel29.Name = "panel29";
             panel29.Size = new Size(758, 92);
             panel29.TabIndex = 35;
@@ -1510,7 +1512,7 @@
             panel22.Controls.Add(label70);
             panel22.Controls.Add(label71);
             panel22.Controls.Add(pictureBox28);
-            panel22.Location = new Point(3, 267);
+            panel22.Location = new Point(3, 251);
             panel22.Name = "panel22";
             panel22.Size = new Size(758, 92);
             panel22.TabIndex = 35;
@@ -1550,7 +1552,7 @@
             panel21.Controls.Add(label68);
             panel21.Controls.Add(label69);
             panel21.Controls.Add(pictureBox27);
-            panel21.Location = new Point(3, 135);
+            panel21.Location = new Point(3, 127);
             panel21.Name = "panel21";
             panel21.Size = new Size(758, 92);
             panel21.TabIndex = 35;
@@ -1592,12 +1594,11 @@
             textBox2.Location = new Point(1102, 3);
             textBox2.Multiline = true;
             textBox2.Name = "textBox2";
-            textBox2.Size = new Size(338, 86);
+            textBox2.Size = new Size(306, 86);
             textBox2.TabIndex = 33;
             // 
             // flowLayoutPanel3
             // 
-            flowLayoutPanel3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             flowLayoutPanel3.Controls.Add(StatusBtn2);
             flowLayoutPanel3.Controls.Add(button9);
             flowLayoutPanel3.Controls.Add(button10);
