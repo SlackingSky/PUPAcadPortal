@@ -93,6 +93,14 @@
             label6 = new Label();
             panel17 = new Panel();
             tableLayoutPanel1 = new TableLayoutPanel();
+            panel35 = new Panel();
+            label100 = new Label();
+            label101 = new Label();
+            pictureBox37 = new PictureBox();
+            panel18 = new Panel();
+            label98 = new Label();
+            label99 = new Label();
+            pictureBox36 = new PictureBox();
             panel34 = new Panel();
             label96 = new Label();
             label97 = new Label();
@@ -126,15 +134,15 @@
             label69 = new Label();
             pictureBox27 = new PictureBox();
             textBox2 = new TextBox();
+            panel20 = new Panel();
+            label67 = new Label();
+            label66 = new Label();
+            pictureBox26 = new PictureBox();
             flowLayoutPanel3 = new FlowLayoutPanel();
             StatusBtn2 = new Button();
             button9 = new Button();
             button10 = new Button();
             button11 = new Button();
-            panel20 = new Panel();
-            label67 = new Label();
-            label66 = new Label();
-            pictureBox26 = new PictureBox();
             pnlSubject = new Panel();
             panel1 = new Panel();
             label8 = new Label();
@@ -308,6 +316,10 @@
             panel14.SuspendLayout();
             panel17.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
+            panel35.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox37).BeginInit();
+            panel18.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox36).BeginInit();
             panel34.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox35).BeginInit();
             panel33.SuspendLayout();
@@ -324,9 +336,9 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox28).BeginInit();
             panel21.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox27).BeginInit();
-            flowLayoutPanel3.SuspendLayout();
             panel20.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox26).BeginInit();
+            flowLayoutPanel3.SuspendLayout();
             pnlSubject.SuspendLayout();
             panel1.SuspendLayout();
             pnlLMSAct.SuspendLayout();
@@ -1239,6 +1251,8 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 770F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 329F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 29F));
+            tableLayoutPanel1.Controls.Add(panel35, 0, 10);
+            tableLayoutPanel1.Controls.Add(panel18, 0, 9);
             tableLayoutPanel1.Controls.Add(panel34, 0, 8);
             tableLayoutPanel1.Controls.Add(panel33, 0, 7);
             tableLayoutPanel1.Controls.Add(panel32, 0, 6);
@@ -1250,7 +1264,7 @@
             tableLayoutPanel1.Controls.Add(textBox2, 2, 0);
             tableLayoutPanel1.Controls.Add(panel20, 0, 0);
             tableLayoutPanel1.Controls.Add(flowLayoutPanel3, 1, 0);
-            tableLayoutPanel1.Location = new Point(17, 365);
+            tableLayoutPanel1.Location = new Point(16, 300);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 11;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 9.090908F));
@@ -1266,6 +1280,86 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 9.090908F));
             tableLayoutPanel1.Size = new Size(1411, 1375);
             tableLayoutPanel1.TabIndex = 22;
+            // 
+            // panel35
+            // 
+            panel35.Controls.Add(label100);
+            panel35.Controls.Add(label101);
+            panel35.Controls.Add(pictureBox37);
+            panel35.Location = new Point(3, 1243);
+            panel35.Name = "panel35";
+            panel35.Size = new Size(758, 92);
+            panel35.TabIndex = 36;
+            // 
+            // label100
+            // 
+            label100.AutoSize = true;
+            label100.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label100.Location = new Point(492, 34);
+            label100.Name = "label100";
+            label100.Size = new Size(236, 31);
+            label100.TabIndex = 29;
+            label100.Text = "2024 - 00174 - SM - 0";
+            // 
+            // label101
+            // 
+            label101.AutoSize = true;
+            label101.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label101.Location = new Point(182, 34);
+            label101.Name = "label101";
+            label101.Size = new Size(162, 31);
+            label101.TabIndex = 29;
+            label101.Text = "Student Name";
+            // 
+            // pictureBox37
+            // 
+            pictureBox37.Image = Properties.Resources.profile1;
+            pictureBox37.Location = new Point(35, 10);
+            pictureBox37.Name = "pictureBox37";
+            pictureBox37.Size = new Size(79, 76);
+            pictureBox37.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox37.TabIndex = 0;
+            pictureBox37.TabStop = false;
+            // 
+            // panel18
+            // 
+            panel18.Controls.Add(label98);
+            panel18.Controls.Add(label99);
+            panel18.Controls.Add(pictureBox36);
+            panel18.Location = new Point(3, 1119);
+            panel18.Name = "panel18";
+            panel18.Size = new Size(758, 92);
+            panel18.TabIndex = 36;
+            // 
+            // label98
+            // 
+            label98.AutoSize = true;
+            label98.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label98.Location = new Point(492, 34);
+            label98.Name = "label98";
+            label98.Size = new Size(236, 31);
+            label98.TabIndex = 29;
+            label98.Text = "2024 - 00174 - SM - 0";
+            // 
+            // label99
+            // 
+            label99.AutoSize = true;
+            label99.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label99.Location = new Point(182, 34);
+            label99.Name = "label99";
+            label99.Size = new Size(162, 31);
+            label99.TabIndex = 29;
+            label99.Text = "Student Name";
+            // 
+            // pictureBox36
+            // 
+            pictureBox36.Image = Properties.Resources.profile1;
+            pictureBox36.Location = new Point(35, 10);
+            pictureBox36.Name = "pictureBox36";
+            pictureBox36.Size = new Size(79, 76);
+            pictureBox36.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox36.TabIndex = 0;
+            pictureBox36.TabStop = false;
             // 
             // panel34
             // 
@@ -1597,6 +1691,46 @@
             textBox2.Size = new Size(306, 86);
             textBox2.TabIndex = 33;
             // 
+            // panel20
+            // 
+            panel20.Controls.Add(label67);
+            panel20.Controls.Add(label66);
+            panel20.Controls.Add(pictureBox26);
+            panel20.Location = new Point(3, 3);
+            panel20.Name = "panel20";
+            panel20.Size = new Size(758, 92);
+            panel20.TabIndex = 34;
+            // 
+            // label67
+            // 
+            label67.AutoSize = true;
+            label67.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label67.Location = new Point(492, 34);
+            label67.Name = "label67";
+            label67.Size = new Size(236, 31);
+            label67.TabIndex = 29;
+            label67.Text = "2024 - 00174 - SM - 0";
+            // 
+            // label66
+            // 
+            label66.AutoSize = true;
+            label66.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label66.Location = new Point(182, 34);
+            label66.Name = "label66";
+            label66.Size = new Size(162, 31);
+            label66.TabIndex = 29;
+            label66.Text = "Student Name";
+            // 
+            // pictureBox26
+            // 
+            pictureBox26.Image = Properties.Resources.profile1;
+            pictureBox26.Location = new Point(35, 10);
+            pictureBox26.Name = "pictureBox26";
+            pictureBox26.Size = new Size(79, 76);
+            pictureBox26.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox26.TabIndex = 0;
+            pictureBox26.TabStop = false;
+            // 
             // flowLayoutPanel3
             // 
             flowLayoutPanel3.Controls.Add(StatusBtn2);
@@ -1664,46 +1798,6 @@
             button11.Text = "EXCUSED";
             button11.TextImageRelation = TextImageRelation.ImageBeforeText;
             button11.UseVisualStyleBackColor = true;
-            // 
-            // panel20
-            // 
-            panel20.Controls.Add(label67);
-            panel20.Controls.Add(label66);
-            panel20.Controls.Add(pictureBox26);
-            panel20.Location = new Point(3, 3);
-            panel20.Name = "panel20";
-            panel20.Size = new Size(758, 92);
-            panel20.TabIndex = 34;
-            // 
-            // label67
-            // 
-            label67.AutoSize = true;
-            label67.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label67.Location = new Point(492, 34);
-            label67.Name = "label67";
-            label67.Size = new Size(236, 31);
-            label67.TabIndex = 29;
-            label67.Text = "2024 - 00174 - SM - 0";
-            // 
-            // label66
-            // 
-            label66.AutoSize = true;
-            label66.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label66.Location = new Point(182, 34);
-            label66.Name = "label66";
-            label66.Size = new Size(162, 31);
-            label66.TabIndex = 29;
-            label66.Text = "Student Name";
-            // 
-            // pictureBox26
-            // 
-            pictureBox26.Image = Properties.Resources.profile1;
-            pictureBox26.Location = new Point(35, 10);
-            pictureBox26.Name = "pictureBox26";
-            pictureBox26.Size = new Size(79, 76);
-            pictureBox26.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox26.TabIndex = 0;
-            pictureBox26.TabStop = false;
             // 
             // pnlSubject
             // 
@@ -3460,6 +3554,12 @@
             panel17.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
+            panel35.ResumeLayout(false);
+            panel35.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox37).EndInit();
+            panel18.ResumeLayout(false);
+            panel18.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox36).EndInit();
             panel34.ResumeLayout(false);
             panel34.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox35).EndInit();
@@ -3484,10 +3584,10 @@
             panel21.ResumeLayout(false);
             panel21.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox27).EndInit();
-            flowLayoutPanel3.ResumeLayout(false);
             panel20.ResumeLayout(false);
             panel20.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox26).EndInit();
+            flowLayoutPanel3.ResumeLayout(false);
             pnlSubject.ResumeLayout(false);
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
@@ -3827,5 +3927,13 @@
         private Label label68;
         private Label label69;
         private PictureBox pictureBox27;
+        private Panel panel35;
+        private Label label100;
+        private Label label101;
+        private PictureBox pictureBox37;
+        private Panel panel18;
+        private Label label98;
+        private Label label99;
+        private PictureBox pictureBox36;
     }
 }
