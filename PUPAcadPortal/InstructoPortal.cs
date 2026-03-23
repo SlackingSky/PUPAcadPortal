@@ -237,5 +237,29 @@ namespace PUPAcadPortal
             pnlSubMenu.Visible = true;
             pnlSubMenu.BringToFront();
         }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            pnlSubject.Visible = true;
+            pnlSubject.BringToFront();
+        }
+
+        private void btnGeneralAnnounce_Click(object sender, EventArgs e)
+        {
+            pnlGenChats.Visible = true;
+            pnlGenChats.BringToFront();
+        }
+
+        private void btnLMSActSub_Click(object sender, EventArgs e)
+        {
+            pnlLMSActivities.Visible = true;
+            pnlLMSActivities.BringToFront();
+        }
+
+        private void btnLMSFiles_Click(object sender, EventArgs e)
+        {
+            pnlLMSFiles.Visible = true;
+            pnlLMSFiles.BringToFront();
+        }
     }
 }

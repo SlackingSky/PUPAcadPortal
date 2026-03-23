@@ -60,6 +60,17 @@
             pnlCoursesContent = new Panel();
             pnlGradesContent = new Panel();
             panel3 = new Panel();
+            pnlSubMenu = new Panel();
+            pnlLMSFiles = new Panel();
+            pnlLMSActivities = new Panel();
+            pnlGenChats = new Panel();
+            panel38 = new Panel();
+            panel39 = new Panel();
+            btnLMSFiles = new Button();
+            btnLMSActSub = new Button();
+            btnGeneralAnnounce = new Button();
+            lblSub1Menu = new Label();
+            btnBack = new Button();
             pnlSubject = new Panel();
             roundedPanel2 = new RoundedPanel();
             lblSection2Sched = new Label();
@@ -369,7 +380,6 @@
             pictureBox22 = new PictureBox();
             timer1 = new System.Windows.Forms.Timer(components);
             sideBarTimer = new System.Windows.Forms.Timer(components);
-            pnlSubMenu = new Panel();
             button29 = new Button();
             pnlSidebar.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
@@ -385,6 +395,9 @@
             panel12.SuspendLayout();
             panel13.SuspendLayout();
             panel3.SuspendLayout();
+            pnlSubMenu.SuspendLayout();
+            panel38.SuspendLayout();
+            panel39.SuspendLayout();
             pnlSubject.SuspendLayout();
             roundedPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox45).BeginInit();
@@ -974,8 +987,8 @@
             // panel3
             // 
             panel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panel3.Controls.Add(pnlSubject);
             panel3.Controls.Add(pnlSubMenu);
+            panel3.Controls.Add(pnlSubject);
             panel3.Controls.Add(pnlAnnounce);
             panel3.Controls.Add(pnlAttendance);
             panel3.Controls.Add(pnlLMSAct);
@@ -992,6 +1005,132 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(1746, 1415);
             panel3.TabIndex = 0;
+            // 
+            // pnlSubMenu
+            // 
+            pnlSubMenu.Controls.Add(pnlLMSFiles);
+            pnlSubMenu.Controls.Add(pnlLMSActivities);
+            pnlSubMenu.Controls.Add(pnlGenChats);
+            pnlSubMenu.Controls.Add(panel38);
+            pnlSubMenu.Dock = DockStyle.Fill;
+            pnlSubMenu.Location = new Point(293, 96);
+            pnlSubMenu.Name = "pnlSubMenu";
+            pnlSubMenu.Size = new Size(1453, 1319);
+            pnlSubMenu.TabIndex = 19;
+            pnlSubMenu.Visible = false;
+            // 
+            // pnlLMSFiles
+            // 
+            pnlLMSFiles.Dock = DockStyle.Fill;
+            pnlLMSFiles.Location = new Point(0, 65);
+            pnlLMSFiles.Name = "pnlLMSFiles";
+            pnlLMSFiles.Size = new Size(1453, 1254);
+            pnlLMSFiles.TabIndex = 0;
+            // 
+            // pnlLMSActivities
+            // 
+            pnlLMSActivities.Dock = DockStyle.Fill;
+            pnlLMSActivities.Location = new Point(0, 65);
+            pnlLMSActivities.Name = "pnlLMSActivities";
+            pnlLMSActivities.Size = new Size(1453, 1254);
+            pnlLMSActivities.TabIndex = 0;
+            // 
+            // pnlGenChats
+            // 
+            pnlGenChats.Dock = DockStyle.Fill;
+            pnlGenChats.Location = new Point(0, 65);
+            pnlGenChats.Name = "pnlGenChats";
+            pnlGenChats.Size = new Size(1453, 1254);
+            pnlGenChats.TabIndex = 1;
+            // 
+            // panel38
+            // 
+            panel38.BackColor = Color.White;
+            panel38.Controls.Add(panel39);
+            panel38.Controls.Add(lblSub1Menu);
+            panel38.Controls.Add(btnBack);
+            panel38.Dock = DockStyle.Top;
+            panel38.Location = new Point(0, 0);
+            panel38.Name = "panel38";
+            panel38.Size = new Size(1453, 65);
+            panel38.TabIndex = 0;
+            // 
+            // panel39
+            // 
+            panel39.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            panel39.Controls.Add(btnLMSFiles);
+            panel39.Controls.Add(btnLMSActSub);
+            panel39.Controls.Add(btnGeneralAnnounce);
+            panel39.Location = new Point(839, 4);
+            panel39.Name = "panel39";
+            panel39.Size = new Size(604, 54);
+            panel39.TabIndex = 1;
+            // 
+            // btnLMSFiles
+            // 
+            btnLMSFiles.BackColor = Color.White;
+            btnLMSFiles.Font = new Font("Arial", 16.2F, FontStyle.Regular, GraphicsUnit.Pixel);
+            btnLMSFiles.Image = (Image)resources.GetObject("btnLMSFiles.Image");
+            btnLMSFiles.Location = new Point(421, 10);
+            btnLMSFiles.Name = "btnLMSFiles";
+            btnLMSFiles.Size = new Size(166, 34);
+            btnLMSFiles.TabIndex = 5;
+            btnLMSFiles.Text = "  Class Files";
+            btnLMSFiles.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnLMSFiles.UseVisualStyleBackColor = false;
+            btnLMSFiles.Click += btnLMSFiles_Click;
+            // 
+            // btnLMSActSub
+            // 
+            btnLMSActSub.BackColor = Color.White;
+            btnLMSActSub.Font = new Font("Arial", 16.2F, FontStyle.Regular, GraphicsUnit.Pixel);
+            btnLMSActSub.Image = (Image)resources.GetObject("btnLMSActSub.Image");
+            btnLMSActSub.Location = new Point(219, 10);
+            btnLMSActSub.Name = "btnLMSActSub";
+            btnLMSActSub.Size = new Size(166, 34);
+            btnLMSActSub.TabIndex = 4;
+            btnLMSActSub.Text = "  Activities";
+            btnLMSActSub.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnLMSActSub.UseVisualStyleBackColor = false;
+            btnLMSActSub.Click += btnLMSActSub_Click;
+            // 
+            // btnGeneralAnnounce
+            // 
+            btnGeneralAnnounce.BackColor = Color.White;
+            btnGeneralAnnounce.Font = new Font("Arial", 16.2F, FontStyle.Regular, GraphicsUnit.Pixel);
+            btnGeneralAnnounce.Image = (Image)resources.GetObject("btnGeneralAnnounce.Image");
+            btnGeneralAnnounce.Location = new Point(17, 10);
+            btnGeneralAnnounce.Name = "btnGeneralAnnounce";
+            btnGeneralAnnounce.Size = new Size(166, 34);
+            btnGeneralAnnounce.TabIndex = 3;
+            btnGeneralAnnounce.Text = "  General Chats";
+            btnGeneralAnnounce.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnGeneralAnnounce.UseVisualStyleBackColor = false;
+            btnGeneralAnnounce.Click += btnGeneralAnnounce_Click;
+            // 
+            // lblSub1Menu
+            // 
+            lblSub1Menu.AutoSize = true;
+            lblSub1Menu.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblSub1Menu.Location = new Point(114, 17);
+            lblSub1Menu.Name = "lblSub1Menu";
+            lblSub1Menu.Size = new Size(343, 31);
+            lblSub1Menu.TabIndex = 2;
+            lblSub1Menu.Text = "Introduction to Programming 1 ";
+            // 
+            // btnBack
+            // 
+            btnBack.BackColor = Color.White;
+            btnBack.Font = new Font("Arial", 16.2F, FontStyle.Regular, GraphicsUnit.Pixel);
+            btnBack.Image = (Image)resources.GetObject("btnBack.Image");
+            btnBack.Location = new Point(13, 16);
+            btnBack.Name = "btnBack";
+            btnBack.Size = new Size(93, 34);
+            btnBack.TabIndex = 0;
+            btnBack.Text = "Back";
+            btnBack.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnBack.UseVisualStyleBackColor = false;
+            btnBack.Click += btnBack_Click;
             // 
             // pnlSubject
             // 
@@ -4652,14 +4791,6 @@
             timer1.Interval = 1;
             timer1.Tick += timer1_Tick;
             // 
-            // pnlSubMenu
-            // 
-            pnlSubMenu.Dock = DockStyle.Fill;
-            pnlSubMenu.Location = new Point(293, 96);
-            pnlSubMenu.Name = "pnlSubMenu";
-            pnlSubMenu.Size = new Size(1453, 1319);
-            pnlSubMenu.TabIndex = 19;
-            // 
             // InstructorPortal
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -4686,6 +4817,10 @@
             panel12.ResumeLayout(false);
             panel13.ResumeLayout(false);
             panel3.ResumeLayout(false);
+            pnlSubMenu.ResumeLayout(false);
+            panel38.ResumeLayout(false);
+            panel38.PerformLayout();
+            panel39.ResumeLayout(false);
             pnlSubject.ResumeLayout(false);
             pnlSubject.PerformLayout();
             roundedPanel2.ResumeLayout(false);
@@ -5214,5 +5349,15 @@
         private PictureBox pictureBox45;
         private Button btnGo2;
         private Panel pnlSubMenu;
+        private Panel panel38;
+        private Button btnBack;
+        private Panel panel39;
+        private Label lblSub1Menu;
+        private Button btnLMSFiles;
+        private Button btnLMSActSub;
+        private Button btnGeneralAnnounce;
+        private Panel pnlLMSFiles;
+        private Panel pnlLMSActivities;
+        private Panel pnlGenChats;
     }
 }
