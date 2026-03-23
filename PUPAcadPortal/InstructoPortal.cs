@@ -231,5 +231,11 @@ namespace PUPAcadPortal
             pnlCreateAnnounce.Visible = false;
             pnlAnnounce.BringToFront();
         }
+
+        private void btnGo1_Click(object sender, EventArgs e)
+        {
+            pnlSubMenu.Visible = true;
+            pnlSubMenu.BringToFront();
+        }
     }
 }
