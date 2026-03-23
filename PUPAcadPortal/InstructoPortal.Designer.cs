@@ -61,14 +61,21 @@
             pnlGradesContent = new Panel();
             panel3 = new Panel();
             pnlAnnounce = new Panel();
+            CreateAnnounce = new Button();
             pnlCreateAnnounce = new RoundedPanel();
+            panel37 = new Panel();
+            btnCancelPost = new Button();
+            btnPostAnnounce = new Button();
+            checkBox1 = new CheckBox();
+            comboBox12 = new ComboBox();
+            label105 = new Label();
+            chkUrgent = new CheckBox();
+            txtBody = new TextBox();
+            txtTitle = new TextBox();
             roundedPanel19 = new RoundedPanel();
             label43 = new Label();
-            textBox22 = new TextBox();
-            textBox23 = new TextBox();
             label102 = new Label();
             label103 = new Label();
-            CreateAnnounce = new Button();
             panel2 = new Panel();
             label104 = new Label();
             roundedPanel13 = new RoundedPanel();
@@ -366,6 +373,7 @@
             panel3.SuspendLayout();
             pnlAnnounce.SuspendLayout();
             pnlCreateAnnounce.SuspendLayout();
+            panel37.SuspendLayout();
             panel2.SuspendLayout();
             roundedPanel13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox38).BeginInit();
@@ -988,78 +996,6 @@
             pnlAnnounce.TabIndex = 17;
             pnlAnnounce.Visible = false;
             // 
-            // pnlCreateAnnounce
-            // 
-            pnlCreateAnnounce.BackColor = Color.Maroon;
-            pnlCreateAnnounce.BorderRadius = 10;
-            pnlCreateAnnounce.Controls.Add(roundedPanel19);
-            pnlCreateAnnounce.Controls.Add(label43);
-            pnlCreateAnnounce.Controls.Add(textBox22);
-            pnlCreateAnnounce.Controls.Add(textBox23);
-            pnlCreateAnnounce.Controls.Add(label102);
-            pnlCreateAnnounce.Controls.Add(label103);
-            pnlCreateAnnounce.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            pnlCreateAnnounce.Location = new Point(224, 210);
-            pnlCreateAnnounce.Name = "pnlCreateAnnounce";
-            pnlCreateAnnounce.Size = new Size(897, 610);
-            pnlCreateAnnounce.TabIndex = 5;
-            pnlCreateAnnounce.Visible = false;
-            // 
-            // roundedPanel19
-            // 
-            roundedPanel19.BackColor = Color.White;
-            roundedPanel19.BorderRadius = 10;
-            roundedPanel19.Location = new Point(27, 431);
-            roundedPanel19.Name = "roundedPanel19";
-            roundedPanel19.Size = new Size(490, 125);
-            roundedPanel19.TabIndex = 5;
-            // 
-            // label43
-            // 
-            label43.AutoSize = true;
-            label43.ForeColor = Color.White;
-            label43.Location = new Point(25, 390);
-            label43.Name = "label43";
-            label43.Size = new Size(100, 23);
-            label43.TabIndex = 4;
-            label43.Text = "Attachment";
-            // 
-            // textBox22
-            // 
-            textBox22.Location = new Point(25, 133);
-            textBox22.Multiline = true;
-            textBox22.Name = "textBox22";
-            textBox22.Size = new Size(492, 202);
-            textBox22.TabIndex = 3;
-            // 
-            // textBox23
-            // 
-            textBox23.Location = new Point(25, 78);
-            textBox23.Name = "textBox23";
-            textBox23.Size = new Size(492, 30);
-            textBox23.TabIndex = 2;
-            // 
-            // label102
-            // 
-            label102.AutoSize = true;
-            label102.ForeColor = Color.White;
-            label102.Location = new Point(25, 53);
-            label102.Name = "label102";
-            label102.Size = new Size(42, 23);
-            label102.TabIndex = 1;
-            label102.Text = "Title";
-            // 
-            // label103
-            // 
-            label103.AutoSize = true;
-            label103.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label103.ForeColor = Color.White;
-            label103.Location = new Point(9, 7);
-            label103.Name = "label103";
-            label103.Size = new Size(253, 31);
-            label103.TabIndex = 0;
-            label103.Text = "Create Announcement";
-            // 
             // CreateAnnounce
             // 
             CreateAnnounce.Anchor = AnchorStyles.Top | AnchorStyles.Right;
@@ -1084,6 +1020,168 @@
             CreateAnnounce.Text = "    Create Announcement";
             CreateAnnounce.TextImageRelation = TextImageRelation.ImageBeforeText;
             CreateAnnounce.UseVisualStyleBackColor = false;
+            CreateAnnounce.Click += CreateAnnounce_Click_1;
+            // 
+            // pnlCreateAnnounce
+            // 
+            pnlCreateAnnounce.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            pnlCreateAnnounce.BackColor = Color.Maroon;
+            pnlCreateAnnounce.BorderRadius = 10;
+            pnlCreateAnnounce.Controls.Add(panel37);
+            pnlCreateAnnounce.Controls.Add(checkBox1);
+            pnlCreateAnnounce.Controls.Add(comboBox12);
+            pnlCreateAnnounce.Controls.Add(label105);
+            pnlCreateAnnounce.Controls.Add(chkUrgent);
+            pnlCreateAnnounce.Controls.Add(txtBody);
+            pnlCreateAnnounce.Controls.Add(txtTitle);
+            pnlCreateAnnounce.Controls.Add(roundedPanel19);
+            pnlCreateAnnounce.Controls.Add(label43);
+            pnlCreateAnnounce.Controls.Add(label102);
+            pnlCreateAnnounce.Controls.Add(label103);
+            pnlCreateAnnounce.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            pnlCreateAnnounce.Location = new Point(224, 127);
+            pnlCreateAnnounce.Name = "pnlCreateAnnounce";
+            pnlCreateAnnounce.Size = new Size(897, 610);
+            pnlCreateAnnounce.TabIndex = 5;
+            pnlCreateAnnounce.Visible = false;
+            // 
+            // panel37
+            // 
+            panel37.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panel37.Controls.Add(btnCancelPost);
+            panel37.Controls.Add(btnPostAnnounce);
+            panel37.Location = new Point(608, 562);
+            panel37.Name = "panel37";
+            panel37.Size = new Size(286, 45);
+            panel37.TabIndex = 14;
+            // 
+            // btnCancelPost
+            // 
+            btnCancelPost.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnCancelPost.Location = new Point(7, 6);
+            btnCancelPost.Name = "btnCancelPost";
+            btnCancelPost.Size = new Size(98, 32);
+            btnCancelPost.TabIndex = 9;
+            btnCancelPost.Text = "Cancel";
+            btnCancelPost.UseVisualStyleBackColor = true;
+            btnCancelPost.Click += btnCancelPost_Click;
+            // 
+            // btnPostAnnounce
+            // 
+            btnPostAnnounce.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnPostAnnounce.Location = new Point(111, 6);
+            btnPostAnnounce.Name = "btnPostAnnounce";
+            btnPostAnnounce.Size = new Size(167, 32);
+            btnPostAnnounce.TabIndex = 8;
+            btnPostAnnounce.Text = "Post Announce";
+            btnPostAnnounce.UseVisualStyleBackColor = true;
+            // 
+            // checkBox1
+            // 
+            checkBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            checkBox1.AutoSize = true;
+            checkBox1.ForeColor = Color.White;
+            checkBox1.Location = new Point(799, 343);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(85, 27);
+            checkBox1.TabIndex = 13;
+            checkBox1.Text = "Pinned";
+            checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // comboBox12
+            // 
+            comboBox12.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            comboBox12.FormattingEnabled = true;
+            comboBox12.Items.AddRange(new object[] { "Course 1", "Course 2", "Course 3", "Course 4", "Course 5", "Course 6", "Course 7", "Course 8" });
+            comboBox12.Location = new Point(656, 86);
+            comboBox12.Name = "comboBox12";
+            comboBox12.Size = new Size(228, 31);
+            comboBox12.TabIndex = 12;
+            // 
+            // label105
+            // 
+            label105.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label105.AutoSize = true;
+            label105.ForeColor = Color.White;
+            label105.Location = new Point(656, 53);
+            label105.Name = "label105";
+            label105.Size = new Size(137, 23);
+            label105.TabIndex = 11;
+            label105.Text = "Course Selection";
+            // 
+            // chkUrgent
+            // 
+            chkUrgent.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            chkUrgent.AutoSize = true;
+            chkUrgent.ForeColor = Color.White;
+            chkUrgent.Location = new Point(656, 343);
+            chkUrgent.Name = "chkUrgent";
+            chkUrgent.Size = new Size(85, 27);
+            chkUrgent.TabIndex = 10;
+            chkUrgent.Text = "Urgent";
+            chkUrgent.UseVisualStyleBackColor = true;
+            // 
+            // txtBody
+            // 
+            txtBody.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtBody.Font = new Font("Segoe UI", 10.2F);
+            txtBody.Location = new Point(25, 141);
+            txtBody.Multiline = true;
+            txtBody.Name = "txtBody";
+            txtBody.Size = new Size(614, 229);
+            txtBody.TabIndex = 7;
+            // 
+            // txtTitle
+            // 
+            txtTitle.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtTitle.Font = new Font("Segoe UI", 10.2F);
+            txtTitle.Location = new Point(25, 87);
+            txtTitle.Name = "txtTitle";
+            txtTitle.Size = new Size(614, 30);
+            txtTitle.TabIndex = 6;
+            // 
+            // roundedPanel19
+            // 
+            roundedPanel19.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            roundedPanel19.BackColor = Color.White;
+            roundedPanel19.BorderRadius = 10;
+            roundedPanel19.Location = new Point(25, 431);
+            roundedPanel19.Name = "roundedPanel19";
+            roundedPanel19.Size = new Size(614, 125);
+            roundedPanel19.TabIndex = 5;
+            // 
+            // label43
+            // 
+            label43.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label43.AutoSize = true;
+            label43.ForeColor = Color.White;
+            label43.Location = new Point(25, 390);
+            label43.Name = "label43";
+            label43.Size = new Size(100, 23);
+            label43.TabIndex = 4;
+            label43.Text = "Attachment";
+            // 
+            // label102
+            // 
+            label102.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label102.AutoSize = true;
+            label102.ForeColor = Color.White;
+            label102.Location = new Point(25, 53);
+            label102.Name = "label102";
+            label102.Size = new Size(42, 23);
+            label102.TabIndex = 1;
+            label102.Text = "Title";
+            // 
+            // label103
+            // 
+            label103.AutoSize = true;
+            label103.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label103.ForeColor = Color.White;
+            label103.Location = new Point(9, 7);
+            label103.Name = "label103";
+            label103.Size = new Size(253, 31);
+            label103.TabIndex = 0;
+            label103.Text = "Create Announcement";
             // 
             // panel2
             // 
@@ -4419,6 +4517,7 @@
             pnlAnnounce.ResumeLayout(false);
             pnlCreateAnnounce.ResumeLayout(false);
             pnlCreateAnnounce.PerformLayout();
+            panel37.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             roundedPanel13.ResumeLayout(false);
@@ -4915,5 +5014,14 @@
         private TextBox textBox24;
         private PictureBox pictureBox42;
         private PictureBox pictureBox43;
+        private TextBox txtBody;
+        private TextBox txtTitle;
+        private Button btnCancelPost;
+        private Button btnPostAnnounce;
+        private Label label105;
+        private CheckBox chkUrgent;
+        private CheckBox checkBox1;
+        private ComboBox comboBox12;
+        private Panel panel37;
     }
 }

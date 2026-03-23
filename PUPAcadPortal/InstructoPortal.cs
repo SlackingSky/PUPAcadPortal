@@ -153,7 +153,7 @@ namespace PUPAcadPortal
         bool expand = false;
         private void timer1_Tick(object sender, EventArgs e)
         {
-         
+
         }
 
         private void StatusBtn_Click(object sender, EventArgs e)
@@ -213,11 +213,23 @@ namespace PUPAcadPortal
             pnlClassFiles.BringToFront();
         }
 
-        
+
 
         private void pnlAttendance_Paint(object sender, PaintEventArgs e)
         {
-          
+
+        }
+
+        private void CreateAnnounce_Click_1(object sender, EventArgs e)
+        {
+            pnlCreateAnnounce.Visible = true;
+            pnlCreateAnnounce.BringToFront();
+        }
+
+        private void btnCancelPost_Click(object sender, EventArgs e)
+        {
+            pnlCreateAnnounce.Visible = false;
+            pnlAnnounce.BringToFront();
         }
     }
 }
