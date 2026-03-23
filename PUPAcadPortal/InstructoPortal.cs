@@ -269,5 +269,35 @@ namespace PUPAcadPortal
             pnlCreateAct.Visible = true;
             pnlCreateAct.BringToFront();
         }
+
+        private void cmbBXActType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Get the selected text safely
+            string selectedAction = cmbBXActType.SelectedItem?.ToString();
+
+            // First, hide all panels to "reset" the view
+            pnlQuiz.Visible = false;
+            pnlEssay.Visible = false;
+            pnlAssign.Visible = false;
+
+            // Now, show only the one that matches the selection
+            switch (selectedAction)
+            {
+                case "Quiz":
+                    pnlQuiz.Visible = true;
+                    pnlQuiz.BringToFront();
+                    break;
+
+                case "Essay":
+                    pnlEssay.Visible = true;
+                    pnlEssay.BringToFront();
+                    break;
+
+                case "Assignment":
+                    pnlAssign.Visible = true;
+                    pnlAssign.BringToFront();
+                    break;
+            }
+        }
     }
 }
