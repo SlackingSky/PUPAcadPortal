@@ -236,6 +236,8 @@ namespace PUPAcadPortal
         {
             pnlSubMenu.Visible = true;
             pnlSubMenu.BringToFront();
+            pnlGenChats.Visible = true;
+            pnlGenChats.BringToFront();
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -260,6 +262,12 @@ namespace PUPAcadPortal
         {
             pnlLMSFiles.Visible = true;
             pnlLMSFiles.BringToFront();
+        }
+
+        private void btnCreateAct_Click(object sender, EventArgs e)
+        {
+            pnlCreateAct.Visible = true;
+            pnlCreateAct.BringToFront();
         }
     }
 }
