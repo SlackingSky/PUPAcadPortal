@@ -17,6 +17,12 @@ namespace PUPAcadPortal
         {
             InitializeComponent();
             pnlAttendance.AutoScrollMinSize = new Size(0, 1000);
+            // 1. Set the format to Custom
+            dateTimePicker1.Format = DateTimePickerFormat.Custom;
+
+            // 2. Set the pattern to include both Date and Time
+            // This will show: 03/24/2026 09:30 PM
+            dateTimePicker1.CustomFormat = "MM/dd/yyyy hh:mm tt";
         }
 
 
@@ -276,21 +282,15 @@ namespace PUPAcadPortal
             string selectedAction = cmbBXActType.SelectedItem?.ToString();
 
             // First, hide all panels to "reset" the view
-            pnlQuiz.Visible = false;
-            pnlEssay.Visible = false;
+            pnlQuiz1.Visible = false;
             pnlAssign.Visible = false;
 
             // Now, show only the one that matches the selection
             switch (selectedAction)
             {
                 case "Quiz":
-                    pnlQuiz.Visible = true;
-                    pnlQuiz.BringToFront();
-                    break;
-
-                case "Essay":
-                    pnlEssay.Visible = true;
-                    pnlEssay.BringToFront();
+                    pnlQuiz1.Visible = true;
+                    pnlQuiz1.BringToFront();
                     break;
 
                 case "Assignment":
@@ -325,6 +325,66 @@ namespace PUPAcadPortal
         private void btnDoneAttach_Click(object sender, EventArgs e)
         {
             pnlAttachAss.Visible = false;
+        }
+
+        // --- BUTTON 1: ADD QUESTION ---
+        private void btnAddPanel_Click(object sender, EventArgs e)
+        {
+            ucQuestionCard newCard = new ucQuestionCard();
+            newCard.Parent = flowLayoutPanel3;
+
+            // Use your exact new dimensions
+            newCard.Width = 1250;
+            newCard.Height = 423;
+
+            // Updated Margin: 57px on the left to center it in the 1363px panel
+            newCard.Margin = new Padding(57, 10, 10, 10);
+
+            flowLayoutPanel3.Controls.Add(newCard);
+
+            // Keep the pnlControlBar (the one with 3 buttons) at the very bottom
+            if (flowLayoutPanel3.Controls.Contains(pnlControlBar))
+            {
+                // Force the bar to match the card's width and margin
+                pnlControlBar.Width = 1250;
+                pnlControlBar.Height = 100;
+                pnlControlBar.Margin = new Padding(57, 10, 10, 10);
+
+                flowLayoutPanel3.Controls.SetChildIndex(pnlControlBar, -1);
+            }
+
+            flowLayoutPanel3.ScrollControlIntoView(pnlControlBar);
+        }
+
+        // --- BUTTON 2: REMOVE LAST QUESTION ---
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            // Find the last card (we skip the control bar itself)
+            // We look for controls that are ucQuestionCard
+            var lastCard = flowLayoutPanel3.Controls.OfType<ucQuestionCard>().LastOrDefault();
+
+            if (lastCard != null)
+            {
+                flowLayoutPanel3.Controls.Remove(lastCard);
+                lastCard.Dispose(); // Clean up memory
+            }
+        }
+
+        // --- BUTTON 3: SAVE & EXIT ---
+        private void btnSaveQuiz_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Do you want to save this quiz before exiting?",
+                                                "Save Quiz", MessageBoxButtons.YesNoCancel);
+
+            if (result == DialogResult.Yes)
+            {
+                // Add your Save Logic here later
+                this.Close();
+            }
+            else if (result == DialogResult.No)
+            {
+                this.Close();
+            }
         }
     }
 }

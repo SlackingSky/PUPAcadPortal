@@ -63,6 +63,15 @@
             pnlSubMenu = new Panel();
             pnlCreateAct = new Panel();
             panel43 = new Panel();
+            pnlQuiz1 = new Panel();
+            panel49 = new Panel();
+            label119 = new Label();
+            flowLayoutPanel3 = new FlowLayoutPanel();
+            pnlControlBar = new Panel();
+            tableLayoutPanel24 = new TableLayoutPanel();
+            btnRemove = new buttonRounded();
+            btnAddPanel = new buttonRounded();
+            btnSaveQuiz = new buttonRounded();
             pnlAssign = new Panel();
             pnlAttachAss = new RoundedPanel();
             btnDoneAttach = new Button();
@@ -79,19 +88,17 @@
             roundedPanel12 = new RoundedPanel();
             textBox22 = new TextBox();
             label117 = new Label();
-            pnlQuiz = new Panel();
-            panel49 = new Panel();
-            label112 = new Label();
-            pnlEssay = new Panel();
-            label113 = new Label();
             panel45 = new Panel();
+            roundedPanel23 = new RoundedPanel();
+            cmbBXActType = new ComboBox();
+            roundedPanel22 = new RoundedPanel();
+            dateTimePicker1 = new DateTimePicker();
+            roundedPanel21 = new RoundedPanel();
+            txtActTitle = new TextBox();
             panel51 = new Panel();
             panel50 = new Panel();
-            dateTimePicker1 = new DateTimePicker();
             label116 = new Label();
-            cmbBXActType = new ComboBox();
             label111 = new Label();
-            txtActTitle = new TextBox();
             label110 = new Label();
             panel44 = new Panel();
             label109 = new Label();
@@ -457,6 +464,11 @@
             pnlSubMenu.SuspendLayout();
             pnlCreateAct.SuspendLayout();
             panel43.SuspendLayout();
+            pnlQuiz1.SuspendLayout();
+            panel49.SuspendLayout();
+            flowLayoutPanel3.SuspendLayout();
+            pnlControlBar.SuspendLayout();
+            tableLayoutPanel24.SuspendLayout();
             pnlAssign.SuspendLayout();
             pnlAttachAss.SuspendLayout();
             roundedPanel29.SuspendLayout();
@@ -464,9 +476,10 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox46).BeginInit();
             roundedPanel11.SuspendLayout();
             roundedPanel12.SuspendLayout();
-            pnlQuiz.SuspendLayout();
-            pnlEssay.SuspendLayout();
             panel45.SuspendLayout();
+            roundedPanel23.SuspendLayout();
+            roundedPanel22.SuspendLayout();
+            roundedPanel21.SuspendLayout();
             panel44.SuspendLayout();
             pnlLMSActivities.SuspendLayout();
             panel42.SuspendLayout();
@@ -1093,8 +1106,8 @@
             // 
             // pnlSubMenu
             // 
-            pnlSubMenu.Controls.Add(pnlLMSActivities);
             pnlSubMenu.Controls.Add(pnlCreateAct);
+            pnlSubMenu.Controls.Add(pnlLMSActivities);
             pnlSubMenu.Controls.Add(pnlGenChats);
             pnlSubMenu.Controls.Add(pnlLMSFiles);
             pnlSubMenu.Controls.Add(panel38);
@@ -1117,9 +1130,8 @@
             // panel43
             // 
             panel43.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panel43.Controls.Add(pnlQuiz1);
             panel43.Controls.Add(pnlAssign);
-            panel43.Controls.Add(pnlQuiz);
-            panel43.Controls.Add(pnlEssay);
             panel43.Controls.Add(panel45);
             panel43.Controls.Add(panel44);
             panel43.Controls.Add(panel46);
@@ -1127,6 +1139,129 @@
             panel43.Name = "panel43";
             panel43.Size = new Size(1453, 901);
             panel43.TabIndex = 1;
+            // 
+            // pnlQuiz1
+            // 
+            pnlQuiz1.AllowDrop = true;
+            pnlQuiz1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            pnlQuiz1.BackColor = SystemColors.Control;
+            pnlQuiz1.Controls.Add(panel49);
+            pnlQuiz1.Controls.Add(flowLayoutPanel3);
+            pnlQuiz1.Location = new Point(0, 248);
+            pnlQuiz1.Name = "pnlQuiz1";
+            pnlQuiz1.Size = new Size(1453, 653);
+            pnlQuiz1.TabIndex = 7;
+            pnlQuiz1.Visible = false;
+            // 
+            // panel49
+            // 
+            panel49.BackColor = Color.White;
+            panel49.Controls.Add(label119);
+            panel49.Dock = DockStyle.Top;
+            panel49.Location = new Point(0, 0);
+            panel49.Name = "panel49";
+            panel49.Size = new Size(1453, 49);
+            panel49.TabIndex = 13;
+            // 
+            // label119
+            // 
+            label119.AutoSize = true;
+            label119.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label119.Location = new Point(44, 9);
+            label119.Name = "label119";
+            label119.Size = new Size(338, 31);
+            label119.TabIndex = 12;
+            label119.Text = "Quiz Creation - Multiple Choice";
+            // 
+            // flowLayoutPanel3
+            // 
+            flowLayoutPanel3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            flowLayoutPanel3.AutoScroll = true;
+            flowLayoutPanel3.BackColor = SystemColors.Control;
+            flowLayoutPanel3.Controls.Add(pnlControlBar);
+            flowLayoutPanel3.FlowDirection = FlowDirection.TopDown;
+            flowLayoutPanel3.Location = new Point(41, 47);
+            flowLayoutPanel3.Name = "flowLayoutPanel3";
+            flowLayoutPanel3.Size = new Size(1384, 650);
+            flowLayoutPanel3.TabIndex = 10;
+            flowLayoutPanel3.WrapContents = false;
+            // 
+            // pnlControlBar
+            // 
+            pnlControlBar.Controls.Add(tableLayoutPanel24);
+            pnlControlBar.Location = new Point(3, 3);
+            pnlControlBar.Name = "pnlControlBar";
+            pnlControlBar.Size = new Size(1355, 52);
+            pnlControlBar.TabIndex = 0;
+            // 
+            // tableLayoutPanel24
+            // 
+            tableLayoutPanel24.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel24.ColumnCount = 5;
+            tableLayoutPanel24.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel24.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 44.4460373F));
+            tableLayoutPanel24.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 44.4460373F));
+            tableLayoutPanel24.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 11.1079245F));
+            tableLayoutPanel24.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel24.Controls.Add(btnRemove, 2, 0);
+            tableLayoutPanel24.Controls.Add(btnAddPanel, 1, 0);
+            tableLayoutPanel24.Controls.Add(btnSaveQuiz, 3, 0);
+            tableLayoutPanel24.Location = new Point(4, 3);
+            tableLayoutPanel24.Name = "tableLayoutPanel24";
+            tableLayoutPanel24.RowCount = 1;
+            tableLayoutPanel24.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel24.Size = new Size(1348, 45);
+            tableLayoutPanel24.TabIndex = 1;
+            // 
+            // btnRemove
+            // 
+            btnRemove.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnRemove.BackColor = Color.FromArgb(128, 0, 0);
+            btnRemove.BorderRadius = 10;
+            btnRemove.FlatAppearance.BorderSize = 0;
+            btnRemove.FlatStyle = FlatStyle.Flat;
+            btnRemove.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
+            btnRemove.ForeColor = Color.White;
+            btnRemove.Location = new Point(1061, 3);
+            btnRemove.Name = "btnRemove";
+            btnRemove.Size = new Size(118, 32);
+            btnRemove.TabIndex = 13;
+            btnRemove.Text = "Remove";
+            btnRemove.UseVisualStyleBackColor = false;
+            btnRemove.Click += btnRemove_Click;
+            // 
+            // btnAddPanel
+            // 
+            btnAddPanel.BackColor = Color.FromArgb(128, 0, 0);
+            btnAddPanel.BorderRadius = 10;
+            btnAddPanel.FlatAppearance.BorderSize = 0;
+            btnAddPanel.FlatStyle = FlatStyle.Flat;
+            btnAddPanel.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
+            btnAddPanel.ForeColor = Color.White;
+            btnAddPanel.Location = new Point(23, 3);
+            btnAddPanel.Name = "btnAddPanel";
+            btnAddPanel.Size = new Size(118, 32);
+            btnAddPanel.TabIndex = 11;
+            btnAddPanel.Text = "Add Question";
+            btnAddPanel.UseVisualStyleBackColor = false;
+            btnAddPanel.Click += btnAddPanel_Click;
+            // 
+            // btnSaveQuiz
+            // 
+            btnSaveQuiz.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnSaveQuiz.BackColor = Color.FromArgb(128, 0, 0);
+            btnSaveQuiz.BorderRadius = 10;
+            btnSaveQuiz.FlatAppearance.BorderSize = 0;
+            btnSaveQuiz.FlatStyle = FlatStyle.Flat;
+            btnSaveQuiz.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
+            btnSaveQuiz.ForeColor = Color.White;
+            btnSaveQuiz.Location = new Point(1208, 3);
+            btnSaveQuiz.Name = "btnSaveQuiz";
+            btnSaveQuiz.Size = new Size(116, 32);
+            btnSaveQuiz.TabIndex = 12;
+            btnSaveQuiz.Text = "Save";
+            btnSaveQuiz.UseVisualStyleBackColor = false;
+            btnSaveQuiz.Click += btnSaveQuiz_Click;
             // 
             // pnlAssign
             // 
@@ -1139,7 +1274,7 @@
             pnlAssign.Controls.Add(roundedPanel11);
             pnlAssign.Controls.Add(label117);
             pnlAssign.Dock = DockStyle.Top;
-            pnlAssign.Location = new Point(0, 290);
+            pnlAssign.Location = new Point(0, 248);
             pnlAssign.Name = "pnlAssign";
             pnlAssign.Size = new Size(1453, 600);
             pnlAssign.TabIndex = 10;
@@ -1253,7 +1388,7 @@
             btnCancelAssign.FlatStyle = FlatStyle.Flat;
             btnCancelAssign.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnCancelAssign.ForeColor = Color.White;
-            btnCancelAssign.Location = new Point(1141, 480);
+            btnCancelAssign.Location = new Point(1132, 480);
             btnCancelAssign.Name = "btnCancelAssign";
             btnCancelAssign.Size = new Size(144, 48);
             btnCancelAssign.TabIndex = 17;
@@ -1285,7 +1420,7 @@
             btnSaveAss.FlatStyle = FlatStyle.Flat;
             btnSaveAss.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnSaveAss.ForeColor = Color.White;
-            btnSaveAss.Location = new Point(1297, 480);
+            btnSaveAss.Location = new Point(1288, 480);
             btnSaveAss.Name = "btnSaveAss";
             btnSaveAss.Size = new Size(144, 48);
             btnSaveAss.TabIndex = 15;
@@ -1300,7 +1435,7 @@
             roundedPanel11.Controls.Add(roundedPanel12);
             roundedPanel11.Location = new Point(18, 70);
             roundedPanel11.Name = "roundedPanel11";
-            roundedPanel11.Size = new Size(1423, 401);
+            roundedPanel11.Size = new Size(1414, 401);
             roundedPanel11.TabIndex = 14;
             // 
             // roundedPanel12
@@ -1335,73 +1470,84 @@
             label117.TabIndex = 13;
             label117.Text = "Instructions";
             // 
-            // pnlQuiz
-            // 
-            pnlQuiz.AutoScroll = true;
-            pnlQuiz.BackColor = Color.White;
-            pnlQuiz.Controls.Add(panel49);
-            pnlQuiz.Controls.Add(label112);
-            pnlQuiz.Dock = DockStyle.Fill;
-            pnlQuiz.Location = new Point(0, 290);
-            pnlQuiz.Name = "pnlQuiz";
-            pnlQuiz.Size = new Size(1453, 611);
-            pnlQuiz.TabIndex = 7;
-            pnlQuiz.Visible = false;
-            // 
-            // panel49
-            // 
-            panel49.Location = new Point(427, 98);
-            panel49.Name = "panel49";
-            panel49.Size = new Size(250, 673);
-            panel49.TabIndex = 9;
-            // 
-            // label112
-            // 
-            label112.AutoSize = true;
-            label112.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label112.Location = new Point(64, 59);
-            label112.Name = "label112";
-            label112.Size = new Size(61, 31);
-            label112.TabIndex = 8;
-            label112.Text = "Quiz";
-            // 
-            // pnlEssay
-            // 
-            pnlEssay.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            pnlEssay.BackColor = Color.White;
-            pnlEssay.Controls.Add(label113);
-            pnlEssay.Location = new Point(0, 319);
-            pnlEssay.Name = "pnlEssay";
-            pnlEssay.Size = new Size(1453, 628);
-            pnlEssay.TabIndex = 9;
-            pnlEssay.Visible = false;
-            // 
-            // label113
-            // 
-            label113.AutoSize = true;
-            label113.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label113.Location = new Point(70, 55);
-            label113.Name = "label113";
-            label113.Size = new Size(70, 31);
-            label113.TabIndex = 9;
-            label113.Text = "Essay";
-            // 
             // panel45
             // 
             panel45.BackColor = Color.White;
+            panel45.Controls.Add(roundedPanel23);
+            panel45.Controls.Add(roundedPanel22);
+            panel45.Controls.Add(roundedPanel21);
             panel45.Controls.Add(panel51);
             panel45.Controls.Add(panel50);
-            panel45.Controls.Add(dateTimePicker1);
             panel45.Controls.Add(label116);
-            panel45.Controls.Add(cmbBXActType);
             panel45.Controls.Add(label111);
-            panel45.Controls.Add(txtActTitle);
             panel45.Controls.Add(label110);
             panel45.Dock = DockStyle.Top;
-            panel45.Location = new Point(0, 83);
+            panel45.Location = new Point(0, 62);
             panel45.Name = "panel45";
-            panel45.Size = new Size(1453, 207);
+            panel45.Size = new Size(1453, 186);
             panel45.TabIndex = 5;
+            // 
+            // roundedPanel23
+            // 
+            roundedPanel23.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            roundedPanel23.BackColor = Color.Maroon;
+            roundedPanel23.BorderRadius = 10;
+            roundedPanel23.Controls.Add(cmbBXActType);
+            roundedPanel23.Location = new Point(1090, 23);
+            roundedPanel23.Name = "roundedPanel23";
+            roundedPanel23.Size = new Size(282, 55);
+            roundedPanel23.TabIndex = 14;
+            // 
+            // cmbBXActType
+            // 
+            cmbBXActType.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            cmbBXActType.Font = new Font("Segoe UI", 13F);
+            cmbBXActType.FormattingEnabled = true;
+            cmbBXActType.Items.AddRange(new object[] { "Quiz", "Assignment" });
+            cmbBXActType.Location = new Point(9, 9);
+            cmbBXActType.Name = "cmbBXActType";
+            cmbBXActType.Size = new Size(264, 38);
+            cmbBXActType.TabIndex = 7;
+            cmbBXActType.SelectedIndexChanged += cmbBXActType_SelectedIndexChanged;
+            // 
+            // roundedPanel22
+            // 
+            roundedPanel22.BackColor = Color.Maroon;
+            roundedPanel22.BorderRadius = 10;
+            roundedPanel22.Controls.Add(dateTimePicker1);
+            roundedPanel22.Location = new Point(219, 104);
+            roundedPanel22.Name = "roundedPanel22";
+            roundedPanel22.Size = new Size(471, 55);
+            roundedPanel22.TabIndex = 14;
+            // 
+            // dateTimePicker1
+            // 
+            dateTimePicker1.Font = new Font("Segoe UI", 13F);
+            dateTimePicker1.Format = DateTimePickerFormat.Custom;
+            dateTimePicker1.Location = new Point(11, 10);
+            dateTimePicker1.Name = "dateTimePicker1";
+            dateTimePicker1.Size = new Size(450, 36);
+            dateTimePicker1.TabIndex = 10;
+            // 
+            // roundedPanel21
+            // 
+            roundedPanel21.BackColor = Color.Maroon;
+            roundedPanel21.BorderRadius = 10;
+            roundedPanel21.Controls.Add(txtActTitle);
+            roundedPanel21.Location = new Point(219, 23);
+            roundedPanel21.Name = "roundedPanel21";
+            roundedPanel21.Size = new Size(471, 55);
+            roundedPanel21.TabIndex = 13;
+            // 
+            // txtActTitle
+            // 
+            txtActTitle.BorderStyle = BorderStyle.None;
+            txtActTitle.Font = new Font("Segoe UI", 13F);
+            txtActTitle.Location = new Point(11, 9);
+            txtActTitle.Multiline = true;
+            txtActTitle.Name = "txtActTitle";
+            txtActTitle.Size = new Size(450, 37);
+            txtActTitle.TabIndex = 5;
             // 
             // panel51
             // 
@@ -1416,67 +1562,37 @@
             // 
             panel50.BackColor = SystemColors.Control;
             panel50.Dock = DockStyle.Bottom;
-            panel50.Location = new Point(0, 187);
+            panel50.Location = new Point(0, 165);
             panel50.Name = "panel50";
-            panel50.Size = new Size(1453, 20);
+            panel50.Size = new Size(1453, 21);
             panel50.TabIndex = 11;
-            // 
-            // dateTimePicker1
-            // 
-            dateTimePicker1.Font = new Font("Segoe UI", 13F);
-            dateTimePicker1.Location = new Point(224, 131);
-            dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(450, 36);
-            dateTimePicker1.TabIndex = 10;
             // 
             // label116
             // 
             label116.AutoSize = true;
             label116.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label116.Location = new Point(47, 135);
+            label116.Location = new Point(47, 118);
             label116.Name = "label116";
             label116.Size = new Size(164, 31);
             label116.TabIndex = 8;
             label116.Text = "Available Until";
-            // 
-            // cmbBXActType
-            // 
-            cmbBXActType.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            cmbBXActType.Font = new Font("Segoe UI", 13F);
-            cmbBXActType.FormattingEnabled = true;
-            cmbBXActType.Items.AddRange(new object[] { "Quiz", "Essay", "Assignment" });
-            cmbBXActType.Location = new Point(1094, 42);
-            cmbBXActType.Name = "cmbBXActType";
-            cmbBXActType.Size = new Size(264, 38);
-            cmbBXActType.TabIndex = 7;
-            cmbBXActType.SelectedIndexChanged += cmbBXActType_SelectedIndexChanged;
             // 
             // label111
             // 
             label111.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label111.AutoSize = true;
             label111.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label111.Location = new Point(924, 47);
+            label111.Location = new Point(924, 30);
             label111.Name = "label111";
             label111.Size = new Size(148, 31);
             label111.TabIndex = 6;
             label111.Text = "Activity Type";
             // 
-            // txtActTitle
-            // 
-            txtActTitle.BorderStyle = BorderStyle.FixedSingle;
-            txtActTitle.Font = new Font("Segoe UI", 13F);
-            txtActTitle.Location = new Point(224, 51);
-            txtActTitle.Multiline = true;
-            txtActTitle.Name = "txtActTitle";
-            txtActTitle.Size = new Size(450, 37);
-            txtActTitle.TabIndex = 5;
-            // 
             // label110
             // 
             label110.AutoSize = true;
             label110.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label110.Location = new Point(47, 52);
+            label110.Location = new Point(47, 35);
             label110.Name = "label110";
             label110.Size = new Size(143, 31);
             label110.TabIndex = 4;
@@ -1490,14 +1606,14 @@
             panel44.Dock = DockStyle.Top;
             panel44.Location = new Point(0, 17);
             panel44.Name = "panel44";
-            panel44.Size = new Size(1453, 66);
+            panel44.Size = new Size(1453, 45);
             panel44.TabIndex = 0;
             // 
             // label109
             // 
             label109.AutoSize = true;
             label109.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label109.Location = new Point(18, 18);
+            label109.Location = new Point(18, 3);
             label109.Name = "label109";
             label109.Size = new Size(218, 31);
             label109.TabIndex = 3;
@@ -1873,9 +1989,9 @@
             btnLMSFiles.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
             btnLMSFiles.ForeColor = Color.White;
             btnLMSFiles.Image = (Image)resources.GetObject("btnLMSFiles.Image");
-            btnLMSFiles.Location = new Point(444, 10);
+            btnLMSFiles.Location = new Point(444, 7);
             btnLMSFiles.Name = "btnLMSFiles";
-            btnLMSFiles.Size = new Size(166, 34);
+            btnLMSFiles.Size = new Size(166, 37);
             btnLMSFiles.TabIndex = 5;
             btnLMSFiles.Text = "  Class Files";
             btnLMSFiles.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -1889,10 +2005,10 @@
             btnLMSActSub.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
             btnLMSActSub.ForeColor = Color.White;
             btnLMSActSub.Image = (Image)resources.GetObject("btnLMSActSub.Image");
-            btnLMSActSub.Location = new Point(237, 11);
+            btnLMSActSub.Location = new Point(237, 7);
             btnLMSActSub.Name = "btnLMSActSub";
             btnLMSActSub.Padding = new Padding(0, 0, 0, 1);
-            btnLMSActSub.Size = new Size(166, 35);
+            btnLMSActSub.Size = new Size(166, 39);
             btnLMSActSub.TabIndex = 4;
             btnLMSActSub.Text = "  Activities";
             btnLMSActSub.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -1906,10 +2022,10 @@
             btnGeneralAnnounce.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
             btnGeneralAnnounce.ForeColor = Color.White;
             btnGeneralAnnounce.Image = (Image)resources.GetObject("btnGeneralAnnounce.Image");
-            btnGeneralAnnounce.Location = new Point(17, 11);
+            btnGeneralAnnounce.Location = new Point(17, 7);
             btnGeneralAnnounce.Name = "btnGeneralAnnounce";
             btnGeneralAnnounce.Padding = new Padding(10, 0, 0, 0);
-            btnGeneralAnnounce.Size = new Size(179, 34);
+            btnGeneralAnnounce.Size = new Size(179, 38);
             btnGeneralAnnounce.TabIndex = 3;
             btnGeneralAnnounce.Text = "  General Chats";
             btnGeneralAnnounce.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -1933,9 +2049,9 @@
             btnBack.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
             btnBack.ForeColor = Color.White;
             btnBack.Image = (Image)resources.GetObject("btnBack.Image");
-            btnBack.Location = new Point(13, 15);
+            btnBack.Location = new Point(13, 11);
             btnBack.Name = "btnBack";
-            btnBack.Size = new Size(93, 34);
+            btnBack.Size = new Size(93, 39);
             btnBack.TabIndex = 0;
             btnBack.Text = "Back";
             btnBack.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -5639,6 +5755,12 @@
             pnlSubMenu.ResumeLayout(false);
             pnlCreateAct.ResumeLayout(false);
             panel43.ResumeLayout(false);
+            pnlQuiz1.ResumeLayout(false);
+            panel49.ResumeLayout(false);
+            panel49.PerformLayout();
+            flowLayoutPanel3.ResumeLayout(false);
+            pnlControlBar.ResumeLayout(false);
+            tableLayoutPanel24.ResumeLayout(false);
             pnlAssign.ResumeLayout(false);
             pnlAssign.PerformLayout();
             pnlAttachAss.ResumeLayout(false);
@@ -5649,12 +5771,12 @@
             roundedPanel11.ResumeLayout(false);
             roundedPanel12.ResumeLayout(false);
             roundedPanel12.PerformLayout();
-            pnlQuiz.ResumeLayout(false);
-            pnlQuiz.PerformLayout();
-            pnlEssay.ResumeLayout(false);
-            pnlEssay.PerformLayout();
             panel45.ResumeLayout(false);
             panel45.PerformLayout();
+            roundedPanel23.ResumeLayout(false);
+            roundedPanel22.ResumeLayout(false);
+            roundedPanel21.ResumeLayout(false);
+            roundedPanel21.PerformLayout();
             panel44.ResumeLayout(false);
             panel44.PerformLayout();
             pnlLMSActivities.ResumeLayout(false);
@@ -5908,18 +6030,15 @@
         private Panel pnlSubject;
         private Panel panel1;
         private Label label8;
-        private RoundedPanel roundedPanel21;
         private Button button28;
         private Label label48;
         private Label label49;
         private PictureBox pictureBox17;
-        private RoundedPanel roundedPanel23;
         private Button button32;
         private Button button33;
         private Label label52;
         private Label label53;
         private PictureBox pictureBox19;
-        private RoundedPanel roundedPanel24;
         private Button button34;
         private Button button35;
         private Label label54;
@@ -6165,7 +6284,6 @@
         private Panel pnlAnnounce;
         private Label label43;
         private TextBox textBox22;
-        private TextBox textBox23;
         private Label label102;
         private Label label103;
         private Button CreateAnnounce;
@@ -6233,12 +6351,8 @@
         private TextBox txtActTitle;
         private Panel panel46;
         private Panel panel47;
-        private Panel pnlQuiz;
-        private Label label112;
-        private Panel pnlEssay;
-        private Label label113;
+        private Panel pnlQuiz1;
         private Panel pnlAssign;
-        private Panel panel49;
         private DateTimePicker dateTimePicker1;
         private Label label116;
         private Label label117;
@@ -6261,5 +6375,15 @@
         protected Button btnGeneralAnnounce;
         private Panel panel51;
         private Panel panel50;
+        private RoundedPanel roundedPanel21;
+        private FlowLayoutPanel flowLayoutPanel3;
+        private Label label119;
+        private buttonRounded btnRemove;
+        private buttonRounded btnAddPanel;
+        private buttonRounded btnSaveQuiz;
+        private Panel panel49;
+        private RoundedPanel roundedPanel23;
+        private TableLayoutPanel tableLayoutPanel24;
+        private Panel pnlControlBar;
     }
 }
