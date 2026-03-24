@@ -23,6 +23,10 @@ namespace PUPAcadPortal
             pnlSubOfferingContent.Visible = false;
             pnlCurrentSemester.Visible = false;
             pnlEditSchedule.Visible = false;
+            pnlSchedule.Visible = false;
+            pnlCurriculumArchive.Visible = false;
+            pnlCurriculum.Visible = false;
+            pnlArchive.Visible = true;
 
             panelToShow.Visible = true;
             panelToShow.BringToFront();
@@ -31,9 +35,11 @@ namespace PUPAcadPortal
         {
             InitializeComponent();
 
+
             pnlEditSchedule.Visible = false;
             pnlCurrentSemester.Visible = false;
             pnlSubOfferingContent.Visible = false;
+            pnlCurriculumArchive.Visible = false;
 
             this.WindowState = FormWindowState.Maximized;
 
@@ -46,6 +52,8 @@ namespace PUPAcadPortal
             // Add 30 default empty rows to the edit schedule grid and Current Semester grid
             try { dgvSchedule.Rows.Add(30); } catch { }
             try { dgvEditSchedule.Rows.Add(30); } catch { }
+            try { dgvScheduleView.Rows.Add(30); } catch { }
+            try { dgvArchive.Rows.Add(25); } catch { }
 
             // Fill first 3 rows with default data for edit schedule and current semester table (ito na rin gamitin sa other two submenus)
             string[,] dummyData =
@@ -55,12 +63,112 @@ namespace PUPAcadPortal
                 { "COMP 012", "Network Administration", "3.0", "2.0", "5.0" }
             };
 
+            string[,] curriculumData =
+            {
+                // First Year - First Semester
+                { "COMP 001", "Introduction to Computing", "3", "2", "3", "1" },
+                { "COMP 002", "Computer Programming 1", "3", "2", "3", "1" },
+                { "ACCO 014", "Principles of Accounting", "0", "3", "3", "1" },
+                { "GEED 004", "Mathematics in the Modern World", "0", "3", "3", "1" },
+                { "GEED 005", "Purposive Communication", "0", "3", "3", "1" },
+                { "GEED 032", "Filipinolohiya at Pambansang Kaunlaran", "0", "3", "3", "1" },
+                { "PATHFit 1", "Physical Activities Towards Health and Fitness 1", "0", "2", "2", "1" },
+                { "NSTP 001", "National Service Training Program 1", "0", "3", "3", "1" },
+
+                // First Year - Second Semester
+                { "COMP 003", "Computer Programming 2", "3", "2", "3", "1" },
+                { "COMP 004", "Discrete Structures 1", "0", "3", "3", "1" },
+                { "COMP 008", "Data Communications and Networking", "3", "2", "3", "1" },
+                { "GEED 002", "Readings in Philippine History", "0", "3", "3", "1" },
+                { "GEED 010", "People and the Earth's Ecosystem", "0", "3", "3", "1" },
+                { "GEED 020", "Politics, Governance and Citizenship", "0", "3", "3", "1" },
+                { "PATHFit 2", "Physical Activities Towards Health and Fitness 2", "0", "2", "2", "1" },
+                { "NSTP 002", "National Service Training Program 2", "0", "3", "3", "1" },
+
+                // Second Year - First Semester
+                { "INTE 201", "Programming 3 (Structured Programming)", "3", "2", "3", "2" },
+                { "COMP 006", "Data Structures and Algorithms", "3", "2", "3", "2" },
+                { "COMP 007", "Operating Systems", "3", "2", "3", "2" },
+                { "GEED 001", "Understanding the Self", "0", "3", "3", "2" },
+                { "GEED 028", "Reading Visual Arts", "0", "3", "3", "2" },
+                { "INTE-FE1", "BSIT Free Elective 1", "0", "3", "3", "2" },
+
+                // Second Year - Second Semester
+                { "INTE 202", "Integrative Programming and Technologies 1", "3", "2", "3", "2" },
+                { "COMP 009", "Object-Oriented Programming", "3", "2", "3", "2" },
+                { "COMP 010", "Information Management", "0", "3", "3", "2" },
+                { "COMP 012", "Network Administration", "3", "2", "3", "2" },
+                { "COMP 013", "Human Computer Interaction", "0", "3", "3", "2" },
+                { "COMP 014", "Quantitative Methods with Modeling and Simulation", "0", "3", "3", "2" },
+                { "INTE-FE2", "BSIT Free Elective 2", "0", "3", "3", "2" },
+
+                // Third Year - First Semester
+                { "INTE 401", "Information Assurance and Security 2", "0", "3", "3", "3" },
+                { "CIT 3101", "Networking 2", "0", "3", "3", "3" },
+                { "CIT 3102", "Systems Integration and Architecture", "0", "3", "3", "3" },
+                { "CIT EL01", "Professional Elective 1", "0", "3", "3", "3" },
+                { "CMR 1101", "Methods of Research for IT/IS", "0", "3", "3", "3" },
+                { "CMS 1101", "Multimedia Systems", "0", "3", "3", "3" },
+                { "GEED 0093", "Ethics", "0", "3", "3", "3" },
+                { "GEED 0293", "Life and Works of Rizal", "0", "3", "3", "3" },
+
+                // Third Year - Second Semester
+                { "CIT 3201", "Networking 3", "0", "3", "3", "3" },
+                { "CIT EL02", "Professional Elective 2", "0", "3", "3", "3" },
+                { "CNA 1101", "Numerical Analysis for ITE", "0", "3", "3", "3" },
+                { "CPP 4980", "Capstone Project and Research 1", "0", "3", "3", "3" },
+                { "GEED 0073", "Art Appreciation", "0", "3", "3", "3" },
+                { "GEED 0083", "Science, Technology, and Society", "0", "3", "3", "3" },
+                { "GEED EL02", "GE Elective 2", "0", "3", "3", "3" },
+                { "ZPD 1102", "Effective Communication with Personality Development", "0", "3", "3", "3" },
+
+                // Fourth Year - First Semester
+                { "CIT 4101", "Certification Course", "0", "3", "3", "4" },
+                { "CIT 4102", "Systems Administration and Maintenance", "0", "3", "3", "4" },
+                { "CIT EL03", "Professional Elective 3", "0", "3", "3", "4" },
+                { "CIT EL04", "Professional Elective 4", "0", "3", "3", "4" },
+                { "CPD 4990", "Capstone Project and Research 2", "0", "3", "3", "4" },
+                { "CQM 1101", "Quantitative Methods (including Modeling and Simulation)", "0", "3", "3", "4" },
+                { "GEED EL03", "GE Elective 3", "0", "3", "3", "4" },
+
+                // Fourth Year - Second Semester
+                { "CPR 4970", "Practicum for IT/IS", "0", "6", "6", "4" },
+            };
+
+            int totalRows = curriculumData.GetLength(0);
+            try { dgvCurriculum.Rows.Add(totalRows > 35 ? totalRows : 35); } catch { }
+
+            for (int row = 0; row < totalRows; row++)
+            {
+                for (int col = 0; col < 6; col++)
+                {
+                    dgvCurriculum.Rows[row].Cells[col].Value = curriculumData[row, col];
+                }
+            }
+
+            string[,] archiveData =
+            {
+                { "2025-2026", "1st Semester", "Archived" },
+                { "2026-2027", "2nd Semester", "Active" },
+            };
+
+            for (int row = 0; row < archiveData.GetLength(0); row++)
+            {
+                for (int col = 0; col < archiveData.GetLength(1); col++)
+                {
+                    dgvArchive.Rows[row].Cells[col].Value = archiveData[row, col];
+                }
+            }
+
+
             for (int row = 0; row < 3; row++)
             {
                 for (int col = 0; col < 5; col++)
                 {
                     dgvEditSchedule.Rows[row].Cells[col].Value = dummyData[row, col];
                     dgvSchedule.Rows[row].Cells[col].Value = dummyData[row, col];
+                    dgvScheduleView.Rows[row].Cells[col].Value = dummyData[row, col];
+
                 }
             }
 
@@ -108,7 +216,7 @@ namespace PUPAcadPortal
             {
                 DuplicateRow(e.RowIndex);
             }
-            else if (colName == "colRemove") 
+            else if (colName == "colRemove")
             {
                 RemoveRow(e.RowIndex);
             }
@@ -152,156 +260,12 @@ namespace PUPAcadPortal
         //--------------------------
         private void btnSO_CurriculumArchive_Click(object sender, EventArgs e)
         {
-            changeButtonColor(btnSubjectOffering);
-            clickedButton = btnSubjectOffering;
+            changeButtonColor(sender as Button);
             showContent(clickedButton);
 
-            pnlSubOfferingContent.Controls.Clear();
-            pnlSubOfferingContent.AutoScroll = false;
-            pnlSubOfferingContent.Visible = true;
-            pnlSubOfferingContent.Padding = new Padding(0);
-
-            var header = new Panel();
-            header.Dock = DockStyle.Top;
-            header.Height = 48;
-            header.BackColor = Color.White;
-
-            var btnCurriculum = new Button();
-            btnCurriculum.Text = "Curriculum";
-            btnCurriculum.FlatStyle = FlatStyle.Flat;
-            btnCurriculum.FlatAppearance.BorderSize = 0;
-            btnCurriculum.Size = new Size(120, 40);
-            btnCurriculum.Location = new Point(10, 4);
-            btnCurriculum.BackColor = Color.FromArgb(230, 230, 230);
-
-            var btnArchive = new Button();
-            btnArchive.Text = "Archive";
-            btnArchive.FlatStyle = FlatStyle.Flat;
-            btnArchive.FlatAppearance.BorderSize = 0;
-            btnArchive.Size = new Size(120, 40);
-            btnArchive.Location = new Point(136, 4);
-            btnArchive.BackColor = Color.Transparent;
-
-            var btnUpdateCurriculum = new Button();
-            btnUpdateCurriculum.Text = "Update Curriculum";
-            btnUpdateCurriculum.Size = new Size(160, 36);
-            btnUpdateCurriculum.BackColor = Color.Maroon;
-            btnUpdateCurriculum.ForeColor = Color.White;
-            btnUpdateCurriculum.FlatStyle = FlatStyle.Flat;
-            btnUpdateCurriculum.FlatAppearance.BorderSize = 0;
-            btnUpdateCurriculum.Cursor = Cursors.Hand;
-            btnUpdateCurriculum.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnUpdateCurriculum.Location = new Point(pnlSubOfferingContent.ClientSize.Width - 170, 6);
-            btnUpdateCurriculum.Click += (s, ev) =>
-            {
-                MessageBox.Show("Update Curriculum clicked.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            };
-
-            header.Controls.Add(btnCurriculum);
-            header.Controls.Add(btnArchive);
-            header.Controls.Add(btnUpdateCurriculum);
-            header.SizeChanged += (s, ev) =>
-            {
-                btnUpdateCurriculum.Left = header.ClientSize.Width - btnUpdateCurriculum.Width - 10;
-            };
-
-            var pnlCurriculum = new Panel();
-            pnlCurriculum.Dock = DockStyle.Fill;
-            pnlCurriculum.BackColor = Color.White;
-            pnlCurriculum.AutoScroll = true;
-
-            var dgvCurriculum = new DataGridView();
-            dgvCurriculum.Location = new Point(0, 0);
-            dgvCurriculum.Dock = DockStyle.Top;
-            dgvCurriculum.Height = 2000;
-            dgvCurriculum.AutoGenerateColumns = false;
-            dgvCurriculum.AllowUserToAddRows = false;
-            dgvCurriculum.RowHeadersVisible = false;
-            dgvCurriculum.ScrollBars = ScrollBars.None;
-            dgvCurriculum.BackgroundColor = Color.White;
-            dgvCurriculum.BorderStyle = BorderStyle.None;
-            dgvCurriculum.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvCurriculum.ReadOnly = true;
-            dgvCurriculum.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvCurriculum.AllowUserToDeleteRows = false;
-            dgvCurriculum.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvCurriculum.AllowUserToResizeRows = false;
-            dgvCurriculum.AllowUserToResizeColumns = false;
-
-
-            dgvCurriculum.DefaultCellStyle.SelectionBackColor = Color.White;
-            dgvCurriculum.DefaultCellStyle.SelectionForeColor = Color.Black;
-
-            dgvCurriculum.Columns.Add(new DataGridViewTextBoxColumn() { Name = "CourseCode", HeaderText = "Course Code", FillWeight = 1f });
-            dgvCurriculum.Columns.Add(new DataGridViewTextBoxColumn() { Name = "CourseTitle", HeaderText = "Course Title", FillWeight = 1f });
-            dgvCurriculum.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Lec", HeaderText = "Lec", FillWeight = 1f });
-            dgvCurriculum.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Lab", HeaderText = "Lab", FillWeight = 1f });
-            dgvCurriculum.Columns.Add(new DataGridViewTextBoxColumn() { Name = "TotalUnits", HeaderText = "Total Units", FillWeight = 1f });
-            dgvCurriculum.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Year", HeaderText = "Year", FillWeight = 1f });
-            dgvCurriculum.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Prerequisite", HeaderText = "Prerequisite", FillWeight = 1f });
-
-            dgvCurriculum.RowCount = 40;
-
-            dgvCurriculum.ClearSelection();
-            dgvCurriculum.SelectionChanged += (s, ev) => { };
-
-            pnlCurriculum.Controls.Add(dgvCurriculum);
-
-            var pnlArchive = new Panel();
-            pnlArchive.Dock = DockStyle.Fill;
-            pnlArchive.BackColor = Color.White;
-            pnlArchive.AutoScroll = true;
-            pnlArchive.Visible = false;
-
-            var dgvArchive = new DataGridView();
-            dgvArchive.Dock = DockStyle.Top;
-            dgvArchive.Height = 20 * 25;
-            dgvArchive.AutoGenerateColumns = false;
-            dgvArchive.AllowUserToAddRows = false;
-            dgvArchive.RowHeadersVisible = false;
-            dgvArchive.ScrollBars = ScrollBars.None;
-            dgvArchive.BackgroundColor = Color.White;
-            dgvArchive.BorderStyle = BorderStyle.None;
-            dgvArchive.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvArchive.ReadOnly = true;
-            dgvArchive.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvArchive.AllowUserToDeleteRows = false;
-            dgvArchive.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvArchive.DefaultCellStyle.SelectionBackColor = Color.White;
-            dgvArchive.DefaultCellStyle.SelectionForeColor = Color.Black;
-
-            dgvArchive.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Semester", HeaderText = "Semester", FillWeight = 1f });
-            dgvArchive.Columns.Add(new DataGridViewTextBoxColumn() { Name = "SchoolYear", HeaderText = "School Year", FillWeight = 1f });
-            dgvArchive.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Action", HeaderText = "", FillWeight = 1f });
-
-            dgvArchive.RowCount = 20;
-            dgvArchive.ClearSelection();
-            pnlArchive.Controls.Add(dgvArchive);
-
-            btnCurriculum.Click += (s, ev) =>
-            {
-                pnlCurriculum.Visible = true;
-                pnlArchive.Visible = false;
-                btnUpdateCurriculum.Visible = true;
-                btnCurriculum.BackColor = Color.FromArgb(230, 230, 230);
-                btnArchive.BackColor = Color.Transparent;
-            };
-            btnArchive.Click += (s, ev) =>
-            {
-                pnlArchive.Visible = true;
-                pnlCurriculum.Visible = false;
-                btnUpdateCurriculum.Visible = false;
-                btnArchive.BackColor = Color.FromArgb(230, 230, 230);
-                btnCurriculum.BackColor = Color.Transparent;
-            };
-
-            pnlSubOfferingContent.Controls.Add(pnlCurriculum);
-            pnlSubOfferingContent.Controls.Add(pnlArchive);
-            pnlSubOfferingContent.Controls.Add(header);
-
+            // Default — ipakita agad ang Curriculum
             pnlCurriculum.Visible = true;
             pnlArchive.Visible = false;
-
         }
 
         private void changeButtonColor(Button button)
@@ -326,197 +290,9 @@ namespace PUPAcadPortal
             changeButtonColor(sender as Button);
             showContent(clickedButton);
 
-            pnlSubOfferingContent.Controls.Clear();
-            pnlSubOfferingContent.AutoScroll = false;
-            pnlSubOfferingContent.Visible = true;
-
-            var panelTop = new Panel();
-            panelTop.Location = new Point(0, 0);
-            panelTop.Width = pnlSubOfferingContent.ClientSize.Width;
-            panelTop.Height = 80;
-            panelTop.BackColor = Color.White;
-
-            var lblCurrent = new Label();
-            lblCurrent.Text = "Current Semester:";
-            lblCurrent.Font = new Font("Arial", 18, FontStyle.Bold);
-            lblCurrent.ForeColor = Color.Black;
-            lblCurrent.Location = new Point(10, 10);
-            lblCurrent.AutoSize = true;
-            panelTop.Controls.Add(lblCurrent);
-
-            var lblYear = new Label();
-            lblYear.Text = "Year Level:";
-            lblYear.Font = new Font("Arial", 12, FontStyle.Regular);
-            lblYear.ForeColor = Color.Black;
-            lblYear.Location = new Point(10, 50);
-            lblYear.AutoSize = true;
-            panelTop.Controls.Add(lblYear);
-
-            var cmbYearSchedule = new ComboBox();
-            cmbYearSchedule.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbYearSchedule.Items.AddRange(new object[] { "All", "1", "2", "3", "4" });
-            cmbYearSchedule.SelectedIndex = 0;
-            cmbYearSchedule.Location = new Point(120, 46);
-            cmbYearSchedule.Size = new Size(80, 24);
-            panelTop.Controls.Add(cmbYearSchedule);
-
-            Button btnPrint = new Button();
-            btnPrint.Text = "Print";
-            btnPrint.Size = new Size(100, 36);
-            btnPrint.BackColor = Color.FromArgb(109, 0, 0);
-            btnPrint.ForeColor = Color.White;
-            btnPrint.FlatStyle = FlatStyle.Flat;
-            btnPrint.FlatAppearance.BorderSize = 0;
-            btnPrint.Cursor = Cursors.Hand;
-            btnPrint.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnPrint.Location = new Point(panelTop.Width - 110, 22);
-            panelTop.Controls.Add(btnPrint);
-
-            Button btnExportPDF = new Button();
-            btnExportPDF.Text = "Export to PDF";
-            btnExportPDF.Size = new Size(120, 36);
-            btnExportPDF.BackColor = Color.FromArgb(109, 0, 0);
-            btnExportPDF.ForeColor = Color.White;
-            btnExportPDF.FlatStyle = FlatStyle.Flat;
-            btnExportPDF.FlatAppearance.BorderSize = 0;
-            btnExportPDF.Cursor = Cursors.Hand;
-            btnExportPDF.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnExportPDF.Location = new Point(panelTop.Width - 240, 22);
-            panelTop.Controls.Add(btnExportPDF);
-
-            Button btnExportExcel = new Button();
-            btnExportExcel.Text = "Export to Excel";
-            btnExportExcel.Size = new Size(130, 36);
-            btnExportExcel.BackColor = Color.FromArgb(109, 0, 0);
-            btnExportExcel.ForeColor = Color.White;
-            btnExportExcel.FlatStyle = FlatStyle.Flat;
-            btnExportExcel.FlatAppearance.BorderSize = 0;
-            btnExportExcel.Cursor = Cursors.Hand;
-            btnExportExcel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnExportExcel.Location = new Point(panelTop.Width - 380, 22);
-            panelTop.Controls.Add(btnExportExcel);
-
-            panelTop.SizeChanged += (s, ev) =>
-            {
-                btnPrint.Left = panelTop.Width - 110;
-                btnExportPDF.Left = panelTop.Width - 240;
-                btnExportExcel.Left = panelTop.Width - 380;
-            };
-
-            btnPrint.Click += (s, ev) =>
-            {
-                MessageBox.Show("Print clicked.", "Print", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            };
-
-            btnExportPDF.Click += (s, ev) =>
-            {
-                MessageBox.Show("Export to PDF clicked.", "Export PDF", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            };
-
-            btnExportExcel.Click += (s, ev) =>
-            {
-                MessageBox.Show("Export to Excel clicked.", "Export Excel", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            };
-
-            var scrollPanel = new Panel();
-            scrollPanel.AutoScroll = true;
-            scrollPanel.BackColor = Color.White;
-
-            var dgvSched = new DataGridView();
-            dgvSched.Location = new Point(10, 0);
-            dgvSched.AutoGenerateColumns = false;
-            dgvSched.AllowUserToAddRows = false;
-            dgvSched.RowHeadersVisible = false;
-            dgvSched.ScrollBars = ScrollBars.None;
-            dgvSched.BackgroundColor = Color.White;
-            dgvSched.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvSched.AllowUserToResizeRows = false;
-            dgvSched.AllowUserToResizeColumns = false;
-            dgvSched.ReadOnly = true;
-            dgvSched.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvSched.DefaultCellStyle.SelectionBackColor = Color.White;
-            dgvSched.DefaultCellStyle.SelectionForeColor = Color.Black;
-
-            dgvSched.Columns.Add(new DataGridViewTextBoxColumn() { Name = "CourseCode", HeaderText = "Course Code", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
-            dgvSched.Columns.Add(new DataGridViewTextBoxColumn() { Name = "CourseTitle", HeaderText = "Course Title", AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill });
-            dgvSched.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Lec", HeaderText = "Lec", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
-            dgvSched.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Lab", HeaderText = "Lab", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
-            dgvSched.Columns.Add(new DataGridViewTextBoxColumn() { Name = "TotalUnits", HeaderText = "Total Units", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
-            dgvSched.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Section", HeaderText = "Section", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
-            dgvSched.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Day", HeaderText = "Day", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
-            dgvSched.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Start", HeaderText = "Start", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
-            dgvSched.Columns.Add(new DataGridViewTextBoxColumn() { Name = "End", HeaderText = "End", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
-            dgvSched.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Room", HeaderText = "Room", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
-            dgvSched.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Instructor", HeaderText = "Instructor", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
-
-            scrollPanel.Controls.Add(dgvSched);
-
-            void PopulateScheduleGrid(string yearFilter)
-            {
-                dgvSched.Rows.Clear();
-
-                var sectionOrder = new List<string>
-                {
-                    "BSIT 1-1", "BSIT 1-2",
-                    "BSIT 2-1", "BSIT 2-2",
-                    "BSIT 3-1", "BSIT 3-2",
-                    "BSIT 4-1", "BSIT 4-2"
-                };
-
-                var filtered = new List<string[]>(_savedSchedule);
-                if (yearFilter != "All")
-                {
-                    filtered = filtered.FindAll(r =>
-                    {
-                        string sec = r.Length > 5 ? r[5] : "";
-                        return sec.Length >= 7 && sec.Substring(5, 1) == yearFilter;
-                    });
-                }
-
-                filtered.Sort((a, b) =>
-                {
-                    int ia = sectionOrder.IndexOf(a[5]); if (ia < 0) ia = 999;
-                    int ib = sectionOrder.IndexOf(b[5]); if (ib < 0) ib = 999;
-                    return ia.CompareTo(ib);
-                });
-
-                foreach (var row in filtered)
-                    dgvSched.Rows.Add(row);
-
-                dgvSched.ClearSelection();
-
-                int rowHeight = dgvSched.RowTemplate.Height;
-                int headerHeight = dgvSched.ColumnHeadersHeight;
-                dgvSched.Height = 700;
-            }
-
-            PopulateScheduleGrid("All");
-
-            cmbYearSchedule.SelectedIndexChanged += (s, ev) =>
-            {
-                string yr = cmbYearSchedule.SelectedItem?.ToString() ?? "All";
-                PopulateScheduleGrid(yr);
-            };
-
-            void RepositionSchedule()
-            {
-                int w = pnlSubOfferingContent.ClientSize.Width;
-                int h = pnlSubOfferingContent.ClientSize.Height;
-
-                panelTop.SetBounds(0, 0, w, 80);
-                scrollPanel.SetBounds(0, 80, w, h - 80);
-                dgvSched.Width = w - 20;
-            }
-            // ---------------------------------------------------------------- end of schedule panel controls
-
-            pnlSubOfferingContent.Controls.Add(scrollPanel);
-            pnlSubOfferingContent.Controls.Add(panelTop);
-            panelTop.BringToFront();
-
-            pnlSubOfferingContent.Resize += (s, ev) => RepositionSchedule();
-            RepositionSchedule();
-
+            dgvScheduleView.DefaultCellStyle.SelectionForeColor = Color.Black;
         }
+
 
         //-----------------------------------------------------(Edit Schedule)
         private void btnSO_EditSchedule_Click(object sender, EventArgs e)
@@ -525,8 +301,11 @@ namespace PUPAcadPortal
             //MessageBox.Show("Edit Schedule clicked.");
             changeButtonColor(sender as Button);
             showContent(clickedButton);
+
+            cmbYearLevel_EditSchedule_SelectedIndexChanged(null, EventArgs.Empty);
         }
 
+      
 
         //-------------------------------------
 
@@ -539,6 +318,10 @@ namespace PUPAcadPortal
             contents.Add(btnEnrollments, pnlEnrollContent);
             contents.Add(btnSO_CurrentSemester, pnlCurrentSemester);
             contents.Add(btnSO_EditSchedule, pnlEditSchedule);
+            contents.Add(btnSO_Schedule, pnlSchedule);
+            contents.Add(btnSO_CurriculumArchive, pnlCurriculumArchive);
+
+
             //Kada button na aadd, maglagay ng panel sa form at lagay dito
             //Tapos, sa click event ng button, icall yung changeButtonColor(sender as Button) at showContent(clickedButton), eto lang ok na - Brylle
             foreach (KeyValuePair<Button, Panel> content in contents)
@@ -639,19 +422,60 @@ namespace PUPAcadPortal
         }
 
         //-------------------------------------------------------------- (events Edit schedule page)
-        private void btnAddSection_Click(object sender, EventArgs e)
-        {
 
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
+        //edit sched
         private void btnSaveSchedule_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Schedule Saved Successfully.");
+            string[] fieldNames = {
+            "Course Code", "Course Title", "Lec Units", "Lab Units", "Total Units",
+            "Section", "Day", "Start Time", "End Time", "Room", "Instructor" };
+
+
+            List<string> errors = new List<string>();
+
+            foreach (DataGridViewRow row in dgvEditSchedule.Rows)
+            {
+                if (row.IsNewRow) continue;
+
+                bool hasAnyData = false;
+                for (int col = 0; col <= 10; col++)
+                {
+                    if (col < row.Cells.Count && !string.IsNullOrWhiteSpace(row.Cells[col].Value?.ToString()))
+                    {
+                        hasAnyData = true;
+                        break;
+                    }
+                }
+                if (!hasAnyData) continue;
+
+                List<string> missingFields = new List<string>();
+                for (int col = 0; col <= 10; col++)
+                {
+                    if (col >= row.Cells.Count) break;
+                    if (string.IsNullOrWhiteSpace(row.Cells[col].Value?.ToString()))
+                        missingFields.Add(fieldNames[col]);
+                }
+
+                if (missingFields.Count > 0)
+                    errors.Add($"Row {row.Index + 1}: Missing — {string.Join(", ", missingFields)}");
+            }
+
+            if (errors.Count > 0)
+            {
+                MessageBox.Show("Please complete all fields before saving.\n\n" + string.Join("\n", errors),
+                    "Incomplete Fields", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            _savedSchedule.Clear();
+
+            dgvScheduleView.Rows.Clear();
+            foreach (var saved in _savedSchedule)
+                dgvScheduleView.Rows.Add(saved);
+
+            while (dgvScheduleView.Rows.Count < 30)
+                dgvScheduleView.Rows.Add();
+
         }
 
         private void lblESCurrentSem_Click(object sender, EventArgs e)
@@ -660,16 +484,6 @@ namespace PUPAcadPortal
         }
 
         private void lblESYearLevel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnClearSchedule_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblCourseList_Click(object sender, EventArgs e)
         {
 
         }
@@ -689,7 +503,106 @@ namespace PUPAcadPortal
 
         }
 
-       
+        //edit sched
+        private void btnClearSchedule_Click_1(object sender, EventArgs e)
+        {
+            var confirm = MessageBox.Show(
+                "Are you sure you want to clear the schedule? Unsaved changes will be lost.",
+                "Confirm Clear", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (confirm != DialogResult.Yes) return;
+
+            //remove non-original rows
+            for (int i = dgvEditSchedule.Rows.Count - 1; i >= 0; i--)
+            {
+                var row = dgvEditSchedule.Rows[i];
+                if (row.IsNewRow) continue;
+                if (row.Tag?.ToString() == "original") continue;
+                dgvEditSchedule.Rows.RemoveAt(i);
+            }
+
+            foreach (DataGridViewRow row in dgvEditSchedule.Rows)
+            {
+                if (row.IsNewRow) continue;
+                if (row.Tag?.ToString() != "original") continue;
+
+                for (int col = 5; col <= 10; col++)
+                {
+                    if (col < row.Cells.Count)
+                        row.Cells[col].Value = null;
+                }
+            }
+
+            while (dgvEditSchedule.Rows.Count < 30)
+                dgvEditSchedule.Rows.Add();
+
+            MessageBox.Show("Schedule cleared.", "Cleared",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        //schedule view only buttons
+        private void btnExportExcel_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Exporting the schedule will overwrite the existing file if it already exists. Do you want to continue?", "Export to Excel", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                // Implement export logic here
+                MessageBox.Show("Schedule exported to Excel successfully!", "Exported", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void btnExportPDF_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Exporting the schedule will overwrite the existing file if it already exists. Do you want to continue?", "Export to PDF", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                // Implement export logic here
+                MessageBox.Show("Schedule exported to PDF successfully!", "Exported", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void btnPrint_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Do you want to print this schedule?", "Print", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+        }
+
+        private void btnCurriculum_Click_1(object sender, EventArgs e)
+        {
+            pnlCurriculum.Visible = true;
+            pnlArchive.Visible = false;
+        }
+
+        private void btnArchive_Click(object sender, EventArgs e)
+        {
+            pnlArchive.Visible = true;
+            pnlCurriculum.Visible = false;
+        }
+
+        private void btnUpdateCurriculum_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Are you sure you want to update the curriculum?", "Confirm Update", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                MessageBox.Show("Curriculum updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        //match year level with section column options 
+        private void cmbYearLevel_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        //dapat magappear lang yung subjects for specific year level
+        private void cmbYearLevel_EditSchedule_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           
+        }
 
     }
+
 }
+
+
