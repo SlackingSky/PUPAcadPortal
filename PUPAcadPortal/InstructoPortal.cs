@@ -299,5 +299,32 @@ namespace PUPAcadPortal
                     break;
             }
         }
+
+        private void btnAssignAttach_Click(object sender, EventArgs e)
+        {
+            pnlAttachAss.Visible = true;
+            pnlAttachAss.BringToFront();
+        }
+
+        private void btnAttachCancel_Click(object sender, EventArgs e)
+        {
+            pnlAttachAss.Visible = false;
+
+        }
+
+        private void btnAttachDone_Click(object sender, EventArgs e)
+        {
+            pnlAttachAss.Visible = false;
+        }
+
+        private void btnAttachCancel_Click_1(object sender, EventArgs e)
+        {
+            pnlAttachAss.Visible = false;
+        }
+
+        private void btnDoneAttach_Click(object sender, EventArgs e)
+        {
+            pnlAttachAss.Visible = false;
+        }
     }
 }
