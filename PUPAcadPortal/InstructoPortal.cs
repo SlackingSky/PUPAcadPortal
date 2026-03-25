@@ -331,25 +331,33 @@ namespace PUPAcadPortal
         private void btnAddPanel_Click(object sender, EventArgs e)
         {
             ucQuestionCard newCard = new ucQuestionCard();
-            newCard.Parent = flowLayoutPanel3;
-
-            // Use your exact new dimensions
+            // Match your new size
             newCard.Width = 1250;
             newCard.Height = 423;
 
-            // Updated Margin: 57px on the left to center it in the 1363px panel
-            newCard.Margin = new Padding(57, 10, 10, 10);
-
             flowLayoutPanel3.Controls.Add(newCard);
 
-            // Keep the pnlControlBar (the one with 3 buttons) at the very bottom
+            // --- THE ALIGNMENT FIX ---
+            // Calculate the margin based on your 1363px panel width
+            int centeredMargin = (flowLayoutPanel3.Width - 1250 - 25) / 2;
+            if (centeredMargin < 0) centeredMargin = 57;
+
+            foreach (Control ctrl in flowLayoutPanel3.Controls)
+            {
+                // Force EVERY control to be exactly 1250 wide
+                ctrl.Width = 1250;
+
+                // Force EVERY control to have the exact same left margin
+                ctrl.Margin = new Padding(centeredMargin, 10, 10, 10);
+
+                // Remove any internal offsets
+                ctrl.Left = 0;
+            }
+
+            RenumberQuestions();
+
             if (flowLayoutPanel3.Controls.Contains(pnlControlBar))
             {
-                // Force the bar to match the card's width and margin
-                pnlControlBar.Width = 1250;
-                pnlControlBar.Height = 100;
-                pnlControlBar.Margin = new Padding(57, 10, 10, 10);
-
                 flowLayoutPanel3.Controls.SetChildIndex(pnlControlBar, -1);
             }
 
@@ -359,14 +367,15 @@ namespace PUPAcadPortal
         // --- BUTTON 2: REMOVE LAST QUESTION ---
         private void btnRemove_Click(object sender, EventArgs e)
         {
-            // Find the last card (we skip the control bar itself)
-            // We look for controls that are ucQuestionCard
             var lastCard = flowLayoutPanel3.Controls.OfType<ucQuestionCard>().LastOrDefault();
 
             if (lastCard != null)
             {
                 flowLayoutPanel3.Controls.Remove(lastCard);
-                lastCard.Dispose(); // Clean up memory
+                lastCard.Dispose();
+
+                // NEW: Renumber the remaining cards so there are no gaps
+                RenumberQuestions();
             }
         }
 
@@ -384,6 +393,36 @@ namespace PUPAcadPortal
             else if (result == DialogResult.No)
             {
                 this.Close();
+            }
+        }
+
+        private void flowLayoutPanel3_Resize(object sender, EventArgs e)
+        {
+            // Calculate new centering margin based on current panel width
+            // Formula: (Current Width - Card Width - Scrollbar Width) / 2
+            int newMargin = (flowLayoutPanel3.Width - 1250 - 25) / 2;
+
+            // If the window is small, don't let the margin go negative
+            if (newMargin < 0) newMargin = 10;
+
+            foreach (Control ctrl in flowLayoutPanel3.Controls)
+            {
+                // Apply the new margin to every card and the control bar
+                ctrl.Margin = new Padding(newMargin, 10, 10, 10);
+            }
+        }
+
+        private void RenumberQuestions()
+        {
+            int count = 1;
+            // Loop through only the UserControls (ignoring the control bar)
+            foreach (Control ctrl in flowLayoutPanel3.Controls)
+            {
+                if (ctrl is ucQuestionCard card)
+                {
+                    card.lblQuestionNumber.Text = "Question " + count;
+                    count++;
+                }
             }
         }
     }

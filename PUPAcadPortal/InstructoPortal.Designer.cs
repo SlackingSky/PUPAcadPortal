@@ -1106,12 +1106,12 @@
             // 
             // pnlSubMenu
             // 
+            pnlSubMenu.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pnlSubMenu.Controls.Add(pnlCreateAct);
             pnlSubMenu.Controls.Add(pnlLMSActivities);
             pnlSubMenu.Controls.Add(pnlGenChats);
             pnlSubMenu.Controls.Add(pnlLMSFiles);
             pnlSubMenu.Controls.Add(panel38);
-            pnlSubMenu.Dock = DockStyle.Fill;
             pnlSubMenu.Location = new Point(293, 96);
             pnlSubMenu.Name = "pnlSubMenu";
             pnlSubMenu.Size = new Size(1453, 1319);
@@ -1130,8 +1130,8 @@
             // panel43
             // 
             panel43.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            panel43.Controls.Add(pnlQuiz1);
             panel43.Controls.Add(pnlAssign);
+            panel43.Controls.Add(pnlQuiz1);
             panel43.Controls.Add(panel45);
             panel43.Controls.Add(panel44);
             panel43.Controls.Add(panel46);
@@ -1180,18 +1180,20 @@
             flowLayoutPanel3.BackColor = SystemColors.Control;
             flowLayoutPanel3.Controls.Add(pnlControlBar);
             flowLayoutPanel3.FlowDirection = FlowDirection.TopDown;
-            flowLayoutPanel3.Location = new Point(41, 47);
+            flowLayoutPanel3.Location = new Point(51, 53);
             flowLayoutPanel3.Name = "flowLayoutPanel3";
-            flowLayoutPanel3.Size = new Size(1384, 650);
+            flowLayoutPanel3.Size = new Size(1384, 530);
             flowLayoutPanel3.TabIndex = 10;
             flowLayoutPanel3.WrapContents = false;
+            flowLayoutPanel3.Resize += flowLayoutPanel3_Resize;
             // 
             // pnlControlBar
             // 
+            pnlControlBar.Anchor = AnchorStyles.None;
             pnlControlBar.Controls.Add(tableLayoutPanel24);
             pnlControlBar.Location = new Point(3, 3);
             pnlControlBar.Name = "pnlControlBar";
-            pnlControlBar.Size = new Size(1355, 52);
+            pnlControlBar.Size = new Size(1374, 52);
             pnlControlBar.TabIndex = 0;
             // 
             // tableLayoutPanel24
@@ -1210,7 +1212,7 @@
             tableLayoutPanel24.Name = "tableLayoutPanel24";
             tableLayoutPanel24.RowCount = 1;
             tableLayoutPanel24.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel24.Size = new Size(1348, 45);
+            tableLayoutPanel24.Size = new Size(1367, 45);
             tableLayoutPanel24.TabIndex = 1;
             // 
             // btnRemove
@@ -1222,7 +1224,7 @@
             btnRemove.FlatStyle = FlatStyle.Flat;
             btnRemove.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
             btnRemove.ForeColor = Color.White;
-            btnRemove.Location = new Point(1061, 3);
+            btnRemove.Location = new Point(1077, 3);
             btnRemove.Name = "btnRemove";
             btnRemove.Size = new Size(118, 32);
             btnRemove.TabIndex = 13;
@@ -1255,7 +1257,7 @@
             btnSaveQuiz.FlatStyle = FlatStyle.Flat;
             btnSaveQuiz.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
             btnSaveQuiz.ForeColor = Color.White;
-            btnSaveQuiz.Location = new Point(1208, 3);
+            btnSaveQuiz.Location = new Point(1226, 3);
             btnSaveQuiz.Name = "btnSaveQuiz";
             btnSaveQuiz.Size = new Size(116, 32);
             btnSaveQuiz.TabIndex = 12;
@@ -1446,7 +1448,7 @@
             roundedPanel12.Controls.Add(textBox22);
             roundedPanel12.Location = new Point(8, 11);
             roundedPanel12.Name = "roundedPanel12";
-            roundedPanel12.Size = new Size(1406, 378);
+            roundedPanel12.Size = new Size(1399, 378);
             roundedPanel12.TabIndex = 15;
             // 
             // textBox22
@@ -1456,7 +1458,7 @@
             textBox22.Location = new Point(15, 9);
             textBox22.Multiline = true;
             textBox22.Name = "textBox22";
-            textBox22.Size = new Size(1377, 360);
+            textBox22.Size = new Size(1370, 360);
             textBox22.TabIndex = 0;
             textBox22.Text = "Insert Instructions Here";
             // 

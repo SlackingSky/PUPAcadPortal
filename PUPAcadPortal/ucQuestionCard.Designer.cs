@@ -55,8 +55,7 @@
             panel1 = new Panel();
             textBox1 = new TextBox();
             panel52 = new Panel();
-            label114 = new Label();
-            label113 = new Label();
+            lblQuestionNumber = new Label();
             panel53 = new Panel();
             Ques = new TextBox();
             roundedPanel23.SuspendLayout();
@@ -83,7 +82,6 @@
             // 
             // roundedPanel23
             // 
-            roundedPanel23.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             roundedPanel23.BackColor = Color.Maroon;
             roundedPanel23.BorderRadius = 10;
             roundedPanel23.Controls.Add(roundedPanel24);
@@ -110,6 +108,7 @@
             // 
             // panel13
             // 
+            panel13.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             panel13.Controls.Add(panel14);
             panel13.Controls.Add(panel16);
             panel13.Location = new Point(52, 339);
@@ -167,6 +166,7 @@
             // 
             // panel9
             // 
+            panel9.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             panel9.Controls.Add(panel10);
             panel9.Controls.Add(panel12);
             panel9.Location = new Point(52, 281);
@@ -224,6 +224,7 @@
             // 
             // panel5
             // 
+            panel5.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             panel5.Controls.Add(panel6);
             panel5.Controls.Add(panel8);
             panel5.Location = new Point(52, 223);
@@ -281,7 +282,7 @@
             // 
             // panel4
             // 
-            panel4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panel4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             panel4.Controls.Add(panel2);
             panel4.Controls.Add(panel1);
             panel4.Location = new Point(52, 165);
@@ -342,32 +343,21 @@
             // 
             // panel52
             // 
-            panel52.Controls.Add(label114);
-            panel52.Controls.Add(label113);
+            panel52.Controls.Add(lblQuestionNumber);
             panel52.Location = new Point(-6, -5);
             panel52.Name = "panel52";
             panel52.Size = new Size(297, 40);
             panel52.TabIndex = 12;
             // 
-            // label114
+            // lblQuestionNumber
             // 
-            label114.AutoSize = true;
-            label114.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label114.Location = new Point(12, 7);
-            label114.Name = "label114";
-            label114.Size = new Size(206, 31);
-            label114.TabIndex = 11;
-            label114.Text = "Question Number:";
-            // 
-            // label113
-            // 
-            label113.AutoSize = true;
-            label113.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label113.Location = new Point(216, 7);
-            label113.Name = "label113";
-            label113.Size = new Size(58, 31);
-            label113.TabIndex = 10;
-            label113.Text = "<  >";
+            lblQuestionNumber.AutoSize = true;
+            lblQuestionNumber.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblQuestionNumber.Location = new Point(12, 7);
+            lblQuestionNumber.Name = "lblQuestionNumber";
+            lblQuestionNumber.Size = new Size(133, 31);
+            lblQuestionNumber.TabIndex = 11;
+            lblQuestionNumber.Text = "Question # ";
             // 
             // panel53
             // 
@@ -437,8 +427,6 @@
         private Panel panel1;
         private TextBox textBox1;
         private Panel panel52;
-        private Label label114;
-        private Label label113;
         private Panel panel53;
         private TextBox Ques;
         private Label label1;
@@ -463,5 +451,6 @@
         private TextBox textBox2;
         private Panel panel4;
         private Panel panel3;
+        public Label lblQuestionNumber;
     }
 }
