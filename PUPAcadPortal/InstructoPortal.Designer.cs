@@ -105,16 +105,16 @@
             panel25 = new Panel();
             label19 = new Label();
             panel14 = new Panel();
-            label11 = new Label();
             label12 = new Label();
+            label11 = new Label();
             pictureBox6 = new PictureBox();
             panel10 = new Panel();
-            label9 = new Label();
             label10 = new Label();
+            label9 = new Label();
             pictureBox5 = new PictureBox();
             panel2 = new Panel();
-            label7 = new Label();
             label8 = new Label();
+            label7 = new Label();
             pictureBox4 = new PictureBox();
             panel1 = new Panel();
             label6 = new Label();
@@ -531,6 +531,7 @@
             // panel3
             // 
             panel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panel3.Controls.Add(pnlCoursesContent);
             panel3.Controls.Add(panel32);
             panel3.Controls.Add(tableLayoutPanel1);
             panel3.Controls.Add(panel14);
@@ -539,7 +540,6 @@
             panel3.Controls.Add(panel1);
             panel3.Controls.Add(pnlBanner);
             panel3.Controls.Add(pnlHeader);
-            panel3.Controls.Add(pnlCoursesContent);
             panel3.Controls.Add(pnlSidebar);
             panel3.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             panel3.Location = new Point(0, 0);
@@ -1064,17 +1064,6 @@
             panel14.Size = new Size(250, 80);
             panel14.TabIndex = 3;
             // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label11.Location = new Point(21, 31);
-            label11.Name = "label11";
-            label11.Size = new Size(36, 28);
-            label11.TabIndex = 2;
-            label11.Text = "15";
-            label11.Click += label11_Click;
-            // 
             // label12
             // 
             label12.AutoSize = true;
@@ -1085,6 +1074,17 @@
             label12.Size = new Size(116, 20);
             label12.TabIndex = 1;
             label12.Text = "Pending Grades";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label11.Location = new Point(21, 31);
+            label11.Name = "label11";
+            label11.Size = new Size(36, 28);
+            label11.TabIndex = 2;
+            label11.Text = "15";
+            label11.Click += label11_Click;
             // 
             // pictureBox6
             // 
@@ -1110,17 +1110,6 @@
             panel10.Size = new Size(252, 80);
             panel10.TabIndex = 3;
             // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label9.Location = new Point(22, 34);
-            label9.Name = "label9";
-            label9.Size = new Size(36, 28);
-            label9.TabIndex = 2;
-            label9.Text = "45";
-            label9.Click += label9_Click;
-            // 
             // label10
             // 
             label10.AutoSize = true;
@@ -1131,6 +1120,17 @@
             label10.Size = new Size(148, 20);
             label10.TabIndex = 1;
             label10.Text = "Graded Assignments";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label9.Location = new Point(22, 34);
+            label9.Name = "label9";
+            label9.Size = new Size(36, 28);
+            label9.TabIndex = 2;
+            label9.Text = "45";
+            label9.Click += label9_Click;
             // 
             // pictureBox5
             // 
@@ -1156,17 +1156,6 @@
             panel2.Size = new Size(257, 80);
             panel2.TabIndex = 3;
             // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label7.Location = new Point(24, 36);
-            label7.Name = "label7";
-            label7.Size = new Size(48, 28);
-            label7.TabIndex = 2;
-            label7.Text = "120";
-            label7.Click += label7_Click;
-            // 
             // label8
             // 
             label8.AutoSize = true;
@@ -1177,6 +1166,17 @@
             label8.Size = new Size(105, 20);
             label8.TabIndex = 1;
             label8.Text = "Total Students";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label7.Location = new Point(24, 36);
+            label7.Name = "label7";
+            label7.Size = new Size(48, 28);
+            label7.TabIndex = 2;
+            label7.Text = "120";
+            label7.Click += label7_Click;
             // 
             // pictureBox4
             // 
@@ -1341,13 +1341,13 @@
             // 
             pnlCoursesContent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pnlCoursesContent.AutoScroll = true;
-            pnlCoursesContent.BackColor = SystemColors.Control;
+            pnlCoursesContent.BackColor = Color.Black;
             pnlCoursesContent.CausesValidation = false;
             pnlCoursesContent.Controls.Add(flowstats);
-            pnlCoursesContent.Location = new Point(304, 248);
+            pnlCoursesContent.Location = new Point(304, 338);
             pnlCoursesContent.Margin = new Padding(0);
             pnlCoursesContent.Name = "pnlCoursesContent";
-            pnlCoursesContent.Size = new Size(250, 80);
+            pnlCoursesContent.Size = new Size(0, 0);
             pnlCoursesContent.TabIndex = 6;
             pnlCoursesContent.Visible = false;
             pnlCoursesContent.Paint += pnlCoursesContent_Paint;
@@ -1358,7 +1358,7 @@
             flowstats.Location = new Point(0, 0);
             flowstats.Name = "flowstats";
             flowstats.Padding = new Padding(0, 16, 0, 16);
-            flowstats.Size = new Size(250, 0);
+            flowstats.Size = new Size(0, 0);
             flowstats.TabIndex = 0;
             flowstats.WrapContents = false;
             flowstats.Paint += flowstats_Paint;
