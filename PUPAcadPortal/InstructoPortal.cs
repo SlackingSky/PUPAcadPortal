@@ -607,6 +607,196 @@ namespace PUPAcadPortal
         private void pictureBox7_Click_1(object sender, EventArgs e)
         {
 
+        private void btnAnnounceIns_Click(object sender, EventArgs e)
+        {
+            pnlAnnounce.BringToFront();
+            pnlAnnounce.Visible = true;
+        }
+
+        private void btnCalendarIns_Click(object sender, EventArgs e)
+        {
+            pnlCalendar.BringToFront();
+            pnlCalendar.Visible = true;
+        }
+
+        private void btnSubjectIns_Click(object sender, EventArgs e)
+        {
+            pnlSubject.BringToFront();
+            pnlSubject.Visible = true;
+        }
+
+        private void btnActivitiesIns_Click(object sender, EventArgs e)
+        {
+            pnlLMSAct.BringToFront();
+            pnlLMSAct.Visible = true;
+        }
+
+        private void btnAttendanceIns_Click(object sender, EventArgs e)
+        {
+            pnlAttendance.BringToFront();
+            pnlAttendance.Visible = true;
+        }
+
+        private void btnGradeIns_Click(object sender, EventArgs e)
+        {
+            pnlGrades.BringToFront();
+            pnlGrades.Visible = true;
+        }
+
+        private void label24_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        bool expand = false;
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (expand == false)
+            {
+                flowLayoutPanel3.Height += 15;
+                if (flowLayoutPanel3.Height >= flowLayoutPanel3.MaximumSize.Height)
+                {
+                    timer1.Stop();
+                    expand = true;
+                }
+            }
+            else
+            {
+                flowLayoutPanel3.Height -= 15;
+                if (flowLayoutPanel3.Height <= flowLayoutPanel3.MinimumSize.Height)
+                {
+                    timer1.Stop();
+                    expand = false;
+                }
+            }
+        }
+
+        private void StatusBtn_Click(object sender, EventArgs e)
+        {
+            timer1.Start();
+        }
+
+        private void CreateAnnounce_Click(object sender, EventArgs e)
+        {
+            pnlCreateAnnounce.Visible = !pnlCreateAnnounce.Visible;
+
+            if (pnlCreateAnnounce.Visible)
+            {
+                // Ensure it sits on top of all other controls/panels
+                pnlCreateAnnounce.BringToFront();
+
+
+                pnlCreateAnnounce.Location = new Point(
+                (this.Width - pnlCreateAnnounce.Width) / 4,
+                (this.Height - pnlCreateAnnounce.Height) / 4);
+
+            }
+        }
+
+        private void StatusBtn2_Click(object sender, EventArgs e)
+        {
+            timer1.Start();
+        }
+
+        private void Sub1_MouseClick(object sender, MouseEventArgs e)
+        {
+            pnlSubMenuMain.Visible = !pnlSubMenuMain.Visible;
+
+            // Optional: Bring it to the front to ensure it's not hidden behind other UI elements
+            if (pnlSubMenuMain.Visible)
+            {
+                pnlSubMenuMain.BringToFront();
+            }
+
+
+        }
+
+        private void Sub1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+        bool sidebarExpand;
+        private void sideBarTimer_Tick(object sender, EventArgs e)
+        {
+            if (sidebarExpand)
+            {
+                // if sidebar is expand, minimize
+                SubjectMenu.Width -= 10;
+                if (SubjectMenu.Width == SubjectMenu.MinimumSize.Width)
+                {
+                    sidebarExpand = false;
+                    sideBarTimer.Stop();
+                }
+            }
+            else
+            {
+                SubjectMenu.Width += 10;
+                if (SubjectMenu.Width == SubjectMenu.MaximumSize.Width)
+                {
+                    sidebarExpand = true;
+                    sideBarTimer.Stop();
+                }
+            }
+        }
+
+        private void MenuButton_Click(object sender, EventArgs e)
+        {
+            sideBarTimer.Start();
+        }
+
+        private void btnAllTeams_Click(object sender, EventArgs e)
+        {
+            // 1. Hide the submenu container
+            pnlSubMenuMain.Visible = false;
+
+            // 2. Ensure the target panel is visible
+            pnlSubject.Visible = true;
+
+            // 3. Optional: If you want pnlSubject to move to the very top of the sidebar
+            pnlSubject.BringToFront();
+        }
+
+        private void btnAssign_Click(object sender, EventArgs e)
+        {
+            // 1. Show the target panel
+            pnlSubActivities.Visible = true;
+
+            // 2. Bring it to the front so it's not hidden behind other main panels
+            pnlSubActivities.BringToFront();
+
+
+        }
+
+        private void btnGeneralChat_Click(object sender, EventArgs e)
+        {
+            // 1. Show the target panel
+            pnlSubMenuMain.Visible = true;
+
+            // 2. Bring it to the front so it's not hidden behind other main panels
+            pnlSubMenuMain.BringToFront();
+        }
+
+        private void btnClassFiles_Click(object sender, EventArgs e)
+        {
+            pnlClassFiles.Visible = true;
+
+            // 2. Bring it to the front so it's not hidden behind other main panels
+            pnlClassFiles.BringToFront();
+        }
+
+        private void button38_Click(object sender, EventArgs e)
+        {
+            pnlSubMenuMain.Visible = true;
+
+            // 2. Bring it to the front so it's not hidden behind other main panels
+            pnlSubMenuMain.BringToFront();
+
+            pnlSubActivities.Visible = true;
+
+            // 2. Bring it to the front so it's not hidden behind other main panels
+            pnlSubActivities.BringToFront();
+
+            
         }
     }
 }
