@@ -242,8 +242,9 @@ namespace PUPAcadPortal
         {
             pnlSubMenu.Visible = true;
             pnlSubMenu.BringToFront();
-            pnlGenChats.Visible = true;
-            pnlGenChats.BringToFront();
+            pnlLMSActivities.Visible = true;
+            pnlLMSActivities.BringToFront();
+            
         }
 
         private void btnBack_Click(object sender, EventArgs e)
