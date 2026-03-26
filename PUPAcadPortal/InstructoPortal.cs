@@ -177,9 +177,9 @@ namespace PUPAcadPortal
 
             lblWelcome = new Label();
             lblWelcome.AutoSize = false;
-            lblWelcome.Location = new Point(24, 18);
+            lblWelcome.Location = new Point(35, 18);
             lblWelcome.Size = new Size(1100, 44);
-            lblWelcome.Font = new Font("Arial", 24F, FontStyle.Bold, GraphicsUnit.Pixel);
+            lblWelcome.Font = new Font("Arial", 35F, FontStyle.Bold, GraphicsUnit.Pixel);
             lblWelcome.ForeColor = Color.White;
             lblWelcome.Text = "Welcome back, Professor!";
 
@@ -399,7 +399,7 @@ namespace PUPAcadPortal
                     this.Controls.Add(pnlYellow);
             }
             if (clickedButton?.Parent != null)
-            clickedButton.BackColor = selectedColor;
+                clickedButton.BackColor = selectedColor;
         }
 
         //Method na nagpapakita ng content ng bawat button, wala akong maisip na iba kaya eto
@@ -415,8 +415,10 @@ namespace PUPAcadPortal
                 if (content.Key == clickedButton)
                 {
                     //Automatic positioning, wag pakialaman maliban nalang kung binago ang position ng sidebar
+                    content.Value.Parent = panel3;
                     content.Value.Location = new Point(pnlSidebar.Size.Width, pnlHeader.Size.Height);
                     content.Value.Visible = true;
+                    content.Value.BringToFront();
                 }
                 else
                 {
@@ -488,6 +490,111 @@ namespace PUPAcadPortal
         }
 
         private void pnlBanner_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void lblWelcomeSubtitle_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void flowstats_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void flowLayoutPanel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label13_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel17_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label14_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label16_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label19_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label20_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label20_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label20_Click_2(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label21_Click(object sender, EventArgs e)
         {
 
         }
