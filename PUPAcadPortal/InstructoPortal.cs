@@ -683,5 +683,45 @@ namespace PUPAcadPortal
         {
 
         }
+
+        private void label44_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel89_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label44_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label79_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label43_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label81_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel8_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label83_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

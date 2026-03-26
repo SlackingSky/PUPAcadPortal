@@ -276,6 +276,18 @@
             pictureBox13 = new PictureBox();
             panel91 = new Panel();
             pictureBox14 = new PictureBox();
+            label44 = new Label();
+            label74 = new Label();
+            label79 = new Label();
+            label80 = new Label();
+            panel92 = new Panel();
+            tableLayoutPanel8 = new TableLayoutPanel();
+            label81 = new Label();
+            label82 = new Label();
+            label83 = new Label();
+            label84 = new Label();
+            label85 = new Label();
+            label86 = new Label();
             pnlSidebar.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             panel7.SuspendLayout();
@@ -391,6 +403,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox13).BeginInit();
             panel91.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox14).BeginInit();
+            panel92.SuspendLayout();
+            tableLayoutPanel8.SuspendLayout();
             SuspendLayout();
             // 
             // pnlSidebar
@@ -2744,6 +2758,7 @@
             // 
             // panel44
             // 
+            panel44.Controls.Add(panel92);
             panel44.Controls.Add(panel80);
             panel44.Controls.Add(button5);
             panel44.Controls.Add(button8);
@@ -2891,7 +2906,7 @@
             label73.BackColor = Color.Transparent;
             label73.Font = new Font("Arial Narrow", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label73.ForeColor = Color.WhiteSmoke;
-            label73.Location = new Point(18, 22);
+            label73.Location = new Point(15, 10);
             label73.Name = "label73";
             label73.Size = new Size(77, 27);
             label73.TabIndex = 0;
@@ -2965,11 +2980,12 @@
             label43.BackColor = Color.Transparent;
             label43.Font = new Font("Arial Narrow", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label43.ForeColor = Color.WhiteSmoke;
-            label43.Location = new Point(30, 34);
+            label43.Location = new Point(16, 8);
             label43.Name = "label43";
             label43.Size = new Size(77, 27);
             label43.TabIndex = 0;
             label43.Text = "Course";
+            label43.Click += label43_Click;
             // 
             // button5
             // 
@@ -3025,8 +3041,9 @@
             // 
             // panel88
             // 
+            panel88.Controls.Add(label44);
             panel88.Controls.Add(pictureBox11);
-            panel88.Dock = DockStyle.Top;
+            panel88.Dock = DockStyle.Fill;
             panel88.Location = new Point(0, 0);
             panel88.Margin = new Padding(8);
             panel88.Name = "panel88";
@@ -3037,7 +3054,7 @@
             // pictureBox11
             // 
             pictureBox11.Image = Properties.Resources.Screenshot_2026_03_25_234609;
-            pictureBox11.Location = new Point(115, 8);
+            pictureBox11.Location = new Point(236, 10);
             pictureBox11.Name = "pictureBox11";
             pictureBox11.Size = new Size(50, 37);
             pictureBox11.SizeMode = PictureBoxSizeMode.Zoom;
@@ -3046,8 +3063,9 @@
             // 
             // panel89
             // 
+            panel89.Controls.Add(label74);
             panel89.Controls.Add(pictureBox12);
-            panel89.Dock = DockStyle.Top;
+            panel89.Dock = DockStyle.Fill;
             panel89.Location = new Point(318, 16);
             panel89.Margin = new Padding(8);
             panel89.Name = "panel89";
@@ -3058,7 +3076,7 @@
             // pictureBox12
             // 
             pictureBox12.Image = Properties.Resources.Screenshot_2026_03_25_234614;
-            pictureBox12.Location = new Point(117, 6);
+            pictureBox12.Location = new Point(236, 5);
             pictureBox12.Name = "pictureBox12";
             pictureBox12.Size = new Size(50, 37);
             pictureBox12.SizeMode = PictureBoxSizeMode.Zoom;
@@ -3067,8 +3085,9 @@
             // 
             // panel90
             // 
+            panel90.Controls.Add(label79);
             panel90.Controls.Add(pictureBox13);
-            panel90.Dock = DockStyle.Top;
+            panel90.Dock = DockStyle.Fill;
             panel90.Location = new Point(620, 16);
             panel90.Margin = new Padding(8);
             panel90.Name = "panel90";
@@ -3079,7 +3098,7 @@
             // pictureBox13
             // 
             pictureBox13.Image = Properties.Resources.Screenshot_2026_03_25_234620;
-            pictureBox13.Location = new Point(114, 5);
+            pictureBox13.Location = new Point(229, 6);
             pictureBox13.Name = "pictureBox13";
             pictureBox13.Size = new Size(50, 37);
             pictureBox13.SizeMode = PictureBoxSizeMode.Zoom;
@@ -3088,8 +3107,9 @@
             // 
             // panel91
             // 
+            panel91.Controls.Add(label80);
             panel91.Controls.Add(pictureBox14);
-            panel91.Dock = DockStyle.Top;
+            panel91.Dock = DockStyle.Fill;
             panel91.Location = new Point(922, 16);
             panel91.Margin = new Padding(8);
             panel91.Name = "panel91";
@@ -3100,12 +3120,157 @@
             // pictureBox14
             // 
             pictureBox14.Image = Properties.Resources.Screenshot_2026_03_25_234625;
-            pictureBox14.Location = new Point(125, 6);
+            pictureBox14.Location = new Point(232, 6);
             pictureBox14.Name = "pictureBox14";
             pictureBox14.Size = new Size(50, 37);
             pictureBox14.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox14.TabIndex = 0;
             pictureBox14.TabStop = false;
+            // 
+            // label44
+            // 
+            label44.AutoSize = true;
+            label44.Font = new Font("Arial", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label44.Location = new Point(15, 19);
+            label44.Name = "label44";
+            label44.Size = new Size(139, 19);
+            label44.TabIndex = 1;
+            label44.Text = "Upload Materials";
+            label44.Click += label44_Click_1;
+            // 
+            // label74
+            // 
+            label74.AutoSize = true;
+            label74.Font = new Font("Arial", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label74.Location = new Point(15, 16);
+            label74.Name = "label74";
+            label74.Size = new Size(157, 19);
+            label74.TabIndex = 2;
+            label74.Text = "Create Assignment";
+            // 
+            // label79
+            // 
+            label79.AutoSize = true;
+            label79.Font = new Font("Arial", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label79.Location = new Point(15, 14);
+            label79.Name = "label79";
+            label79.Size = new Size(129, 19);
+            label79.TabIndex = 2;
+            label79.Text = "Schedule Exam";
+            label79.Click += label79_Click;
+            // 
+            // label80
+            // 
+            label80.AutoSize = true;
+            label80.Font = new Font("Arial", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label80.Location = new Point(15, 16);
+            label80.Name = "label80";
+            label80.Size = new Size(167, 19);
+            label80.TabIndex = 2;
+            label80.Text = "Post Announcement";
+            // 
+            // panel92
+            // 
+            panel92.BorderStyle = BorderStyle.FixedSingle;
+            panel92.Controls.Add(label85);
+            panel92.Controls.Add(label86);
+            panel92.Controls.Add(label84);
+            panel92.Controls.Add(tableLayoutPanel8);
+            panel92.Location = new Point(12, 646);
+            panel92.Name = "panel92";
+            panel92.Size = new Size(1265, 199);
+            panel92.TabIndex = 8;
+            // 
+            // tableLayoutPanel8
+            // 
+            tableLayoutPanel8.BackColor = SystemColors.ButtonFace;
+            tableLayoutPanel8.ColumnCount = 3;
+            tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel8.Controls.Add(label83, 2, 0);
+            tableLayoutPanel8.Controls.Add(label82, 1, 0);
+            tableLayoutPanel8.Controls.Add(label81, 0, 0);
+            tableLayoutPanel8.Location = new Point(31, 32);
+            tableLayoutPanel8.Margin = new Padding(8);
+            tableLayoutPanel8.Name = "tableLayoutPanel8";
+            tableLayoutPanel8.Padding = new Padding(12);
+            tableLayoutPanel8.RowCount = 1;
+            tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel8.Size = new Size(1214, 110);
+            tableLayoutPanel8.TabIndex = 0;
+            tableLayoutPanel8.Paint += tableLayoutPanel8_Paint;
+            // 
+            // label81
+            // 
+            label81.AutoSize = true;
+            label81.Dock = DockStyle.Top;
+            label81.Font = new Font("Arial Narrow", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label81.Location = new Point(15, 12);
+            label81.Name = "label81";
+            label81.Size = new Size(390, 55);
+            label81.TabIndex = 0;
+            label81.Text = "3";
+            label81.TextAlign = ContentAlignment.MiddleCenter;
+            label81.Click += label81_Click;
+            // 
+            // label82
+            // 
+            label82.AutoSize = true;
+            label82.Dock = DockStyle.Top;
+            label82.Font = new Font("Arial Narrow", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label82.Location = new Point(411, 12);
+            label82.Name = "label82";
+            label82.Size = new Size(390, 55);
+            label82.TabIndex = 1;
+            label82.Text = "57";
+            label82.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // label83
+            // 
+            label83.AutoSize = true;
+            label83.Dock = DockStyle.Top;
+            label83.Font = new Font("Arial Narrow", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label83.Location = new Point(807, 12);
+            label83.Name = "label83";
+            label83.Size = new Size(392, 55);
+            label83.TabIndex = 2;
+            label83.Text = "23";
+            label83.TextAlign = ContentAlignment.MiddleCenter;
+            label83.Click += label83_Click;
+            // 
+            // label84
+            // 
+            label84.AutoSize = true;
+            label84.BackColor = Color.Transparent;
+            label84.Font = new Font("Arial", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label84.Location = new Point(187, 105);
+            label84.Name = "label84";
+            label84.Size = new Size(107, 19);
+            label84.TabIndex = 1;
+            label84.Text = "Total Courses";
+            // 
+            // label85
+            // 
+            label85.AutoSize = true;
+            label85.BackColor = Color.Transparent;
+            label85.Font = new Font("Arial", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label85.Location = new Point(582, 105);
+            label85.Name = "label85";
+            label85.Size = new Size(109, 19);
+            label85.TabIndex = 2;
+            label85.Text = "Total Students";
+            // 
+            // label86
+            // 
+            label86.AutoSize = true;
+            label86.BackColor = Color.Transparent;
+            label86.Font = new Font("Arial", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label86.Location = new Point(985, 105);
+            label86.Name = "label86";
+            label86.Size = new Size(82, 19);
+            label86.TabIndex = 3;
+            label86.Text = "Total Units";
             // 
             // InstructorPortal
             // 
@@ -3272,13 +3437,21 @@
             tableLayoutPanel6.ResumeLayout(false);
             panel85.ResumeLayout(false);
             panel88.ResumeLayout(false);
+            panel88.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox11).EndInit();
             panel89.ResumeLayout(false);
+            panel89.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox12).EndInit();
             panel90.ResumeLayout(false);
+            panel90.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox13).EndInit();
             panel91.ResumeLayout(false);
+            panel91.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox14).EndInit();
+            panel92.ResumeLayout(false);
+            panel92.PerformLayout();
+            tableLayoutPanel8.ResumeLayout(false);
+            tableLayoutPanel8.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -3532,5 +3705,17 @@
         private Panel panel85;
         private Panel panel88;
         private PictureBox pictureBox11;
+        private Label label44;
+        private Label label80;
+        private Label label79;
+        private Label label74;
+        private Panel panel92;
+        private Label label81;
+        private TableLayoutPanel tableLayoutPanel8;
+        private Label label83;
+        private Label label82;
+        private Label label84;
+        private Label label85;
+        private Label label86;
     }
 }
