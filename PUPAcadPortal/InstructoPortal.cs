@@ -18,6 +18,9 @@ namespace PUPAcadPortal
             InitializeComponent();
             SetupDashboardUI();
             SetupGradesUI();
+            this.Size = new System.Drawing.Size(1544, Screen.PrimaryScreen.WorkingArea.Height);
+            changeButtonColor(btnDashboard);
+            showContent(clickedButton);
         }
 
         private void SetupGradesUI()
@@ -203,52 +206,6 @@ namespace PUPAcadPortal
             }
             catch { }
 
-            // Stats
-            pnlStats = new Panel();
-            pnlStats.Location = new Point(18, 168);
-            pnlStats.Name = "pnlStats";
-            pnlStats.Size = new Size(1418, 108);
-            pnlStats.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-
-            string[] statTitles = { "Active Courses", "Total Students", "Graded Assignments", "Pending Grades" };
-            string[] statValues = { "3", "120", "45", "15" };
-            Color[] statColors = { Color.DodgerBlue, Color.SeaGreen, Color.MediumPurple, Color.Gold };
-
-            for (int i = 0; i < 4; i++)
-            {
-                Panel card = new Panel();
-                card.Size = new Size(328, 92);
-                card.Location = new Point(i * 342, 0);
-                card.BackColor = Color.White;
-                card.Padding = new Padding(12);
-
-                Label t = new Label();
-                t.AutoSize = false;
-                t.Size = new Size(220, 18);
-                t.Location = new Point(8, 8);
-                t.Font = new Font("Arial", 10F, FontStyle.Regular, GraphicsUnit.Pixel);
-                t.ForeColor = Color.FromArgb(100, 0, 0, 0);
-                t.Text = statTitles[i];
-
-                Label n = new Label();
-                n.AutoSize = false;
-                n.Size = new Size(140, 30);
-                n.Location = new Point(8, 28);
-                n.Font = new Font("Arial", 18F, FontStyle.Bold, GraphicsUnit.Pixel);
-                n.ForeColor = Color.FromArgb(40, 40, 40);
-                n.Text = statValues[i];
-
-                Panel icon = new Panel();
-                icon.Size = new Size(44, 44);
-                icon.Location = new Point(268, 24);
-                icon.BackColor = statColors[i];
-
-                card.Controls.Add(t);
-                card.Controls.Add(n);
-                card.Controls.Add(icon);
-                pnlStats.Controls.Add(card);
-            }
-            pnlDashboardContent.Controls.Add(pnlStats);
 
             // Lower main area: Quick Actions and Upcoming Events
             pnlMainLower = new Panel();
@@ -605,6 +562,11 @@ namespace PUPAcadPortal
         }
 
         private void pictureBox7_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
         {
 
         }
