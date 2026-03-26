@@ -13,6 +13,9 @@ namespace PUPAcadPortal
         private Button clickedButton;
         private Color defaultColor = Color.Maroon;
         private Color selectedColor = Color.FromArgb(109, 0, 0);
+        private Color selectedUserButtonColor = Color.FromArgb(109, 0, 0);
+        private Button selectedUserTypeButton;                 // tracks which button (Students/Professors) is selected
+        private Color defaultUserButtonColor = Color.Maroon;   // default color for the toggle buttons
         private Dictionary<Button, Panel> contentPanels; // Class-level dictionary to hold button-panel mappings
         public AdminPortal()
         {
@@ -23,7 +26,6 @@ namespace PUPAcadPortal
             contentPanels = new Dictionary<Button, Panel>
             {
             { btnDashboard, pnlDashboardContent },
-            { btnEnrollments, pnlEnrollContent },
             { btnSubjectOffering, pnlSubOfferingContent },
             { btnGradesManagement, pnlGradesManagementContent },
             { btnAccountingRecords, pnlAccountingRecordsContent },
@@ -100,6 +102,11 @@ namespace PUPAcadPortal
             if (pnlGradesManagementContent.Visible) FitContentPanel(pnlGradesManagementContent);
             if (pnlAccountingRecordsContent.Visible) FitContentPanel(pnlAccountingRecordsContent);
             if (pnlEnrolledStudentsContent.Visible) FitContentPanel(pnlEnrolledStudentsContent);
+
+            if (pnlViewAllUsersContent.Visible && selectedUserTypeButton != null)
+            {
+                MoveIndicatorUnder(selectedUserTypeButton);
+            }
         }
 
         private void FitContentPanel(Panel panel)
@@ -224,6 +231,74 @@ namespace PUPAcadPortal
         private void btnLogout_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void lblViewDesc_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnViewStudents_Click(object sender, EventArgs e)
+        {
+            if (selectedUserTypeButton == btnViewStudents) return; // already selected
+            SelectUserTypeButton(btnViewStudents);
+            RefreshUsersList(); // load student data
+        }
+
+        private void btnViewProf_Click(object sender, EventArgs e)
+        {
+            if (selectedUserTypeButton == btnViewProf) return;
+            SelectUserTypeButton(btnViewProf);
+            RefreshUsersList(); // load professor data
+        }
+
+        private void SelectUserTypeButton(Button selected)
+        {
+            // Reset previous button
+            if (selectedUserTypeButton != null)
+            {
+                selectedUserTypeButton.BackColor = defaultUserButtonColor;
+            }
+
+            // Set new selected button
+            selectedUserTypeButton = selected;
+            selected.BackColor = selectedUserButtonColor;
+
+            // Move the indicator line below the selected button
+            MoveIndicatorUnder(selected);
+        }
+
+        private void MoveIndicatorUnder(Button button)
+        {
+            if (pnlUserTypeIndicator == null) return;
+            // Align indicator to the left edge of the button
+            pnlUserTypeIndicator.Location = new Point(button.Left, button.Bottom + 2);
+            // Make indicator width match the button
+            pnlUserTypeIndicator.Width = button.Width;
+        }
+
+        private void SetDefaultUserTypeButton()
+        {
+            SelectUserTypeButton(btnViewStudents); // This will also trigger the indicator movement
+        }
+
+        private void RefreshUsersList()
+        {
+            string typeFilter = (selectedUserTypeButton == btnViewStudents) ? "Student" : "Professor";
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            RefreshUsersList();
+        }
+
+        private void txtSearchViewAUs_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnSearch.PerformClick();
+                e.SuppressKeyPress = true;
+            }
         }
     }
 }

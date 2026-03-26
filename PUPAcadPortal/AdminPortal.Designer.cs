@@ -34,12 +34,11 @@
             flowLayoutPanel1 = new FlowLayoutPanel();
             panel7 = new Panel();
             btnDashboard = new Button();
-            panel8 = new Panel();
-            btnEnrollments = new Button();
             pnlRegistrarFunctions = new Panel();
             btnRegistrarFunctions = new Button();
             pnlRegistrarSubmenu = new Panel();
             pnlGradesManagement = new Panel();
+            panel1 = new Panel();
             btnGradesManagement = new Button();
             pnlAccountingRecords = new Panel();
             btnAccountingRecords = new Button();
@@ -68,12 +67,25 @@
             pnlSubOfferingContent = new Panel();
             pnlEnrollContent = new Panel();
             panel3 = new Panel();
+            pnlViewAllUsersContent = new Panel();
+            pnlViewSPsContent = new Panel();
+            dgvUsers = new DataGridView();
+            panel8 = new Panel();
+            comboBox1 = new ComboBox();
+            btnSearch = new Button();
+            cmbYear = new ComboBox();
+            txtSearchViewAUs = new TextBox();
+            btnViewProf = new Button();
+            pnlUserTypeIndicator = new Panel();
+            btnViewStudents = new Button();
+            pictureBox3 = new PictureBox();
+            lblViewDesc = new Label();
+            lblViewAllUsers = new Label();
             pnlRegisterProfessorContent = new Panel();
             pnlRegisterStudentContent = new Panel();
             pnlEnrolledStudentsContent = new Panel();
             pnlAccountingRecordsContent = new Panel();
             pnlGradesManagementContent = new Panel();
-            pnlViewAllUsersContent = new Panel();
             pnlDashboardContent = new Panel();
             pnlHeader = new Panel();
             panel15 = new Panel();
@@ -85,7 +97,6 @@
             pnlSidebar.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             panel7.SuspendLayout();
-            panel8.SuspendLayout();
             pnlRegistrarFunctions.SuspendLayout();
             pnlRegistrarSubmenu.SuspendLayout();
             pnlGradesManagement.SuspendLayout();
@@ -103,6 +114,11 @@
             panel12.SuspendLayout();
             panel13.SuspendLayout();
             panel3.SuspendLayout();
+            pnlViewAllUsersContent.SuspendLayout();
+            pnlViewSPsContent.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvUsers).BeginInit();
+            panel8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             pnlHeader.SuspendLayout();
             panel15.SuspendLayout();
             panel16.SuspendLayout();
@@ -137,7 +153,6 @@
             // 
             flowLayoutPanel1.BackColor = Color.Transparent;
             flowLayoutPanel1.Controls.Add(panel7);
-            flowLayoutPanel1.Controls.Add(panel8);
             flowLayoutPanel1.Controls.Add(pnlRegistrarFunctions);
             flowLayoutPanel1.Controls.Add(pnlRegistrarSubmenu);
             flowLayoutPanel1.Controls.Add(panel2);
@@ -183,42 +198,11 @@
             btnDashboard.UseVisualStyleBackColor = true;
             btnDashboard.Click += btnDashboard_Click;
             // 
-            // panel8
-            // 
-            panel8.Controls.Add(btnEnrollments);
-            panel8.Location = new Point(0, 64);
-            panel8.Margin = new Padding(0);
-            panel8.Name = "panel8";
-            panel8.Size = new Size(256, 48);
-            panel8.TabIndex = 1;
-            // 
-            // btnEnrollments
-            // 
-            btnEnrollments.BackgroundImageLayout = ImageLayout.None;
-            btnEnrollments.Cursor = Cursors.Hand;
-            btnEnrollments.FlatAppearance.BorderSize = 0;
-            btnEnrollments.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            btnEnrollments.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            btnEnrollments.FlatStyle = FlatStyle.Flat;
-            btnEnrollments.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            btnEnrollments.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            btnEnrollments.Image = Properties.Resources.Enrollment;
-            btnEnrollments.ImageAlign = ContentAlignment.MiddleLeft;
-            btnEnrollments.Location = new Point(0, 0);
-            btnEnrollments.Name = "btnEnrollments";
-            btnEnrollments.Padding = new Padding(16, 0, 0, 0);
-            btnEnrollments.Size = new Size(256, 48);
-            btnEnrollments.TabIndex = 3;
-            btnEnrollments.Text = " Enrollments";
-            btnEnrollments.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnEnrollments.UseVisualStyleBackColor = true;
-            btnEnrollments.Click += btnEnrollments_Click;
-            // 
             // pnlRegistrarFunctions
             // 
             pnlRegistrarFunctions.BackColor = Color.Transparent;
             pnlRegistrarFunctions.Controls.Add(btnRegistrarFunctions);
-            pnlRegistrarFunctions.Location = new Point(3, 115);
+            pnlRegistrarFunctions.Location = new Point(3, 67);
             pnlRegistrarFunctions.Name = "pnlRegistrarFunctions";
             pnlRegistrarFunctions.Size = new Size(256, 48);
             pnlRegistrarFunctions.TabIndex = 0;
@@ -251,7 +235,7 @@
             pnlRegistrarSubmenu.Controls.Add(pnlGradesManagement);
             pnlRegistrarSubmenu.Controls.Add(pnlAccountingRecords);
             pnlRegistrarSubmenu.Controls.Add(pnlEnrolledStudents);
-            pnlRegistrarSubmenu.Location = new Point(0, 166);
+            pnlRegistrarSubmenu.Location = new Point(0, 118);
             pnlRegistrarSubmenu.Margin = new Padding(0);
             pnlRegistrarSubmenu.Name = "pnlRegistrarSubmenu";
             pnlRegistrarSubmenu.Size = new Size(256, 144);
@@ -262,10 +246,19 @@
             // 
             pnlGradesManagement.BackColor = Color.Transparent;
             pnlGradesManagement.Controls.Add(btnGradesManagement);
+            pnlGradesManagement.Controls.Add(panel1);
             pnlGradesManagement.Location = new Point(0, 0);
             pnlGradesManagement.Name = "pnlGradesManagement";
             pnlGradesManagement.Size = new Size(256, 48);
             pnlGradesManagement.TabIndex = 9;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.Transparent;
+            panel1.Location = new Point(8, 8);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(256, 48);
+            panel1.TabIndex = 10;
             // 
             // btnGradesManagement
             // 
@@ -352,7 +345,7 @@
             // panel2
             // 
             panel2.Controls.Add(btnRegisterStudent);
-            panel2.Location = new Point(3, 313);
+            panel2.Location = new Point(3, 265);
             panel2.Name = "panel2";
             panel2.Size = new Size(259, 48);
             panel2.TabIndex = 0;
@@ -382,12 +375,12 @@
             // panel10
             // 
             panel10.Controls.Add(btnRegisterProfessor);
-            panel10.Location = new Point(3, 367);
+            panel10.Location = new Point(3, 319);
             panel10.Name = "panel10";
             panel10.Size = new Size(256, 48);
             panel10.TabIndex = 1;
             // 
-            // btnRegisterProf
+            // btnRegisterProfessor
             // 
             btnRegisterProfessor.BackgroundImageLayout = ImageLayout.None;
             btnRegisterProfessor.Cursor = Cursors.Hand;
@@ -399,7 +392,7 @@
             btnRegisterProfessor.ForeColor = Color.FromArgb(179, 255, 255, 255);
             btnRegisterProfessor.ImageAlign = ContentAlignment.MiddleLeft;
             btnRegisterProfessor.Location = new Point(0, -3);
-            btnRegisterProfessor.Name = "btnRegisterProf";
+            btnRegisterProfessor.Name = "btnRegisterProfessor";
             btnRegisterProfessor.Padding = new Padding(16, 0, 0, 0);
             btnRegisterProfessor.Size = new Size(253, 48);
             btnRegisterProfessor.TabIndex = 8;
@@ -411,7 +404,7 @@
             // panel14
             // 
             panel14.Controls.Add(btnViewAllUsers);
-            panel14.Location = new Point(3, 421);
+            panel14.Location = new Point(3, 373);
             panel14.Name = "panel14";
             panel14.Size = new Size(256, 48);
             panel14.TabIndex = 2;
@@ -440,7 +433,7 @@
             // panel9
             // 
             panel9.Controls.Add(btnSubjectOffering);
-            panel9.Location = new Point(0, 472);
+            panel9.Location = new Point(0, 424);
             panel9.Margin = new Padding(0);
             panel9.Name = "panel9";
             panel9.Size = new Size(256, 48);
@@ -471,7 +464,7 @@
             // panel11
             // 
             panel11.Controls.Add(btnLMS);
-            panel11.Location = new Point(0, 520);
+            panel11.Location = new Point(0, 472);
             panel11.Margin = new Padding(0);
             panel11.Name = "panel11";
             panel11.Size = new Size(256, 48);
@@ -502,7 +495,7 @@
             // pnllmsSubmenu
             // 
             pnllmsSubmenu.BackColor = Color.FromArgb(128, 109, 0, 0);
-            pnllmsSubmenu.Location = new Point(0, 568);
+            pnllmsSubmenu.Location = new Point(0, 520);
             pnllmsSubmenu.Margin = new Padding(0);
             pnllmsSubmenu.Name = "pnllmsSubmenu";
             pnllmsSubmenu.Size = new Size(256, 100);
@@ -625,7 +618,7 @@
             pnlEnrollContent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pnlEnrollContent.AutoScroll = true;
             pnlEnrollContent.BackColor = Color.Aqua;
-            pnlEnrollContent.Location = new Point(361, 142);
+            pnlEnrollContent.Location = new Point(262, 530);
             pnlEnrollContent.Margin = new Padding(0);
             pnlEnrollContent.Name = "pnlEnrollContent";
             pnlEnrollContent.Size = new Size(1272, 989);
@@ -635,13 +628,13 @@
             // panel3
             // 
             panel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panel3.Controls.Add(pnlViewAllUsersContent);
+            panel3.Controls.Add(pnlEnrollContent);
             panel3.Controls.Add(pnlRegisterProfessorContent);
             panel3.Controls.Add(pnlRegisterStudentContent);
             panel3.Controls.Add(pnlEnrolledStudentsContent);
             panel3.Controls.Add(pnlAccountingRecordsContent);
             panel3.Controls.Add(pnlGradesManagementContent);
-            panel3.Controls.Add(pnlViewAllUsersContent);
-            panel3.Controls.Add(pnlEnrollContent);
             panel3.Controls.Add(pnlDashboardContent);
             panel3.Controls.Add(pnlHeader);
             panel3.Controls.Add(pnlSidebar);
@@ -652,6 +645,189 @@
             panel3.Size = new Size(1528, 1061);
             panel3.TabIndex = 0;
             // 
+            // pnlViewAllUsersContent
+            // 
+            pnlViewAllUsersContent.BackColor = SystemColors.ButtonFace;
+            pnlViewAllUsersContent.Controls.Add(pnlViewSPsContent);
+            pnlViewAllUsersContent.Controls.Add(pictureBox3);
+            pnlViewAllUsersContent.Controls.Add(lblViewDesc);
+            pnlViewAllUsersContent.Controls.Add(lblViewAllUsers);
+            pnlViewAllUsersContent.Location = new Point(256, 72);
+            pnlViewAllUsersContent.Name = "pnlViewAllUsersContent";
+            pnlViewAllUsersContent.Size = new Size(1272, 989);
+            pnlViewAllUsersContent.TabIndex = 7;
+            pnlViewAllUsersContent.Visible = false;
+            // 
+            // pnlViewSPsContent
+            // 
+            pnlViewSPsContent.AutoScroll = true;
+            pnlViewSPsContent.BackColor = Color.White;
+            pnlViewSPsContent.BackgroundImageLayout = ImageLayout.Center;
+            pnlViewSPsContent.BorderStyle = BorderStyle.FixedSingle;
+            pnlViewSPsContent.Controls.Add(dgvUsers);
+            pnlViewSPsContent.Controls.Add(panel8);
+            pnlViewSPsContent.Controls.Add(btnViewProf);
+            pnlViewSPsContent.Controls.Add(pnlUserTypeIndicator);
+            pnlViewSPsContent.Controls.Add(btnViewStudents);
+            pnlViewSPsContent.Location = new Point(32, 137);
+            pnlViewSPsContent.Name = "pnlViewSPsContent";
+            pnlViewSPsContent.Size = new Size(1215, 583);
+            pnlViewSPsContent.TabIndex = 5;
+            // 
+            // dgvUsers
+            // 
+            dgvUsers.AllowUserToAddRows = false;
+            dgvUsers.AllowUserToDeleteRows = false;
+            dgvUsers.AllowUserToResizeColumns = false;
+            dgvUsers.AllowUserToResizeRows = false;
+            dgvUsers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvUsers.BackgroundColor = Color.White;
+            dgvUsers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvUsers.Location = new Point(35, 149);
+            dgvUsers.Name = "dgvUsers";
+            dgvUsers.ReadOnly = true;
+            dgvUsers.RowHeadersVisible = false;
+            dgvUsers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvUsers.Size = new Size(1143, 403);
+            dgvUsers.TabIndex = 15;
+            // 
+            // panel8
+            // 
+            panel8.BackColor = SystemColors.ControlLight;
+            panel8.Controls.Add(comboBox1);
+            panel8.Controls.Add(btnSearch);
+            panel8.Controls.Add(cmbYear);
+            panel8.Controls.Add(txtSearchViewAUs);
+            panel8.Location = new Point(35, 90);
+            panel8.Name = "panel8";
+            panel8.Size = new Size(1143, 47);
+            panel8.TabIndex = 14;
+            // 
+            // comboBox1
+            // 
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Items.AddRange(new object[] { "All", "BSIT", "BSHM", "BSED-M", "BSED-E", "BSCpE" });
+            comboBox1.Location = new Point(77, 15);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(73, 23);
+            comboBox1.TabIndex = 14;
+            comboBox1.Text = "Program";
+            // 
+            // btnSearch
+            // 
+            btnSearch.BackColor = Color.Maroon;
+            btnSearch.FlatAppearance.BorderSize = 0;
+            btnSearch.FlatStyle = FlatStyle.Flat;
+            btnSearch.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSearch.ForeColor = SystemColors.ControlLightLight;
+            btnSearch.Location = new Point(1047, 8);
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new Size(82, 32);
+            btnSearch.TabIndex = 13;
+            btnSearch.Text = "Search";
+            btnSearch.UseVisualStyleBackColor = false;
+            btnSearch.Click += btnSearch_Click;
+            // 
+            // cmbYear
+            // 
+            cmbYear.FormattingEnabled = true;
+            cmbYear.Items.AddRange(new object[] { "All", "1st Year", "2nd Year", "3rd Year", "4th Year" });
+            cmbYear.Location = new Point(12, 15);
+            cmbYear.Name = "cmbYear";
+            cmbYear.Size = new Size(59, 23);
+            cmbYear.TabIndex = 13;
+            cmbYear.Text = "Year";
+            // 
+            // txtSearchViewAUs
+            // 
+            txtSearchViewAUs.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtSearchViewAUs.Location = new Point(156, 13);
+            txtSearchViewAUs.Name = "txtSearchViewAUs";
+            txtSearchViewAUs.Size = new Size(885, 25);
+            txtSearchViewAUs.TabIndex = 12;
+            // 
+            // btnViewProf
+            // 
+            btnViewProf.BackColor = Color.Transparent;
+            btnViewProf.BackgroundImageLayout = ImageLayout.None;
+            btnViewProf.Cursor = Cursors.Hand;
+            btnViewProf.FlatAppearance.BorderSize = 0;
+            btnViewProf.FlatStyle = FlatStyle.Flat;
+            btnViewProf.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnViewProf.Image = (Image)resources.GetObject("btnViewProf.Image");
+            btnViewProf.Location = new Point(288, 31);
+            btnViewProf.Name = "btnViewProf";
+            btnViewProf.Size = new Size(247, 36);
+            btnViewProf.TabIndex = 11;
+            btnViewProf.Text = "Professors";
+            btnViewProf.UseVisualStyleBackColor = false;
+            btnViewProf.Click += btnViewProf_Click;
+            // 
+            // pnlUserTypeIndicator
+            // 
+            pnlUserTypeIndicator.BackColor = Color.Maroon;
+            pnlUserTypeIndicator.Location = new Point(35, 70);
+            pnlUserTypeIndicator.Margin = new Padding(0);
+            pnlUserTypeIndicator.Name = "pnlUserTypeIndicator";
+            pnlUserTypeIndicator.Size = new Size(247, 4);
+            pnlUserTypeIndicator.TabIndex = 8;
+            pnlUserTypeIndicator.Visible = false;
+            // 
+            // btnViewStudents
+            // 
+            btnViewStudents.BackColor = Color.Transparent;
+            btnViewStudents.BackgroundImageLayout = ImageLayout.None;
+            btnViewStudents.Cursor = Cursors.Hand;
+            btnViewStudents.FlatAppearance.BorderSize = 0;
+            btnViewStudents.FlatStyle = FlatStyle.Flat;
+            btnViewStudents.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnViewStudents.Image = (Image)resources.GetObject("btnViewStudents.Image");
+            btnViewStudents.Location = new Point(35, 31);
+            btnViewStudents.Name = "btnViewStudents";
+            btnViewStudents.Size = new Size(247, 36);
+            btnViewStudents.TabIndex = 9;
+            btnViewStudents.Text = "Students";
+            btnViewStudents.TextAlign = ContentAlignment.MiddleRight;
+            btnViewStudents.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnViewStudents.UseVisualStyleBackColor = false;
+            btnViewStudents.Click += btnViewStudents_Click;
+            // 
+            // pictureBox3
+            // 
+            pictureBox3.BackColor = Color.Maroon;
+            pictureBox3.BackgroundImageLayout = ImageLayout.Zoom;
+            pictureBox3.BorderStyle = BorderStyle.FixedSingle;
+            pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
+            pictureBox3.Location = new Point(32, 25);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(85, 73);
+            pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox3.TabIndex = 4;
+            pictureBox3.TabStop = false;
+            // 
+            // lblViewDesc
+            // 
+            lblViewDesc.AutoSize = true;
+            lblViewDesc.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            lblViewDesc.ForeColor = Color.DimGray;
+            lblViewDesc.Location = new Point(122, 79);
+            lblViewDesc.Name = "lblViewDesc";
+            lblViewDesc.Size = new Size(211, 19);
+            lblViewDesc.TabIndex = 3;
+            lblViewDesc.Text = "Manage students and professors";
+            lblViewDesc.Click += lblViewDesc_Click;
+            // 
+            // lblViewAllUsers
+            // 
+            lblViewAllUsers.AutoSize = true;
+            lblViewAllUsers.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblViewAllUsers.ForeColor = Color.Black;
+            lblViewAllUsers.Location = new Point(122, 39);
+            lblViewAllUsers.Name = "lblViewAllUsers";
+            lblViewAllUsers.Size = new Size(210, 40);
+            lblViewAllUsers.TabIndex = 1;
+            lblViewAllUsers.Text = "View All Users";
+            // 
             // pnlRegisterProfessorContent
             // 
             pnlRegisterProfessorContent.BackColor = SystemColors.ActiveCaption;
@@ -661,11 +837,11 @@
             pnlRegisterProfessorContent.TabIndex = 8;
             pnlRegisterProfessorContent.Visible = false;
             // 
-            // pnlRegisterStudents
+            // pnlRegisterStudentContent
             // 
             pnlRegisterStudentContent.BackColor = Color.MediumOrchid;
             pnlRegisterStudentContent.Location = new Point(1149, 88);
-            pnlRegisterStudentContent.Name = "pnlRegisterStudents";
+            pnlRegisterStudentContent.Name = "pnlRegisterStudentContent";
             pnlRegisterStudentContent.Size = new Size(200, 100);
             pnlRegisterStudentContent.TabIndex = 8;
             pnlRegisterStudentContent.Visible = false;
@@ -696,15 +872,6 @@
             pnlGradesManagementContent.Size = new Size(200, 100);
             pnlGradesManagementContent.TabIndex = 8;
             pnlGradesManagementContent.Visible = false;
-            // 
-            // pnlViewAllUsersContent
-            // 
-            pnlViewAllUsersContent.BackColor = Color.MistyRose;
-            pnlViewAllUsersContent.Location = new Point(299, 97);
-            pnlViewAllUsersContent.Name = "pnlViewAllUsersContent";
-            pnlViewAllUsersContent.Size = new Size(200, 100);
-            pnlViewAllUsersContent.TabIndex = 7;
-            pnlViewAllUsersContent.Visible = false;
             // 
             // pnlDashboardContent
             // 
@@ -804,7 +971,6 @@
             pnlSidebar.ResumeLayout(false);
             flowLayoutPanel1.ResumeLayout(false);
             panel7.ResumeLayout(false);
-            panel8.ResumeLayout(false);
             pnlRegistrarFunctions.ResumeLayout(false);
             pnlRegistrarSubmenu.ResumeLayout(false);
             pnlGradesManagement.ResumeLayout(false);
@@ -823,6 +989,13 @@
             panel12.ResumeLayout(false);
             panel13.ResumeLayout(false);
             panel3.ResumeLayout(false);
+            pnlViewAllUsersContent.ResumeLayout(false);
+            pnlViewAllUsersContent.PerformLayout();
+            pnlViewSPsContent.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvUsers).EndInit();
+            panel8.ResumeLayout(false);
+            panel8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             pnlHeader.ResumeLayout(false);
             panel15.ResumeLayout(false);
             panel15.PerformLayout();
@@ -844,8 +1017,6 @@
         private FlowLayoutPanel flowLayoutPanel1;
         private Panel panel7;
         private Button btnDashboard;
-        private Panel panel8;
-        private Button btnEnrollments;
         private Panel panel11;
         private Button btnLMS;
         private Panel panel12;
@@ -886,5 +1057,19 @@
         private Panel pnlAccountingRecordsContent;
         private Panel pnlGradesManagementContent;
         private Panel pnlViewAllUsersContent;
+        private Label lblViewAllUsers;
+        private Label lblViewDesc;
+        private PictureBox pictureBox3;
+        private Panel pnlViewSPsContent;
+        private Panel pnlUserTypeIndicator;
+        private Button btnViewStudents;
+        private Panel panel1;
+        private Button btnViewProf;
+        private Panel panel8;
+        private ComboBox comboBox1;
+        private ComboBox cmbYear;
+        private TextBox txtSearchViewAUs;
+        private Button btnSearch;
+        private DataGridView dgvUsers;
     }
 }
