@@ -52,7 +52,7 @@ namespace PUPAcadPortal
             contents.Add(btnDashboard, pnlDashboardContent);
             contents.Add(btnEnrollment, pnlEnrollContent);
             contents.Add(btnCourses, pnlCoursesContent);
-            contents.Add(btnAccounts, pnlAccountsContent);
+            contents.Add(btnAccounts, pnlAccountsContentHolder);
             //Kada button na aadd, maglagay ng panel sa form at lagay dito
             foreach (KeyValuePair<Button, Panel> content in contents)
             {
@@ -132,50 +132,20 @@ namespace PUPAcadPortal
         private void FitContentPanel(Panel panel)
         {
             panel.Width = this.ClientSize.Width - pnlSidebar.Width;
+            panel.Height = this.ClientSize.Height - pnlHeader.Height;
             panel.Location = new Point(pnlSidebar.Width, pnlHeader.Height);
+
         }
 
-        private void SetupDataGridViewDefaults(DataGridView dgv)
-        {
-            dgv.EnableHeadersVisualStyles = false;
-            dgv.RowHeadersVisible = false;
-            dgv.AllowUserToAddRows = false;
-            dgv.AllowUserToDeleteRows = false;
-            dgv.AllowUserToResizeRows = false;
-            dgv.AllowUserToResizeColumns = false;
-            dgv.BorderStyle = BorderStyle.None;
-            dgv.DefaultCellStyle.SelectionBackColor = Color.White;
-            dgv.DefaultCellStyle.SelectionForeColor = Color.Black;
-        }
+
+
         // Enrollment
 
         private void Enrollment_Initialize()
         {
-            Enrollment_SetupGrid();
+
             Enrollment_LoadData();
-            Enrollment_SetupLayout();
             Enrollment_UpdateTotalUnits();
-        }
-
-        private void Enrollment_SetupGrid()
-        {
-            SetupDataGridViewDefaults(dgvEnrollment);
-            // Only grid styling here
-            dgvEnrollment.ColumnHeadersDefaultCellStyle.BackColor = Color.Maroon;
-            dgvEnrollment.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            dgvEnrollment.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dgvEnrollment.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
-            dgvEnrollment.Height = EnrollmentGridHeight;
-
-            // Column alignment
-            dgvEnrollment.Columns["colUnits"].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgvEnrollment.Columns["colSelect"].Width = 40;
-            dgvEnrollment.Columns["colAction"].Width = 80;
-            dgvEnrollment.Columns["colTitle"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvEnrollment.Columns["colSchedule"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvEnrollment.Columns["colCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvEnrollment.Columns["colUnits"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvEnrollment.Columns["colStatus"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
         private void Enrollment_LoadData()
@@ -193,38 +163,6 @@ namespace PUPAcadPortal
                 row.Cells["colAction"].Value = "More";
             }
             dgvEnrollment.Columns["colAction"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        }
-
-        private void Enrollment_SetupLayout()
-        {
-            // Only layout/positioning here
-            StudentPortal_EnrollmentResize(null, null);
-        }
-
-        private void Enrollment_PositionCards()
-        {
-            int contentWidth = pnlEnrollContent.Width;
-            int cardWidth = (contentWidth - (SidePadding * 2) - (CardGap * 2)) / 3;
-
-            // Widths
-            pnlEnrollLeftCard.Width = cardWidth;
-            pnlEnrollMiddleCard.Width = cardWidth;
-            pnlEnrollRightCard.Width = cardWidth;
-
-            // Horizontal positions
-            pnlEnrollLeftCard.Left = SidePadding;
-            pnlEnrollMiddleCard.Left = SidePadding + cardWidth + CardGap;
-            pnlEnrollRightCard.Left = SidePadding + (cardWidth * 2) + (CardGap * 2);
-
-            // Vertical positions
-            btnEnrollSelectAll.Location = new Point(SidePadding, dgvEnrollment.Bottom + CardGap);
-            int cardsY = btnEnrollSelectAll.Bottom + CardGap;
-            pnlEnrollLeftCard.Top = cardsY;
-            pnlEnrollMiddleCard.Top = cardsY;
-            pnlEnrollRightCard.Top = cardsY;
-
-            // Fit content height
-            pnlEnrollContent.Height = cardsY + pnlEnrollLeftCard.Height + SidePadding;
         }
 
         private void Enrollment_UpdateTotalUnits()
@@ -249,19 +187,18 @@ namespace PUPAcadPortal
 
         private void StudentPortal_EnrollmentResize(object sender, EventArgs e)
         {
-            if (!IsHandleCreated) return; // ← fixes null reference bug
+            if (!IsHandleCreated) return;
 
-            FitContentPanel(pnlEnrollContent);
-            dgvEnrollment.Width = pnlEnrollContent.Width - (SidePadding * 2);
-            Enrollment_PositionCards();
+            int contentWidth = pnlEnrollContent.Width;
+            int cardWidth = (contentWidth - (SidePadding * 2) - (CardGap * 2)) / 3;
 
-            if (pnlViewDetails.Visible)
-            {
-                pnlViewDetails.Location = new Point(
-                    (this.ClientSize.Width - pnlViewDetails.Width) / 2,
-                    (this.ClientSize.Height - pnlViewDetails.Height) / 2
-                );
-            }
+            pnlEnrollLeftCard.Width = cardWidth;
+            pnlEnrollMiddleCard.Width = cardWidth;
+            pnlEnrollRightCard.Width = cardWidth;
+
+            pnlEnrollLeftCard.Left = SidePadding;
+            pnlEnrollMiddleCard.Left = SidePadding + cardWidth + CardGap;
+            pnlEnrollRightCard.Left = SidePadding + (cardWidth * 2) + (CardGap * 2);
         }
 
         private void dgvEnrollment_SelectionChanged(object sender, EventArgs e)
@@ -389,42 +326,16 @@ namespace PUPAcadPortal
         {
             Enrollment_HideOverlay();
         }
-        
+
 
         // ── ACCOUNTS ──
 
         private void Accounts_Initialize()
         {
-            Accounts_SetupGrid();
+            pnlAccountsContent.Visible = true;
             Accounts_LoadData();
-            Accounts_SetupLayout();
         }
 
-        private void Accounts_SetupGrid()
-        {
-            dgvAccounts.CellFormatting += dgvAccounts_CellFormatting;
-            SetupDataGridViewDefaults(dgvAccounts);
-            dgvAccounts.BackgroundColor = Color.White;
-            dgvAccounts.GridColor = Color.FromArgb(220, 220, 220);
-            dgvAccounts.RowTemplate.Height = 50;
-            
-
-            dgvAccounts.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(245, 247, 250);
-            dgvAccounts.ColumnHeadersDefaultCellStyle.ForeColor = Color.FromArgb(60, 60, 60);
-            dgvAccounts.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            dgvAccounts.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-
-            dgvAccounts.DefaultCellStyle.Font = new Font("Segoe UI", 9F);
-            dgvAccounts.DefaultCellStyle.Padding = new Padding(5, 10, 5, 10);
-
-            dgvAccounts.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
-            dgvAccounts.Columns["colAccountsRefID"].Width = 120;
-            dgvAccounts.Columns["colAccountsDescription"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvAccounts.Columns["colAccountsAmount"].Width = 100;
-            dgvAccounts.Columns["colAccountsDueDate"].Width = 120;
-            dgvAccounts.Columns["colAccountsStatus"].Width = 100;
-            dgvAccounts.Columns["colAccountsPaidDate"].Width = 120;
-        }
 
         private void Accounts_LoadData()
         {
@@ -437,20 +348,12 @@ namespace PUPAcadPortal
             dgvAccounts.Rows.Add("LB-001", "Library Fee", "₱100", "Mar 15, 2026", "Paid", "Mar 1, 2026");
         }
 
-        private void Accounts_SetupLayout()
-        {
-            // Only layout here
-            btnAccountsDownloadStatement.Image = new Bitmap(
-                btnAccountsDownloadStatement.Image, new Size(20, 20));
-            StudentPortal_AccountsResize(null, null);
-        }
-
         private void StudentPortal_AccountsResize(object sender, EventArgs e)
         {
 
             if (!IsHandleCreated) return; // ← fixes null reference bug
 
-            FitContentPanel(pnlAccountsContent);
+            FitContentPanel(pnlAccountsContentHolder);
 
             int contentWidth = pnlAccountsContent.Width - (SidePadding * 2);
             int cardWidth = (contentWidth - (CardGap * 2)) / 3;
@@ -468,45 +371,6 @@ namespace PUPAcadPortal
             panel1.Left = SidePadding;
             panel21.Left = SidePadding + cardWidth + CardGap;
             panel20.Left = SidePadding + (cardWidth * 2) + (CardGap * 2);
-        }
-
-        private void dgvAccounts_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            // Amount column
-            if (e.ColumnIndex == dgvAccounts.Columns["colAccountsAmount"].Index && e.Value != null)
-            {
-                if (e.Value.ToString() == "FREE")
-                {
-                    e.CellStyle.ForeColor = Color.Green;
-                    e.CellStyle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-                }
-                else
-                {
-                    e.CellStyle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-                }
-            }
-
-            // Status column
-            if (e.ColumnIndex == dgvAccounts.Columns["colAccountsStatus"].Index && e.Value != null)
-            {
-                switch (e.Value.ToString())
-                {
-                    case "Paid":
-                        e.CellStyle.ForeColor = Color.Green;
-                        e.CellStyle.BackColor = Color.FromArgb(220, 255, 220);
-                        break;
-                    case "Pending":
-                        e.CellStyle.ForeColor = Color.FromArgb(180, 120, 0);
-                        e.CellStyle.BackColor = Color.FromArgb(255, 243, 200);
-                        break;
-                }
-            }
-
-            // Reference ID - gray
-            if (e.ColumnIndex == dgvAccounts.Columns["colAccountsRefID"].Index)
-            {
-                e.CellStyle.ForeColor = Color.Gray;
-            }
         }
     }
 }
