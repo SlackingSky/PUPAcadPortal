@@ -57,6 +57,69 @@
             btnLogout = new Button();
             pnlYellow = new Panel();
             panel3 = new Panel();
+            panel32 = new Panel();
+            panel37 = new Panel();
+            label30 = new Label();
+            label31 = new Label();
+            panel38 = new Panel();
+            panel35 = new Panel();
+            label28 = new Label();
+            label29 = new Label();
+            panel36 = new Panel();
+            panel33 = new Panel();
+            label27 = new Label();
+            label26 = new Label();
+            panel34 = new Panel();
+            label18 = new Label();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            panel17 = new Panel();
+            tableLayoutPanel2 = new TableLayoutPanel();
+            panel21 = new Panel();
+            label17 = new Label();
+            pictureBox10 = new PictureBox();
+            panel20 = new Panel();
+            label16 = new Label();
+            pictureBox9 = new PictureBox();
+            panel19 = new Panel();
+            label15 = new Label();
+            pictureBox8 = new PictureBox();
+            panel18 = new Panel();
+            label14 = new Label();
+            pictureBox7 = new PictureBox();
+            label13 = new Label();
+            panel22 = new Panel();
+            panel29 = new Panel();
+            label24 = new Label();
+            label25 = new Label();
+            panel30 = new Panel();
+            panel31 = new Panel();
+            panel26 = new Panel();
+            label22 = new Label();
+            label23 = new Label();
+            panel27 = new Panel();
+            panel28 = new Panel();
+            panel23 = new Panel();
+            label21 = new Label();
+            label20 = new Label();
+            panel24 = new Panel();
+            panel25 = new Panel();
+            label19 = new Label();
+            panel14 = new Panel();
+            label11 = new Label();
+            label12 = new Label();
+            pictureBox6 = new PictureBox();
+            panel10 = new Panel();
+            label9 = new Label();
+            label10 = new Label();
+            pictureBox5 = new PictureBox();
+            panel2 = new Panel();
+            label7 = new Label();
+            label8 = new Label();
+            pictureBox4 = new PictureBox();
+            panel1 = new Panel();
+            label6 = new Label();
+            label5 = new Label();
+            pictureBox3 = new PictureBox();
             pnlBanner = new Panel();
             lblWelcome = new Label();
             lblWelcomeSubtitle = new Label();
@@ -66,71 +129,8 @@
             label3 = new Label();
             label4 = new Label();
             pictureBox2 = new PictureBox();
-            panel1 = new Panel();
             pnlCoursesContent = new Panel();
             flowstats = new FlowLayoutPanel();
-            pictureBox3 = new PictureBox();
-            label5 = new Label();
-            label6 = new Label();
-            panel2 = new Panel();
-            label7 = new Label();
-            label8 = new Label();
-            pictureBox4 = new PictureBox();
-            panel10 = new Panel();
-            label9 = new Label();
-            label10 = new Label();
-            pictureBox5 = new PictureBox();
-            panel14 = new Panel();
-            label11 = new Label();
-            label12 = new Label();
-            pictureBox6 = new PictureBox();
-            tableLayoutPanel1 = new TableLayoutPanel();
-            label13 = new Label();
-            panel17 = new Panel();
-            tableLayoutPanel2 = new TableLayoutPanel();
-            panel18 = new Panel();
-            pictureBox7 = new PictureBox();
-            label14 = new Label();
-            panel19 = new Panel();
-            label15 = new Label();
-            pictureBox8 = new PictureBox();
-            panel20 = new Panel();
-            label16 = new Label();
-            pictureBox9 = new PictureBox();
-            panel21 = new Panel();
-            label17 = new Label();
-            pictureBox10 = new PictureBox();
-            panel22 = new Panel();
-            label19 = new Label();
-            panel23 = new Panel();
-            panel24 = new Panel();
-            panel25 = new Panel();
-            label20 = new Label();
-            label21 = new Label();
-            panel26 = new Panel();
-            label22 = new Label();
-            label23 = new Label();
-            panel27 = new Panel();
-            panel28 = new Panel();
-            panel29 = new Panel();
-            label24 = new Label();
-            label25 = new Label();
-            panel30 = new Panel();
-            panel31 = new Panel();
-            panel32 = new Panel();
-            label18 = new Label();
-            panel33 = new Panel();
-            panel34 = new Panel();
-            label26 = new Label();
-            label27 = new Label();
-            panel35 = new Panel();
-            label28 = new Label();
-            label29 = new Label();
-            panel36 = new Panel();
-            panel37 = new Panel();
-            label30 = new Label();
-            label31 = new Label();
-            panel38 = new Panel();
             pnlSidebar.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             panel7.SuspendLayout();
@@ -146,42 +146,42 @@
             panel12.SuspendLayout();
             panel13.SuspendLayout();
             panel3.SuspendLayout();
+            panel32.SuspendLayout();
+            panel37.SuspendLayout();
+            panel35.SuspendLayout();
+            panel33.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
+            panel17.SuspendLayout();
+            tableLayoutPanel2.SuspendLayout();
+            panel21.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox10).BeginInit();
+            panel20.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
+            panel19.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
+            panel18.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
+            panel22.SuspendLayout();
+            panel29.SuspendLayout();
+            panel30.SuspendLayout();
+            panel26.SuspendLayout();
+            panel27.SuspendLayout();
+            panel23.SuspendLayout();
+            panel24.SuspendLayout();
+            panel14.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
+            panel10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
+            panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
+            panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             pnlBanner.SuspendLayout();
             pnlHeader.SuspendLayout();
             panel15.SuspendLayout();
             panel16.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
-            panel1.SuspendLayout();
             pnlCoursesContent.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
-            panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
-            panel10.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
-            panel14.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
-            tableLayoutPanel1.SuspendLayout();
-            panel17.SuspendLayout();
-            tableLayoutPanel2.SuspendLayout();
-            panel18.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
-            panel19.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
-            panel20.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
-            panel21.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox10).BeginInit();
-            panel22.SuspendLayout();
-            panel23.SuspendLayout();
-            panel24.SuspendLayout();
-            panel26.SuspendLayout();
-            panel27.SuspendLayout();
-            panel29.SuspendLayout();
-            panel30.SuspendLayout();
-            panel32.SuspendLayout();
-            panel33.SuspendLayout();
-            panel35.SuspendLayout();
-            panel37.SuspendLayout();
             SuspendLayout();
             // 
             // pnlSidebar
@@ -549,6 +549,695 @@
             panel3.TabIndex = 0;
             panel3.Paint += panel3_Paint;
             // 
+            // panel32
+            // 
+            panel32.Controls.Add(panel37);
+            panel32.Controls.Add(panel35);
+            panel32.Controls.Add(panel33);
+            panel32.Controls.Add(label18);
+            panel32.Location = new Point(317, 717);
+            panel32.Name = "panel32";
+            panel32.Padding = new Padding(16);
+            panel32.Size = new Size(1044, 301);
+            panel32.TabIndex = 8;
+            // 
+            // panel37
+            // 
+            panel37.Controls.Add(label30);
+            panel37.Controls.Add(label31);
+            panel37.Controls.Add(panel38);
+            panel37.Location = new Point(15, 205);
+            panel37.Name = "panel37";
+            panel37.Size = new Size(1025, 60);
+            panel37.TabIndex = 3;
+            // 
+            // label30
+            // 
+            label30.AutoSize = true;
+            label30.Font = new Font("Calibri", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label30.ForeColor = SystemColors.ControlDarkDark;
+            label30.Location = new Point(23, 31);
+            label30.Name = "label30";
+            label30.Size = new Size(92, 15);
+            label30.TabIndex = 2;
+            label30.Text = "March 26. 2026";
+            // 
+            // label31
+            // 
+            label31.AutoSize = true;
+            label31.Location = new Point(17, 9);
+            label31.Name = "label31";
+            label31.Size = new Size(234, 23);
+            label31.TabIndex = 1;
+            label31.Text = "Enrollment Period Extended";
+            // 
+            // panel38
+            // 
+            panel38.BackColor = Color.Gold;
+            panel38.Dock = DockStyle.Left;
+            panel38.Location = new Point(0, 0);
+            panel38.Name = "panel38";
+            panel38.Size = new Size(4, 60);
+            panel38.TabIndex = 0;
+            // 
+            // panel35
+            // 
+            panel35.Controls.Add(label28);
+            panel35.Controls.Add(label29);
+            panel35.Controls.Add(panel36);
+            panel35.Location = new Point(16, 127);
+            panel35.Name = "panel35";
+            panel35.Size = new Size(1025, 60);
+            panel35.TabIndex = 2;
+            // 
+            // label28
+            // 
+            label28.AutoSize = true;
+            label28.Font = new Font("Calibri", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label28.ForeColor = SystemColors.ControlDarkDark;
+            label28.Location = new Point(23, 31);
+            label28.Name = "label28";
+            label28.Size = new Size(92, 15);
+            label28.TabIndex = 2;
+            label28.Text = "March 26. 2026";
+            // 
+            // label29
+            // 
+            label29.AutoSize = true;
+            label29.Location = new Point(17, 9);
+            label29.Name = "label29";
+            label29.Size = new Size(234, 23);
+            label29.TabIndex = 1;
+            label29.Text = "Enrollment Period Extended";
+            // 
+            // panel36
+            // 
+            panel36.BackColor = Color.Gold;
+            panel36.Dock = DockStyle.Left;
+            panel36.Location = new Point(0, 0);
+            panel36.Name = "panel36";
+            panel36.Size = new Size(4, 60);
+            panel36.TabIndex = 0;
+            // 
+            // panel33
+            // 
+            panel33.Controls.Add(label27);
+            panel33.Controls.Add(label26);
+            panel33.Controls.Add(panel34);
+            panel33.Location = new Point(16, 52);
+            panel33.Name = "panel33";
+            panel33.Size = new Size(1025, 60);
+            panel33.TabIndex = 1;
+            // 
+            // label27
+            // 
+            label27.AutoSize = true;
+            label27.Font = new Font("Calibri", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label27.ForeColor = SystemColors.ControlDarkDark;
+            label27.Location = new Point(23, 31);
+            label27.Name = "label27";
+            label27.Size = new Size(92, 15);
+            label27.TabIndex = 2;
+            label27.Text = "March 26. 2026";
+            // 
+            // label26
+            // 
+            label26.AutoSize = true;
+            label26.Location = new Point(17, 9);
+            label26.Name = "label26";
+            label26.Size = new Size(234, 23);
+            label26.TabIndex = 1;
+            label26.Text = "Enrollment Period Extended";
+            // 
+            // panel34
+            // 
+            panel34.BackColor = Color.Gold;
+            panel34.Dock = DockStyle.Left;
+            panel34.Location = new Point(0, 0);
+            panel34.Name = "panel34";
+            panel34.Size = new Size(4, 60);
+            panel34.TabIndex = 0;
+            // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            label18.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label18.ForeColor = Color.Maroon;
+            label18.Location = new Point(10, 14);
+            label18.Name = "label18";
+            label18.Size = new Size(131, 23);
+            label18.TabIndex = 0;
+            label18.Text = "Announcement";
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.ColumnCount = 2;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 70F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
+            tableLayoutPanel1.Controls.Add(panel17, 0, 0);
+            tableLayoutPanel1.Controls.Add(panel22, 1, 0);
+            tableLayoutPanel1.Location = new Point(315, 376);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 1;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Size = new Size(1046, 323);
+            tableLayoutPanel1.TabIndex = 7;
+            // 
+            // panel17
+            // 
+            panel17.Controls.Add(tableLayoutPanel2);
+            panel17.Controls.Add(label13);
+            panel17.Dock = DockStyle.Fill;
+            panel17.Font = new Font("Arial Narrow", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            panel17.Location = new Point(3, 3);
+            panel17.Name = "panel17";
+            panel17.Size = new Size(726, 317);
+            panel17.TabIndex = 0;
+            panel17.Paint += panel17_Paint;
+            // 
+            // tableLayoutPanel2
+            // 
+            tableLayoutPanel2.ColumnCount = 2;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.Controls.Add(panel21, 1, 1);
+            tableLayoutPanel2.Controls.Add(panel20, 0, 1);
+            tableLayoutPanel2.Controls.Add(panel19, 1, 0);
+            tableLayoutPanel2.Controls.Add(panel18, 0, 0);
+            tableLayoutPanel2.Location = new Point(8, 55);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 2;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.Size = new Size(703, 197);
+            tableLayoutPanel2.TabIndex = 1;
+            // 
+            // panel21
+            // 
+            panel21.BackColor = SystemColors.ControlLight;
+            panel21.Controls.Add(label17);
+            panel21.Controls.Add(pictureBox10);
+            panel21.Dock = DockStyle.Fill;
+            panel21.Location = new Point(357, 104);
+            panel21.Margin = new Padding(6);
+            panel21.Name = "panel21";
+            panel21.Padding = new Padding(12);
+            panel21.Size = new Size(340, 87);
+            panel21.TabIndex = 3;
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Font = new Font("Arial Rounded MT Bold", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label17.Location = new Point(83, 31);
+            label17.Name = "label17";
+            label17.Size = new Size(94, 17);
+            label17.TabIndex = 1;
+            label17.Text = "Student List";
+            // 
+            // pictureBox10
+            // 
+            pictureBox10.BackColor = Color.Maroon;
+            pictureBox10.Image = Properties.Resources.Screenshot_2026_03_25_202219;
+            pictureBox10.Location = new Point(15, 19);
+            pictureBox10.Name = "pictureBox10";
+            pictureBox10.Size = new Size(50, 42);
+            pictureBox10.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox10.TabIndex = 0;
+            pictureBox10.TabStop = false;
+            // 
+            // panel20
+            // 
+            panel20.BackColor = SystemColors.ControlLight;
+            panel20.Controls.Add(label16);
+            panel20.Controls.Add(pictureBox9);
+            panel20.Dock = DockStyle.Fill;
+            panel20.Location = new Point(6, 104);
+            panel20.Margin = new Padding(6);
+            panel20.Name = "panel20";
+            panel20.Padding = new Padding(12);
+            panel20.Size = new Size(339, 87);
+            panel20.TabIndex = 2;
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Font = new Font("Arial Rounded MT Bold", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label16.Location = new Point(71, 31);
+            label16.Name = "label16";
+            label16.Size = new Size(124, 17);
+            label16.TabIndex = 1;
+            label16.Text = "Course Material";
+            label16.Click += label16_Click;
+            // 
+            // pictureBox9
+            // 
+            pictureBox9.BackColor = Color.Maroon;
+            pictureBox9.Image = Properties.Resources.Screenshot_2026_03_25_202106;
+            pictureBox9.Location = new Point(15, 19);
+            pictureBox9.Name = "pictureBox9";
+            pictureBox9.Size = new Size(50, 42);
+            pictureBox9.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox9.TabIndex = 0;
+            pictureBox9.TabStop = false;
+            // 
+            // panel19
+            // 
+            panel19.BackColor = SystemColors.ControlLight;
+            panel19.Controls.Add(label15);
+            panel19.Controls.Add(pictureBox8);
+            panel19.Dock = DockStyle.Fill;
+            panel19.Location = new Point(357, 6);
+            panel19.Margin = new Padding(6);
+            panel19.Name = "panel19";
+            panel19.Padding = new Padding(12);
+            panel19.Size = new Size(340, 86);
+            panel19.TabIndex = 1;
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Font = new Font("Arial Rounded MT Bold", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label15.Location = new Point(83, 26);
+            label15.Name = "label15";
+            label15.Size = new Size(120, 17);
+            label15.TabIndex = 1;
+            label15.Text = "Class Schedule";
+            // 
+            // pictureBox8
+            // 
+            pictureBox8.BackColor = Color.Maroon;
+            pictureBox8.Image = Properties.Resources.Screenshot_2026_03_25_202152;
+            pictureBox8.Location = new Point(15, 19);
+            pictureBox8.Name = "pictureBox8";
+            pictureBox8.Size = new Size(50, 42);
+            pictureBox8.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox8.TabIndex = 0;
+            pictureBox8.TabStop = false;
+            // 
+            // panel18
+            // 
+            panel18.BackColor = SystemColors.ControlLight;
+            panel18.Controls.Add(label14);
+            panel18.Controls.Add(pictureBox7);
+            panel18.Dock = DockStyle.Fill;
+            panel18.Location = new Point(6, 6);
+            panel18.Margin = new Padding(6);
+            panel18.Name = "panel18";
+            panel18.Padding = new Padding(12);
+            panel18.Size = new Size(339, 86);
+            panel18.TabIndex = 0;
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Font = new Font("Arial Rounded MT Bold", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label14.Location = new Point(71, 26);
+            label14.Name = "label14";
+            label14.Size = new Size(141, 17);
+            label14.TabIndex = 1;
+            label14.Text = "Grade Submission";
+            label14.Click += label14_Click;
+            // 
+            // pictureBox7
+            // 
+            pictureBox7.BackColor = Color.Maroon;
+            pictureBox7.Image = Properties.Resources.Screenshot_2026_03_25_201838;
+            pictureBox7.Location = new Point(15, 19);
+            pictureBox7.Name = "pictureBox7";
+            pictureBox7.Size = new Size(50, 42);
+            pictureBox7.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox7.TabIndex = 0;
+            pictureBox7.TabStop = false;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.BackColor = Color.Transparent;
+            label13.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label13.ForeColor = Color.Maroon;
+            label13.Location = new Point(8, 14);
+            label13.Name = "label13";
+            label13.Size = new Size(130, 25);
+            label13.TabIndex = 0;
+            label13.Text = "Quick Actions";
+            label13.Click += label13_Click_1;
+            // 
+            // panel22
+            // 
+            panel22.Controls.Add(panel29);
+            panel22.Controls.Add(panel26);
+            panel22.Controls.Add(panel23);
+            panel22.Controls.Add(label19);
+            panel22.Dock = DockStyle.Fill;
+            panel22.Location = new Point(735, 3);
+            panel22.Name = "panel22";
+            panel22.Size = new Size(308, 317);
+            panel22.TabIndex = 1;
+            // 
+            // panel29
+            // 
+            panel29.Controls.Add(label24);
+            panel29.Controls.Add(label25);
+            panel29.Controls.Add(panel30);
+            panel29.Location = new Point(21, 196);
+            panel29.Name = "panel29";
+            panel29.Size = new Size(250, 50);
+            panel29.TabIndex = 3;
+            // 
+            // label24
+            // 
+            label24.AutoSize = true;
+            label24.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label24.Location = new Point(55, 28);
+            label24.Name = "label24";
+            label24.Size = new Size(62, 17);
+            label24.TabIndex = 2;
+            label24.Text = "11:59 pm";
+            // 
+            // label25
+            // 
+            label25.AutoSize = true;
+            label25.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label25.Location = new Point(46, 8);
+            label25.Name = "label25";
+            label25.Size = new Size(162, 20);
+            label25.TabIndex = 1;
+            label25.Text = "Add/Drop Period Ends";
+            // 
+            // panel30
+            // 
+            panel30.BackColor = Color.Maroon;
+            panel30.Controls.Add(panel31);
+            panel30.Dock = DockStyle.Left;
+            panel30.Location = new Point(0, 0);
+            panel30.Name = "panel30";
+            panel30.Size = new Size(40, 50);
+            panel30.TabIndex = 0;
+            // 
+            // panel31
+            // 
+            panel31.Location = new Point(1, -1);
+            panel31.Name = "panel31";
+            panel31.Size = new Size(250, 125);
+            panel31.TabIndex = 0;
+            // 
+            // panel26
+            // 
+            panel26.Controls.Add(label22);
+            panel26.Controls.Add(label23);
+            panel26.Controls.Add(panel27);
+            panel26.Location = new Point(20, 128);
+            panel26.Name = "panel26";
+            panel26.Size = new Size(250, 50);
+            panel26.TabIndex = 2;
+            // 
+            // label22
+            // 
+            label22.AutoSize = true;
+            label22.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label22.Location = new Point(55, 28);
+            label22.Name = "label22";
+            label22.Size = new Size(56, 17);
+            label22.TabIndex = 2;
+            label22.Text = "8:00 AM";
+            // 
+            // label23
+            // 
+            label23.AutoSize = true;
+            label23.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label23.Location = new Point(46, 8);
+            label23.Name = "label23";
+            label23.Size = new Size(99, 20);
+            label23.TabIndex = 1;
+            label23.Text = "Classes Begin";
+            // 
+            // panel27
+            // 
+            panel27.BackColor = Color.Maroon;
+            panel27.Controls.Add(panel28);
+            panel27.Dock = DockStyle.Left;
+            panel27.Location = new Point(0, 0);
+            panel27.Name = "panel27";
+            panel27.Size = new Size(40, 50);
+            panel27.TabIndex = 0;
+            // 
+            // panel28
+            // 
+            panel28.Location = new Point(1, -1);
+            panel28.Name = "panel28";
+            panel28.Size = new Size(250, 125);
+            panel28.TabIndex = 0;
+            // 
+            // panel23
+            // 
+            panel23.Controls.Add(label21);
+            panel23.Controls.Add(label20);
+            panel23.Controls.Add(panel24);
+            panel23.Location = new Point(19, 59);
+            panel23.Name = "panel23";
+            panel23.Size = new Size(250, 50);
+            panel23.TabIndex = 1;
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label21.Location = new Point(55, 28);
+            label21.Name = "label21";
+            label21.Size = new Size(62, 17);
+            label21.TabIndex = 2;
+            label21.Text = "11:59 PM";
+            label21.Click += label21_Click;
+            // 
+            // label20
+            // 
+            label20.AutoSize = true;
+            label20.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label20.Location = new Point(46, 8);
+            label20.Name = "label20";
+            label20.Size = new Size(120, 20);
+            label20.TabIndex = 1;
+            label20.Text = "Assignment Due";
+            label20.Click += label20_Click_2;
+            // 
+            // panel24
+            // 
+            panel24.BackColor = Color.Maroon;
+            panel24.Controls.Add(panel25);
+            panel24.Dock = DockStyle.Left;
+            panel24.Location = new Point(0, 0);
+            panel24.Name = "panel24";
+            panel24.Size = new Size(40, 50);
+            panel24.TabIndex = 0;
+            // 
+            // panel25
+            // 
+            panel25.Location = new Point(1, -1);
+            panel25.Name = "panel25";
+            panel25.Size = new Size(250, 125);
+            panel25.TabIndex = 0;
+            // 
+            // label19
+            // 
+            label19.AutoSize = true;
+            label19.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label19.ForeColor = Color.Maroon;
+            label19.Location = new Point(12, 14);
+            label19.Name = "label19";
+            label19.Size = new Size(149, 23);
+            label19.TabIndex = 0;
+            label19.Text = "Upcoming Events";
+            label19.Click += label19_Click;
+            // 
+            // panel14
+            // 
+            panel14.BackColor = Color.White;
+            panel14.BorderStyle = BorderStyle.FixedSingle;
+            panel14.Controls.Add(label12);
+            panel14.Controls.Add(label11);
+            panel14.Controls.Add(pictureBox6);
+            panel14.Location = new Point(1111, 248);
+            panel14.Margin = new Padding(0, 0, 16, 0);
+            panel14.Name = "panel14";
+            panel14.Padding = new Padding(0, 16, 0, 16);
+            panel14.Size = new Size(250, 80);
+            panel14.TabIndex = 3;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label11.Location = new Point(21, 31);
+            label11.Name = "label11";
+            label11.Size = new Size(36, 28);
+            label11.TabIndex = 2;
+            label11.Text = "15";
+            label11.Click += label11_Click;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label12.ForeColor = SystemColors.WindowText;
+            label12.Location = new Point(12, 16);
+            label12.Name = "label12";
+            label12.Size = new Size(116, 20);
+            label12.TabIndex = 1;
+            label12.Text = "Pending Grades";
+            // 
+            // pictureBox6
+            // 
+            pictureBox6.Image = Properties.Resources.Screenshot_2026_03_25_201808;
+            pictureBox6.Location = new Point(186, 16);
+            pictureBox6.Name = "pictureBox6";
+            pictureBox6.Size = new Size(40, 40);
+            pictureBox6.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox6.TabIndex = 0;
+            pictureBox6.TabStop = false;
+            // 
+            // panel10
+            // 
+            panel10.BackColor = Color.White;
+            panel10.BorderStyle = BorderStyle.FixedSingle;
+            panel10.Controls.Add(label10);
+            panel10.Controls.Add(label9);
+            panel10.Controls.Add(pictureBox5);
+            panel10.Location = new Point(843, 248);
+            panel10.Margin = new Padding(0, 0, 16, 0);
+            panel10.Name = "panel10";
+            panel10.Padding = new Padding(0, 16, 0, 16);
+            panel10.Size = new Size(252, 80);
+            panel10.TabIndex = 3;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label9.Location = new Point(22, 34);
+            label9.Name = "label9";
+            label9.Size = new Size(36, 28);
+            label9.TabIndex = 2;
+            label9.Text = "45";
+            label9.Click += label9_Click;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label10.ForeColor = SystemColors.WindowText;
+            label10.Location = new Point(12, 16);
+            label10.Name = "label10";
+            label10.Size = new Size(148, 20);
+            label10.TabIndex = 1;
+            label10.Text = "Graded Assignments";
+            // 
+            // pictureBox5
+            // 
+            pictureBox5.Image = Properties.Resources.Screenshot_2026_03_25_201735;
+            pictureBox5.Location = new Point(188, 19);
+            pictureBox5.Name = "pictureBox5";
+            pictureBox5.Size = new Size(40, 40);
+            pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox5.TabIndex = 0;
+            pictureBox5.TabStop = false;
+            // 
+            // panel2
+            // 
+            panel2.BackColor = Color.White;
+            panel2.BorderStyle = BorderStyle.FixedSingle;
+            panel2.Controls.Add(label8);
+            panel2.Controls.Add(label7);
+            panel2.Controls.Add(pictureBox4);
+            panel2.Location = new Point(570, 248);
+            panel2.Margin = new Padding(0, 0, 16, 0);
+            panel2.Name = "panel2";
+            panel2.Padding = new Padding(0, 16, 0, 16);
+            panel2.Size = new Size(257, 80);
+            panel2.TabIndex = 3;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label7.Location = new Point(24, 36);
+            label7.Name = "label7";
+            label7.Size = new Size(48, 28);
+            label7.TabIndex = 2;
+            label7.Text = "120";
+            label7.Click += label7_Click;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label8.ForeColor = SystemColors.WindowText;
+            label8.Location = new Point(13, 16);
+            label8.Name = "label8";
+            label8.Size = new Size(105, 20);
+            label8.TabIndex = 1;
+            label8.Text = "Total Students";
+            // 
+            // pictureBox4
+            // 
+            pictureBox4.Image = Properties.Resources.Screenshot_2026_03_25_185238;
+            pictureBox4.Location = new Point(182, 16);
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.Size = new Size(40, 40);
+            pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox4.TabIndex = 0;
+            pictureBox4.TabStop = false;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.White;
+            panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(label6);
+            panel1.Controls.Add(label5);
+            panel1.Controls.Add(pictureBox3);
+            panel1.Location = new Point(304, 248);
+            panel1.Margin = new Padding(0, 0, 16, 0);
+            panel1.Name = "panel1";
+            panel1.Padding = new Padding(0, 16, 0, 16);
+            panel1.Size = new Size(250, 80);
+            panel1.TabIndex = 0;
+            panel1.Paint += panel1_Paint;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label6.Location = new Point(21, 36);
+            label6.Name = "label6";
+            label6.Size = new Size(24, 28);
+            label6.TabIndex = 2;
+            label6.Text = "3";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5.ForeColor = SystemColors.WindowText;
+            label5.Location = new Point(12, 16);
+            label5.Name = "label5";
+            label5.Size = new Size(108, 20);
+            label5.TabIndex = 1;
+            label5.Text = "Active Courses";
+            label5.Click += label5_Click;
+            // 
+            // pictureBox3
+            // 
+            pictureBox3.ErrorImage = (Image)resources.GetObject("pictureBox3.ErrorImage");
+            pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
+            pictureBox3.InitialImage = (Image)resources.GetObject("pictureBox3.InitialImage");
+            pictureBox3.Location = new Point(186, 16);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(40, 40);
+            pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox3.TabIndex = 0;
+            pictureBox3.TabStop = false;
+            pictureBox3.Click += pictureBox3_Click;
+            // 
             // pnlBanner
             // 
             pnlBanner.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
@@ -648,21 +1337,6 @@
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
             // 
-            // panel1
-            // 
-            panel1.BackColor = Color.White;
-            panel1.BorderStyle = BorderStyle.FixedSingle;
-            panel1.Controls.Add(label6);
-            panel1.Controls.Add(label5);
-            panel1.Controls.Add(pictureBox3);
-            panel1.Location = new Point(304, 248);
-            panel1.Margin = new Padding(0, 0, 16, 0);
-            panel1.Name = "panel1";
-            panel1.Padding = new Padding(0, 16, 0, 16);
-            panel1.Size = new Size(250, 80);
-            panel1.TabIndex = 0;
-            panel1.Paint += panel1_Paint;
-            // 
             // pnlCoursesContent
             // 
             pnlCoursesContent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -688,666 +1362,6 @@
             flowstats.TabIndex = 0;
             flowstats.WrapContents = false;
             flowstats.Paint += flowstats_Paint;
-            // 
-            // pictureBox3
-            // 
-            pictureBox3.Location = new Point(186, 16);
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(40, 40);
-            pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox3.TabIndex = 0;
-            pictureBox3.TabStop = false;
-            pictureBox3.Click += pictureBox3_Click;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.ForeColor = SystemColors.WindowText;
-            label5.Location = new Point(12, 16);
-            label5.Name = "label5";
-            label5.Size = new Size(108, 20);
-            label5.TabIndex = 1;
-            label5.Text = "Active Courses";
-            label5.Click += label5_Click;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label6.Location = new Point(21, 36);
-            label6.Name = "label6";
-            label6.Size = new Size(24, 28);
-            label6.TabIndex = 2;
-            label6.Text = "3";
-            // 
-            // panel2
-            // 
-            panel2.BackColor = Color.White;
-            panel2.BorderStyle = BorderStyle.FixedSingle;
-            panel2.Controls.Add(label7);
-            panel2.Controls.Add(label8);
-            panel2.Controls.Add(pictureBox4);
-            panel2.Location = new Point(570, 248);
-            panel2.Margin = new Padding(0, 0, 16, 0);
-            panel2.Name = "panel2";
-            panel2.Padding = new Padding(0, 16, 0, 16);
-            panel2.Size = new Size(257, 80);
-            panel2.TabIndex = 3;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label7.Location = new Point(24, 36);
-            label7.Name = "label7";
-            label7.Size = new Size(24, 28);
-            label7.TabIndex = 2;
-            label7.Text = "3";
-            label7.Click += label7_Click;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label8.ForeColor = SystemColors.WindowText;
-            label8.Location = new Point(13, 16);
-            label8.Name = "label8";
-            label8.Size = new Size(108, 20);
-            label8.TabIndex = 1;
-            label8.Text = "Active Courses";
-            // 
-            // pictureBox4
-            // 
-            pictureBox4.Location = new Point(182, 16);
-            pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(40, 40);
-            pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox4.TabIndex = 0;
-            pictureBox4.TabStop = false;
-            // 
-            // panel10
-            // 
-            panel10.BackColor = Color.White;
-            panel10.BorderStyle = BorderStyle.FixedSingle;
-            panel10.Controls.Add(label9);
-            panel10.Controls.Add(label10);
-            panel10.Controls.Add(pictureBox5);
-            panel10.Location = new Point(843, 248);
-            panel10.Margin = new Padding(0, 0, 16, 0);
-            panel10.Name = "panel10";
-            panel10.Padding = new Padding(0, 16, 0, 16);
-            panel10.Size = new Size(252, 80);
-            panel10.TabIndex = 3;
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label9.Location = new Point(21, 31);
-            label9.Name = "label9";
-            label9.Size = new Size(24, 28);
-            label9.TabIndex = 2;
-            label9.Text = "3";
-            label9.Click += label9_Click;
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label10.ForeColor = SystemColors.WindowText;
-            label10.Location = new Point(12, 16);
-            label10.Name = "label10";
-            label10.Size = new Size(108, 20);
-            label10.TabIndex = 1;
-            label10.Text = "Active Courses";
-            // 
-            // pictureBox5
-            // 
-            pictureBox5.Location = new Point(188, 19);
-            pictureBox5.Name = "pictureBox5";
-            pictureBox5.Size = new Size(40, 40);
-            pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox5.TabIndex = 0;
-            pictureBox5.TabStop = false;
-            // 
-            // panel14
-            // 
-            panel14.BackColor = Color.White;
-            panel14.BorderStyle = BorderStyle.FixedSingle;
-            panel14.Controls.Add(label11);
-            panel14.Controls.Add(label12);
-            panel14.Controls.Add(pictureBox6);
-            panel14.Location = new Point(1111, 248);
-            panel14.Margin = new Padding(0, 0, 16, 0);
-            panel14.Name = "panel14";
-            panel14.Padding = new Padding(0, 16, 0, 16);
-            panel14.Size = new Size(250, 80);
-            panel14.TabIndex = 3;
-            // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label11.Location = new Point(21, 31);
-            label11.Name = "label11";
-            label11.Size = new Size(24, 28);
-            label11.TabIndex = 2;
-            label11.Text = "3";
-            label11.Click += label11_Click;
-            // 
-            // label12
-            // 
-            label12.AutoSize = true;
-            label12.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label12.ForeColor = SystemColors.WindowText;
-            label12.Location = new Point(12, 16);
-            label12.Name = "label12";
-            label12.Size = new Size(108, 20);
-            label12.TabIndex = 1;
-            label12.Text = "Active Courses";
-            // 
-            // pictureBox6
-            // 
-            pictureBox6.Location = new Point(186, 16);
-            pictureBox6.Name = "pictureBox6";
-            pictureBox6.Size = new Size(40, 40);
-            pictureBox6.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox6.TabIndex = 0;
-            pictureBox6.TabStop = false;
-            // 
-            // tableLayoutPanel1
-            // 
-            tableLayoutPanel1.ColumnCount = 2;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 70F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
-            tableLayoutPanel1.Controls.Add(panel17, 0, 0);
-            tableLayoutPanel1.Controls.Add(panel22, 1, 0);
-            tableLayoutPanel1.Location = new Point(315, 376);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 1;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Size = new Size(1046, 323);
-            tableLayoutPanel1.TabIndex = 7;
-            // 
-            // label13
-            // 
-            label13.AutoSize = true;
-            label13.BackColor = Color.Transparent;
-            label13.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label13.ForeColor = Color.Maroon;
-            label13.Location = new Point(8, 14);
-            label13.Name = "label13";
-            label13.Size = new Size(130, 25);
-            label13.TabIndex = 0;
-            label13.Text = "Quick Actions";
-            label13.Click += label13_Click_1;
-            // 
-            // panel17
-            // 
-            panel17.Controls.Add(tableLayoutPanel2);
-            panel17.Controls.Add(label13);
-            panel17.Dock = DockStyle.Fill;
-            panel17.Font = new Font("Arial Narrow", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            panel17.Location = new Point(3, 3);
-            panel17.Name = "panel17";
-            panel17.Size = new Size(726, 317);
-            panel17.TabIndex = 0;
-            panel17.Paint += panel17_Paint;
-            // 
-            // tableLayoutPanel2
-            // 
-            tableLayoutPanel2.ColumnCount = 2;
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel2.Controls.Add(panel21, 1, 1);
-            tableLayoutPanel2.Controls.Add(panel20, 0, 1);
-            tableLayoutPanel2.Controls.Add(panel19, 1, 0);
-            tableLayoutPanel2.Controls.Add(panel18, 0, 0);
-            tableLayoutPanel2.Location = new Point(8, 55);
-            tableLayoutPanel2.Name = "tableLayoutPanel2";
-            tableLayoutPanel2.RowCount = 2;
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel2.Size = new Size(703, 197);
-            tableLayoutPanel2.TabIndex = 1;
-            // 
-            // panel18
-            // 
-            panel18.BackColor = SystemColors.ControlLight;
-            panel18.Controls.Add(label14);
-            panel18.Controls.Add(pictureBox7);
-            panel18.Dock = DockStyle.Fill;
-            panel18.Location = new Point(6, 6);
-            panel18.Margin = new Padding(6);
-            panel18.Name = "panel18";
-            panel18.Padding = new Padding(12);
-            panel18.Size = new Size(339, 86);
-            panel18.TabIndex = 0;
-            // 
-            // pictureBox7
-            // 
-            pictureBox7.BackColor = Color.Maroon;
-            pictureBox7.Location = new Point(15, 19);
-            pictureBox7.Name = "pictureBox7";
-            pictureBox7.Size = new Size(50, 42);
-            pictureBox7.TabIndex = 0;
-            pictureBox7.TabStop = false;
-            // 
-            // label14
-            // 
-            label14.AutoSize = true;
-            label14.Font = new Font("Arial Rounded MT Bold", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label14.Location = new Point(71, 26);
-            label14.Name = "label14";
-            label14.Size = new Size(141, 17);
-            label14.TabIndex = 1;
-            label14.Text = "Grade Submission";
-            label14.Click += label14_Click;
-            // 
-            // panel19
-            // 
-            panel19.BackColor = SystemColors.ControlLight;
-            panel19.Controls.Add(label15);
-            panel19.Controls.Add(pictureBox8);
-            panel19.Dock = DockStyle.Fill;
-            panel19.Location = new Point(357, 6);
-            panel19.Margin = new Padding(6);
-            panel19.Name = "panel19";
-            panel19.Padding = new Padding(12);
-            panel19.Size = new Size(340, 86);
-            panel19.TabIndex = 1;
-            // 
-            // label15
-            // 
-            label15.AutoSize = true;
-            label15.Font = new Font("Arial Rounded MT Bold", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label15.Location = new Point(83, 26);
-            label15.Name = "label15";
-            label15.Size = new Size(141, 17);
-            label15.TabIndex = 1;
-            label15.Text = "Grade Submission";
-            // 
-            // pictureBox8
-            // 
-            pictureBox8.BackColor = Color.Maroon;
-            pictureBox8.Location = new Point(15, 19);
-            pictureBox8.Name = "pictureBox8";
-            pictureBox8.Size = new Size(50, 42);
-            pictureBox8.TabIndex = 0;
-            pictureBox8.TabStop = false;
-            // 
-            // panel20
-            // 
-            panel20.BackColor = SystemColors.ControlLight;
-            panel20.Controls.Add(label16);
-            panel20.Controls.Add(pictureBox9);
-            panel20.Dock = DockStyle.Fill;
-            panel20.Location = new Point(6, 104);
-            panel20.Margin = new Padding(6);
-            panel20.Name = "panel20";
-            panel20.Padding = new Padding(12);
-            panel20.Size = new Size(339, 87);
-            panel20.TabIndex = 2;
-            // 
-            // label16
-            // 
-            label16.AutoSize = true;
-            label16.Font = new Font("Arial Rounded MT Bold", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label16.Location = new Point(71, 31);
-            label16.Name = "label16";
-            label16.Size = new Size(141, 17);
-            label16.TabIndex = 1;
-            label16.Text = "Grade Submission";
-            label16.Click += label16_Click;
-            // 
-            // pictureBox9
-            // 
-            pictureBox9.BackColor = Color.Maroon;
-            pictureBox9.Location = new Point(15, 19);
-            pictureBox9.Name = "pictureBox9";
-            pictureBox9.Size = new Size(50, 42);
-            pictureBox9.TabIndex = 0;
-            pictureBox9.TabStop = false;
-            // 
-            // panel21
-            // 
-            panel21.BackColor = SystemColors.ControlLight;
-            panel21.Controls.Add(label17);
-            panel21.Controls.Add(pictureBox10);
-            panel21.Dock = DockStyle.Fill;
-            panel21.Location = new Point(357, 104);
-            panel21.Margin = new Padding(6);
-            panel21.Name = "panel21";
-            panel21.Padding = new Padding(12);
-            panel21.Size = new Size(340, 87);
-            panel21.TabIndex = 3;
-            // 
-            // label17
-            // 
-            label17.AutoSize = true;
-            label17.Font = new Font("Arial Rounded MT Bold", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label17.Location = new Point(83, 31);
-            label17.Name = "label17";
-            label17.Size = new Size(141, 17);
-            label17.TabIndex = 1;
-            label17.Text = "Grade Submission";
-            // 
-            // pictureBox10
-            // 
-            pictureBox10.BackColor = Color.Maroon;
-            pictureBox10.Location = new Point(15, 19);
-            pictureBox10.Name = "pictureBox10";
-            pictureBox10.Size = new Size(50, 42);
-            pictureBox10.TabIndex = 0;
-            pictureBox10.TabStop = false;
-            // 
-            // panel22
-            // 
-            panel22.Controls.Add(panel29);
-            panel22.Controls.Add(panel26);
-            panel22.Controls.Add(panel23);
-            panel22.Controls.Add(label19);
-            panel22.Dock = DockStyle.Fill;
-            panel22.Location = new Point(735, 3);
-            panel22.Name = "panel22";
-            panel22.Size = new Size(308, 317);
-            panel22.TabIndex = 1;
-            // 
-            // label19
-            // 
-            label19.AutoSize = true;
-            label19.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label19.ForeColor = Color.Maroon;
-            label19.Location = new Point(12, 14);
-            label19.Name = "label19";
-            label19.Size = new Size(149, 23);
-            label19.TabIndex = 0;
-            label19.Text = "Upcoming Events";
-            label19.Click += label19_Click;
-            // 
-            // panel23
-            // 
-            panel23.Controls.Add(label21);
-            panel23.Controls.Add(label20);
-            panel23.Controls.Add(panel24);
-            panel23.Location = new Point(19, 59);
-            panel23.Name = "panel23";
-            panel23.Size = new Size(250, 50);
-            panel23.TabIndex = 1;
-            // 
-            // panel24
-            // 
-            panel24.BackColor = Color.Maroon;
-            panel24.Controls.Add(panel25);
-            panel24.Dock = DockStyle.Left;
-            panel24.Location = new Point(0, 0);
-            panel24.Name = "panel24";
-            panel24.Size = new Size(40, 50);
-            panel24.TabIndex = 0;
-            // 
-            // panel25
-            // 
-            panel25.Location = new Point(1, -1);
-            panel25.Name = "panel25";
-            panel25.Size = new Size(250, 125);
-            panel25.TabIndex = 0;
-            // 
-            // label20
-            // 
-            label20.AutoSize = true;
-            label20.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label20.Location = new Point(46, 8);
-            label20.Name = "label20";
-            label20.Size = new Size(120, 20);
-            label20.TabIndex = 1;
-            label20.Text = "Assignment Due";
-            label20.Click += label20_Click_2;
-            // 
-            // label21
-            // 
-            label21.AutoSize = true;
-            label21.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label21.Location = new Point(55, 28);
-            label21.Name = "label21";
-            label21.Size = new Size(62, 17);
-            label21.TabIndex = 2;
-            label21.Text = "11:59 pm";
-            label21.Click += label21_Click;
-            // 
-            // panel26
-            // 
-            panel26.Controls.Add(label22);
-            panel26.Controls.Add(label23);
-            panel26.Controls.Add(panel27);
-            panel26.Location = new Point(20, 128);
-            panel26.Name = "panel26";
-            panel26.Size = new Size(250, 50);
-            panel26.TabIndex = 2;
-            // 
-            // label22
-            // 
-            label22.AutoSize = true;
-            label22.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label22.Location = new Point(55, 28);
-            label22.Name = "label22";
-            label22.Size = new Size(62, 17);
-            label22.TabIndex = 2;
-            label22.Text = "11:59 pm";
-            // 
-            // label23
-            // 
-            label23.AutoSize = true;
-            label23.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label23.Location = new Point(46, 8);
-            label23.Name = "label23";
-            label23.Size = new Size(120, 20);
-            label23.TabIndex = 1;
-            label23.Text = "Assignment Due";
-            // 
-            // panel27
-            // 
-            panel27.BackColor = Color.Maroon;
-            panel27.Controls.Add(panel28);
-            panel27.Dock = DockStyle.Left;
-            panel27.Location = new Point(0, 0);
-            panel27.Name = "panel27";
-            panel27.Size = new Size(40, 50);
-            panel27.TabIndex = 0;
-            // 
-            // panel28
-            // 
-            panel28.Location = new Point(1, -1);
-            panel28.Name = "panel28";
-            panel28.Size = new Size(250, 125);
-            panel28.TabIndex = 0;
-            // 
-            // panel29
-            // 
-            panel29.Controls.Add(label24);
-            panel29.Controls.Add(label25);
-            panel29.Controls.Add(panel30);
-            panel29.Location = new Point(21, 196);
-            panel29.Name = "panel29";
-            panel29.Size = new Size(250, 50);
-            panel29.TabIndex = 3;
-            // 
-            // label24
-            // 
-            label24.AutoSize = true;
-            label24.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label24.Location = new Point(55, 28);
-            label24.Name = "label24";
-            label24.Size = new Size(62, 17);
-            label24.TabIndex = 2;
-            label24.Text = "11:59 pm";
-            // 
-            // label25
-            // 
-            label25.AutoSize = true;
-            label25.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label25.Location = new Point(46, 8);
-            label25.Name = "label25";
-            label25.Size = new Size(120, 20);
-            label25.TabIndex = 1;
-            label25.Text = "Assignment Due";
-            // 
-            // panel30
-            // 
-            panel30.BackColor = Color.Maroon;
-            panel30.Controls.Add(panel31);
-            panel30.Dock = DockStyle.Left;
-            panel30.Location = new Point(0, 0);
-            panel30.Name = "panel30";
-            panel30.Size = new Size(40, 50);
-            panel30.TabIndex = 0;
-            // 
-            // panel31
-            // 
-            panel31.Location = new Point(1, -1);
-            panel31.Name = "panel31";
-            panel31.Size = new Size(250, 125);
-            panel31.TabIndex = 0;
-            // 
-            // panel32
-            // 
-            panel32.Controls.Add(panel37);
-            panel32.Controls.Add(panel35);
-            panel32.Controls.Add(panel33);
-            panel32.Controls.Add(label18);
-            panel32.Location = new Point(317, 717);
-            panel32.Name = "panel32";
-            panel32.Padding = new Padding(16);
-            panel32.Size = new Size(1044, 301);
-            panel32.TabIndex = 8;
-            // 
-            // label18
-            // 
-            label18.AutoSize = true;
-            label18.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label18.ForeColor = Color.Maroon;
-            label18.Location = new Point(10, 14);
-            label18.Name = "label18";
-            label18.Size = new Size(131, 23);
-            label18.TabIndex = 0;
-            label18.Text = "Announcement";
-            // 
-            // panel33
-            // 
-            panel33.Controls.Add(label27);
-            panel33.Controls.Add(label26);
-            panel33.Controls.Add(panel34);
-            panel33.Location = new Point(16, 52);
-            panel33.Name = "panel33";
-            panel33.Size = new Size(1025, 60);
-            panel33.TabIndex = 1;
-            // 
-            // panel34
-            // 
-            panel34.BackColor = Color.Gold;
-            panel34.Dock = DockStyle.Left;
-            panel34.Location = new Point(0, 0);
-            panel34.Name = "panel34";
-            panel34.Size = new Size(4, 60);
-            panel34.TabIndex = 0;
-            // 
-            // label26
-            // 
-            label26.AutoSize = true;
-            label26.Location = new Point(17, 9);
-            label26.Name = "label26";
-            label26.Size = new Size(234, 23);
-            label26.TabIndex = 1;
-            label26.Text = "Enrollment Period Extended";
-            // 
-            // label27
-            // 
-            label27.AutoSize = true;
-            label27.Font = new Font("Calibri", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label27.ForeColor = SystemColors.ControlDarkDark;
-            label27.Location = new Point(23, 31);
-            label27.Name = "label27";
-            label27.Size = new Size(92, 15);
-            label27.TabIndex = 2;
-            label27.Text = "March 26. 2026";
-            // 
-            // panel35
-            // 
-            panel35.Controls.Add(label28);
-            panel35.Controls.Add(label29);
-            panel35.Controls.Add(panel36);
-            panel35.Location = new Point(16, 127);
-            panel35.Name = "panel35";
-            panel35.Size = new Size(1025, 60);
-            panel35.TabIndex = 2;
-            // 
-            // label28
-            // 
-            label28.AutoSize = true;
-            label28.Font = new Font("Calibri", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label28.ForeColor = SystemColors.ControlDarkDark;
-            label28.Location = new Point(23, 31);
-            label28.Name = "label28";
-            label28.Size = new Size(92, 15);
-            label28.TabIndex = 2;
-            label28.Text = "March 26. 2026";
-            // 
-            // label29
-            // 
-            label29.AutoSize = true;
-            label29.Location = new Point(17, 9);
-            label29.Name = "label29";
-            label29.Size = new Size(234, 23);
-            label29.TabIndex = 1;
-            label29.Text = "Enrollment Period Extended";
-            // 
-            // panel36
-            // 
-            panel36.BackColor = Color.Gold;
-            panel36.Dock = DockStyle.Left;
-            panel36.Location = new Point(0, 0);
-            panel36.Name = "panel36";
-            panel36.Size = new Size(4, 60);
-            panel36.TabIndex = 0;
-            // 
-            // panel37
-            // 
-            panel37.Controls.Add(label30);
-            panel37.Controls.Add(label31);
-            panel37.Controls.Add(panel38);
-            panel37.Location = new Point(15, 205);
-            panel37.Name = "panel37";
-            panel37.Size = new Size(1025, 60);
-            panel37.TabIndex = 3;
-            // 
-            // label30
-            // 
-            label30.AutoSize = true;
-            label30.Font = new Font("Calibri", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label30.ForeColor = SystemColors.ControlDarkDark;
-            label30.Location = new Point(23, 31);
-            label30.Name = "label30";
-            label30.Size = new Size(92, 15);
-            label30.TabIndex = 2;
-            label30.Text = "March 26. 2026";
-            // 
-            // label31
-            // 
-            label31.AutoSize = true;
-            label31.Location = new Point(17, 9);
-            label31.Name = "label31";
-            label31.Size = new Size(234, 23);
-            label31.TabIndex = 1;
-            label31.Text = "Enrollment Period Extended";
-            // 
-            // panel38
-            // 
-            panel38.BackColor = Color.Gold;
-            panel38.Dock = DockStyle.Left;
-            panel38.Location = new Point(0, 0);
-            panel38.Name = "panel38";
-            panel38.Size = new Size(4, 60);
-            panel38.TabIndex = 0;
             // 
             // InstructorPortal
             // 
@@ -1377,60 +1391,60 @@
             panel12.ResumeLayout(false);
             panel13.ResumeLayout(false);
             panel3.ResumeLayout(false);
+            panel32.ResumeLayout(false);
+            panel32.PerformLayout();
+            panel37.ResumeLayout(false);
+            panel37.PerformLayout();
+            panel35.ResumeLayout(false);
+            panel35.PerformLayout();
+            panel33.ResumeLayout(false);
+            panel33.PerformLayout();
+            tableLayoutPanel1.ResumeLayout(false);
+            panel17.ResumeLayout(false);
+            panel17.PerformLayout();
+            tableLayoutPanel2.ResumeLayout(false);
+            panel21.ResumeLayout(false);
+            panel21.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox10).EndInit();
+            panel20.ResumeLayout(false);
+            panel20.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
+            panel19.ResumeLayout(false);
+            panel19.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
+            panel18.ResumeLayout(false);
+            panel18.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox7).EndInit();
+            panel22.ResumeLayout(false);
+            panel22.PerformLayout();
+            panel29.ResumeLayout(false);
+            panel29.PerformLayout();
+            panel30.ResumeLayout(false);
+            panel26.ResumeLayout(false);
+            panel26.PerformLayout();
+            panel27.ResumeLayout(false);
+            panel23.ResumeLayout(false);
+            panel23.PerformLayout();
+            panel24.ResumeLayout(false);
+            panel14.ResumeLayout(false);
+            panel14.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
+            panel10.ResumeLayout(false);
+            panel10.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             pnlBanner.ResumeLayout(false);
             pnlHeader.ResumeLayout(false);
             panel15.ResumeLayout(false);
             panel15.PerformLayout();
             panel16.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
             pnlCoursesContent.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
-            panel10.ResumeLayout(false);
-            panel10.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
-            panel14.ResumeLayout(false);
-            panel14.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
-            tableLayoutPanel1.ResumeLayout(false);
-            panel17.ResumeLayout(false);
-            panel17.PerformLayout();
-            tableLayoutPanel2.ResumeLayout(false);
-            panel18.ResumeLayout(false);
-            panel18.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox7).EndInit();
-            panel19.ResumeLayout(false);
-            panel19.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
-            panel20.ResumeLayout(false);
-            panel20.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
-            panel21.ResumeLayout(false);
-            panel21.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox10).EndInit();
-            panel22.ResumeLayout(false);
-            panel22.PerformLayout();
-            panel23.ResumeLayout(false);
-            panel23.PerformLayout();
-            panel24.ResumeLayout(false);
-            panel26.ResumeLayout(false);
-            panel26.PerformLayout();
-            panel27.ResumeLayout(false);
-            panel29.ResumeLayout(false);
-            panel29.PerformLayout();
-            panel30.ResumeLayout(false);
-            panel32.ResumeLayout(false);
-            panel32.PerformLayout();
-            panel33.ResumeLayout(false);
-            panel33.PerformLayout();
-            panel35.ResumeLayout(false);
-            panel35.PerformLayout();
-            panel37.ResumeLayout(false);
-            panel37.PerformLayout();
             ResumeLayout(false);
         }
 
