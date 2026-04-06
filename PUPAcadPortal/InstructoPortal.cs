@@ -447,41 +447,28 @@ namespace PUPAcadPortal
         private void AddFileToListView(string filepath)
         {
             FileInfo fileInfo = new FileInfo(filepath);
-
-            // 1. Check if the file is larger than 10MB
-            // 10 * 1024 * 1024 bytes = 10,485,760 bytes
             long maxFileSize = 10 * 1024 * 1024;
 
             if (fileInfo.Length <= maxFileSize)
             {
-                // 2. Extract the icon from the actual file
-                // This handles .pdf, .docx, .png, etc. automatically
                 Icon fileIcon = Icon.ExtractAssociatedIcon(filepath);
 
-                // 3. Add the icon to your ImageList at runtime 
-                // We use the extension as the Key to avoid adding the same icon twice
+                // We use the extension as a key (e.g., ".pdf")
                 if (!imageList1.Images.ContainsKey(fileInfo.Extension))
                 {
+                    // The imageList will automatically scale the icon to 32x32 
+                    // because we set the ImageSize in the Load event.
                     imageList1.Images.Add(fileInfo.Extension, fileIcon);
                 }
 
-                // 4. Find the index of the icon we just added (or existing one)
                 int iconIndex = imageList1.Images.IndexOfKey(fileInfo.Extension);
 
-                // 5. Create the item using the Name and the iconIndex
+                // Ensure the index is valid
                 ListViewItem item = new ListViewItem(fileInfo.Name, iconIndex);
-
-                // 6. Add the sub-item for File Size
+                item.Tag = filepath;
                 item.SubItems.Add($"{fileInfo.Length / 1024.0:F2} KB");
 
-                // 7. Add the completed item to your ListView
                 listView_file.Items.Add(item);
-            }
-            else
-            {
-                // Optional: Let the user know the file was too big
-                MessageBox.Show($"{fileInfo.Name} exceeds the 10MB limit.", "File Too Large",
-                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -499,23 +486,115 @@ namespace PUPAcadPortal
 
         private void InstructorPortal_Load(object sender, EventArgs e)
         {
-            // 1. Basic Setup
+            // 1. Font and Appearance
+            listView_file.Font = new Font("Segoe UI", 11.5f); // Slightly larger for better readability
             listView_file.View = View.Details;
-            listView_file.FullRowSelect = true; // Makes the whole row clickable
-            listView_file.GridLines = true;      // Adds subtle lines between files
+            listView_file.FullRowSelect = true;
+            listView_file.GridLines = false;
 
-            // 2. Setup Columns (Updated your names slightly for a cleaner look)
-            listView_file.Columns.Clear(); // Clears any designer columns to prevent duplicates
-            listView_file.Columns.Add("File Name", 250);
-            listView_file.Columns.Add("Size", 100);
-
-            // 3. IMPORTANT: Connect the ImageList to the ListView
-            // This allows the icons from AddFileToListView to actually appear
+            // 2. Fix the Icon Visibility & Spacing
+            // Width and Height must both be large enough to see the icon
+            imageList1.ImageSize = new Size(32, 32);
+            imageList1.ColorDepth = ColorDepth.Depth32Bit; // Makes icons crisp
             listView_file.SmallImageList = imageList1;
 
-            // 4. (Optional) Set the ImageList icon quality
-            imageList1.ColorDepth = ColorDepth.Depth32Bit;
-            imageList1.ImageSize = new Size(16, 16);
+            // 3. Columns
+            listView_file.Columns.Clear();
+            listView_file.Columns.Add("File Name", 350);
+            listView_file.Columns.Add("Size", 120);
+        }
+
+        private void listView_file_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            // 1. Check if an item was actually clicked
+            if (listView_file.SelectedItems.Count > 0)
+            {
+                // 2. Get the full path we stored in the Tag earlier
+                string fullPath = listView_file.SelectedItems[0].Tag.ToString();
+
+                try
+                {
+                    // 3. Tell Windows to open the file
+                    ProcessStartInfo psi = new ProcessStartInfo
+                    {
+                        FileName = fullPath,
+                        UseShellExecute = true // This is required for modern .NET to open files
+                    };
+                    Process.Start(psi);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Could not open file: " + ex.Message);
+                }
+            }
+        }
+
+        private void removeFromTheListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Check if an item is selected
+            if (listView_file.SelectedItems.Count > 0)
+            {
+                // Ask for confirmation (Optional but professional)
+                DialogResult result = MessageBox.Show("Remove this file from the list?",
+                    "Confirm Remove", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    foreach (ListViewItem item in listView_file.SelectedItems)
+                    {
+                        listView_file.Items.Remove(item);
+                    }
+                }
+            }
+        }
+
+        private void downloadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (listView_file.SelectedItems.Count > 0)
+            {
+                // 1. Get the original path we stored in the Tag
+                string sourcePath = listView_file.SelectedItems[0].Tag.ToString();
+                string fileName = listView_file.SelectedItems[0].Text;
+
+                // 2. Open a Save File Dialog
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.FileName = fileName;
+                saveFileDialog.Filter = "All files (*.*)|*.*";
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        // 3. Copy the file from the original path to the new path
+                        File.Copy(sourcePath, saveFileDialog.FileName, true);
+                        MessageBox.Show("File saved successfully!", "Success",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error saving file: " + ex.Message);
+                    }
+                }
+            }
+        }
+
+        private void listView_file_MouseClick(object sender, MouseEventArgs e)
+        {
+            // This checks if the user clicked the Right Mouse Button
+            if (e.Button == MouseButtons.Right)
+            {
+                // This finds exactly which file was under the mouse cursor
+                var item = listView_file.GetItemAt(e.X, e.Y);
+
+                if (item != null)
+                {
+                    // Select the item so the menu knows which file to "Remove" or "Download"
+                    item.Selected = true;
+
+                    // Show your ContextMenuStrip at the exact mouse location
+                    contextMenuStrip1.Show(listView_file, e.Location);
+                }
+            }
         }
     }
 }

@@ -62,7 +62,13 @@
             panel3 = new Panel();
             pnlSubMenu = new Panel();
             pnlLMSFiles = new Panel();
+            panel25 = new Panel();
+            panel26 = new Panel();
+            label121 = new Label();
             listView_file = new ListView();
+            contextMenuStrip1 = new ContextMenuStrip(components);
+            downloadToolStripMenuItem = new ToolStripMenuItem();
+            removeFromTheListToolStripMenuItem = new ToolStripMenuItem();
             imageList1 = new ImageList(components);
             pnlLMSActivities = new Panel();
             panel42 = new Panel();
@@ -476,6 +482,8 @@
             panel3.SuspendLayout();
             pnlSubMenu.SuspendLayout();
             pnlLMSFiles.SuspendLayout();
+            panel25.SuspendLayout();
+            contextMenuStrip1.SuspendLayout();
             pnlLMSActivities.SuspendLayout();
             panel42.SuspendLayout();
             roundedPanel10.SuspendLayout();
@@ -1137,8 +1145,9 @@
             // pnlLMSFiles
             // 
             pnlLMSFiles.AllowDrop = true;
+            pnlLMSFiles.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            pnlLMSFiles.Controls.Add(panel25);
             pnlLMSFiles.Controls.Add(listView_file);
-            pnlLMSFiles.Dock = DockStyle.Top;
             pnlLMSFiles.Location = new Point(0, 65);
             pnlLMSFiles.Name = "pnlLMSFiles";
             pnlLMSFiles.Size = new Size(1453, 1254);
@@ -1147,20 +1156,75 @@
             pnlLMSFiles.DragDrop += pnlLMSFiles_DragDrop;
             pnlLMSFiles.DragEnter += pnlLMSFiles_DragEnter;
             // 
+            // panel25
+            // 
+            panel25.BackColor = Color.White;
+            panel25.Controls.Add(panel26);
+            panel25.Controls.Add(label121);
+            panel25.Dock = DockStyle.Top;
+            panel25.Location = new Point(0, 0);
+            panel25.Name = "panel25";
+            panel25.Size = new Size(1453, 79);
+            panel25.TabIndex = 1;
+            // 
+            // panel26
+            // 
+            panel26.BackColor = SystemColors.Control;
+            panel26.Dock = DockStyle.Top;
+            panel26.Location = new Point(0, 0);
+            panel26.Name = "panel26";
+            panel26.Size = new Size(1453, 21);
+            panel26.TabIndex = 2;
+            // 
+            // label121
+            // 
+            label121.AutoSize = true;
+            label121.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label121.Location = new Point(18, 34);
+            label121.Name = "label121";
+            label121.Size = new Size(118, 31);
+            label121.TabIndex = 3;
+            label121.Text = "Class Files";
+            // 
             // listView_file
             // 
-            listView_file.Location = new Point(13, 12);
+            listView_file.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            listView_file.ContextMenuStrip = contextMenuStrip1;
+            listView_file.Location = new Point(13, 98);
             listView_file.Name = "listView_file";
-            listView_file.Size = new Size(1422, 683);
+            listView_file.Size = new Size(1422, 784);
             listView_file.SmallImageList = imageList1;
             listView_file.TabIndex = 0;
             listView_file.UseCompatibleStateImageBehavior = false;
             listView_file.View = View.Details;
+            listView_file.MouseClick += listView_file_MouseClick;
+            listView_file.MouseDoubleClick += listView_file_MouseDoubleClick;
+            // 
+            // contextMenuStrip1
+            // 
+            contextMenuStrip1.ImageScalingSize = new Size(20, 20);
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { downloadToolStripMenuItem, removeFromTheListToolStripMenuItem });
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(220, 52);
+            // 
+            // downloadToolStripMenuItem
+            // 
+            downloadToolStripMenuItem.Name = "downloadToolStripMenuItem";
+            downloadToolStripMenuItem.Size = new Size(219, 24);
+            downloadToolStripMenuItem.Text = "Download";
+            downloadToolStripMenuItem.Click += downloadToolStripMenuItem_Click;
+            // 
+            // removeFromTheListToolStripMenuItem
+            // 
+            removeFromTheListToolStripMenuItem.Name = "removeFromTheListToolStripMenuItem";
+            removeFromTheListToolStripMenuItem.Size = new Size(219, 24);
+            removeFromTheListToolStripMenuItem.Text = "Remove from the List";
+            removeFromTheListToolStripMenuItem.Click += removeFromTheListToolStripMenuItem_Click;
             // 
             // imageList1
             // 
             imageList1.ColorDepth = ColorDepth.Depth32Bit;
-            imageList1.ImageSize = new Size(16, 16);
+            imageList1.ImageSize = new Size(32, 32);
             imageList1.TransparentColor = Color.Transparent;
             // 
             // pnlLMSActivities
@@ -5953,6 +6017,9 @@
             panel3.ResumeLayout(false);
             pnlSubMenu.ResumeLayout(false);
             pnlLMSFiles.ResumeLayout(false);
+            panel25.ResumeLayout(false);
+            panel25.PerformLayout();
+            contextMenuStrip1.ResumeLayout(false);
             pnlLMSActivities.ResumeLayout(false);
             panel42.ResumeLayout(false);
             panel42.PerformLayout();
@@ -6599,5 +6666,11 @@
         private Button button10;
         private ListView listView_file;
         private ImageList imageList1;
+        private ContextMenuStrip contextMenuStrip1;
+        private ToolStripMenuItem downloadToolStripMenuItem;
+        private ToolStripMenuItem removeFromTheListToolStripMenuItem;
+        private Panel panel25;
+        private Panel panel26;
+        private Label label121;
     }
 }
