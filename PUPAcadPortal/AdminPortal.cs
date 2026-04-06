@@ -456,6 +456,5 @@ namespace PUPAcadPortal
             ApplyFiltersAndRefresh();
         }
 
-        
     }
 }
