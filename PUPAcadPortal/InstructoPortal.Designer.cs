@@ -1087,9 +1087,9 @@
             // panel3
             // 
             panel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panel3.Controls.Add(pnlAttendance);
             panel3.Controls.Add(pnlSubject);
             panel3.Controls.Add(pnlSubMenu);
-            panel3.Controls.Add(pnlAttendance);
             panel3.Controls.Add(pnlAnnounce);
             panel3.Controls.Add(pnlLMSAct);
             panel3.Controls.Add(pnlClassFiles);
@@ -1108,6 +1108,7 @@
             // 
             // pnlSubject
             // 
+            pnlSubject.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pnlSubject.AutoScroll = true;
             pnlSubject.BackColor = SystemColors.Control;
             pnlSubject.CausesValidation = false;
@@ -1115,7 +1116,6 @@
             pnlSubject.Controls.Add(roundedPanel1);
             pnlSubject.Controls.Add(label106);
             pnlSubject.Controls.Add(panel1);
-            pnlSubject.Dock = DockStyle.Fill;
             pnlSubject.Location = new Point(293, 96);
             pnlSubject.Margin = new Padding(0);
             pnlSubject.Name = "pnlSubject";
@@ -6082,9 +6082,6 @@
         private TextBox textBox9;
         private Label label44;
         private RoundedPanel roundedPanel19;
-        private Panel pnlSubject;
-        private Panel panel1;
-        private Label label8;
         private Button button28;
         private Label label48;
         private Label label49;
@@ -6132,7 +6129,6 @@
         private Label label28;
         private Label label24;
         private TextBox textBox2;
-        private RoundedPanel roundedPanel2;
         private RoundedPanel roundedPanel7;
         private FlowLayoutPanel flowLayoutPanel2;
         private Button button4;
@@ -6360,18 +6356,6 @@
         private CheckBox checkBox1;
         private ComboBox comboBox12;
         private Panel panel37;
-        private Label label106;
-        private RoundedPanel roundedPanel1;
-        private Button btnGo1;
-        private Label lblSubject1;
-        private Label lblsection1;
-        private PictureBox pictureBox44;
-        private Label lblSection1Sched;
-        private Label lblSection2Sched;
-        private Label lblSubject2;
-        private Label lblSection2;
-        private PictureBox pictureBox45;
-        private Button btnGo2;
         private Panel pnlSubMenu;
         private Panel panel38;
         private Panel panel39;
@@ -6442,5 +6426,21 @@
         private Panel pnlControlBar;
         private DateTimePicker dateTimePicker2;
         private Label label112;
+        private Panel pnlSubject;
+        private RoundedPanel roundedPanel2;
+        private Label lblSection2Sched;
+        private Label lblSubject2;
+        private Label lblSection2;
+        private PictureBox pictureBox45;
+        private Button btnGo2;
+        private RoundedPanel roundedPanel1;
+        private Label lblSection1Sched;
+        private Label lblSubject1;
+        private Label lblsection1;
+        private PictureBox pictureBox44;
+        private Button btnGo1;
+        private Label label106;
+        private Panel panel1;
+        private Label label8;
     }
 }
