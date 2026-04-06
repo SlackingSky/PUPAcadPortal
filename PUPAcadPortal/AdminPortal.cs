@@ -456,14 +456,6 @@ namespace PUPAcadPortal
             ApplyFiltersAndRefresh();
         }
 
-        private void pnlProfRegistrationContainer_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-
-        }
+        
     }
 }
