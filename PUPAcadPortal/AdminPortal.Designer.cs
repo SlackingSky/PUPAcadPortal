@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminPortal));
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             pnlSidebar = new Panel();
             pnlYellow = new Panel();
             flowLayoutPanel1 = new FlowLayoutPanel();
@@ -69,9 +69,6 @@
             pnlSubOfferingContent = new Panel();
             panel3 = new Panel();
             pnlAccountingRecordsContent = new Panel();
-            panel29 = new Panel();
-            label58 = new Label();
-            label59 = new Label();
             panel30 = new Panel();
             label60 = new Label();
             label61 = new Label();
@@ -231,6 +228,12 @@
             label4 = new Label();
             pictureBox2 = new PictureBox();
             pnlAccountsContent = new Panel();
+            pictureBox11 = new PictureBox();
+            pictureBox12 = new PictureBox();
+            pictureBox13 = new PictureBox();
+            panel29 = new Panel();
+            textBox16 = new TextBox();
+            button3 = new Button();
             pnlSidebar.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             panel7.SuspendLayout();
@@ -252,7 +255,6 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel3.SuspendLayout();
             pnlAccountingRecordsContent.SuspendLayout();
-            panel29.SuspendLayout();
             panel30.SuspendLayout();
             panel31.SuspendLayout();
             panel32.SuspendLayout();
@@ -287,6 +289,10 @@
             panel15.SuspendLayout();
             panel16.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox11).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox12).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox13).BeginInit();
+            panel29.SuspendLayout();
             SuspendLayout();
             // 
             // pnlSidebar
@@ -828,7 +834,7 @@
             // pnlAccountingRecordsContent
             // 
             pnlAccountingRecordsContent.AutoScroll = true;
-            pnlAccountingRecordsContent.BackColor = Color.Moccasin;
+            pnlAccountingRecordsContent.BackColor = SystemColors.ControlLight;
             pnlAccountingRecordsContent.Controls.Add(panel29);
             pnlAccountingRecordsContent.Controls.Add(panel30);
             pnlAccountingRecordsContent.Controls.Add(panel31);
@@ -843,49 +849,16 @@
             pnlAccountingRecordsContent.TabIndex = 8;
             pnlAccountingRecordsContent.Visible = false;
             // 
-            // panel29
-            // 
-            panel29.BackColor = Color.White;
-            panel29.BorderStyle = BorderStyle.Fixed3D;
-            panel29.Controls.Add(label58);
-            panel29.Controls.Add(label59);
-            panel29.Location = new Point(1083, 163);
-            panel29.Name = "panel29";
-            panel29.Size = new Size(320, 125);
-            panel29.TabIndex = 21;
-            // 
-            // label58
-            // 
-            label58.AutoSize = true;
-            label58.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label58.ForeColor = Color.DimGray;
-            label58.Location = new Point(3, 10);
-            label58.Name = "label58";
-            label58.Size = new Size(111, 28);
-            label58.TabIndex = 16;
-            label58.Text = "Graduated";
-            // 
-            // label59
-            // 
-            label59.AutoSize = true;
-            label59.BackColor = Color.Transparent;
-            label59.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label59.ForeColor = Color.Blue;
-            label59.Location = new Point(3, 29);
-            label59.Name = "label59";
-            label59.Size = new Size(70, 81);
-            label59.TabIndex = 17;
-            label59.Text = "0";
-            // 
             // panel30
             // 
             panel30.BackColor = Color.White;
             panel30.BorderStyle = BorderStyle.Fixed3D;
+            panel30.Controls.Add(pictureBox13);
             panel30.Controls.Add(label60);
             panel30.Controls.Add(label61);
-            panel30.Location = new Point(728, 163);
+            panel30.Location = new Point(983, 159);
             panel30.Name = "panel30";
-            panel30.Size = new Size(320, 125);
+            panel30.Size = new Size(420, 125);
             panel30.TabIndex = 20;
             // 
             // label60
@@ -895,31 +868,32 @@
             label60.ForeColor = Color.DimGray;
             label60.Location = new Point(3, 10);
             label60.Name = "label60";
-            label60.Size = new Size(87, 28);
+            label60.Size = new Size(161, 28);
             label60.TabIndex = 16;
-            label60.Text = "Inactive";
+            label60.Text = "Unpaid Amount";
             // 
             // label61
             // 
             label61.AutoSize = true;
             label61.BackColor = Color.Transparent;
             label61.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label61.ForeColor = Color.Orange;
+            label61.ForeColor = Color.Red;
             label61.Location = new Point(3, 29);
             label61.Name = "label61";
-            label61.Size = new Size(70, 81);
+            label61.Size = new Size(125, 81);
             label61.TabIndex = 17;
-            label61.Text = "0";
+            label61.Text = " ₱0";
             // 
             // panel31
             // 
             panel31.BackColor = Color.White;
             panel31.BorderStyle = BorderStyle.Fixed3D;
+            panel31.Controls.Add(pictureBox12);
             panel31.Controls.Add(label62);
             panel31.Controls.Add(label63);
-            panel31.Location = new Point(381, 163);
+            panel31.Location = new Point(506, 159);
             panel31.Name = "panel31";
-            panel31.Size = new Size(320, 125);
+            panel31.Size = new Size(420, 128);
             panel31.TabIndex = 19;
             // 
             // label62
@@ -929,9 +903,9 @@
             label62.ForeColor = Color.DimGray;
             label62.Location = new Point(3, 10);
             label62.Name = "label62";
-            label62.Size = new Size(72, 28);
+            label62.Size = new Size(135, 28);
             label62.TabIndex = 16;
-            label62.Text = "Active";
+            label62.Text = "Paid Amount";
             // 
             // label63
             // 
@@ -941,19 +915,20 @@
             label63.ForeColor = Color.LimeGreen;
             label63.Location = new Point(3, 29);
             label63.Name = "label63";
-            label63.Size = new Size(70, 81);
+            label63.Size = new Size(125, 81);
             label63.TabIndex = 17;
-            label63.Text = "0";
+            label63.Text = " ₱0";
             // 
             // panel32
             // 
             panel32.BackColor = Color.White;
             panel32.BorderStyle = BorderStyle.Fixed3D;
+            panel32.Controls.Add(pictureBox11);
             panel32.Controls.Add(label64);
             panel32.Controls.Add(label65);
             panel32.Location = new Point(37, 163);
             panel32.Name = "panel32";
-            panel32.Size = new Size(320, 125);
+            panel32.Size = new Size(420, 125);
             panel32.TabIndex = 18;
             // 
             // label64
@@ -963,9 +938,9 @@
             label64.ForeColor = Color.DimGray;
             label64.Location = new Point(3, 10);
             label64.Name = "label64";
-            label64.Size = new Size(148, 28);
+            label64.Size = new Size(141, 28);
             label64.TabIndex = 15;
-            label64.Text = "Total Students";
+            label64.Text = "Total Amount";
             // 
             // label65
             // 
@@ -975,16 +950,16 @@
             label65.ForeColor = Color.Black;
             label65.Location = new Point(3, 29);
             label65.Name = "label65";
-            label65.Size = new Size(70, 81);
+            label65.Size = new Size(125, 81);
             label65.TabIndex = 15;
-            label65.Text = "0";
+            label65.Text = " ₱0";
             // 
             // label66
             // 
             label66.AutoSize = true;
             label66.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label66.ForeColor = Color.Black;
-            label66.Location = new Point(107, 41);
+            label66.Location = new Point(107, 43);
             label66.Name = "label66";
             label66.Size = new Size(369, 50);
             label66.TabIndex = 17;
@@ -1006,11 +981,11 @@
             pictureBox10.BackColor = Color.Maroon;
             pictureBox10.BackgroundImageLayout = ImageLayout.Zoom;
             pictureBox10.BorderStyle = BorderStyle.FixedSingle;
-            pictureBox10.Image = Properties.Resources.enrolledstudents_32;
+            pictureBox10.Image = (Image)resources.GetObject("pictureBox10.Image");
             pictureBox10.Location = new Point(36, 41);
             pictureBox10.Margin = new Padding(3, 4, 3, 4);
             pictureBox10.Name = "pictureBox10";
-            pictureBox10.Size = new Size(65, 79);
+            pictureBox10.Size = new Size(67, 87);
             pictureBox10.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox10.TabIndex = 15;
             pictureBox10.TabStop = false;
@@ -2526,24 +2501,24 @@
             dgvUsers.BorderStyle = BorderStyle.None;
             dgvUsers.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvUsers.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = Color.Maroon;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            dataGridViewCellStyle1.ForeColor = Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dgvUsers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.Maroon;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            dataGridViewCellStyle3.ForeColor = Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            dgvUsers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             dgvUsers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvUsers.Columns.AddRange(new DataGridViewColumn[] { colUserID, colUserName, colUserEmail, colUserProgram, colUserYear, colUserStatus });
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(197, 202, 233);
-            dataGridViewCellStyle2.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dgvUsers.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.Window;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(197, 202, 233);
+            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
+            dgvUsers.DefaultCellStyle = dataGridViewCellStyle4;
             dgvUsers.Dock = DockStyle.Fill;
             dgvUsers.EnableHeadersVisualStyles = false;
             dgvUsers.GridColor = Color.FromArgb(220, 220, 220);
@@ -2837,6 +2812,80 @@
             pnlAccountsContent.TabIndex = 5;
             pnlAccountsContent.Visible = false;
             // 
+            // pictureBox11
+            // 
+            pictureBox11.BackColor = Color.Maroon;
+            pictureBox11.BackgroundImageLayout = ImageLayout.Zoom;
+            pictureBox11.BorderStyle = BorderStyle.FixedSingle;
+            pictureBox11.Image = Properties.Resources.card_inserting_48__1_;
+            pictureBox11.Location = new Point(305, 17);
+            pictureBox11.Margin = new Padding(3, 4, 3, 4);
+            pictureBox11.Name = "pictureBox11";
+            pictureBox11.Size = new Size(91, 87);
+            pictureBox11.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox11.TabIndex = 21;
+            pictureBox11.TabStop = false;
+            // 
+            // pictureBox12
+            // 
+            pictureBox12.BackColor = Color.Maroon;
+            pictureBox12.BackgroundImageLayout = ImageLayout.Zoom;
+            pictureBox12.BorderStyle = BorderStyle.FixedSingle;
+            pictureBox12.Image = Properties.Resources.card_in_use_48;
+            pictureBox12.Location = new Point(301, 21);
+            pictureBox12.Margin = new Padding(3, 4, 3, 4);
+            pictureBox12.Name = "pictureBox12";
+            pictureBox12.Size = new Size(91, 87);
+            pictureBox12.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox12.TabIndex = 22;
+            pictureBox12.TabStop = false;
+            // 
+            // pictureBox13
+            // 
+            pictureBox13.BackColor = Color.Maroon;
+            pictureBox13.BackgroundImageLayout = ImageLayout.Zoom;
+            pictureBox13.BorderStyle = BorderStyle.FixedSingle;
+            pictureBox13.Image = Properties.Resources.calendar_10_48;
+            pictureBox13.Location = new Point(309, 16);
+            pictureBox13.Margin = new Padding(3, 4, 3, 4);
+            pictureBox13.Name = "pictureBox13";
+            pictureBox13.Size = new Size(91, 87);
+            pictureBox13.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox13.TabIndex = 23;
+            pictureBox13.TabStop = false;
+            // 
+            // panel29
+            // 
+            panel29.BackColor = Color.White;
+            panel29.Controls.Add(button3);
+            panel29.Controls.Add(textBox16);
+            panel29.Location = new Point(36, 333);
+            panel29.Name = "panel29";
+            panel29.Size = new Size(1366, 390);
+            panel29.TabIndex = 21;
+            // 
+            // textBox16
+            // 
+            textBox16.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textBox16.Location = new Point(23, 23);
+            textBox16.Name = "textBox16";
+            textBox16.PlaceholderText = "Search by student name, ID, or transaction type...";
+            textBox16.Size = new Size(1140, 34);
+            textBox16.TabIndex = 0;
+            // 
+            // button3
+            // 
+            button3.BackColor = Color.Maroon;
+            button3.FlatStyle = FlatStyle.Flat;
+            button3.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button3.ForeColor = Color.White;
+            button3.Location = new Point(1180, 22);
+            button3.Name = "button3";
+            button3.Size = new Size(165, 35);
+            button3.TabIndex = 1;
+            button3.Text = "Search";
+            button3.UseVisualStyleBackColor = false;
+            // 
             // AdminPortal
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -2873,8 +2922,6 @@
             panel3.ResumeLayout(false);
             pnlAccountingRecordsContent.ResumeLayout(false);
             pnlAccountingRecordsContent.PerformLayout();
-            panel29.ResumeLayout(false);
-            panel29.PerformLayout();
             panel30.ResumeLayout(false);
             panel30.PerformLayout();
             panel31.ResumeLayout(false);
@@ -2930,6 +2977,11 @@
             panel15.PerformLayout();
             panel16.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox11).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox12).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox13).EndInit();
+            panel29.ResumeLayout(false);
+            panel29.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -3120,9 +3172,6 @@
         private Label label55;
         private Panel panel28;
         private Label label57;
-        private Panel panel29;
-        private Label label58;
-        private Label label59;
         private Panel panel30;
         private Label label60;
         private Label label61;
@@ -3135,5 +3184,11 @@
         private Label label66;
         private Label label67;
         private PictureBox pictureBox10;
+        private PictureBox pictureBox13;
+        private PictureBox pictureBox12;
+        private PictureBox pictureBox11;
+        private Panel panel29;
+        private Button button3;
+        private TextBox textBox16;
     }
 }

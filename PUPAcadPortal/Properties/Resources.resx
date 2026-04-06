@@ -133,6 +133,9 @@
   <data name="button" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\button.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="item.icon (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\item.icon (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="search-3-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\search-3-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -150,6 +153,9 @@
   </data>
   <data name="SubOffering" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SubOffering.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="student-black-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\student-black-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="professor-black-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\professor-black-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -181,6 +187,9 @@
   <data name="peso_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\peso_icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="card-inserting-24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\card-inserting-24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="user-3-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\user-3-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -190,17 +199,14 @@
   <data name="Check_icon1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Check_icon1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="pupbackgradient" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pupbackgradient.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Container" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Container.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="plus-8-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\plus-8-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="professor-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\professor-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="calendar-10-48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\calendar-10-48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="visible-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\visible-161.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -211,8 +217,11 @@
   <data name="exclamation-128" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\exclamation-1281.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="books-48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\books-48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="card-in-use-48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\card-in-use-48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="card-inserting-48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\card-inserting-48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Exclamation_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Exclamation_icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -226,8 +235,8 @@
   <data name="Roboto-VariableFont_wdth,wght" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Roboto-VariableFont_wdth,wght.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="student-black-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\student-black-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="professor-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\professor-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="student-2-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\student-2-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -241,11 +250,14 @@
   <data name="Eye" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Eye.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="empty-filter-24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\empty-filter-24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="button (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\button (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="item.icon (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\item.icon (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="pupbackgradient" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pupbackgradient.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="edit-user-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\edit-user-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -268,11 +280,17 @@
   <data name="img (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\img (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="credit-card-6-481" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\credit-card-6-481.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="warning-4-128" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\warning-4-1281.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Course" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Course.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="books-48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\books-48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="professor-161" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\professor-161.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -283,7 +301,7 @@
   <data name="plus-8-24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\plus-8-24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="empty-filter-24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\empty-filter-24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="card-inserting-48 (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\card-inserting-48 (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
