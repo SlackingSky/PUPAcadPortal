@@ -23,6 +23,7 @@ namespace PUPAcadPortal
             // 2. Set the pattern to include both Date and Time
             // This will show: 03/24/2026 09:30 PM
             dateTimePicker1.CustomFormat = "MM/dd/yyyy hh:mm tt";
+            //aalisin ung border ng datetimepicker sa attendance tab | d ko alam kung sakin lng kasi nagbubug / nawawala ung button for the date :) - hansukal
             // Removes 2 pixels from every side of the control
             //dateTimePicker3.Region = new Region(new Rectangle(2, 2, dateTimePicker1.Width - 4, dateTimePicker1.Height - 4));
         }
