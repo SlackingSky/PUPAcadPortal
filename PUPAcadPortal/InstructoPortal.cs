@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace PUPAcadPortal
 {
@@ -247,7 +248,7 @@ namespace PUPAcadPortal
             pnlSubMenu.BringToFront();
             pnlLMSActivities.Visible = true;
             pnlLMSActivities.BringToFront();
-            
+
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -264,6 +265,7 @@ namespace PUPAcadPortal
 
         private void btnLMSActSub_Click(object sender, EventArgs e)
         {
+            pnlLMSFiles.Visible = false;
             pnlLMSActivities.Visible = true;
             pnlLMSActivities.BringToFront();
         }
@@ -428,6 +430,92 @@ namespace PUPAcadPortal
                     count++;
                 }
             }
+        }
+
+        private void pnlLMSFiles_DragDrop(object sender, DragEventArgs e)
+        {
+            // Get the array of file paths
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+            foreach (string filePath in files)
+            {
+                // Just call your helper method! It already has the size check and icon logic.
+                AddFileToListView(filePath);
+            }
+        }
+
+        private void AddFileToListView(string filepath)
+        {
+            FileInfo fileInfo = new FileInfo(filepath);
+
+            // 1. Check if the file is larger than 10MB
+            // 10 * 1024 * 1024 bytes = 10,485,760 bytes
+            long maxFileSize = 10 * 1024 * 1024;
+
+            if (fileInfo.Length <= maxFileSize)
+            {
+                // 2. Extract the icon from the actual file
+                // This handles .pdf, .docx, .png, etc. automatically
+                Icon fileIcon = Icon.ExtractAssociatedIcon(filepath);
+
+                // 3. Add the icon to your ImageList at runtime 
+                // We use the extension as the Key to avoid adding the same icon twice
+                if (!imageList1.Images.ContainsKey(fileInfo.Extension))
+                {
+                    imageList1.Images.Add(fileInfo.Extension, fileIcon);
+                }
+
+                // 4. Find the index of the icon we just added (or existing one)
+                int iconIndex = imageList1.Images.IndexOfKey(fileInfo.Extension);
+
+                // 5. Create the item using the Name and the iconIndex
+                ListViewItem item = new ListViewItem(fileInfo.Name, iconIndex);
+
+                // 6. Add the sub-item for File Size
+                item.SubItems.Add($"{fileInfo.Length / 1024.0:F2} KB");
+
+                // 7. Add the completed item to your ListView
+                listView_file.Items.Add(item);
+            }
+            else
+            {
+                // Optional: Let the user know the file was too big
+                MessageBox.Show($"{fileInfo.Name} exceeds the 10MB limit.", "File Too Large",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void pnlLMSFiles_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        private void InstructorPortal_Load(object sender, EventArgs e)
+        {
+            // 1. Basic Setup
+            listView_file.View = View.Details;
+            listView_file.FullRowSelect = true; // Makes the whole row clickable
+            listView_file.GridLines = true;      // Adds subtle lines between files
+
+            // 2. Setup Columns (Updated your names slightly for a cleaner look)
+            listView_file.Columns.Clear(); // Clears any designer columns to prevent duplicates
+            listView_file.Columns.Add("File Name", 250);
+            listView_file.Columns.Add("Size", 100);
+
+            // 3. IMPORTANT: Connect the ImageList to the ListView
+            // This allows the icons from AddFileToListView to actually appear
+            listView_file.SmallImageList = imageList1;
+
+            // 4. (Optional) Set the ImageList icon quality
+            imageList1.ColorDepth = ColorDepth.Depth32Bit;
+            imageList1.ImageSize = new Size(16, 16);
         }
     }
 }
