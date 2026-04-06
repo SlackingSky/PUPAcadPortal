@@ -877,7 +877,7 @@
             roundedPanel1.Controls.Add(lblsection1);
             roundedPanel1.Controls.Add(pictureBox44);
             roundedPanel1.Controls.Add(btnGo1);
-            roundedPanel1.Location = new Point(76, 171);
+            roundedPanel1.Location = new Point(51, 164);
             roundedPanel1.Name = "roundedPanel1";
             roundedPanel1.Size = new Size(578, 183);
             roundedPanel1.TabIndex = 17;
@@ -939,7 +939,7 @@
             // 
             // roundedPanel2
             // 
-            roundedPanel2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            roundedPanel2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             roundedPanel2.BackColor = Color.White;
             roundedPanel2.BorderRadius = 10;
             roundedPanel2.Controls.Add(lblSection2Sched);
@@ -947,7 +947,7 @@
             roundedPanel2.Controls.Add(lblSection2);
             roundedPanel2.Controls.Add(pictureBox45);
             roundedPanel2.Controls.Add(btnGo2);
-            roundedPanel2.Location = new Point(801, 168);
+            roundedPanel2.Location = new Point(815, 164);
             roundedPanel2.Name = "roundedPanel2";
             roundedPanel2.Size = new Size(578, 183);
             roundedPanel2.TabIndex = 18;
@@ -965,7 +965,7 @@
             // 
             // lblSubject2
             // 
-            lblSubject2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lblSubject2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblSubject2.AutoSize = true;
             lblSubject2.Font = new Font("Segoe UI Semibold", 14.8000011F, FontStyle.Bold);
             lblSubject2.Location = new Point(200, 20);
