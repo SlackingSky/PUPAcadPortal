@@ -111,14 +111,13 @@ namespace PUPAcadPortal
         private void btnAnnounce_Click(object sender, EventArgs e)
         {
             pnlAnnounce.BringToFront();
-
             pnlAnnounce.Visible = true;
         }
 
         private void btnCalendar_Click(object sender, EventArgs e)
         {
+            pnlSubject.Visible = false;
             pnlCalendar.BringToFront();
-
             pnlCalendar.Visible = true;
         }
 
@@ -144,6 +143,33 @@ namespace PUPAcadPortal
         {
             pnlGrades.BringToFront();
             pnlGrades.Visible = true;
+        }
+
+        private void btnGo1_Click(object sender, EventArgs e)
+        {
+            pnlSubMenu.BringToFront();
+            pnlSubMenu.Visible = true;
+            pnlLMSActivities.BringToFront();
+            pnlLMSActivities.Visible = true;
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            pnlSubject.BringToFront();
+            pnlSubject.Visible = true;
+        }
+
+        private void btnStudFiles_Click(object sender, EventArgs e)
+        {
+            pnlStudFiles.BringToFront();
+            pnlStudFiles.Visible = true;
+        }
+
+        private void btnStudAct_Click(object sender, EventArgs e)
+        {
+            pnlLMSFiles.Hide();
+            pnlLMSActivities.BringToFront();
+            pnlLMSActivities.Visible = true;
         }
     }
 }
