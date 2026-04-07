@@ -147,6 +147,7 @@ namespace PUPAcadPortal
 
         private void btnGo1_Click(object sender, EventArgs e)
         {
+            pnlLMSFiles.Visible = false;
             pnlSubMenu.BringToFront();
             pnlSubMenu.Visible = true;
             pnlLMSActivities.BringToFront();
@@ -161,13 +162,51 @@ namespace PUPAcadPortal
 
         private void btnStudFiles_Click(object sender, EventArgs e)
         {
-            pnlStudFiles.BringToFront();
-            pnlStudFiles.Visible = true;
+
+            pnlLMSFiles.BringToFront();
+            pnlLMSFiles.Visible = true;
         }
 
         private void btnStudAct_Click(object sender, EventArgs e)
         {
-            pnlLMSFiles.Hide();
+            pnlLMSFiles.Visible = false;
+            pnlLMSActivities.BringToFront();
+            pnlLMSActivities.Visible = true;
+        }
+
+        private void pnlAct1_MouseEnter(object sender, EventArgs e)
+        {
+            // Change to a light highlight color (e.g., Light Gray or Light Maroon)
+            pnlAct1.BackColor = Color.FromArgb(128, 0, 0);
+            pnlAct1.Cursor = Cursors.Hand; // Shows the clicking hand icon
+        }
+
+        private void pnlAct1_MouseLeave(object sender, EventArgs e)
+        {
+            // Change back to the original background color (usually White)
+            pnlAct1.BackColor = Color.White;
+        }
+
+        private void pnlAct1_Click(object sender, EventArgs e)
+        {
+            // 1. Hide the panel that contains the question/choices
+            // Replace 'pnlQuestionArea' with the actual parent container name
+            pnlAnsAct1.Visible = false;
+
+            // 2. Show the Answer Action panel
+            pnlAnsAct1.Visible = true;
+            pnlAnsAct1.BringToFront();
+            pnlAnsAct1.Dock = DockStyle.Fill; // Optional: ensures it fills the space
+        }
+
+        private void btnCancelAct_Click(object sender, EventArgs e)
+        {
+            pnlLMSActivities.BringToFront();
+            pnlLMSActivities.Visible = true;
+        }
+
+        private void btnCancelAct_Click_1(object sender, EventArgs e)
+        {
             pnlLMSActivities.BringToFront();
             pnlLMSActivities.Visible = true;
         }

@@ -473,6 +473,16 @@ namespace PUPAcadPortal.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap quiz {
+            get {
+                object obj = ResourceManager.GetObject("quiz", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap report {
             get {
                 object obj = ResourceManager.GetObject("report", resourceCulture);
@@ -496,6 +506,26 @@ namespace PUPAcadPortal.Properties {
         internal static System.Drawing.Bitmap Screenshot_2026_04_07_132102 {
             get {
                 object obj = ResourceManager.GetObject("Screenshot 2026-04-07 132102", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Screenshot_2026_04_07_164610 {
+            get {
+                object obj = ResourceManager.GetObject("Screenshot 2026-04-07 164610", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Screenshot_2026_04_07_164620 {
+            get {
+                object obj = ResourceManager.GetObject("Screenshot 2026-04-07 164620", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
