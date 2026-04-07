@@ -14,7 +14,7 @@ namespace PUPAcadPortal
         private Color defaultColor = Color.Maroon;
         private Color selectedColor = Color.FromArgb(109, 0, 0);
 
-        private bool headerChecked = false;
+        
 
         private const int SidePadding = 16;
         private const int CardGap = 10;
