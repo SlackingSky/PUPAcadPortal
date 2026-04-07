@@ -62,13 +62,22 @@
             pnlEnrollContent = new Panel();
             panel3 = new Panel();
             pnlSubMenu = new Panel();
+            pnlLMSFiles = new Panel();
+            pictureBox3 = new PictureBox();
+            panel25 = new Panel();
+            panel26 = new Panel();
+            label121 = new Label();
             pnlLMSActivities = new Panel();
             roundedPanel15 = new RoundedPanel();
             roundedPanel16 = new RoundedPanel();
+            label19 = new Label();
             pictureBox7 = new PictureBox();
+            label20 = new Label();
             roundedPanel13 = new RoundedPanel();
             roundedPanel14 = new RoundedPanel();
+            label21 = new Label();
             pictureBox6 = new PictureBox();
+            label22 = new Label();
             roundedPanel5 = new RoundedPanel();
             pnlAss1 = new RoundedPanel();
             label15 = new Label();
@@ -130,11 +139,6 @@
             panel35 = new Panel();
             label12 = new Label();
             pictureBox8 = new PictureBox();
-            pnlLMSFiles = new Panel();
-            pictureBox3 = new PictureBox();
-            panel25 = new Panel();
-            panel26 = new Panel();
-            label121 = new Label();
             panel38 = new Panel();
             panel18 = new Panel();
             btnStudFiles = new Button();
@@ -291,10 +295,6 @@
             label3 = new Label();
             label4 = new Label();
             pictureBox2 = new PictureBox();
-            label19 = new Label();
-            label20 = new Label();
-            label21 = new Label();
-            label22 = new Label();
             pnlSidebar.SuspendLayout();
             panel4.SuspendLayout();
             panel5.SuspendLayout();
@@ -311,6 +311,9 @@
             panel13.SuspendLayout();
             panel3.SuspendLayout();
             pnlSubMenu.SuspendLayout();
+            pnlLMSFiles.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
+            panel25.SuspendLayout();
             pnlLMSActivities.SuspendLayout();
             roundedPanel15.SuspendLayout();
             roundedPanel16.SuspendLayout();
@@ -348,9 +351,6 @@
             panel36.SuspendLayout();
             panel23.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
-            pnlLMSFiles.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
-            panel25.SuspendLayout();
             panel38.SuspendLayout();
             panel18.SuspendLayout();
             pnlAttendance.SuspendLayout();
@@ -942,9 +942,9 @@
             // pnlSubMenu
             // 
             pnlSubMenu.Controls.Add(pnlLMSActivities);
+            pnlSubMenu.Controls.Add(pnlLMSFiles);
             pnlSubMenu.Controls.Add(pnlAnsAss);
             pnlSubMenu.Controls.Add(pnlAnsAct1);
-            pnlSubMenu.Controls.Add(pnlLMSFiles);
             pnlSubMenu.Controls.Add(panel38);
             pnlSubMenu.Dock = DockStyle.Fill;
             pnlSubMenu.Location = new Point(293, 96);
@@ -952,6 +952,59 @@
             pnlSubMenu.Size = new Size(1453, 1319);
             pnlSubMenu.TabIndex = 32;
             pnlSubMenu.Visible = false;
+            // 
+            // pnlLMSFiles
+            // 
+            pnlLMSFiles.AllowDrop = true;
+            pnlLMSFiles.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            pnlLMSFiles.Controls.Add(pictureBox3);
+            pnlLMSFiles.Controls.Add(panel25);
+            pnlLMSFiles.Location = new Point(0, 65);
+            pnlLMSFiles.Name = "pnlLMSFiles";
+            pnlLMSFiles.Size = new Size(1453, 1254);
+            pnlLMSFiles.TabIndex = 1;
+            pnlLMSFiles.Visible = false;
+            // 
+            // pictureBox3
+            // 
+            pictureBox3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            pictureBox3.Image = Properties.Resources.Screenshot_2026_04_07_132102;
+            pictureBox3.Location = new Point(18, 94);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(1423, 725);
+            pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox3.TabIndex = 2;
+            pictureBox3.TabStop = false;
+            // 
+            // panel25
+            // 
+            panel25.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panel25.BackColor = Color.White;
+            panel25.Controls.Add(panel26);
+            panel25.Controls.Add(label121);
+            panel25.Location = new Point(0, 0);
+            panel25.Name = "panel25";
+            panel25.Size = new Size(1453, 79);
+            panel25.TabIndex = 1;
+            // 
+            // panel26
+            // 
+            panel26.BackColor = SystemColors.Control;
+            panel26.Dock = DockStyle.Top;
+            panel26.Location = new Point(0, 0);
+            panel26.Name = "panel26";
+            panel26.Size = new Size(1453, 21);
+            panel26.TabIndex = 2;
+            // 
+            // label121
+            // 
+            label121.AutoSize = true;
+            label121.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label121.Location = new Point(18, 34);
+            label121.Name = "label121";
+            label121.Size = new Size(118, 31);
+            label121.TabIndex = 3;
+            label121.Text = "Class Files";
             // 
             // pnlLMSActivities
             // 
@@ -987,7 +1040,6 @@
             roundedPanel16.BackColor = Color.White;
             roundedPanel16.BackgroundImageLayout = ImageLayout.Center;
             roundedPanel16.BorderRadius = 10;
-            roundedPanel16.BorderStyle = BorderStyle.FixedSingle;
             roundedPanel16.Controls.Add(label19);
             roundedPanel16.Controls.Add(pictureBox7);
             roundedPanel16.Controls.Add(label20);
@@ -998,6 +1050,16 @@
             roundedPanel16.MouseEnter += roundedPanel16_MouseEnter;
             roundedPanel16.MouseLeave += roundedPanel16_MouseLeave;
             // 
+            // label19
+            // 
+            label19.AutoSize = true;
+            label19.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label19.Location = new Point(209, 86);
+            label19.Name = "label19";
+            label19.Size = new Size(270, 31);
+            label19.TabIndex = 10;
+            label19.Text = "Due : April 20, 11 : 59 pm";
+            // 
             // pictureBox7
             // 
             pictureBox7.Image = (Image)resources.GetObject("pictureBox7.Image");
@@ -1007,6 +1069,16 @@
             pictureBox7.SizeMode = PictureBoxSizeMode.AutoSize;
             pictureBox7.TabIndex = 9;
             pictureBox7.TabStop = false;
+            // 
+            // label20
+            // 
+            label20.AutoSize = true;
+            label20.Font = new Font("Segoe UI Semibold", 16.8F, FontStyle.Bold);
+            label20.Location = new Point(207, 48);
+            label20.Name = "label20";
+            label20.Size = new Size(419, 38);
+            label20.TabIndex = 9;
+            label20.Text = "Assignment 2 - Module 3 and 4";
             // 
             // roundedPanel13
             // 
@@ -1027,7 +1099,6 @@
             roundedPanel14.BackColor = Color.White;
             roundedPanel14.BackgroundImageLayout = ImageLayout.Center;
             roundedPanel14.BorderRadius = 10;
-            roundedPanel14.BorderStyle = BorderStyle.FixedSingle;
             roundedPanel14.Controls.Add(label21);
             roundedPanel14.Controls.Add(pictureBox6);
             roundedPanel14.Controls.Add(label22);
@@ -1039,6 +1110,16 @@
             roundedPanel14.MouseEnter += roundedPanel14_MouseEnter;
             roundedPanel14.MouseLeave += roundedPanel14_MouseLeave;
             // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label21.Location = new Point(209, 86);
+            label21.Name = "label21";
+            label21.Size = new Size(262, 31);
+            label21.TabIndex = 8;
+            label21.Text = "Due : April 15, 12: 30 am";
+            // 
             // pictureBox6
             // 
             pictureBox6.Image = Properties.Resources.quiz;
@@ -1048,6 +1129,16 @@
             pictureBox6.SizeMode = PictureBoxSizeMode.AutoSize;
             pictureBox6.TabIndex = 8;
             pictureBox6.TabStop = false;
+            // 
+            // label22
+            // 
+            label22.AutoSize = true;
+            label22.Font = new Font("Segoe UI Semibold", 16.8F, FontStyle.Bold);
+            label22.Location = new Point(207, 48);
+            label22.Name = "label22";
+            label22.Size = new Size(327, 38);
+            label22.TabIndex = 7;
+            label22.Text = "Quiz 2 - Module 3 and 4";
             // 
             // roundedPanel5
             // 
@@ -1761,57 +1852,6 @@
             pictureBox8.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox8.TabIndex = 1;
             pictureBox8.TabStop = false;
-            // 
-            // pnlLMSFiles
-            // 
-            pnlLMSFiles.AllowDrop = true;
-            pnlLMSFiles.Controls.Add(pictureBox3);
-            pnlLMSFiles.Controls.Add(panel25);
-            pnlLMSFiles.Location = new Point(0, 65);
-            pnlLMSFiles.Name = "pnlLMSFiles";
-            pnlLMSFiles.Size = new Size(1453, 1254);
-            pnlLMSFiles.TabIndex = 1;
-            pnlLMSFiles.Visible = false;
-            // 
-            // pictureBox3
-            // 
-            pictureBox3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            pictureBox3.Image = Properties.Resources.Screenshot_2026_04_07_132102;
-            pictureBox3.Location = new Point(18, 94);
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(1423, 725);
-            pictureBox3.TabIndex = 2;
-            pictureBox3.TabStop = false;
-            // 
-            // panel25
-            // 
-            panel25.BackColor = Color.White;
-            panel25.Controls.Add(panel26);
-            panel25.Controls.Add(label121);
-            panel25.Dock = DockStyle.Top;
-            panel25.Location = new Point(0, 0);
-            panel25.Name = "panel25";
-            panel25.Size = new Size(1453, 79);
-            panel25.TabIndex = 1;
-            // 
-            // panel26
-            // 
-            panel26.BackColor = SystemColors.Control;
-            panel26.Dock = DockStyle.Top;
-            panel26.Location = new Point(0, 0);
-            panel26.Name = "panel26";
-            panel26.Size = new Size(1453, 21);
-            panel26.TabIndex = 2;
-            // 
-            // label121
-            // 
-            label121.AutoSize = true;
-            label121.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label121.Location = new Point(18, 34);
-            label121.Name = "label121";
-            label121.Size = new Size(118, 31);
-            label121.TabIndex = 3;
-            label121.Text = "Class Files";
             // 
             // panel38
             // 
@@ -3730,46 +3770,6 @@
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
             // 
-            // label19
-            // 
-            label19.AutoSize = true;
-            label19.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label19.Location = new Point(209, 86);
-            label19.Name = "label19";
-            label19.Size = new Size(270, 31);
-            label19.TabIndex = 10;
-            label19.Text = "Due : April 20, 11 : 59 pm";
-            // 
-            // label20
-            // 
-            label20.AutoSize = true;
-            label20.Font = new Font("Segoe UI Semibold", 16.8F, FontStyle.Bold);
-            label20.Location = new Point(207, 48);
-            label20.Name = "label20";
-            label20.Size = new Size(419, 38);
-            label20.TabIndex = 9;
-            label20.Text = "Assignment 2 - Module 3 and 4";
-            // 
-            // label21
-            // 
-            label21.AutoSize = true;
-            label21.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label21.Location = new Point(209, 86);
-            label21.Name = "label21";
-            label21.Size = new Size(262, 31);
-            label21.TabIndex = 8;
-            label21.Text = "Due : April 15, 12: 30 am";
-            // 
-            // label22
-            // 
-            label22.AutoSize = true;
-            label22.Font = new Font("Segoe UI Semibold", 16.8F, FontStyle.Bold);
-            label22.Location = new Point(207, 48);
-            label22.Name = "label22";
-            label22.Size = new Size(327, 38);
-            label22.TabIndex = 7;
-            label22.Text = "Quiz 2 - Module 3 and 4";
-            // 
             // StudentPortal
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -3799,6 +3799,10 @@
             panel13.ResumeLayout(false);
             panel3.ResumeLayout(false);
             pnlSubMenu.ResumeLayout(false);
+            pnlLMSFiles.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
+            panel25.ResumeLayout(false);
+            panel25.PerformLayout();
             pnlLMSActivities.ResumeLayout(false);
             roundedPanel15.ResumeLayout(false);
             roundedPanel16.ResumeLayout(false);
@@ -3846,10 +3850,6 @@
             panel36.ResumeLayout(false);
             panel23.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
-            pnlLMSFiles.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
-            panel25.ResumeLayout(false);
-            panel25.PerformLayout();
             panel38.ResumeLayout(false);
             panel38.PerformLayout();
             panel18.ResumeLayout(false);
