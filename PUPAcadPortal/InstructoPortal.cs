@@ -76,6 +76,7 @@ namespace PUPAcadPortal
                 {
                     content.Value.Visible = true;
                     // Dock = Fill ensures it doesn't get cut off when fullscreen
+                    content.Value.Parent = panel3;
                     content.Value.Dock = DockStyle.Fill;
                     content.Value.BringToFront(); // Forces it to the top so nothing overlaps it
                 }
