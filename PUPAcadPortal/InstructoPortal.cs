@@ -52,10 +52,11 @@ namespace PUPAcadPortal
                     {
                         IList cells = dataGridView1.Rows[e.RowIndex].Cells;
 
-                        DataGridViewCell midCell = (DataGridViewCell)cells!;
-                        DataGridViewCell finCell = (DataGridViewCell)cells!;
-                        DataGridViewCell avgCell = (DataGridViewCell)cells!;
-                        DataGridViewCell remCell = (DataGridViewCell)cells!;
+                        // BINALIK YUNG MGA NUMBERS SA BRACKET DITO!
+                        DataGridViewCell midCell = (DataGridViewCell)cells;
+                        DataGridViewCell finCell = (DataGridViewCell)cells;
+                        DataGridViewCell avgCell = (DataGridViewCell)cells;
+                        DataGridViewCell remCell = (DataGridViewCell)cells;
 
                         double m, f;
                         bool hasMid = double.TryParse(Convert.ToString(midCell.Value), out m);
@@ -96,11 +97,12 @@ namespace PUPAcadPortal
                             if (r.IsNewRow) continue;
 
                             IList cells = r.Cells;
-                            DataGridViewCell cell0 = (DataGridViewCell)cells!; // Student Number
-                            DataGridViewCell cell1 = (DataGridViewCell)cells!; // Name
+                            // BINALIK YUNG MGA NUMBERS SA BRACKET DITO!
+                            DataGridViewCell cell0 = (DataGridViewCell)cells; // Student Number
+                            DataGridViewCell cell1 = (DataGridViewCell)cells; // Name
 
-                            string sn = cell0.Value != null ? cell0.Value.ToString()!.ToLower() : "";
-                            string nm = cell1.Value != null ? cell1.Value.ToString()!.ToLower() : "";
+                            string sn = cell0.Value != null ? cell0.Value.ToString().ToLower() : "";
+                            string nm = cell1.Value != null ? cell1.Value.ToString().ToLower() : "";
 
                             // I-hide o i-show ang row depende kung may match
                             r.Visible = string.IsNullOrEmpty(q) || sn.Contains(q) || nm.Contains(q);
