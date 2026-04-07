@@ -148,36 +148,6 @@
         fxf4APN8GSNCzaoyAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="pictureBox3.ErrorImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAAOZJREFUWEftlrEKwjAQhvM+voAvoC/gc/gEDo66dRJ3F8d2c3QUXDo6uiiOgovj
-        Lz8xkF4JaWuIyx18UO5C7ksoR8zrDawPwGiZl0UJ3J+AmW3bxVxMC8DIZG5UQAVUICowXtmhIZkU/daE
-        iAqcrwjG5minaCguj/Z+kqgAx2VZN3M8MZu72J1szl/j6nI/ySABB2+HdZknWQSq2krIPFEBFVCBpAK3
-        r4QPh4+bA2wm65yCSQTme7sZG/nwMeuC37JOujx2owIhOHrZmPBxKetdGSxAeEL+BzLfh58EUqACKqAC
-        fxf4APN8GSNCzaoyAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="pictureBox3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAAOZJREFUWEftlrEKwjAQhvM+voAvoC/gc/gEDo66dRJ3F8d2c3QUXDo6uiiOgovj
-        Lz8xkF4JaWuIyx18UO5C7ksoR8zrDawPwGiZl0UJ3J+AmW3bxVxMC8DIZG5UQAVUICowXtmhIZkU/daE
-        iAqcrwjG5minaCguj/Z+kqgAx2VZN3M8MZu72J1szl/j6nI/ySABB2+HdZknWQSq2krIPFEBFVCBpAK3
-        r4QPh4+bA2wm65yCSQTme7sZG/nwMeuC37JOujx2owIhOHrZmPBxKetdGSxAeEL+BzLfh58EUqACKqAC
-        fxf4APN8GSNCzaoyAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="pictureBox3.InitialImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAAOZJREFUWEftlrEKwjAQhvM+voAvoC/gc/gEDo66dRJ3F8d2c3QUXDo6uiiOgovj
-        Lz8xkF4JaWuIyx18UO5C7ksoR8zrDawPwGiZl0UJ3J+AmW3bxVxMC8DIZG5UQAVUICowXtmhIZkU/daE
-        iAqcrwjG5minaCguj/Z+kqgAx2VZN3M8MZu72J1szl/j6nI/ySABB2+HdZknWQSq2krIPFEBFVCBpAK3
-        r4QPh4+bA2wm65yCSQTme7sZG/nwMeuC37JOujx2owIhOHrZmPBxKetdGSxAeEL+BzLfh58EUqACKqAC
-        fxf4APN8GSNCzaoyAAAAAElFTkSuQmCC
-</value>
-  </data>
   <metadata name="StudentNumber.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
