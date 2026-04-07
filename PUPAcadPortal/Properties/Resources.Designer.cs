@@ -243,6 +243,16 @@ namespace PUPAcadPortal.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap folder_icon {
+            get {
+                object obj = ResourceManager.GetObject("folder_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Group_14__2_ {
             get {
                 object obj = ResourceManager.GetObject("Group 14 (2)", resourceCulture);
@@ -383,6 +393,36 @@ namespace PUPAcadPortal.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap pdf_icon {
+            get {
+                object obj = ResourceManager.GetObject("pdf_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap png_icon {
+            get {
+                object obj = ResourceManager.GetObject("png_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ppt_icon {
+            get {
+                object obj = ResourceManager.GetObject("ppt_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap profile {
             get {
                 object obj = ResourceManager.GetObject("profile", resourceCulture);
@@ -447,6 +487,16 @@ namespace PUPAcadPortal.Properties {
             get {
                 object obj = ResourceManager.GetObject("Roboto-VariableFont_wdth,wght", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Screenshot_2026_04_07_132102 {
+            get {
+                object obj = ResourceManager.GetObject("Screenshot 2026-04-07 132102", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

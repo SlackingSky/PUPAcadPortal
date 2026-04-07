@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.IO;
 
 namespace PUPAcadPortal
 {
@@ -402,7 +403,7 @@ namespace PUPAcadPortal
             }
         }
 
-        private void flowLayoutPanel3_Resize(object sender, EventArgs e)
+        private void flowLayoutPanel3_Resize(object sender, EventArgs e) // sa quiz din ung pinakapanel ng insert quiz
         {
             // Calculate new centering margin based on current panel width
             // Formula: (Current Width - Card Width - Scrollbar Width) / 2
@@ -418,7 +419,7 @@ namespace PUPAcadPortal
             }
         }
 
-        private void RenumberQuestions()
+        private void RenumberQuestions() //sa quiz to ung add quiz - hansukal
         {
             int count = 1;
             // Loop through only the UserControls (ignoring the control bar)
@@ -432,43 +433,87 @@ namespace PUPAcadPortal
             }
         }
 
-        private void pnlLMSFiles_DragDrop(object sender, DragEventArgs e)
+        private void pnlLMSFiles_DragDrop(object sender, DragEventArgs e) //drag and drop feature ng class files
         {
-            // Get the array of file paths
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            // We get the paths from the drag event
+            string[] paths = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-            foreach (string filePath in files)
+            foreach (string path in paths)
             {
-                // Just call your helper method! It already has the size check and icon logic.
-                AddFileToListView(filePath);
+                if (Directory.Exists(path))
+                {
+                    // We are passing 'path' here
+                    AddFolderToListView(path);
+                }
+                else
+                {
+                    // We are passing 'path' here
+                    AddFileToListView(path);
+                }
             }
+        }
+
+        private void AddFolderToListView(string folderPath)
+        {
+            DirectoryInfo dirInfo = new DirectoryInfo(folderPath);
+
+            if (!imageList1.Images.ContainsKey("FolderIcon"))
+            {
+                // Use the 'Name' you gave in the Resource window
+                imageList1.Images.Add("FolderIcon", Properties.Resources.folder_icon);
+            }
+
+            int iconIndex = imageList1.Images.IndexOfKey("FolderIcon");
+            ListViewItem item = new ListViewItem(dirInfo.Name, iconIndex);
+            item.Tag = folderPath;
+
+            item.SubItems.Add("File Folder");
+            item.SubItems.Add(DateTime.Now.ToString("g"));
+
+            listView_file.Items.Add(item);
         }
 
         private void AddFileToListView(string filepath)
         {
             FileInfo fileInfo = new FileInfo(filepath);
-            long maxFileSize = 10 * 1024 * 1024;
+            string ext = fileInfo.Extension.ToLower();
+            long maxFileSize = 20 * 1024 * 1024; // 20MB
 
             if (fileInfo.Length <= maxFileSize)
             {
-                Icon fileIcon = Icon.ExtractAssociatedIcon(filepath);
-
-                // We use the extension as a key (e.g., ".pdf")
-                if (!imageList1.Images.ContainsKey(fileInfo.Extension))
+                // Handle Icons
+                if (!imageList1.Images.ContainsKey(ext))
                 {
-                    // The imageList will automatically scale the icon to 32x32 
-                    // because we set the ImageSize in the Load event.
-                    imageList1.Images.Add(fileInfo.Extension, fileIcon);
+                    if (ext == ".pdf")
+                        imageList1.Images.Add(ext, Properties.Resources.pdf_icon);
+                    else if (ext == ".png" || ext == ".jpg" || ext == ".jpeg")
+                        imageList1.Images.Add(ext, Properties.Resources.png_icon);
+                    else if (ext == ".ppt" || ext == ".pptx")
+                        imageList1.Images.Add(ext, Properties.Resources.ppt_icon);
+                    else
+                        // Default system icon for everything else
+                        imageList1.Images.Add(ext, Icon.ExtractAssociatedIcon(filepath));
                 }
 
-                int iconIndex = imageList1.Images.IndexOfKey(fileInfo.Extension);
-
-                // Ensure the index is valid
+                int iconIndex = imageList1.Images.IndexOfKey(ext);
                 ListViewItem item = new ListViewItem(fileInfo.Name, iconIndex);
                 item.Tag = filepath;
-                item.SubItems.Add($"{fileInfo.Length / 1024.0:F2} KB");
+
+                // Smart Size Formatting
+                double sizeInKB = fileInfo.Length / 1024.0;
+                string sizeDisplay = (sizeInKB >= 1024)
+                    ? $"{(sizeInKB / 1024.0):F2} MB"
+                    : $"{sizeInKB:F2} KB";
+
+                item.SubItems.Add(sizeDisplay);
+                item.SubItems.Add(DateTime.Now.ToString("g"));
 
                 listView_file.Items.Add(item);
+            }
+            else
+            {
+                MessageBox.Show($"{fileInfo.Name} is over the 20MB limit.", "PUP Acad Portal",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -486,22 +531,25 @@ namespace PUPAcadPortal
 
         private void InstructorPortal_Load(object sender, EventArgs e)
         {
-            // 1. Font and Appearance
-            listView_file.Font = new Font("Segoe UI", 11.5f); // Slightly larger for better readability
+            // 1. Visual Styling
+            listView_file.Font = new Font("Segoe UI", 11.5f);
             listView_file.View = View.Details;
             listView_file.FullRowSelect = true;
             listView_file.GridLines = false;
 
-            // 2. Fix the Icon Visibility & Spacing
-            // Width and Height must both be large enough to see the icon
+            // 2. Row Spacing & Icons
+            // 32x32 provides the height for spacing and makes icons visible
             imageList1.ImageSize = new Size(32, 32);
-            imageList1.ColorDepth = ColorDepth.Depth32Bit; // Makes icons crisp
+            imageList1.ColorDepth = ColorDepth.Depth32Bit;
             listView_file.SmallImageList = imageList1;
 
-            // 3. Columns
+            // 3. Define Columns (Clear first to avoid duplicates)
             listView_file.Columns.Clear();
-            listView_file.Columns.Add("File Name", 350);
-            listView_file.Columns.Add("Size", 120);
+            listView_file.Columns.Add("File Name", 250);
+            listView_file.Columns.Add("Size", 100);
+            listView_file.Columns.Add("Date Uploaded", 180);
+
+
         }
 
         private void listView_file_MouseDoubleClick(object sender, MouseEventArgs e)
