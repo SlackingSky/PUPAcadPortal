@@ -746,6 +746,9 @@ namespace PUPAcadPortal.Properties {
         internal static System.Drawing.Bitmap save_16 {
             get {
                 object obj = ResourceManager.GetObject("save-16", resourceCulture);
+        internal static System.Drawing.Bitmap Screenshot_2026_03_25_185238 {
+            get {
+                object obj = ResourceManager.GetObject("Screenshot 2026-03-25 185238", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -756,6 +759,9 @@ namespace PUPAcadPortal.Properties {
         internal static System.Drawing.Bitmap search_3_16 {
             get {
                 object obj = ResourceManager.GetObject("search-3-16", resourceCulture);
+        internal static System.Drawing.Bitmap Screenshot_2026_03_25_201735 {
+            get {
+                object obj = ResourceManager.GetObject("Screenshot 2026-03-25 201735", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -766,6 +772,9 @@ namespace PUPAcadPortal.Properties {
         internal static System.Drawing.Bitmap student_16 {
             get {
                 object obj = ResourceManager.GetObject("student-16", resourceCulture);
+        internal static System.Drawing.Bitmap Screenshot_2026_03_25_201808 {
+            get {
+                object obj = ResourceManager.GetObject("Screenshot 2026-03-25 201808", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -776,6 +785,9 @@ namespace PUPAcadPortal.Properties {
         internal static System.Drawing.Bitmap student_2_16 {
             get {
                 object obj = ResourceManager.GetObject("student-2-16", resourceCulture);
+        internal static System.Drawing.Bitmap Screenshot_2026_03_25_201838 {
+            get {
+                object obj = ResourceManager.GetObject("Screenshot 2026-03-25 201838", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -786,6 +798,9 @@ namespace PUPAcadPortal.Properties {
         internal static System.Drawing.Bitmap student_2_161 {
             get {
                 object obj = ResourceManager.GetObject("student-2-161", resourceCulture);
+        internal static System.Drawing.Bitmap Screenshot_2026_03_25_202106 {
+            get {
+                object obj = ResourceManager.GetObject("Screenshot 2026-03-25 202106", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -796,6 +811,9 @@ namespace PUPAcadPortal.Properties {
         internal static System.Drawing.Bitmap student_2_162 {
             get {
                 object obj = ResourceManager.GetObject("student-2-162", resourceCulture);
+        internal static System.Drawing.Bitmap Screenshot_2026_03_25_202152 {
+            get {
+                object obj = ResourceManager.GetObject("Screenshot 2026-03-25 202152", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -806,6 +824,9 @@ namespace PUPAcadPortal.Properties {
         internal static System.Drawing.Bitmap student_black_16 {
             get {
                 object obj = ResourceManager.GetObject("student-black-16", resourceCulture);
+        internal static System.Drawing.Bitmap Screenshot_2026_03_25_202219 {
+            get {
+                object obj = ResourceManager.GetObject("Screenshot 2026-03-25 202219", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
