@@ -372,5 +372,25 @@ namespace PUPAcadPortal
             panel21.Left = SidePadding + cardWidth + CardGap;
             panel20.Left = SidePadding + (cardWidth * 2) + (CardGap * 2);
         }
+
+        private void pictureBox4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel14_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panel27_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void pnlAccountsContent_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
