@@ -162,6 +162,7 @@ namespace PUPAcadPortal
                 if (content.Key == button)
                 {
                     content.Value.Visible = true;
+                    content.Value.Parent = panel3;
                     content.Value.Dock = DockStyle.Fill;
                     content.Value.BringToFront();
                 }
