@@ -1,5 +1,4 @@
-﻿#nullable disable
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,19 +9,10 @@ using System.Windows.Forms;
 
 namespace PUPAcadPortal
 {
-    public class StudentGrade
-    {
-        public string StudentNumber { get; set; } = string.Empty;
-        public string Name { get; set; } = string.Empty;
-        public double? Midterm { get; set; }
-        public double? Finals { get; set; }
-        public double? Average => (Midterm.HasValue && Finals.HasValue) ? (Midterm + Finals) / 2.0 : null;
-        public string Remarks => Average.HasValue ? (Average >= 75.0 ? "Passed" : "Failed") : "Incomplete";
-    }
-
     public partial class InstructorPortal : Form
     {
-        private Button clickedButton;
+        // Added '?' to tell VS this is allowed to be null initially
+        private Button? clickedButton;
         private Color defaultColor = Color.Maroon;
         private Color selectedColor = Color.FromArgb(109, 0, 0);
 
@@ -35,6 +25,7 @@ namespace PUPAcadPortal
 
         private void SetupGradesUI()
         {
+            // Added '!' to tell VS we know these panels exist
             if (pnlGradesContent != null) pnlGradesContent.Controls.Clear();
 
             Label lblTitle = new Label();
@@ -69,7 +60,7 @@ namespace PUPAcadPortal
             DataGridView dgv = new DataGridView();
             dgv.Name = "dgvGrades";
             dgv.Location = new Point(16, 56);
-            dgv.Size = new Size(pnlGradesContent.ClientSize.Width - 40, pnlGradesContent.ClientSize.Height - 160);
+            dgv.Size = new Size(pnlGradesContent!.ClientSize.Width - 40, pnlGradesContent.ClientSize.Height - 160);
             dgv.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgv.AllowUserToAddRows = false;
             dgv.RowHeadersVisible = false;
@@ -83,8 +74,9 @@ namespace PUPAcadPortal
             dgv.Columns.Add("Average", "Average");
             dgv.Columns.Add("Remarks", "Remarks");
 
-            if (dgv.Columns["Average"] != null) dgv.Columns["Average"].ReadOnly = true;
-            if (dgv.Columns["Remarks"] != null) dgv.Columns["Remarks"].ReadOnly = true;
+            // Added '!' to satisfy the null checker
+            if (dgv.Columns["Average"] != null) dgv.Columns["Average"]!.ReadOnly = true;
+            if (dgv.Columns["Remarks"] != null) dgv.Columns["Remarks"]!.ReadOnly = true;
 
             DataGridViewButtonColumn actionCol = new DataGridViewButtonColumn();
             actionCol.Name = "Action";
@@ -94,16 +86,15 @@ namespace PUPAcadPortal
             actionCol.Width = 90;
             dgv.Columns.Add(actionCol);
 
-            // Using IList to bypass the VS indexer compiler bug
             dgv.CellValueChanged += (s, e) => {
                 if (e.RowIndex >= 0 && (e.ColumnIndex == 2 || e.ColumnIndex == 3))
                 {
                     IList cells = dgv.Rows[e.RowIndex].Cells;
 
-                    DataGridViewCell midCell = (DataGridViewCell)cells;
-                    DataGridViewCell finCell = (DataGridViewCell)cells;
-                    DataGridViewCell avgCell = (DataGridViewCell)cells;
-                    DataGridViewCell remCell = (DataGridViewCell)cells;
+                    DataGridViewCell midCell = (DataGridViewCell)cells!;
+                    DataGridViewCell finCell = (DataGridViewCell)cells!;
+                    DataGridViewCell avgCell = (DataGridViewCell)cells!;
+                    DataGridViewCell remCell = (DataGridViewCell)cells!;
 
                     double m, f;
                     bool hasMid = double.TryParse(Convert.ToString(midCell.Value), out m);
@@ -159,7 +150,6 @@ namespace PUPAcadPortal
             pnlSubmit.Controls.Add(lblReady);
             pnlSubmit.Controls.Add(btnSubmit);
 
-            // Search filter using IList bypass
             txtSearch.TextChanged += (s, e) =>
             {
                 string q = txtSearch.Text != null ? txtSearch.Text.Trim().ToLower() : "";
@@ -168,23 +158,22 @@ namespace PUPAcadPortal
                     if (r.IsNewRow) continue;
 
                     IList cells = r.Cells;
-                    DataGridViewCell cell0 = (DataGridViewCell)cells;
-                    DataGridViewCell cell1 = (DataGridViewCell)cells;
+                    DataGridViewCell cell0 = (DataGridViewCell)cells!;
+                    DataGridViewCell cell1 = (DataGridViewCell)cells!;
 
-                    string sn = cell0.Value != null ? cell0.Value.ToString().ToLower() : "";
-                    string nm = cell1.Value != null ? cell1.Value.ToString().ToLower() : "";
+                    string sn = cell0.Value != null ? cell0.Value.ToString()!.ToLower() : "";
+                    string nm = cell1.Value != null ? cell1.Value.ToString()!.ToLower() : "";
 
                     r.Visible = string.IsNullOrEmpty(q) || sn.Contains(q) || nm.Contains(q);
                 }
             };
 
-            // Action column using IList bypass
             dgv.CellClick += (s, e) =>
             {
-                if (e.RowIndex >= 0 && dgv.Columns["Action"] != null && e.ColumnIndex == dgv.Columns["Action"].Index)
+                if (e.RowIndex >= 0 && dgv.Columns["Action"] != null && e.ColumnIndex == dgv.Columns["Action"]!.Index)
                 {
                     IList cells = dgv.Rows[e.RowIndex].Cells;
-                    DataGridViewCell nameCell = (DataGridViewCell)cells;
+                    DataGridViewCell nameCell = (DataGridViewCell)cells!;
                     MessageBox.Show("Upload for student " + nameCell.Value, "Upload", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             };
@@ -398,7 +387,8 @@ namespace PUPAcadPortal
             if (pnlDashboardContent != null) pnlDashboardContent.Controls.Add(pnlMainLower);
         }
 
-        private void changeButtonColor(Button button)
+        // Added '?' to parameter
+        private void changeButtonColor(Button? button)
         {
             if (button == null) return;
 
@@ -432,7 +422,8 @@ namespace PUPAcadPortal
             }
         }
 
-        private void showContent(Button button)
+        // Added '?' to parameter
+        private void showContent(Button? button)
         {
             if (button == null) return;
 
@@ -561,5 +552,15 @@ namespace PUPAcadPortal
         private void label81_Click(object sender, EventArgs e) { }
         private void tableLayoutPanel8_Paint(object sender, PaintEventArgs e) { }
         private void label83_Click(object sender, EventArgs e) { }
+    }
+
+    public class StudentGrade
+    {
+        public string StudentNumber { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public double? Midterm { get; set; }
+        public double? Finals { get; set; }
+        public double? Average => (Midterm.HasValue && Finals.HasValue) ? (Midterm + Finals) / 2.0 : null;
+        public string Remarks => Average.HasValue ? (Average >= 75.0 ? "Passed" : "Failed") : "Incomplete";
     }
 }
