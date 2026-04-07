@@ -601,6 +601,7 @@
             panel9.Name = "panel9";
             panel9.Size = new Size(256, 48);
             panel9.TabIndex = 2;
+            panel9.Visible = false;
             // 
             // btnCourses
             // 
@@ -632,6 +633,7 @@
             panel11.Name = "panel11";
             panel11.Size = new Size(256, 48);
             panel11.TabIndex = 4;
+            panel11.Visible = false;
             // 
             // btnLMS
             // 
@@ -4152,7 +4154,7 @@
             Controls.Add(panel3);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "InstructorPortal";
-            StartPosition = FormStartPosition.CenterParent;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "StudentPortal";
             FormClosing += StudentPortal_Closing;
             pnlSidebar.ResumeLayout(false);

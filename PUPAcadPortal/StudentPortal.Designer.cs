@@ -135,6 +135,7 @@
             btnEnrollCloseDetails = new Button();
             label7 = new Label();
             panel3 = new Panel();
+            pnlAccountsContentHolder = new Panel();
             pnlDashboardContent = new Panel();
             panel22 = new Panel();
             panel18 = new Panel();
@@ -202,7 +203,6 @@
             panel14 = new Panel();
             label14 = new Label();
             label10 = new Label();
-            pnlAccountsContentHolder = new Panel();
             pnlHeader = new Panel();
             panel15 = new Panel();
             panel16 = new Panel();
@@ -248,6 +248,7 @@
             pnlEnrollSearchbar.SuspendLayout();
             pnlViewDetails.SuspendLayout();
             panel3.SuspendLayout();
+            pnlAccountsContentHolder.SuspendLayout();
             pnlDashboardContent.SuspendLayout();
             panel18.SuspendLayout();
             panel25.SuspendLayout();
@@ -273,7 +274,6 @@
             panel35.SuspendLayout();
             panel36.SuspendLayout();
             panel14.SuspendLayout();
-            pnlAccountsContentHolder.SuspendLayout();
             pnlHeader.SuspendLayout();
             panel15.SuspendLayout();
             panel16.SuspendLayout();
@@ -390,6 +390,7 @@
             panel9.Name = "panel9";
             panel9.Size = new Size(256, 48);
             panel9.TabIndex = 2;
+            panel9.Visible = false;
             // 
             // btnCourses
             // 
@@ -1509,6 +1510,17 @@
             panel3.Size = new Size(1512, 881);
             panel3.TabIndex = 0;
             // 
+            // pnlAccountsContentHolder
+            // 
+            pnlAccountsContentHolder.AutoScroll = true;
+            pnlAccountsContentHolder.BackColor = SystemColors.ActiveCaption;
+            pnlAccountsContentHolder.Controls.Add(pnlAccountsContent);
+            pnlAccountsContentHolder.Location = new Point(256, 72);
+            pnlAccountsContentHolder.Name = "pnlAccountsContentHolder";
+            pnlAccountsContentHolder.Size = new Size(1256, 809);
+            pnlAccountsContentHolder.TabIndex = 6;
+            pnlAccountsContentHolder.Visible = false;
+            // 
             // pnlDashboardContent
             // 
             pnlDashboardContent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -2255,17 +2267,6 @@
             label10.TabIndex = 0;
             label10.Text = "Welcome back, John DoReMi!";
             // 
-            // pnlAccountsContentHolder
-            // 
-            pnlAccountsContentHolder.AutoScroll = true;
-            pnlAccountsContentHolder.BackColor = SystemColors.ActiveCaption;
-            pnlAccountsContentHolder.Controls.Add(pnlAccountsContent);
-            pnlAccountsContentHolder.Location = new Point(256, 72);
-            pnlAccountsContentHolder.Name = "pnlAccountsContentHolder";
-            pnlAccountsContentHolder.Size = new Size(1256, 809);
-            pnlAccountsContentHolder.TabIndex = 6;
-            pnlAccountsContentHolder.Visible = false;
-            // 
             // pnlHeader
             // 
             pnlHeader.BackColor = Color.FromArgb(42, 42, 42);
@@ -2358,7 +2359,7 @@
             Controls.Add(pnlViewDetails);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "StudentPortal";
-            StartPosition = FormStartPosition.CenterParent;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "StudentPortal";
             FormClosing += StudentPortal_Closing;
             Load += StudentPortal_Load;
@@ -2415,6 +2416,7 @@
             pnlViewDetails.ResumeLayout(false);
             pnlViewDetails.PerformLayout();
             panel3.ResumeLayout(false);
+            pnlAccountsContentHolder.ResumeLayout(false);
             pnlDashboardContent.ResumeLayout(false);
             panel18.ResumeLayout(false);
             panel18.PerformLayout();
@@ -2460,7 +2462,6 @@
             panel36.PerformLayout();
             panel14.ResumeLayout(false);
             panel14.PerformLayout();
-            pnlAccountsContentHolder.ResumeLayout(false);
             pnlHeader.ResumeLayout(false);
             panel15.ResumeLayout(false);
             panel15.PerformLayout();
