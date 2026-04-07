@@ -268,5 +268,27 @@ namespace PUPAcadPortal
             // Optional: If pnlAss1 is inside a container that you hide:
             // pnlMainContainer.Visible = false;
         }
+
+        private void roundedPanel14_MouseLeave(object sender, EventArgs e)// ung pangatlong panel sa activities ng courses
+        {
+            roundedPanel14.BackColor = Color.White;
+        }
+
+        private void roundedPanel14_MouseEnter(object sender, EventArgs e)// ung pangatlong panel sa activities ng courses
+        {
+            roundedPanel14.BackColor = Color.Maroon;
+            roundedPanel14.Cursor = Cursors.Hand;
+        }
+
+        private void roundedPanel16_MouseEnter(object sender, EventArgs e)
+        {
+            roundedPanel16.BackColor = Color.Maroon;
+            roundedPanel16.Cursor = Cursors.Hand;
+        }
+
+        private void roundedPanel16_MouseLeave(object sender, EventArgs e)
+        {
+            roundedPanel16.BackColor = Color.White;
+        }
     }
 }
