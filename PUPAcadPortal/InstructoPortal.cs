@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable disable
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,11 +10,22 @@ using System.Windows.Forms;
 
 namespace PUPAcadPortal
 {
+    public class StudentGrade
+    {
+        public string StudentNumber { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public double? Midterm { get; set; }
+        public double? Finals { get; set; }
+        public double? Average => (Midterm.HasValue && Finals.HasValue) ? (Midterm + Finals) / 2.0 : null;
+        public string Remarks => Average.HasValue ? (Average >= 75.0 ? "Passed" : "Failed") : "Incomplete";
+    }
+
     public partial class InstructorPortal : Form
     {
         private Button clickedButton;
         private Color defaultColor = Color.Maroon;
         private Color selectedColor = Color.FromArgb(109, 0, 0);
+
         public InstructorPortal()
         {
             InitializeComponent();
@@ -22,10 +35,8 @@ namespace PUPAcadPortal
 
         private void SetupGradesUI()
         {
-            // Clear any existing controls in grades panel
-            pnlGradesContent.Controls.Clear();
+            if (pnlGradesContent != null) pnlGradesContent.Controls.Clear();
 
-            // Top controls: title, select course, search, upload/download
             Label lblTitle = new Label();
             lblTitle.Text = "Grade Management";
             lblTitle.Font = new Font("Arial", 18F, FontStyle.Bold, GraphicsUnit.Pixel);
@@ -55,22 +66,26 @@ namespace PUPAcadPortal
             btnDownload.Location = new Point(1072, 12);
             btnDownload.Size = new Size(90, 28);
 
-            // DataGridView for grades
             DataGridView dgv = new DataGridView();
+            dgv.Name = "dgvGrades";
             dgv.Location = new Point(16, 56);
             dgv.Size = new Size(pnlGradesContent.ClientSize.Width - 40, pnlGradesContent.ClientSize.Height - 160);
             dgv.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgv.AllowUserToAddRows = false;
             dgv.RowHeadersVisible = false;
             dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-            // columns
-            dgv.Columns.Add(new DataGridViewTextBoxColumn() { Name = "StudentNumber", HeaderText = "Student Number", Width = 140 });
-            dgv.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Name", HeaderText = "Name", Width = 220 });
-            dgv.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Midterm", HeaderText = "Midterm", Width = 80 });
-            dgv.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Finals", HeaderText = "Finals", Width = 80 });
-            dgv.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Average", HeaderText = "Average", ReadOnly = true, Width = 100 });
-            dgv.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Remarks", HeaderText = "Remarks", ReadOnly = true, Width = 120 });
+            dgv.Columns.Add("StudentNumber", "Student Number");
+            dgv.Columns.Add("Name", "Name");
+            dgv.Columns.Add("Midterm", "Midterm");
+            dgv.Columns.Add("Finals", "Finals");
+            dgv.Columns.Add("Average", "Average");
+            dgv.Columns.Add("Remarks", "Remarks");
+
+            if (dgv.Columns["Average"] != null) dgv.Columns["Average"].ReadOnly = true;
+            if (dgv.Columns["Remarks"] != null) dgv.Columns["Remarks"].ReadOnly = true;
+
             DataGridViewButtonColumn actionCol = new DataGridViewButtonColumn();
             actionCol.Name = "Action";
             actionCol.HeaderText = "Action";
@@ -79,33 +94,44 @@ namespace PUPAcadPortal
             actionCol.Width = 90;
             dgv.Columns.Add(actionCol);
 
-            // sample rows
-            void AddRow(string sn, string name, string mid, string fin)
-            {
-                int rowIndex = dgv.Rows.Add(sn, name, mid, fin, "", "", "Upload");
-                DataGridViewRow row = dgv.Rows[rowIndex];
-                double m, f;
-                if (double.TryParse(mid, out m) && double.TryParse(fin, out f))
+            // Using IList to bypass the VS indexer compiler bug
+            dgv.CellValueChanged += (s, e) => {
+                if (e.RowIndex >= 0 && (e.ColumnIndex == 2 || e.ColumnIndex == 3))
                 {
-                    double avg = (m + f) / 2.0;
-                    row.Cells[4].Value = avg.ToString("F2");
-                    row.Cells[5].Value = avg >= 75.0 ? "Passed" : "Failed";
-                }
-                else
-                {
-                    row.Cells[4].Value = "";
-                    row.Cells[5].Value = "Incomplete";
-                }
-            }
+                    IList cells = dgv.Rows[e.RowIndex].Cells;
 
-            AddRow("20230001", "Student 1", "85", "88");
-            AddRow("20230002", "Student 2", "92", "95");
-            AddRow("20230003", "Student 3", "78", "82");
-            AddRow("20230004", "Student 4", "88", "90");
-            AddRow("20230005", "Student 5", "72", "75");
-            AddRow("20230006", "Student 6", "", "");
+                    DataGridViewCell midCell = (DataGridViewCell)cells;
+                    DataGridViewCell finCell = (DataGridViewCell)cells;
+                    DataGridViewCell avgCell = (DataGridViewCell)cells;
+                    DataGridViewCell remCell = (DataGridViewCell)cells;
 
-            // bottom submission area
+                    double m, f;
+                    bool hasMid = double.TryParse(Convert.ToString(midCell.Value), out m);
+                    bool hasFin = double.TryParse(Convert.ToString(finCell.Value), out f);
+
+                    if (hasMid && hasFin)
+                    {
+                        double avg = (m + f) / 2.0;
+                        avgCell.Value = avg.ToString("F2");
+                        remCell.Value = avg >= 75.0 ? "Passed" : "Failed";
+                        if (remCell.Style != null) remCell.Style.ForeColor = avg >= 75.0 ? Color.Green : Color.Red;
+                    }
+                    else
+                    {
+                        avgCell.Value = "";
+                        remCell.Value = "Incomplete";
+                        if (remCell.Style != null) remCell.Style.ForeColor = Color.Gray;
+                    }
+                }
+            };
+
+            dgv.Rows.Add("20230001", "Student 1", "85", "88");
+            dgv.Rows.Add("20230002", "Student 2", "92", "95");
+            dgv.Rows.Add("20230003", "Student 3", "78", "82");
+            dgv.Rows.Add("20230004", "Student 4", "88", "90");
+            dgv.Rows.Add("20230005", "Student 5", "72", "75");
+            dgv.Rows.Add("20230006", "Student 6", "", "");
+
             Panel pnlSubmit = new Panel();
             pnlSubmit.Location = new Point(16, pnlGradesContent.ClientSize.Height - 88);
             pnlSubmit.Size = new Size(pnlGradesContent.ClientSize.Width - 40, 64);
@@ -133,29 +159,36 @@ namespace PUPAcadPortal
             pnlSubmit.Controls.Add(lblReady);
             pnlSubmit.Controls.Add(btnSubmit);
 
-            // wire up search filtering
+            // Search filter using IList bypass
             txtSearch.TextChanged += (s, e) =>
             {
-                string q = txtSearch.Text.Trim().ToLower();
+                string q = txtSearch.Text != null ? txtSearch.Text.Trim().ToLower() : "";
                 foreach (DataGridViewRow r in dgv.Rows)
                 {
                     if (r.IsNewRow) continue;
-                    string sn = (r.Cells[0].Value ?? string.Empty).ToString().ToLower();
-                    string nm = (r.Cells[1].Value ?? string.Empty).ToString().ToLower();
+
+                    IList cells = r.Cells;
+                    DataGridViewCell cell0 = (DataGridViewCell)cells;
+                    DataGridViewCell cell1 = (DataGridViewCell)cells;
+
+                    string sn = cell0.Value != null ? cell0.Value.ToString().ToLower() : "";
+                    string nm = cell1.Value != null ? cell1.Value.ToString().ToLower() : "";
+
                     r.Visible = string.IsNullOrEmpty(q) || sn.Contains(q) || nm.Contains(q);
                 }
             };
 
-            // action column click stub
+            // Action column using IList bypass
             dgv.CellClick += (s, e) =>
             {
-                if (e.RowIndex >= 0 && e.ColumnIndex == dgv.Columns["Action"].Index)
+                if (e.RowIndex >= 0 && dgv.Columns["Action"] != null && e.ColumnIndex == dgv.Columns["Action"].Index)
                 {
-                    MessageBox.Show("Upload for student " + dgv.Rows[e.RowIndex].Cells[1].Value, "Upload", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    IList cells = dgv.Rows[e.RowIndex].Cells;
+                    DataGridViewCell nameCell = (DataGridViewCell)cells;
+                    MessageBox.Show("Upload for student " + nameCell.Value, "Upload", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             };
 
-            // add controls to panel
             pnlGradesContent.Controls.Add(lblTitle);
             pnlGradesContent.Controls.Add(cmbCourse);
             pnlGradesContent.Controls.Add(txtSearch);
@@ -167,15 +200,14 @@ namespace PUPAcadPortal
 
         private void SetupDashboardUI()
         {
-            // Create banner
-            pnlBanner = new Panel();
+            Panel pnlBanner = new Panel();
             pnlBanner.Location = new Point(18, 16);
             pnlBanner.Name = "pnlBanner";
             pnlBanner.Size = new Size(1418, 136);
             pnlBanner.BackColor = Color.FromArgb(109, 0, 0);
             pnlBanner.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
 
-            lblWelcome = new Label();
+            Label lblWelcome = new Label();
             lblWelcome.AutoSize = false;
             lblWelcome.Location = new Point(35, 18);
             lblWelcome.Size = new Size(1100, 44);
@@ -183,7 +215,7 @@ namespace PUPAcadPortal
             lblWelcome.ForeColor = Color.White;
             lblWelcome.Text = "Welcome back, Professor!";
 
-            lblWelcomeSubtitle = new Label();
+            Label lblWelcomeSubtitle = new Label();
             lblWelcomeSubtitle.AutoSize = false;
             lblWelcomeSubtitle.Location = new Point(24, 66);
             lblWelcomeSubtitle.Size = new Size(1100, 28);
@@ -193,18 +225,16 @@ namespace PUPAcadPortal
 
             pnlBanner.Controls.Add(lblWelcome);
             pnlBanner.Controls.Add(lblWelcomeSubtitle);
-            pnlDashboardContent.Controls.Add(pnlBanner);
+            if (pnlDashboardContent != null) pnlDashboardContent.Controls.Add(pnlBanner);
 
-            // Anonymize sidebar name/role
             try
             {
-                label1.Text = "Professor"; // anonymized role label
-                label2.Text = ""; // no personal name shown
+                if (label1 != null) label1.Text = "Professor";
+                if (label2 != null) label2.Text = "";
             }
             catch { }
 
-            // Stats
-            pnlStats = new Panel();
+            Panel pnlStats = new Panel();
             pnlStats.Location = new Point(18, 168);
             pnlStats.Name = "pnlStats";
             pnlStats.Size = new Size(1418, 108);
@@ -248,17 +278,15 @@ namespace PUPAcadPortal
                 card.Controls.Add(icon);
                 pnlStats.Controls.Add(card);
             }
-            pnlDashboardContent.Controls.Add(pnlStats);
+            if (pnlDashboardContent != null) pnlDashboardContent.Controls.Add(pnlStats);
 
-            // Lower main area: Quick Actions and Upcoming Events
-            pnlMainLower = new Panel();
+            Panel pnlMainLower = new Panel();
             pnlMainLower.Location = new Point(18, 292);
             pnlMainLower.Name = "pnlMainLower";
             pnlMainLower.Size = new Size(1418, 980);
             pnlMainLower.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
 
-            // Quick Actions
-            pnlQuickActions = new Panel();
+            Panel pnlQuickActions = new Panel();
             pnlQuickActions.Location = new Point(0, 0);
             pnlQuickActions.Size = new Size(960, 960);
             pnlQuickActions.BackColor = Color.White;
@@ -272,52 +300,51 @@ namespace PUPAcadPortal
             lblQA.Size = new Size(300, 26);
             pnlQuickActions.Controls.Add(lblQA);
 
-            string[,] actions = new string[2, 2] {
-                { "Grade Submissions", "Class Schedule" },
-                { "Course Materials", "Student List" }
+            string[] actions = {
+                "Grade Submissions", "Class Schedule",
+                "Course Materials", "Student List"
             };
-            string[,] actionsSub = new string[2, 2] {
-                { "Submit student grades", "View teaching schedule" },
-                { "Upload course resources", "View enrolled students" }
+            string[] actionsSub = {
+                "Submit student grades", "View teaching schedule",
+                "Upload course resources", "View enrolled students"
             };
 
-            for (int r = 0; r < 2; r++)
+            for (int i = 0; i < 4; i++)
             {
-                for (int c = 0; c < 2; c++)
-                {
-                    Panel action = new Panel();
-                    action.Size = new Size(440, 140);
-                    action.Location = new Point(12 + c * 452, 56 + r * 164);
-                    action.BackColor = Color.FromArgb(245, 245, 245);
+                int r = i / 2;
+                int c = i % 2;
 
-                    Label actionTitle = new Label();
-                    actionTitle.Text = actions[r, c];
-                    actionTitle.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Pixel);
-                    actionTitle.Location = new Point(72, 16);
-                    actionTitle.Size = new Size(340, 20);
+                Panel action = new Panel();
+                action.Size = new Size(440, 140);
+                action.Location = new Point(12 + c * 452, 56 + r * 164);
+                action.BackColor = Color.FromArgb(245, 245, 245);
 
-                    Label actionSub = new Label();
-                    actionSub.Text = actionsSub[r, c];
-                    actionSub.Font = new Font("Arial", 10F, FontStyle.Regular, GraphicsUnit.Pixel);
-                    actionSub.ForeColor = Color.FromArgb(120, 120, 120);
-                    actionSub.Location = new Point(72, 40);
-                    actionSub.Size = new Size(340, 20);
+                Label actionTitle = new Label();
+                actionTitle.Text = actions[i];
+                actionTitle.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Pixel);
+                actionTitle.Location = new Point(72, 16);
+                actionTitle.Size = new Size(340, 20);
 
-                    Panel actionIcon = new Panel();
-                    actionIcon.Size = new Size(52, 52);
-                    actionIcon.Location = new Point(8, 40);
-                    actionIcon.BackColor = Color.FromArgb(109, 0, 0);
+                Label actionSub = new Label();
+                actionSub.Text = actionsSub[i];
+                actionSub.Font = new Font("Arial", 10F, FontStyle.Regular, GraphicsUnit.Pixel);
+                actionSub.ForeColor = Color.FromArgb(120, 120, 120);
+                actionSub.Location = new Point(72, 40);
+                actionSub.Size = new Size(340, 20);
 
-                    action.Controls.Add(actionIcon);
-                    action.Controls.Add(actionTitle);
-                    action.Controls.Add(actionSub);
-                    pnlQuickActions.Controls.Add(action);
-                }
+                Panel actionIcon = new Panel();
+                actionIcon.Size = new Size(52, 52);
+                actionIcon.Location = new Point(8, 40);
+                actionIcon.BackColor = Color.FromArgb(109, 0, 0);
+
+                action.Controls.Add(actionIcon);
+                action.Controls.Add(actionTitle);
+                action.Controls.Add(actionSub);
+                pnlQuickActions.Controls.Add(action);
             }
             pnlMainLower.Controls.Add(pnlQuickActions);
 
-            // Upcoming Events
-            pnlUpcoming = new Panel();
+            Panel pnlUpcoming = new Panel();
             pnlUpcoming.Location = new Point(984, 0);
             pnlUpcoming.Size = new Size(430, 960);
             pnlUpcoming.BackColor = Color.White;
@@ -368,12 +395,11 @@ namespace PUPAcadPortal
                 pnlUpcoming.Controls.Add(ev);
             }
             pnlMainLower.Controls.Add(pnlUpcoming);
-            pnlDashboardContent.Controls.Add(pnlMainLower);
+            if (pnlDashboardContent != null) pnlDashboardContent.Controls.Add(pnlMainLower);
         }
 
         private void changeButtonColor(Button button)
         {
-            // guard: don't proceed if no button provided
             if (button == null) return;
 
             if (clickedButton != null)
@@ -383,7 +409,6 @@ namespace PUPAcadPortal
 
             clickedButton = button;
 
-            // ensure pnlYellow exists (lazy init) to avoid NullReferenceException
             if (pnlYellow == null)
             {
                 pnlYellow = new Panel
@@ -398,37 +423,43 @@ namespace PUPAcadPortal
                 else
                     this.Controls.Add(pnlYellow);
             }
-            if (clickedButton?.Parent != null)
+
+            if (clickedButton != null && clickedButton.Parent != null)
+            {
                 clickedButton.BackColor = selectedColor;
+                pnlYellow.Visible = true;
+                pnlYellow.Location = new Point(0, clickedButton.Location.Y);
+            }
         }
 
-        //Method na nagpapakita ng content ng bawat button, wala akong maisip na iba kaya eto
         private void showContent(Button button)
         {
-            Dictionary<Button, Panel> contents = new Dictionary<Button, Panel> { };
-            contents.Add(btnDashboard, pnlDashboardContent);
-            contents.Add(btnGrades, pnlGradesContent);
-            contents.Add(btnCourses, pnlCoursesContent);
-            //Kada button na aadd, maglagay ng panel sa form at lagay dito
-            foreach (KeyValuePair<Button, Panel> content in contents)
+            if (button == null) return;
+
+            var contents = new Dictionary<Button, Panel>();
+            if (btnDashboard != null && pnlDashboardContent != null) contents.Add(btnDashboard, pnlDashboardContent);
+            if (btnGrades != null && pnlGradesContent != null) contents.Add(btnGrades, pnlGradesContent);
+            if (btnCourses != null && pnlCoursesContent != null) contents.Add(btnCourses, pnlCoursesContent);
+
+            foreach (var content in contents)
             {
-                if (content.Key == clickedButton)
+                if (content.Key == button)
                 {
-                    //Automatic positioning, wag pakialaman maliban nalang kung binago ang position ng sidebar
-                    content.Value.Parent = panel3;
-                    content.Value.Location = new Point(pnlSidebar.Size.Width, pnlHeader.Size.Height);
                     content.Value.Visible = true;
+                    if (content.Value.Parent == null && panel3 != null)
+                        content.Value.Parent = panel3;
                     content.Value.BringToFront();
                 }
                 else
                 {
-                    content.Value.Visible = false;
+                    if (content.Value != null)
+                    {
+                        content.Value.Visible = false;
+                    }
                 }
             }
         }
 
-        //Method para pag pinindot yung X sa taas o mag alt-F4, icclose lahat ng forms para di magerror pag ni run uli
-        //Lagay to sa bawat form na iaadd, Step 1: Hanapin sa properties ng form yung event na FormClosing, Step 2: Double click para gumawa ng method, Step 3: Copy paste code na nasa loob nito
         private void StudentPortal_Closing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
@@ -459,269 +490,76 @@ namespace PUPAcadPortal
             changeButtonColor(sender as Button);
             showContent(clickedButton);
         }
+
         private void btnLMS_Click(object sender, EventArgs e)
         {
             changeButtonColor(sender as Button);
             showContent(clickedButton);
-            pnllmsSubmenu.Visible = !pnllmsSubmenu.Visible;
-            if (pnllmsSubmenu.Visible)
-                btnLMS.Text = " LMS                                       ⌄";
-            else
-                btnLMS.Text = " LMS                                        ›";
+            if (pnllmsSubmenu != null && btnLMS != null)
+            {
+                pnllmsSubmenu.Visible = !pnllmsSubmenu.Visible;
+                if (pnllmsSubmenu.Visible)
+                    btnLMS.Text = " LMS                                       ⌄";
+                else
+                    btnLMS.Text = " LMS                                       ›";
+            }
         }
+
         private void btnLogout_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void pnlCoursesContent_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblWelcome_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pnlBanner_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void lblWelcomeSubtitle_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void flowstats_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void panel3_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void pictureBox3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void flowLayoutPanel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void label7_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label9_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label11_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label13_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label13_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel17_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void label14_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label16_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label19_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label20_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label20_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label20_Click_2(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label21_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pictureBox7_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pictureBox7_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel40_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void label32_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label34_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label36_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cmbSelectCourse_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void flowLayoutPanel2_Paint_1(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void label37_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label38_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel46_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel87_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void button9_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label44_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel89_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void label44_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label79_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label43_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label81_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tableLayoutPanel8_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void label83_Click(object sender, EventArgs e)
-        {
-
-        }
+        // --- EMPTY EVENT HANDLERS ---
+        private void pnlCoursesContent_Paint(object sender, PaintEventArgs e) { }
+        private void label2_Click(object sender, EventArgs e) { }
+        private void lblWelcome_Click(object sender, EventArgs e) { }
+        private void pnlBanner_Paint(object sender, PaintEventArgs e) { }
+        private void lblWelcomeSubtitle_Click(object sender, EventArgs e) { }
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e) { }
+        private void flowstats_Paint(object sender, PaintEventArgs e) { }
+        private void panel3_Paint(object sender, PaintEventArgs e) { }
+        private void panel1_Paint(object sender, PaintEventArgs e) { }
+        private void pictureBox3_Click(object sender, EventArgs e) { }
+        private void label5_Click(object sender, EventArgs e) { }
+        private void flowLayoutPanel2_Paint(object sender, PaintEventArgs e) { }
+        private void label7_Click(object sender, EventArgs e) { }
+        private void label9_Click(object sender, EventArgs e) { }
+        private void label11_Click(object sender, EventArgs e) { }
+        private void label13_Click(object sender, EventArgs e) { }
+        private void label13_Click_1(object sender, EventArgs e) { }
+        private void panel17_Paint(object sender, PaintEventArgs e) { }
+        private void label14_Click(object sender, EventArgs e) { }
+        private void label16_Click(object sender, EventArgs e) { }
+        private void label19_Click(object sender, EventArgs e) { }
+        private void label20_Click(object sender, EventArgs e) { }
+        private void label20_Click_1(object sender, EventArgs e) { }
+        private void label20_Click_2(object sender, EventArgs e) { }
+        private void label21_Click(object sender, EventArgs e) { }
+        private void pictureBox7_Click(object sender, EventArgs e) { }
+        private void pictureBox7_Click_1(object sender, EventArgs e) { }
+        private void panel40_Paint(object sender, PaintEventArgs e) { }
+        private void label32_Click(object sender, EventArgs e) { }
+        private void label34_Click(object sender, EventArgs e) { }
+        private void label36_Click(object sender, EventArgs e) { }
+        private void cmbSelectCourse_Paint(object sender, PaintEventArgs e) { }
+        private void flowLayoutPanel2_Paint_1(object sender, PaintEventArgs e) { }
+        private void button2_Click(object sender, EventArgs e) { }
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
+        private void label37_Click(object sender, EventArgs e) { }
+        private void label38_Click(object sender, EventArgs e) { }
+        private void button4_Click(object sender, EventArgs e) { }
+        private void panel46_Paint(object sender, PaintEventArgs e) { }
+        private void button6_Click(object sender, EventArgs e) { }
+        private void panel87_Paint(object sender, PaintEventArgs e) { }
+        private void button9_Click(object sender, EventArgs e) { }
+        private void label44_Click(object sender, EventArgs e) { }
+        private void panel89_Paint(object sender, PaintEventArgs e) { }
+        private void label44_Click_1(object sender, EventArgs e) { }
+        private void label79_Click(object sender, EventArgs e) { }
+        private void label43_Click(object sender, EventArgs e) { }
+        private void label81_Click(object sender, EventArgs e) { }
+        private void tableLayoutPanel8_Paint(object sender, PaintEventArgs e) { }
+        private void label83_Click(object sender, EventArgs e) { }
     }
 }
