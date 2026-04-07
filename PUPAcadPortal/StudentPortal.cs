@@ -210,5 +210,63 @@ namespace PUPAcadPortal
             pnlLMSActivities.BringToFront();
             pnlLMSActivities.Visible = true;
         }
+
+        private void btnSubmit_Click(object sender, EventArgs e)
+        {
+            pnlLMSActivities.BringToFront();
+            pnlLMSActivities.Visible = true;
+        }
+
+        private void btnAssignAttach_Click(object sender, EventArgs e)
+        {
+            pnlAttachAss.BringToFront();
+            pnlAttachAss.Visible = true;
+        }
+
+        private void btnCancelAssign_Click(object sender, EventArgs e)
+        {
+            pnlLMSActivities.BringToFront(); pnlLMSActivities.Visible = true;
+        }
+
+        private void btnSaveAss_Click(object sender, EventArgs e)
+        {
+            pnlLMSActivities.BringToFront(); pnlLMSActivities.Visible = true;
+        }
+
+        private void btnAttachCancel_Click(object sender, EventArgs e)
+        {
+            pnlAttachAss.Hide();
+        }
+
+        private void btnDoneAttach_Click(object sender, EventArgs e)
+        {
+            pnlAttachAss.Hide();
+        }
+
+        private void pnlAss1_MouseEnter(object sender, EventArgs e)
+        {
+            // Highlights to Maroon on hover
+            pnlAss1.BackColor = Color.Maroon;
+            pnlAss1.Cursor = Cursors.Hand;
+        }
+
+        private void pnlAss1_MouseLeave(object sender, EventArgs e)
+        {
+            // Changes back to White when the mouse leaves
+            pnlAss1.BackColor = Color.White;
+        }
+
+        private void pnlAss1_Click(object sender, EventArgs e)
+        {
+            // 1. Immediately reset the color to White
+            pnlAss1.BackColor = Color.White;
+
+            // 2. Switch to the Answer panel
+            pnlAnsAss.Visible = true;
+            pnlAnsAss.BringToFront();
+
+            // Optional: If pnlAss1 is inside a container that you hide:
+            // pnlMainContainer.Visible = false;
+        }
     }
 }
