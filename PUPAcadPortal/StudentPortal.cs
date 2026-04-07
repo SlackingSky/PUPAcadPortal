@@ -20,6 +20,9 @@ namespace PUPAcadPortal
         private const int CardGap = 10;
         private const int EnrollmentGridHeight = 300;
 
+        // ---------- NEW: Store original enrollment data ----------
+        private List<string[]> enrollmentData = new List<string[]>();
+
         public StudentPortal()
         {
             InitializeComponent();
@@ -27,9 +30,8 @@ namespace PUPAcadPortal
             this.Resize += StudentPortal_EnrollmentResize;
             this.Resize += StudentPortal_AccountsResize;
 
-            panel3.Dock = DockStyle.Fill;
-            panel3.AutoScroll = true;
-
+            pnlContainerAdminPortal.Dock = DockStyle.Fill;
+            pnlContainerAdminPortal.AutoScroll = true;
         }
 
         private void changeButtonColor(Button button)
@@ -70,7 +72,6 @@ namespace PUPAcadPortal
         }
 
         //Method para pag pinindot yung X sa taas o mag alt-F4, icclose lahat ng forms para di magerror pag ni run uli
-        //Lagay to sa bawat form na iaadd, Step 1: Hanapin sa properties ng form yung event na FormClosing, Step 2: Double click para gumawa ng method, Step 3: Copy paste code na nasa loob nito
         private void StudentPortal_Closing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
@@ -134,54 +135,52 @@ namespace PUPAcadPortal
             panel.Width = this.ClientSize.Width - pnlSidebar.Width;
             panel.Height = this.ClientSize.Height - pnlHeader.Height;
             panel.Location = new Point(pnlSidebar.Width, pnlHeader.Height);
-
         }
 
-
-
-        // Enrollment
+        // ==================== ENROLLMENT ====================
 
         private void Enrollment_Initialize()
         {
-
             Enrollment_LoadData();
             Enrollment_UpdateTotalUnits();
         }
 
+        // ---------- MODIFIED: Load data into both the list and the grid ----------
         private void Enrollment_LoadData()
         {
-            // Only data loading here
+            // Clear previous data
+            enrollmentData.Clear();
             dgvEnrollment.Rows.Clear();
-            dgvEnrollment.Rows.Add(false, "COMP 009", "Object Oriented Programming", "3", "MWF 7:30AM", "Enrolled");
-            dgvEnrollment.Rows.Add(false, "ELEC IT-FE2", "BSIT Free Elective 2", "3", "TTH 9:00AM - 12:00PM", "Pending");
-            dgvEnrollment.Rows.Add(false, "INTE 202", "Integrative Programming", "3", "MWF 10:00AM - 10:02AM", "Enrolled");
-            dgvEnrollment.Rows.Add(false, "PATHFIT 4", "Physical Activity Towards Health and Fitness 4", "2", "TTH 1:00PM - 3:00PM", "Dropped");
 
-            // Set action chevron
-            foreach (DataGridViewRow row in dgvEnrollment.Rows)
+            // Add dummy rows
+            enrollmentData.Add(new string[] { "COMP 009", "Object Oriented Programming", "3", "MWF 7:30AM", "Enrolled" });
+            enrollmentData.Add(new string[] { "ELEC IT-FE2", "BSIT Free Elective 2", "3", "TTH 9:00AM - 12:00PM", "Pending" });
+            enrollmentData.Add(new string[] { "INTE 202", "Integrative Programming", "3", "MWF 10:00AM - 10:02AM", "Enrolled" });
+            enrollmentData.Add(new string[] { "PATHFIT 4", "Physical Activity Towards Health and Fitness 4", "2", "TTH 1:00PM - 3:00PM", "Dropped" });
+
+            // Populate DataGridView
+            foreach (var row in enrollmentData)
             {
-                row.Cells["colAction"].Value = "More";
+                dgvEnrollment.Rows.Add(false, row[0], row[1], row[2], row[3], row[4], "More");
             }
-            dgvEnrollment.Columns["colAction"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            Enrollment_UpdateTotalUnits();
         }
 
+        // ---------- MODIFIED: Update total units based on visible rows ----------
         private void Enrollment_UpdateTotalUnits()
         {
             int total = 0;
-
             foreach (DataGridViewRow row in dgvEnrollment.Rows)
             {
+                if (row.IsNewRow) continue;
                 if (row.Cells["colUnits"].Value != null)
                 {
                     int units;
                     if (int.TryParse(row.Cells["colUnits"].Value.ToString(), out units))
-                    {
                         total += units;
-                    }
                 }
             }
-
-            // Replace "lblTotalUnitsValue" with the actual name of your "24" label
             lblEnrollTotalUnitsValue.Text = total.ToString();
         }
 
@@ -211,30 +210,72 @@ namespace PUPAcadPortal
         private void btnEnrollSelectAll_Click(object sender, EventArgs e)
         {
             allSelected = !allSelected;
-
             foreach (DataGridViewRow row in dgvEnrollment.Rows)
             {
                 row.Cells["colSelect"].Value = allSelected;
             }
-
             btnEnrollSelectAll.Text = allSelected ? "Deselect All" : "Select All";
         }
-
 
         // Press ENTER in search box = triggers search button
         private void txtEnrollSearch_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                //MessageBox.Show("Search triggered for: " + txtSearch.Text); trigger checker
                 btnEnrollSearch.PerformClick();
-                e.SuppressKeyPress = true; // prevents the "ding" sound
+                e.SuppressKeyPress = true;
             }
         }
 
+        // ---------- MODIFIED: Search / filter logic ----------
         private void btnEnrollSearch_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show("Search button clicked!"); /button click checker
+            string searchTerm = txtEnrollSearch.Text.Trim().ToLower();
+            string filterBy = cmbEnrollFilter.SelectedItem?.ToString() ?? "All";
+
+            // Clear current grid rows
+            dgvEnrollment.Rows.Clear();
+
+            // If search is empty, show all original data
+            if (string.IsNullOrEmpty(searchTerm))
+            {
+                foreach (var row in enrollmentData)
+                {
+                    dgvEnrollment.Rows.Add(false, row[0], row[1], row[2], row[3], row[4], "More");
+                }
+                Enrollment_UpdateTotalUnits();
+                return;
+            }
+
+            // Filter based on selected column
+            List<string[]> filtered = new List<string[]>();
+            foreach (var row in enrollmentData)
+            {
+                bool match = false;
+                if (filterBy == "Course Code")
+                {
+                    match = row[0].ToLower().Contains(searchTerm);
+                }
+                else if (filterBy == "Course Title")
+                {
+                    match = row[1].ToLower().Contains(searchTerm);
+                }
+                else // "All" – search in both Code and Title
+                {
+                    match = row[0].ToLower().Contains(searchTerm) || row[1].ToLower().Contains(searchTerm);
+                }
+                if (match)
+                    filtered.Add(row);
+            }
+
+            // Add filtered rows to grid
+            foreach (var row in filtered)
+            {
+                dgvEnrollment.Rows.Add(false, row[0], row[1], row[2], row[3], row[4], "More");
+            }
+
+            // Update total units based on filtered results
+            Enrollment_UpdateTotalUnits();
         }
 
         private void dgvEnrollment_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
@@ -245,19 +286,14 @@ namespace PUPAcadPortal
                 e.ColumnIndex == dgvEnrollment.Columns["colAction"].Index))
             {
                 e.Paint(e.CellBounds, DataGridViewPaintParts.Background | DataGridViewPaintParts.Border);
-
                 using (SolidBrush brush = new SolidBrush(Color.White))
                 {
                     StringFormat sf = new StringFormat();
                     sf.Alignment = StringAlignment.Center;
                     sf.LineAlignment = StringAlignment.Center;
-
-                    // Draw correct header text per column
                     string headerText = dgvEnrollment.Columns[e.ColumnIndex].HeaderText;
-
                     e.Graphics.DrawString(headerText, e.CellStyle.Font, brush, e.CellBounds, sf);
                 }
-
                 e.Handled = true;
             }
         }
@@ -266,11 +302,10 @@ namespace PUPAcadPortal
         {
             if (e.RowIndex >= 0 && e.ColumnIndex == dgvEnrollment.Columns["colSelect"].Index)
             {
-                // Toggle checkbox on single click
                 bool currentValue = Convert.ToBoolean(dgvEnrollment.Rows[e.RowIndex].Cells["colSelect"].Value);
                 dgvEnrollment.Rows[e.RowIndex].Cells["colSelect"].Value = !currentValue;
-                dgvEnrollment.ClearSelection(); // clear AFTER toggling
-                dgvEnrollment.CurrentCell = null; // removes focus border
+                dgvEnrollment.ClearSelection();
+                dgvEnrollment.CurrentCell = null;
             }
 
             if (e.ColumnIndex == dgvEnrollment.Columns["colAction"].Index && e.RowIndex >= 0)
@@ -279,15 +314,12 @@ namespace PUPAcadPortal
                 Point menuLocation = dgvEnrollment.PointToScreen(new Point(cellRect.Left, cellRect.Bottom));
                 cmsEnrollAction.Show(menuLocation);
             }
-
         }
 
         private void Enrollment_ShowOverlay()
         {
-
             pnlViewDetails.BringToFront();
             pnlViewDetails.Visible = true;
-
             pnlViewDetails.Location = new Point(
                 (this.ClientSize.Width - pnlViewDetails.Width) / 2,
                 (this.ClientSize.Height - pnlViewDetails.Height) / 2
@@ -301,7 +333,6 @@ namespace PUPAcadPortal
 
         private void Enrollment_viewDetailsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Get the selected row data
             if (dgvEnrollment.CurrentRow != null)
             {
                 string code = dgvEnrollment.CurrentRow.Cells["colCode"].Value.ToString();
@@ -309,16 +340,8 @@ namespace PUPAcadPortal
                 string units = dgvEnrollment.CurrentRow.Cells["colUnits"].Value.ToString();
                 string schedule = dgvEnrollment.CurrentRow.Cells["colSchedule"].Value.ToString();
                 string status = dgvEnrollment.CurrentRow.Cells["colStatus"].Value.ToString();
-
-                // Set popup labels — replace with your actual label names
-                //lblDetailCode.Text = "Code: " + code;
-                //lblDetailTitle.Text = "Title: " + title;
-                //lblDetailUnits.Text = "Units: " + units;
-                //lblDetailSchedule.Text = "Schedule: " + schedule;
-                //lblDetailStatus.Text = "Status: " + status;
-
+                // You can show details in the overlay if you wish
             }
-
             Enrollment_ShowOverlay();
         }
 
@@ -327,8 +350,7 @@ namespace PUPAcadPortal
             Enrollment_HideOverlay();
         }
 
-
-        // ── ACCOUNTS ──
+        // ==================== ACCOUNTS ====================
 
         private void Accounts_Initialize()
         {
@@ -336,10 +358,8 @@ namespace PUPAcadPortal
             Accounts_LoadData();
         }
 
-
         private void Accounts_LoadData()
         {
-            // Only data loading here
             dgvAccounts.Rows.Clear();
             dgvAccounts.Rows.Add("TF-001", "Tuition Fee", "FREE", "Mar 15, 2026", "Paid", "Mar 1, 2026");
             dgvAccounts.Rows.Add("MF-001", "Miscellaneous Fees", "FREE", "Mar 15, 2026", "Paid", "Mar 1, 2026");
@@ -350,47 +370,90 @@ namespace PUPAcadPortal
 
         private void StudentPortal_AccountsResize(object sender, EventArgs e)
         {
-
-            if (!IsHandleCreated) return; // ← fixes null reference bug
-
+            if (!IsHandleCreated) return;
             FitContentPanel(pnlAccountsContentHolder);
-
             int contentWidth = pnlAccountsContent.Width - (SidePadding * 2);
             int cardWidth = (contentWidth - (CardGap * 2)) / 3;
-
             dgvAccounts.Width = contentWidth;
             pnlAccountsFreeEd.Width = contentWidth;
             pnlAccountsSelectSem.Width = contentWidth;
-
             btnAccountsDownloadStatement.Left = contentWidth - btnAccountsDownloadStatement.Width + SidePadding;
-
-            panel1.Width = cardWidth;
-            panel21.Width = cardWidth;
-            panel20.Width = cardWidth;
-
-            panel1.Left = SidePadding;
-            panel21.Left = SidePadding + cardWidth + CardGap;
-            panel20.Left = SidePadding + (cardWidth * 2) + (CardGap * 2);
+            pnlTotalAssessment.Width = cardWidth;
+            pnlTotalPaid.Width = cardWidth;
+            pnlBalance.Width = cardWidth;
+            pnlTotalAssessment.Left = SidePadding;
+            pnlTotalPaid.Left = SidePadding + cardWidth + CardGap;
+            pnlBalance.Left = SidePadding + (cardWidth * 2) + (CardGap * 2);
         }
 
-        private void pictureBox4_Click(object sender, EventArgs e)
+        private void ShowDashboardPanel(Panel targetPanel)
         {
+            // List of all main content panels
+            Panel[] allContentPanels = { pnlDashboardContent, pnlEnrollContent, pnlCoursesContent, pnlAccountsContentHolder };
 
+            foreach (Panel p in allContentPanels)
+            {
+                if (p == targetPanel)
+                {
+                    FitContentPanel(p);   // size and position
+                    p.Visible = true;
+                    p.BringToFront();
+                }
+                else
+                {
+                    p.Visible = false;
+                }
+            }
         }
 
-        private void panel14_Paint(object sender, PaintEventArgs e)
+        private void btnDashboardViewEnrollment_Click(object sender, EventArgs e)
         {
-
+            changeButtonColor(sender as Button);
+            ShowDashboardPanel(pnlEnrollContent);
         }
 
-        private void panel27_Paint(object sender, PaintEventArgs e)
+        private void btnDashboardCourses_Click(object sender, EventArgs e)
         {
-
+            changeButtonColor(sender as Button);
+            ShowDashboardPanel(pnlCoursesContent);
         }
 
-        private void pnlAccountsContent_Paint(object sender, PaintEventArgs e)
+        private void btnDashboardPaymentStatus_Click(object sender, EventArgs e)
         {
-
+            changeButtonColor(sender as Button);
+            ShowDashboardPanel(pnlAccountsContentHolder);
         }
+
+        private void btnDownloadCOR_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Get the image from resources (change name to match yours)
+                System.Drawing.Image img = Properties.Resources.CertificateOfRegistration;
+
+                if (img == null)
+                {
+                    MessageBox.Show("Certificate image not found in resources.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Let the user choose where to save the file
+                using (SaveFileDialog sfd = new SaveFileDialog())
+                {
+                    sfd.Filter = "PNG Image|*.png";
+                    sfd.FileName = "Certificate_of_Registration.png";
+                    if (sfd.ShowDialog() == DialogResult.OK)
+                    {
+                        img.Save(sfd.FileName, System.Drawing.Imaging.ImageFormat.Png);
+                        MessageBox.Show("File saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 }
