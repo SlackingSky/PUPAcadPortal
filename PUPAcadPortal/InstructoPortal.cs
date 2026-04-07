@@ -1,5 +1,6 @@
 ﻿#nullable disable
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -22,9 +23,94 @@ namespace PUPAcadPortal
                 changeButtonColor(btnDashboard);
                 showContent(btnDashboard);
             }
+
+            // Buhayin ang logic para sa Grades (Auto-Compute at Search)
+            SetupGradeLogic();
         }
 
-        // Handles the Gold Bar and button color on the sidebar
+        // --- GRADE MANAGEMENT LOGIC (AUTO-COMPUTE & SEARCH) ---
+        private void SetupGradeLogic()
+        {
+            // 1. LALAGYAN NG SAMPLE DATA (Para may ma-test ka agad)
+            if (dataGridView1 != null && dataGridView1.Rows.Count == 0)
+            {
+                dataGridView1.Rows.Add("2021-00001-MN-0", "John Doe", "85", "88");
+                dataGridView1.Rows.Add("2021-00002-MN-0", "Jane Smith", "92", "95");
+                dataGridView1.Rows.Add("2021-00003-MN-0", "Robert Johnson", "78", "82");
+                dataGridView1.Rows.Add("2021-00004-MN-0", "Maria Garcia", "88", "90");
+                dataGridView1.Rows.Add("2021-00005-MN-0", "Michael Chen", "72", "75");
+                dataGridView1.Rows.Add("2021-00006-MN-0", "Sarah Williams", "", "");
+            }
+
+            // 2. AUTO-CALCULATE GRADES LOGIC
+            if (dataGridView1 != null)
+            {
+                // Ginagamit ang IList para maiwasan ang Visual Studio compiler bugs
+                dataGridView1.CellValueChanged += (s, e) => {
+                    // I-check kung Midterm (Column 2) o Finals (Column 3) ang in-edit
+                    if (e.RowIndex >= 0 && (e.ColumnIndex == 2 || e.ColumnIndex == 3))
+                    {
+                        IList cells = dataGridView1.Rows[e.RowIndex].Cells;
+
+                        DataGridViewCell midCell = (DataGridViewCell)cells!;
+                        DataGridViewCell finCell = (DataGridViewCell)cells!;
+                        DataGridViewCell avgCell = (DataGridViewCell)cells!;
+                        DataGridViewCell remCell = (DataGridViewCell)cells!;
+
+                        double m, f;
+                        bool hasMid = double.TryParse(Convert.ToString(midCell.Value), out m);
+                        bool hasFin = double.TryParse(Convert.ToString(finCell.Value), out f);
+
+                        // Kung may laman pareho ang Midterm at Finals, i-compute
+                        if (hasMid && hasFin)
+                        {
+                            double avg = (m + f) / 2.0;
+                            avgCell.Value = avg.ToString("F2");
+                            remCell.Value = avg >= 75.0 ? "Passed" : "Failed";
+                            if (remCell.Style != null) remCell.Style.ForeColor = avg >= 75.0 ? Color.Green : Color.Red;
+                        }
+                        else
+                        {
+                            avgCell.Value = "";
+                            remCell.Value = "Incomplete";
+                            if (remCell.Style != null) remCell.Style.ForeColor = Color.Gray;
+                        }
+                    }
+                };
+            }
+
+            // 3. SEARCH BAR LOGIC
+            if (textBox1 != null)
+            {
+                textBox1.TextChanged += (s, e) =>
+                {
+                    string q = textBox1.Text != null ? textBox1.Text.Trim().ToLower() : "";
+
+                    if (dataGridView1 != null)
+                    {
+                        // Kailangan i-null ang CurrentCell para makapag-hide tayo ng rows nang walang error
+                        dataGridView1.CurrentCell = null;
+
+                        foreach (DataGridViewRow r in dataGridView1.Rows)
+                        {
+                            if (r.IsNewRow) continue;
+
+                            IList cells = r.Cells;
+                            DataGridViewCell cell0 = (DataGridViewCell)cells!; // Student Number
+                            DataGridViewCell cell1 = (DataGridViewCell)cells!; // Name
+
+                            string sn = cell0.Value != null ? cell0.Value.ToString()!.ToLower() : "";
+                            string nm = cell1.Value != null ? cell1.Value.ToString()!.ToLower() : "";
+
+                            // I-hide o i-show ang row depende kung may match
+                            r.Visible = string.IsNullOrEmpty(q) || sn.Contains(q) || nm.Contains(q);
+                        }
+                    }
+                };
+            }
+        }
+
+        // --- SIDEBAR NAVIGATION LOGIC ---
         private void changeButtonColor(Button button)
         {
             if (button == null) return;
@@ -56,11 +142,10 @@ namespace PUPAcadPortal
                 clickedButton.BackColor = selectedColor;
                 pnlYellow.Visible = true;
                 pnlYellow.Location = new Point(0, clickedButton.Location.Y);
-                pnlYellow.BringToFront(); // Ensure the gold bar isn't hidden
+                pnlYellow.BringToFront();
             }
         }
 
-        // Handles hiding and showing your Designer panels cleanly
         private void showContent(Button button)
         {
             if (button == null) return;
@@ -75,10 +160,8 @@ namespace PUPAcadPortal
                 if (content.Key == button)
                 {
                     content.Value.Visible = true;
-                    // Dock = Fill ensures it doesn't get cut off when fullscreen
-                    content.Value.Parent = panel3;
                     content.Value.Dock = DockStyle.Fill;
-                    content.Value.BringToFront(); // Forces it to the top so nothing overlaps it
+                    content.Value.BringToFront();
                 }
                 else
                 {
@@ -141,7 +224,7 @@ namespace PUPAcadPortal
             this.Close();
         }
 
-        // --- KEEP YOUR EMPTY EVENT HANDLERS HERE SO THE DESIGNER DOESNT BREAK ---
+        // --- EMPTY EVENT HANDLERS (DO NOT DELETE) ---
         private void pnlCoursesContent_Paint(object sender, PaintEventArgs e) { }
         private void label2_Click(object sender, EventArgs e) { }
         private void lblWelcome_Click(object sender, EventArgs e) { }
@@ -192,5 +275,17 @@ namespace PUPAcadPortal
         private void label81_Click(object sender, EventArgs e) { }
         private void tableLayoutPanel8_Paint(object sender, PaintEventArgs e) { }
         private void label83_Click(object sender, EventArgs e) { }
+        private void panel93_Paint(object sender, PaintEventArgs e) { }
+    }
+
+    // --- DATA MODEL ---
+    public class StudentGrade
+    {
+        public string StudentNumber { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public double? Midterm { get; set; }
+        public double? Finals { get; set; }
+        public double? Average => (Midterm.HasValue && Finals.HasValue) ? (Midterm + Finals) / 2.0 : null;
+        public string Remarks => Average.HasValue ? (Average >= 75.0 ? "Passed" : "Failed") : "Incomplete";
     }
 }
