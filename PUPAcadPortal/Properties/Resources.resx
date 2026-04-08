@@ -195,6 +195,7 @@
   </data>
   <data name="professor-black-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\professor-black-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Screenshot 2026-03-25 202152" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Screenshot 2026-03-25 202152.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -221,6 +222,7 @@
   </data>
   <data name="professor-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\professor-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Screenshot 2026-03-25 201808" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Screenshot 2026-03-25 201808.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -235,6 +237,7 @@
   </data>
   <data name="warning-4-128" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\warning-4-1281.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="pupbackgradient" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pupbackgradient.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -255,6 +258,7 @@
   </data>
   <data name="pupbackgradient" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pupbackgradient.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Lock" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Lock.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -314,6 +318,7 @@
   </data>
   <data name="books-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\books-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="item.icon (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\item.icon (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -328,6 +333,7 @@
   </data>
   <data name="plus-8-24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\plus-8-24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="check-mark-6-48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\check-mark-6-48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -411,8 +417,10 @@
   </data>
   <data name="CertificateOfRegistration" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CertificateofRegistration.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="save-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\save-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Screenshot 2026-03-25 202219" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Screenshot 2026-03-25 202219.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
