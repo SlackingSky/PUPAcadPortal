@@ -1634,8 +1634,8 @@
             // panel3
             // 
             panel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panel3.Controls.Add(pnlSubMenu);
             panel3.Controls.Add(pnlSubject);
+            panel3.Controls.Add(pnlSubMenu);
             panel3.Controls.Add(pnlAttendance);
             panel3.Controls.Add(pnlAnnounce);
             panel3.Controls.Add(pnlLMSAct);
@@ -1655,9 +1655,9 @@
             // pnlSubMenu
             // 
             pnlSubMenu.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            pnlSubMenu.Controls.Add(pnlLMSActivities);
             pnlSubMenu.Controls.Add(pnlLMSFiles);
             pnlSubMenu.Controls.Add(pnlCreateAct);
-            pnlSubMenu.Controls.Add(pnlLMSActivities);
             pnlSubMenu.Controls.Add(pnlGenChats);
             pnlSubMenu.Controls.Add(panel38);
             pnlSubMenu.Location = new Point(293, 96);
