@@ -44,6 +44,7 @@ namespace PUPAcadPortal
             { btnRegisterProfessor, new ContentPanelInfo { Panel = pnlRegisterProfessorContent, ResetAction = () => { /* register professor reset */ } } },
             { btnViewAllUsers, new ContentPanelInfo { Panel = pnlViewAllUsersContent, ResetAction = ResetViewAllUsersPanel } }
             };
+
         }
 
         public class ContentPanelInfo
@@ -301,6 +302,8 @@ namespace PUPAcadPortal
                     txtSearchViewAUs.ForeColor = Color.Gray;
                 }
             };
+
+            btnDashboard.PerformClick();
         }
 
         private void LoadStudentPlaceholders()
