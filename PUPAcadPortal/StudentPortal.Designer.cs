@@ -1034,7 +1034,7 @@
             // pictureBox7
             // 
             pictureBox7.Image = (Image)resources.GetObject("pictureBox7.Image");
-            pictureBox7.Location = new Point(46, 43);
+            pictureBox7.Location = new Point(42, 39);
             pictureBox7.Name = "pictureBox7";
             pictureBox7.Size = new Size(80, 80);
             pictureBox7.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -1045,7 +1045,7 @@
             // 
             label19.AutoSize = true;
             label19.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label19.Location = new Point(209, 86);
+            label19.Location = new Point(206, 82);
             label19.Name = "label19";
             label19.Size = new Size(270, 31);
             label19.TabIndex = 10;
@@ -1055,7 +1055,7 @@
             // 
             label20.AutoSize = true;
             label20.Font = new Font("Segoe UI Semibold", 16.8F, FontStyle.Bold);
-            label20.Location = new Point(207, 48);
+            label20.Location = new Point(206, 44);
             label20.Name = "label20";
             label20.Size = new Size(419, 38);
             label20.TabIndex = 9;
@@ -1094,7 +1094,7 @@
             // pictureBox6
             // 
             pictureBox6.Image = Properties.Resources.quiz;
-            pictureBox6.Location = new Point(41, 46);
+            pictureBox6.Location = new Point(42, 39);
             pictureBox6.Name = "pictureBox6";
             pictureBox6.Size = new Size(80, 77);
             pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -1105,7 +1105,7 @@
             // 
             label21.AutoSize = true;
             label21.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label21.Location = new Point(209, 86);
+            label21.Location = new Point(204, 82);
             label21.Name = "label21";
             label21.Size = new Size(262, 31);
             label21.TabIndex = 8;
@@ -1115,7 +1115,7 @@
             // 
             label22.AutoSize = true;
             label22.Font = new Font("Segoe UI Semibold", 16.8F, FontStyle.Bold);
-            label22.Location = new Point(207, 48);
+            label22.Location = new Point(206, 44);
             label22.Name = "label22";
             label22.Size = new Size(327, 38);
             label22.TabIndex = 7;
@@ -1155,7 +1155,7 @@
             // 
             label15.AutoSize = true;
             label15.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label15.Location = new Point(206, 86);
+            label15.Location = new Point(206, 82);
             label15.Name = "label15";
             label15.Size = new Size(266, 31);
             label15.TabIndex = 8;
@@ -1164,7 +1164,7 @@
             // pictureBox5
             // 
             pictureBox5.Image = (Image)resources.GetObject("pictureBox5.Image");
-            pictureBox5.Location = new Point(44, 42);
+            pictureBox5.Location = new Point(44, 39);
             pictureBox5.Name = "pictureBox5";
             pictureBox5.Size = new Size(80, 80);
             pictureBox5.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -1175,7 +1175,7 @@
             // 
             label16.AutoSize = true;
             label16.Font = new Font("Segoe UI Semibold", 16.8F, FontStyle.Bold);
-            label16.Location = new Point(204, 48);
+            label16.Location = new Point(206, 44);
             label16.Name = "label16";
             label16.Size = new Size(409, 38);
             label16.TabIndex = 7;
