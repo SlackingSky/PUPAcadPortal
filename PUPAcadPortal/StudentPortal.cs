@@ -145,13 +145,9 @@ namespace PUPAcadPortal
             pnlGrades.Visible = true;
         }
 
-        private void btnGo1_Click(object sender, EventArgs e)
+        private void btnGo1_Click(object sender, EventArgs e) // ALA TO WAG MAG PASTE NG CODE DITO PLZZZZZ MALI NADELETE KO NA TO
         {
-            pnlLMSFiles.Visible = false;
-            pnlSubMenu.BringToFront();
-            pnlSubMenu.Visible = true;
-            pnlLMSActivities.BringToFront();
-            pnlLMSActivities.Visible = true;
+           
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -289,6 +285,15 @@ namespace PUPAcadPortal
         private void roundedPanel16_MouseLeave(object sender, EventArgs e)
         {
             roundedPanel16.BackColor = Color.White;
+        }
+
+        private void btnGo1_Click_1(object sender, EventArgs e)
+        {
+            pnlLMSFiles.Visible = false;
+            pnlSubMenu.BringToFront();
+            pnlSubMenu.Visible = true;
+            pnlLMSActivities.BringToFront();
+            pnlLMSActivities.Visible = true;
         }
     }
 }

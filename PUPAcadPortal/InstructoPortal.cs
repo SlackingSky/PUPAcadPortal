@@ -225,10 +225,10 @@ namespace PUPAcadPortal
         }
         private void btnClassFiles_Click(object sender, EventArgs e)
         {
-            pnlClassFiles.Visible = true;
+            pnlLMSFiles.Visible = true;
 
             // 2. Bring it to the front so it's not hidden behind other main panels
-            pnlClassFiles.BringToFront();
+            pnlLMSFiles.BringToFront();
         }
 
 
@@ -647,6 +647,35 @@ namespace PUPAcadPortal
 
                     // Show your ContextMenuStrip at the exact mouse location
                     contextMenuStrip1.Show(listView_file, e.Location);
+                }
+            }
+        }
+
+        private void btnUpload_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "All Files (*.*)|*.*";
+                openFileDialog.Multiselect = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    // 1. Suspend the layout to prevent "flickering" or shifting while adding
+                    listView_file.BeginUpdate();
+
+                    foreach (string filePath in openFileDialog.FileNames)
+                    {
+                        AddFileToListView(filePath);
+                    }
+
+                    // 2. FORCE the columns to stay at your preferred widths
+                    // This prevents the columns from jumping or changing format
+                    listView_file.Columns[0].Width = 650; // File Name
+                    listView_file.Columns[1].Width = 650; // Date Uploaded
+                    listView_file.Columns[2].Width = 380; // Size
+
+                    // 3. Resume the layout
+                    listView_file.EndUpdate();
                 }
             }
         }

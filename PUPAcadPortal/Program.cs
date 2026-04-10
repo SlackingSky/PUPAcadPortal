@@ -1,5 +1,3 @@
-using static System.Windows.Forms.DataFormats;
-
 namespace PUPAcadPortal
 {
     internal static class Program
