@@ -28,6 +28,13 @@ namespace PUPAcadPortal
             //aalisin ung border ng datetimepicker sa attendance tab | d ko alam kung sakin lng kasi nagbubug / nawawala ung button for the date :) - hansukal
             // Removes 2 pixels from every side of the control
             //dateTimePicker3.Region = new Region(new Rectangle(2, 2, dateTimePicker1.Width - 4, dateTimePicker1.Height - 4));
+            // 1. Tell the control to use your custom string
+            dateTimePicker2.Format = DateTimePickerFormat.Custom;
+
+            // 2. Set the pattern (no extra spaces)
+            // "ddd" = Fri, "MMM" = Apr, "dd" = 10
+            dateTimePicker2.CustomFormat = "ddd, MMM dd, yyyy";
+
         }
 
 
@@ -459,7 +466,6 @@ namespace PUPAcadPortal
 
             if (!imageList1.Images.ContainsKey("FolderIcon"))
             {
-                // Use the 'Name' you gave in the Resource window
                 imageList1.Images.Add("FolderIcon", Properties.Resources.folder_icon);
             }
 
@@ -467,8 +473,11 @@ namespace PUPAcadPortal
             ListViewItem item = new ListViewItem(dirInfo.Name, iconIndex);
             item.Tag = folderPath;
 
-            item.SubItems.Add("File Folder");
+            // 1. Add DATE first
             item.SubItems.Add(DateTime.Now.ToString("g"));
+
+            // 2. Add "File Folder" second (as the size placeholder)
+            item.SubItems.Add("File Folder");
 
             listView_file.Items.Add(item);
         }
@@ -491,7 +500,6 @@ namespace PUPAcadPortal
                     else if (ext == ".ppt" || ext == ".pptx")
                         imageList1.Images.Add(ext, Properties.Resources.ppt_icon);
                     else
-                        // Default system icon for everything else
                         imageList1.Images.Add(ext, Icon.ExtractAssociatedIcon(filepath));
                 }
 
@@ -499,14 +507,15 @@ namespace PUPAcadPortal
                 ListViewItem item = new ListViewItem(fileInfo.Name, iconIndex);
                 item.Tag = filepath;
 
-                // Smart Size Formatting
+                // 1. Add DATE first (Matches Column 1)
+                item.SubItems.Add(DateTime.Now.ToString("g"));
+
+                // 2. Add SIZE second (Matches Column 2)
                 double sizeInKB = fileInfo.Length / 1024.0;
                 string sizeDisplay = (sizeInKB >= 1024)
                     ? $"{(sizeInKB / 1024.0):F2} MB"
                     : $"{sizeInKB:F2} KB";
-
                 item.SubItems.Add(sizeDisplay);
-                item.SubItems.Add(DateTime.Now.ToString("g"));
 
                 listView_file.Items.Add(item);
             }
@@ -538,18 +547,15 @@ namespace PUPAcadPortal
             listView_file.GridLines = false;
 
             // 2. Row Spacing & Icons
-            // 32x32 provides the height for spacing and makes icons visible
             imageList1.ImageSize = new Size(32, 32);
             imageList1.ColorDepth = ColorDepth.Depth32Bit;
             listView_file.SmallImageList = imageList1;
 
-            // 3. Define Columns (Clear first to avoid duplicates)
+            // 3. Define Columns (Swapped order: Name -> Date -> Size)
             listView_file.Columns.Clear();
-            listView_file.Columns.Add("File Name", 250);
-            listView_file.Columns.Add("Size", 100);
-            listView_file.Columns.Add("Date Uploaded", 180);
-
-
+            listView_file.Columns.Add("  File Name", 650);
+            listView_file.Columns.Add("  Date Uploaded", 650); // Column index 1
+            listView_file.Columns.Add("  Size", 350);          // Column index 2
         }
 
         private void listView_file_MouseDoubleClick(object sender, MouseEventArgs e)
