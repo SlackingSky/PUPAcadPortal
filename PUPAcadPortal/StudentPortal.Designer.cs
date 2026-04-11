@@ -1389,6 +1389,7 @@
             btnGenerate.TabIndex = 4;
             btnGenerate.Text = "Generate COG";
             btnGenerate.UseVisualStyleBackColor = false;
+            btnGenerate.Click += btnGenerate_Click;
             // 
             // label5
             // 

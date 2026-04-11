@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -289,6 +290,40 @@ namespace PUPAcadPortal
         private void roundedPanel16_MouseLeave(object sender, EventArgs e)
         {
             roundedPanel16.BackColor = Color.White;
+        }
+
+        private void btnGenerate_Click(object sender, EventArgs e)
+        {
+            string sourceFile = Path.Combine(Application.StartupPath, "Resources", "COG-MTECH.pdf");
+
+            if (!File.Exists(sourceFile))
+            {
+                MessageBox.Show("Error: COG-MTECH.pdf was not found in the Resources folder.",
+                                "Missing File", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using (SaveFileDialog sfd = new SaveFileDialog())
+            {
+                sfd.Filter = "PDF Documents (.pdf)|.pdf";
+                sfd.FileName = "COG-MTECH.pdf"; 
+                sfd.Title = "Save COG-MTECH Report";
+
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        File.Copy(sourceFile, sfd.FileName, true);
+
+                        MessageBox.Show("COG-MTECH.pdf has been saved successfully!",
+                                        "Download Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("An error occurred: " + ex.Message);
+                    }
+                }
+            }
         }
     }
 }
