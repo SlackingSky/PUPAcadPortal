@@ -83,6 +83,9 @@
             roundedPanel12 = new RoundedPanel();
             textBox22 = new TextBox();
             label117 = new Label();
+            panel44 = new Panel();
+            label109 = new Label();
+            panel46 = new Panel();
             panel45 = new Panel();
             roundedPanel23 = new RoundedPanel();
             cmbBXActType = new ComboBox();
@@ -95,12 +98,20 @@
             label116 = new Label();
             label111 = new Label();
             label110 = new Label();
-            panel44 = new Panel();
-            label109 = new Label();
-            panel46 = new Panel();
             pnlCoursesContent = new Panel();
             pnlGradesContent = new Panel();
             panel3 = new Panel();
+            pnlGrades = new Panel();
+            panel52 = new Panel();
+            roundedPanel30 = new RoundedPanel();
+            comboBox14 = new ComboBox();
+            label128 = new Label();
+            panel43 = new Panel();
+            btnRelease = new Button();
+            btnSave = new Button();
+            roundedPanel28 = new RoundedPanel();
+            comboBox13 = new ComboBox();
+            label5 = new Label();
             pnlSubMenu = new Panel();
             pnlLMSActivities = new Panel();
             panel42 = new Panel();
@@ -344,8 +355,6 @@
             label60 = new Label();
             pnlClassFiles = new Panel();
             label7 = new Label();
-            pnlGrades = new Panel();
-            label5 = new Label();
             pnlCalendar = new Panel();
             label9 = new Label();
             pnlHeader = new Panel();
@@ -508,12 +517,17 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox46).BeginInit();
             roundedPanel11.SuspendLayout();
             roundedPanel12.SuspendLayout();
+            panel44.SuspendLayout();
             panel45.SuspendLayout();
             roundedPanel23.SuspendLayout();
             roundedPanel22.SuspendLayout();
             roundedPanel21.SuspendLayout();
-            panel44.SuspendLayout();
             panel3.SuspendLayout();
+            pnlGrades.SuspendLayout();
+            panel52.SuspendLayout();
+            roundedPanel30.SuspendLayout();
+            panel43.SuspendLayout();
+            roundedPanel28.SuspendLayout();
             pnlSubMenu.SuspendLayout();
             pnlLMSActivities.SuspendLayout();
             panel42.SuspendLayout();
@@ -619,7 +633,6 @@
             tableLayoutPanel6.SuspendLayout();
             pnlLMSAct.SuspendLayout();
             pnlClassFiles.SuspendLayout();
-            pnlGrades.SuspendLayout();
             pnlCalendar.SuspendLayout();
             pnlHeader.SuspendLayout();
             panel23.SuspendLayout();
@@ -1106,9 +1119,9 @@
             pnlCreateAct.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pnlCreateAct.Controls.Add(pnlQuiz1);
             pnlCreateAct.Controls.Add(pnlAssign);
-            pnlCreateAct.Controls.Add(panel45);
             pnlCreateAct.Controls.Add(panel44);
             pnlCreateAct.Controls.Add(panel46);
+            pnlCreateAct.Controls.Add(panel45);
             pnlCreateAct.Location = new Point(0, 65);
             pnlCreateAct.Name = "pnlCreateAct";
             pnlCreateAct.Size = new Size(1453, 901);
@@ -1446,6 +1459,35 @@
             label117.TabIndex = 13;
             label117.Text = "Instructions";
             // 
+            // panel44
+            // 
+            panel44.AutoScroll = true;
+            panel44.BackColor = Color.White;
+            panel44.Controls.Add(label109);
+            panel44.Dock = DockStyle.Top;
+            panel44.Location = new Point(0, 203);
+            panel44.Name = "panel44";
+            panel44.Size = new Size(1453, 45);
+            panel44.TabIndex = 0;
+            // 
+            // label109
+            // 
+            label109.AutoSize = true;
+            label109.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label109.Location = new Point(18, 3);
+            label109.Name = "label109";
+            label109.Size = new Size(218, 31);
+            label109.TabIndex = 3;
+            label109.Text = "Create New Activity";
+            // 
+            // panel46
+            // 
+            panel46.Dock = DockStyle.Top;
+            panel46.Location = new Point(0, 186);
+            panel46.Name = "panel46";
+            panel46.Size = new Size(1453, 17);
+            panel46.TabIndex = 6;
+            // 
             // panel45
             // 
             panel45.BackColor = Color.White;
@@ -1458,7 +1500,7 @@
             panel45.Controls.Add(label111);
             panel45.Controls.Add(label110);
             panel45.Dock = DockStyle.Top;
-            panel45.Location = new Point(0, 62);
+            panel45.Location = new Point(0, 0);
             panel45.Name = "panel45";
             panel45.Size = new Size(1453, 186);
             panel45.TabIndex = 5;
@@ -1574,35 +1616,6 @@
             label110.TabIndex = 4;
             label110.Text = "Activity Title";
             // 
-            // panel44
-            // 
-            panel44.AutoScroll = true;
-            panel44.BackColor = Color.White;
-            panel44.Controls.Add(label109);
-            panel44.Dock = DockStyle.Top;
-            panel44.Location = new Point(0, 17);
-            panel44.Name = "panel44";
-            panel44.Size = new Size(1453, 45);
-            panel44.TabIndex = 0;
-            // 
-            // label109
-            // 
-            label109.AutoSize = true;
-            label109.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label109.Location = new Point(18, 3);
-            label109.Name = "label109";
-            label109.Size = new Size(218, 31);
-            label109.TabIndex = 3;
-            label109.Text = "Create New Activity";
-            // 
-            // panel46
-            // 
-            panel46.Dock = DockStyle.Top;
-            panel46.Location = new Point(0, 0);
-            panel46.Name = "panel46";
-            panel46.Size = new Size(1453, 17);
-            panel46.TabIndex = 6;
-            // 
             // pnlCoursesContent
             // 
             pnlCoursesContent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -1630,13 +1643,13 @@
             // panel3
             // 
             panel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panel3.Controls.Add(pnlGrades);
             panel3.Controls.Add(pnlSubMenu);
             panel3.Controls.Add(pnlSubject);
             panel3.Controls.Add(pnlAnnounce);
             panel3.Controls.Add(pnlAttendance);
             panel3.Controls.Add(pnlLMSAct);
             panel3.Controls.Add(pnlClassFiles);
-            panel3.Controls.Add(pnlGrades);
             panel3.Controls.Add(pnlCalendar);
             panel3.Controls.Add(pnlHeader);
             panel3.Controls.Add(pnlCoursesContent);
@@ -1648,6 +1661,127 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(1746, 1415);
             panel3.TabIndex = 0;
+            // 
+            // pnlGrades
+            // 
+            pnlGrades.AutoScroll = true;
+            pnlGrades.BackColor = SystemColors.Control;
+            pnlGrades.CausesValidation = false;
+            pnlGrades.Controls.Add(panel52);
+            pnlGrades.Controls.Add(panel43);
+            pnlGrades.Dock = DockStyle.Fill;
+            pnlGrades.Location = new Point(293, 96);
+            pnlGrades.Margin = new Padding(0);
+            pnlGrades.Name = "pnlGrades";
+            pnlGrades.Size = new Size(1453, 1319);
+            pnlGrades.TabIndex = 15;
+            pnlGrades.Visible = false;
+            // 
+            // panel52
+            // 
+            panel52.BackColor = Color.White;
+            panel52.Controls.Add(roundedPanel30);
+            panel52.Controls.Add(label128);
+            panel52.Location = new Point(0, 130);
+            panel52.Name = "panel52";
+            panel52.Size = new Size(1453, 92);
+            panel52.TabIndex = 4;
+            // 
+            // roundedPanel30
+            // 
+            roundedPanel30.BackColor = Color.Maroon;
+            roundedPanel30.BorderRadius = 10;
+            roundedPanel30.Controls.Add(comboBox14);
+            roundedPanel30.Location = new Point(278, 21);
+            roundedPanel30.Name = "roundedPanel30";
+            roundedPanel30.Size = new Size(372, 51);
+            roundedPanel30.TabIndex = 1;
+            // 
+            // comboBox14
+            // 
+            comboBox14.FormattingEnabled = true;
+            comboBox14.Items.AddRange(new object[] { "Midterm Period", "Finalterm Period" });
+            comboBox14.Location = new Point(23, 11);
+            comboBox14.Name = "comboBox14";
+            comboBox14.Size = new Size(328, 28);
+            comboBox14.TabIndex = 0;
+            // 
+            // label128
+            // 
+            label128.AutoSize = true;
+            label128.BackColor = Color.White;
+            label128.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label128.Location = new Point(26, 28);
+            label128.Name = "label128";
+            label128.Size = new Size(171, 31);
+            label128.TabIndex = 0;
+            label128.Text = "Grading Period";
+            // 
+            // panel43
+            // 
+            panel43.BackColor = Color.White;
+            panel43.Controls.Add(btnRelease);
+            panel43.Controls.Add(btnSave);
+            panel43.Controls.Add(roundedPanel28);
+            panel43.Controls.Add(label5);
+            panel43.Location = new Point(0, 19);
+            panel43.Name = "panel43";
+            panel43.Size = new Size(1453, 92);
+            panel43.TabIndex = 2;
+            // 
+            // btnRelease
+            // 
+            btnRelease.BackColor = Color.Maroon;
+            btnRelease.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnRelease.ForeColor = Color.White;
+            btnRelease.Location = new Point(1121, 22);
+            btnRelease.Name = "btnRelease";
+            btnRelease.Size = new Size(311, 49);
+            btnRelease.TabIndex = 3;
+            btnRelease.Text = "Release Grades";
+            btnRelease.UseVisualStyleBackColor = false;
+            // 
+            // btnSave
+            // 
+            btnSave.BackColor = Color.Maroon;
+            btnSave.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSave.ForeColor = Color.White;
+            btnSave.Location = new Point(944, 21);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(166, 49);
+            btnSave.TabIndex = 2;
+            btnSave.Text = "Save";
+            btnSave.UseVisualStyleBackColor = false;
+            // 
+            // roundedPanel28
+            // 
+            roundedPanel28.BackColor = Color.Maroon;
+            roundedPanel28.BorderRadius = 10;
+            roundedPanel28.Controls.Add(comboBox13);
+            roundedPanel28.Location = new Point(278, 21);
+            roundedPanel28.Name = "roundedPanel28";
+            roundedPanel28.Size = new Size(372, 51);
+            roundedPanel28.TabIndex = 1;
+            // 
+            // comboBox13
+            // 
+            comboBox13.FormattingEnabled = true;
+            comboBox13.Items.AddRange(new object[] { "BSIT 2-2 | Introduction to Programming 1", "BSIT 2-2 | Information Management", "" });
+            comboBox13.Location = new Point(23, 11);
+            comboBox13.Name = "comboBox13";
+            comboBox13.Size = new Size(328, 28);
+            comboBox13.TabIndex = 0;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.BackColor = Color.White;
+            label5.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5.Location = new Point(26, 28);
+            label5.Name = "label5";
+            label5.Size = new Size(227, 31);
+            label5.TabIndex = 0;
+            label5.Text = "Course & Year-Section";
             // 
             // pnlSubMenu
             // 
@@ -4633,29 +4767,6 @@
             label7.TabIndex = 0;
             label7.Text = "Class Files";
             // 
-            // pnlGrades
-            // 
-            pnlGrades.AutoScroll = true;
-            pnlGrades.BackColor = SystemColors.Control;
-            pnlGrades.CausesValidation = false;
-            pnlGrades.Controls.Add(label5);
-            pnlGrades.Dock = DockStyle.Fill;
-            pnlGrades.Location = new Point(293, 96);
-            pnlGrades.Margin = new Padding(0);
-            pnlGrades.Name = "pnlGrades";
-            pnlGrades.Size = new Size(1453, 1319);
-            pnlGrades.TabIndex = 15;
-            pnlGrades.Visible = false;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(140, 29);
-            label5.Name = "label5";
-            label5.Size = new Size(55, 20);
-            label5.TabIndex = 0;
-            label5.Text = "Grades";
-            // 
             // pnlCalendar
             // 
             pnlCalendar.AutoScroll = true;
@@ -4782,7 +4893,7 @@
             // pictureBox2
             // 
             pictureBox2.Image = Properties.Resources.pup48x48;
-            pictureBox2.Location = new Point(0, 0);
+            pictureBox2.Location = new Point(0, 1);
             pictureBox2.Margin = new Padding(3, 4, 3, 4);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(48, 48);
@@ -6264,15 +6375,22 @@
             roundedPanel11.ResumeLayout(false);
             roundedPanel12.ResumeLayout(false);
             roundedPanel12.PerformLayout();
+            panel44.ResumeLayout(false);
+            panel44.PerformLayout();
             panel45.ResumeLayout(false);
             panel45.PerformLayout();
             roundedPanel23.ResumeLayout(false);
             roundedPanel22.ResumeLayout(false);
             roundedPanel21.ResumeLayout(false);
             roundedPanel21.PerformLayout();
-            panel44.ResumeLayout(false);
-            panel44.PerformLayout();
             panel3.ResumeLayout(false);
+            pnlGrades.ResumeLayout(false);
+            panel52.ResumeLayout(false);
+            panel52.PerformLayout();
+            roundedPanel30.ResumeLayout(false);
+            panel43.ResumeLayout(false);
+            panel43.PerformLayout();
+            roundedPanel28.ResumeLayout(false);
             pnlSubMenu.ResumeLayout(false);
             pnlLMSActivities.ResumeLayout(false);
             panel42.ResumeLayout(false);
@@ -6424,8 +6542,6 @@
             pnlLMSAct.PerformLayout();
             pnlClassFiles.ResumeLayout(false);
             pnlClassFiles.PerformLayout();
-            pnlGrades.ResumeLayout(false);
-            pnlGrades.PerformLayout();
             pnlCalendar.ResumeLayout(false);
             pnlCalendar.PerformLayout();
             pnlHeader.ResumeLayout(false);
@@ -6926,5 +7042,12 @@
         private Button button42;
         private Button button41;
         private Button button40;
+        private ComboBox comboBox13;
+        private Button btnRelease;
+        private Button btnSave;
+        private Panel panel52;
+        private RoundedPanel roundedPanel30;
+        private ComboBox comboBox14;
+        private Label label128;
     }
 }
