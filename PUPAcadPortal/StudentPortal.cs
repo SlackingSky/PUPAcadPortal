@@ -306,7 +306,7 @@ namespace PUPAcadPortal
             using (SaveFileDialog sfd = new SaveFileDialog())
             {
                 sfd.Filter = "PDF Documents (.pdf)|.pdf";
-                sfd.FileName = "COG-MTECH.pdf"; 
+                sfd.FileName = "COG-MTECH.pdf";
                 sfd.Title = "Save COG-MTECH Report";
 
                 if (sfd.ShowDialog() == DialogResult.OK)
@@ -324,6 +324,21 @@ namespace PUPAcadPortal
                     }
                 }
             }
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            roundedPanel36.Visible = false;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            roundedPanel36.Visible = true;
+        }
+
+        private void roundedPanel36_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

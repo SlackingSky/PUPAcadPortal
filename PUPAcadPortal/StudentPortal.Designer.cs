@@ -62,6 +62,11 @@
             pnlEnrollContent = new Panel();
             panel3 = new Panel();
             pnlGrades = new Panel();
+            roundedPanel36 = new RoundedPanel();
+            roundedPanel37 = new RoundedPanel();
+            button8 = new Button();
+            listBox1 = new ListBox();
+            label40 = new Label();
             roundedPanel34 = new RoundedPanel();
             panel63 = new Panel();
             button7 = new Button();
@@ -80,6 +85,17 @@
             roundedPanel31 = new RoundedPanel();
             label34 = new Label();
             label35 = new Label();
+            panel57 = new Panel();
+            roundedPanel38 = new RoundedPanel();
+            comboBox10 = new ComboBox();
+            btnGenerate = new Button();
+            label5 = new Label();
+            roundedPanel6 = new RoundedPanel();
+            panel58 = new Panel();
+            button1 = new Button();
+            roundedPanel20 = new RoundedPanel();
+            label26 = new Label();
+            label25 = new Label();
             roundedPanel23 = new RoundedPanel();
             panel60 = new Panel();
             button4 = new Button();
@@ -92,15 +108,6 @@
             roundedPanel22 = new RoundedPanel();
             label27 = new Label();
             label31 = new Label();
-            panel57 = new Panel();
-            btnGenerate = new Button();
-            label5 = new Label();
-            roundedPanel6 = new RoundedPanel();
-            panel58 = new Panel();
-            button1 = new Button();
-            roundedPanel20 = new RoundedPanel();
-            label26 = new Label();
-            label25 = new Label();
             pnlSubject = new Panel();
             roundedPanel26 = new RoundedPanel();
             label122 = new Label();
@@ -373,6 +380,8 @@
             panel13.SuspendLayout();
             panel3.SuspendLayout();
             pnlGrades.SuspendLayout();
+            roundedPanel36.SuspendLayout();
+            roundedPanel37.SuspendLayout();
             roundedPanel34.SuspendLayout();
             panel63.SuspendLayout();
             roundedPanel35.SuspendLayout();
@@ -382,16 +391,17 @@
             roundedPanel30.SuspendLayout();
             panel61.SuspendLayout();
             roundedPanel31.SuspendLayout();
+            panel57.SuspendLayout();
+            roundedPanel38.SuspendLayout();
+            roundedPanel6.SuspendLayout();
+            panel58.SuspendLayout();
+            roundedPanel20.SuspendLayout();
             roundedPanel23.SuspendLayout();
             panel60.SuspendLayout();
             roundedPanel28.SuspendLayout();
             roundedPanel21.SuspendLayout();
             panel59.SuspendLayout();
             roundedPanel22.SuspendLayout();
-            panel57.SuspendLayout();
-            roundedPanel6.SuspendLayout();
-            panel58.SuspendLayout();
-            roundedPanel20.SuspendLayout();
             pnlSubject.SuspendLayout();
             roundedPanel26.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox49).BeginInit();
@@ -1033,13 +1043,14 @@
             pnlGrades.AutoScroll = true;
             pnlGrades.BackColor = SystemColors.Control;
             pnlGrades.CausesValidation = false;
+            pnlGrades.Controls.Add(roundedPanel36);
             pnlGrades.Controls.Add(roundedPanel34);
             pnlGrades.Controls.Add(roundedPanel32);
             pnlGrades.Controls.Add(roundedPanel30);
-            pnlGrades.Controls.Add(roundedPanel23);
-            pnlGrades.Controls.Add(roundedPanel21);
             pnlGrades.Controls.Add(panel57);
             pnlGrades.Controls.Add(roundedPanel6);
+            pnlGrades.Controls.Add(roundedPanel23);
+            pnlGrades.Controls.Add(roundedPanel21);
             pnlGrades.Dock = DockStyle.Fill;
             pnlGrades.Location = new Point(293, 96);
             pnlGrades.Margin = new Padding(0);
@@ -1047,6 +1058,62 @@
             pnlGrades.Size = new Size(1453, 1319);
             pnlGrades.TabIndex = 12;
             pnlGrades.Visible = false;
+            // 
+            // roundedPanel36
+            // 
+            roundedPanel36.BackColor = Color.Maroon;
+            roundedPanel36.BorderRadius = 10;
+            roundedPanel36.Controls.Add(roundedPanel37);
+            roundedPanel36.Location = new Point(120, 166);
+            roundedPanel36.Name = "roundedPanel36";
+            roundedPanel36.Size = new Size(856, 520);
+            roundedPanel36.TabIndex = 1;
+            roundedPanel36.Visible = false;
+            roundedPanel36.Paint += roundedPanel36_Paint;
+            // 
+            // roundedPanel37
+            // 
+            roundedPanel37.BackColor = Color.White;
+            roundedPanel37.BorderRadius = 10;
+            roundedPanel37.Controls.Add(button8);
+            roundedPanel37.Controls.Add(listBox1);
+            roundedPanel37.Controls.Add(label40);
+            roundedPanel37.Location = new Point(21, 21);
+            roundedPanel37.Name = "roundedPanel37";
+            roundedPanel37.Size = new Size(811, 469);
+            roundedPanel37.TabIndex = 0;
+            // 
+            // button8
+            // 
+            button8.BackColor = Color.Maroon;
+            button8.ForeColor = Color.White;
+            button8.Location = new Point(689, 424);
+            button8.Name = "button8";
+            button8.Size = new Size(94, 29);
+            button8.TabIndex = 7;
+            button8.Text = "Back";
+            button8.UseVisualStyleBackColor = false;
+            button8.Click += button8_Click;
+            // 
+            // listBox1
+            // 
+            listBox1.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            listBox1.FormattingEnabled = true;
+            listBox1.Items.AddRange(new object[] { "Attendance (10%)                                   - 10", "Recitation / Class Participation (15%)    - 15", "Seatwork / Short Quiz (15%)                  - 15", "Assignment / Project (15%)                    - 15", "Long Quiz (25%)                                      - 25", "Major Examination (30%)                       - 30", "Grade Computation                             100  -> 1.00" });
+            listBox1.Location = new Point(148, 62);
+            listBox1.Name = "listBox1";
+            listBox1.Size = new Size(518, 345);
+            listBox1.TabIndex = 6;
+            // 
+            // label40
+            // 
+            label40.AutoSize = true;
+            label40.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label40.Location = new Point(24, 21);
+            label40.Name = "label40";
+            label40.Size = new Size(225, 31);
+            label40.TabIndex = 5;
+            label40.Text = "Grade Computation:";
             // 
             // roundedPanel34
             // 
@@ -1240,6 +1307,124 @@
             label35.TabIndex = 1;
             label35.Text = "Human Computer Interaction";
             // 
+            // panel57
+            // 
+            panel57.BackColor = Color.White;
+            panel57.Controls.Add(roundedPanel38);
+            panel57.Controls.Add(btnGenerate);
+            panel57.Controls.Add(label5);
+            panel57.Location = new Point(0, 29);
+            panel57.Name = "panel57";
+            panel57.Size = new Size(1450, 85);
+            panel57.TabIndex = 2;
+            // 
+            // roundedPanel38
+            // 
+            roundedPanel38.BackColor = Color.Maroon;
+            roundedPanel38.BorderRadius = 10;
+            roundedPanel38.Controls.Add(comboBox10);
+            roundedPanel38.Location = new Point(224, 12);
+            roundedPanel38.Name = "roundedPanel38";
+            roundedPanel38.Size = new Size(302, 64);
+            roundedPanel38.TabIndex = 5;
+            // 
+            // comboBox10
+            // 
+            comboBox10.FormattingEnabled = true;
+            comboBox10.Items.AddRange(new object[] { "Midterm Period", "Finalterm Period" });
+            comboBox10.Location = new Point(12, 16);
+            comboBox10.Name = "comboBox10";
+            comboBox10.Size = new Size(280, 28);
+            comboBox10.TabIndex = 5;
+            // 
+            // btnGenerate
+            // 
+            btnGenerate.BackColor = Color.Maroon;
+            btnGenerate.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnGenerate.ForeColor = Color.White;
+            btnGenerate.Location = new Point(1140, 14);
+            btnGenerate.Name = "btnGenerate";
+            btnGenerate.Size = new Size(270, 54);
+            btnGenerate.TabIndex = 4;
+            btnGenerate.Text = "Generate COG";
+            btnGenerate.UseVisualStyleBackColor = false;
+            btnGenerate.Click += btnGenerate_Click;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5.Location = new Point(31, 28);
+            label5.Name = "label5";
+            label5.Size = new Size(171, 31);
+            label5.TabIndex = 0;
+            label5.Text = "Grading Period";
+            // 
+            // roundedPanel6
+            // 
+            roundedPanel6.BackColor = Color.Maroon;
+            roundedPanel6.BorderRadius = 10;
+            roundedPanel6.Controls.Add(panel58);
+            roundedPanel6.Location = new Point(271, 129);
+            roundedPanel6.Name = "roundedPanel6";
+            roundedPanel6.Size = new Size(885, 128);
+            roundedPanel6.TabIndex = 1;
+            // 
+            // panel58
+            // 
+            panel58.BackColor = Color.White;
+            panel58.Controls.Add(button1);
+            panel58.Controls.Add(roundedPanel20);
+            panel58.Controls.Add(label25);
+            panel58.Location = new Point(27, 21);
+            panel58.Name = "panel58";
+            panel58.Size = new Size(836, 84);
+            panel58.TabIndex = 0;
+            // 
+            // button1
+            // 
+            button1.BackColor = Color.Maroon;
+            button1.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button1.ForeColor = Color.White;
+            button1.Location = new Point(643, 16);
+            button1.Name = "button1";
+            button1.Size = new Size(157, 54);
+            button1.TabIndex = 3;
+            button1.Text = "View Grade Breakdown";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
+            // 
+            // roundedPanel20
+            // 
+            roundedPanel20.BackColor = Color.Maroon;
+            roundedPanel20.BorderRadius = 10;
+            roundedPanel20.Controls.Add(label26);
+            roundedPanel20.Location = new Point(447, 19);
+            roundedPanel20.Name = "roundedPanel20";
+            roundedPanel20.Size = new Size(172, 48);
+            roundedPanel20.TabIndex = 2;
+            // 
+            // label26
+            // 
+            label26.AutoSize = true;
+            label26.BackColor = Color.White;
+            label26.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label26.Location = new Point(55, 7);
+            label26.Name = "label26";
+            label26.Size = new Size(55, 31);
+            label26.TabIndex = 1;
+            label26.Text = "1.00";
+            // 
+            // label25
+            // 
+            label25.AutoSize = true;
+            label25.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label25.Location = new Point(24, 24);
+            label25.Name = "label25";
+            label25.Size = new Size(337, 31);
+            label25.TabIndex = 1;
+            label25.Text = "Introduction to Programming 1";
+            // 
             // roundedPanel23
             // 
             roundedPanel23.BackColor = Color.Maroon;
@@ -1367,103 +1552,6 @@
             label31.Size = new Size(119, 31);
             label31.TabIndex = 1;
             label31.Text = "PATHFIT 4";
-            // 
-            // panel57
-            // 
-            panel57.BackColor = Color.White;
-            panel57.Controls.Add(btnGenerate);
-            panel57.Controls.Add(label5);
-            panel57.Location = new Point(0, 29);
-            panel57.Name = "panel57";
-            panel57.Size = new Size(1450, 85);
-            panel57.TabIndex = 2;
-            // 
-            // btnGenerate
-            // 
-            btnGenerate.BackColor = Color.Maroon;
-            btnGenerate.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnGenerate.ForeColor = Color.White;
-            btnGenerate.Location = new Point(1140, 14);
-            btnGenerate.Name = "btnGenerate";
-            btnGenerate.Size = new Size(270, 54);
-            btnGenerate.TabIndex = 4;
-            btnGenerate.Text = "Generate COG";
-            btnGenerate.UseVisualStyleBackColor = false;
-            btnGenerate.Click += btnGenerate_Click;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(31, 28);
-            label5.Name = "label5";
-            label5.Size = new Size(87, 31);
-            label5.TabIndex = 0;
-            label5.Text = "Grades";
-            // 
-            // roundedPanel6
-            // 
-            roundedPanel6.BackColor = Color.Maroon;
-            roundedPanel6.BorderRadius = 10;
-            roundedPanel6.Controls.Add(panel58);
-            roundedPanel6.Location = new Point(271, 129);
-            roundedPanel6.Name = "roundedPanel6";
-            roundedPanel6.Size = new Size(885, 128);
-            roundedPanel6.TabIndex = 1;
-            // 
-            // panel58
-            // 
-            panel58.BackColor = Color.White;
-            panel58.Controls.Add(button1);
-            panel58.Controls.Add(roundedPanel20);
-            panel58.Controls.Add(label25);
-            panel58.Location = new Point(27, 21);
-            panel58.Name = "panel58";
-            panel58.Size = new Size(836, 84);
-            panel58.TabIndex = 0;
-            // 
-            // button1
-            // 
-            button1.BackColor = Color.Maroon;
-            button1.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.ForeColor = Color.White;
-            button1.Location = new Point(643, 16);
-            button1.Name = "button1";
-            button1.Size = new Size(157, 54);
-            button1.TabIndex = 3;
-            button1.Text = "View Grade Breakdown";
-            button1.UseVisualStyleBackColor = false;
-            // 
-            // roundedPanel20
-            // 
-            roundedPanel20.BackColor = Color.Maroon;
-            roundedPanel20.BorderRadius = 10;
-            roundedPanel20.Controls.Add(label26);
-            roundedPanel20.Location = new Point(447, 19);
-            roundedPanel20.Name = "roundedPanel20";
-            roundedPanel20.Size = new Size(172, 48);
-            roundedPanel20.TabIndex = 2;
-            // 
-            // label26
-            // 
-            label26.AutoSize = true;
-            label26.BackColor = Color.White;
-            label26.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label26.Location = new Point(55, 7);
-            label26.Name = "label26";
-            label26.Size = new Size(55, 31);
-            label26.TabIndex = 1;
-            label26.Text = "1.00";
-            // 
-            // label25
-            // 
-            label25.AutoSize = true;
-            label25.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label25.Location = new Point(24, 24);
-            label25.Name = "label25";
-            label25.Size = new Size(337, 31);
-            label25.TabIndex = 1;
-            label25.Text = "Introduction to Programming 1";
             // 
             // pnlSubject
             // 
@@ -4582,6 +4670,9 @@
             panel13.ResumeLayout(false);
             panel3.ResumeLayout(false);
             pnlGrades.ResumeLayout(false);
+            roundedPanel36.ResumeLayout(false);
+            roundedPanel37.ResumeLayout(false);
+            roundedPanel37.PerformLayout();
             roundedPanel34.ResumeLayout(false);
             panel63.ResumeLayout(false);
             panel63.PerformLayout();
@@ -4597,6 +4688,14 @@
             panel61.PerformLayout();
             roundedPanel31.ResumeLayout(false);
             roundedPanel31.PerformLayout();
+            panel57.ResumeLayout(false);
+            panel57.PerformLayout();
+            roundedPanel38.ResumeLayout(false);
+            roundedPanel6.ResumeLayout(false);
+            panel58.ResumeLayout(false);
+            panel58.PerformLayout();
+            roundedPanel20.ResumeLayout(false);
+            roundedPanel20.PerformLayout();
             roundedPanel23.ResumeLayout(false);
             panel60.ResumeLayout(false);
             panel60.PerformLayout();
@@ -4607,13 +4706,6 @@
             panel59.PerformLayout();
             roundedPanel22.ResumeLayout(false);
             roundedPanel22.PerformLayout();
-            panel57.ResumeLayout(false);
-            panel57.PerformLayout();
-            roundedPanel6.ResumeLayout(false);
-            panel58.ResumeLayout(false);
-            panel58.PerformLayout();
-            roundedPanel20.ResumeLayout(false);
-            roundedPanel20.PerformLayout();
             pnlSubject.ResumeLayout(false);
             pnlSubject.PerformLayout();
             roundedPanel26.ResumeLayout(false);
@@ -5118,5 +5210,12 @@
         private Label label32;
         private Label label33;
         private Button button1;
+        private RoundedPanel roundedPanel36;
+        private RoundedPanel roundedPanel37;
+        private ListBox listBox1;
+        private Label label40;
+        private Button button8;
+        private RoundedPanel roundedPanel38;
+        private ComboBox comboBox10;
     }
 }
