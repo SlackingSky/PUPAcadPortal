@@ -102,6 +102,15 @@
             pnlGradesContent = new Panel();
             panel3 = new Panel();
             pnlGrades = new Panel();
+            dataGridView1 = new DataGridView();
+            StudentID = new DataGridViewTextBoxColumn();
+            StudentName = new DataGridViewTextBoxColumn();
+            Attendance = new DataGridViewTextBoxColumn();
+            Recitation = new DataGridViewTextBoxColumn();
+            Activities = new DataGridViewTextBoxColumn();
+            Assignment = new DataGridViewTextBoxColumn();
+            Exam = new DataGridViewTextBoxColumn();
+            Grade = new DataGridViewTextBoxColumn();
             panel52 = new Panel();
             roundedPanel30 = new RoundedPanel();
             comboBox14 = new ComboBox();
@@ -524,6 +533,7 @@
             roundedPanel21.SuspendLayout();
             panel3.SuspendLayout();
             pnlGrades.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             panel52.SuspendLayout();
             roundedPanel30.SuspendLayout();
             panel43.SuspendLayout();
@@ -1667,6 +1677,7 @@
             pnlGrades.AutoScroll = true;
             pnlGrades.BackColor = SystemColors.Control;
             pnlGrades.CausesValidation = false;
+            pnlGrades.Controls.Add(dataGridView1);
             pnlGrades.Controls.Add(panel52);
             pnlGrades.Controls.Add(panel43);
             pnlGrades.Dock = DockStyle.Fill;
@@ -1676,6 +1687,74 @@
             pnlGrades.Size = new Size(1453, 1319);
             pnlGrades.TabIndex = 15;
             pnlGrades.Visible = false;
+            // 
+            // dataGridView1
+            // 
+            dataGridView1.BackgroundColor = Color.White;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { StudentID, StudentName, Attendance, Recitation, Activities, Assignment, Exam, Grade });
+            dataGridView1.Location = new Point(187, 333);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowHeadersWidth = 51;
+            dataGridView1.Size = new Size(1052, 399);
+            dataGridView1.TabIndex = 5;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick_2;
+            // 
+            // StudentID
+            // 
+            StudentID.HeaderText = "Student ID";
+            StudentID.MinimumWidth = 6;
+            StudentID.Name = "StudentID";
+            StudentID.Width = 125;
+            // 
+            // StudentName
+            // 
+            StudentName.HeaderText = "Student Name";
+            StudentName.MinimumWidth = 6;
+            StudentName.Name = "StudentName";
+            StudentName.Width = 125;
+            // 
+            // Attendance
+            // 
+            Attendance.HeaderText = "Attendance";
+            Attendance.MinimumWidth = 6;
+            Attendance.Name = "Attendance";
+            Attendance.Width = 125;
+            // 
+            // Recitation
+            // 
+            Recitation.HeaderText = "Recitation/Class Participation";
+            Recitation.MinimumWidth = 6;
+            Recitation.Name = "Recitation";
+            Recitation.Width = 125;
+            // 
+            // Activities
+            // 
+            Activities.HeaderText = "Seatwork / Short Quiz";
+            Activities.MinimumWidth = 6;
+            Activities.Name = "Activities";
+            Activities.Width = 125;
+            // 
+            // Assignment
+            // 
+            Assignment.HeaderText = "Assignment / Project";
+            Assignment.MinimumWidth = 6;
+            Assignment.Name = "Assignment";
+            Assignment.Width = 125;
+            // 
+            // Exam
+            // 
+            Exam.HeaderText = "Major Examination";
+            Exam.MinimumWidth = 6;
+            Exam.Name = "Exam";
+            Exam.Width = 125;
+            // 
+            // Grade
+            // 
+            Grade.HeaderText = "Grade";
+            Grade.MinimumWidth = 6;
+            Grade.Name = "Grade";
+            Grade.Width = 125;
             // 
             // panel52
             // 
@@ -6385,6 +6464,7 @@
             roundedPanel21.PerformLayout();
             panel3.ResumeLayout(false);
             pnlGrades.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             panel52.ResumeLayout(false);
             panel52.PerformLayout();
             roundedPanel30.ResumeLayout(false);
@@ -7049,5 +7129,14 @@
         private RoundedPanel roundedPanel30;
         private ComboBox comboBox14;
         private Label label128;
+        private DataGridView dataGridView1;
+        private DataGridViewTextBoxColumn StudentID;
+        private DataGridViewTextBoxColumn StudentName;
+        private DataGridViewTextBoxColumn Attendance;
+        private DataGridViewTextBoxColumn Recitation;
+        private DataGridViewTextBoxColumn Activities;
+        private DataGridViewTextBoxColumn Assignment;
+        private DataGridViewTextBoxColumn Exam;
+        private DataGridViewTextBoxColumn Grade;
     }
 }
