@@ -129,6 +129,7 @@ namespace PUPAcadPortal
 
         private void btnAnnounceIns_Click(object sender, EventArgs e)
         {
+            pnlCreateAnnounce.Visible = false;
             pnlAnnounce.BringToFront();
             pnlAnnounce.Visible = true;
         }
@@ -254,8 +255,8 @@ namespace PUPAcadPortal
         {
             pnlSubMenu.Visible = true;
             pnlSubMenu.BringToFront();
-            pnlLMSActivities.Visible = true;
-            pnlLMSActivities.BringToFront();
+            pnlPostedAct.Visible = true;
+            pnlPostedAct.BringToFront();
 
         }
 
@@ -678,6 +679,12 @@ namespace PUPAcadPortal
                     listView_file.EndUpdate();
                 }
             }
+        }
+
+        private void btnPostedAct_Click(object sender, EventArgs e)
+        {
+            pnlPostedAct.BringToFront();
+            pnlPostedAct.Visible = true;
         }
     }
 }
