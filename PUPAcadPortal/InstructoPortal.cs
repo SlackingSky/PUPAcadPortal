@@ -644,5 +644,10 @@ namespace PUPAcadPortal
                 }
             }
         }
+
+        private void lblSub1Menu_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

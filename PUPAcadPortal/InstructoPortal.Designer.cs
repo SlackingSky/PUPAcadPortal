@@ -2154,6 +2154,7 @@
             lblSub1Menu.Size = new Size(343, 31);
             lblSub1Menu.TabIndex = 2;
             lblSub1Menu.Text = "Introduction to Programming 1 ";
+            lblSub1Menu.Click += lblSub1Menu_Click;
             // 
             // btnBack
             // 
