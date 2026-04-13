@@ -1,17 +1,22 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
-using System.Diagnostics;
-using System.IO;
 
 namespace PUPAcadPortal
 {
     public partial class InstructorPortal : Form
     {
+        public static int _year, _month;
+        public static Dictionary<DateTime, string> notesDict = new Dictionary<DateTime, string>();
+
         private Button clickedButton;
         private Color defaultColor = Color.Maroon;
         private Color selectedColor = Color.FromArgb(109, 0, 0);
@@ -549,8 +554,14 @@ namespace PUPAcadPortal
             listView_file.Columns.Add("Size", 100);
             listView_file.Columns.Add("Date Uploaded", 180);
 
+            showDays(DateTime.Now.Month, DateTime.Now.Year);
 
         }
+
+
+
+
+
 
         private void listView_file_MouseDoubleClick(object sender, MouseEventArgs e)
         {
@@ -625,6 +636,31 @@ namespace PUPAcadPortal
                 }
             }
         }
+        private void showDays(int month, int year)
+        {
+            FPLmonth.Controls.Clear();
+            int daysInMonth = DateTime.DaysInMonth(year, month);
+            _year = year;
+            _month = month;
+
+            string monthName = new DateTimeFormatInfo().GetMonthName(month);
+            lblMonthYear.Text = monthName.ToUpper() + " " + year;
+            DateTime firstDayOfMonth = new DateTime(year, month, 1);
+            int day = DateTime.DaysInMonth(year, month);
+            int week = Convert.ToInt32(firstDayOfMonth.DayOfWeek.ToString("d"));
+            for (int i = 0; i < week; i++)
+            {
+                UrDay uc = new UrDay("");
+                FPLmonth.Controls.Add(uc);
+            }
+            for (int i = 1; i < day; i++)
+            {
+                UrDay uc = new UrDay(i + "");
+                FPLmonth.Controls.Add(uc);
+
+            }
+
+        }
 
         private void listView_file_MouseClick(object sender, MouseEventArgs e)
         {
@@ -644,5 +680,6 @@ namespace PUPAcadPortal
                 }
             }
         }
+
     }
 }
