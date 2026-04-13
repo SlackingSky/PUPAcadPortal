@@ -9,6 +9,7 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PUPAcadPortal
 {
@@ -84,7 +85,7 @@ namespace PUPAcadPortal
                     e.Cancel = true;
                 }
                 else
-                    Application.Exit();
+                    System.Windows.Forms.Application.Exit();
             }
         }
 
@@ -537,7 +538,7 @@ namespace PUPAcadPortal
         private void InstructorPortal_Load(object sender, EventArgs e)
         {
             // 1. Visual Styling
-            listView_file.Font = new Font("Segoe UI", 11.5f);
+            listView_file.Font = new System.Drawing.Font("Segoe UI", 11.5f);
             listView_file.View = View.Details;
             listView_file.FullRowSelect = true;
             listView_file.GridLines = false;
@@ -653,7 +654,7 @@ namespace PUPAcadPortal
                 UrDay uc = new UrDay("");
                 FPLmonth.Controls.Add(uc);
             }
-            for (int i = 1; i < day; i++)
+            for (int i = 1; i <= day; i++)
             {
                 UrDay uc = new UrDay(i + "");
                 FPLmonth.Controls.Add(uc);
@@ -681,5 +682,31 @@ namespace PUPAcadPortal
             }
         }
 
+        private void picNext_Click(object sender, EventArgs e)
+        {
+            _month++;
+
+            if (_month > 12)
+            {
+                _month = 1;
+                _year++;
+            }
+
+            showDays(_month, _year);
+        }
+
+
+        private void picPrev_Click(object sender, EventArgs e)
+        {
+            _month--;
+
+            if (_month < 1)
+            {
+                _month = 12;
+                _year--;
+            }
+
+            showDays(_month, _year);
+        }
     }
 }
