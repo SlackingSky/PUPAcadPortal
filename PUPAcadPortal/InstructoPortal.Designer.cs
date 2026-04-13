@@ -1424,9 +1424,9 @@
             // picPrev
             // 
             picPrev.Image = (Image)resources.GetObject("picPrev.Image");
-            picPrev.Location = new Point(231, 5);
+            picPrev.Location = new Point(312, 9);
             picPrev.Name = "picPrev";
-            picPrev.Size = new Size(39, 39);
+            picPrev.Size = new Size(32, 32);
             picPrev.SizeMode = PictureBoxSizeMode.StretchImage;
             picPrev.TabIndex = 10;
             picPrev.TabStop = false;
@@ -1435,9 +1435,9 @@
             // picNext
             // 
             picNext.Image = (Image)resources.GetObject("picNext.Image");
-            picNext.Location = new Point(279, 5);
+            picNext.Location = new Point(355, 9);
             picNext.Name = "picNext";
-            picNext.Size = new Size(39, 39);
+            picNext.Size = new Size(32, 32);
             picNext.SizeMode = PictureBoxSizeMode.StretchImage;
             picNext.TabIndex = 9;
             picNext.TabStop = false;
@@ -1446,10 +1446,10 @@
             // lblMonthYear
             // 
             lblMonthYear.AutoSize = true;
-            lblMonthYear.Font = new Font("Maiandra GD", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblMonthYear.Location = new Point(46, 5);
+            lblMonthYear.Font = new Font("Maiandra GD", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblMonthYear.Location = new Point(60, 9);
             lblMonthYear.Name = "lblMonthYear";
-            lblMonthYear.Size = new Size(179, 39);
+            lblMonthYear.Size = new Size(160, 32);
             lblMonthYear.TabIndex = 8;
             lblMonthYear.Text = "Month 000";
             // 
