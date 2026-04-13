@@ -46,6 +46,7 @@
             panel1.Size = new Size(165, 150);
             panel1.TabIndex = 0;
             panel1.Click += panel1_Click;
+            panel1.Paint += panel1_Paint;
             // 
             // chkSelect
             // 

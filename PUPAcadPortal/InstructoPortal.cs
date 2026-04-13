@@ -17,33 +17,62 @@ namespace PUPAcadPortal
     {
         public static int _year, _month;
         public static Dictionary<DateTime, string> notesDict = new Dictionary<DateTime, string>();
+        public static Dictionary<DateTime, string> holidaysDict = new Dictionary<DateTime, string>
+        {
+            // 2025
+            { new DateTime(2025, 1, 1),  "New Year's Day" },
+            { new DateTime(2025, 4, 17), "Maundy Thursday" },
+            { new DateTime(2025, 4, 18), "Good Friday" },
+            { new DateTime(2025, 4, 19), "Black Saturday" },
+            { new DateTime(2025, 4, 9),  "Araw ng Kagitingan" },
+            { new DateTime(2025, 5, 1),  "Labor Day" },
+            { new DateTime(2025, 6, 12), "Independence Day" },
+            { new DateTime(2025, 8, 21), "Ninoy Aquino Day" },
+            { new DateTime(2025, 8, 25), "National Heroes Day" },
+            { new DateTime(2025, 11, 1), "All Saints' Day" },
+            { new DateTime(2025, 11, 30),"Bonifacio Day" },
+            { new DateTime(2025, 12, 8), "Immaculate Conception" },
+            { new DateTime(2025, 12, 25),"Christmas Day" },
+            { new DateTime(2025, 12, 30),"Rizal Day" },
+            { new DateTime(2025, 12, 31),"New Year's Eve" },
+            // 2026
+            { new DateTime(2026, 1, 1),  "New Year's Day" },
+            { new DateTime(2026, 2, 25), "EDSA Revolution" },
+            { new DateTime(2026, 4, 2),  "Maundy Thursday" },
+            { new DateTime(2026, 4, 3),  "Good Friday" },
+            { new DateTime(2026, 4, 4),  "Black Saturday" },
+            { new DateTime(2026, 4, 9),  "Araw ng Kagitingan" },
+            { new DateTime(2026, 5, 1),  "Labor Day" },
+            { new DateTime(2026, 6, 12), "Independence Day" },
+            { new DateTime(2026, 8, 21), "Ninoy Aquino Day" },
+            { new DateTime(2026, 8, 31), "National Heroes Day" },
+            { new DateTime(2026, 11, 1), "All Saints' Day" },
+            { new DateTime(2026, 11, 2), "All Souls' Day" },
+            { new DateTime(2026, 11, 30),"Bonifacio Day" },
+            { new DateTime(2026, 12, 8), "Immaculate Conception" },
+            { new DateTime(2026, 12, 24),"Christmas Eve" },
+            { new DateTime(2026, 12, 25),"Christmas Day" },
+            { new DateTime(2026, 12, 30),"Rizal Day" },
+            { new DateTime(2026, 12, 31),"New Year's Eve" },
+        };
 
         private Button clickedButton;
         private Color defaultColor = Color.Maroon;
         private Color selectedColor = Color.FromArgb(109, 0, 0);
+
         public InstructorPortal()
         {
             InitializeComponent();
             pnlAttendance.AutoScrollMinSize = new Size(0, 1000);
-            // 1. Set the format to Custom
             dateTimePicker1.Format = DateTimePickerFormat.Custom;
-
-            // 2. Set the pattern to include both Date and Time
-            // This will show: 03/24/2026 09:30 PM
             dateTimePicker1.CustomFormat = "MM/dd/yyyy hh:mm tt";
-            //aalisin ung border ng datetimepicker sa attendance tab | d ko alam kung sakin lng kasi nagbubug / nawawala ung button for the date :) - hansukal
-            // Removes 2 pixels from every side of the control
-            //dateTimePicker3.Region = new Region(new Rectangle(2, 2, dateTimePicker1.Width - 4, dateTimePicker1.Height - 4));
         }
-
-
 
         private void changeButtonColor(Button button)
         {
             if (clickedButton != null)
-            {
                 clickedButton.BackColor = defaultColor;
-            }
+
             clickedButton = button;
             pnlYellow.Visible = true;
             pnlYellow.Parent = clickedButton.Parent;
@@ -51,19 +80,17 @@ namespace PUPAcadPortal
             clickedButton.BackColor = selectedColor;
         }
 
-        //Method na nagpapakita ng content ng bawat button, wala akong maisip na iba kaya eto
         private void showContent(Button button)
         {
-            Dictionary<Button, Panel> contents = new Dictionary<Button, Panel> { };
+            Dictionary<Button, Panel> contents = new Dictionary<Button, Panel>();
             contents.Add(btnDashboard, pnlDashboardContent);
             contents.Add(btnGrades, pnlGradesContent);
             contents.Add(btnCourses, pnlCoursesContent);
-            //Kada button na aadd, maglagay ng panel sa form at lagay dito
+
             foreach (KeyValuePair<Button, Panel> content in contents)
             {
                 if (content.Key == clickedButton)
                 {
-                    //Automatic positioning, wag pakialaman maliban nalang kung binago ang position ng sidebar
                     content.Value.Location = new Point(pnlSidebar.Size.Width, pnlHeader.Size.Height);
                     content.Value.Visible = true;
                 }
@@ -74,13 +101,12 @@ namespace PUPAcadPortal
             }
         }
 
-        //Method para pag pinindot yung X sa taas o mag alt-F4, icclose lahat ng forms para di magerror pag ni run uli
-        //Lagay to sa bawat form na iaadd, Step 1: Hanapin sa properties ng form yung event na FormClosing, Step 2: Double click para gumawa ng method, Step 3: Copy paste code na nasa loob nito
         private void StudentPortal_Closing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
             {
-                if (MessageBox.Show("Are you sure you want to exit?", "Confirm Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                if (MessageBox.Show("Are you sure you want to exit?", "Confirm Exit",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 {
                     e.Cancel = true;
                 }
@@ -106,6 +132,7 @@ namespace PUPAcadPortal
             changeButtonColor(sender as Button);
             showContent(clickedButton);
         }
+
         private void btnLMS_Click(object sender, EventArgs e)
         {
             changeButtonColor(sender as Button);
@@ -116,15 +143,13 @@ namespace PUPAcadPortal
             else
                 btnLMS.Text = " LMS                                        ›";
         }
+
         private void btnLogout_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void pnlCoursesContent_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
+        private void pnlCoursesContent_Paint(object sender, PaintEventArgs e) { }
 
         private void btnAnnounceIns_Click(object sender, EventArgs e)
         {
@@ -162,16 +187,11 @@ namespace PUPAcadPortal
             pnlGrades.Visible = true;
         }
 
-        private void label24_Click(object sender, EventArgs e)
-        {
-
-        }
+        private void label24_Click(object sender, EventArgs e) { }
 
         bool expand = false;
-        private void timer1_Tick(object sender, EventArgs e)
-        {
 
-        }
+        private void timer1_Tick(object sender, EventArgs e) { }
 
         private void StatusBtn_Click(object sender, EventArgs e)
         {
@@ -184,14 +204,10 @@ namespace PUPAcadPortal
 
             if (pnlCreateAnnounce.Visible)
             {
-                // Ensure it sits on top of all other controls/panels
                 pnlCreateAnnounce.BringToFront();
-
-
                 pnlCreateAnnounce.Location = new Point(
-                (this.Width - pnlCreateAnnounce.Width) / 4,
-                (this.Height - pnlCreateAnnounce.Height) / 4);
-
+                    (this.Width - pnlCreateAnnounce.Width) / 4,
+                    (this.Height - pnlCreateAnnounce.Height) / 4);
             }
         }
 
@@ -200,11 +216,8 @@ namespace PUPAcadPortal
             timer1.Start();
         }
 
+        private void Sub1_Paint(object sender, PaintEventArgs e) { }
 
-        private void Sub1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
         bool sidebarExpand;
 
         private void MenuButton_Click(object sender, EventArgs e)
@@ -214,28 +227,17 @@ namespace PUPAcadPortal
 
         private void btnAssign_Click(object sender, EventArgs e)
         {
-            // 1. Show the target panel
             pnlLMSAct.Visible = true;
-
-            // 2. Bring it to the front so it's not hidden behind other main panels
             pnlLMSAct.BringToFront();
-
-
         }
+
         private void btnClassFiles_Click(object sender, EventArgs e)
         {
             pnlClassFiles.Visible = true;
-
-            // 2. Bring it to the front so it's not hidden behind other main panels
             pnlClassFiles.BringToFront();
         }
 
-
-
-        private void pnlAttendance_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
+        private void pnlAttendance_Paint(object sender, PaintEventArgs e) { }
 
         private void CreateAnnounce_Click_1(object sender, EventArgs e)
         {
@@ -255,7 +257,6 @@ namespace PUPAcadPortal
             pnlSubMenu.BringToFront();
             pnlLMSActivities.Visible = true;
             pnlLMSActivities.BringToFront();
-
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -291,21 +292,17 @@ namespace PUPAcadPortal
 
         private void cmbBXActType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Get the selected text safely
             string selectedAction = cmbBXActType.SelectedItem?.ToString();
 
-            // First, hide all panels to "reset" the view
             pnlQuiz1.Visible = false;
             pnlAssign.Visible = false;
 
-            // Now, show only the one that matches the selection
             switch (selectedAction)
             {
                 case "Quiz":
                     pnlQuiz1.Visible = true;
                     pnlQuiz1.BringToFront();
                     break;
-
                 case "Assignment":
                     pnlAssign.Visible = true;
                     pnlAssign.BringToFront();
@@ -322,7 +319,6 @@ namespace PUPAcadPortal
         private void btnAttachCancel_Click(object sender, EventArgs e)
         {
             pnlAttachAss.Visible = false;
-
         }
 
         private void btnAttachDone_Click(object sender, EventArgs e)
@@ -340,44 +336,32 @@ namespace PUPAcadPortal
             pnlAttachAss.Visible = false;
         }
 
-        // --- BUTTON 1: ADD QUESTION ---
         private void btnAddPanel_Click(object sender, EventArgs e)
         {
             ucQuestionCard newCard = new ucQuestionCard();
-            // Match your new size
             newCard.Width = 1250;
             newCard.Height = 423;
 
             flowLayoutPanel3.Controls.Add(newCard);
 
-            // --- THE ALIGNMENT FIX ---
-            // Calculate the margin based on your 1363px panel width
             int centeredMargin = (flowLayoutPanel3.Width - 1250 - 25) / 2;
             if (centeredMargin < 0) centeredMargin = 57;
 
             foreach (Control ctrl in flowLayoutPanel3.Controls)
             {
-                // Force EVERY control to be exactly 1250 wide
                 ctrl.Width = 1250;
-
-                // Force EVERY control to have the exact same left margin
                 ctrl.Margin = new Padding(centeredMargin, 10, 10, 10);
-
-                // Remove any internal offsets
                 ctrl.Left = 0;
             }
 
             RenumberQuestions();
 
             if (flowLayoutPanel3.Controls.Contains(pnlControlBar))
-            {
                 flowLayoutPanel3.Controls.SetChildIndex(pnlControlBar, -1);
-            }
 
             flowLayoutPanel3.ScrollControlIntoView(pnlControlBar);
         }
 
-        // --- BUTTON 2: REMOVE LAST QUESTION ---
         private void btnRemove_Click(object sender, EventArgs e)
         {
             var lastCard = flowLayoutPanel3.Controls.OfType<ucQuestionCard>().LastOrDefault();
@@ -386,49 +370,34 @@ namespace PUPAcadPortal
             {
                 flowLayoutPanel3.Controls.Remove(lastCard);
                 lastCard.Dispose();
-
-                // NEW: Renumber the remaining cards so there are no gaps
                 RenumberQuestions();
             }
         }
 
-        // --- BUTTON 3: SAVE & EXIT ---
         private void btnSaveQuiz_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Do you want to save this quiz before exiting?",
-                                                "Save Quiz", MessageBoxButtons.YesNoCancel);
+            DialogResult result = MessageBox.Show(
+                "Do you want to save this quiz before exiting?",
+                "Save Quiz", MessageBoxButtons.YesNoCancel);
 
             if (result == DialogResult.Yes)
-            {
-                // Add your Save Logic here later
                 this.Close();
-            }
             else if (result == DialogResult.No)
-            {
                 this.Close();
-            }
         }
 
-        private void flowLayoutPanel3_Resize(object sender, EventArgs e) // sa quiz din ung pinakapanel ng insert quiz
+        private void flowLayoutPanel3_Resize(object sender, EventArgs e)
         {
-            // Calculate new centering margin based on current panel width
-            // Formula: (Current Width - Card Width - Scrollbar Width) / 2
             int newMargin = (flowLayoutPanel3.Width - 1250 - 25) / 2;
-
-            // If the window is small, don't let the margin go negative
             if (newMargin < 0) newMargin = 10;
 
             foreach (Control ctrl in flowLayoutPanel3.Controls)
-            {
-                // Apply the new margin to every card and the control bar
                 ctrl.Margin = new Padding(newMargin, 10, 10, 10);
-            }
         }
 
-        private void RenumberQuestions() //sa quiz to ung add quiz - hansukal
+        private void RenumberQuestions()
         {
             int count = 1;
-            // Loop through only the UserControls (ignoring the control bar)
             foreach (Control ctrl in flowLayoutPanel3.Controls)
             {
                 if (ctrl is ucQuestionCard card)
@@ -439,23 +408,16 @@ namespace PUPAcadPortal
             }
         }
 
-        private void pnlLMSFiles_DragDrop(object sender, DragEventArgs e) //drag and drop feature ng class files
+        private void pnlLMSFiles_DragDrop(object sender, DragEventArgs e)
         {
-            // We get the paths from the drag event
             string[] paths = (string[])e.Data.GetData(DataFormats.FileDrop);
 
             foreach (string path in paths)
             {
                 if (Directory.Exists(path))
-                {
-                    // We are passing 'path' here
                     AddFolderToListView(path);
-                }
                 else
-                {
-                    // We are passing 'path' here
                     AddFileToListView(path);
-                }
             }
         }
 
@@ -464,15 +426,11 @@ namespace PUPAcadPortal
             DirectoryInfo dirInfo = new DirectoryInfo(folderPath);
 
             if (!imageList1.Images.ContainsKey("FolderIcon"))
-            {
-                // Use the 'Name' you gave in the Resource window
                 imageList1.Images.Add("FolderIcon", Properties.Resources.folder_icon);
-            }
 
             int iconIndex = imageList1.Images.IndexOfKey("FolderIcon");
             ListViewItem item = new ListViewItem(dirInfo.Name, iconIndex);
             item.Tag = folderPath;
-
             item.SubItems.Add("File Folder");
             item.SubItems.Add(DateTime.Now.ToString("g"));
 
@@ -483,11 +441,10 @@ namespace PUPAcadPortal
         {
             FileInfo fileInfo = new FileInfo(filepath);
             string ext = fileInfo.Extension.ToLower();
-            long maxFileSize = 20 * 1024 * 1024; // 20MB
+            long maxFileSize = 20 * 1024 * 1024;
 
             if (fileInfo.Length <= maxFileSize)
             {
-                // Handle Icons
                 if (!imageList1.Images.ContainsKey(ext))
                 {
                     if (ext == ".pdf")
@@ -497,7 +454,6 @@ namespace PUPAcadPortal
                     else if (ext == ".ppt" || ext == ".pptx")
                         imageList1.Images.Add(ext, Properties.Resources.ppt_icon);
                     else
-                        // Default system icon for everything else
                         imageList1.Images.Add(ext, Icon.ExtractAssociatedIcon(filepath));
                 }
 
@@ -505,7 +461,6 @@ namespace PUPAcadPortal
                 ListViewItem item = new ListViewItem(fileInfo.Name, iconIndex);
                 item.Tag = filepath;
 
-                // Smart Size Formatting
                 double sizeInKB = fileInfo.Length / 1024.0;
                 string sizeDisplay = (sizeInKB >= 1024)
                     ? $"{(sizeInKB / 1024.0):F2} MB"
@@ -519,66 +474,65 @@ namespace PUPAcadPortal
             else
             {
                 MessageBox.Show($"{fileInfo.Name} is over the 20MB limit.", "PUP Acad Portal",
-                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void pnlLMSFiles_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
                 e.Effect = DragDropEffects.Copy;
-            }
             else
-            {
                 e.Effect = DragDropEffects.None;
-            }
         }
 
         private void InstructorPortal_Load(object sender, EventArgs e)
         {
-            // 1. Visual Styling
+            // ListView styling
             listView_file.Font = new System.Drawing.Font("Segoe UI", 11.5f);
             listView_file.View = View.Details;
             listView_file.FullRowSelect = true;
             listView_file.GridLines = false;
 
-            // 2. Row Spacing & Icons
-            // 32x32 provides the height for spacing and makes icons visible
             imageList1.ImageSize = new Size(32, 32);
             imageList1.ColorDepth = ColorDepth.Depth32Bit;
             listView_file.SmallImageList = imageList1;
 
-            // 3. Define Columns (Clear first to avoid duplicates)
             listView_file.Columns.Clear();
             listView_file.Columns.Add("File Name", 250);
             listView_file.Columns.Add("Size", 100);
             listView_file.Columns.Add("Date Uploaded", 180);
 
+            // Calendar responsive resize
+            FPLmonth.Resize += (s, ev) => ResizeCalendarCells();
+
+            // Show current month
             showDays(DateTime.Now.Month, DateTime.Now.Year);
 
+            //Mouse-wheel - month navigation
+            var wheelFilter = new CalendarWheelFilter(FPLmonth, delta =>
+            {
+                if (delta > 0)
+                    picPrev_Click(this, EventArgs.Empty);  // scroll UP   = previous month
+                else
+                    picNext_Click(this, EventArgs.Empty);  // scroll DOWN = next month
+            });
+            System.Windows.Forms.Application.AddMessageFilter(wheelFilter);
+
+            this.FormClosed += (s, ev) => System.Windows.Forms.Application.RemoveMessageFilter(wheelFilter);
         }
-
-
-
-
-
 
         private void listView_file_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            // 1. Check if an item was actually clicked
             if (listView_file.SelectedItems.Count > 0)
             {
-                // 2. Get the full path we stored in the Tag earlier
                 string fullPath = listView_file.SelectedItems[0].Tag.ToString();
-
                 try
                 {
-                    // 3. Tell Windows to open the file
                     ProcessStartInfo psi = new ProcessStartInfo
                     {
                         FileName = fullPath,
-                        UseShellExecute = true // This is required for modern .NET to open files
+                        UseShellExecute = true
                     };
                     Process.Start(psi);
                 }
@@ -591,19 +545,15 @@ namespace PUPAcadPortal
 
         private void removeFromTheListToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Check if an item is selected
             if (listView_file.SelectedItems.Count > 0)
             {
-                // Ask for confirmation (Optional but professional)
                 DialogResult result = MessageBox.Show("Remove this file from the list?",
                     "Confirm Remove", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
                 {
                     foreach (ListViewItem item in listView_file.SelectedItems)
-                    {
                         listView_file.Items.Remove(item);
-                    }
                 }
             }
         }
@@ -612,11 +562,9 @@ namespace PUPAcadPortal
         {
             if (listView_file.SelectedItems.Count > 0)
             {
-                // 1. Get the original path we stored in the Tag
                 string sourcePath = listView_file.SelectedItems[0].Tag.ToString();
                 string fileName = listView_file.SelectedItems[0].Text;
 
-                // 2. Open a Save File Dialog
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
                 saveFileDialog.FileName = fileName;
                 saveFileDialog.Filter = "All files (*.*)|*.*";
@@ -625,7 +573,6 @@ namespace PUPAcadPortal
                 {
                     try
                     {
-                        // 3. Copy the file from the original path to the new path
                         File.Copy(sourcePath, saveFileDialog.FileName, true);
                         MessageBox.Show("File saved successfully!", "Success",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -637,76 +584,141 @@ namespace PUPAcadPortal
                 }
             }
         }
+
         private void showDays(int month, int year)
         {
             FPLmonth.Controls.Clear();
-            int daysInMonth = DateTime.DaysInMonth(year, month);
             _year = year;
             _month = month;
 
             string monthName = new DateTimeFormatInfo().GetMonthName(month);
             lblMonthYear.Text = monthName.ToUpper() + " " + year;
-            DateTime firstDayOfMonth = new DateTime(year, month, 1);
-            int day = DateTime.DaysInMonth(year, month);
-            int week = Convert.ToInt32(firstDayOfMonth.DayOfWeek.ToString("d"));
-            for (int i = 0; i < week; i++)
-            {
-                UrDay uc = new UrDay("");
-                FPLmonth.Controls.Add(uc);
-            }
-            for (int i = 1; i <= day; i++)
-            {
-                UrDay uc = new UrDay(i + "");
-                FPLmonth.Controls.Add(uc);
 
+            DateTime firstDay = new DateTime(year, month, 1);
+            int startDOW = (int)firstDay.DayOfWeek;
+            int daysInMonth = DateTime.DaysInMonth(year, month);
+
+            // Leading days from previous month (grayed out)
+            if (startDOW > 0)
+            {
+                DateTime prevMonth = firstDay.AddMonths(-1);
+                int prevDays = DateTime.DaysInMonth(prevMonth.Year, prevMonth.Month);
+                for (int i = startDOW - 1; i >= 0; i--)
+                {
+                    int d = prevDays - i;
+                    string h = GetHoliday(prevMonth.Year, prevMonth.Month, d);
+                    FPLmonth.Controls.Add(new UrDay(d.ToString(), prevMonth.Year, prevMonth.Month, false, h));
+                }
             }
 
+            // Current month days
+            for (int i = 1; i <= daysInMonth; i++)
+            {
+                string h = GetHoliday(year, month, i);
+                FPLmonth.Controls.Add(new UrDay(i.ToString(), year, month, true, h));
+            }
+
+            // Trailing days from next month (grayed out)
+            int total = FPLmonth.Controls.Count;
+            int remainder = total % 7;
+            if (remainder > 0)
+            {
+                DateTime nextMonth = firstDay.AddMonths(1);
+                int trailing = 7 - remainder;
+                for (int i = 1; i <= trailing; i++)
+                {
+                    string h = GetHoliday(nextMonth.Year, nextMonth.Month, i);
+                    FPLmonth.Controls.Add(new UrDay(i.ToString(), nextMonth.Year, nextMonth.Month, false, h));
+                }
+            }
+
+            ResizeCalendarCells();
+        }
+
+        private string GetHoliday(int year, int month, int day)
+        {
+            DateTime date = new DateTime(year, month, day);
+            return holidaysDict.ContainsKey(date) ? holidaysDict[date] : "";
         }
 
         private void listView_file_MouseClick(object sender, MouseEventArgs e)
         {
-            // This checks if the user clicked the Right Mouse Button
             if (e.Button == MouseButtons.Right)
             {
-                // This finds exactly which file was under the mouse cursor
                 var item = listView_file.GetItemAt(e.X, e.Y);
-
                 if (item != null)
                 {
-                    // Select the item so the menu knows which file to "Remove" or "Download"
                     item.Selected = true;
-
-                    // Show your ContextMenuStrip at the exact mouse location
                     contextMenuStrip1.Show(listView_file, e.Location);
                 }
             }
         }
 
+        private void ResizeCalendarCells()
+        {
+            if (FPLmonth.Controls.Count == 0) return;
+
+            int cols = 7;
+            int scrollBarWidth = SystemInformation.VerticalScrollBarWidth;
+            int availableWidth = FPLmonth.ClientSize.Width - scrollBarWidth - 2;
+            int cellWidth = availableWidth / cols;
+            int cellHeight = 110;
+
+            FPLmonth.SuspendLayout();
+            foreach (Control ctrl in FPLmonth.Controls)
+            {
+                ctrl.Width = cellWidth;
+                ctrl.Height = cellHeight;
+                ctrl.Margin = new Padding(1);
+            }
+            FPLmonth.ResumeLayout();
+        }
+
         private void picNext_Click(object sender, EventArgs e)
         {
             _month++;
-
-            if (_month > 12)
-            {
-                _month = 1;
-                _year++;
-            }
-
+            if (_month > 12) { _month = 1; _year++; }
             showDays(_month, _year);
         }
-
 
         private void picPrev_Click(object sender, EventArgs e)
         {
             _month--;
-
-            if (_month < 1)
-            {
-                _month = 12;
-                _year--;
-            }
-
+            if (_month < 1) { _month = 12; _year--; }
             showDays(_month, _year);
+        }
+
+        private void FPLmonth_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+    }
+
+    // Mouse-wheel filter — fires month navigation when hovering the calendar
+    public class CalendarWheelFilter : IMessageFilter
+    {
+        private const int WM_MOUSEWHEEL = 0x020A;
+        private readonly Control _watchArea;
+        private readonly Action<int> _onScroll;
+
+        public CalendarWheelFilter(Control watchArea, Action<int> onScroll)
+        {
+            _watchArea = watchArea;
+            _onScroll = onScroll;
+        }
+
+        public bool PreFilterMessage(ref Message m)
+        {
+            if (m.Msg != WM_MOUSEWHEEL) return false;
+
+            Point cursor = Cursor.Position;
+            if (!_watchArea.ClientRectangle.Contains(_watchArea.PointToClient(cursor)))
+                return false;
+
+            // Positive delta = scrolled up = go to previous month
+            int delta = (short)(((int)m.WParam >> 16) & 0xFFFF);
+            _onScroll(delta);
+            return true; // swallow so the panel itself doesn't scroll
         }
     }
 }

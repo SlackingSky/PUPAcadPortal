@@ -89,8 +89,6 @@
             pnlGradesContent = new Panel();
             panel3 = new Panel();
             pnlCalendar = new Panel();
-            picPrev = new PictureBox();
-            picNext = new PictureBox();
             lblMonthYear = new Label();
             label133 = new Label();
             label131 = new Label();
@@ -477,8 +475,6 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox46).BeginInit();
             panel3.SuspendLayout();
             pnlCalendar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picPrev).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)picNext).BeginInit();
             pnlSubMenu.SuspendLayout();
             pnlLMSActivities.SuspendLayout();
             panel42.SuspendLayout();
@@ -1402,8 +1398,6 @@
             pnlCalendar.AutoScroll = true;
             pnlCalendar.BackColor = SystemColors.Control;
             pnlCalendar.CausesValidation = false;
-            pnlCalendar.Controls.Add(picPrev);
-            pnlCalendar.Controls.Add(picNext);
             pnlCalendar.Controls.Add(lblMonthYear);
             pnlCalendar.Controls.Add(label133);
             pnlCalendar.Controls.Add(label131);
@@ -1421,37 +1415,16 @@
             pnlCalendar.TabIndex = 12;
             pnlCalendar.Visible = false;
             // 
-            // picPrev
-            // 
-            picPrev.Image = (Image)resources.GetObject("picPrev.Image");
-            picPrev.Location = new Point(312, 9);
-            picPrev.Name = "picPrev";
-            picPrev.Size = new Size(32, 32);
-            picPrev.SizeMode = PictureBoxSizeMode.StretchImage;
-            picPrev.TabIndex = 10;
-            picPrev.TabStop = false;
-            picPrev.Click += picPrev_Click;
-            // 
-            // picNext
-            // 
-            picNext.Image = (Image)resources.GetObject("picNext.Image");
-            picNext.Location = new Point(355, 9);
-            picNext.Name = "picNext";
-            picNext.Size = new Size(32, 32);
-            picNext.SizeMode = PictureBoxSizeMode.StretchImage;
-            picNext.TabIndex = 9;
-            picNext.TabStop = false;
-            picNext.Click += picNext_Click;
-            // 
             // lblMonthYear
             // 
             lblMonthYear.AutoSize = true;
-            lblMonthYear.Font = new Font("Maiandra GD", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblMonthYear.Location = new Point(60, 9);
+            lblMonthYear.Font = new Font("Maiandra GD", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblMonthYear.Location = new Point(540, 5);
             lblMonthYear.Name = "lblMonthYear";
-            lblMonthYear.Size = new Size(160, 32);
+            lblMonthYear.Size = new Size(208, 39);
             lblMonthYear.TabIndex = 8;
-            lblMonthYear.Text = "Month 000";
+            lblMonthYear.Text = "Month 0000";
+            lblMonthYear.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // label133
             // 
@@ -1528,8 +1501,9 @@
             FPLmonth.AutoScroll = true;
             FPLmonth.Location = new Point(24, 72);
             FPLmonth.Name = "FPLmonth";
-            FPLmonth.Size = new Size(1239, 616);
+            FPLmonth.Size = new Size(1239, 635);
             FPLmonth.TabIndex = 0;
+            FPLmonth.Paint += FPLmonth_Paint;
             // 
             // pnlSubMenu
             // 
@@ -5820,8 +5794,6 @@
             panel3.ResumeLayout(false);
             pnlCalendar.ResumeLayout(false);
             pnlCalendar.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)picPrev).EndInit();
-            ((System.ComponentModel.ISupportInitialize)picNext).EndInit();
             pnlSubMenu.ResumeLayout(false);
             pnlLMSActivities.ResumeLayout(false);
             panel42.ResumeLayout(false);
@@ -6451,7 +6423,5 @@
         private Label label9;
         private Label lblMonthYear;
         private FlowLayoutPanel FPLmonth;
-        private PictureBox picPrev;
-        private PictureBox picNext;
     }
 }
