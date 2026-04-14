@@ -589,7 +589,7 @@
             btnGrades.FlatStyle = FlatStyle.Flat;
             btnGrades.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
             btnGrades.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            btnGrades.Image = Properties.Resources.item_icon__1_;
+            btnGrades.Image = Properties.Resources.item_icon;
             btnGrades.ImageAlign = ContentAlignment.MiddleLeft;
             btnGrades.Location = new Point(0, 0);
             btnGrades.Margin = new Padding(3, 4, 3, 4);

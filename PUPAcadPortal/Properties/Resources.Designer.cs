@@ -73,16 +73,6 @@ namespace PUPAcadPortal.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Accounts1 {
-            get {
-                object obj = ResourceManager.GetObject("Accounts1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap books_16 {
             get {
                 object obj = ResourceManager.GetObject("books-16", resourceCulture);
@@ -116,16 +106,6 @@ namespace PUPAcadPortal.Properties {
         internal static System.Drawing.Bitmap button {
             get {
                 object obj = ResourceManager.GetObject("button", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap button__1_ {
-            get {
-                object obj = ResourceManager.GetObject("button (1)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -173,26 +153,6 @@ namespace PUPAcadPortal.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap card_inserting_48__1_ {
-            get {
-                object obj = ResourceManager.GetObject("card-inserting-48 (1)", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap card_inserting_48__1_1 {
-            get {
-                object obj = ResourceManager.GetObject("card-inserting-48 (1)1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap cashier_solid_two_color_icon_vector {
             get {
                 object obj = ResourceManager.GetObject("cashier-solid-two-color-icon-vector", resourceCulture);
@@ -206,16 +166,6 @@ namespace PUPAcadPortal.Properties {
         internal static System.Drawing.Bitmap Check_icon {
             get {
                 object obj = ResourceManager.GetObject("Check_icon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Check_icon1 {
-            get {
-                object obj = ResourceManager.GetObject("Check_icon1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -253,16 +203,6 @@ namespace PUPAcadPortal.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Container__2_ {
-            get {
-                object obj = ResourceManager.GetObject("Container (2)", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap Course {
             get {
                 object obj = ResourceManager.GetObject("Course", resourceCulture);
@@ -276,16 +216,6 @@ namespace PUPAcadPortal.Properties {
         internal static System.Drawing.Bitmap credit_card_6_48 {
             get {
                 object obj = ResourceManager.GetObject("credit-card-6-48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap credit_card_6_481 {
-            get {
-                object obj = ResourceManager.GetObject("credit-card-6-481", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -353,16 +283,6 @@ namespace PUPAcadPortal.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Enrollment1 {
-            get {
-                object obj = ResourceManager.GetObject("Enrollment1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap exclamation_128 {
             get {
                 object obj = ResourceManager.GetObject("exclamation-128", resourceCulture);
@@ -393,16 +313,6 @@ namespace PUPAcadPortal.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap img__1_ {
-            get {
-                object obj = ResourceManager.GetObject("img (1)", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap input {
             get {
                 object obj = ResourceManager.GetObject("input", resourceCulture);
@@ -416,16 +326,6 @@ namespace PUPAcadPortal.Properties {
         internal static System.Drawing.Bitmap item_icon {
             get {
                 object obj = ResourceManager.GetObject("item.icon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap item_icon__1_ {
-            get {
-                object obj = ResourceManager.GetObject("item.icon (1)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -496,16 +396,6 @@ namespace PUPAcadPortal.Properties {
         internal static System.Drawing.Bitmap professor_16 {
             get {
                 object obj = ResourceManager.GetObject("professor-16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap professor_161 {
-            get {
-                object obj = ResourceManager.GetObject("professor-161", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -656,9 +546,6 @@ namespace PUPAcadPortal.Properties {
         internal static System.Drawing.Bitmap Screenshot_2026_03_25_234609 {
             get {
                 object obj = ResourceManager.GetObject("Screenshot 2026-03-25 234609", resourceCulture);
-        internal static System.Drawing.Bitmap search_3_16 {
-            get {
-                object obj = ResourceManager.GetObject("search-3-16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -669,9 +556,6 @@ namespace PUPAcadPortal.Properties {
         internal static System.Drawing.Bitmap Screenshot_2026_03_25_234614 {
             get {
                 object obj = ResourceManager.GetObject("Screenshot 2026-03-25 234614", resourceCulture);
-        internal static System.Drawing.Bitmap student_16 {
-            get {
-                object obj = ResourceManager.GetObject("student-16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -682,9 +566,6 @@ namespace PUPAcadPortal.Properties {
         internal static System.Drawing.Bitmap Screenshot_2026_03_25_234620 {
             get {
                 object obj = ResourceManager.GetObject("Screenshot 2026-03-25 234620", resourceCulture);
-        internal static System.Drawing.Bitmap student_2_16 {
-            get {
-                object obj = ResourceManager.GetObject("student-2-16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -695,9 +576,6 @@ namespace PUPAcadPortal.Properties {
         internal static System.Drawing.Bitmap Screenshot_2026_03_25_234625 {
             get {
                 object obj = ResourceManager.GetObject("Screenshot 2026-03-25 234625", resourceCulture);
-        internal static System.Drawing.Bitmap student_2_161 {
-            get {
-                object obj = ResourceManager.GetObject("student-2-161", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -705,9 +583,29 @@ namespace PUPAcadPortal.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap student_2_162 {
+        internal static System.Drawing.Bitmap search_3_16 {
             get {
-                object obj = ResourceManager.GetObject("student-2-162", resourceCulture);
+                object obj = ResourceManager.GetObject("search-3-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap student_16 {
+            get {
+                object obj = ResourceManager.GetObject("student-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap student_2_16 {
+            get {
+                object obj = ResourceManager.GetObject("student-2-16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -765,16 +663,6 @@ namespace PUPAcadPortal.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap UserY1 {
-            get {
-                object obj = ResourceManager.GetObject("UserY1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap visible_16 {
             get {
                 object obj = ResourceManager.GetObject("visible-16", resourceCulture);
@@ -788,26 +676,6 @@ namespace PUPAcadPortal.Properties {
         internal static System.Drawing.Bitmap visible_32 {
             get {
                 object obj = ResourceManager.GetObject("visible-32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap warning_4_128 {
-            get {
-                object obj = ResourceManager.GetObject("warning-4-128", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap warning_4_1281 {
-            get {
-                object obj = ResourceManager.GetObject("warning-4-1281", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

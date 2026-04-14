@@ -40,15 +40,14 @@ namespace PUPAcadPortal
                 dataGridView1.AllowUserToResizeRows = false;    // Prevents row resizing
             }
 
-            // --- FIX: Populate the Select Course ComboBox ---
-            if (cmbSelectCourse != null && cmbSelectCourse.Items.Count == 0)
+            // --- FIX: ComboBox Logic (Commented out to prevent CS0103 error until you add it to the Designer) ---
+            /* if (cmbSelectCourse != null && cmbSelectCourse.Items.Count == 0)
             {
                 cmbSelectCourse.Items.Add("IT 101 - Introduction to Computing");
                 cmbSelectCourse.Items.Add("CS 102 - Data Structures");
                 cmbSelectCourse.Items.Add("IS 103 - Database Management");
-                // Optional: Select the first item by default
-                // cmbSelectCourse.SelectedIndex = 0; 
             }
+            */
 
             // 1. LALAGYAN NG SAMPLE DATA
             if (dataGridView1 != null && dataGridView1.Rows.Count == 0)
@@ -58,7 +57,7 @@ namespace PUPAcadPortal
                 dataGridView1.Rows.Add("2021-00003-MN-0", "Trisha Walang Last Name", "78", "82");
                 dataGridView1.Rows.Add("2021-00004-MN-0", "Liza Soberano", "88", "90");
                 dataGridView1.Rows.Add("2021-00005-MN-0", "Kween Yasmin", "72", "75");
-                dataGridView1.Rows.Add("2021-00006-MN-0", "Maine Love Alden", "", "");
+                dataGridView1.Rows.Add("2021-00006-MN-0", "Maine Love Alden", "98", "89");
             }
 
             // 2. AUTO-CALCULATE GRADES LOGIC
@@ -71,8 +70,8 @@ namespace PUPAcadPortal
                     {
                         IList cells = dataGridView1.Rows[e.RowIndex].Cells;
 
-                        // --- FIX: Added index [] to access specific cells ---
-                        [cite_start] DataGridViewCell midCell = (DataGridViewCell)cells[2];
+                        // --- FIX: Cleaned up indices ---
+                        DataGridViewCell midCell = (DataGridViewCell)cells[2];
                         [cite_start] DataGridViewCell finCell = (DataGridViewCell)cells[3];
                         [cite_start] DataGridViewCell avgCell = (DataGridViewCell)cells[4];
                         [cite_start] DataGridViewCell remCell = (DataGridViewCell)cells[5];
@@ -117,7 +116,7 @@ namespace PUPAcadPortal
 
                             IList cells = r.Cells;
 
-                            // --- FIX: Added index [] to fix the casting crash ---
+                            // --- FIX: Cleaned up indices ---
                             DataGridViewCell cell0 = (DataGridViewCell)cells; // Student Number
                             [cite_start] DataGridViewCell cell1 = (DataGridViewCell)cells[1]; // Name
 
@@ -299,36 +298,12 @@ namespace PUPAcadPortal
         private void tableLayoutPanel8_Paint(object sender, PaintEventArgs e) { }
         private void label83_Click(object sender, EventArgs e) { }
         private void panel93_Paint(object sender, PaintEventArgs e) { }
-
-        private void panel101_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void pictureBox20_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pictureBox21_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label109_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label116_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel107_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
+        private void panel101_Paint(object sender, PaintEventArgs e) { }
+        private void pictureBox20_Click(object sender, EventArgs e) { }
+        private void pictureBox21_Click(object sender, EventArgs e) { }
+        private void label109_Click(object sender, EventArgs e) { }
+        private void label116_Click(object sender, EventArgs e) { }
+        private void panel107_Paint(object sender, PaintEventArgs e) { }
     }
 
     // --- DATA MODEL ---
