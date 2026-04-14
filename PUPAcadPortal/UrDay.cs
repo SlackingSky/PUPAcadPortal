@@ -12,7 +12,7 @@ namespace PUPAcadPortal
         private DateTime fullDate;
         private Label _lblHoliday;
         private bool _isCurrentMonth;
-        private bool _isStudent; // true = student view (announcements read-only)
+        private bool _isStudent; 
 
         // Lets the portal push an announcement text onto this cell
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]

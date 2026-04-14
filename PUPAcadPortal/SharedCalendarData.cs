@@ -9,7 +9,7 @@ namespace PUPAcadPortal
     /// </summary>
     public static class SharedCalendarData
     {
-        // ── Shared current calendar state (used by both portals) ─────────────
+        //  Shared current calendar state (used by both portals) 
         public static int CurrentYear = DateTime.Now.Year;
         public static int CurrentMonth = DateTime.Now.Month;
 
@@ -21,7 +21,7 @@ namespace PUPAcadPortal
         public static Dictionary<DateTime, string> StudentNotes
             = new Dictionary<DateTime, string>();
 
-        // Holidays — single source, both portals use this
+        // Holidays 
         public static Dictionary<DateTime, string> Holidays
             = new Dictionary<DateTime, string>
         {

@@ -441,7 +441,7 @@ namespace PUPAcadPortal
                 e.Effect = DragDropEffects.None;
         }
 
-        // ── FORM LOAD ─────────────────────────────────────────────────────────
+        //  FORM LOAD 
         private void InstructorPortal_Load(object sender, EventArgs e)
         {
             // ListView styling
@@ -459,10 +459,10 @@ namespace PUPAcadPortal
             listView_file.Columns.Add("Size", 100);
             listView_file.Columns.Add("Date Uploaded", 180);
 
-            // ── Build dynamic day-header row ──────────────────────────────────
+            //  Build dynamic day-header row 
             BuildDayHeaders();
 
-            // ── Calendar resize hooks ─────────────────────────────────────────
+            //  Calendar resize hooks 
             FPLmonth.Resize += (s, ev) =>
             {
                 ResizeCalendarCells();
@@ -471,10 +471,10 @@ namespace PUPAcadPortal
 
             this.Resize += OnFormResized;
 
-            // ── Show current month ────────────────────────────────────────────
+            //  Show current month 
             showDays(DateTime.Now.Month, DateTime.Now.Year);
 
-            // ── Mouse-wheel → month navigation ───────────────────────────────
+            //  Mouse-wheel 
             var wheelFilter = new CalendarWheelFilter(FPLmonth, delta =>
             {
                 if (delta > 0) picPrev_Click(this, EventArgs.Empty);
@@ -489,7 +489,7 @@ namespace PUPAcadPortal
             };
         }
 
-        // ── Build dynamic Sun–Sat header row ─────────────────────────────────
+        //  Build dynamic Sun–Sat header row 
         private void BuildDayHeaders()
         {
             string[] days = { "Sunday", "Monday", "Tuesday", "Wednesday",
@@ -529,7 +529,7 @@ namespace PUPAcadPortal
             pnlDayHeaders.BringToFront();
         }
 
-        // ── Align header labels to match cell widths ──────────────────────────
+        //  Align header labels to match cell widths 
         private void AlignDayHeaders()
         {
             if (pnlDayHeaders == null) return;
@@ -545,14 +545,14 @@ namespace PUPAcadPortal
                 ctrl.Width = cellWidth;
         }
 
-        // ── showDays — uses SharedCalendarData, passes isStudent: false ───────
+        //  showDays 
         private void showDays(int month, int year)
         {
             FPLmonth.Controls.Clear();
             _year = year;
             _month = month;
 
-            // ── Keep shared state in sync ─────────────────────────────────────────
+            //  Keep shared state in sync 
             SharedCalendarData.CurrentYear = year;
             SharedCalendarData.CurrentMonth = month;
 
@@ -604,7 +604,7 @@ namespace PUPAcadPortal
             ResizeCalendarCells();
         }
 
-        // ── Uses SharedCalendarData.Holidays ─────────────────────────────────
+        //  Uses SharedCalendarData.Holidays 
         private string GetHoliday(int year, int month, int day)
         {
             DateTime date = new DateTime(year, month, day);
@@ -688,7 +688,7 @@ namespace PUPAcadPortal
             }
         }
 
-        // ── Resize helpers ────────────────────────────────────────────────────
+        //  Resize helpers 
         private void ResizeCalendarCells()
         {
             if (FPLmonth.Controls.Count == 0) return;
@@ -757,7 +757,7 @@ namespace PUPAcadPortal
             lblMonthYear.Left = 0;
         }
 
-        // ── Navigation arrows ─────────────────────────────────────────────────
+        //  Navigation arrows 
         private void picNext_Click(object sender, EventArgs e)
         {
             _month++;
@@ -773,7 +773,7 @@ namespace PUPAcadPortal
         }
     }
 
-    // ── Mouse-wheel filter ────────────────────────────────────────────────────
+    //  Mouse-wheel filter 
     public class CalendarWheelFilter : IMessageFilter
     {
         private const int WM_MOUSEWHEEL = 0x020A;
