@@ -67,6 +67,50 @@
             lblDay.TabIndex = 0;
             lblDay.Text = "00";
             // 
+            // 
+            // lblNote
+            // 
+            this.lblNote = new System.Windows.Forms.Label();
+            this.lblNote.AutoSize = false;
+            this.lblNote.AutoEllipsis = true;
+            this.lblNote.UseMnemonic = false;
+            this.lblNote.Font = new System.Drawing.Font("Segoe UI", 6.8f, System.Drawing.FontStyle.Regular);
+            this.lblNote.ForeColor = System.Drawing.Color.White;
+            this.lblNote.BackColor = System.Drawing.Color.FromArgb(66, 133, 244);   // Blue
+            this.lblNote.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblNote.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblNote.Location = new System.Drawing.Point(2, 56);
+            this.lblNote.Size = new System.Drawing.Size(120, 18);
+            this.lblNote.Anchor = System.Windows.Forms.AnchorStyles.Top
+                                | System.Windows.Forms.AnchorStyles.Left
+                                | System.Windows.Forms.AnchorStyles.Right;
+            this.lblNote.Visible = false;
+            this.lblNote.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblNote.Name = "lblNote";
+            // 
+            // lblAnnouncement
+            // 
+            this.lblAnnouncement = new System.Windows.Forms.Label();
+            this.lblAnnouncement.AutoSize = false;
+            this.lblAnnouncement.AutoEllipsis = true;
+            this.lblAnnouncement.UseMnemonic = false;
+            this.lblAnnouncement.Font = new System.Drawing.Font("Segoe UI", 6.8f, System.Drawing.FontStyle.Regular);
+            this.lblAnnouncement.ForeColor = System.Drawing.Color.White;
+            this.lblAnnouncement.BackColor = System.Drawing.Color.FromArgb(230, 81, 0);  // Orange
+            this.lblAnnouncement.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblAnnouncement.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblAnnouncement.Location = new System.Drawing.Point(2, 76);
+            this.lblAnnouncement.Size = new System.Drawing.Size(120, 18);
+            this.lblAnnouncement.Anchor = System.Windows.Forms.AnchorStyles.Top
+                                         | System.Windows.Forms.AnchorStyles.Left
+                                         | System.Windows.Forms.AnchorStyles.Right;
+            this.lblAnnouncement.Visible = false;
+            this.lblAnnouncement.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblAnnouncement.Name = "lblAnnouncement";
+
+            // Add them to the control
+            this.Controls.Add(this.lblNote);
+            this.Controls.Add(this.lblAnnouncement);
             // UrDay
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -85,5 +129,7 @@
         private Panel panel1;
         private CheckBox chkSelect;
         private Label lblDay;
+        private System.Windows.Forms.Label lblNote;
+        private System.Windows.Forms.Label lblAnnouncement;
     }
 }

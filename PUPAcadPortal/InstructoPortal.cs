@@ -17,45 +17,8 @@ namespace PUPAcadPortal
     {
         public static int _year, _month;
         public static Dictionary<DateTime, string> notesDict = new Dictionary<DateTime, string>();
-        public static Dictionary<DateTime, string> holidaysDict = new Dictionary<DateTime, string>
-        {
-            // 2025
-            { new DateTime(2025, 1, 1),  "New Year's Day" },
-            { new DateTime(2025, 4, 17), "Maundy Thursday" },
-            { new DateTime(2025, 4, 18), "Good Friday" },
-            { new DateTime(2025, 4, 19), "Black Saturday" },
-            { new DateTime(2025, 4, 9),  "Araw ng Kagitingan" },
-            { new DateTime(2025, 5, 1),  "Labor Day" },
-            { new DateTime(2025, 6, 12), "Independence Day" },
-            { new DateTime(2025, 8, 21), "Ninoy Aquino Day" },
-            { new DateTime(2025, 8, 25), "National Heroes Day" },
-            { new DateTime(2025, 11, 1), "All Saints' Day" },
-            { new DateTime(2025, 11, 30),"Bonifacio Day" },
-            { new DateTime(2025, 12, 8), "Immaculate Conception" },
-            { new DateTime(2025, 12, 25),"Christmas Day" },
-            { new DateTime(2025, 12, 30),"Rizal Day" },
-            { new DateTime(2025, 12, 31),"New Year's Eve" },
-            // 2026
-            { new DateTime(2026, 1, 1),  "New Year's Day" },
-            { new DateTime(2026, 2, 25), "EDSA Revolution" },
-            { new DateTime(2026, 4, 2),  "Maundy Thursday" },
-            { new DateTime(2026, 4, 3),  "Good Friday" },
-            { new DateTime(2026, 4, 4),  "Black Saturday" },
-            { new DateTime(2026, 4, 9),  "Araw ng Kagitingan" },
-            { new DateTime(2026, 5, 1),  "Labor Day" },
-            { new DateTime(2026, 6, 12), "Independence Day" },
-            { new DateTime(2026, 8, 21), "Ninoy Aquino Day" },
-            { new DateTime(2026, 8, 31), "National Heroes Day" },
-            { new DateTime(2026, 11, 1), "All Saints' Day" },
-            { new DateTime(2026, 11, 2), "All Souls' Day" },
-            { new DateTime(2026, 11, 30),"Bonifacio Day" },
-            { new DateTime(2026, 12, 8), "Immaculate Conception" },
-            { new DateTime(2026, 12, 24),"Christmas Eve" },
-            { new DateTime(2026, 12, 25),"Christmas Day" },
-            { new DateTime(2026, 12, 30),"Rizal Day" },
-            { new DateTime(2026, 12, 31),"New Year's Eve" },
-        };
 
+        private FlowLayoutPanel pnlDayHeaders;
         private Button clickedButton;
         private Color defaultColor = Color.Maroon;
         private Color selectedColor = Color.FromArgb(109, 0, 0);
@@ -107,9 +70,7 @@ namespace PUPAcadPortal
             {
                 if (MessageBox.Show("Are you sure you want to exit?", "Confirm Exit",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-                {
                     e.Cancel = true;
-                }
                 else
                     System.Windows.Forms.Application.Exit();
             }
@@ -201,7 +162,6 @@ namespace PUPAcadPortal
         private void CreateAnnounce_Click(object sender, EventArgs e)
         {
             pnlCreateAnnounce.Visible = !pnlCreateAnnounce.Visible;
-
             if (pnlCreateAnnounce.Visible)
             {
                 pnlCreateAnnounce.BringToFront();
@@ -293,7 +253,6 @@ namespace PUPAcadPortal
         private void cmbBXActType_SelectedIndexChanged(object sender, EventArgs e)
         {
             string selectedAction = cmbBXActType.SelectedItem?.ToString();
-
             pnlQuiz1.Visible = false;
             pnlAssign.Visible = false;
 
@@ -365,7 +324,6 @@ namespace PUPAcadPortal
         private void btnRemove_Click(object sender, EventArgs e)
         {
             var lastCard = flowLayoutPanel3.Controls.OfType<ucQuestionCard>().LastOrDefault();
-
             if (lastCard != null)
             {
                 flowLayoutPanel3.Controls.Remove(lastCard);
@@ -411,7 +369,6 @@ namespace PUPAcadPortal
         private void pnlLMSFiles_DragDrop(object sender, DragEventArgs e)
         {
             string[] paths = (string[])e.Data.GetData(DataFormats.FileDrop);
-
             foreach (string path in paths)
             {
                 if (Directory.Exists(path))
@@ -433,7 +390,6 @@ namespace PUPAcadPortal
             item.Tag = folderPath;
             item.SubItems.Add("File Folder");
             item.SubItems.Add(DateTime.Now.ToString("g"));
-
             listView_file.Items.Add(item);
         }
 
@@ -468,7 +424,6 @@ namespace PUPAcadPortal
 
                 item.SubItems.Add(sizeDisplay);
                 item.SubItems.Add(DateTime.Now.ToString("g"));
-
                 listView_file.Items.Add(item);
             }
             else
@@ -486,6 +441,7 @@ namespace PUPAcadPortal
                 e.Effect = DragDropEffects.None;
         }
 
+        // ── FORM LOAD ─────────────────────────────────────────────────────────
         private void InstructorPortal_Load(object sender, EventArgs e)
         {
             // ListView styling
@@ -503,23 +459,170 @@ namespace PUPAcadPortal
             listView_file.Columns.Add("Size", 100);
             listView_file.Columns.Add("Date Uploaded", 180);
 
-            // Calendar responsive resize
-            FPLmonth.Resize += (s, ev) => ResizeCalendarCells();
+            // ── Build dynamic day-header row ──────────────────────────────────
+            BuildDayHeaders();
 
-            // Show current month
+            // ── Calendar resize hooks ─────────────────────────────────────────
+            FPLmonth.Resize += (s, ev) =>
+            {
+                ResizeCalendarCells();
+                AlignDayHeaders();
+            };
+
+            this.Resize += OnFormResized;
+
+            // ── Show current month ────────────────────────────────────────────
             showDays(DateTime.Now.Month, DateTime.Now.Year);
 
-            //Mouse-wheel - month navigation
+            // ── Mouse-wheel → month navigation ───────────────────────────────
             var wheelFilter = new CalendarWheelFilter(FPLmonth, delta =>
             {
-                if (delta > 0)
-                    picPrev_Click(this, EventArgs.Empty);  // scroll UP   = previous month
-                else
-                    picNext_Click(this, EventArgs.Empty);  // scroll DOWN = next month
+                if (delta > 0) picPrev_Click(this, EventArgs.Empty);
+                else picNext_Click(this, EventArgs.Empty);
             });
             System.Windows.Forms.Application.AddMessageFilter(wheelFilter);
 
-            this.FormClosed += (s, ev) => System.Windows.Forms.Application.RemoveMessageFilter(wheelFilter);
+            this.FormClosed += (s, ev) =>
+            {
+                System.Windows.Forms.Application.RemoveMessageFilter(wheelFilter);
+                this.Resize -= OnFormResized;
+            };
+        }
+
+        // ── Build dynamic Sun–Sat header row ─────────────────────────────────
+        private void BuildDayHeaders()
+        {
+            string[] days = { "Sunday", "Monday", "Tuesday", "Wednesday",
+                               "Thursday", "Friday", "Saturday" };
+
+            pnlDayHeaders = new FlowLayoutPanel
+            {
+                FlowDirection = FlowDirection.LeftToRight,
+                WrapContents = false,
+                Height = 32,
+                Padding = new Padding(0),
+                Margin = new Padding(0),
+                BackColor = Color.FromArgb(245, 245, 245),
+            };
+
+            pnlDayHeaders.Parent = FPLmonth.Parent;
+            pnlDayHeaders.Left = FPLmonth.Left;
+            pnlDayHeaders.Width = FPLmonth.Width;
+            pnlDayHeaders.Top = FPLmonth.Top - 32;
+            pnlDayHeaders.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+
+            foreach (string d in days)
+            {
+                pnlDayHeaders.Controls.Add(new Label
+                {
+                    Text = d,
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    AutoSize = false,
+                    Font = new System.Drawing.Font("Segoe UI", 9f, FontStyle.Regular),
+                    ForeColor = (d == "Sunday") ? Color.Crimson : Color.FromArgb(80, 80, 80),
+                    BackColor = Color.Transparent,
+                    Margin = new Padding(1, 0, 1, 0),
+                    Height = 32,
+                });
+            }
+
+            pnlDayHeaders.BringToFront();
+        }
+
+        // ── Align header labels to match cell widths ──────────────────────────
+        private void AlignDayHeaders()
+        {
+            if (pnlDayHeaders == null) return;
+
+            pnlDayHeaders.Left = FPLmonth.Left;
+            pnlDayHeaders.Width = FPLmonth.Width;
+            pnlDayHeaders.Top = FPLmonth.Top - pnlDayHeaders.Height;
+
+            int available = FPLmonth.ClientSize.Width - SystemInformation.VerticalScrollBarWidth - 2;
+            int cellWidth = available / 7;
+
+            foreach (Control ctrl in pnlDayHeaders.Controls)
+                ctrl.Width = cellWidth;
+        }
+
+        // ── showDays — uses SharedCalendarData, passes isStudent: false ───────
+        private void showDays(int month, int year)
+        {
+            FPLmonth.Controls.Clear();
+            _year = year;
+            _month = month;
+
+            // ── Keep shared state in sync ─────────────────────────────────────────
+            SharedCalendarData.CurrentYear = year;
+            SharedCalendarData.CurrentMonth = month;
+
+            string monthName = new DateTimeFormatInfo().GetMonthName(month);
+            lblMonthYear.Text = monthName.ToUpper() + " " + year;
+            CenterMonthLabel();
+
+            DateTime firstDay = new DateTime(year, month, 1);
+            int startDOW = (int)firstDay.DayOfWeek;
+            int daysInMonth = DateTime.DaysInMonth(year, month);
+
+            // Leading days from previous month (grayed out)
+            if (startDOW > 0)
+            {
+                DateTime prevMonth = firstDay.AddMonths(-1);
+                int prevDays = DateTime.DaysInMonth(prevMonth.Year, prevMonth.Month);
+                for (int i = startDOW - 1; i >= 0; i--)
+                {
+                    int d = prevDays - i;
+                    string h = GetHoliday(prevMonth.Year, prevMonth.Month, d);
+                    FPLmonth.Controls.Add(
+                        new UrDay(d.ToString(), prevMonth.Year, prevMonth.Month, false, h, isStudent: false));
+                }
+            }
+
+            // Current month days
+            for (int i = 1; i <= daysInMonth; i++)
+            {
+                string h = GetHoliday(year, month, i);
+                FPLmonth.Controls.Add(
+                    new UrDay(i.ToString(), year, month, true, h, isStudent: false));
+            }
+
+            // Trailing days from next month (grayed out)
+            int total = FPLmonth.Controls.Count;
+            int remainder = total % 7;
+            if (remainder > 0)
+            {
+                DateTime nextMonth = firstDay.AddMonths(1);
+                int trailing = 7 - remainder;
+                for (int i = 1; i <= trailing; i++)
+                {
+                    string h = GetHoliday(nextMonth.Year, nextMonth.Month, i);
+                    FPLmonth.Controls.Add(
+                        new UrDay(i.ToString(), nextMonth.Year, nextMonth.Month, false, h, isStudent: false));
+                }
+            }
+
+            ResizeCalendarCells();
+        }
+
+        // ── Uses SharedCalendarData.Holidays ─────────────────────────────────
+        private string GetHoliday(int year, int month, int day)
+        {
+            DateTime date = new DateTime(year, month, day);
+            return SharedCalendarData.Holidays.ContainsKey(date)
+                ? SharedCalendarData.Holidays[date] : "";
+        }
+
+        private void listView_file_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var item = listView_file.GetItemAt(e.X, e.Y);
+                if (item != null)
+                {
+                    item.Selected = true;
+                    contextMenuStrip1.Show(listView_file, e.Location);
+                }
+            }
         }
 
         private void listView_file_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -585,83 +688,13 @@ namespace PUPAcadPortal
             }
         }
 
-        private void showDays(int month, int year)
-        {
-            FPLmonth.Controls.Clear();
-            _year = year;
-            _month = month;
-
-            string monthName = new DateTimeFormatInfo().GetMonthName(month);
-            lblMonthYear.Text = monthName.ToUpper() + " " + year;
-
-            DateTime firstDay = new DateTime(year, month, 1);
-            int startDOW = (int)firstDay.DayOfWeek;
-            int daysInMonth = DateTime.DaysInMonth(year, month);
-
-            // Leading days from previous month (grayed out)
-            if (startDOW > 0)
-            {
-                DateTime prevMonth = firstDay.AddMonths(-1);
-                int prevDays = DateTime.DaysInMonth(prevMonth.Year, prevMonth.Month);
-                for (int i = startDOW - 1; i >= 0; i--)
-                {
-                    int d = prevDays - i;
-                    string h = GetHoliday(prevMonth.Year, prevMonth.Month, d);
-                    FPLmonth.Controls.Add(new UrDay(d.ToString(), prevMonth.Year, prevMonth.Month, false, h));
-                }
-            }
-
-            // Current month days
-            for (int i = 1; i <= daysInMonth; i++)
-            {
-                string h = GetHoliday(year, month, i);
-                FPLmonth.Controls.Add(new UrDay(i.ToString(), year, month, true, h));
-            }
-
-            // Trailing days from next month (grayed out)
-            int total = FPLmonth.Controls.Count;
-            int remainder = total % 7;
-            if (remainder > 0)
-            {
-                DateTime nextMonth = firstDay.AddMonths(1);
-                int trailing = 7 - remainder;
-                for (int i = 1; i <= trailing; i++)
-                {
-                    string h = GetHoliday(nextMonth.Year, nextMonth.Month, i);
-                    FPLmonth.Controls.Add(new UrDay(i.ToString(), nextMonth.Year, nextMonth.Month, false, h));
-                }
-            }
-
-            ResizeCalendarCells();
-        }
-
-        private string GetHoliday(int year, int month, int day)
-        {
-            DateTime date = new DateTime(year, month, day);
-            return holidaysDict.ContainsKey(date) ? holidaysDict[date] : "";
-        }
-
-        private void listView_file_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                var item = listView_file.GetItemAt(e.X, e.Y);
-                if (item != null)
-                {
-                    item.Selected = true;
-                    contextMenuStrip1.Show(listView_file, e.Location);
-                }
-            }
-        }
-
+        // ── Resize helpers ────────────────────────────────────────────────────
         private void ResizeCalendarCells()
         {
             if (FPLmonth.Controls.Count == 0) return;
 
-            int cols = 7;
-            int scrollBarWidth = SystemInformation.VerticalScrollBarWidth;
-            int availableWidth = FPLmonth.ClientSize.Width - scrollBarWidth - 2;
-            int cellWidth = availableWidth / cols;
+            int available = FPLmonth.ClientSize.Width - SystemInformation.VerticalScrollBarWidth - 2;
+            int cellWidth = available / 7;
             int cellHeight = 110;
 
             FPLmonth.SuspendLayout();
@@ -672,8 +705,59 @@ namespace PUPAcadPortal
                 ctrl.Margin = new Padding(1);
             }
             FPLmonth.ResumeLayout();
+
+            AlignDayHeaders();
         }
 
+        private void OnFormResized(object sender, EventArgs e)
+        {
+            if (!this.IsHandleCreated || this.IsDisposed) return;
+
+            this.BeginInvoke((Action)(() =>
+            {
+                try
+                {
+                    FitCalendarPanel();
+                    ResizeCalendarCells();
+                    CenterMonthLabel();
+                }
+                catch { }
+            }));
+        }
+
+        private void FitCalendarPanel()
+        {
+            if (pnlCalendar == null || !pnlCalendar.Visible) return;
+            if (pnlSidebar == null || pnlHeader == null) return;
+
+            pnlCalendar.Left = pnlSidebar.Width;
+            pnlCalendar.Top = pnlHeader.Height;
+            pnlCalendar.Width = this.ClientSize.Width - pnlSidebar.Width;
+            pnlCalendar.Height = this.ClientSize.Height - pnlHeader.Height;
+
+            if (FPLmonth != null)
+            {
+                int headerBottom = (pnlDayHeaders != null)
+                    ? pnlDayHeaders.Top + pnlDayHeaders.Height
+                    : FPLmonth.Top;
+
+                FPLmonth.Width = pnlCalendar.ClientSize.Width - FPLmonth.Left - 4;
+                FPLmonth.Top = headerBottom;
+                FPLmonth.Height = pnlCalendar.ClientSize.Height - FPLmonth.Top - 4;
+            }
+        }
+
+        private void CenterMonthLabel()
+        {
+            if (lblMonthYear == null || pnlCalendar == null) return;
+
+            lblMonthYear.AutoSize = false;
+            lblMonthYear.TextAlign = ContentAlignment.MiddleCenter;
+            lblMonthYear.Width = pnlCalendar.ClientSize.Width;
+            lblMonthYear.Left = 0;
+        }
+
+        // ── Navigation arrows ─────────────────────────────────────────────────
         private void picNext_Click(object sender, EventArgs e)
         {
             _month++;
@@ -687,14 +771,9 @@ namespace PUPAcadPortal
             if (_month < 1) { _month = 12; _year--; }
             showDays(_month, _year);
         }
-
-        private void FPLmonth_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
     }
 
-    // Mouse-wheel filter — fires month navigation when hovering the calendar
+    // ── Mouse-wheel filter ────────────────────────────────────────────────────
     public class CalendarWheelFilter : IMessageFilter
     {
         private const int WM_MOUSEWHEEL = 0x020A;
@@ -715,10 +794,9 @@ namespace PUPAcadPortal
             if (!_watchArea.ClientRectangle.Contains(_watchArea.PointToClient(cursor)))
                 return false;
 
-            // Positive delta = scrolled up = go to previous month
             int delta = (short)(((int)m.WParam >> 16) & 0xFFFF);
             _onScroll(delta);
-            return true; // swallow so the panel itself doesn't scroll
+            return true;
         }
     }
 }

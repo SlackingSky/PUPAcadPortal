@@ -62,6 +62,8 @@
             pnlEnrollContent = new Panel();
             panel3 = new Panel();
             pnlCalendar = new Panel();
+            lblMonthYear = new Label();
+            FPLmonth = new FlowLayoutPanel();
             pnlSubject = new Panel();
             roundedPanel26 = new RoundedPanel();
             label122 = new Label();
@@ -333,6 +335,7 @@
             panel12.SuspendLayout();
             panel13.SuspendLayout();
             panel3.SuspendLayout();
+            pnlCalendar.SuspendLayout();
             pnlSubject.SuspendLayout();
             roundedPanel26.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox49).BeginInit();
@@ -955,6 +958,8 @@
             pnlCalendar.AutoScroll = true;
             pnlCalendar.BackColor = SystemColors.Control;
             pnlCalendar.CausesValidation = false;
+            pnlCalendar.Controls.Add(lblMonthYear);
+            pnlCalendar.Controls.Add(FPLmonth);
             pnlCalendar.Dock = DockStyle.Fill;
             pnlCalendar.Location = new Point(256, 72);
             pnlCalendar.Margin = new Padding(0);
@@ -962,6 +967,25 @@
             pnlCalendar.Size = new Size(1272, 989);
             pnlCalendar.TabIndex = 8;
             pnlCalendar.Visible = false;
+            // 
+            // lblMonthYear
+            // 
+            lblMonthYear.AutoSize = true;
+            lblMonthYear.Font = new Font("Maiandra GD", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblMonthYear.Location = new Point(527, 1);
+            lblMonthYear.Name = "lblMonthYear";
+            lblMonthYear.Size = new Size(208, 39);
+            lblMonthYear.TabIndex = 10;
+            lblMonthYear.Text = "Month 0000";
+            lblMonthYear.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // FPLmonth
+            // 
+            FPLmonth.AutoScroll = true;
+            FPLmonth.Location = new Point(11, 68);
+            FPLmonth.Name = "FPLmonth";
+            FPLmonth.Size = new Size(1239, 635);
+            FPLmonth.TabIndex = 9;
             // 
             // pnlSubject
             // 
@@ -4242,6 +4266,8 @@
             panel12.ResumeLayout(false);
             panel13.ResumeLayout(false);
             panel3.ResumeLayout(false);
+            pnlCalendar.ResumeLayout(false);
+            pnlCalendar.PerformLayout();
             pnlSubject.ResumeLayout(false);
             pnlSubject.PerformLayout();
             roundedPanel26.ResumeLayout(false);
@@ -4708,5 +4734,7 @@
         private Label label120;
         private PictureBox pictureBox48;
         private Button button10;
+        private Label lblMonthYear;
+        private FlowLayoutPanel FPLmonth;
     }
 }

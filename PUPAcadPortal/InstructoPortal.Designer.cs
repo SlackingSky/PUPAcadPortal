@@ -90,13 +90,6 @@
             panel3 = new Panel();
             pnlCalendar = new Panel();
             lblMonthYear = new Label();
-            label133 = new Label();
-            label131 = new Label();
-            label132 = new Label();
-            label129 = new Label();
-            label130 = new Label();
-            label128 = new Label();
-            label9 = new Label();
             FPLmonth = new FlowLayoutPanel();
             pnlSubMenu = new Panel();
             pnlLMSActivities = new Panel();
@@ -1399,13 +1392,6 @@
             pnlCalendar.BackColor = SystemColors.Control;
             pnlCalendar.CausesValidation = false;
             pnlCalendar.Controls.Add(lblMonthYear);
-            pnlCalendar.Controls.Add(label133);
-            pnlCalendar.Controls.Add(label131);
-            pnlCalendar.Controls.Add(label132);
-            pnlCalendar.Controls.Add(label129);
-            pnlCalendar.Controls.Add(label130);
-            pnlCalendar.Controls.Add(label128);
-            pnlCalendar.Controls.Add(label9);
             pnlCalendar.Controls.Add(FPLmonth);
             pnlCalendar.Dock = DockStyle.Fill;
             pnlCalendar.Location = new Point(256, 72);
@@ -1426,76 +1412,6 @@
             lblMonthYear.Text = "Month 0000";
             lblMonthYear.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // label133
-            // 
-            label133.AutoSize = true;
-            label133.Font = new Font("Malgun Gothic", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label133.Location = new Point(1148, 50);
-            label133.Name = "label133";
-            label133.Size = new Size(60, 17);
-            label133.TabIndex = 7;
-            label133.Text = "Saturday";
-            // 
-            // label131
-            // 
-            label131.AutoSize = true;
-            label131.Font = new Font("Malgun Gothic", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label131.Location = new Point(968, 50);
-            label131.Name = "label131";
-            label131.Size = new Size(43, 17);
-            label131.TabIndex = 6;
-            label131.Text = "Friday";
-            // 
-            // label132
-            // 
-            label132.AutoSize = true;
-            label132.Font = new Font("Malgun Gothic", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label132.Location = new Point(780, 50);
-            label132.Name = "label132";
-            label132.Size = new Size(63, 17);
-            label132.TabIndex = 5;
-            label132.Text = "Thursday";
-            // 
-            // label129
-            // 
-            label129.AutoSize = true;
-            label129.Font = new Font("Malgun Gothic", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label129.Location = new Point(604, 50);
-            label129.Name = "label129";
-            label129.Size = new Size(77, 17);
-            label129.TabIndex = 4;
-            label129.Text = "Wednesday";
-            // 
-            // label130
-            // 
-            label130.AutoSize = true;
-            label130.Font = new Font("Malgun Gothic", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label130.Location = new Point(430, 50);
-            label130.Name = "label130";
-            label130.Size = new Size(57, 17);
-            label130.TabIndex = 3;
-            label130.Text = "Tuesday";
-            // 
-            // label128
-            // 
-            label128.AutoSize = true;
-            label128.Font = new Font("Malgun Gothic", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label128.Location = new Point(247, 50);
-            label128.Name = "label128";
-            label128.Size = new Size(57, 17);
-            label128.TabIndex = 2;
-            label128.Text = "Monday";
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Font = new Font("Malgun Gothic", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label9.Location = new Point(71, 50);
-            label9.Name = "label9";
-            label9.Size = new Size(52, 17);
-            label9.TabIndex = 1;
-            label9.Text = "Sunday";
-            // 
             // FPLmonth
             // 
             FPLmonth.AutoScroll = true;
@@ -1503,7 +1419,6 @@
             FPLmonth.Name = "FPLmonth";
             FPLmonth.Size = new Size(1239, 635);
             FPLmonth.TabIndex = 0;
-            FPLmonth.Paint += FPLmonth_Paint;
             // 
             // pnlSubMenu
             // 
@@ -6414,13 +6329,6 @@
         private Button button42;
         private Button button41;
         private Button button40;
-        private Label label133;
-        private Label label131;
-        private Label label132;
-        private Label label129;
-        private Label label130;
-        private Label label128;
-        private Label label9;
         private Label lblMonthYear;
         private FlowLayoutPanel FPLmonth;
     }
