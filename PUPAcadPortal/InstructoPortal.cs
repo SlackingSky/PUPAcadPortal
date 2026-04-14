@@ -244,7 +244,7 @@ namespace PUPAcadPortal
             pnlSubMenu.BringToFront();
             pnlLMSActivities.Visible = true;
             pnlLMSActivities.BringToFront();
-            
+
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -425,6 +425,28 @@ namespace PUPAcadPortal
                     count++;
                 }
             }
+        }
+
+        private void buttonRounded1_Click(object sender, EventArgs e)
+        {
+            pnlSub1.Visible = true;
+            pnlSub1.BringToFront();
+        }
+
+        private void buttonRounded2_Click(object sender, EventArgs e)
+        {
+            pnlStudents1.Visible = true;
+            pnlStudents1.BringToFront();
+        }
+
+        private void buttonRounded7_Click(object sender, EventArgs e)
+        {
+            pnlSub1.Visible = false;
+        }
+
+        private void buttonRounded3_Click(object sender, EventArgs e)
+        {
+            pnlStudents1.Visible = false;
         }
     }
 }
