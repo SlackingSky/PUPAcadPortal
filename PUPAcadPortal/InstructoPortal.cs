@@ -17,6 +17,9 @@ namespace PUPAcadPortal
         {
             InitializeComponent();
 
+            // --- FIX: Forces the window to open maximized so the view isn't partially displayed ---
+            this.WindowState = FormWindowState.Maximized;
+
             // Show the dashboard by default when the app opens
             if (btnDashboard != null)
             {
@@ -31,7 +34,7 @@ namespace PUPAcadPortal
         // --- GRADE MANAGEMENT LOGIC (AUTO-COMPUTE & SEARCH) ---
         private void SetupGradeLogic()
         {
-            // --- FIX: Lock down DataGridView UI settings ---
+            // Lock down DataGridView UI settings
             if (dataGridView1 != null)
             {
                 dataGridView1.AllowUserToAddRows = false;       // Prevents random blank row/edit button at the bottom
@@ -40,14 +43,13 @@ namespace PUPAcadPortal
                 dataGridView1.AllowUserToResizeRows = false;    // Prevents row resizing
             }
 
-            // --- FIX: ComboBox Logic (Commented out to prevent CS0103 error until you add it to the Designer) ---
-            /* if (cmbSelectCourse != null && cmbSelectCourse.Items.Count == 0)
+            // --- FIX: Uncommented to populate the Select Course ComboBox ---
+            if (cmbSelectCourse != null && cmbSelectCourse.Items.Count == 0)
             {
                 cmbSelectCourse.Items.Add("IT 101 - Introduction to Computing");
                 cmbSelectCourse.Items.Add("CS 102 - Data Structures");
                 cmbSelectCourse.Items.Add("IS 103 - Database Management");
             }
-            */
 
             // 1. LALAGYAN NG SAMPLE DATA
             if (dataGridView1 != null && dataGridView1.Rows.Count == 0)
@@ -70,11 +72,11 @@ namespace PUPAcadPortal
                     {
                         IList cells = dataGridView1.Rows[e.RowIndex].Cells;
 
-                        // --- FIX: Cleaned up indices ---
+                        // --- FIX: Cleaned up indices and removed AI tags ---
                         DataGridViewCell midCell = (DataGridViewCell)cells[2];
-                        [cite_start] DataGridViewCell finCell = (DataGridViewCell)cells[3];
-                        [cite_start] DataGridViewCell avgCell = (DataGridViewCell)cells[4];
-                        [cite_start] DataGridViewCell remCell = (DataGridViewCell)cells[5];
+                        DataGridViewCell finCell = (DataGridViewCell)cells[3];
+                        DataGridViewCell avgCell = (DataGridViewCell)cells[4];
+                        DataGridViewCell remCell = (DataGridViewCell)cells[5];
 
                         double m, f;
                         bool hasMid = double.TryParse(Convert.ToString(midCell.Value), out m);
@@ -116,9 +118,9 @@ namespace PUPAcadPortal
 
                             IList cells = r.Cells;
 
-                            // --- FIX: Cleaned up indices ---
+                            // --- FIX: Added to fix the crash, and removed AI tags from [1] ---
                             DataGridViewCell cell0 = (DataGridViewCell)cells; // Student Number
-                            [cite_start] DataGridViewCell cell1 = (DataGridViewCell)cells[1]; // Name
+                            DataGridViewCell cell1 = (DataGridViewCell)cells[1]; // Name
 
                             string sn = cell0.Value != null ? cell0.Value.ToString().ToLower() : "";
                             string nm = cell1.Value != null ? cell1.Value.ToString().ToLower() : "";
@@ -246,6 +248,23 @@ namespace PUPAcadPortal
             this.Close();
         }
 
+        // --- DASHBOARD QUICK ACTIONS FIX ---
+        // Redirects dashboard buttons to their respective pages to make them functional
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (btnGrades != null) btnGrades_Click(btnGrades, e);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (btnCourses != null) btnCourses_Click(btnCourses, e);
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (btnGrades != null) btnGrades_Click(btnGrades, e);
+        }
+
         // --- EMPTY EVENT HANDLERS (DO NOT DELETE) ---
         private void pnlCoursesContent_Paint(object sender, PaintEventArgs e) { }
         private void label2_Click(object sender, EventArgs e) { }
@@ -280,13 +299,10 @@ namespace PUPAcadPortal
         private void label36_Click(object sender, EventArgs e) { }
         private void cmbSelectCourse_Paint(object sender, PaintEventArgs e) { }
         private void flowLayoutPanel2_Paint_1(object sender, PaintEventArgs e) { }
-        private void button2_Click(object sender, EventArgs e) { }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
         private void label37_Click(object sender, EventArgs e) { }
         private void label38_Click(object sender, EventArgs e) { }
-        private void button4_Click(object sender, EventArgs e) { }
         private void panel46_Paint(object sender, PaintEventArgs e) { }
-        private void button6_Click(object sender, EventArgs e) { }
         private void panel87_Paint(object sender, PaintEventArgs e) { }
         private void button9_Click(object sender, EventArgs e) { }
         private void label44_Click(object sender, EventArgs e) { }
@@ -304,6 +320,26 @@ namespace PUPAcadPortal
         private void label109_Click(object sender, EventArgs e) { }
         private void label116_Click(object sender, EventArgs e) { }
         private void panel107_Paint(object sender, PaintEventArgs e) { }
+
+        private void panel105_Paint(object sender, PaintEventArgs e)
+        {
+            if (btnGrades != null) btnGrades_Click(btnGrades, e);
+        }
+
+        private void panel103_Paint(object sender, PaintEventArgs e)
+        {
+            if (btnGrades != null) btnGrades_Click(btnGrades, e);
+        }
+
+        private void panel102_Paint(object sender, PaintEventArgs e)
+        {
+            if (btnGrades != null) btnGrades_Click(btnGrades, e);
+        }
+
+        private void panel104_Paint(object sender, PaintEventArgs e)
+        {
+            if (btnCourses != null) btnCourses_Click(btnCourses, e);
+        }
     }
 
     // --- DATA MODEL ---
