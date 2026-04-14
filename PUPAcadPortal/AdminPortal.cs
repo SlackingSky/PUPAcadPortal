@@ -148,8 +148,8 @@ namespace PUPAcadPortal
 
             string[,] archiveData =
             {
-                { "2025-2026", "1st Semester", "Archived" },
-                { "2026-2027", "2nd Semester", "Active" },
+                { "1st Semester", "2025-2026", "Archived" },
+                { "2nd Semester", "2026-2027", "Active" },
             };
 
             for (int row = 0; row < archiveData.GetLength(0); row++)
@@ -589,15 +589,17 @@ namespace PUPAcadPortal
             }
         }
 
+        //backend
         //match year level with section column options 
         private void cmbYearLevel_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+           
         }
 
         //dapat magappear lang yung subjects for specific year level
         private void cmbYearLevel_EditSchedule_SelectedIndexChanged(object sender, EventArgs e)
         {
+        
            
         }
 
