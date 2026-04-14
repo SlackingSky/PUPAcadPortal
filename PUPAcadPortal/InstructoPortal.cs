@@ -31,32 +31,51 @@ namespace PUPAcadPortal
         // --- GRADE MANAGEMENT LOGIC (AUTO-COMPUTE & SEARCH) ---
         private void SetupGradeLogic()
         {
-            // 1. LALAGYAN NG SAMPLE DATA (Para may ma-test ka agad)
+            // --- FIX: Lock down DataGridView UI settings ---
+            if (dataGridView1 != null)
+            {
+                dataGridView1.AllowUserToAddRows = false;       // Prevents random blank row/edit button at the bottom
+                dataGridView1.AllowUserToOrderColumns = false;  // Prevents column reordering
+                dataGridView1.AllowUserToResizeColumns = false; // Prevents column resizing
+                dataGridView1.AllowUserToResizeRows = false;    // Prevents row resizing
+            }
+
+            // --- FIX: Populate the Select Course ComboBox ---
+            if (cmbSelectCourse != null && cmbSelectCourse.Items.Count == 0)
+            {
+                cmbSelectCourse.Items.Add("IT 101 - Introduction to Computing");
+                cmbSelectCourse.Items.Add("CS 102 - Data Structures");
+                cmbSelectCourse.Items.Add("IS 103 - Database Management");
+                // Optional: Select the first item by default
+                // cmbSelectCourse.SelectedIndex = 0; 
+            }
+
+            // 1. LALAGYAN NG SAMPLE DATA
             if (dataGridView1 != null && dataGridView1.Rows.Count == 0)
             {
-                dataGridView1.Rows.Add("2021-00001-MN-0", "John Doe", "85", "88");
-                dataGridView1.Rows.Add("2021-00002-MN-0", "Jane Smith", "92", "95");
-                dataGridView1.Rows.Add("2021-00003-MN-0", "Robert Johnson", "78", "82");
-                dataGridView1.Rows.Add("2021-00004-MN-0", "Maria Garcia", "88", "90");
-                dataGridView1.Rows.Add("2021-00005-MN-0", "Michael Chen", "72", "75");
-                dataGridView1.Rows.Add("2021-00006-MN-0", "Sarah Williams", "", "");
+                dataGridView1.Rows.Add("2021-00001-MN-0", "Eisen Nodesca", "85", "88");
+                dataGridView1.Rows.Add("2021-00002-MN-0", "Clarisa Matias", "92", "95");
+                dataGridView1.Rows.Add("2021-00003-MN-0", "Trisha Walang Last Name", "78", "82");
+                dataGridView1.Rows.Add("2021-00004-MN-0", "Liza Soberano", "88", "90");
+                dataGridView1.Rows.Add("2021-00005-MN-0", "Kween Yasmin", "72", "75");
+                dataGridView1.Rows.Add("2021-00006-MN-0", "Maine Love Alden", "", "");
             }
 
             // 2. AUTO-CALCULATE GRADES LOGIC
             if (dataGridView1 != null)
             {
-                // Ginagamit ang IList para maiwasan ang Visual Studio compiler bugs
-                dataGridView1.CellValueChanged += (s, e) => {
+                dataGridView1.CellValueChanged += (s, e) =>
+                {
                     // I-check kung Midterm (Column 2) o Finals (Column 3) ang in-edit
                     if (e.RowIndex >= 0 && (e.ColumnIndex == 2 || e.ColumnIndex == 3))
                     {
                         IList cells = dataGridView1.Rows[e.RowIndex].Cells;
 
-                        // BINALIK YUNG MGA NUMBERS SA BRACKET DITO!
-                        DataGridViewCell midCell = (DataGridViewCell)cells;
-                        DataGridViewCell finCell = (DataGridViewCell)cells;
-                        DataGridViewCell avgCell = (DataGridViewCell)cells;
-                        DataGridViewCell remCell = (DataGridViewCell)cells;
+                        // --- FIX: Added index [] to access specific cells ---
+                        [cite_start] DataGridViewCell midCell = (DataGridViewCell)cells[2];
+                        [cite_start] DataGridViewCell finCell = (DataGridViewCell)cells[3];
+                        [cite_start] DataGridViewCell avgCell = (DataGridViewCell)cells[4];
+                        [cite_start] DataGridViewCell remCell = (DataGridViewCell)cells[5];
 
                         double m, f;
                         bool hasMid = double.TryParse(Convert.ToString(midCell.Value), out m);
@@ -97,9 +116,10 @@ namespace PUPAcadPortal
                             if (r.IsNewRow) continue;
 
                             IList cells = r.Cells;
-                            // BINALIK YUNG MGA NUMBERS SA BRACKET DITO!
+
+                            // --- FIX: Added index [] to fix the casting crash ---
                             DataGridViewCell cell0 = (DataGridViewCell)cells; // Student Number
-                            DataGridViewCell cell1 = (DataGridViewCell)cells; // Name
+                            [cite_start] DataGridViewCell cell1 = (DataGridViewCell)cells[1]; // Name
 
                             string sn = cell0.Value != null ? cell0.Value.ToString().ToLower() : "";
                             string nm = cell1.Value != null ? cell1.Value.ToString().ToLower() : "";
@@ -279,6 +299,36 @@ namespace PUPAcadPortal
         private void tableLayoutPanel8_Paint(object sender, PaintEventArgs e) { }
         private void label83_Click(object sender, EventArgs e) { }
         private void panel93_Paint(object sender, PaintEventArgs e) { }
+
+        private void panel101_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void pictureBox20_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox21_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label109_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label116_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel107_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 
     // --- DATA MODEL ---
