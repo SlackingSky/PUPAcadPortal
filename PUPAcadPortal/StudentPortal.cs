@@ -145,5 +145,23 @@ namespace PUPAcadPortal
             pnlGrades.BringToFront();
             pnlGrades.Visible = true;
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            pnlTW.BringToFront();
+            pnlTW.Visible = true;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            pnlToday.BringToFront();
+            pnlToday.Visible = true;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            pnlNW.BringToFront();
+            pnlNW.Visible = true;
+        }
     }
 }
