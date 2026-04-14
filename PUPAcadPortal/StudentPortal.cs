@@ -163,5 +163,25 @@ namespace PUPAcadPortal
             pnlNW.BringToFront();
             pnlNW.Visible = true;
         }
+
+        private void buttonRounded2_Click(object sender, EventArgs e)
+        {
+            pnlVA.BringToFront();
+            pnlVA.Visible = true;
+        }
+
+        private void buttonRounded6_Click(object sender, EventArgs e)
+        {
+            pnlToday.BringToFront();
+            pnlToday.Visible = true;
+            pnlVA.Visible = false;
+        }
+
+        private void buttonRounded7_Click(object sender, EventArgs e)
+        {
+            pnlToday.BringToFront();
+            pnlToday.Visible = true;
+            pnlVA.Visible = false;
+        }
     }
 }
