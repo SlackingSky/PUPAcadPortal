@@ -80,7 +80,7 @@ namespace PUPAcadPortal
                 Width = 480,
                 Height = BOTTOM_H - 8,
                 Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom,
-                Name = "pnlLeft",   
+                Name = "pnlLeft",
             };
             pnlBottom.Controls.Add(pnlLeft);
 
@@ -644,5 +644,10 @@ namespace PUPAcadPortal
         private void roundedPanel14_MouseEnter(object sender, EventArgs e) { roundedPanel14.BackColor = Color.Maroon; roundedPanel14.Cursor = Cursors.Hand; }
         private void roundedPanel16_MouseEnter(object sender, EventArgs e) { roundedPanel16.BackColor = Color.Maroon; roundedPanel16.Cursor = Cursors.Hand; }
         private void roundedPanel16_MouseLeave(object sender, EventArgs e) => roundedPanel16.BackColor = Color.White;
+
+        private void StudentPortal_Load_1(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

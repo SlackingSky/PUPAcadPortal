@@ -4247,9 +4247,10 @@
             Controls.Add(panel3);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "StudentPortal";
-            StartPosition = FormStartPosition.CenterParent;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "StudentPortal";
             FormClosing += StudentPortal_Closing;
+            Load += StudentPortal_Load_1;
             pnlSidebar.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel5.ResumeLayout(false);
