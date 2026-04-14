@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -8,13 +9,15 @@ namespace PUPAcadPortal
 {
     public partial class UrDay : UserControl
     {
+        public static event Action<DateTime> DaySelected;
         private string _day;
-        private DateTime fullDate;
+        private DateTime _fullDate;
         private Label _lblHoliday;
         private bool _isCurrentMonth;
-        private bool _isStudent; 
-
-        // Lets the portal push an announcement text onto this cell
+        private bool _isStudent;
+        private bool _isSelected;
+        private readonly List<Label> _eventPills = new List<Label>();
+        private ContextMenuStrip _ctxMenu;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string AnnouncementText
         {
@@ -27,7 +30,18 @@ namespace PUPAcadPortal
             }
         }
 
-        // Constructor
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set
+            {
+                _isSelected = value;
+                this.BackColor = value ? Color.FromArgb(240, 245, 255) : Color.White;
+                Invalidate();
+            }
+        }
+
         public UrDay(string day,
                      int year = 0,
                      int month = 0,
@@ -45,11 +59,11 @@ namespace PUPAcadPortal
             this.Margin = new Padding(0);
             this.Dock = DockStyle.None;
             this.BackColor = Color.White;
+            this.Cursor = Cursors.Hand;
 
             if (year == 0) year = SharedCalendarData.CurrentYear;
             if (month == 0) month = SharedCalendarData.CurrentMonth;
 
-            // Style lblDay
             lblDay.AutoSize = false;
             lblDay.Size = new Size(28, 28);
             lblDay.Location = new Point(4, 4);
@@ -65,90 +79,244 @@ namespace PUPAcadPortal
             }
 
             int dayInt = int.Parse(day);
-            fullDate = new DateTime(year, month, dayInt);
+            _fullDate = new DateTime(year, month, dayInt);
 
-            // Day number colour
             if (!isCurrentMonth)
-                lblDay.ForeColor = Color.FromArgb(190, 190, 190);
-            else if (fullDate.DayOfWeek == DayOfWeek.Sunday)
+                lblDay.ForeColor = Color.FromArgb(200, 200, 200);
+            else if (_fullDate.DayOfWeek == DayOfWeek.Sunday)
                 lblDay.ForeColor = Color.Crimson;
             else
                 lblDay.ForeColor = Color.FromArgb(40, 40, 40);
 
-            // TODAY
-            if (DateTime.Now.Date == fullDate.Date)
+            if (DateTime.Now.Date == _fullDate.Date)
             {
-                GraphicsPath gp = new GraphicsPath();
+                var gp = new GraphicsPath();
                 gp.AddEllipse(0, 0, lblDay.Width, lblDay.Height);
                 lblDay.Region = new Region(gp);
                 lblDay.BackColor = Color.Maroon;
                 lblDay.ForeColor = Color.White;
             }
 
-            // HOLIDAY green pill (always read-only)
             if (!string.IsNullOrEmpty(holiday))
             {
-                _lblHoliday = NewMethod(holiday);
-
-                // Show holiday name in a popup
+                _lblHoliday = MakePill(holiday, Color.FromArgb(52, 168, 83));
+                _lblHoliday.Cursor = Cursors.Help;
                 _lblHoliday.Click += (s, e) =>
                     MessageBox.Show(holiday,
-                        "Holiday — " + fullDate.ToString("MMMM dd, yyyy"),
+                        "Holiday — " + _fullDate.ToString("MMMM dd, yyyy"),
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                var tip = new ToolTip();
+                tip.SetToolTip(_lblHoliday, "Philippine Holiday — " + holiday);
                 this.Controls.Add(_lblHoliday);
                 _lblHoliday.BringToFront();
             }
 
-            // NOTE pill blue (student or instructor notes) 
             lblNote.Click += (s, e) => OpenNotesDialog();
-
-            // ANNOUNCEMENT pill orange (instructor writes, student reads)
             lblAnnouncement.Click += (s, e) => OpenAnnouncementInfo();
+            this.Click += Cell_Click;
+            lblDay.Click += Cell_Click;
+            BuildContextMenu();
+            this.MouseClick += Cell_MouseClick;
 
-            // Resize → keep pills wide
             this.Resize += (s, e) =>
             {
-                if (_lblHoliday != null)
-                    _lblHoliday.Size = new Size(this.Width - 4, 16);
-                lblNote.Size = new Size(this.Width - 4, 18);
-                lblAnnouncement.Size = new Size(this.Width - 4, 18);
+                if (_lblHoliday != null) _lblHoliday.Width = this.Width - 4;
+                lblNote.Width = this.Width - 4;
+                lblAnnouncement.Width = this.Width - 4;
+                foreach (var lbl in _eventPills) lbl.Width = this.Width - 4;
             };
 
             RepositionPills();
             LoadNote();
             LoadAnnouncement();
+            RefreshEventPills();
         }
 
-        private Label NewMethod(string holiday)
+        private void BuildContextMenu()
         {
-            Label lbl = new Label
+            _ctxMenu = new ContextMenuStrip();
+
+            if (!_isStudent)
+            {
+                var addClass = new ToolStripMenuItem("📘 Add Class", null, (s, e) => QuickAddEvent(EventType.Class));
+                var addExam = new ToolStripMenuItem("📝 Add Exam", null, (s, e) => QuickAddEvent(EventType.Exam));
+                var addDead = new ToolStripMenuItem("📌 Add Deadline", null, (s, e) => QuickAddEvent(EventType.Deadline));
+                var addConsult = new ToolStripMenuItem("🩺 Add Consultation", null, (s, e) => QuickAddEvent(EventType.Consultation));
+                var addNote = new ToolStripMenuItem("🗒  Add Note", null, (s, e) => OpenNotesDialog());
+
+                _ctxMenu.Items.AddRange(new ToolStripItem[]
+                {
+                    addClass, addExam, addDead, addConsult,
+                    new ToolStripSeparator(),
+                    addNote,
+                    new ToolStripSeparator(),
+                });
+
+                var mnuRemove = new ToolStripMenuItem("🗑  Remove Event");
+                _ctxMenu.Items.Add(mnuRemove);
+
+                var mnuRemoveAnnounce = new ToolStripMenuItem("🔔 Remove Announcement");
+                _ctxMenu.Items.Add(mnuRemoveAnnounce);
+
+                _ctxMenu.Opening += (s, e) =>
+                {
+                    mnuRemove.DropDownItems.Clear();
+                    var events = SharedCalendarData.GetEventsForDate(_fullDate);
+
+                    mnuRemove.Enabled = _isCurrentMonth && events.Count > 0;
+
+                    foreach (var ev in events)
+                    {
+                        var capturedEv = ev;
+
+                        string prefix = capturedEv.Type switch
+                        {
+                            EventType.Class => "📘",
+                            EventType.Exam => "📝",
+                            EventType.Deadline => "📌",
+                            EventType.Consultation => "🩺",
+                            EventType.Cancelled => "🚫",
+                            _ => "📅",
+                        };
+
+                        var item = new ToolStripMenuItem(
+                            $"{prefix} [{capturedEv.GetTypeLabel()}]  {capturedEv.Title}");
+
+                        item.Click += (ss, ee) =>
+                        {
+                            if (MessageBox.Show(
+                                    $"Remove \"{capturedEv.Title}\" from {_fullDate:MMMM dd, yyyy}?",
+                                    "Confirm Remove",
+                                    MessageBoxButtons.YesNo,
+                                    MessageBoxIcon.Question) == DialogResult.Yes)
+                            {
+                                SharedCalendarData.RemoveEvent(_fullDate, capturedEv);
+                                RefreshEventPills();
+                                DaySelected?.Invoke(_fullDate);   // refreshes bottom panel
+                            }
+                        };
+
+                        mnuRemove.DropDownItems.Add(item);
+                    }
+
+                    bool hasAnnounce =
+                        _isCurrentMonth &&
+                        SharedCalendarData.InstructorAnnouncements.ContainsKey(_fullDate) &&
+                        !string.IsNullOrWhiteSpace(
+                            SharedCalendarData.InstructorAnnouncements[_fullDate]);
+
+                    mnuRemoveAnnounce.Enabled = hasAnnounce;
+
+                    mnuRemoveAnnounce.Click -= OnRemoveAnnouncement;   // prevent double-subscribe
+                    if (hasAnnounce)
+                        mnuRemoveAnnounce.Click += OnRemoveAnnouncement;
+                };
+            }
+            else
+            {
+                var addNote = new ToolStripMenuItem("🗒  Add / Edit Note", null, (s, e) => OpenNotesDialog());
+                _ctxMenu.Items.Add(addNote);
+            }
+
+            this.ContextMenuStrip = _ctxMenu;
+        }
+
+        private void OnRemoveAnnouncement(object sender, EventArgs e)
+        {
+            string title = SharedCalendarData.InstructorAnnouncements.ContainsKey(_fullDate)
+                ? SharedCalendarData.InstructorAnnouncements[_fullDate]
+                : "";
+
+            if (MessageBox.Show(
+                    $"Remove the announcement for {_fullDate:MMMM dd, yyyy}?\n\n\"{title}\"",
+                    "Confirm Remove",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                SharedCalendarData.InstructorAnnouncements.Remove(_fullDate);
+                SharedCalendarData.SaveData();
+                LoadAnnouncement();
+                DaySelected?.Invoke(_fullDate);
+            }
+        }
+
+        private void QuickAddEvent(EventType type)
+        {
+            if (!_isCurrentMonth) return;
+
+            using var dlg = new AddEventForm(_fullDate, type);
+            if (dlg.ShowDialog() == DialogResult.OK && dlg.CreatedEvent != null)
+            {
+                SharedCalendarData.AddEvent(_fullDate, dlg.CreatedEvent);
+                RefreshEventPills();
+                DaySelected?.Invoke(_fullDate);
+            }
+        }
+
+        public void RefreshEventPills()
+        {
+            foreach (var lbl in _eventPills) this.Controls.Remove(lbl);
+            _eventPills.Clear();
+
+            var events = SharedCalendarData.GetEventsForDate(_fullDate);
+            foreach (var ev in events)
+            {
+                var pill = MakePill(ev.Title, ev.GetColor());
+                pill.Tag = ev;
+                pill.Click += (s, e) => ShowEventDetails(ev);
+
+                var tip = new ToolTip();
+                string tipText = ev.GetTypeLabel();
+                if (!string.IsNullOrEmpty(ev.StartTime)) tipText += $"  {ev.StartTime}";
+                if (!string.IsNullOrEmpty(ev.Room)) tipText += $"  •  {ev.Room}";
+                tip.SetToolTip(pill, tipText);
+
+                _eventPills.Add(pill);
+                this.Controls.Add(pill);
+                pill.BringToFront();
+            }
+
+            RepositionPills();
+        }
+
+        private void ShowEventDetails(CalendarEvent ev)
+        {
+            string msg = $"[{ev.GetTypeLabel()}]  {ev.Title}\n";
+            if (!string.IsNullOrEmpty(ev.StartTime))
+                msg += $"Time: {ev.StartTime}" +
+                       (string.IsNullOrEmpty(ev.EndTime) ? "" : $" – {ev.EndTime}") + "\n";
+            if (!string.IsNullOrEmpty(ev.Room))
+                msg += $"Room: {ev.Room}\n";
+            if (!string.IsNullOrEmpty(ev.Description))
+                msg += $"\n{ev.Description}";
+
+            MessageBox.Show(msg.Trim(),
+                _fullDate.ToString("MMMM dd, yyyy"),
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private Label MakePill(string text, Color back)
+        {
+            return new Label
             {
                 AutoSize = false,
                 AutoEllipsis = true,
-                Text = holiday,
+                Text = text,
                 Font = new Font("Segoe UI", 6.8f),
                 ForeColor = Color.White,
-                BackColor = Color.FromArgb(52, 168, 83),
-                Location = new Point(2, 36),
+                BackColor = back,
                 Size = new Size(this.Width - 4, 16),
-                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
                 TextAlign = ContentAlignment.MiddleLeft,
                 Padding = new Padding(3, 0, 0, 0),
-                Cursor = Cursors.Help,
+                Cursor = Cursors.Hand,
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
             };
-
-            // Attach tooltip separately — Label has no ToolTipText property
-            ToolTip tip = new ToolTip();
-            tip.SetToolTip(lbl, "Philippine Holiday — " + holiday);
-
-            return lbl;
         }
 
-        // Stack pills so they don't overlap
         private void RepositionPills()
         {
-            int y = 36;
+            int y = 34;
 
             if (_lblHoliday != null)
             {
@@ -156,93 +324,93 @@ namespace PUPAcadPortal
                 y += 18;
             }
 
-            lblNote.Location = new Point(2, y);
-            y += lblNote.Visible ? 20 : 0;
+            foreach (var lbl in _eventPills)
+            {
+                lbl.Location = new Point(2, y);
+                y += 18;
+            }
 
-            lblAnnouncement.Location = new Point(2, y);
+            if (lblNote.Visible)
+            {
+                lblNote.Location = new Point(2, y);
+                y += 18;
+            }
+
+            if (lblAnnouncement.Visible)
+                lblAnnouncement.Location = new Point(2, y);
         }
 
-        // Load the correct notes dictionary
         private void LoadNote()
         {
             if (lblNote == null) return;
-
-            // Students use SharedCalendarData.StudentNotes
-            // Instructors use InstructorPortal.notesDict
-            var dict = _isStudent
-                ? SharedCalendarData.StudentNotes
-                : InstructorPortal.notesDict;
-
-            bool hasNote = dict.ContainsKey(fullDate)
-                               && !string.IsNullOrWhiteSpace(dict[fullDate]);
-            lblNote.Text = hasNote ? dict[fullDate] : "";
-            lblNote.Visible = hasNote;
-
+            var dict = _isStudent ? SharedCalendarData.StudentNotes : InstructorPortal.notesDict;
+            bool has = dict.ContainsKey(_fullDate) && !string.IsNullOrWhiteSpace(dict[_fullDate]);
+            lblNote.Text = has ? dict[_fullDate] : "";
+            lblNote.Visible = has;
             RepositionPills();
         }
 
-        // Load instructor announcement onto this cell
         private void LoadAnnouncement()
         {
             if (lblAnnouncement == null) return;
-
-            bool has = SharedCalendarData.InstructorAnnouncements.ContainsKey(fullDate)
+            bool has = SharedCalendarData.InstructorAnnouncements.ContainsKey(_fullDate)
                        && !string.IsNullOrWhiteSpace(
-                              SharedCalendarData.InstructorAnnouncements[fullDate]);
-
-            lblAnnouncement.Text = has
-                ? SharedCalendarData.InstructorAnnouncements[fullDate] : "";
+                              SharedCalendarData.InstructorAnnouncements[_fullDate]);
+            lblAnnouncement.Text = has ? SharedCalendarData.InstructorAnnouncements[_fullDate] : "";
             lblAnnouncement.Visible = has;
-
             RepositionPills();
         }
 
-        // Open notes editor (both portals — uses correct dict)
         private void OpenNotesDialog()
         {
             if (string.IsNullOrEmpty(_day) || !_isCurrentMonth) return;
+            var dict = _isStudent ? SharedCalendarData.StudentNotes : InstructorPortal.notesDict;
+            string existing = dict.ContainsKey(_fullDate) ? dict[_fullDate] : "";
 
-            var dict = _isStudent
-                ? SharedCalendarData.StudentNotes
-                : InstructorPortal.notesDict;
-
-            string existing = dict.ContainsKey(fullDate) ? dict[fullDate] : "";
-
-            AddNotesForm form = new AddNotesForm(fullDate, existing);
+            using var form = new AddNotesForm(_fullDate, existing);
             if (form.ShowDialog() == DialogResult.OK)
             {
-                if (form.IsDeleted)
-                    dict.Remove(fullDate);
-                else
-                    dict[fullDate] = form.NoteText;
-
+                if (form.IsDeleted) dict.Remove(_fullDate);
+                else dict[_fullDate] = form.NoteText;
+                SharedCalendarData.SaveData();
                 LoadNote();
+                DaySelected?.Invoke(_fullDate);
             }
         }
 
-        // Show announcement popup (read-only for everyone)
         private void OpenAnnouncementInfo()
         {
             if (string.IsNullOrWhiteSpace(lblAnnouncement.Text)) return;
-
             MessageBox.Show(lblAnnouncement.Text,
-                "Instructor Announcement — " + fullDate.ToString("MMMM dd, yyyy"),
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+                "Instructor Announcement — " + _fullDate.ToString("MMMM dd, yyyy"),
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        // Cell border
+        private void Cell_Click(object sender, EventArgs e)
+        {
+            if (!_isCurrentMonth) return;
+            DaySelected?.Invoke(_fullDate);
+        }
+
+        private void Cell_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && _isCurrentMonth)
+                _ctxMenu?.Show(this, e.Location);
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            using (Pen pen = new Pen(Color.FromArgb(210, 210, 210)))
+            Color borderColor = _isSelected
+                ? Color.FromArgb(66, 133, 244)
+                : Color.FromArgb(210, 210, 210);
+            int penWidth = _isSelected ? 2 : 1;
+            using (var pen = new Pen(borderColor, penWidth))
                 e.Graphics.DrawRectangle(pen, 0, 0, this.Width - 1, this.Height - 1);
         }
 
         private void UrDay_Load(object sender, EventArgs e) { }
-
-        // Clicking the cell background opens notes
-        private void panel1_Click(object sender, EventArgs e) => OpenNotesDialog();
+        private void panel1_Click(object sender, EventArgs e) => Cell_Click(sender, e);
         private void panel1_Paint(object sender, PaintEventArgs e) { }
     }
 }
