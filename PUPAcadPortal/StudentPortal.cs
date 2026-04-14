@@ -11,7 +11,6 @@ namespace PUPAcadPortal
 {
     public partial class StudentPortal : Form
     {
-        // Calendar state
         public static int _year, _month;
         private FlowLayoutPanel pnlDayHeaders;
 
@@ -167,7 +166,7 @@ namespace PUPAcadPortal
             _year = year;
             _month = month;
 
-            // ── Keep shared state in sync ─────────────────────────────────────────
+            //  Keep shared state in sync 
             SharedCalendarData.CurrentYear = year;
             SharedCalendarData.CurrentMonth = month;
 
