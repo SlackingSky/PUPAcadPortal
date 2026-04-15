@@ -273,6 +273,16 @@ namespace PUPAcadPortal
                 flpDayEvents.Controls.Add(noteCard);
             }
 
+            if (SharedCalendarData.InstructorAnnouncements.ContainsKey(date.Date) &&
+                !string.IsNullOrWhiteSpace(SharedCalendarData.InstructorAnnouncements[date.Date]))
+            {
+                var announceCard = MakeEventCard(
+                    "📢 Announcement",
+                    SharedCalendarData.InstructorAnnouncements[date.Date],
+                    Color.FromArgb(255, 140, 0), date);
+                flpDayEvents.Controls.Add(announceCard);
+            }
+
             if (events.Count == 0 && flpDayEvents.Controls.Count == 0)
             {
                 flpDayEvents.Controls.Add(lblNoEvents);
@@ -647,7 +657,13 @@ namespace PUPAcadPortal
 
         private void StudentPortal_Load_1(object sender, EventArgs e)
         {
-            
+            this.BeginInvoke((Action)(() =>
+            {
+                FitCalendarPanel();
+                ResizeCalendarCells();
+                CenterMonthLabel();
+                PositionBottomPanel();
+            }));
         }
     }
 }

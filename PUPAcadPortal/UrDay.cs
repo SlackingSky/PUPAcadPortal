@@ -16,9 +16,11 @@ namespace PUPAcadPortal
         private bool _isCurrentMonth;
         private bool _isStudent;
         private bool _isSelected;
+        private bool _isHovered = false;
         private readonly List<Label> _eventPills = new List<Label>();
         private ContextMenuStrip _ctxMenu;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+
         public string AnnouncementText
         {
             get => lblAnnouncement.Text;
@@ -115,6 +117,10 @@ namespace PUPAcadPortal
             lblNote.Click += (s, e) => OpenNotesDialog();
             lblAnnouncement.Click += (s, e) => OpenAnnouncementInfo();
             this.Click += Cell_Click;
+            this.MouseEnter += (s, e) => { if (_isCurrentMonth && !string.IsNullOrEmpty(_day)) { _isHovered = true; Invalidate(); } };
+            this.MouseLeave += (s, e) => { _isHovered = false; Invalidate(); };
+            lblDay.MouseEnter += (s, e) => { if (_isCurrentMonth && !string.IsNullOrEmpty(_day)) { _isHovered = true; Invalidate(); } };
+            lblDay.MouseLeave += (s, e) => { _isHovered = false; Invalidate(); };
             lblDay.Click += Cell_Click;
             BuildContextMenu();
             this.MouseClick += Cell_MouseClick;
@@ -139,15 +145,23 @@ namespace PUPAcadPortal
 
             if (!_isStudent)
             {
-                var addClass = new ToolStripMenuItem("📘 Add Class", null, (s, e) => QuickAddEvent(EventType.Class));
-                var addExam = new ToolStripMenuItem("📝 Add Exam", null, (s, e) => QuickAddEvent(EventType.Exam));
-                var addDead = new ToolStripMenuItem("📌 Add Deadline", null, (s, e) => QuickAddEvent(EventType.Deadline));
-                var addConsult = new ToolStripMenuItem("🩺 Add Consultation", null, (s, e) => QuickAddEvent(EventType.Consultation));
+
+                var addAnnounce = new ToolStripMenuItem("📢 Add / Edit Announcement",
+                 null, (s, e) => OpenAnnouncementDialog());
+
+                var addEvent = new ToolStripMenuItem("🗓  Add Event");
+                addEvent.DropDownItems.Add(new ToolStripMenuItem("📘 Class", null, (s, e) => QuickAddEvent(EventType.Class)));
+                addEvent.DropDownItems.Add(new ToolStripMenuItem("📝 Exam", null, (s, e) => QuickAddEvent(EventType.Exam)));
+                addEvent.DropDownItems.Add(new ToolStripMenuItem("📌 Deadline", null, (s, e) => QuickAddEvent(EventType.Deadline)));
+                addEvent.DropDownItems.Add(new ToolStripMenuItem("🩺 Consultation", null, (s, e) => QuickAddEvent(EventType.Consultation)));
+
                 var addNote = new ToolStripMenuItem("🗒  Add Note", null, (s, e) => OpenNotesDialog());
 
                 _ctxMenu.Items.AddRange(new ToolStripItem[]
                 {
-                    addClass, addExam, addDead, addConsult,
+                    addAnnounce,
+                    new ToolStripSeparator(),
+                    addEvent,
                     new ToolStripSeparator(),
                     addNote,
                     new ToolStripSeparator(),
@@ -220,6 +234,94 @@ namespace PUPAcadPortal
             }
 
             this.ContextMenuStrip = _ctxMenu;
+        }
+
+        private void OpenAnnouncementDialog()
+        {
+            if (string.IsNullOrEmpty(_day) || !_isCurrentMonth) return;
+
+            string existing = SharedCalendarData.InstructorAnnouncements.ContainsKey(_fullDate)
+                ? SharedCalendarData.InstructorAnnouncements[_fullDate] : "";
+
+            using var frm = new Form
+            {
+                Text = "Add Announcement — " + _fullDate.ToString("MMMM dd, yyyy"),
+                Size = new Size(400, 210),
+                StartPosition = FormStartPosition.CenterParent,
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                MaximizeBox = false,
+                MinimizeBox = false,
+                BackColor = Color.White
+            };
+            var pnlH = new Panel { Dock = DockStyle.Top, Height = 42, BackColor = Color.Maroon };
+            var lH = new Label
+            {
+                Text = "Add Announcement",
+                Dock = DockStyle.Fill,
+                Font = new Font("Segoe UI", 11f, FontStyle.Bold),
+                ForeColor = Color.White,
+                TextAlign = ContentAlignment.MiddleLeft,
+                Padding = new Padding(10, 0, 0, 0)
+            };
+            pnlH.Controls.Add(lH);
+
+            var lbl = new Label
+            {
+                Text = "Announcement text:",
+                Left = 12,
+                Top = 54,
+                AutoSize = true,
+                Font = new Font("Segoe UI", 9f),
+                ForeColor = Color.FromArgb(60, 60, 60)
+            };
+            var txt = new TextBox
+            {
+                Left = 12,
+                Top = 73,
+                Width = 360,
+                Height = 56,
+                Multiline = true,
+                ScrollBars = ScrollBars.Vertical,
+                Text = existing,
+                Font = new Font("Segoe UI", 9f)
+            };
+            var btnOk = new Button
+            {
+                Text = "Save",
+                Left = 188,
+                Top = 138,
+                Width = 90,
+                Height = 30,
+                BackColor = Color.Maroon,
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                DialogResult = DialogResult.OK
+            };
+            btnOk.FlatAppearance.BorderSize = 0;
+            var btnCnl = new Button
+            {
+                Text = "Cancel",
+                Left = 286,
+                Top = 138,
+                Width = 90,
+                Height = 30,
+                FlatStyle = FlatStyle.Flat,
+                DialogResult = DialogResult.Cancel
+            };
+            frm.Controls.AddRange(new Control[] { pnlH, lbl, txt, btnOk, btnCnl });
+            frm.AcceptButton = btnOk;
+            frm.CancelButton = btnCnl;
+
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                if (string.IsNullOrWhiteSpace(txt.Text))
+                    SharedCalendarData.InstructorAnnouncements.Remove(_fullDate);
+                else
+                    SharedCalendarData.InstructorAnnouncements[_fullDate] = txt.Text.Trim();
+                SharedCalendarData.SaveData();
+                LoadAnnouncement();
+                DaySelected?.Invoke(_fullDate);
+            }
         }
 
         private void OnRemoveAnnouncement(object sender, EventArgs e)
@@ -403,8 +505,10 @@ namespace PUPAcadPortal
             base.OnPaint(e);
             Color borderColor = _isSelected
                 ? Color.FromArgb(66, 133, 244)
-                : Color.FromArgb(210, 210, 210);
-            int penWidth = _isSelected ? 2 : 1;
+                : _isHovered && _isCurrentMonth
+                    ? Color.FromArgb(200, 80, 40)   // warm orange-red on hover
+                    : Color.FromArgb(210, 210, 210);
+            int penWidth = (_isSelected || _isHovered) ? 2 : 1;
             using (var pen = new Pen(borderColor, penWidth))
                 e.Graphics.DrawRectangle(pen, 0, 0, this.Width - 1, this.Height - 1);
         }

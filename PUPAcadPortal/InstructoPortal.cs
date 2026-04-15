@@ -106,6 +106,14 @@ namespace PUPAcadPortal
                 this.Resize -= OnFormResized;
                 SharedCalendarData.SaveData();
             };
+
+            this.BeginInvoke((Action)(() =>
+            {
+                FitCalendarPanel();
+                ResizeCalendarCells();
+                CenterMonthLabel();
+                PositionBottomPanel();
+            }));
         }
 
         private void BuildBottomPanel()
