@@ -583,6 +583,16 @@ namespace PUPAcadPortal.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Screenshot_2026_04_15_200423 {
+            get {
+                object obj = ResourceManager.GetObject("Screenshot 2026-04-15 200423", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap square_a {
             get {
                 object obj = ResourceManager.GetObject("square-a", resourceCulture);

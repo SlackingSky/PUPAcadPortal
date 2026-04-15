@@ -61,6 +61,13 @@
             pnlCoursesContent = new Panel();
             pnlEnrollContent = new Panel();
             panel3 = new Panel();
+            pnlAnnounce = new Panel();
+            pictureBox10 = new PictureBox();
+            roundedPanel9 = new RoundedPanel();
+            textBox1 = new TextBox();
+            pictureBox9 = new PictureBox();
+            panel1 = new Panel();
+            label10 = new Label();
             pnlSubMenu = new Panel();
             pnlLMSActivities = new Panel();
             roundedPanel15 = new RoundedPanel();
@@ -290,22 +297,6 @@
             label106 = new Label();
             panel2 = new Panel();
             label8 = new Label();
-            pnlAnnounce = new Panel();
-            roundedPanel12 = new RoundedPanel();
-            pictureBox14 = new PictureBox();
-            roundedPanel11 = new RoundedPanel();
-            pictureBox13 = new PictureBox();
-            roundedPanel10 = new RoundedPanel();
-            pictureBox12 = new PictureBox();
-            roundedPanel8 = new RoundedPanel();
-            pictureBox11 = new PictureBox();
-            roundedPanel9 = new RoundedPanel();
-            textBox1 = new TextBox();
-            pictureBox9 = new PictureBox();
-            roundedPanel7 = new RoundedPanel();
-            pictureBox10 = new PictureBox();
-            panel1 = new Panel();
-            label10 = new Label();
             pnlCalendar = new Panel();
             label9 = new Label();
             pnlActivities = new Panel();
@@ -335,6 +326,11 @@
             panel12.SuspendLayout();
             panel13.SuspendLayout();
             panel3.SuspendLayout();
+            pnlAnnounce.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox10).BeginInit();
+            roundedPanel9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
+            panel1.SuspendLayout();
             pnlSubMenu.SuspendLayout();
             pnlLMSActivities.SuspendLayout();
             roundedPanel15.SuspendLayout();
@@ -438,20 +434,6 @@
             roundedPanel28.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox25).BeginInit();
             panel2.SuspendLayout();
-            pnlAnnounce.SuspendLayout();
-            roundedPanel12.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox14).BeginInit();
-            roundedPanel11.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox13).BeginInit();
-            roundedPanel10.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox12).BeginInit();
-            roundedPanel8.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox11).BeginInit();
-            roundedPanel9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
-            roundedPanel7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox10).BeginInit();
-            panel1.SuspendLayout();
             pnlCalendar.SuspendLayout();
             pnlActivities.SuspendLayout();
             pnlGrades.SuspendLayout();
@@ -954,10 +936,10 @@
             // panel3
             // 
             panel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panel3.Controls.Add(pnlAnnounce);
             panel3.Controls.Add(pnlSubMenu);
             panel3.Controls.Add(pnlAttendance);
             panel3.Controls.Add(pnlSubject);
-            panel3.Controls.Add(pnlAnnounce);
             panel3.Controls.Add(pnlCalendar);
             panel3.Controls.Add(pnlActivities);
             panel3.Controls.Add(pnlGrades);
@@ -972,6 +954,85 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(1746, 1415);
             panel3.TabIndex = 0;
+            // 
+            // pnlAnnounce
+            // 
+            pnlAnnounce.AutoScroll = true;
+            pnlAnnounce.BackColor = SystemColors.Control;
+            pnlAnnounce.CausesValidation = false;
+            pnlAnnounce.Controls.Add(pictureBox10);
+            pnlAnnounce.Controls.Add(roundedPanel9);
+            pnlAnnounce.Controls.Add(panel1);
+            pnlAnnounce.Dock = DockStyle.Fill;
+            pnlAnnounce.Location = new Point(293, 96);
+            pnlAnnounce.Margin = new Padding(0);
+            pnlAnnounce.Name = "pnlAnnounce";
+            pnlAnnounce.Size = new Size(1453, 1319);
+            pnlAnnounce.TabIndex = 7;
+            pnlAnnounce.Visible = false;
+            // 
+            // pictureBox10
+            // 
+            pictureBox10.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            pictureBox10.Image = Properties.Resources.Screenshot_2026_04_15_200423;
+            pictureBox10.Location = new Point(8, 117);
+            pictureBox10.Name = "pictureBox10";
+            pictureBox10.Size = new Size(1433, 830);
+            pictureBox10.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox10.TabIndex = 5;
+            pictureBox10.TabStop = false;
+            // 
+            // roundedPanel9
+            // 
+            roundedPanel9.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            roundedPanel9.BackColor = Color.White;
+            roundedPanel9.BorderRadius = 10;
+            roundedPanel9.Controls.Add(textBox1);
+            roundedPanel9.Controls.Add(pictureBox9);
+            roundedPanel9.Location = new Point(18, 66);
+            roundedPanel9.Name = "roundedPanel9";
+            roundedPanel9.Padding = new Padding(5);
+            roundedPanel9.Size = new Size(316, 41);
+            roundedPanel9.TabIndex = 4;
+            // 
+            // textBox1
+            // 
+            textBox1.BorderStyle = BorderStyle.None;
+            textBox1.Location = new Point(44, 11);
+            textBox1.Name = "textBox1";
+            textBox1.PlaceholderText = "Search Here";
+            textBox1.Size = new Size(219, 20);
+            textBox1.TabIndex = 1;
+            // 
+            // pictureBox9
+            // 
+            pictureBox9.Image = Properties.Resources.magnifier;
+            pictureBox9.Location = new Point(9, 8);
+            pictureBox9.Name = "pictureBox9";
+            pictureBox9.Size = new Size(29, 25);
+            pictureBox9.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox9.TabIndex = 0;
+            pictureBox9.TabStop = false;
+            // 
+            // panel1
+            // 
+            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panel1.BackColor = SystemColors.ButtonHighlight;
+            panel1.Controls.Add(label10);
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(1453, 46);
+            panel1.TabIndex = 1;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label10.Location = new Point(8, 8);
+            label10.Name = "label10";
+            label10.Size = new Size(181, 31);
+            label10.TabIndex = 0;
+            label10.Text = "Announcements";
             // 
             // pnlSubMenu
             // 
@@ -3766,188 +3827,6 @@
             label8.TabIndex = 0;
             label8.Text = "Welcome back, <Student>";
             // 
-            // pnlAnnounce
-            // 
-            pnlAnnounce.AutoScroll = true;
-            pnlAnnounce.BackColor = SystemColors.Control;
-            pnlAnnounce.CausesValidation = false;
-            pnlAnnounce.Controls.Add(roundedPanel12);
-            pnlAnnounce.Controls.Add(roundedPanel11);
-            pnlAnnounce.Controls.Add(roundedPanel10);
-            pnlAnnounce.Controls.Add(roundedPanel8);
-            pnlAnnounce.Controls.Add(roundedPanel9);
-            pnlAnnounce.Controls.Add(roundedPanel7);
-            pnlAnnounce.Controls.Add(panel1);
-            pnlAnnounce.Dock = DockStyle.Fill;
-            pnlAnnounce.Location = new Point(293, 96);
-            pnlAnnounce.Margin = new Padding(0);
-            pnlAnnounce.Name = "pnlAnnounce";
-            pnlAnnounce.Size = new Size(1453, 1319);
-            pnlAnnounce.TabIndex = 7;
-            pnlAnnounce.Visible = false;
-            // 
-            // roundedPanel12
-            // 
-            roundedPanel12.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            roundedPanel12.BackColor = Color.White;
-            roundedPanel12.BorderRadius = 30;
-            roundedPanel12.Controls.Add(pictureBox14);
-            roundedPanel12.Location = new Point(18, 814);
-            roundedPanel12.Name = "roundedPanel12";
-            roundedPanel12.Padding = new Padding(10);
-            roundedPanel12.Size = new Size(1402, 132);
-            roundedPanel12.TabIndex = 3;
-            // 
-            // pictureBox14
-            // 
-            pictureBox14.Image = (Image)resources.GetObject("pictureBox14.Image");
-            pictureBox14.Location = new Point(18, 38);
-            pictureBox14.Name = "pictureBox14";
-            pictureBox14.Size = new Size(71, 62);
-            pictureBox14.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox14.TabIndex = 0;
-            pictureBox14.TabStop = false;
-            // 
-            // roundedPanel11
-            // 
-            roundedPanel11.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            roundedPanel11.BackColor = Color.White;
-            roundedPanel11.BorderRadius = 30;
-            roundedPanel11.Controls.Add(pictureBox13);
-            roundedPanel11.Location = new Point(18, 647);
-            roundedPanel11.Name = "roundedPanel11";
-            roundedPanel11.Padding = new Padding(10);
-            roundedPanel11.Size = new Size(1403, 132);
-            roundedPanel11.TabIndex = 3;
-            // 
-            // pictureBox13
-            // 
-            pictureBox13.Image = (Image)resources.GetObject("pictureBox13.Image");
-            pictureBox13.Location = new Point(18, 38);
-            pictureBox13.Name = "pictureBox13";
-            pictureBox13.Size = new Size(71, 62);
-            pictureBox13.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox13.TabIndex = 0;
-            pictureBox13.TabStop = false;
-            // 
-            // roundedPanel10
-            // 
-            roundedPanel10.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            roundedPanel10.BackColor = Color.White;
-            roundedPanel10.BorderRadius = 30;
-            roundedPanel10.Controls.Add(pictureBox12);
-            roundedPanel10.Location = new Point(18, 480);
-            roundedPanel10.Name = "roundedPanel10";
-            roundedPanel10.Padding = new Padding(10);
-            roundedPanel10.Size = new Size(1402, 132);
-            roundedPanel10.TabIndex = 3;
-            // 
-            // pictureBox12
-            // 
-            pictureBox12.Image = (Image)resources.GetObject("pictureBox12.Image");
-            pictureBox12.Location = new Point(18, 38);
-            pictureBox12.Name = "pictureBox12";
-            pictureBox12.Size = new Size(71, 62);
-            pictureBox12.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox12.TabIndex = 0;
-            pictureBox12.TabStop = false;
-            // 
-            // roundedPanel8
-            // 
-            roundedPanel8.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            roundedPanel8.BackColor = Color.White;
-            roundedPanel8.BorderRadius = 30;
-            roundedPanel8.Controls.Add(pictureBox11);
-            roundedPanel8.Location = new Point(18, 313);
-            roundedPanel8.Name = "roundedPanel8";
-            roundedPanel8.Padding = new Padding(10);
-            roundedPanel8.Size = new Size(1405, 132);
-            roundedPanel8.TabIndex = 3;
-            // 
-            // pictureBox11
-            // 
-            pictureBox11.Image = (Image)resources.GetObject("pictureBox11.Image");
-            pictureBox11.Location = new Point(18, 38);
-            pictureBox11.Name = "pictureBox11";
-            pictureBox11.Size = new Size(71, 62);
-            pictureBox11.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox11.TabIndex = 0;
-            pictureBox11.TabStop = false;
-            // 
-            // roundedPanel9
-            // 
-            roundedPanel9.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            roundedPanel9.BackColor = Color.White;
-            roundedPanel9.BorderRadius = 10;
-            roundedPanel9.Controls.Add(textBox1);
-            roundedPanel9.Controls.Add(pictureBox9);
-            roundedPanel9.Location = new Point(18, 232);
-            roundedPanel9.Name = "roundedPanel9";
-            roundedPanel9.Padding = new Padding(5);
-            roundedPanel9.Size = new Size(316, 41);
-            roundedPanel9.TabIndex = 4;
-            // 
-            // textBox1
-            // 
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Location = new Point(44, 11);
-            textBox1.Name = "textBox1";
-            textBox1.PlaceholderText = "Search Here";
-            textBox1.Size = new Size(219, 20);
-            textBox1.TabIndex = 1;
-            // 
-            // pictureBox9
-            // 
-            pictureBox9.Image = Properties.Resources.magnifier;
-            pictureBox9.Location = new Point(9, 8);
-            pictureBox9.Name = "pictureBox9";
-            pictureBox9.Size = new Size(29, 25);
-            pictureBox9.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox9.TabIndex = 0;
-            pictureBox9.TabStop = false;
-            // 
-            // roundedPanel7
-            // 
-            roundedPanel7.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            roundedPanel7.BackColor = Color.White;
-            roundedPanel7.BorderRadius = 30;
-            roundedPanel7.Controls.Add(pictureBox10);
-            roundedPanel7.Location = new Point(18, 68);
-            roundedPanel7.Name = "roundedPanel7";
-            roundedPanel7.Padding = new Padding(10);
-            roundedPanel7.Size = new Size(1405, 132);
-            roundedPanel7.TabIndex = 2;
-            // 
-            // pictureBox10
-            // 
-            pictureBox10.Image = (Image)resources.GetObject("pictureBox10.Image");
-            pictureBox10.Location = new Point(18, 38);
-            pictureBox10.Name = "pictureBox10";
-            pictureBox10.Size = new Size(71, 62);
-            pictureBox10.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox10.TabIndex = 0;
-            pictureBox10.TabStop = false;
-            // 
-            // panel1
-            // 
-            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            panel1.BackColor = SystemColors.ButtonHighlight;
-            panel1.Controls.Add(label10);
-            panel1.Location = new Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(1453, 46);
-            panel1.TabIndex = 1;
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label10.Location = new Point(8, 8);
-            label10.Name = "label10";
-            label10.Size = new Size(181, 31);
-            label10.TabIndex = 0;
-            label10.Text = "Announcements";
-            // 
             // pnlCalendar
             // 
             pnlCalendar.AutoScroll = true;
@@ -4134,6 +4013,13 @@
             panel12.ResumeLayout(false);
             panel13.ResumeLayout(false);
             panel3.ResumeLayout(false);
+            pnlAnnounce.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox10).EndInit();
+            roundedPanel9.ResumeLayout(false);
+            roundedPanel9.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             pnlSubMenu.ResumeLayout(false);
             pnlLMSActivities.ResumeLayout(false);
             roundedPanel15.ResumeLayout(false);
@@ -4280,22 +4166,6 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox25).EndInit();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
-            pnlAnnounce.ResumeLayout(false);
-            roundedPanel12.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox14).EndInit();
-            roundedPanel11.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox13).EndInit();
-            roundedPanel10.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox12).EndInit();
-            roundedPanel8.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox11).EndInit();
-            roundedPanel9.ResumeLayout(false);
-            roundedPanel9.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
-            roundedPanel7.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox10).EndInit();
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
             pnlCalendar.ResumeLayout(false);
             pnlCalendar.PerformLayout();
             pnlActivities.ResumeLayout(false);
@@ -4363,19 +4233,9 @@
         private Label label7;
         private Label label5;
         private Panel panel1;
-        private RoundedPanel roundedPanel7;
         private RoundedPanel roundedPanel9;
         private PictureBox pictureBox9;
         private TextBox textBox1;
-        private PictureBox pictureBox10;
-        private RoundedPanel roundedPanel12;
-        private PictureBox pictureBox14;
-        private RoundedPanel roundedPanel11;
-        private PictureBox pictureBox13;
-        private RoundedPanel roundedPanel10;
-        private PictureBox pictureBox12;
-        private RoundedPanel roundedPanel8;
-        private PictureBox pictureBox11;
         private Panel pnlSubject;
         private Label label106;
         private Panel pnlAttendance;
@@ -4604,5 +4464,6 @@
         private Label label45;
         private PictureBox pictureBox25;
         private Button btnGo1;
+        private PictureBox pictureBox10;
     }
 }
