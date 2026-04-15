@@ -506,7 +506,7 @@ namespace PUPAcadPortal
             Color borderColor = _isSelected
                 ? Color.FromArgb(66, 133, 244)
                 : _isHovered && _isCurrentMonth
-                    ? Color.FromArgb(200, 80, 40)   // warm orange-red on hover
+                    ? Color.FromArgb(200, 80, 40)  
                     : Color.FromArgb(210, 210, 210);
             int penWidth = (_isSelected || _isHovered) ? 2 : 1;
             using (var pen = new Pen(borderColor, penWidth))

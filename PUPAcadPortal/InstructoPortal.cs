@@ -273,7 +273,6 @@ namespace PUPAcadPortal
             if (dlg.ShowDialog() == DialogResult.OK && dlg.CreatedEvent != null)
             {
                 SharedCalendarData.AddEvent(_lastSelectedDate, dlg.CreatedEvent);
-                // Refresh the UrDay cell pill
                 foreach (Control ctrl in FPLmonth.Controls)
                     if (ctrl is UrDay ud) ud.RefreshEventPills();
 

@@ -26,11 +26,9 @@ namespace PUPAcadPortal
 
             cmbType.SelectedItem = _defaultType;
 
-            // Default time pickers to unchecked (no time set)
             dtpStart.Checked = false;
             dtpEnd.Checked = false;
 
-            // Set a sensible default time so when user checks it, it starts at 8:00 AM
             dtpStart.Value = new DateTime(_date.Year, _date.Month, _date.Day, 8, 0, 0);
             dtpEnd.Value = new DateTime(_date.Year, _date.Month, _date.Day, 9, 0, 0);
         }
