@@ -2020,12 +2020,14 @@
             // 
             // flowLayoutPanelAnnouncements
             // 
-            flowLayoutPanelAnnouncements.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            flowLayoutPanelAnnouncements.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             flowLayoutPanelAnnouncements.AutoScroll = true;
-            flowLayoutPanelAnnouncements.Location = new Point(9, 162);
+            flowLayoutPanelAnnouncements.FlowDirection = FlowDirection.TopDown;
+            flowLayoutPanelAnnouncements.Location = new Point(46, 162);
             flowLayoutPanelAnnouncements.Name = "flowLayoutPanelAnnouncements";
-            flowLayoutPanelAnnouncements.Size = new Size(1434, 895);
+            flowLayoutPanelAnnouncements.Size = new Size(1392, 895);
             flowLayoutPanelAnnouncements.TabIndex = 0;
+            flowLayoutPanelAnnouncements.WrapContents = false;
             // 
             // roundedPanel37
             // 
