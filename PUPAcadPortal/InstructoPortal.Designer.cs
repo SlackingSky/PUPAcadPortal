@@ -122,8 +122,13 @@
             label146 = new Label();
             label147 = new Label();
             label148 = new Label();
-            btnCreateAnnouncement = new Button();
+            panel60 = new Panel();
+            label145 = new Label();
             flowLayoutPanelAnnouncements = new FlowLayoutPanel();
+            roundedPanel37 = new RoundedPanel();
+            textBox25 = new TextBox();
+            pictureBox59 = new PictureBox();
+            btnCreateAnnouncement = new Button();
             pnlAnnounce = new Panel();
             pnlCreateAnnounce = new RoundedPanel();
             panel53 = new Panel();
@@ -591,6 +596,9 @@
             pnlAnnouncement.SuspendLayout();
             pnlCreateAnnounce1.SuspendLayout();
             panel59.SuspendLayout();
+            panel60.SuspendLayout();
+            roundedPanel37.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox59).BeginInit();
             pnlAnnounce.SuspendLayout();
             pnlCreateAnnounce.SuspendLayout();
             panel37.SuspendLayout();
@@ -1750,8 +1758,10 @@
             // 
             pnlAnnouncement.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pnlAnnouncement.Controls.Add(pnlCreateAnnounce1);
-            pnlAnnouncement.Controls.Add(btnCreateAnnouncement);
+            pnlAnnouncement.Controls.Add(panel60);
             pnlAnnouncement.Controls.Add(flowLayoutPanelAnnouncements);
+            pnlAnnouncement.Controls.Add(roundedPanel37);
+            pnlAnnouncement.Controls.Add(btnCreateAnnouncement);
             pnlAnnouncement.Location = new Point(293, 96);
             pnlAnnouncement.Name = "pnlAnnouncement";
             pnlAnnouncement.Size = new Size(1453, 1319);
@@ -1760,7 +1770,7 @@
             // 
             // pnlCreateAnnounce1
             // 
-            pnlCreateAnnounce1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            pnlCreateAnnounce1.Anchor = AnchorStyles.None;
             pnlCreateAnnounce1.BackColor = Color.Maroon;
             pnlCreateAnnounce1.BorderRadius = 10;
             pnlCreateAnnounce1.Controls.Add(checkPinned);
@@ -1781,7 +1791,7 @@
             pnlCreateAnnounce1.Controls.Add(label147);
             pnlCreateAnnounce1.Controls.Add(label148);
             pnlCreateAnnounce1.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            pnlCreateAnnounce1.Location = new Point(232, 32);
+            pnlCreateAnnounce1.Location = new Point(158, 24);
             pnlCreateAnnounce1.Name = "pnlCreateAnnounce1";
             pnlCreateAnnounce1.Size = new Size(897, 570);
             pnlCreateAnnounce1.TabIndex = 6;
@@ -1988,6 +1998,67 @@
             label148.TabIndex = 0;
             label148.Text = "Create Announcement";
             // 
+            // panel60
+            // 
+            panel60.BackColor = SystemColors.ButtonHighlight;
+            panel60.Controls.Add(label145);
+            panel60.Dock = DockStyle.Top;
+            panel60.Location = new Point(0, 0);
+            panel60.Name = "panel60";
+            panel60.Size = new Size(1453, 55);
+            panel60.TabIndex = 9;
+            // 
+            // label145
+            // 
+            label145.AutoSize = true;
+            label145.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label145.Location = new Point(17, 11);
+            label145.Name = "label145";
+            label145.Size = new Size(181, 31);
+            label145.TabIndex = 0;
+            label145.Text = "Announcements";
+            // 
+            // flowLayoutPanelAnnouncements
+            // 
+            flowLayoutPanelAnnouncements.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            flowLayoutPanelAnnouncements.AutoScroll = true;
+            flowLayoutPanelAnnouncements.Location = new Point(9, 162);
+            flowLayoutPanelAnnouncements.Name = "flowLayoutPanelAnnouncements";
+            flowLayoutPanelAnnouncements.Size = new Size(1434, 895);
+            flowLayoutPanelAnnouncements.TabIndex = 0;
+            // 
+            // roundedPanel37
+            // 
+            roundedPanel37.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            roundedPanel37.BackColor = Color.White;
+            roundedPanel37.BorderRadius = 10;
+            roundedPanel37.Controls.Add(textBox25);
+            roundedPanel37.Controls.Add(pictureBox59);
+            roundedPanel37.Location = new Point(17, 77);
+            roundedPanel37.Name = "roundedPanel37";
+            roundedPanel37.Padding = new Padding(5);
+            roundedPanel37.Size = new Size(368, 41);
+            roundedPanel37.TabIndex = 8;
+            // 
+            // textBox25
+            // 
+            textBox25.BorderStyle = BorderStyle.None;
+            textBox25.Location = new Point(44, 11);
+            textBox25.Name = "textBox25";
+            textBox25.PlaceholderText = "Search Here";
+            textBox25.Size = new Size(219, 20);
+            textBox25.TabIndex = 1;
+            // 
+            // pictureBox59
+            // 
+            pictureBox59.Image = Properties.Resources.magnifier;
+            pictureBox59.Location = new Point(9, 8);
+            pictureBox59.Name = "pictureBox59";
+            pictureBox59.Size = new Size(29, 25);
+            pictureBox59.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox59.TabIndex = 0;
+            pictureBox59.TabStop = false;
+            // 
             // btnCreateAnnouncement
             // 
             btnCreateAnnouncement.Anchor = AnchorStyles.Top | AnchorStyles.Right;
@@ -2002,7 +2073,7 @@
             btnCreateAnnouncement.ForeColor = Color.FromArgb(179, 255, 255, 255);
             btnCreateAnnouncement.Image = (Image)resources.GetObject("btnCreateAnnouncement.Image");
             btnCreateAnnouncement.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCreateAnnouncement.Location = new Point(1181, 6);
+            btnCreateAnnouncement.Location = new Point(1182, 78);
             btnCreateAnnouncement.Margin = new Padding(3, 4, 3, 4);
             btnCreateAnnouncement.MinimumSize = new Size(259, 40);
             btnCreateAnnouncement.Name = "btnCreateAnnouncement";
@@ -2013,15 +2084,6 @@
             btnCreateAnnouncement.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnCreateAnnouncement.UseVisualStyleBackColor = false;
             btnCreateAnnouncement.Click += btnCreateAnnouncement_Click;
-            // 
-            // flowLayoutPanelAnnouncements
-            // 
-            flowLayoutPanelAnnouncements.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            flowLayoutPanelAnnouncements.AutoScroll = true;
-            flowLayoutPanelAnnouncements.Location = new Point(21, 65);
-            flowLayoutPanelAnnouncements.Name = "flowLayoutPanelAnnouncements";
-            flowLayoutPanelAnnouncements.Size = new Size(1420, 895);
-            flowLayoutPanelAnnouncements.TabIndex = 0;
             // 
             // pnlAnnounce
             // 
@@ -7290,6 +7352,7 @@
             Text = "StudentPortal";
             FormClosing += StudentPortal_Closing;
             Load += InstructorPortal_Load;
+            Resize += InstructorPortal_Resize;
             pnlSidebar.ResumeLayout(false);
             flowLayoutPanel1.ResumeLayout(false);
             panel7.ResumeLayout(false);
@@ -7333,6 +7396,11 @@
             pnlCreateAnnounce1.ResumeLayout(false);
             pnlCreateAnnounce1.PerformLayout();
             panel59.ResumeLayout(false);
+            panel60.ResumeLayout(false);
+            panel60.PerformLayout();
+            roundedPanel37.ResumeLayout(false);
+            roundedPanel37.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox59).EndInit();
             pnlAnnounce.ResumeLayout(false);
             pnlCreateAnnounce.ResumeLayout(false);
             pnlCreateAnnounce.PerformLayout();
@@ -8089,5 +8157,10 @@
         private Label label150;
         private CheckBox checkPinned;
         private Button btnCreateAnnouncement;
+        private RoundedPanel roundedPanel37;
+        private TextBox textBox25;
+        private PictureBox pictureBox59;
+        private Panel panel60;
+        private Label label145;
     }
 }

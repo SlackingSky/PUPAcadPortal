@@ -41,6 +41,7 @@ namespace PUPAcadPortal
             // "ddd" = Fri, "MMM" = Apr, "dd" = 10
             dateTimePicker2.CustomFormat = "ddd, MMM dd, yyyy";
             this.Resize += (s, e) => UpdateCardWidths();
+            this.Resize += (s, e) => CenterAnnouncementPanel();
         }
 
 
@@ -577,18 +578,18 @@ namespace PUPAcadPortal
             {
                 if (c is Panel card)
                 {
-                    // Stretch the card to fill the container
-                    card.Width = flowLayoutPanelAnnouncements.ClientSize.Width - 40;
+                    card.Width = flowLayoutPanelAnnouncements.ClientSize.Width - 60;
                     ApplyRoundedRegion(card, 20);
 
-                    // Move the buttons to the new right edge
-                    foreach (Control sub in card.Controls)
+                    // Find the Action Panel and push it to the right
+                    foreach (Control child in card.Controls)
                     {
-                        if (sub is FlowLayoutPanel pnl)
+                        if (child is FlowLayoutPanel pnlActions)
                         {
-                            pnl.Left = card.Width - pnl.Width - 20;
+                            // Manually force it to the right edge minus its own width
+                            pnlActions.Left = card.Width - pnlActions.Width - 20;
                         }
-                        if (sub is Label lbl && lbl.Name == "lblDesc") // ensure lblDesc has a name
+                        if (child is Label lbl && lbl.Name == "lblDesc")
                         {
                             lbl.Width = card.Width - 150;
                         }
@@ -767,15 +768,17 @@ namespace PUPAcadPortal
                 });
             }
 
-            // RESET
+            // --- RESET AND HIDE ---
             editingAnnouncementId = -1;
             txtAnnTitle.Clear();
             txtAnnDesc.Clear();
             checkPinned.Checked = false;
             chckUrgent.Checked = false;
 
-            pnlCreateAnnounce.Visible = false;
+            // This hides the panel after the announcement is saved
+            pnlCreateAnnounce1.Visible = false;
 
+            // Refresh the list to show the new/edited announcement
             RenderAnnouncements();
         }
 
@@ -784,9 +787,10 @@ namespace PUPAcadPortal
             flowLayoutPanelAnnouncements.Controls.Clear();
             flowLayoutPanelAnnouncements.SuspendLayout();
 
-            // Ensure the container allows children to stretch
+            // Standard container setup
             flowLayoutPanelAnnouncements.FlowDirection = FlowDirection.TopDown;
             flowLayoutPanelAnnouncements.WrapContents = false;
+            flowLayoutPanelAnnouncements.AutoScroll = true;
 
             var sorted = announcements
                 .OrderByDescending(a => a.IsPinned)
@@ -798,20 +802,19 @@ namespace PUPAcadPortal
                 // 1. Main Card Container
                 Panel card = new Panel
                 {
-                    // Subtracting 40 to account for padding/scrollbar
-                    Width = flowLayoutPanelAnnouncements.ClientSize.Width - 40,
+                    Width = flowLayoutPanelAnnouncements.ClientSize.Width - 60,
                     Height = 80,
                     BackColor = Color.White,
                     Margin = new Padding(10, 0, 10, 15),
                     Tag = false
                 };
 
-                // 2. Bell Icon Circle (RED BACKGROUND)
+                // 2. Bell Icon Circle
                 Panel iconCircle = new Panel
                 {
                     Size = new Size(50, 50),
                     Location = new Point(20, 15),
-                    // Set this to Red to match your request
+                    // Background color logic
                     BackColor = a.Status == "active" ? Color.FromArgb(255, 235, 238) : Color.FromArgb(240, 240, 240)
                 };
                 ApplyRoundedRegion(iconCircle, 50);
@@ -826,45 +829,47 @@ namespace PUPAcadPortal
                 };
                 iconCircle.Controls.Add(picBell);
 
-                // 3. Header Labels
+                // 3. Labels
                 Label lblTitle = new Label { Text = a.Title, Font = new Font("Segoe UI Semibold", 11), Location = new Point(85, 18), AutoSize = true };
                 Label lblSub = new Label { Text = $"All users • {a.Date:MMM dd, yyyy}", Font = new Font("Segoe UI", 8), ForeColor = Color.Gray, Location = new Point(85, 42), AutoSize = true };
 
-                // 4. Description (The Expandable Body)
+                // 4. Hidden Description
                 Label lblDesc = new Label
                 {
+                    Name = "lblDesc", // Named so UpdateCardWidths can find it
                     Text = a.Description,
                     Font = new Font("Segoe UI", 10),
                     Location = new Point(85, 85),
-                    // Stretch description width too
                     Width = card.Width - 150,
                     AutoSize = true,
                     Visible = false
                 };
 
-                // 5. Action Buttons Panel (RIGHT ALIGNED)
+                // 5. Action Panel (Buttons)
                 FlowLayoutPanel pnlActions = new FlowLayoutPanel
                 {
+                    Name = "pnlActions",
                     AutoSize = true,
-                    // Anchor to the Right
-                    Location = new Point(card.Width - 320, 20),
-                    Anchor = AnchorStyles.Top | AnchorStyles.Right,
                     FlowDirection = FlowDirection.LeftToRight,
-                    BackColor = Color.Transparent
+                    BackColor = Color.Transparent,
+                    WrapContents = false,
+                    // Anchor to Top and Right so it moves when the card stretches
+                    Anchor = AnchorStyles.Top | AnchorStyles.Right
                 };
 
-                // Badge
+                // Status Badge (Aligned to 24x24 icons)
                 Label lblStatus = new Label
                 {
                     Text = a.Status == "active" ? "Active" : "Inactive",
                     BackColor = a.Status == "active" ? Color.FromArgb(200, 240, 200) : Color.LightGray,
+                    ForeColor = a.Status == "active" ? Color.DarkGreen : Color.DimGray,
                     Size = new Size(65, 25),
                     TextAlign = ContentAlignment.MiddleCenter,
-                    Margin = new Padding(0, 0, 10, 0)
+                    Margin = new Padding(0, 4, 10, 0) // The '4' centers it vertically with 24px icons
                 };
                 ApplyRoundedRegion(lblStatus, 10);
 
-                // Create Buttons
+                // Buttons (Using 24x24 icons)
                 Button btnExpand = CreateImgButton(Properties.Resources.arrow_down, (s, e) => ToggleExpand(card, lblDesc, (Button)s));
                 Button btnToggle = CreateImgButton(Properties.Resources.power_icon, (s, e) => ToggleAnnouncement(a.Id));
                 Button btnEdit = CreateImgButton(Properties.Resources.edit_icon, (s, e) => EditAnnouncement(a.Id));
@@ -872,8 +877,10 @@ namespace PUPAcadPortal
 
                 pnlActions.Controls.AddRange(new Control[] { lblStatus, btnExpand, btnToggle, btnEdit, btnDelete });
 
-                // Add to Card
+                // Add controls and position the action panel
                 card.Controls.Add(pnlActions);
+                pnlActions.Location = new Point(card.Width - pnlActions.PreferredSize.Width - 20, 22);
+
                 card.Controls.Add(iconCircle);
                 card.Controls.Add(lblTitle);
                 card.Controls.Add(lblSub);
@@ -885,21 +892,24 @@ namespace PUPAcadPortal
             flowLayoutPanelAnnouncements.ResumeLayout();
         }
 
+        // Helper for clean 24x24 icon buttons
         private Button CreateImgButton(Image img, EventHandler onClick)
         {
             Button btn = new Button
             {
                 Image = img,
-                Size = new Size(35, 35),
+                Size = new Size(32, 32), // Area is 32, icon is 24 inside
                 FlatStyle = FlatStyle.Flat,
                 Cursor = Cursors.Hand,
-                ImageAlign = ContentAlignment.MiddleCenter
+                ImageAlign = ContentAlignment.MiddleCenter,
+                Margin = new Padding(2, 0, 2, 0)
             };
             btn.FlatAppearance.BorderSize = 0;
             btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(245, 245, 245);
             btn.Click += onClick;
             return btn;
         }
+
 
         // Logic to show/hide the description and swap arrow images
         private void ToggleExpand(Panel card, Label desc, Button btn)
@@ -922,6 +932,19 @@ namespace PUPAcadPortal
 
             // Refresh rounding for the new height
             ApplyRoundedRegion(card, 20);
+        }
+
+        private void CenterAnnouncementPanel()
+        {
+            // 1. Make sure it's not trying to 'Dock' or it won't move
+            pnlCreateAnnounce1.Dock = DockStyle.None;
+
+            // 2. Calculate center based on the current window (this)
+            int x = (this.ClientSize.Width - pnlCreateAnnounce1.Width) / 2;
+            int y = (this.ClientSize.Height - pnlCreateAnnounce1.Height) / 2;
+
+            // 3. Apply the position
+            pnlCreateAnnounce1.Location = new Point(x, y);
         }
 
 
@@ -978,14 +1001,43 @@ namespace PUPAcadPortal
 
         private void btnCreateAnnouncement_Click(object sender, EventArgs e)
         {
+            // Make sure it's on top and visible
             pnlCreateAnnounce1.Visible = true;
             pnlCreateAnnounce1.BringToFront();
 
-            // Optional: center it
-            pnlCreateAnnounce1.Location = new Point(
-                (pnlAnnounce.Width - pnlCreateAnnounce1.Width) / 2,
-                (pnlAnnounce.Height - pnlCreateAnnounce1.Height) / 2
-            );
+            // Position it immediately
+            CenterTheAnnouncementPanel();
+        }
+
+        private void CenterTheAnnouncementPanel()
+        {
+            // Only move it if it is currently visible to the user
+            if (pnlCreateAnnounce1.Visible)
+            {
+                // Ensure Dock is none so we can set coordinates manually
+                pnlCreateAnnounce1.Dock = DockStyle.None;
+
+                // Calculate the exact center
+                int x = (this.ClientSize.Width - pnlCreateAnnounce1.Width) / 2;
+                int y = (this.ClientSize.Height - pnlCreateAnnounce1.Height) / 2;
+
+                // Apply the location
+                pnlCreateAnnounce1.Location = new Point(x, y);
+            }
+        }
+
+        private void InstructorPortal_Resize(object sender, EventArgs e)
+        {
+            CenterAnnouncePanel();
+        }
+
+        private void CenterAnnouncePanel()
+        {
+            if (pnlCreateAnnounce1.Visible)
+            {
+                pnlCreateAnnounce1.Left = (this.ClientSize.Width - pnlCreateAnnounce1.Width) / 2;
+                pnlCreateAnnounce1.Top = (this.ClientSize.Height - pnlCreateAnnounce1.Height) / 2;
+            }
         }
     }
 }
