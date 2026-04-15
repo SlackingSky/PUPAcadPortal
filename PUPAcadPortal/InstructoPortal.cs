@@ -34,7 +34,7 @@ namespace PUPAcadPortal
 
             // ✅ FIX: Wire the resize event ONLY ONCE here.
             // If you put this inside a Click event, it stacks and causes the "creeping" movement.
-           
+
         }
 
 
@@ -1005,14 +1005,17 @@ namespace PUPAcadPortal
             }
         }
 
-        
+
 
         private void InstructorPortal_Resize(object sender, EventArgs e)
         {
-           
+
 
         }
 
-       
+        private void panel18_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
