@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
-using System.Diagnostics;
-using System.IO;
+using static PUPAcadPortal.InstructorPortal;
+
 
 namespace PUPAcadPortal
 {
@@ -15,6 +17,10 @@ namespace PUPAcadPortal
         private Button clickedButton;
         private Color defaultColor = Color.Maroon;
         private Color selectedColor = Color.FromArgb(109, 0, 0);
+
+        // ✅ ANNOUNCEMENT SYSTEM VARIABLES (GLOBAL)
+        List<Announcement> announcements = new List<Announcement>();
+        int editingAnnouncementId = -1;
         public InstructorPortal()
         {
             InitializeComponent();
@@ -34,7 +40,7 @@ namespace PUPAcadPortal
             // 2. Set the pattern (no extra spaces)
             // "ddd" = Fri, "MMM" = Apr, "dd" = 10
             dateTimePicker2.CustomFormat = "ddd, MMM dd, yyyy";
-
+            this.Resize += (s, e) => UpdateCardWidths();
         }
 
 
@@ -129,9 +135,9 @@ namespace PUPAcadPortal
 
         private void btnAnnounceIns_Click(object sender, EventArgs e)
         {
-            pnlCreateAnnounce.Visible = false;
-            pnlAnnounce.BringToFront();
-            pnlAnnounce.Visible = true;
+            pnlCreateAnnounce1.Visible = false;
+            pnlAnnouncement.BringToFront();
+            pnlAnnouncement.Visible = true;
         }
 
         private void btnCalendarIns_Click(object sender, EventArgs e)
@@ -557,6 +563,39 @@ namespace PUPAcadPortal
             listView_file.Columns.Add("  File Name", 650);
             listView_file.Columns.Add("  Date Uploaded", 650); // Column index 1
             listView_file.Columns.Add("  Size", 350);          // Column index 2
+
+            // This ensures that when the window gets bigger, the cards stretch to fit.
+            flowLayoutPanelAnnouncements.Resize += (s, e) => UpdateCardWidths();
+
+
+        }
+
+        private void UpdateCardWidths()
+        {
+            flowLayoutPanelAnnouncements.SuspendLayout();
+            foreach (Control c in flowLayoutPanelAnnouncements.Controls)
+            {
+                if (c is Panel card)
+                {
+                    // Stretch the card to fill the container
+                    card.Width = flowLayoutPanelAnnouncements.ClientSize.Width - 40;
+                    ApplyRoundedRegion(card, 20);
+
+                    // Move the buttons to the new right edge
+                    foreach (Control sub in card.Controls)
+                    {
+                        if (sub is FlowLayoutPanel pnl)
+                        {
+                            pnl.Left = card.Width - pnl.Width - 20;
+                        }
+                        if (sub is Label lbl && lbl.Name == "lblDesc") // ensure lblDesc has a name
+                        {
+                            lbl.Width = card.Width - 150;
+                        }
+                    }
+                }
+            }
+            flowLayoutPanelAnnouncements.ResumeLayout();
         }
 
         private void listView_file_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -685,6 +724,268 @@ namespace PUPAcadPortal
         {
             pnlPostedAct.BringToFront();
             pnlPostedAct.Visible = true;
+        }
+
+        public class Announcement
+        {
+            public int Id;
+            public string Title;
+            public string Description;
+            public DateTime Date;
+            public bool IsPinned;
+            public bool IsUrgent;
+            public string Status;
+        }
+
+        private void btnPostAnn_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtAnnTitle.Text)) return;
+
+            if (editingAnnouncementId != -1)
+            {
+                var a = announcements.Find(x => x.Id == editingAnnouncementId);
+                if (a != null)
+                {
+                    a.Title = txtAnnTitle.Text;
+                    a.Description = txtAnnDesc.Text;
+                    a.Date = dateTimePicker4.Value;
+                    a.IsPinned = checkPinned.Checked;
+                    a.IsUrgent = chckUrgent.Checked;
+                }
+            }
+            else
+            {
+                announcements.Insert(0, new Announcement
+                {
+                    Id = DateTime.Now.Millisecond,
+                    Title = txtAnnTitle.Text,
+                    Description = txtAnnDesc.Text,
+                    Date = dateTimePicker4.Value,
+                    IsPinned = checkPinned.Checked,
+                    IsUrgent = chckUrgent.Checked,
+                    Status = "active"
+                });
+            }
+
+            // RESET
+            editingAnnouncementId = -1;
+            txtAnnTitle.Clear();
+            txtAnnDesc.Clear();
+            checkPinned.Checked = false;
+            chckUrgent.Checked = false;
+
+            pnlCreateAnnounce.Visible = false;
+
+            RenderAnnouncements();
+        }
+
+        private void RenderAnnouncements()
+        {
+            flowLayoutPanelAnnouncements.Controls.Clear();
+            flowLayoutPanelAnnouncements.SuspendLayout();
+
+            // Ensure the container allows children to stretch
+            flowLayoutPanelAnnouncements.FlowDirection = FlowDirection.TopDown;
+            flowLayoutPanelAnnouncements.WrapContents = false;
+
+            var sorted = announcements
+                .OrderByDescending(a => a.IsPinned)
+                .ThenByDescending(a => a.Date)
+                .ToList();
+
+            foreach (var a in sorted)
+            {
+                // 1. Main Card Container
+                Panel card = new Panel
+                {
+                    // Subtracting 40 to account for padding/scrollbar
+                    Width = flowLayoutPanelAnnouncements.ClientSize.Width - 40,
+                    Height = 80,
+                    BackColor = Color.White,
+                    Margin = new Padding(10, 0, 10, 15),
+                    Tag = false
+                };
+
+                // 2. Bell Icon Circle (RED BACKGROUND)
+                Panel iconCircle = new Panel
+                {
+                    Size = new Size(50, 50),
+                    Location = new Point(20, 15),
+                    // Set this to Red to match your request
+                    BackColor = a.Status == "active" ? Color.FromArgb(255, 235, 238) : Color.FromArgb(240, 240, 240)
+                };
+                ApplyRoundedRegion(iconCircle, 50);
+
+                PictureBox picBell = new PictureBox
+                {
+                    Image = a.Status == "active" ? Properties.Resources.bell_icon : Properties.Resources.bell_gray,
+                    SizeMode = PictureBoxSizeMode.Zoom,
+                    Size = new Size(26, 26),
+                    Location = new Point(12, 12),
+                    BackColor = Color.Transparent
+                };
+                iconCircle.Controls.Add(picBell);
+
+                // 3. Header Labels
+                Label lblTitle = new Label { Text = a.Title, Font = new Font("Segoe UI Semibold", 11), Location = new Point(85, 18), AutoSize = true };
+                Label lblSub = new Label { Text = $"All users • {a.Date:MMM dd, yyyy}", Font = new Font("Segoe UI", 8), ForeColor = Color.Gray, Location = new Point(85, 42), AutoSize = true };
+
+                // 4. Description (The Expandable Body)
+                Label lblDesc = new Label
+                {
+                    Text = a.Description,
+                    Font = new Font("Segoe UI", 10),
+                    Location = new Point(85, 85),
+                    // Stretch description width too
+                    Width = card.Width - 150,
+                    AutoSize = true,
+                    Visible = false
+                };
+
+                // 5. Action Buttons Panel (RIGHT ALIGNED)
+                FlowLayoutPanel pnlActions = new FlowLayoutPanel
+                {
+                    AutoSize = true,
+                    // Anchor to the Right
+                    Location = new Point(card.Width - 320, 20),
+                    Anchor = AnchorStyles.Top | AnchorStyles.Right,
+                    FlowDirection = FlowDirection.LeftToRight,
+                    BackColor = Color.Transparent
+                };
+
+                // Badge
+                Label lblStatus = new Label
+                {
+                    Text = a.Status == "active" ? "Active" : "Inactive",
+                    BackColor = a.Status == "active" ? Color.FromArgb(200, 240, 200) : Color.LightGray,
+                    Size = new Size(65, 25),
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Margin = new Padding(0, 0, 10, 0)
+                };
+                ApplyRoundedRegion(lblStatus, 10);
+
+                // Create Buttons
+                Button btnExpand = CreateImgButton(Properties.Resources.arrow_down, (s, e) => ToggleExpand(card, lblDesc, (Button)s));
+                Button btnToggle = CreateImgButton(Properties.Resources.power_icon, (s, e) => ToggleAnnouncement(a.Id));
+                Button btnEdit = CreateImgButton(Properties.Resources.edit_icon, (s, e) => EditAnnouncement(a.Id));
+                Button btnDelete = CreateImgButton(Properties.Resources.delete_icon, (s, e) => DeleteAnnouncement(a.Id));
+
+                pnlActions.Controls.AddRange(new Control[] { lblStatus, btnExpand, btnToggle, btnEdit, btnDelete });
+
+                // Add to Card
+                card.Controls.Add(pnlActions);
+                card.Controls.Add(iconCircle);
+                card.Controls.Add(lblTitle);
+                card.Controls.Add(lblSub);
+                card.Controls.Add(lblDesc);
+
+                ApplyRoundedRegion(card, 20);
+                flowLayoutPanelAnnouncements.Controls.Add(card);
+            }
+            flowLayoutPanelAnnouncements.ResumeLayout();
+        }
+
+        private Button CreateImgButton(Image img, EventHandler onClick)
+        {
+            Button btn = new Button
+            {
+                Image = img,
+                Size = new Size(35, 35),
+                FlatStyle = FlatStyle.Flat,
+                Cursor = Cursors.Hand,
+                ImageAlign = ContentAlignment.MiddleCenter
+            };
+            btn.FlatAppearance.BorderSize = 0;
+            btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(245, 245, 245);
+            btn.Click += onClick;
+            return btn;
+        }
+
+        // Logic to show/hide the description and swap arrow images
+        private void ToggleExpand(Panel card, Label desc, Button btn)
+        {
+            bool isExpanded = (bool)card.Tag;
+            if (isExpanded)
+            {
+                card.Height = 80;
+                btn.Image = Properties.Resources.arrow_down;
+                desc.Visible = false;
+            }
+            else
+            {
+                // Set height based on description
+                card.Height = 110 + desc.Height;
+                btn.Image = Properties.Resources.up_arrow;
+                desc.Visible = true;
+            }
+            card.Tag = !isExpanded;
+
+            // Refresh rounding for the new height
+            ApplyRoundedRegion(card, 20);
+        }
+
+
+        // Helper to make the icons look clean
+        private Button CreateIconButton(string icon, EventHandler onClick)
+        {
+            Button btn = new Button { Text = icon, Size = new Size(35, 30), FlatStyle = FlatStyle.Flat, Font = new Font("Segoe UI", 12) };
+            btn.FlatAppearance.BorderSize = 0;
+            btn.Click += onClick;
+            return btn;
+        }
+
+        private void ApplyRoundedRegion(Control control, int radius)
+        {
+            System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
+            path.AddArc(0, 0, radius, radius, 180, 90);
+            path.AddArc(control.Width - radius, 0, radius, radius, 270, 90);
+            path.AddArc(control.Width - radius, control.Height - radius, radius, radius, 0, 90);
+            path.AddArc(0, control.Height - radius, radius, radius, 90, 90);
+            path.CloseAllFigures();
+            control.Region = new Region(path);
+        }
+
+        private void EditAnnouncement(int id)
+        {
+            var a = announcements.Find(x => x.Id == id);
+            if (a == null) return;
+
+            editingAnnouncementId = id;
+
+            txtAnnTitle.Text = a.Title;
+            txtAnnDesc.Text = a.Description;
+            dateTimePicker4.Value = a.Date;
+            checkPinned.Checked = a.IsPinned;
+            chckUrgent.Checked = a.IsUrgent;
+
+            pnlCreateAnnounce.Visible = true;
+            pnlCreateAnnounce.BringToFront();
+        }
+
+        private void ToggleAnnouncement(int id)
+        {
+            var a = announcements.Find(x => x.Id == id);
+            if (a != null)
+                a.Status = a.Status == "active" ? "inactive" : "active";
+
+            RenderAnnouncements();
+        }
+        private void DeleteAnnouncement(int id)
+        {
+            announcements.RemoveAll(x => x.Id == id);
+            RenderAnnouncements();
+        }
+
+        private void btnCreateAnnouncement_Click(object sender, EventArgs e)
+        {
+            pnlCreateAnnounce1.Visible = true;
+            pnlCreateAnnounce1.BringToFront();
+
+            // Optional: center it
+            pnlCreateAnnounce1.Location = new Point(
+                (pnlAnnounce.Width - pnlCreateAnnounce1.Width) / 2,
+                (pnlAnnounce.Height - pnlCreateAnnounce1.Height) / 2
+            );
         }
     }
 }
