@@ -167,7 +167,7 @@ namespace PUPAcadPortal
                 // Combine all schedule lines with newline characters
                 string scheduleStr = string.Join(Environment.NewLine, course.ScheduleLines);
                 int units = GetUnits(course.Code);
-                string status = "Enrolled";
+                string status = "Pending";
 
                 enrollmentData.Add(new string[] { course.Code, course.Name, units.ToString(), scheduleStr, status });
             }
@@ -333,7 +333,26 @@ namespace PUPAcadPortal
             pnlViewDetails.Location = new Point((ClientSize.Width - pnlViewDetails.Width) / 2, (ClientSize.Height - pnlViewDetails.Height) / 2);
         }
         private void Enrollment_HideOverlay() => pnlViewDetails.Visible = false;
-        private void Enrollment_viewDetailsToolStripMenuItem_Click(object sender, EventArgs e) => Enrollment_ShowOverlay();
+        private void Enrollment_viewDetailsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dgvEnrollment.CurrentRow != null)
+            {
+                // Retrieve values from the current row
+                string code = dgvEnrollment.CurrentRow.Cells["colCode"].Value?.ToString() ?? "";
+                string title = dgvEnrollment.CurrentRow.Cells["colTitle"].Value?.ToString() ?? "";
+                string units = dgvEnrollment.CurrentRow.Cells["colUnits"].Value?.ToString() ?? "";
+                string schedule = dgvEnrollment.CurrentRow.Cells["colSchedule"].Value?.ToString() ?? "";
+                string status = dgvEnrollment.CurrentRow.Cells["colStatus"].Value?.ToString() ?? "";
+
+                // Assign to labels (make sure these label names exist in pnlViewDetails)
+                lblDetailCode.Text = $"Code: {code}";
+                lblDetailTitle.Text = $"Title: {title}";
+                lblDetailUnits.Text = $"Units: {units}";
+                txtDetailSchedule.Text = $"Schedule: {schedule}";
+                lblDetailStatus.Text = $"Status: {status}";
+            }
+            Enrollment_ShowOverlay();
+        }
         private void btnEnrollCloseDetails_Click(object sender, EventArgs e) => Enrollment_HideOverlay();
         private void dropSubjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -381,7 +400,7 @@ namespace PUPAcadPortal
                     "Confirm Enrollment", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (confirm != DialogResult.Yes) return;
 
-                // 3. Collect selected rows (with null checks for columns)
+                // 3. Collect selected rows
                 List<DataGridViewRow> selectedRows = new List<DataGridViewRow>();
                 foreach (DataGridViewRow row in dgvEnrollment.Rows)
                 {
@@ -406,43 +425,72 @@ namespace PUPAcadPortal
                 confirmedTable.Columns.Add("Schedule", typeof(string));
                 confirmedTable.Columns.Add("Status", typeof(string));
 
+                int totalUnits = 0;
                 foreach (DataGridViewRow row in selectedRows)
                 {
+                    string unitsStr = row.Cells["colUnits"]?.Value?.ToString() ?? "0";
                     confirmedTable.Rows.Add(
                         row.Cells["colCode"]?.Value ?? "",
                         row.Cells["colTitle"]?.Value ?? "",
-                        row.Cells["colUnits"]?.Value ?? "",
+                        unitsStr,
                         row.Cells["colSchedule"]?.Value ?? "",
                         "Enrolled"
                     );
+                    if (int.TryParse(unitsStr, out int u))
+                        totalUnits += u;
                 }
 
-                // 5. Reposition and show the confirmed grid
+                // 5. Update total units label
+                lblEnrollTotalUnitsValue.Text = totalUnits.ToString();
+
+                // 6. Reposition the confirmed grid panel
                 pnlEnrollmentConfirmedDGV.Location = pnlContainerEnrollmentDGV.Location;
                 pnlEnrollmentConfirmedDGV.Size = pnlContainerEnrollmentDGV.Size;
 
-                // 6. Configure confirmed grid columns (check if they exist)
+                // 7. Configure confirmed grid columns using actual designer column names
                 dgvEnrollmentConfirmed.AutoGenerateColumns = false;
-                if (dgvEnrollmentConfirmed.Columns.Contains("dataGridViewTextBoxColumn1"))
-                    dgvEnrollmentConfirmed.Columns["dataGridViewTextBoxColumn1"].DataPropertyName = "Code";
-                if (dgvEnrollmentConfirmed.Columns.Contains("dataGridViewTextBoxColumn2"))
-                    dgvEnrollmentConfirmed.Columns["dataGridViewTextBoxColumn2"].DataPropertyName = "Title";
-                if (dgvEnrollmentConfirmed.Columns.Contains("dataGridViewTextBoxColumn3"))
-                    dgvEnrollmentConfirmed.Columns["dataGridViewTextBoxColumn3"].DataPropertyName = "Units";
-                if (dgvEnrollmentConfirmed.Columns.Contains("dataGridViewTextBoxColumn4"))
-                    dgvEnrollmentConfirmed.Columns["dataGridViewTextBoxColumn4"].DataPropertyName = "Schedule";
-                if (dgvEnrollmentConfirmed.Columns.Contains("dataGridViewTextBoxColumn5"))
-                    dgvEnrollmentConfirmed.Columns["dataGridViewTextBoxColumn5"].DataPropertyName = "Status";
-                if (dgvEnrollmentConfirmed.Columns.Contains("dataGridViewTextBoxColumn6"))
-                    dgvEnrollmentConfirmed.Columns["dataGridViewTextBoxColumn6"].Visible = false;
 
+                if (dgvEnrollmentConfirmed.Columns.Contains("colCode2"))
+                    dgvEnrollmentConfirmed.Columns["colCode2"].DataPropertyName = "Code";
+                if (dgvEnrollmentConfirmed.Columns.Contains("colourseTitle2"))
+                    dgvEnrollmentConfirmed.Columns["colourseTitle2"].DataPropertyName = "Title";
+                if (dgvEnrollmentConfirmed.Columns.Contains("colUnits2"))
+                    dgvEnrollmentConfirmed.Columns["colUnits2"].DataPropertyName = "Units";
+                if (dgvEnrollmentConfirmed.Columns.Contains("colSchedule2"))
+                    dgvEnrollmentConfirmed.Columns["colSchedule2"].DataPropertyName = "Schedule";
+                if (dgvEnrollmentConfirmed.Columns.Contains("colStatus2"))
+                    dgvEnrollmentConfirmed.Columns["colStatus2"].DataPropertyName = "Status";
+                if (dgvEnrollmentConfirmed.Columns.Contains("colAction2"))
+                    dgvEnrollmentConfirmed.Columns["colAction2"].Visible = false;
+
+                // 8. Bind data
                 dgvEnrollmentConfirmed.DataSource = confirmedTable;
                 dgvEnrollmentConfirmed.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
                 dgvEnrollmentConfirmed.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-                if (dgvEnrollmentConfirmed.Columns.Contains("Schedule"))
-                    dgvEnrollmentConfirmed.Columns["Schedule"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+                if (dgvEnrollmentConfirmed.Columns.Contains("colSchedule2"))
+                    dgvEnrollmentConfirmed.Columns["colSchedule2"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
-                // 7. Hide original UI, show confirmed grid
+                // 9. Remove selection highlight (no blue background on rows or headers)
+                dgvEnrollmentConfirmed.EnableHeadersVisualStyles = false;
+                dgvEnrollmentConfirmed.DefaultCellStyle.SelectionBackColor = dgvEnrollmentConfirmed.DefaultCellStyle.BackColor;
+                dgvEnrollmentConfirmed.DefaultCellStyle.SelectionForeColor = dgvEnrollmentConfirmed.DefaultCellStyle.ForeColor;
+                dgvEnrollmentConfirmed.ColumnHeadersDefaultCellStyle.SelectionBackColor = dgvEnrollmentConfirmed.ColumnHeadersDefaultCellStyle.BackColor;
+                dgvEnrollmentConfirmed.ColumnHeadersDefaultCellStyle.SelectionForeColor = dgvEnrollmentConfirmed.ColumnHeadersDefaultCellStyle.ForeColor;
+                dgvEnrollmentConfirmed.RowHeadersVisible = false;
+
+                // 10. Center align Units and Status columns (both cells and headers)
+                if (dgvEnrollmentConfirmed.Columns.Contains("colUnits2"))
+                {
+                    dgvEnrollmentConfirmed.Columns["colUnits2"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    dgvEnrollmentConfirmed.Columns["colUnits2"].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                }
+                if (dgvEnrollmentConfirmed.Columns.Contains("colStatus2"))
+                {
+                    dgvEnrollmentConfirmed.Columns["colStatus2"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    dgvEnrollmentConfirmed.Columns["colStatus2"].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                }
+
+                // 11. Hide original UI, show confirmed grid
                 dgvEnrollment.Visible = false;
                 pnlContainerEnrollmentDGV.Visible = false;
                 btnEnrollSelectAll.Visible = false;
@@ -451,17 +499,7 @@ namespace PUPAcadPortal
                 pnlEnrollmentConfirmedDGV.Visible = true;
                 dgvEnrollmentConfirmed.Visible = true;
 
-                // 8. Update total units
-                int totalUnits = 0;
-                foreach (DataGridViewRow row in dgvEnrollmentConfirmed.Rows)
-                {
-                    if (row.IsNewRow) continue;
-                    if (int.TryParse(row.Cells["Units"].Value?.ToString(), out int u))
-                        totalUnits += u;
-                }
-                lblEnrollTotalUnitsValue.Text = totalUnits.ToString();
-
-                // 9. Update enrollment status card
+                // 12. Update enrollment status card
                 lblEnrollStatusTitle.Text = "Officially Enrolled";
                 lblEnrollStatusDesc.Text = "You are now officially enrolled. Your subjects have been confirmed.";
                 pnlEnrollStatusCard.BackColor = Color.FromArgb(220, 255, 220);
