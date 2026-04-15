@@ -34,7 +34,7 @@ namespace PUPAcadPortal
 
             // ✅ FIX: Wire the resize event ONLY ONCE here.
             // If you put this inside a Click event, it stacks and causes the "creeping" movement.
-            this.Resize += (s, e) => CenterCreateAnnouncementPanel();
+           
         }
 
 
@@ -1005,46 +1005,14 @@ namespace PUPAcadPortal
             }
         }
 
-        private void CenterTheAnnouncementPanel()
-        {
-            // Only move it if it is currently visible to the user
-            if (pnlCreateAnnounce1.Visible)
-            {
-                // Ensure Dock is none so we can set coordinates manually
-                pnlCreateAnnounce1.Dock = DockStyle.None;
-
-                // Calculate the exact center
-                int x = (this.ClientSize.Width - pnlCreateAnnounce1.Width) / 2;
-                int y = (this.ClientSize.Height - pnlCreateAnnounce1.Height) / 2;
-
-                // Apply the location
-                pnlCreateAnnounce1.Location = new Point(x, y);
-            }
-        }
+        
 
         private void InstructorPortal_Resize(object sender, EventArgs e)
         {
-            CenterAnnouncementPanel(); // Recalculates center when window grows
+           
 
         }
 
-        private void CenterAnnouncePanel()
-        {
-            if (pnlCreateAnnounce1.Visible)
-            {
-                pnlCreateAnnounce1.BringToFront();
-
-                // 1. Get the control that actually holds the pnlCreateAnnounce1
-                Control parent = pnlCreateAnnounce1.Parent;
-
-                // 2. Calculate center relative ONLY to its container
-                // This ignores the sidebar automatically because the parent 
-                // starts where the sidebar ends.
-                int x = (parent.ClientSize.Width - pnlCreateAnnounce1.Width) / 2;
-                int y = (parent.ClientSize.Height - pnlCreateAnnounce1.Height) / 2;
-
-                pnlCreateAnnounce1.Location = new Point(x, y);
-            }
-        }
+       
     }
 }
