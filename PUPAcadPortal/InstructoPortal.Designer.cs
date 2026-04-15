@@ -101,7 +101,6 @@
             pnlCoursesContent = new Panel();
             pnlGradesContent = new Panel();
             panel3 = new Panel();
-            pnlAnnouncement = new Panel();
             pnlCreateAnnounce1 = new RoundedPanel();
             checkPinned = new CheckBox();
             label150 = new Label();
@@ -122,6 +121,7 @@
             label146 = new Label();
             label147 = new Label();
             label148 = new Label();
+            pnlAnnouncement = new Panel();
             panel60 = new Panel();
             label145 = new Label();
             flowLayoutPanelAnnouncements = new FlowLayoutPanel();
@@ -593,9 +593,9 @@
             roundedPanel21.SuspendLayout();
             panel44.SuspendLayout();
             panel3.SuspendLayout();
-            pnlAnnouncement.SuspendLayout();
             pnlCreateAnnounce1.SuspendLayout();
             panel59.SuspendLayout();
+            pnlAnnouncement.SuspendLayout();
             panel60.SuspendLayout();
             roundedPanel37.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox59).BeginInit();
@@ -1735,6 +1735,7 @@
             // panel3
             // 
             panel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panel3.Controls.Add(pnlCreateAnnounce1);
             panel3.Controls.Add(pnlAnnouncement);
             panel3.Controls.Add(pnlAnnounce);
             panel3.Controls.Add(pnlSubMenu);
@@ -1753,20 +1754,6 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(1746, 1415);
             panel3.TabIndex = 0;
-            // 
-            // pnlAnnouncement
-            // 
-            pnlAnnouncement.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            pnlAnnouncement.Controls.Add(pnlCreateAnnounce1);
-            pnlAnnouncement.Controls.Add(panel60);
-            pnlAnnouncement.Controls.Add(flowLayoutPanelAnnouncements);
-            pnlAnnouncement.Controls.Add(roundedPanel37);
-            pnlAnnouncement.Controls.Add(btnCreateAnnouncement);
-            pnlAnnouncement.Location = new Point(293, 96);
-            pnlAnnouncement.Name = "pnlAnnouncement";
-            pnlAnnouncement.Size = new Size(1453, 1319);
-            pnlAnnouncement.TabIndex = 6;
-            pnlAnnouncement.Visible = false;
             // 
             // pnlCreateAnnounce1
             // 
@@ -1791,7 +1778,7 @@
             pnlCreateAnnounce1.Controls.Add(label147);
             pnlCreateAnnounce1.Controls.Add(label148);
             pnlCreateAnnounce1.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            pnlCreateAnnounce1.Location = new Point(158, 24);
+            pnlCreateAnnounce1.Location = new Point(0, 0);
             pnlCreateAnnounce1.Name = "pnlCreateAnnounce1";
             pnlCreateAnnounce1.Size = new Size(897, 570);
             pnlCreateAnnounce1.TabIndex = 6;
@@ -1997,6 +1984,19 @@
             label148.Size = new Size(253, 31);
             label148.TabIndex = 0;
             label148.Text = "Create Announcement";
+            // 
+            // pnlAnnouncement
+            // 
+            pnlAnnouncement.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            pnlAnnouncement.Controls.Add(panel60);
+            pnlAnnouncement.Controls.Add(flowLayoutPanelAnnouncements);
+            pnlAnnouncement.Controls.Add(roundedPanel37);
+            pnlAnnouncement.Controls.Add(btnCreateAnnouncement);
+            pnlAnnouncement.Location = new Point(293, 96);
+            pnlAnnouncement.Name = "pnlAnnouncement";
+            pnlAnnouncement.Size = new Size(1453, 1319);
+            pnlAnnouncement.TabIndex = 6;
+            pnlAnnouncement.Visible = false;
             // 
             // panel60
             // 
@@ -7394,10 +7394,10 @@
             panel44.ResumeLayout(false);
             panel44.PerformLayout();
             panel3.ResumeLayout(false);
-            pnlAnnouncement.ResumeLayout(false);
             pnlCreateAnnounce1.ResumeLayout(false);
             pnlCreateAnnounce1.PerformLayout();
             panel59.ResumeLayout(false);
+            pnlAnnouncement.ResumeLayout(false);
             panel60.ResumeLayout(false);
             panel60.PerformLayout();
             roundedPanel37.ResumeLayout(false);

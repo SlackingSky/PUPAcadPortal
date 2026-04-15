@@ -25,21 +25,15 @@ namespace PUPAcadPortal
         {
             InitializeComponent();
             pnlAttendance.AutoScrollMinSize = new Size(0, 1000);
-            // 1. Set the format to Custom
+
+            // DateTimePicker Formatting
             dateTimePicker1.Format = DateTimePickerFormat.Custom;
-
-            // 2. Set the pattern to include both Date and Time
-            // This will show: 03/24/2026 09:30 PM
             dateTimePicker1.CustomFormat = "MM/dd/yyyy hh:mm tt";
-            //aalisin ung border ng datetimepicker sa attendance tab | d ko alam kung sakin lng kasi nagbubug / nawawala ung button for the date :) - hansukal
-            // Removes 2 pixels from every side of the control
-            //dateTimePicker3.Region = new Region(new Rectangle(2, 2, dateTimePicker1.Width - 4, dateTimePicker1.Height - 4));
-            // 1. Tell the control to use your custom string
             dateTimePicker2.Format = DateTimePickerFormat.Custom;
-
-            // 2. Set the pattern (no extra spaces)
-            // "ddd" = Fri, "MMM" = Apr, "dd" = 10
             dateTimePicker2.CustomFormat = "ddd, MMM dd, yyyy";
+
+            // ✅ FIX: Wire the resize event ONLY ONCE here.
+            // If you put this inside a Click event, it stacks and causes the "creeping" movement.
             this.Resize += (s, e) => CenterCreateAnnouncementPanel();
         }
 
@@ -186,13 +180,6 @@ namespace PUPAcadPortal
             timer1.Start();
         }
 
-        private void CreateAnnounce_Click(object sender, EventArgs e)
-        {
-            pnlCreateAnnounce1.Visible = true;
-            pnlCreateAnnounce1.BringToFront();
-            CenterCreateAnnouncementPanel(); // Trigger the center logic
-        }
-
         private void StatusBtn2_Click(object sender, EventArgs e)
         {
             timer1.Start();
@@ -237,8 +224,10 @@ namespace PUPAcadPortal
 
         private void CreateAnnounce_Click_1(object sender, EventArgs e)
         {
-            pnlCreateAnnounce.Visible = true;
-            pnlCreateAnnounce.BringToFront();
+            pnlCreateAnnounce1.Visible = true;
+            pnlCreateAnnounce1.BringToFront();
+            pnlCreateAnnounce1.Anchor = AnchorStyles.None;
+            CenterCreateAnnouncementPanel();
         }
 
         private void btnCancelPost_Click(object sender, EventArgs e)
@@ -1003,11 +992,15 @@ namespace PUPAcadPortal
             {
                 pnlCreateAnnounce1.BringToFront();
 
-                // We use the Parent's width/height so it centers inside 
-                // the gray area, NOT the whole red/black window.
-                int x = (pnlCreateAnnounce1.Parent.Width - pnlCreateAnnounce1.Width) / 2;
-                int y = (pnlCreateAnnounce1.Parent.Height - pnlCreateAnnounce1.Height) / 4;
+                // Get the actual container (the gray area)
+                Control parent = pnlCreateAnnounce1.Parent;
 
+                // Use ClientSize to ignore borders/scrollbars
+                // Your /4 logic for Y is great for visual balance
+                int x = (parent.ClientSize.Width - pnlCreateAnnounce1.Width) / 2;
+                int y = (parent.ClientSize.Height - pnlCreateAnnounce1.Height) / 4;
+
+                // Set the location directly
                 pnlCreateAnnounce1.Location = new Point(x, y);
             }
         }
