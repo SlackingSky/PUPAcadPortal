@@ -803,13 +803,16 @@
             pnlCoursesContent.Controls.Add(label40);
             pnlCoursesContent.Controls.Add(label39);
             pnlCoursesContent.Controls.Add(flowLayoutPanel23);
-            pnlCoursesContent.Location = new Point(584, 103);
+            pnlCoursesContent.Dock = DockStyle.Fill;
+            pnlCoursesContent.Location = new Point(293, 10);
             pnlCoursesContent.Name = "pnlCoursesContent";
-            pnlCoursesContent.Size = new Size(1427, 1379);
+            pnlCoursesContent.Size = new Size(1453, 1045);
             pnlCoursesContent.TabIndex = 10;
+            pnlCoursesContent.Paint += pnlCoursesContent_Paint_1;
             // 
             // panel92
             // 
+            panel92.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel92.BorderStyle = BorderStyle.FixedSingle;
             panel92.Controls.Add(label85);
             panel92.Controls.Add(label86);
@@ -817,7 +820,7 @@
             panel92.Controls.Add(tableLayoutPanel8);
             panel92.Location = new Point(11, 645);
             panel92.Name = "panel92";
-            panel92.Size = new Size(1265, 199);
+            panel92.Size = new Size(1398, 199);
             panel92.TabIndex = 8;
             // 
             // label85
@@ -855,6 +858,7 @@
             // 
             // tableLayoutPanel8
             // 
+            tableLayoutPanel8.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             tableLayoutPanel8.BackColor = SystemColors.ButtonFace;
             tableLayoutPanel8.ColumnCount = 3;
             tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
@@ -863,13 +867,13 @@
             tableLayoutPanel8.Controls.Add(label83, 2, 0);
             tableLayoutPanel8.Controls.Add(label82, 1, 0);
             tableLayoutPanel8.Controls.Add(label81, 0, 0);
-            tableLayoutPanel8.Location = new Point(31, 32);
+            tableLayoutPanel8.Location = new Point(92, 35);
             tableLayoutPanel8.Margin = new Padding(8);
             tableLayoutPanel8.Name = "tableLayoutPanel8";
             tableLayoutPanel8.Padding = new Padding(11, 12, 11, 12);
             tableLayoutPanel8.RowCount = 1;
             tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel8.Size = new Size(1214, 109);
+            tableLayoutPanel8.Size = new Size(1205, 109);
             tableLayoutPanel8.TabIndex = 0;
             tableLayoutPanel8.Paint += tableLayoutPanel8_Paint;
             // 
@@ -878,9 +882,9 @@
             label83.AutoSize = true;
             label83.Dock = DockStyle.Top;
             label83.Font = new Font("Arial Narrow", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label83.Location = new Point(808, 12);
+            label83.Location = new Point(802, 12);
             label83.Name = "label83";
-            label83.Size = new Size(392, 55);
+            label83.Size = new Size(389, 55);
             label83.TabIndex = 2;
             label83.Text = "23";
             label83.TextAlign = ContentAlignment.MiddleCenter;
@@ -891,9 +895,9 @@
             label82.AutoSize = true;
             label82.Dock = DockStyle.Top;
             label82.Font = new Font("Arial Narrow", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label82.Location = new Point(411, 12);
+            label82.Location = new Point(408, 12);
             label82.Name = "label82";
-            label82.Size = new Size(391, 55);
+            label82.Size = new Size(388, 55);
             label82.TabIndex = 1;
             label82.Text = "57";
             label82.TextAlign = ContentAlignment.MiddleCenter;
@@ -905,7 +909,7 @@
             label81.Font = new Font("Arial Narrow", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label81.Location = new Point(14, 12);
             label81.Name = "label81";
-            label81.Size = new Size(391, 55);
+            label81.Size = new Size(388, 55);
             label81.TabIndex = 0;
             label81.Text = "3";
             label81.TextAlign = ContentAlignment.MiddleCenter;
@@ -913,13 +917,14 @@
             // 
             // panel80
             // 
+            panel80.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel80.BorderStyle = BorderStyle.FixedSingle;
             panel80.Controls.Add(tableLayoutPanel6);
             panel80.Location = new Point(14, 457);
             panel80.Margin = new Padding(0, 16, 0, 16);
             panel80.Name = "panel80";
             panel80.Padding = new Padding(18, 19, 18, 19);
-            panel80.Size = new Size(1263, 119);
+            panel80.Size = new Size(1295, 119);
             panel80.TabIndex = 7;
             // 
             // tableLayoutPanel6
@@ -940,7 +945,7 @@
             tableLayoutPanel6.RowCount = 1;
             tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Absolute, 64F));
-            tableLayoutPanel6.Size = new Size(1225, 79);
+            tableLayoutPanel6.Size = new Size(1257, 79);
             tableLayoutPanel6.TabIndex = 0;
             // 
             // panel91
@@ -948,11 +953,11 @@
             panel91.Controls.Add(label80);
             panel91.Controls.Add(pictureBox14);
             panel91.Dock = DockStyle.Fill;
-            panel91.Location = new Point(922, 16);
+            panel91.Location = new Point(946, 16);
             panel91.Margin = new Padding(8);
             panel91.Name = "panel91";
             panel91.Padding = new Padding(11, 12, 11, 12);
-            panel91.Size = new Size(287, 47);
+            panel91.Size = new Size(295, 47);
             panel91.TabIndex = 4;
             // 
             // label80
@@ -980,11 +985,11 @@
             panel90.Controls.Add(label79);
             panel90.Controls.Add(pictureBox13);
             panel90.Dock = DockStyle.Fill;
-            panel90.Location = new Point(620, 16);
+            panel90.Location = new Point(636, 16);
             panel90.Margin = new Padding(8);
             panel90.Name = "panel90";
             panel90.Padding = new Padding(11, 12, 11, 12);
-            panel90.Size = new Size(286, 47);
+            panel90.Size = new Size(294, 47);
             panel90.TabIndex = 3;
             // 
             // label79
@@ -1013,11 +1018,11 @@
             panel89.Controls.Add(label74);
             panel89.Controls.Add(pictureBox12);
             panel89.Dock = DockStyle.Fill;
-            panel89.Location = new Point(318, 16);
+            panel89.Location = new Point(326, 16);
             panel89.Margin = new Padding(8);
             panel89.Name = "panel89";
             panel89.Padding = new Padding(11, 12, 11, 12);
-            panel89.Size = new Size(286, 47);
+            panel89.Size = new Size(294, 47);
             panel89.TabIndex = 2;
             // 
             // label74
@@ -1046,7 +1051,7 @@
             panel85.Dock = DockStyle.Top;
             panel85.Location = new Point(11, 11);
             panel85.Name = "panel85";
-            panel85.Size = new Size(296, 53);
+            panel85.Size = new Size(304, 53);
             panel85.TabIndex = 0;
             // 
             // panel88
@@ -1058,7 +1063,7 @@
             panel88.Margin = new Padding(8);
             panel88.Name = "panel88";
             panel88.Padding = new Padding(11, 12, 11, 12);
-            panel88.Size = new Size(296, 53);
+            panel88.Size = new Size(304, 53);
             panel88.TabIndex = 1;
             // 
             // label44
@@ -1106,6 +1111,7 @@
             // 
             // flowLayoutPanel21
             // 
+            flowLayoutPanel21.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             flowLayoutPanel21.AutoScroll = true;
             flowLayoutPanel21.Controls.Add(panel49);
             flowLayoutPanel21.Location = new Point(873, 97);
@@ -1182,6 +1188,7 @@
             // 
             // flowLayoutPanel3
             // 
+            flowLayoutPanel3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             flowLayoutPanel3.AutoScroll = true;
             flowLayoutPanel3.Controls.Add(panel45);
             flowLayoutPanel3.Controls.Add(flowLayoutPanel4);
@@ -1331,6 +1338,7 @@
             // 
             // flowLayoutPanel23
             // 
+            flowLayoutPanel23.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             flowLayoutPanel23.AutoScroll = true;
             flowLayoutPanel23.Controls.Add(panel86);
             flowLayoutPanel23.Location = new Point(441, 95);
@@ -1395,6 +1403,7 @@
             // 
             // panel3
             // 
+            panel3.Controls.Add(pnlCoursesContent);
             panel3.Controls.Add(pnlDashboardContent);
             panel3.Controls.Add(pnlGradesContent);
             panel3.Controls.Add(panel32);
@@ -2257,7 +2266,6 @@
             // pnlGradesContent
             // 
             pnlGradesContent.BorderStyle = BorderStyle.FixedSingle;
-            pnlGradesContent.Controls.Add(pnlCoursesContent);
             pnlGradesContent.Controls.Add(panel43);
             pnlGradesContent.Controls.Add(dataGridView1);
             pnlGradesContent.Controls.Add(panel79);

@@ -79,12 +79,12 @@ namespace PUPAcadPortal
 
             if (dataGridView1 != null && dataGridView1.Rows.Count == 0)
             {
-                dataGridView1.Rows.Add("2021-00001-MN-0", "Eisen Nodesca", "85", "88");
-                dataGridView1.Rows.Add("2021-00002-MN-0", "Clarisa Matias", "92", "95");
-                dataGridView1.Rows.Add("2021-00003-MN-0", "Trisha Walang Last Name", "78", "82");
-                dataGridView1.Rows.Add("2021-00004-MN-0", "Liza Soberano", "88", "90");
-                dataGridView1.Rows.Add("2021-00005-MN-0", "Kween Yasmin", "72", "75");
-                dataGridView1.Rows.Add("2021-00006-MN-0", "Maine Love Alden", "98", "89");
+                dataGridView1.Rows.Add("2021-00001-SM-0", "Eisen Nodesca", "85", "88");
+                dataGridView1.Rows.Add("2021-00002-SM-0", "Clarisa Matias", "92", "95");
+                dataGridView1.Rows.Add("2021-00003-SM-0", "Trisha Walang Last Name", "78", "82");
+                dataGridView1.Rows.Add("2021-00004-SM-0", "Liza Soberano", "88", "90");
+                dataGridView1.Rows.Add("2021-00005-SM-0", "Kween Yasmin", "72", "75");
+                dataGridView1.Rows.Add("2021-00006-SM-0", "Maine Love Alden", "98", "89");
             }
 
             // 2. AUTO-CALCULATE GRADES LOGIC
@@ -367,6 +367,11 @@ namespace PUPAcadPortal
         }
 
         private void label114_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pnlCoursesContent_Paint_1(object sender, PaintEventArgs e)
         {
 
         }
