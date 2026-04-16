@@ -17,8 +17,6 @@ namespace PUPAcadPortal
         {
             InitializeComponent();
 
-            this.WindowState = FormWindowState.Maximized;
-
             if (panel3 != null)
             {
                 panel3.Dock = DockStyle.Fill;
@@ -364,6 +362,11 @@ namespace PUPAcadPortal
         }
 
         private void panel114_Paint_1(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label114_Click(object sender, EventArgs e)
         {
 
         }
