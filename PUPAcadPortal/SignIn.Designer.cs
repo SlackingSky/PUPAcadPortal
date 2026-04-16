@@ -59,7 +59,7 @@ namespace PUPAcadPortal
             label6 = new Label();
             panel3 = new Panel();
             panel4 = new Panel();
-            button1 = new Button();
+            btnSignIn = new Button();
             panel6 = new Panel();
             panel8 = new Panel();
             btnShowPass = new Button();
@@ -154,7 +154,7 @@ namespace PUPAcadPortal
             // 
             panel4.Anchor = AnchorStyles.None;
             panel4.BackColor = Color.Transparent;
-            panel4.Controls.Add(button1);
+            panel4.Controls.Add(btnSignIn);
             panel4.Controls.Add(panel6);
             panel4.Controls.Add(panel5);
             panel4.Location = new Point(32, 160);
@@ -179,6 +179,23 @@ namespace PUPAcadPortal
             button1.Text = "Sign In";
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
+            // btnSignIn
+            // 
+            btnSignIn.Anchor = AnchorStyles.None;
+            btnSignIn.BackColor = Color.Transparent;
+            btnSignIn.Cursor = Cursors.Hand;
+            btnSignIn.FlatAppearance.BorderSize = 0;
+            btnSignIn.FlatStyle = FlatStyle.Flat;
+            btnSignIn.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            btnSignIn.ForeColor = Color.White;
+            btnSignIn.Image = Properties.Resources.button__1_;
+            btnSignIn.Location = new Point(0, 227);
+            btnSignIn.Name = "btnSignIn";
+            btnSignIn.Size = new Size(384, 48);
+            btnSignIn.TabIndex = 1;
+            btnSignIn.Text = "Sign In";
+            btnSignIn.UseVisualStyleBackColor = false;
+            btnSignIn.Click += btnSignIn_Click;
             // 
             // panel6
             // 
@@ -410,7 +427,7 @@ namespace PUPAcadPortal
         private PictureBox pictureBox3;
         private TextBox txtPassword;
         private Button btnShowPass;
-        private Button button1;
+        private Button btnSignIn;
         private Panel panel9;
         private Label label6;
         private Label label7;

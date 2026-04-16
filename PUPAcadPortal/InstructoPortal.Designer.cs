@@ -169,6 +169,15 @@
             panel118 = new Panel();
             label114 = new Label();
             label115 = new Label();
+            pnlHeader = new Panel();
+            panel15 = new Panel();
+            panel16 = new Panel();
+            label3 = new Label();
+            label4 = new Label();
+            pictureBox2 = new PictureBox();
+            pnlBanner = new Panel();
+            lblWelcome = new Label();
+            lblWelcomeSubtitle = new Label();
             pnlGradesContent = new Panel();
             panel43 = new Panel();
             button3 = new Button();
@@ -434,6 +443,11 @@
             panel117.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox22).BeginInit();
             panel118.SuspendLayout();
+            pnlHeader.SuspendLayout();
+            panel15.SuspendLayout();
+            panel16.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            pnlBanner.SuspendLayout();
             pnlGradesContent.SuspendLayout();
             panel43.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -618,6 +632,7 @@
             panel9.Name = "panel9";
             panel9.Size = new Size(293, 64);
             panel9.TabIndex = 2;
+            panel9.Visible = false;
             // 
             // btnCourses
             // 
@@ -650,6 +665,7 @@
             panel11.Name = "panel11";
             panel11.Size = new Size(293, 64);
             panel11.TabIndex = 4;
+            panel11.Visible = false;
             // 
             // btnLMS
             // 
@@ -2854,6 +2870,17 @@
             panel63.Name = "panel63";
             panel63.Size = new Size(261, 72);
             panel63.TabIndex = 0;
+            // pnlHeader
+            // 
+            pnlHeader.AutoSize = true;
+            pnlHeader.BackColor = Color.FromArgb(42, 42, 42);
+            pnlHeader.Controls.Add(panel15);
+            pnlHeader.Dock = DockStyle.Top;
+            pnlHeader.Location = new Point(256, 0);
+            pnlHeader.Margin = new Padding(0);
+            pnlHeader.Name = "pnlHeader";
+            pnlHeader.Size = new Size(1272, 79);
+            pnlHeader.TabIndex = 2;
             // 
             // panel64
             // 
@@ -2942,6 +2969,28 @@
             flowLayoutPanel13.Name = "flowLayoutPanel13";
             flowLayoutPanel13.Size = new Size(275, 80);
             flowLayoutPanel13.TabIndex = 4;
+            pnlGradesContent.AutoScroll = true;
+            pnlGradesContent.BorderStyle = BorderStyle.FixedSingle;
+            pnlGradesContent.Controls.Add(panel43);
+            pnlGradesContent.Controls.Add(dataGridView1);
+            pnlGradesContent.Controls.Add(panel79);
+            pnlGradesContent.Controls.Add(flowLayoutPanel6);
+            pnlGradesContent.Controls.Add(flowLayoutPanel19);
+            pnlGradesContent.Controls.Add(flowLayoutPanel5);
+            pnlGradesContent.Controls.Add(flowLayoutPanel2);
+            pnlGradesContent.Controls.Add(panel41);
+            pnlGradesContent.Controls.Add(panel40);
+            pnlGradesContent.Controls.Add(pnlCoursesContent);
+            pnlGradesContent.Dock = DockStyle.Fill;
+            pnlGradesContent.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            pnlGradesContent.ForeColor = Color.Black;
+            pnlGradesContent.Location = new Point(0, 0);
+            pnlGradesContent.Margin = new Padding(0, 0, 10, 0);
+            pnlGradesContent.Name = "pnlGradesContent";
+            pnlGradesContent.Padding = new Padding(10, 9, 10, 9);
+            pnlGradesContent.Size = new Size(1528, 791);
+            pnlGradesContent.TabIndex = 3;
+            pnlGradesContent.Paint += cmbSelectCourse_Paint;
             // 
             // panel67
             // 
@@ -4219,7 +4268,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 4, 3, 4);
             Name = "InstructorPortal";
-            StartPosition = FormStartPosition.CenterParent;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "StudentPortal";
             FormClosing += StudentPortal_Closing;
             pnlSidebar.ResumeLayout(false);
@@ -4269,6 +4318,7 @@
             panel87.ResumeLayout(false);
             panel87.PerformLayout();
             panel3.ResumeLayout(false);
+            panel3.PerformLayout();
             pnlDashboardContent.ResumeLayout(false);
             pnlMainLower.ResumeLayout(false);
             pnlQuickActions.ResumeLayout(false);
@@ -4328,6 +4378,12 @@
             panel117.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox22).EndInit();
             panel118.ResumeLayout(false);
+            pnlHeader.ResumeLayout(false);
+            panel15.ResumeLayout(false);
+            panel15.PerformLayout();
+            panel16.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            pnlBanner.ResumeLayout(false);
             pnlGradesContent.ResumeLayout(false);
             panel43.ResumeLayout(false);
             panel43.PerformLayout();
@@ -4475,12 +4531,6 @@
         private Panel panel12;
         private Panel panel13;
         private Button btnLogout;
-        private Panel pnlHeader;
-        private Panel panel15;
-        private Panel panel16;
-        private PictureBox pictureBox2;
-        private Label label3;
-        private Label label4;
         private Panel pnllmsSubmenu;
         private Panel pnlGradesContent;
         // Dashboard sub-controls
@@ -4488,8 +4538,6 @@
         private Label lblWelcome;
         private Label lblWelcomeSubtitle;
         private Panel pnlYellow;
-        private Panel panel1;
-        private PictureBox pictureBox3;
         private Panel pnlCoursesContent;
         private Label label6;
         private Label label5;
@@ -4552,6 +4600,7 @@
         private Label label28;
         private Label label29;
         private Panel panel36;
+        private FlowLayoutPanel flowstats;
         private Panel panel40;
         private Label label32;
         private Panel panel41;
@@ -4781,5 +4830,11 @@
         private TableLayoutPanel tableLayoutPanel3;
         private Panel panel45;
         private Label label41;
+        private Panel pnlHeader;
+        private Panel panel15;
+        private Panel panel16;
+        private Label label3;
+        private Label label4;
+        private PictureBox pictureBox2;
     }
 }

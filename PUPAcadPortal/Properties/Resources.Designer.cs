@@ -543,29 +543,35 @@ namespace PUPAcadPortal.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Screenshot_2026_03_25_234609 {
-            get {
+        internal static System.Drawing.Bitmap Screenshot_2026_03_25_234609
+        {
+            get
+            {
                 object obj = ResourceManager.GetObject("Screenshot 2026-03-25 234609", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        internal static System.Drawing.Bitmap search_3_16 {
+            get {
+                object obj = ResourceManager.GetObject("search-3-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Screenshot_2026_03_25_234614 {
-            get {
+        internal static System.Drawing.Bitmap Screenshot_2026_03_25_234614
+        {
+            get
+            {
                 object obj = ResourceManager.GetObject("Screenshot 2026-03-25 234614", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Screenshot_2026_03_25_234620 {
+        internal static System.Drawing.Bitmap student_16 {
             get {
-                object obj = ResourceManager.GetObject("Screenshot 2026-03-25 234620", resourceCulture);
+                object obj = ResourceManager.GetObject("student-16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -573,9 +579,46 @@ namespace PUPAcadPortal.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Screenshot_2026_03_25_234625 {
+        internal static System.Drawing.Bitmap Screenshot_2026_03_25_234620
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("Screenshot 2026-03-25 234620", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        internal static System.Drawing.Bitmap student_2_16 {
             get {
+                object obj = ResourceManager.GetObject("student-2-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Screenshot_2026_03_25_234625
+        {
+            get
+            {
                 object obj = ResourceManager.GetObject("Screenshot 2026-03-25 234625", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap student_2_161 {
+            get {
+                object obj = ResourceManager.GetObject("student-2-161", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap student_2_162 {
+            get {
+                object obj = ResourceManager.GetObject("student-2-162", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

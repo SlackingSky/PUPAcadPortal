@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminPortal));
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             pnlSidebar = new Panel();
             pnlYellow = new Panel();
             flowLayoutPanel1 = new FlowLayoutPanel();
@@ -71,6 +71,8 @@
             pnlGradesManagementContent = new Panel();
             panel49 = new Panel();
             panel19 = new Panel();
+            button8 = new Button();
+            textBox24 = new TextBox();
             button7 = new Button();
             button4 = new Button();
             label93 = new Label();
@@ -294,8 +296,6 @@
             label4 = new Label();
             pictureBox2 = new PictureBox();
             pnlAccountsContent = new Panel();
-            textBox24 = new TextBox();
-            button8 = new Button();
             pnlSidebar.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             panel7.SuspendLayout();
@@ -940,6 +940,34 @@
             panel19.Size = new Size(1195, 557);
             panel19.TabIndex = 14;
             // 
+            // button8
+            // 
+            button8.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            button8.BackColor = Color.Maroon;
+            button8.FlatStyle = FlatStyle.Flat;
+            button8.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button8.ForeColor = Color.White;
+            button8.Image = Properties.Resources.search_3_16;
+            button8.Location = new Point(1048, 99);
+            button8.Name = "button8";
+            button8.Size = new Size(123, 33);
+            button8.TabIndex = 57;
+            button8.Text = "Search";
+            button8.TextAlign = ContentAlignment.MiddleRight;
+            button8.TextImageRelation = TextImageRelation.ImageBeforeText;
+            button8.UseVisualStyleBackColor = false;
+            // 
+            // textBox24
+            // 
+            textBox24.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBox24.BorderStyle = BorderStyle.FixedSingle;
+            textBox24.Font = new Font("Segoe UI", 12F);
+            textBox24.Location = new Point(178, 101);
+            textBox24.Name = "textBox24";
+            textBox24.PlaceholderText = "Search by student name, ID, or subject...";
+            textBox24.Size = new Size(861, 29);
+            textBox24.TabIndex = 56;
+            // 
             // button7
             // 
             button7.Anchor = AnchorStyles.Top | AnchorStyles.Right;
@@ -1209,7 +1237,7 @@
             pnlGradesManagementContainer.Controls.Add(textBox5);
             pnlGradesManagementContainer.Location = new Point(31, 680);
             pnlGradesManagementContainer.Name = "pnlGradesManagementContainer";
-            pnlGradesManagementContainer.Size = new Size(1208, 1037);
+            pnlGradesManagementContainer.Size = new Size(1208, 1693);
             pnlGradesManagementContainer.TabIndex = 13;
             // 
             // label38
@@ -3305,24 +3333,24 @@
             dgvUsers.BorderStyle = BorderStyle.None;
             dgvUsers.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvUsers.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = Color.Maroon;
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            dataGridViewCellStyle3.ForeColor = Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            dgvUsers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.Maroon;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgvUsers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dgvUsers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvUsers.Columns.AddRange(new DataGridViewColumn[] { colUserID, colUserName, colUserEmail, colUserProgram, colUserYear, colUserStatus });
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = SystemColors.Window;
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(197, 202, 233);
-            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
-            dgvUsers.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(197, 202, 233);
+            dataGridViewCellStyle2.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dgvUsers.DefaultCellStyle = dataGridViewCellStyle2;
             dgvUsers.Dock = DockStyle.Fill;
             dgvUsers.EnableHeadersVisualStyles = false;
             dgvUsers.GridColor = Color.FromArgb(220, 220, 220);
@@ -3592,34 +3620,6 @@
             pnlAccountsContent.Size = new Size(2664, 2015);
             pnlAccountsContent.TabIndex = 5;
             pnlAccountsContent.Visible = false;
-            // 
-            // textBox24
-            // 
-            textBox24.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            textBox24.BorderStyle = BorderStyle.FixedSingle;
-            textBox24.Font = new Font("Segoe UI", 12F);
-            textBox24.Location = new Point(178, 101);
-            textBox24.Name = "textBox24";
-            textBox24.PlaceholderText = "Search by student name, ID, or subject...";
-            textBox24.Size = new Size(861, 29);
-            textBox24.TabIndex = 56;
-            // 
-            // button8
-            // 
-            button8.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            button8.BackColor = Color.Maroon;
-            button8.FlatStyle = FlatStyle.Flat;
-            button8.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button8.ForeColor = Color.White;
-            button8.Image = Properties.Resources.search_3_16;
-            button8.Location = new Point(1048, 99);
-            button8.Name = "button8";
-            button8.Size = new Size(123, 33);
-            button8.TabIndex = 57;
-            button8.Text = "Search";
-            button8.TextAlign = ContentAlignment.MiddleRight;
-            button8.TextImageRelation = TextImageRelation.ImageBeforeText;
-            button8.UseVisualStyleBackColor = false;
             // 
             // AdminPortal
             // 
