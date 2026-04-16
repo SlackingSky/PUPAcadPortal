@@ -228,6 +228,8 @@ namespace PUPAcadPortal
                 {
                     e.Cancel = true;
                 }
+                else
+                    Application.Exit();
             }
         }
 
