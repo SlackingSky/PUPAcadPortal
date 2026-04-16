@@ -375,6 +375,16 @@ namespace PUPAcadPortal
         {
 
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label39_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 
     // --- DATA MODEL ---
