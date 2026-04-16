@@ -218,7 +218,7 @@ namespace PUPAcadPortal
             }
         }
 
-        private void StudentPortal_Closing(object sender, FormClosingEventArgs e)
+        private void InstructorPortal_Closing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
             {

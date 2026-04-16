@@ -161,24 +161,24 @@ namespace PUPAcadPortal
             panel4.Name = "panel4";
             panel4.Size = new Size(384, 275);
             panel4.TabIndex = 4;
-            // 
-            // button1
-            // 
-            button1.Anchor = AnchorStyles.None;
-            button1.BackColor = Color.Transparent;
-            button1.Cursor = Cursors.Hand;
-            button1.FlatAppearance.BorderSize = 0;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            button1.ForeColor = Color.White;
-            button1.Image = Properties.Resources.button;
-            button1.Location = new Point(0, 227);
-            button1.Name = "button1";
-            button1.Size = new Size(384, 48);
-            button1.TabIndex = 1;
-            button1.Text = "Sign In";
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
+            //// 
+            //// button1
+            //// 
+            //button1.Anchor = AnchorStyles.None;
+            //button1.BackColor = Color.Transparent;
+            //button1.Cursor = Cursors.Hand;
+            //button1.FlatAppearance.BorderSize = 0;
+            //button1.FlatStyle = FlatStyle.Flat;
+            //button1.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            //button1.ForeColor = Color.White;
+            //button1.Image = Properties.Resources.button;
+            //button1.Location = new Point(0, 227);
+            //button1.Name = "button1";
+            //button1.Size = new Size(384, 48);
+            //button1.TabIndex = 1;
+            //button1.Text = "Sign In";
+            //button1.UseVisualStyleBackColor = false;
+            //button1.Click += button1_Click;
             // btnSignIn
             // 
             btnSignIn.Anchor = AnchorStyles.None;
@@ -188,7 +188,6 @@ namespace PUPAcadPortal
             btnSignIn.FlatStyle = FlatStyle.Flat;
             btnSignIn.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
             btnSignIn.ForeColor = Color.White;
-            btnSignIn.Image = Properties.Resources.button__1_;
             btnSignIn.Location = new Point(0, 227);
             btnSignIn.Name = "btnSignIn";
             btnSignIn.Size = new Size(384, 48);
