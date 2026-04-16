@@ -1,4 +1,5 @@
-﻿namespace PUPAcadPortal
+﻿#nullable disable
+namespace PUPAcadPortal
 {
     partial class StudentPortal
     {
@@ -796,7 +797,6 @@
             // 
             pictureBox5.BackColor = Color.Maroon;
             pictureBox5.BorderStyle = BorderStyle.Fixed3D;
-            pictureBox5.Image = Properties.Resources.warning_4_1281;
             pictureBox5.Location = new Point(281, 24);
             pictureBox5.Name = "pictureBox5";
             pictureBox5.Size = new Size(95, 81);

@@ -140,7 +140,7 @@ namespace PUPAcadPortal
             // 
             panel3.Anchor = AnchorStyles.None;
             panel3.BackColor = Color.Transparent;
-            panel3.BackgroundImage = Properties.Resources.Container__2_;
+            panel3.BackgroundImage = Properties.Resources.Container;
             panel3.BackgroundImageLayout = ImageLayout.Stretch;
             panel3.Controls.Add(panel4);
             panel3.Controls.Add(label3);
@@ -171,7 +171,7 @@ namespace PUPAcadPortal
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
             button1.ForeColor = Color.White;
-            button1.Image = Properties.Resources.button__1_;
+            button1.Image = Properties.Resources.button;
             button1.Location = new Point(0, 227);
             button1.Name = "button1";
             button1.Size = new Size(384, 48);
@@ -350,7 +350,6 @@ namespace PUPAcadPortal
             // 
             // pictureBox1
             // 
-            pictureBox1.Image = Properties.Resources.img__1_;
             pictureBox1.Location = new Point(176, 0);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(96, 96);

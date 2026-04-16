@@ -549,7 +549,7 @@
             btnAccountingRecords.FlatStyle = FlatStyle.Flat;
             btnAccountingRecords.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
             btnAccountingRecords.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            btnAccountingRecords.Image = Properties.Resources.Accounts1;
+            btnAccountingRecords.Image = Properties.Resources.Accounts;
             btnAccountingRecords.Location = new Point(-5, 0);
             btnAccountingRecords.Name = "btnAccountingRecords";
             btnAccountingRecords.Padding = new Padding(16, 0, 0, 0);
@@ -1399,7 +1399,7 @@
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.White;
-            button1.Image = Properties.Resources.professor_161;
+            button1.Image = Properties.Resources.professor_16;
             button1.Location = new Point(666, 755);
             button1.Name = "button1";
             button1.Size = new Size(215, 37);
@@ -2434,7 +2434,7 @@
             pictureBox11.BackColor = Color.Maroon;
             pictureBox11.BackgroundImageLayout = ImageLayout.Zoom;
             pictureBox11.BorderStyle = BorderStyle.FixedSingle;
-            pictureBox11.Image = Properties.Resources.card_inserting_48__1_;
+            pictureBox11.Image = Properties.Resources.card_inserting_48;
             pictureBox11.Location = new Point(267, 13);
             pictureBox11.Name = "pictureBox11";
             pictureBox11.Size = new Size(80, 66);
@@ -2901,7 +2901,7 @@
             btnStudentRegistration.FlatStyle = FlatStyle.Flat;
             btnStudentRegistration.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnStudentRegistration.ForeColor = Color.White;
-            btnStudentRegistration.Image = Properties.Resources.student_2_161;
+            btnStudentRegistration.Image = Properties.Resources.student_2_16;
             btnStudentRegistration.Location = new Point(662, 677);
             btnStudentRegistration.Name = "btnStudentRegistration";
             btnStudentRegistration.Size = new Size(215, 37);

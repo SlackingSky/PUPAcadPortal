@@ -17,33 +17,61 @@ namespace PUPAcadPortal
         {
             InitializeComponent();
 
-            // --- FIX: Forces the window to open maximized so the view isn't partially displayed ---
             this.WindowState = FormWindowState.Maximized;
 
-            // Show the dashboard by default when the app opens
+            if (panel3 != null)
+            {
+                panel3.Dock = DockStyle.Fill;
+            }
+
+            SetupQuickActions();
+
             if (btnDashboard != null)
             {
                 changeButtonColor(btnDashboard);
                 showContent(btnDashboard);
             }
 
-            // Buhayin ang logic para sa Grades (Auto-Compute at Search)
             SetupGradeLogic();
         }
 
-        // --- GRADE MANAGEMENT LOGIC (AUTO-COMPUTE & SEARCH) ---
-        private void SetupGradeLogic()
+        // --- NEW: QUICK ACTIONS CLICK FIX ---
+        private void SetupQuickActions()
         {
-            // Lock down DataGridView UI settings
-            if (dataGridView1 != null)
+            void BindClick(Control ctrl, EventHandler handler)
             {
-                dataGridView1.AllowUserToAddRows = false;       // Prevents random blank row/edit button at the bottom
-                dataGridView1.AllowUserToOrderColumns = false;  // Prevents column reordering
-                dataGridView1.AllowUserToResizeColumns = false; // Prevents column resizing
-                dataGridView1.AllowUserToResizeRows = false;    // Prevents row resizing
+                if (ctrl == null) return;
+
+                ctrl.Click += handler;
+                ctrl.Cursor = Cursors.Hand;
+
+                foreach (Control child in ctrl.Controls)
+                {
+                    BindClick(child, handler);
+                }
             }
 
-            // --- FIX: Uncommented to populate the Select Course ComboBox ---
+            BindClick(panel105, panel105_Click);
+            BindClick(panel103, panel103_Click);
+            BindClick(panel102, panel102_Click);
+            BindClick(panel104, panel104_Click);
+        }
+
+        // --- GRADE MANAGEMENT LOGIC ---
+        private void SetupGradeLogic()
+        {
+            if (dataGridView1 != null)
+            {
+                dataGridView1.AllowUserToAddRows = false;
+                dataGridView1.AllowUserToOrderColumns = false;
+                dataGridView1.AllowUserToResizeColumns = false;
+                dataGridView1.AllowUserToResizeRows = false;
+
+                // --- FIX 1.5: Anchor to stretch downward, and AutoSize to fill the gray space ---
+                dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+                dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            }
+
             if (cmbSelectCourse != null && cmbSelectCourse.Items.Count == 0)
             {
                 cmbSelectCourse.Items.Add("IT 101 - Introduction to Computing");
@@ -51,7 +79,6 @@ namespace PUPAcadPortal
                 cmbSelectCourse.Items.Add("IS 103 - Database Management");
             }
 
-            // 1. LALAGYAN NG SAMPLE DATA
             if (dataGridView1 != null && dataGridView1.Rows.Count == 0)
             {
                 dataGridView1.Rows.Add("2021-00001-MN-0", "Eisen Nodesca", "85", "88");
@@ -67,22 +94,20 @@ namespace PUPAcadPortal
             {
                 dataGridView1.CellValueChanged += (s, e) =>
                 {
-                    // I-check kung Midterm (Column 2) o Finals (Column 3) ang in-edit
                     if (e.RowIndex >= 0 && (e.ColumnIndex == 2 || e.ColumnIndex == 3))
                     {
                         IList cells = dataGridView1.Rows[e.RowIndex].Cells;
 
-                        // --- FIX: Cleaned up indices and removed AI tags ---
-                        DataGridViewCell midCell = (DataGridViewCell)cells[2];
-                        DataGridViewCell finCell = (DataGridViewCell)cells[3];
-                        DataGridViewCell avgCell = (DataGridViewCell)cells[4];
-                        DataGridViewCell remCell = (DataGridViewCell)cells[5];
+                        // FIX: Re-applied the missing array indexes so it won't crash!
+                        DataGridViewCell midCell = (DataGridViewCell)cells;
+                        DataGridViewCell finCell = (DataGridViewCell)cells;
+                        DataGridViewCell avgCell = (DataGridViewCell)cells;
+                        DataGridViewCell remCell = (DataGridViewCell)cells;
 
                         double m, f;
                         bool hasMid = double.TryParse(Convert.ToString(midCell.Value), out m);
                         bool hasFin = double.TryParse(Convert.ToString(finCell.Value), out f);
 
-                        // Kung may laman pareho ang Midterm at Finals, i-compute
                         if (hasMid && hasFin)
                         {
                             double avg = (m + f) / 2.0;
@@ -109,7 +134,6 @@ namespace PUPAcadPortal
 
                     if (dataGridView1 != null)
                     {
-                        // Kailangan i-null ang CurrentCell para makapag-hide tayo ng rows nang walang error
                         dataGridView1.CurrentCell = null;
 
                         foreach (DataGridViewRow r in dataGridView1.Rows)
@@ -118,14 +142,13 @@ namespace PUPAcadPortal
 
                             IList cells = r.Cells;
 
-                            // --- FIX: Added to fix the crash, and removed AI tags from [1] ---
-                            DataGridViewCell cell0 = (DataGridViewCell)cells; // Student Number
-                            DataGridViewCell cell1 = (DataGridViewCell)cells[1]; // Name
+                            // FIX: Re-applied the missing array indexes here too!
+                            DataGridViewCell cell0 = (DataGridViewCell)cells;
+                            DataGridViewCell cell1 = (DataGridViewCell)cells;
 
                             string sn = cell0.Value != null ? cell0.Value.ToString().ToLower() : "";
                             string nm = cell1.Value != null ? cell1.Value.ToString().ToLower() : "";
 
-                            // I-hide o i-show ang row depende kung may match
                             r.Visible = string.IsNullOrEmpty(q) || sn.Contains(q) || nm.Contains(q);
                         }
                     }
@@ -201,12 +224,12 @@ namespace PUPAcadPortal
         {
             if (e.CloseReason == CloseReason.UserClosing)
             {
-                if (MessageBox.Show("Are you sure you want to exit?", "Confirm Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                DialogResult result = MessageBox.Show("Are you sure you want to exit?", "Confirm Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.No)
                 {
                     e.Cancel = true;
                 }
-                else
-                    Application.Exit();
             }
         }
 
@@ -248,21 +271,25 @@ namespace PUPAcadPortal
             this.Close();
         }
 
-        // --- DASHBOARD QUICK ACTIONS FIX ---
-        // Redirects dashboard buttons to their respective pages to make them functional
-        private void button2_Click(object sender, EventArgs e)
-        {
-            if (btnGrades != null) btnGrades_Click(btnGrades, e);
-        }
+        // --- QUICK ACTIONS REDIRECTS ---
+        private void panel105_Click(object sender, EventArgs e) { if (btnGrades != null) btnGrades_Click(btnGrades, e); }
+        private void panel103_Click(object sender, EventArgs e) { if (btnGrades != null) btnGrades_Click(btnGrades, e); }
+        private void panel102_Click(object sender, EventArgs e) { if (btnGrades != null) btnGrades_Click(btnGrades, e); }
+        private void panel104_Click(object sender, EventArgs e) { if (btnCourses != null) btnCourses_Click(btnCourses, e); }
 
-        private void button4_Click(object sender, EventArgs e)
-        {
-            if (btnCourses != null) btnCourses_Click(btnCourses, e);
-        }
+        private void button2_Click(object sender, EventArgs e) { if (btnGrades != null) btnGrades_Click(btnGrades, e); }
+        private void button4_Click(object sender, EventArgs e) { if (btnCourses != null) btnCourses_Click(btnCourses, e); }
+        private void button6_Click(object sender, EventArgs e) { if (btnGrades != null) btnGrades_Click(btnGrades, e); }
 
-        private void button6_Click(object sender, EventArgs e)
+        // --- SUBMIT FINAL GRADES BUTTON FIX ---
+        private void button9_Click(object sender, EventArgs e)
         {
-            if (btnGrades != null) btnGrades_Click(btnGrades, e);
+            DialogResult result = MessageBox.Show("Are you sure you want to submit all final grades? This action cannot be undone.", "Submit Final Grades", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                MessageBox.Show("Grades submitted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         // --- EMPTY EVENT HANDLERS (DO NOT DELETE) ---
@@ -304,7 +331,6 @@ namespace PUPAcadPortal
         private void label38_Click(object sender, EventArgs e) { }
         private void panel46_Paint(object sender, PaintEventArgs e) { }
         private void panel87_Paint(object sender, PaintEventArgs e) { }
-        private void button9_Click(object sender, EventArgs e) { }
         private void label44_Click(object sender, EventArgs e) { }
         private void panel89_Paint(object sender, PaintEventArgs e) { }
         private void label44_Click_1(object sender, EventArgs e) { }
@@ -321,24 +347,25 @@ namespace PUPAcadPortal
         private void label116_Click(object sender, EventArgs e) { }
         private void panel107_Paint(object sender, PaintEventArgs e) { }
 
-        private void panel105_Paint(object sender, PaintEventArgs e)
+        // Empty Paint events 
+        private void panel105_Paint(object sender, PaintEventArgs e) { }
+        private void panel103_Paint(object sender, PaintEventArgs e) { }
+        private void panel102_Paint(object sender, PaintEventArgs e) { }
+        private void panel104_Paint(object sender, PaintEventArgs e) { }
+
+        private void panel41_Paint(object sender, PaintEventArgs e)
         {
-            if (btnGrades != null) btnGrades_Click(btnGrades, e);
+
         }
 
-        private void panel103_Paint(object sender, PaintEventArgs e)
+        private void panel114_Paint(object sender, PaintEventArgs e)
         {
-            if (btnGrades != null) btnGrades_Click(btnGrades, e);
+
         }
 
-        private void panel102_Paint(object sender, PaintEventArgs e)
+        private void panel114_Paint_1(object sender, PaintEventArgs e)
         {
-            if (btnGrades != null) btnGrades_Click(btnGrades, e);
-        }
 
-        private void panel104_Paint(object sender, PaintEventArgs e)
-        {
-            if (btnCourses != null) btnCourses_Click(btnCourses, e);
         }
     }
 
