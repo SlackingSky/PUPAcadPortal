@@ -34,6 +34,11 @@ namespace PUPAcadPortal
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StudentPortal));
             pnlSidebar = new Panel();
             flowLayoutPanel1 = new FlowLayoutPanel();
@@ -42,13 +47,13 @@ namespace PUPAcadPortal
             btnDashboard = new Button();
             panel8 = new Panel();
             btnEnrollment = new Button();
-            panel9 = new Panel();
-            btnCourses = new Button();
             panel10 = new Panel();
             btnAccounts = new Button();
             panel11 = new Panel();
             btnLMS = new Button();
             pnllmsSubmenu = new Panel();
+            panel9 = new Panel();
+            btnCourses = new Button();
             panel4 = new Panel();
             pnlCoursesContent = new Panel();
             panel5 = new Panel();
@@ -60,6 +65,7 @@ namespace PUPAcadPortal
             panel13 = new Panel();
             btnLogout = new Button();
             pnlAccountsContent = new Panel();
+            pnlSpaceProviderAccounts = new Panel();
             dgvAccounts = new DataGridView();
             colAccountsRefID = new DataGridViewTextBoxColumn();
             colAccountsDescription = new DataGridViewTextBoxColumn();
@@ -70,54 +76,56 @@ namespace PUPAcadPortal
             btnAccountsDownloadStatement = new Button();
             lblPaymentHistory = new Label();
             pnlAccountsSelectSem = new Panel();
-            comboBox1 = new ComboBox();
+            cmbSelectSem = new ComboBox();
             lblSelSem = new Label();
-            panel20 = new Panel();
+            pnlBalance = new Panel();
             lblBalancePeso = new Label();
             lblBalance = new Label();
-            pictureBox5 = new PictureBox();
-            panel21 = new Panel();
+            pbBalance = new PictureBox();
+            pnlTotalPaid = new Panel();
             lblTPPeso = new Label();
             lblTotalPaid = new Label();
-            pictureBox4 = new PictureBox();
+            pbPaid = new PictureBox();
             pnlAccountsFreeEd = new Panel();
-            pictureBox6 = new PictureBox();
-            lblDescription2 = new Label();
-            lblDescription = new Label();
+            pbFreeEducProg = new PictureBox();
+            lblNoteFreeEducProg = new Label();
+            lblDescriptionFreeEducProg = new Label();
             lblFreeEducProg = new Label();
-            lblViewPHAB = new Label();
-            panel1 = new Panel();
-            pictureBox3 = new PictureBox();
+            lblDescriptionAccsPay = new Label();
+            pnlTotalAssessment = new Panel();
+            pbTotalAssessment = new PictureBox();
             lblTAPeso = new Label();
             lblTotalAssessment = new Label();
             lblAccountsandPayments = new Label();
-            lblPaymentMethods2 = new Label();
+            lblPaymentMethods = new Label();
             pnlOnlinePayment = new Panel();
+            pictureBox3 = new PictureBox();
             lblOnlinePayTitle = new Label();
             lblOnlinePayDesc = new Label();
             btnPayOnline = new Button();
             pnlCashier = new Panel();
+            pictureBox4 = new PictureBox();
             lblCashierTitle = new Label();
             lblCashierDesc = new Label();
             btnPaymentSlip = new Button();
             lblEnrollStatus = new Label();
             pnlEnrollStatusCard = new Panel();
+            pictureBox5 = new PictureBox();
             lblEnrollStatusTitle = new Label();
             lblEnrollStatusDesc = new Label();
             pnlEnrollContent = new Panel();
+            btnSaveAndAssess = new Button();
+            pnlEnrollmentConfirmedDGV = new Panel();
+            dgvEnrollmentConfirmed = new DataGridView();
+            colCode2 = new DataGridViewTextBoxColumn();
+            colourseTitle2 = new DataGridViewTextBoxColumn();
+            colUnits2 = new DataGridViewTextBoxColumn();
+            colSchedule2 = new DataGridViewTextBoxColumn();
+            colStatus2 = new DataGridViewTextBoxColumn();
+            colAction2 = new DataGridViewTextBoxColumn();
+            btnDownloadCOR = new Button();
             btnEnrollSelectAll = new Button();
-            pnlEnrollRightCard = new Panel();
-            label12 = new Label();
-            label13 = new Label();
-            pnlEnrollMiddleCard = new Panel();
-            lblMaximumUnitsValue = new Label();
-            label11 = new Label();
-            pnlEnrollLeftCard = new Panel();
-            label8 = new Label();
-            label9 = new Label();
-            panel2 = new Panel();
-            lblEnrollTotalUnitsValue = new Label();
-            label6 = new Label();
+            pnlContainerEnrollmentDGV = new Panel();
             dgvEnrollment = new DataGridView();
             colSelect = new DataGridViewCheckBoxColumn();
             colCode = new DataGridViewTextBoxColumn();
@@ -126,6 +134,18 @@ namespace PUPAcadPortal
             colSchedule = new DataGridViewTextBoxColumn();
             colStatus = new DataGridViewTextBoxColumn();
             colAction = new DataGridViewTextBoxColumn();
+            pnlEnrollRightCard = new Panel();
+            lblCurrentSectionIndicator = new Label();
+            label13 = new Label();
+            pnlEnrollMiddleCard = new Panel();
+            label11 = new Label();
+            lblMaximumUnitsValue = new Label();
+            pnlEnrollLeftCard = new Panel();
+            label9 = new Label();
+            label8 = new Label();
+            pnlTotalUnits = new Panel();
+            lblEnrollTotalUnitsValue = new Label();
+            label6 = new Label();
             pnlEnrollSearchbar = new Panel();
             cmbEnrollFilter = new ComboBox();
             btnEnrollSearch = new Button();
@@ -133,13 +153,20 @@ namespace PUPAcadPortal
             lblAcademicYear = new Label();
             label5 = new Label();
             pnlViewDetails = new Panel();
+            txtDetailSchedule = new TextBox();
+            lblDetailTitle = new Label();
+            lblDetailUnits = new Label();
+            lblDetailStatus = new Label();
+            lblDetailCode = new Label();
             btnEnrollCloseDetails = new Button();
+            lblSubjectDetails = new Label();
+            pnlContainerStudentPortal = new Panel();
             label7 = new Label();
             panel3 = new Panel();
             pnlAccountsContentHolder = new Panel();
             pnlDashboardContent = new Panel();
-            panel22 = new Panel();
-            panel18 = new Panel();
+            pnlDashboardSpaceProvider = new Panel();
+            pnlAnnouncementsContainer = new Panel();
             panel25 = new Panel();
             label21 = new Label();
             label22 = new Label();
@@ -151,7 +178,7 @@ namespace PUPAcadPortal
             panel24 = new Panel();
             label17 = new Label();
             label16 = new Label();
-            panel19 = new Panel();
+            pnlUpcomingEventsContainer = new Panel();
             panel31 = new Panel();
             label32 = new Label();
             label33 = new Label();
@@ -171,36 +198,43 @@ namespace PUPAcadPortal
             label24 = new Label();
             label25 = new Label();
             label18 = new Label();
-            panel17 = new Panel();
-            panel39 = new Panel();
-            pictureBox10 = new PictureBox();
-            label40 = new Label();
-            label41 = new Label();
-            panel38 = new Panel();
-            pictureBox9 = new PictureBox();
+            pnlQuickActionsContainer = new Panel();
+            panel20 = new Panel();
+            btnDashboardCourses = new Button();
             label38 = new Label();
-            label39 = new Label();
-            panel37 = new Panel();
-            pictureBox8 = new PictureBox();
+            lblCourses = new Label();
+            panel3 = new Panel();
+            button3 = new Button();
             label36 = new Label();
             label37 = new Label();
+            panel1 = new Panel();
+            btnDashboardPaymentStatus = new Button();
+            label10 = new Label();
+            label14 = new Label();
             panel41 = new Panel();
-            pictureBox7 = new PictureBox();
+            btnDashboardViewEnrollment = new Button();
             label44 = new Label();
             label45 = new Label();
             label15 = new Label();
-            panel33 = new Panel();
+            pnlEnrolleft = new Panel();
+            pictureBox13 = new PictureBox();
             label54 = new Label();
             label55 = new Label();
-            panel34 = new Panel();
+            pnlCurrentSemesterCard = new Panel();
+            pictureBox12 = new PictureBox();
             label52 = new Label();
             label53 = new Label();
-            panel35 = new Panel();
+            pnlEnrollmentStatusCard = new Panel();
+            pictureBox11 = new PictureBox();
             label70 = new Label();
             label71 = new Label();
-            panel36 = new Panel();
+            pnlEnrolledUnitsCard = new Panel();
+            pictureBox6 = new PictureBox();
             label72 = new Label();
             label73 = new Label();
+            pnlDashboardGreetingsContainer = new Panel();
+            lblDashboardGreetingDesc = new Label();
+            lblDashboardGreeting = new Label();
             panel14 = new Panel();
             label14 = new Label();
             label10 = new Label();
@@ -217,9 +251,10 @@ namespace PUPAcadPortal
             flowLayoutPanel1.SuspendLayout();
             panel7.SuspendLayout();
             panel8.SuspendLayout();
-            panel9.SuspendLayout();
             panel10.SuspendLayout();
             panel11.SuspendLayout();
+            pnllmsSubmenu.SuspendLayout();
+            panel9.SuspendLayout();
             panel4.SuspendLayout();
             panel5.SuspendLayout();
             panel6.SuspendLayout();
@@ -229,46 +264,59 @@ namespace PUPAcadPortal
             pnlAccountsContent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvAccounts).BeginInit();
             pnlAccountsSelectSem.SuspendLayout();
-            panel20.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
-            panel21.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
+            pnlBalance.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbBalance).BeginInit();
+            pnlTotalPaid.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbPaid).BeginInit();
             pnlAccountsFreeEd.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
-            panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbFreeEducProg).BeginInit();
+            pnlTotalAssessment.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbTotalAssessment).BeginInit();
             pnlOnlinePayment.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             pnlCashier.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             pnlEnrollStatusCard.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             pnlEnrollContent.SuspendLayout();
+            pnlEnrollmentConfirmedDGV.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvEnrollmentConfirmed).BeginInit();
+            pnlContainerEnrollmentDGV.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvEnrollment).BeginInit();
             pnlEnrollRightCard.SuspendLayout();
             pnlEnrollMiddleCard.SuspendLayout();
             pnlEnrollLeftCard.SuspendLayout();
-            panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvEnrollment).BeginInit();
+            pnlTotalUnits.SuspendLayout();
             pnlEnrollSearchbar.SuspendLayout();
             pnlViewDetails.SuspendLayout();
+            pnlContainerStudentPortal.SuspendLayout();
             panel3.SuspendLayout();
             pnlAccountsContentHolder.SuspendLayout();
             pnlDashboardContent.SuspendLayout();
-            panel18.SuspendLayout();
+            pnlAnnouncementsContainer.SuspendLayout();
             panel25.SuspendLayout();
             panel23.SuspendLayout();
-            panel19.SuspendLayout();
+            pnlUpcomingEventsContainer.SuspendLayout();
             panel31.SuspendLayout();
             panel32.SuspendLayout();
             panel29.SuspendLayout();
             panel30.SuspendLayout();
             panel27.SuspendLayout();
             panel28.SuspendLayout();
-            panel17.SuspendLayout();
-            panel39.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox10).BeginInit();
-            panel38.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
-            panel37.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
+            pnlQuickActionsContainer.SuspendLayout();
+            panel20.SuspendLayout();
+            panel3.SuspendLayout();
+            panel1.SuspendLayout();
             panel41.SuspendLayout();
+            pnlEnrolleft.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox13).BeginInit();
+            pnlCurrentSemesterCard.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox12).BeginInit();
+            pnlEnrollmentStatusCard.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox11).BeginInit();
+            pnlEnrolledUnitsCard.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
+            pnlDashboardGreetingsContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
             panel33.SuspendLayout();
             panel34.SuspendLayout();
@@ -300,7 +348,6 @@ namespace PUPAcadPortal
             flowLayoutPanel1.BackColor = Color.Transparent;
             flowLayoutPanel1.Controls.Add(panel7);
             flowLayoutPanel1.Controls.Add(panel8);
-            flowLayoutPanel1.Controls.Add(panel9);
             flowLayoutPanel1.Controls.Add(panel10);
             flowLayoutPanel1.Controls.Add(panel11);
             flowLayoutPanel1.Controls.Add(pnllmsSubmenu);
@@ -418,7 +465,7 @@ namespace PUPAcadPortal
             // panel10
             // 
             panel10.Controls.Add(btnAccounts);
-            panel10.Location = new Point(0, 160);
+            panel10.Location = new Point(0, 112);
             panel10.Margin = new Padding(0);
             panel10.Name = "panel10";
             panel10.Size = new Size(256, 48);
@@ -449,7 +496,7 @@ namespace PUPAcadPortal
             // panel11
             // 
             panel11.Controls.Add(btnLMS);
-            panel11.Location = new Point(0, 208);
+            panel11.Location = new Point(0, 160);
             panel11.Margin = new Padding(0);
             panel11.Name = "panel11";
             panel11.Size = new Size(256, 48);
@@ -480,12 +527,44 @@ namespace PUPAcadPortal
             // pnllmsSubmenu
             // 
             pnllmsSubmenu.BackColor = Color.FromArgb(128, 109, 0, 0);
-            pnllmsSubmenu.Location = new Point(0, 256);
+            pnllmsSubmenu.Controls.Add(panel9);
+            pnllmsSubmenu.Location = new Point(0, 208);
             pnllmsSubmenu.Margin = new Padding(0);
             pnllmsSubmenu.Name = "pnllmsSubmenu";
             pnllmsSubmenu.Size = new Size(256, 100);
             pnllmsSubmenu.TabIndex = 5;
             pnllmsSubmenu.Visible = false;
+            // 
+            // panel9
+            // 
+            panel9.Controls.Add(btnCourses);
+            panel9.Location = new Point(3, 1);
+            panel9.Margin = new Padding(0);
+            panel9.Name = "panel9";
+            panel9.Size = new Size(256, 48);
+            panel9.TabIndex = 2;
+            // 
+            // btnCourses
+            // 
+            btnCourses.BackgroundImageLayout = ImageLayout.None;
+            btnCourses.Cursor = Cursors.Hand;
+            btnCourses.FlatAppearance.BorderSize = 0;
+            btnCourses.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnCourses.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            btnCourses.FlatStyle = FlatStyle.Flat;
+            btnCourses.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            btnCourses.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            btnCourses.Image = Properties.Resources.Course;
+            btnCourses.ImageAlign = ContentAlignment.MiddleLeft;
+            btnCourses.Location = new Point(0, 0);
+            btnCourses.Name = "btnCourses";
+            btnCourses.Padding = new Padding(16, 0, 0, 0);
+            btnCourses.Size = new Size(256, 48);
+            btnCourses.TabIndex = 3;
+            btnCourses.Text = " Courses";
+            btnCourses.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnCourses.UseVisualStyleBackColor = true;
+            btnCourses.Click += btnCourses_Click;
             // 
             // panel4
             // 
@@ -604,17 +683,18 @@ namespace PUPAcadPortal
             // 
             pnlAccountsContent.AutoScroll = true;
             pnlAccountsContent.BackColor = Color.WhiteSmoke;
+            pnlAccountsContent.Controls.Add(pnlSpaceProviderAccounts);
             pnlAccountsContent.Controls.Add(dgvAccounts);
             pnlAccountsContent.Controls.Add(btnAccountsDownloadStatement);
             pnlAccountsContent.Controls.Add(lblPaymentHistory);
             pnlAccountsContent.Controls.Add(pnlAccountsSelectSem);
-            pnlAccountsContent.Controls.Add(panel20);
-            pnlAccountsContent.Controls.Add(panel21);
+            pnlAccountsContent.Controls.Add(pnlBalance);
+            pnlAccountsContent.Controls.Add(pnlTotalPaid);
             pnlAccountsContent.Controls.Add(pnlAccountsFreeEd);
-            pnlAccountsContent.Controls.Add(lblViewPHAB);
-            pnlAccountsContent.Controls.Add(panel1);
+            pnlAccountsContent.Controls.Add(lblDescriptionAccsPay);
+            pnlAccountsContent.Controls.Add(pnlTotalAssessment);
             pnlAccountsContent.Controls.Add(lblAccountsandPayments);
-            pnlAccountsContent.Controls.Add(lblPaymentMethods2);
+            pnlAccountsContent.Controls.Add(lblPaymentMethods);
             pnlAccountsContent.Controls.Add(pnlOnlinePayment);
             pnlAccountsContent.Controls.Add(pnlCashier);
             pnlAccountsContent.Controls.Add(lblEnrollStatus);
@@ -626,6 +706,14 @@ namespace PUPAcadPortal
             pnlAccountsContent.Size = new Size(1256, 809);
             pnlAccountsContent.TabIndex = 5;
             pnlAccountsContent.Visible = false;
+            // 
+            // pnlSpaceProviderAccounts
+            // 
+            pnlSpaceProviderAccounts.BackColor = Color.Transparent;
+            pnlSpaceProviderAccounts.Location = new Point(16, 1326);
+            pnlSpaceProviderAccounts.Name = "pnlSpaceProviderAccounts";
+            pnlSpaceProviderAccounts.Size = new Size(1200, 130);
+            pnlSpaceProviderAccounts.TabIndex = 18;
             // 
             // dgvAccounts
             // 
@@ -709,22 +797,25 @@ namespace PUPAcadPortal
             btnAccountsDownloadStatement.BackColor = Color.DarkRed;
             btnAccountsDownloadStatement.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnAccountsDownloadStatement.ForeColor = SystemColors.ControlLightLight;
+            btnAccountsDownloadStatement.Image = Properties.Resources.download_2_16;
             btnAccountsDownloadStatement.Location = new Point(983, 515);
             btnAccountsDownloadStatement.Name = "btnAccountsDownloadStatement";
             btnAccountsDownloadStatement.Size = new Size(246, 41);
             btnAccountsDownloadStatement.TabIndex = 10;
-            btnAccountsDownloadStatement.Text = "Download Statement";
+            btnAccountsDownloadStatement.Text = " Download Statement";
+            btnAccountsDownloadStatement.TextAlign = ContentAlignment.MiddleRight;
             btnAccountsDownloadStatement.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnAccountsDownloadStatement.UseVisualStyleBackColor = false;
+            btnAccountsDownloadStatement.Click += btnAccountsDownloadStatement_Click;
             // 
             // lblPaymentHistory
             // 
             lblPaymentHistory.AutoSize = true;
-            lblPaymentHistory.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblPaymentHistory.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblPaymentHistory.ForeColor = Color.Maroon;
             lblPaymentHistory.Location = new Point(14, 522);
             lblPaymentHistory.Name = "lblPaymentHistory";
-            lblPaymentHistory.Size = new Size(161, 25);
+            lblPaymentHistory.Size = new Size(204, 32);
             lblPaymentHistory.TabIndex = 9;
             lblPaymentHistory.Text = "Payment History";
             // 
@@ -732,22 +823,23 @@ namespace PUPAcadPortal
             // 
             pnlAccountsSelectSem.BackColor = Color.White;
             pnlAccountsSelectSem.BorderStyle = BorderStyle.FixedSingle;
-            pnlAccountsSelectSem.Controls.Add(comboBox1);
+            pnlAccountsSelectSem.Controls.Add(cmbSelectSem);
             pnlAccountsSelectSem.Controls.Add(lblSelSem);
             pnlAccountsSelectSem.Location = new Point(19, 404);
             pnlAccountsSelectSem.Name = "pnlAccountsSelectSem";
             pnlAccountsSelectSem.Size = new Size(1210, 77);
             pnlAccountsSelectSem.TabIndex = 8;
             // 
-            // comboBox1
+            // cmbSelectSem
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "1st Semester", "2nd Semester", "3rd Semester", "4th Semester" });
-            comboBox1.Location = new Point(13, 35);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(254, 23);
-            comboBox1.TabIndex = 5;
-            comboBox1.Text = "Select...";
+            cmbSelectSem.FormattingEnabled = true;
+            cmbSelectSem.Items.AddRange(new object[] { "1st Semester", "2nd Semester", "3rd Semester", "4th Semester" });
+            cmbSelectSem.Location = new Point(13, 35);
+            cmbSelectSem.Name = "cmbSelectSem";
+            cmbSelectSem.Size = new Size(254, 23);
+            cmbSelectSem.TabIndex = 5;
+            cmbSelectSem.Text = "Select...";
+            cmbSelectSem.SelectedIndexChanged += cmbSelectSem_SelectedIndexChanged;
             // 
             // lblSelSem
             // 
@@ -760,17 +852,17 @@ namespace PUPAcadPortal
             lblSelSem.TabIndex = 4;
             lblSelSem.Text = "Select Semester";
             // 
-            // panel20
+            // pnlBalance
             // 
-            panel20.BackColor = SystemColors.ControlLightLight;
-            panel20.BorderStyle = BorderStyle.FixedSingle;
-            panel20.Controls.Add(lblBalancePeso);
-            panel20.Controls.Add(lblBalance);
-            panel20.Controls.Add(pictureBox5);
-            panel20.Location = new Point(842, 111);
-            panel20.Name = "panel20";
-            panel20.Size = new Size(387, 133);
-            panel20.TabIndex = 5;
+            pnlBalance.BackColor = SystemColors.ControlLightLight;
+            pnlBalance.BorderStyle = BorderStyle.FixedSingle;
+            pnlBalance.Controls.Add(lblBalancePeso);
+            pnlBalance.Controls.Add(lblBalance);
+            pnlBalance.Controls.Add(pbBalance);
+            pnlBalance.Location = new Point(842, 111);
+            pnlBalance.Name = "pnlBalance";
+            pnlBalance.Size = new Size(387, 133);
+            pnlBalance.TabIndex = 5;
             // 
             // lblBalancePeso
             // 
@@ -794,6 +886,30 @@ namespace PUPAcadPortal
             lblBalance.TabIndex = 5;
             lblBalance.Text = "Balance";
             // 
+            // pbBalance
+            // 
+            pbBalance.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            pbBalance.BackColor = Color.Maroon;
+            pbBalance.BorderStyle = BorderStyle.Fixed3D;
+            pbBalance.Image = Properties.Resources.warning_4_1281;
+            pbBalance.Location = new Point(281, 24);
+            pbBalance.Name = "pbBalance";
+            pbBalance.Size = new Size(95, 81);
+            pbBalance.SizeMode = PictureBoxSizeMode.Zoom;
+            pbBalance.TabIndex = 3;
+            pbBalance.TabStop = false;
+            // 
+            // pnlTotalPaid
+            // 
+            pnlTotalPaid.BackColor = SystemColors.ControlLightLight;
+            pnlTotalPaid.BorderStyle = BorderStyle.FixedSingle;
+            pnlTotalPaid.Controls.Add(lblTPPeso);
+            pnlTotalPaid.Controls.Add(lblTotalPaid);
+            pnlTotalPaid.Controls.Add(pbPaid);
+            pnlTotalPaid.Location = new Point(428, 111);
+            pnlTotalPaid.Name = "pnlTotalPaid";
+            pnlTotalPaid.Size = new Size(387, 133);
+            pnlTotalPaid.TabIndex = 5;
             // pictureBox5
             // 
             pictureBox5.BackColor = Color.Maroon;
@@ -839,62 +955,63 @@ namespace PUPAcadPortal
             lblTotalPaid.TabIndex = 5;
             lblTotalPaid.Text = "Total Paid";
             // 
-            // pictureBox4
+            // pbPaid
             // 
-            pictureBox4.BackColor = Color.Maroon;
-            pictureBox4.BorderStyle = BorderStyle.Fixed3D;
-            pictureBox4.Image = Properties.Resources.check_mark_6_48;
-            pictureBox4.Location = new Point(279, 22);
-            pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(88, 83);
-            pictureBox4.SizeMode = PictureBoxSizeMode.CenterImage;
-            pictureBox4.TabIndex = 3;
-            pictureBox4.TabStop = false;
+            pbPaid.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            pbPaid.BackColor = Color.Maroon;
+            pbPaid.BorderStyle = BorderStyle.Fixed3D;
+            pbPaid.Image = Properties.Resources.check_mark_6_48;
+            pbPaid.Location = new Point(279, 22);
+            pbPaid.Name = "pbPaid";
+            pbPaid.Size = new Size(88, 83);
+            pbPaid.SizeMode = PictureBoxSizeMode.CenterImage;
+            pbPaid.TabIndex = 3;
+            pbPaid.TabStop = false;
             // 
             // pnlAccountsFreeEd
             // 
             pnlAccountsFreeEd.BackColor = Color.DarkRed;
             pnlAccountsFreeEd.BorderStyle = BorderStyle.Fixed3D;
-            pnlAccountsFreeEd.Controls.Add(pictureBox6);
-            pnlAccountsFreeEd.Controls.Add(lblDescription2);
-            pnlAccountsFreeEd.Controls.Add(lblDescription);
+            pnlAccountsFreeEd.Controls.Add(pbFreeEducProg);
+            pnlAccountsFreeEd.Controls.Add(lblNoteFreeEducProg);
+            pnlAccountsFreeEd.Controls.Add(lblDescriptionFreeEducProg);
             pnlAccountsFreeEd.Controls.Add(lblFreeEducProg);
             pnlAccountsFreeEd.Location = new Point(19, 260);
             pnlAccountsFreeEd.Name = "pnlAccountsFreeEd";
             pnlAccountsFreeEd.Size = new Size(1210, 135);
             pnlAccountsFreeEd.TabIndex = 7;
             // 
-            // pictureBox6
+            // pbFreeEducProg
             // 
-            pictureBox6.BackColor = Color.IndianRed;
-            pictureBox6.BorderStyle = BorderStyle.FixedSingle;
-            pictureBox6.Image = Properties.Resources.document_icon;
-            pictureBox6.Location = new Point(12, 17);
-            pictureBox6.Name = "pictureBox6";
-            pictureBox6.Size = new Size(78, 96);
-            pictureBox6.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox6.TabIndex = 10;
-            pictureBox6.TabStop = false;
+            pbFreeEducProg.BackColor = Color.IndianRed;
+            pbFreeEducProg.BorderStyle = BorderStyle.FixedSingle;
+            pbFreeEducProg.Image = Properties.Resources.document_icon;
+            pbFreeEducProg.Location = new Point(12, 17);
+            pbFreeEducProg.Name = "pbFreeEducProg";
+            pbFreeEducProg.Size = new Size(78, 96);
+            pbFreeEducProg.SizeMode = PictureBoxSizeMode.Zoom;
+            pbFreeEducProg.TabIndex = 10;
+            pbFreeEducProg.TabStop = false;
             // 
-            // lblDescription2
+            // lblNoteFreeEducProg
             // 
-            lblDescription2.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
-            lblDescription2.ForeColor = Color.WhiteSmoke;
-            lblDescription2.Location = new Point(96, 91);
-            lblDescription2.Name = "lblDescription2";
-            lblDescription2.Size = new Size(1073, 35);
-            lblDescription2.TabIndex = 9;
-            lblDescription2.Text = "Note: Some laboratory fees, ID replacement, and other special fees may still apply.";
+            lblNoteFreeEducProg.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            lblNoteFreeEducProg.ForeColor = Color.WhiteSmoke;
+            lblNoteFreeEducProg.Location = new Point(96, 91);
+            lblNoteFreeEducProg.Name = "lblNoteFreeEducProg";
+            lblNoteFreeEducProg.Size = new Size(1073, 35);
+            lblNoteFreeEducProg.TabIndex = 9;
+            lblNoteFreeEducProg.Text = "Note: Some laboratory fees, ID replacement, and other special fees may still apply.";
             // 
-            // lblDescription
+            // lblDescriptionFreeEducProg
             // 
-            lblDescription.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
-            lblDescription.ForeColor = Color.White;
-            lblDescription.Location = new Point(96, 44);
-            lblDescription.Name = "lblDescription";
-            lblDescription.Size = new Size(1092, 47);
-            lblDescription.TabIndex = 8;
-            lblDescription.Text = "As a student of Polytechnic University of the Philippines, you are covered under the Free Higher Education Act (RA 10391). Tuition and miscellaneous fees are subsidized by the government";
+            lblDescriptionFreeEducProg.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            lblDescriptionFreeEducProg.ForeColor = Color.White;
+            lblDescriptionFreeEducProg.Location = new Point(96, 44);
+            lblDescriptionFreeEducProg.Name = "lblDescriptionFreeEducProg";
+            lblDescriptionFreeEducProg.Size = new Size(1092, 47);
+            lblDescriptionFreeEducProg.TabIndex = 8;
+            lblDescriptionFreeEducProg.Text = "As a student of Polytechnic University of the Philippines, you are covered under the Free Higher Education Act (RA 10391). Tuition and miscellaneous fees are subsidized by the government";
             // 
             // lblFreeEducProg
             // 
@@ -907,40 +1024,41 @@ namespace PUPAcadPortal
             lblFreeEducProg.TabIndex = 8;
             lblFreeEducProg.Text = "Free Education Program";
             // 
-            // lblViewPHAB
+            // lblDescriptionAccsPay
             // 
-            lblViewPHAB.AutoSize = true;
-            lblViewPHAB.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
-            lblViewPHAB.ForeColor = Color.DimGray;
-            lblViewPHAB.Location = new Point(19, 59);
-            lblViewPHAB.Name = "lblViewPHAB";
-            lblViewPHAB.Size = new Size(311, 19);
-            lblViewPHAB.TabIndex = 2;
-            lblViewPHAB.Text = "View your payment history and account balance";
+            lblDescriptionAccsPay.AutoSize = true;
+            lblDescriptionAccsPay.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            lblDescriptionAccsPay.ForeColor = Color.DimGray;
+            lblDescriptionAccsPay.Location = new Point(19, 59);
+            lblDescriptionAccsPay.Name = "lblDescriptionAccsPay";
+            lblDescriptionAccsPay.Size = new Size(311, 19);
+            lblDescriptionAccsPay.TabIndex = 2;
+            lblDescriptionAccsPay.Text = "View your payment history and account balance";
             // 
-            // panel1
+            // pnlTotalAssessment
             // 
-            panel1.BackColor = SystemColors.ControlLightLight;
-            panel1.BorderStyle = BorderStyle.FixedSingle;
-            panel1.Controls.Add(pictureBox3);
-            panel1.Controls.Add(lblTAPeso);
-            panel1.Controls.Add(lblTotalAssessment);
-            panel1.Location = new Point(19, 111);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(387, 133);
-            panel1.TabIndex = 1;
+            pnlTotalAssessment.BackColor = SystemColors.ControlLightLight;
+            pnlTotalAssessment.BorderStyle = BorderStyle.FixedSingle;
+            pnlTotalAssessment.Controls.Add(pbTotalAssessment);
+            pnlTotalAssessment.Controls.Add(lblTAPeso);
+            pnlTotalAssessment.Controls.Add(lblTotalAssessment);
+            pnlTotalAssessment.Location = new Point(19, 111);
+            pnlTotalAssessment.Name = "pnlTotalAssessment";
+            pnlTotalAssessment.Size = new Size(387, 133);
+            pnlTotalAssessment.TabIndex = 1;
             // 
-            // pictureBox3
+            // pbTotalAssessment
             // 
-            pictureBox3.BackColor = Color.Maroon;
-            pictureBox3.BorderStyle = BorderStyle.Fixed3D;
-            pictureBox3.Image = Properties.Resources.peso_icon;
-            pictureBox3.Location = new Point(269, 22);
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(95, 85);
-            pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox3.TabIndex = 3;
-            pictureBox3.TabStop = false;
+            pbTotalAssessment.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            pbTotalAssessment.BackColor = Color.Maroon;
+            pbTotalAssessment.BorderStyle = BorderStyle.Fixed3D;
+            pbTotalAssessment.Image = Properties.Resources.peso_icon;
+            pbTotalAssessment.Location = new Point(269, 22);
+            pbTotalAssessment.Name = "pbTotalAssessment";
+            pbTotalAssessment.Size = new Size(95, 85);
+            pbTotalAssessment.SizeMode = PictureBoxSizeMode.Zoom;
+            pbTotalAssessment.TabIndex = 3;
+            pbTotalAssessment.TabStop = false;
             // 
             // lblTAPeso
             // 
@@ -967,36 +1085,48 @@ namespace PUPAcadPortal
             // lblAccountsandPayments
             // 
             lblAccountsandPayments.AutoSize = true;
-            lblAccountsandPayments.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblAccountsandPayments.Font = new Font("Segoe UI", 22.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblAccountsandPayments.ForeColor = Color.Maroon;
             lblAccountsandPayments.Location = new Point(16, 24);
             lblAccountsandPayments.Name = "lblAccountsandPayments";
-            lblAccountsandPayments.Size = new Size(287, 32);
+            lblAccountsandPayments.Size = new Size(350, 41);
             lblAccountsandPayments.TabIndex = 0;
             lblAccountsandPayments.Text = "Accounts and Payments";
             // 
-            // lblPaymentMethods2
+            // lblPaymentMethods
             // 
-            lblPaymentMethods2.AutoSize = true;
-            lblPaymentMethods2.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            lblPaymentMethods2.ForeColor = Color.Maroon;
-            lblPaymentMethods2.Location = new Point(16, 1000);
-            lblPaymentMethods2.Name = "lblPaymentMethods2";
-            lblPaymentMethods2.Size = new Size(173, 25);
-            lblPaymentMethods2.TabIndex = 13;
-            lblPaymentMethods2.Text = "Payment Methods";
+            lblPaymentMethods.AutoSize = true;
+            lblPaymentMethods.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            lblPaymentMethods.ForeColor = Color.Maroon;
+            lblPaymentMethods.Location = new Point(16, 1000);
+            lblPaymentMethods.Name = "lblPaymentMethods";
+            lblPaymentMethods.Size = new Size(173, 25);
+            lblPaymentMethods.TabIndex = 13;
+            lblPaymentMethods.Text = "Payment Methods";
             // 
             // pnlOnlinePayment
             // 
             pnlOnlinePayment.BackColor = Color.White;
             pnlOnlinePayment.BorderStyle = BorderStyle.FixedSingle;
+            pnlOnlinePayment.Controls.Add(pictureBox3);
             pnlOnlinePayment.Controls.Add(lblOnlinePayTitle);
             pnlOnlinePayment.Controls.Add(lblOnlinePayDesc);
             pnlOnlinePayment.Controls.Add(btnPayOnline);
-            pnlOnlinePayment.Location = new Point(19, 1040);
+            pnlOnlinePayment.Location = new Point(23, 1040);
             pnlOnlinePayment.Name = "pnlOnlinePayment";
             pnlOnlinePayment.Size = new Size(590, 130);
             pnlOnlinePayment.TabIndex = 14;
+            // 
+            // pictureBox3
+            // 
+            pictureBox3.BackColor = Color.Maroon;
+            pictureBox3.Image = Properties.Resources.card_in_use_32;
+            pictureBox3.Location = new Point(10, 10);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(54, 52);
+            pictureBox3.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox3.TabIndex = 3;
+            pictureBox3.TabStop = false;
             // 
             // lblOnlinePayTitle
             // 
@@ -1021,28 +1151,42 @@ namespace PUPAcadPortal
             // 
             // btnPayOnline
             // 
-            btnPayOnline.BackColor = Color.FromArgb(240, 240, 240);
+            btnPayOnline.BackColor = Color.Maroon;
             btnPayOnline.FlatAppearance.BorderColor = Color.FromArgb(200, 200, 200);
             btnPayOnline.FlatStyle = FlatStyle.Flat;
-            btnPayOnline.Font = new Font("Segoe UI", 10F);
+            btnPayOnline.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnPayOnline.ForeColor = SystemColors.ControlLightLight;
             btnPayOnline.Location = new Point(10, 80);
             btnPayOnline.Name = "btnPayOnline";
             btnPayOnline.Size = new Size(565, 35);
             btnPayOnline.TabIndex = 2;
             btnPayOnline.Text = "Pay Online";
             btnPayOnline.UseVisualStyleBackColor = false;
+            btnPayOnline.Click += btnPayOnline_Click;
             // 
             // pnlCashier
             // 
             pnlCashier.BackColor = Color.White;
             pnlCashier.BorderStyle = BorderStyle.FixedSingle;
+            pnlCashier.Controls.Add(pictureBox4);
             pnlCashier.Controls.Add(lblCashierTitle);
             pnlCashier.Controls.Add(lblCashierDesc);
             pnlCashier.Controls.Add(btnPaymentSlip);
-            pnlCashier.Location = new Point(625, 1040);
+            pnlCashier.Location = new Point(639, 1040);
             pnlCashier.Name = "pnlCashier";
             pnlCashier.Size = new Size(590, 130);
             pnlCashier.TabIndex = 15;
+            // 
+            // pictureBox4
+            // 
+            pictureBox4.BackColor = Color.Maroon;
+            pictureBox4.Image = Properties.Resources.cash_receiving_32;
+            pictureBox4.Location = new Point(10, 10);
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.Size = new Size(54, 52);
+            pictureBox4.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox4.TabIndex = 4;
+            pictureBox4.TabStop = false;
             // 
             // lblCashierTitle
             // 
@@ -1067,16 +1211,18 @@ namespace PUPAcadPortal
             // 
             // btnPaymentSlip
             // 
-            btnPaymentSlip.BackColor = Color.FromArgb(240, 240, 240);
+            btnPaymentSlip.BackColor = Color.Maroon;
             btnPaymentSlip.FlatAppearance.BorderColor = Color.FromArgb(200, 200, 200);
             btnPaymentSlip.FlatStyle = FlatStyle.Flat;
-            btnPaymentSlip.Font = new Font("Segoe UI", 10F);
+            btnPaymentSlip.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnPaymentSlip.ForeColor = Color.White;
             btnPaymentSlip.Location = new Point(10, 80);
             btnPaymentSlip.Name = "btnPaymentSlip";
             btnPaymentSlip.Size = new Size(565, 35);
             btnPaymentSlip.TabIndex = 2;
             btnPaymentSlip.Text = "Get Payment Slip";
             btnPaymentSlip.UseVisualStyleBackColor = false;
+            btnPaymentSlip.Click += btnPaymentSlip_Click;
             // 
             // lblEnrollStatus
             // 
@@ -1091,21 +1237,34 @@ namespace PUPAcadPortal
             // 
             // pnlEnrollStatusCard
             // 
+            pnlEnrollStatusCard.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pnlEnrollStatusCard.BackColor = Color.FromArgb(240, 255, 245);
             pnlEnrollStatusCard.BorderStyle = BorderStyle.FixedSingle;
+            pnlEnrollStatusCard.Controls.Add(pictureBox5);
             pnlEnrollStatusCard.Controls.Add(lblEnrollStatusTitle);
             pnlEnrollStatusCard.Controls.Add(lblEnrollStatusDesc);
             pnlEnrollStatusCard.Location = new Point(19, 1240);
             pnlEnrollStatusCard.Name = "pnlEnrollStatusCard";
-            pnlEnrollStatusCard.Size = new Size(1196, 80);
+            pnlEnrollStatusCard.Size = new Size(1210, 80);
             pnlEnrollStatusCard.TabIndex = 17;
+            // 
+            // pictureBox5
+            // 
+            pictureBox5.BackColor = Color.Green;
+            pictureBox5.Image = Properties.Resources.Enrollment2;
+            pictureBox5.Location = new Point(13, 13);
+            pictureBox5.Name = "pictureBox5";
+            pictureBox5.Size = new Size(54, 52);
+            pictureBox5.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox5.TabIndex = 4;
+            pictureBox5.TabStop = false;
             // 
             // lblEnrollStatusTitle
             // 
             lblEnrollStatusTitle.AutoSize = true;
             lblEnrollStatusTitle.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             lblEnrollStatusTitle.ForeColor = Color.Green;
-            lblEnrollStatusTitle.Location = new Point(70, 15);
+            lblEnrollStatusTitle.Location = new Point(73, 18);
             lblEnrollStatusTitle.Name = "lblEnrollStatusTitle";
             lblEnrollStatusTitle.Size = new Size(132, 20);
             lblEnrollStatusTitle.TabIndex = 0;
@@ -1116,7 +1275,7 @@ namespace PUPAcadPortal
             lblEnrollStatusDesc.AutoSize = true;
             lblEnrollStatusDesc.Font = new Font("Segoe UI", 9F);
             lblEnrollStatusDesc.ForeColor = Color.Green;
-            lblEnrollStatusDesc.Location = new Point(70, 38);
+            lblEnrollStatusDesc.Location = new Point(73, 41);
             lblEnrollStatusDesc.Name = "lblEnrollStatusDesc";
             lblEnrollStatusDesc.Size = new Size(380, 15);
             lblEnrollStatusDesc.TabIndex = 1;
@@ -1126,179 +1285,58 @@ namespace PUPAcadPortal
             // 
             pnlEnrollContent.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pnlEnrollContent.BackColor = SystemColors.Control;
+            pnlEnrollContent.Controls.Add(btnSaveAndAssess);
+            pnlEnrollContent.Controls.Add(pnlEnrollmentConfirmedDGV);
+            pnlEnrollContent.Controls.Add(btnDownloadCOR);
             pnlEnrollContent.Controls.Add(btnEnrollSelectAll);
+            pnlEnrollContent.Controls.Add(pnlContainerEnrollmentDGV);
             pnlEnrollContent.Controls.Add(pnlEnrollRightCard);
             pnlEnrollContent.Controls.Add(pnlEnrollMiddleCard);
             pnlEnrollContent.Controls.Add(pnlEnrollLeftCard);
-            pnlEnrollContent.Controls.Add(panel2);
-            pnlEnrollContent.Controls.Add(dgvEnrollment);
+            pnlEnrollContent.Controls.Add(pnlTotalUnits);
             pnlEnrollContent.Controls.Add(pnlEnrollSearchbar);
             pnlEnrollContent.Controls.Add(lblAcademicYear);
             pnlEnrollContent.Controls.Add(label5);
-            pnlEnrollContent.Location = new Point(579, 142);
+            pnlEnrollContent.Location = new Point(257, 72);
             pnlEnrollContent.Margin = new Padding(0);
             pnlEnrollContent.Name = "pnlEnrollContent";
-            pnlEnrollContent.Size = new Size(1212, 809);
+            pnlEnrollContent.Size = new Size(1256, 809);
             pnlEnrollContent.TabIndex = 5;
             pnlEnrollContent.Visible = false;
             // 
-            // btnEnrollSelectAll
+            // btnSaveAndAssess
             // 
-            btnEnrollSelectAll.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnEnrollSelectAll.Location = new Point(17, 156);
-            btnEnrollSelectAll.Name = "btnEnrollSelectAll";
-            btnEnrollSelectAll.Size = new Size(75, 23);
-            btnEnrollSelectAll.TabIndex = 18;
-            btnEnrollSelectAll.Text = "Select All";
-            btnEnrollSelectAll.UseVisualStyleBackColor = true;
-            btnEnrollSelectAll.Click += btnEnrollSelectAll_Click;
+            btnSaveAndAssess.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnSaveAndAssess.BackColor = SystemColors.ControlLight;
+            btnSaveAndAssess.FlatStyle = FlatStyle.Flat;
+            btnSaveAndAssess.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSaveAndAssess.ForeColor = Color.Black;
+            btnSaveAndAssess.Location = new Point(1117, 502);
+            btnSaveAndAssess.Name = "btnSaveAndAssess";
+            btnSaveAndAssess.Size = new Size(104, 23);
+            btnSaveAndAssess.TabIndex = 22;
+            btnSaveAndAssess.Text = "Save and Assess";
+            btnSaveAndAssess.UseVisualStyleBackColor = false;
             // 
-            // pnlEnrollRightCard
+            // pnlEnrollmentConfirmedDGV
             // 
-            pnlEnrollRightCard.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            pnlEnrollRightCard.BackColor = Color.FromArgb(240, 255, 245);
-            pnlEnrollRightCard.BorderStyle = BorderStyle.Fixed3D;
-            pnlEnrollRightCard.Controls.Add(label12);
-            pnlEnrollRightCard.Controls.Add(label13);
-            pnlEnrollRightCard.Location = new Point(17, 512);
-            pnlEnrollRightCard.Name = "pnlEnrollRightCard";
-            pnlEnrollRightCard.Size = new Size(384, 70);
-            pnlEnrollRightCard.TabIndex = 17;
+            pnlEnrollmentConfirmedDGV.AutoScroll = true;
+            pnlEnrollmentConfirmedDGV.Controls.Add(dgvEnrollmentConfirmed);
+            pnlEnrollmentConfirmedDGV.Location = new Point(18, 675);
+            pnlEnrollmentConfirmedDGV.Name = "pnlEnrollmentConfirmedDGV";
+            pnlEnrollmentConfirmedDGV.Size = new Size(1205, 300);
+            pnlEnrollmentConfirmedDGV.TabIndex = 21;
             // 
-            // label12
+            // dgvEnrollmentConfirmed
             // 
-            label12.AutoSize = true;
-            label12.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold);
-            label12.ForeColor = Color.Green;
-            label12.Location = new Point(37, 23);
-            label12.Name = "label12";
-            label12.Size = new Size(105, 32);
-            label12.TabIndex = 1;
-            label12.Text = "BSIT 2-2";
-            // 
-            // label13
-            // 
-            label13.AutoSize = true;
-            label13.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            label13.ForeColor = Color.Green;
-            label13.Location = new Point(14, 7);
-            label13.Name = "label13";
-            label13.Size = new Size(89, 15);
-            label13.TabIndex = 0;
-            label13.Text = "Current Section";
-            // 
-            // pnlEnrollMiddleCard
-            // 
-            pnlEnrollMiddleCard.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            pnlEnrollMiddleCard.BackColor = Color.FromArgb(250, 240, 255);
-            pnlEnrollMiddleCard.BorderStyle = BorderStyle.Fixed3D;
-            pnlEnrollMiddleCard.Controls.Add(lblMaximumUnitsValue);
-            pnlEnrollMiddleCard.Controls.Add(label11);
-            pnlEnrollMiddleCard.Location = new Point(425, 512);
-            pnlEnrollMiddleCard.Name = "pnlEnrollMiddleCard";
-            pnlEnrollMiddleCard.Size = new Size(384, 70);
-            pnlEnrollMiddleCard.TabIndex = 16;
-            // 
-            // lblMaximumUnitsValue
-            // 
-            lblMaximumUnitsValue.AutoSize = true;
-            lblMaximumUnitsValue.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold);
-            lblMaximumUnitsValue.ForeColor = Color.BlueViolet;
-            lblMaximumUnitsValue.Location = new Point(32, 22);
-            lblMaximumUnitsValue.Name = "lblMaximumUnitsValue";
-            lblMaximumUnitsValue.Size = new Size(103, 32);
-            lblMaximumUnitsValue.TabIndex = 1;
-            lblMaximumUnitsValue.Text = "23 Units";
-            // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            label11.ForeColor = Color.BlueViolet;
-            label11.Location = new Point(12, 7);
-            label11.Name = "label11";
-            label11.Size = new Size(92, 15);
-            label11.TabIndex = 0;
-            label11.Text = "Maximum Units";
-            // 
-            // pnlEnrollLeftCard
-            // 
-            pnlEnrollLeftCard.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            pnlEnrollLeftCard.BackColor = Color.FromArgb(240, 242, 255);
-            pnlEnrollLeftCard.BorderStyle = BorderStyle.Fixed3D;
-            pnlEnrollLeftCard.Controls.Add(label8);
-            pnlEnrollLeftCard.Controls.Add(label9);
-            pnlEnrollLeftCard.Location = new Point(838, 512);
-            pnlEnrollLeftCard.Name = "pnlEnrollLeftCard";
-            pnlEnrollLeftCard.Size = new Size(384, 70);
-            pnlEnrollLeftCard.TabIndex = 15;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold);
-            label8.ForeColor = Color.MidnightBlue;
-            label8.Location = new Point(32, 22);
-            label8.Name = "label8";
-            label8.Size = new Size(244, 32);
-            label8.TabIndex = 1;
-            label8.Text = "February 1 - 11,  2026";
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            label9.ForeColor = Color.MidnightBlue;
-            label9.Location = new Point(15, 7);
-            label9.Name = "label9";
-            label9.Size = new Size(102, 15);
-            label9.TabIndex = 0;
-            label9.Text = "Enrollment Period";
-            // 
-            // panel2
-            // 
-            panel2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            panel2.BackColor = Color.FromArgb(255, 193, 7);
-            panel2.BorderStyle = BorderStyle.Fixed3D;
-            panel2.Controls.Add(lblEnrollTotalUnitsValue);
-            panel2.Controls.Add(label6);
-            panel2.Location = new Point(-1245, 13);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(77, 70);
-            panel2.TabIndex = 14;
-            // 
-            // lblEnrollTotalUnitsValue
-            // 
-            lblEnrollTotalUnitsValue.AutoSize = true;
-            lblEnrollTotalUnitsValue.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold);
-            lblEnrollTotalUnitsValue.Location = new Point(32, 22);
-            lblEnrollTotalUnitsValue.Name = "lblEnrollTotalUnitsValue";
-            lblEnrollTotalUnitsValue.Size = new Size(34, 32);
-            lblEnrollTotalUnitsValue.TabIndex = 1;
-            lblEnrollTotalUnitsValue.Text = "11";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            label6.Location = new Point(3, 7);
-            label6.Name = "label6";
-            label6.Size = new Size(63, 15);
-            label6.TabIndex = 0;
-            label6.Text = "Total Units";
-            // 
-            // dgvEnrollment
-            // 
-            dgvEnrollment.AllowUserToAddRows = false;
-            dgvEnrollment.AllowUserToDeleteRows = false;
-            dgvEnrollment.AllowUserToResizeColumns = false;
-            dgvEnrollment.AllowUserToResizeRows = false;
-            dgvEnrollment.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            dgvEnrollment.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvEnrollment.BackgroundColor = Color.White;
-            dgvEnrollment.BorderStyle = BorderStyle.None;
-            dgvEnrollment.CellBorderStyle = DataGridViewCellBorderStyle.None;
-            dgvEnrollment.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dgvEnrollmentConfirmed.AllowUserToAddRows = false;
+            dgvEnrollmentConfirmed.AllowUserToDeleteRows = false;
+            dgvEnrollmentConfirmed.AllowUserToResizeColumns = false;
+            dgvEnrollmentConfirmed.AllowUserToResizeRows = false;
+            dgvEnrollmentConfirmed.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvEnrollmentConfirmed.BackgroundColor = Color.White;
+            dgvEnrollmentConfirmed.CellBorderStyle = DataGridViewCellBorderStyle.None;
+            dgvEnrollmentConfirmed.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = Color.Maroon;
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
@@ -1306,17 +1344,159 @@ namespace PUPAcadPortal
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            dgvEnrollment.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dgvEnrollmentConfirmed.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dgvEnrollmentConfirmed.ColumnHeadersHeight = 29;
+            dgvEnrollmentConfirmed.Columns.AddRange(new DataGridViewColumn[] { colCode2, colourseTitle2, colUnits2, colSchedule2, colStatus2, colAction2 });
+            dgvEnrollmentConfirmed.Dock = DockStyle.Fill;
+            dgvEnrollmentConfirmed.EnableHeadersVisualStyles = false;
+            dgvEnrollmentConfirmed.GridColor = Color.White;
+            dgvEnrollmentConfirmed.Location = new Point(0, 0);
+            dgvEnrollmentConfirmed.Name = "dgvEnrollmentConfirmed";
+            dgvEnrollmentConfirmed.RowHeadersVisible = false;
+            dgvEnrollmentConfirmed.RowHeadersWidth = 51;
+            dgvEnrollmentConfirmed.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvEnrollmentConfirmed.Size = new Size(1205, 300);
+            dgvEnrollmentConfirmed.TabIndex = 13;
+            dgvEnrollmentConfirmed.Visible = false;
+            // 
+            // colCode2
+            // 
+            colCode2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            colCode2.FillWeight = 92.978F;
+            colCode2.HeaderText = "Code";
+            colCode2.MinimumWidth = 6;
+            colCode2.Name = "colCode2";
+            colCode2.ReadOnly = true;
+            colCode2.Resizable = DataGridViewTriState.False;
+            colCode2.Width = 120;
+            // 
+            // colourseTitle2
+            // 
+            colourseTitle2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            colourseTitle2.FillWeight = 92.978F;
+            colourseTitle2.HeaderText = "Course Title";
+            colourseTitle2.MinimumWidth = 6;
+            colourseTitle2.Name = "colourseTitle2";
+            colourseTitle2.ReadOnly = true;
+            colourseTitle2.Resizable = DataGridViewTriState.False;
+            colourseTitle2.Width = 300;
+            // 
+            // colUnits2
+            // 
+            colUnits2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            colUnits2.DefaultCellStyle = dataGridViewCellStyle3;
+            colUnits2.FillWeight = 92.978F;
+            colUnits2.HeaderText = "Units";
+            colUnits2.MinimumWidth = 6;
+            colUnits2.Name = "colUnits2";
+            colUnits2.ReadOnly = true;
+            colUnits2.Resizable = DataGridViewTriState.False;
+            colUnits2.Width = 90;
+            // 
+            // colSchedule2
+            // 
+            colSchedule2.FillWeight = 92.978F;
+            colSchedule2.HeaderText = "Schedule";
+            colSchedule2.MinimumWidth = 6;
+            colSchedule2.Name = "colSchedule2";
+            colSchedule2.ReadOnly = true;
+            colSchedule2.Resizable = DataGridViewTriState.False;
+            // 
+            // colStatus2
+            // 
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            colStatus2.DefaultCellStyle = dataGridViewCellStyle4;
+            colStatus2.FillWeight = 92.978F;
+            colStatus2.HeaderText = "Status";
+            colStatus2.MinimumWidth = 6;
+            colStatus2.Name = "colStatus2";
+            colStatus2.ReadOnly = true;
+            colStatus2.Resizable = DataGridViewTriState.False;
+            // 
+            // colAction2
+            // 
+            colAction2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 9F, FontStyle.Underline);
+            dataGridViewCellStyle5.ForeColor = Color.Maroon;
+            colAction2.DefaultCellStyle = dataGridViewCellStyle5;
+            colAction2.HeaderText = "Action";
+            colAction2.MinimumWidth = 6;
+            colAction2.Name = "colAction2";
+            colAction2.ReadOnly = true;
+            colAction2.Width = 125;
+            // 
+            // btnDownloadCOR
+            // 
+            btnDownloadCOR.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            btnDownloadCOR.BackColor = Color.DarkRed;
+            btnDownloadCOR.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnDownloadCOR.ForeColor = SystemColors.ControlLightLight;
+            btnDownloadCOR.Image = Properties.Resources.download_2_16;
+            btnDownloadCOR.Location = new Point(795, 28);
+            btnDownloadCOR.Name = "btnDownloadCOR";
+            btnDownloadCOR.Size = new Size(325, 41);
+            btnDownloadCOR.TabIndex = 19;
+            btnDownloadCOR.Text = " Certificate of Registration";
+            btnDownloadCOR.TextAlign = ContentAlignment.MiddleRight;
+            btnDownloadCOR.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnDownloadCOR.UseVisualStyleBackColor = false;
+            btnDownloadCOR.Click += btnDownloadCOR_Click;
+            // 
+            // btnEnrollSelectAll
+            // 
+            btnEnrollSelectAll.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnEnrollSelectAll.BackColor = SystemColors.ControlLight;
+            btnEnrollSelectAll.FlatStyle = FlatStyle.Flat;
+            btnEnrollSelectAll.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnEnrollSelectAll.ForeColor = Color.Black;
+            btnEnrollSelectAll.Location = new Point(17, 156);
+            btnEnrollSelectAll.Name = "btnEnrollSelectAll";
+            btnEnrollSelectAll.Size = new Size(75, 23);
+            btnEnrollSelectAll.TabIndex = 18;
+            btnEnrollSelectAll.Text = "Select All";
+            btnEnrollSelectAll.UseVisualStyleBackColor = false;
+            btnEnrollSelectAll.Click += btnEnrollSelectAll_Click;
+            // 
+            // pnlContainerEnrollmentDGV
+            // 
+            pnlContainerEnrollmentDGV.AutoScroll = true;
+            pnlContainerEnrollmentDGV.Controls.Add(dgvEnrollment);
+            pnlContainerEnrollmentDGV.Location = new Point(18, 190);
+            pnlContainerEnrollmentDGV.Name = "pnlContainerEnrollmentDGV";
+            pnlContainerEnrollmentDGV.Size = new Size(1205, 300);
+            pnlContainerEnrollmentDGV.TabIndex = 20;
+            // 
+            // dgvEnrollment
+            // 
+            dgvEnrollment.AllowUserToAddRows = false;
+            dgvEnrollment.AllowUserToDeleteRows = false;
+            dgvEnrollment.AllowUserToResizeColumns = false;
+            dgvEnrollment.AllowUserToResizeRows = false;
+            dgvEnrollment.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvEnrollment.BackgroundColor = Color.White;
+            dgvEnrollment.CellBorderStyle = DataGridViewCellBorderStyle.None;
+            dgvEnrollment.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = Color.Maroon;
+            dataGridViewCellStyle6.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle6.ForeColor = Color.White;
+            dataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
+            dgvEnrollment.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             dgvEnrollment.ColumnHeadersHeight = 29;
             dgvEnrollment.Columns.AddRange(new DataGridViewColumn[] { colSelect, colCode, colTitle, colUnits, colSchedule, colStatus, colAction });
+            dgvEnrollment.Dock = DockStyle.Fill;
             dgvEnrollment.EnableHeadersVisualStyles = false;
             dgvEnrollment.GridColor = Color.White;
-            dgvEnrollment.Location = new Point(17, 187);
+            dgvEnrollment.Location = new Point(0, 0);
             dgvEnrollment.Name = "dgvEnrollment";
             dgvEnrollment.RowHeadersVisible = false;
             dgvEnrollment.RowHeadersWidth = 51;
             dgvEnrollment.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvEnrollment.Size = new Size(1161, 300);
+            dgvEnrollment.Size = new Size(1205, 300);
             dgvEnrollment.TabIndex = 13;
             dgvEnrollment.CellClick += dgvEnrollment_CellClick;
             dgvEnrollment.CellPainting += dgvEnrollment_CellPainting;
@@ -1357,8 +1537,8 @@ namespace PUPAcadPortal
             // colUnits
             // 
             colUnits.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            colUnits.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            colUnits.DefaultCellStyle = dataGridViewCellStyle7;
             colUnits.FillWeight = 92.978F;
             colUnits.HeaderText = "Units";
             colUnits.MinimumWidth = 6;
@@ -1378,8 +1558,8 @@ namespace PUPAcadPortal
             // 
             // colStatus
             // 
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            colStatus.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            colStatus.DefaultCellStyle = dataGridViewCellStyle8;
             colStatus.FillWeight = 92.978F;
             colStatus.HeaderText = "Status";
             colStatus.MinimumWidth = 6;
@@ -1390,57 +1570,205 @@ namespace PUPAcadPortal
             // colAction
             // 
             colAction.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.Font = new Font("Segoe UI", 9F, FontStyle.Underline);
+            dataGridViewCellStyle9.ForeColor = Color.Maroon;
+            colAction.DefaultCellStyle = dataGridViewCellStyle9;
             colAction.HeaderText = "Action";
             colAction.MinimumWidth = 6;
             colAction.Name = "colAction";
             colAction.ReadOnly = true;
             colAction.Width = 125;
             // 
+            // pnlEnrollRightCard
+            // 
+            pnlEnrollRightCard.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            pnlEnrollRightCard.BackColor = SystemColors.ControlLightLight;
+            pnlEnrollRightCard.BorderStyle = BorderStyle.Fixed3D;
+            pnlEnrollRightCard.Controls.Add(lblCurrentSectionIndicator);
+            pnlEnrollRightCard.Controls.Add(label13);
+            pnlEnrollRightCard.Location = new Point(18, 557);
+            pnlEnrollRightCard.Name = "pnlEnrollRightCard";
+            pnlEnrollRightCard.Size = new Size(384, 70);
+            pnlEnrollRightCard.TabIndex = 17;
+            // 
+            // lblCurrentSectionIndicator
+            // 
+            lblCurrentSectionIndicator.AutoSize = true;
+            lblCurrentSectionIndicator.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblCurrentSectionIndicator.ForeColor = Color.Black;
+            lblCurrentSectionIndicator.Location = new Point(37, 23);
+            lblCurrentSectionIndicator.Name = "lblCurrentSectionIndicator";
+            lblCurrentSectionIndicator.Size = new Size(109, 32);
+            lblCurrentSectionIndicator.TabIndex = 1;
+            lblCurrentSectionIndicator.Text = "BSIT 2-2";
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.BackColor = Color.Transparent;
+            label13.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label13.ForeColor = Color.Maroon;
+            label13.Location = new Point(14, 7);
+            label13.Name = "label13";
+            label13.Size = new Size(102, 17);
+            label13.TabIndex = 0;
+            label13.Text = "Current Section";
+            // 
+            // pnlEnrollMiddleCard
+            // 
+            pnlEnrollMiddleCard.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            pnlEnrollMiddleCard.BackColor = SystemColors.ControlLightLight;
+            pnlEnrollMiddleCard.BorderStyle = BorderStyle.Fixed3D;
+            pnlEnrollMiddleCard.Controls.Add(label11);
+            pnlEnrollMiddleCard.Controls.Add(lblMaximumUnitsValue);
+            pnlEnrollMiddleCard.Location = new Point(426, 557);
+            pnlEnrollMiddleCard.Name = "pnlEnrollMiddleCard";
+            pnlEnrollMiddleCard.Size = new Size(384, 70);
+            pnlEnrollMiddleCard.TabIndex = 16;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.BackColor = Color.Transparent;
+            label11.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label11.ForeColor = Color.Maroon;
+            label11.Location = new Point(12, 7);
+            label11.Name = "label11";
+            label11.Size = new Size(104, 17);
+            label11.TabIndex = 0;
+            label11.Text = "Maximum Units";
+            // 
+            // lblMaximumUnitsValue
+            // 
+            lblMaximumUnitsValue.AutoSize = true;
+            lblMaximumUnitsValue.BackColor = Color.Transparent;
+            lblMaximumUnitsValue.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblMaximumUnitsValue.ForeColor = Color.Black;
+            lblMaximumUnitsValue.Location = new Point(32, 22);
+            lblMaximumUnitsValue.Name = "lblMaximumUnitsValue";
+            lblMaximumUnitsValue.Size = new Size(108, 32);
+            lblMaximumUnitsValue.TabIndex = 1;
+            lblMaximumUnitsValue.Text = "23 Units";
+            // 
+            // pnlEnrollLeftCard
+            // 
+            pnlEnrollLeftCard.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            pnlEnrollLeftCard.BackColor = Color.White;
+            pnlEnrollLeftCard.Controls.Add(label9);
+            pnlEnrollLeftCard.Controls.Add(label8);
+            pnlEnrollLeftCard.Location = new Point(839, 557);
+            pnlEnrollLeftCard.Name = "pnlEnrollLeftCard";
+            pnlEnrollLeftCard.Size = new Size(386, 70);
+            pnlEnrollLeftCard.TabIndex = 15;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.BackColor = Color.Transparent;
+            label9.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
+            label9.ForeColor = Color.Maroon;
+            label9.Location = new Point(15, 7);
+            label9.Name = "label9";
+            label9.Size = new Size(117, 17);
+            label9.TabIndex = 0;
+            label9.Text = "Enrollment Period";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.BackColor = Color.Transparent;
+            label8.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+            label8.ForeColor = Color.Black;
+            label8.Location = new Point(32, 22);
+            label8.Name = "label8";
+            label8.Size = new Size(266, 32);
+            label8.TabIndex = 1;
+            label8.Text = "February 1 - 11,  2026";
+            // 
+            // pnlTotalUnits
+            // 
+            pnlTotalUnits.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            pnlTotalUnits.BackColor = Color.FromArgb(255, 193, 7);
+            pnlTotalUnits.BorderStyle = BorderStyle.Fixed3D;
+            pnlTotalUnits.Controls.Add(lblEnrollTotalUnitsValue);
+            pnlTotalUnits.Controls.Add(label6);
+            pnlTotalUnits.Location = new Point(1145, 13);
+            pnlTotalUnits.Name = "pnlTotalUnits";
+            pnlTotalUnits.Size = new Size(77, 70);
+            pnlTotalUnits.TabIndex = 14;
+            // 
+            // lblEnrollTotalUnitsValue
+            // 
+            lblEnrollTotalUnitsValue.AutoSize = true;
+            lblEnrollTotalUnitsValue.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold);
+            lblEnrollTotalUnitsValue.Location = new Point(32, 22);
+            lblEnrollTotalUnitsValue.Name = "lblEnrollTotalUnitsValue";
+            lblEnrollTotalUnitsValue.Size = new Size(34, 32);
+            lblEnrollTotalUnitsValue.TabIndex = 1;
+            lblEnrollTotalUnitsValue.Text = "11";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            label6.Location = new Point(3, 7);
+            label6.Name = "label6";
+            label6.Size = new Size(63, 15);
+            label6.TabIndex = 0;
+            label6.Text = "Total Units";
+            // 
             // pnlEnrollSearchbar
             // 
             pnlEnrollSearchbar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            pnlEnrollSearchbar.BackColor = SystemColors.ControlLightLight;
+            pnlEnrollSearchbar.BackColor = SystemColors.ControlLight;
             pnlEnrollSearchbar.BorderStyle = BorderStyle.FixedSingle;
             pnlEnrollSearchbar.Controls.Add(cmbEnrollFilter);
             pnlEnrollSearchbar.Controls.Add(btnEnrollSearch);
             pnlEnrollSearchbar.Controls.Add(txtEnrollSearch);
-            pnlEnrollSearchbar.Location = new Point(16, 105);
+            pnlEnrollSearchbar.Location = new Point(16, 101);
             pnlEnrollSearchbar.Margin = new Padding(3, 2, 3, 2);
             pnlEnrollSearchbar.Name = "pnlEnrollSearchbar";
-            pnlEnrollSearchbar.Size = new Size(1161, 46);
+            pnlEnrollSearchbar.Size = new Size(1205, 50);
             pnlEnrollSearchbar.TabIndex = 12;
             // 
             // cmbEnrollFilter
             // 
+            cmbEnrollFilter.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cmbEnrollFilter.FormattingEnabled = true;
             cmbEnrollFilter.Items.AddRange(new object[] { "All", "Course Code ", "Course Title" });
-            cmbEnrollFilter.Location = new Point(16, 11);
+            cmbEnrollFilter.Location = new Point(10, 10);
             cmbEnrollFilter.Margin = new Padding(3, 2, 3, 2);
             cmbEnrollFilter.Name = "cmbEnrollFilter";
-            cmbEnrollFilter.Size = new Size(133, 23);
+            cmbEnrollFilter.Size = new Size(133, 29);
             cmbEnrollFilter.TabIndex = 10;
             // 
             // btnEnrollSearch
             // 
             btnEnrollSearch.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnEnrollSearch.Location = new Point(1064, 10);
+            btnEnrollSearch.BackColor = Color.Black;
+            btnEnrollSearch.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnEnrollSearch.ForeColor = SystemColors.ControlLightLight;
+            btnEnrollSearch.Location = new Point(1106, 6);
             btnEnrollSearch.Margin = new Padding(3, 2, 3, 2);
             btnEnrollSearch.Name = "btnEnrollSearch";
-            btnEnrollSearch.Size = new Size(82, 25);
+            btnEnrollSearch.Size = new Size(86, 36);
             btnEnrollSearch.TabIndex = 11;
             btnEnrollSearch.Text = "Search";
-            btnEnrollSearch.UseVisualStyleBackColor = true;
+            btnEnrollSearch.UseVisualStyleBackColor = false;
             btnEnrollSearch.Click += btnEnrollSearch_Click;
             // 
             // txtEnrollSearch
             // 
             txtEnrollSearch.AccessibleDescription = "";
             txtEnrollSearch.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtEnrollSearch.Location = new Point(155, 10);
+            txtEnrollSearch.BorderStyle = BorderStyle.FixedSingle;
+            txtEnrollSearch.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtEnrollSearch.Location = new Point(149, 10);
             txtEnrollSearch.Margin = new Padding(3, 2, 3, 2);
             txtEnrollSearch.Name = "txtEnrollSearch";
             txtEnrollSearch.PlaceholderText = "Search course here by code or title...";
-            txtEnrollSearch.Size = new Size(906, 23);
+            txtEnrollSearch.Size = new Size(950, 29);
             txtEnrollSearch.TabIndex = 9;
             txtEnrollSearch.KeyDown += txtEnrollSearch_KeyDown;
             // 
@@ -1470,13 +1798,71 @@ namespace PUPAcadPortal
             // 
             pnlViewDetails.BackColor = Color.White;
             pnlViewDetails.BorderStyle = BorderStyle.FixedSingle;
+            pnlViewDetails.Controls.Add(txtDetailSchedule);
+            pnlViewDetails.Controls.Add(lblDetailTitle);
+            pnlViewDetails.Controls.Add(lblDetailUnits);
+            pnlViewDetails.Controls.Add(lblDetailStatus);
+            pnlViewDetails.Controls.Add(lblDetailCode);
             pnlViewDetails.Controls.Add(btnEnrollCloseDetails);
-            pnlViewDetails.Controls.Add(label7);
+            pnlViewDetails.Controls.Add(lblSubjectDetails);
             pnlViewDetails.Location = new Point(269, 71);
             pnlViewDetails.Name = "pnlViewDetails";
             pnlViewDetails.Size = new Size(498, 410);
             pnlViewDetails.TabIndex = 0;
             pnlViewDetails.Visible = false;
+            // 
+            // txtDetailSchedule
+            // 
+            txtDetailSchedule.BackColor = SystemColors.ControlLightLight;
+            txtDetailSchedule.BorderStyle = BorderStyle.None;
+            txtDetailSchedule.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtDetailSchedule.Location = new Point(15, 214);
+            txtDetailSchedule.Multiline = true;
+            txtDetailSchedule.Name = "txtDetailSchedule";
+            txtDetailSchedule.ReadOnly = true;
+            txtDetailSchedule.Size = new Size(445, 49);
+            txtDetailSchedule.TabIndex = 7;
+            txtDetailSchedule.Text = "Schedule: ";
+            // 
+            // lblDetailTitle
+            // 
+            lblDetailTitle.AutoSize = true;
+            lblDetailTitle.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblDetailTitle.Location = new Point(14, 99);
+            lblDetailTitle.Name = "lblDetailTitle";
+            lblDetailTitle.Size = new Size(99, 21);
+            lblDetailTitle.TabIndex = 6;
+            lblDetailTitle.Text = "Course Title: ";
+            // 
+            // lblDetailUnits
+            // 
+            lblDetailUnits.AutoSize = true;
+            lblDetailUnits.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblDetailUnits.Location = new Point(14, 134);
+            lblDetailUnits.Name = "lblDetailUnits";
+            lblDetailUnits.Size = new Size(53, 21);
+            lblDetailUnits.TabIndex = 5;
+            lblDetailUnits.Text = "Units: ";
+            // 
+            // lblDetailStatus
+            // 
+            lblDetailStatus.AutoSize = true;
+            lblDetailStatus.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblDetailStatus.Location = new Point(15, 172);
+            lblDetailStatus.Name = "lblDetailStatus";
+            lblDetailStatus.Size = new Size(59, 21);
+            lblDetailStatus.TabIndex = 3;
+            lblDetailStatus.Text = "Status: ";
+            // 
+            // lblDetailCode
+            // 
+            lblDetailCode.AutoSize = true;
+            lblDetailCode.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblDetailCode.Location = new Point(14, 65);
+            lblDetailCode.Name = "lblDetailCode";
+            lblDetailCode.Size = new Size(53, 21);
+            lblDetailCode.TabIndex = 2;
+            lblDetailCode.Text = "Code: ";
             // 
             // btnEnrollCloseDetails
             // 
@@ -1488,27 +1874,39 @@ namespace PUPAcadPortal
             btnEnrollCloseDetails.UseVisualStyleBackColor = true;
             btnEnrollCloseDetails.Click += btnEnrollCloseDetails_Click;
             // 
-            // label7
+            // lblSubjectDetails
             // 
-            label7.AutoSize = true;
-            label7.Location = new Point(14, 21);
-            label7.Name = "label7";
-            label7.Size = new Size(84, 15);
-            label7.TabIndex = 0;
-            label7.Text = "Subject Details";
+            lblSubjectDetails.AutoSize = true;
+            lblSubjectDetails.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            lblSubjectDetails.Location = new Point(14, 21);
+            lblSubjectDetails.Name = "lblSubjectDetails";
+            lblSubjectDetails.Size = new Size(167, 30);
+            lblSubjectDetails.TabIndex = 0;
+            lblSubjectDetails.Text = "Subject Details";
             // 
-            // panel3
+            // pnlContainerStudentPortal
             // 
-            panel3.Controls.Add(pnlAccountsContentHolder);
-            panel3.Controls.Add(pnlDashboardContent);
-            panel3.Controls.Add(pnlEnrollContent);
-            panel3.Controls.Add(pnlHeader);
-            panel3.Controls.Add(pnlSidebar);
-            panel3.Dock = DockStyle.Fill;
-            panel3.Location = new Point(0, 0);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(1512, 881);
-            panel3.TabIndex = 0;
+            pnlContainerStudentPortal.Controls.Add(pnlEnrollContent);
+            pnlContainerStudentPortal.Controls.Add(pnlAccountsContentHolder);
+            pnlContainerStudentPortal.Controls.Add(pnlDashboardContent);
+            pnlContainerStudentPortal.Controls.Add(pnlHeader);
+            pnlContainerStudentPortal.Controls.Add(pnlSidebar);
+            pnlContainerStudentPortal.Dock = DockStyle.Fill;
+            pnlContainerStudentPortal.Location = new Point(0, 0);
+            pnlContainerStudentPortal.Name = "pnlContainerStudentPortal";
+            pnlContainerStudentPortal.Size = new Size(1512, 881);
+            pnlContainerStudentPortal.TabIndex = 0;
+            // 
+            // pnlAccountsContentHolder
+            // 
+            pnlAccountsContentHolder.AutoScroll = true;
+            pnlAccountsContentHolder.BackColor = SystemColors.ActiveCaption;
+            pnlAccountsContentHolder.Controls.Add(pnlAccountsContent);
+            pnlAccountsContentHolder.Location = new Point(256, 72);
+            pnlAccountsContentHolder.Name = "pnlAccountsContentHolder";
+            pnlAccountsContentHolder.Size = new Size(1256, 809);
+            pnlAccountsContentHolder.TabIndex = 6;
+            pnlAccountsContentHolder.Visible = false;
             // 
             // pnlAccountsContentHolder
             // 
@@ -1526,15 +1924,15 @@ namespace PUPAcadPortal
             pnlDashboardContent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pnlDashboardContent.AutoScroll = true;
             pnlDashboardContent.BackColor = SystemColors.Control;
-            pnlDashboardContent.Controls.Add(panel22);
-            pnlDashboardContent.Controls.Add(panel18);
-            pnlDashboardContent.Controls.Add(panel19);
-            pnlDashboardContent.Controls.Add(panel17);
-            pnlDashboardContent.Controls.Add(panel33);
-            pnlDashboardContent.Controls.Add(panel34);
-            pnlDashboardContent.Controls.Add(panel35);
-            pnlDashboardContent.Controls.Add(panel36);
-            pnlDashboardContent.Controls.Add(panel14);
+            pnlDashboardContent.Controls.Add(pnlDashboardSpaceProvider);
+            pnlDashboardContent.Controls.Add(pnlAnnouncementsContainer);
+            pnlDashboardContent.Controls.Add(pnlUpcomingEventsContainer);
+            pnlDashboardContent.Controls.Add(pnlQuickActionsContainer);
+            pnlDashboardContent.Controls.Add(pnlEnrolleft);
+            pnlDashboardContent.Controls.Add(pnlCurrentSemesterCard);
+            pnlDashboardContent.Controls.Add(pnlEnrollmentStatusCard);
+            pnlDashboardContent.Controls.Add(pnlEnrolledUnitsCard);
+            pnlDashboardContent.Controls.Add(pnlDashboardGreetingsContainer);
             pnlDashboardContent.Location = new Point(257, 72);
             pnlDashboardContent.Margin = new Padding(0);
             pnlDashboardContent.Name = "pnlDashboardContent";
@@ -1542,25 +1940,26 @@ namespace PUPAcadPortal
             pnlDashboardContent.TabIndex = 4;
             pnlDashboardContent.Visible = false;
             // 
-            // panel22
+            // pnlDashboardSpaceProvider
             // 
-            panel22.BackColor = SystemColors.Control;
-            panel22.Location = new Point(23, 983);
-            panel22.Name = "panel22";
-            panel22.Size = new Size(1195, 331);
-            panel22.TabIndex = 28;
+            pnlDashboardSpaceProvider.BackColor = SystemColors.Control;
+            pnlDashboardSpaceProvider.Location = new Point(23, 983);
+            pnlDashboardSpaceProvider.Name = "pnlDashboardSpaceProvider";
+            pnlDashboardSpaceProvider.Size = new Size(1195, 331);
+            pnlDashboardSpaceProvider.TabIndex = 28;
             // 
-            // panel18
+            // pnlAnnouncementsContainer
             // 
-            panel18.BackColor = SystemColors.ControlLightLight;
-            panel18.BorderStyle = BorderStyle.FixedSingle;
-            panel18.Controls.Add(panel25);
-            panel18.Controls.Add(panel23);
-            panel18.Controls.Add(label16);
-            panel18.Location = new Point(24, 644);
-            panel18.Name = "panel18";
-            panel18.Size = new Size(1195, 331);
-            panel18.TabIndex = 27;
+            pnlAnnouncementsContainer.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            pnlAnnouncementsContainer.BackColor = SystemColors.ControlLightLight;
+            pnlAnnouncementsContainer.BorderStyle = BorderStyle.FixedSingle;
+            pnlAnnouncementsContainer.Controls.Add(panel25);
+            pnlAnnouncementsContainer.Controls.Add(panel23);
+            pnlAnnouncementsContainer.Controls.Add(label16);
+            pnlAnnouncementsContainer.Location = new Point(23, 639);
+            pnlAnnouncementsContainer.Name = "pnlAnnouncementsContainer";
+            pnlAnnouncementsContainer.Size = new Size(1178, 331);
+            pnlAnnouncementsContainer.TabIndex = 27;
             // 
             // panel25
             // 
@@ -1677,18 +2076,19 @@ namespace PUPAcadPortal
             label16.TabIndex = 17;
             label16.Text = "Announcements";
             // 
-            // panel19
+            // pnlUpcomingEventsContainer
             // 
-            panel19.BackColor = SystemColors.ControlLightLight;
-            panel19.BorderStyle = BorderStyle.FixedSingle;
-            panel19.Controls.Add(panel31);
-            panel19.Controls.Add(panel29);
-            panel19.Controls.Add(panel27);
-            panel19.Controls.Add(label18);
-            panel19.Location = new Point(833, 275);
-            panel19.Name = "panel19";
-            panel19.Size = new Size(385, 331);
-            panel19.TabIndex = 26;
+            pnlUpcomingEventsContainer.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            pnlUpcomingEventsContainer.BackColor = SystemColors.ControlLightLight;
+            pnlUpcomingEventsContainer.BorderStyle = BorderStyle.FixedSingle;
+            pnlUpcomingEventsContainer.Controls.Add(panel31);
+            pnlUpcomingEventsContainer.Controls.Add(panel29);
+            pnlUpcomingEventsContainer.Controls.Add(panel27);
+            pnlUpcomingEventsContainer.Controls.Add(label18);
+            pnlUpcomingEventsContainer.Location = new Point(833, 275);
+            pnlUpcomingEventsContainer.Name = "pnlUpcomingEventsContainer";
+            pnlUpcomingEventsContainer.Size = new Size(368, 331);
+            pnlUpcomingEventsContainer.TabIndex = 26;
             // 
             // panel31
             // 
@@ -1697,7 +2097,7 @@ namespace PUPAcadPortal
             panel31.Controls.Add(panel32);
             panel31.Location = new Point(11, 226);
             panel31.Name = "panel31";
-            panel31.Size = new Size(363, 80);
+            panel31.Size = new Size(344, 80);
             panel31.TabIndex = 21;
             // 
             // label32
@@ -1761,7 +2161,7 @@ namespace PUPAcadPortal
             panel29.Controls.Add(panel30);
             panel29.Location = new Point(11, 140);
             panel29.Name = "panel29";
-            panel29.Size = new Size(363, 80);
+            panel29.Size = new Size(344, 80);
             panel29.TabIndex = 20;
             // 
             // label28
@@ -1825,7 +2225,7 @@ namespace PUPAcadPortal
             panel27.Controls.Add(panel28);
             panel27.Location = new Point(11, 53);
             panel27.Name = "panel27";
-            panel27.Size = new Size(363, 80);
+            panel27.Size = new Size(344, 80);
             panel27.TabIndex = 19;
             // 
             // label27
@@ -1893,157 +2293,162 @@ namespace PUPAcadPortal
             label18.TabIndex = 18;
             label18.Text = "Upcoming Events";
             // 
-            // panel17
+            // pnlQuickActionsContainer
             // 
-            panel17.BackColor = SystemColors.ControlLightLight;
-            panel17.BorderStyle = BorderStyle.FixedSingle;
-            panel17.Controls.Add(panel39);
-            panel17.Controls.Add(panel38);
-            panel17.Controls.Add(panel37);
-            panel17.Controls.Add(panel41);
-            panel17.Controls.Add(label15);
-            panel17.Location = new Point(23, 275);
-            panel17.Name = "panel17";
-            panel17.Size = new Size(789, 331);
-            panel17.TabIndex = 25;
+            pnlQuickActionsContainer.BackColor = SystemColors.ControlLightLight;
+            pnlQuickActionsContainer.BorderStyle = BorderStyle.FixedSingle;
+            pnlQuickActionsContainer.Controls.Add(panel20);
+            pnlQuickActionsContainer.Controls.Add(panel3);
+            pnlQuickActionsContainer.Controls.Add(panel1);
+            pnlQuickActionsContainer.Controls.Add(panel41);
+            pnlQuickActionsContainer.Controls.Add(label15);
+            pnlQuickActionsContainer.Location = new Point(23, 275);
+            pnlQuickActionsContainer.Name = "pnlQuickActionsContainer";
+            pnlQuickActionsContainer.Size = new Size(789, 331);
+            pnlQuickActionsContainer.TabIndex = 25;
             // 
-            // panel39
+            // panel20
             // 
-            panel39.BorderStyle = BorderStyle.FixedSingle;
-            panel39.Controls.Add(pictureBox10);
-            panel39.Controls.Add(label40);
-            panel39.Controls.Add(label41);
-            panel39.Location = new Point(403, 157);
-            panel39.Name = "panel39";
-            panel39.Size = new Size(363, 80);
-            panel39.TabIndex = 25;
+            panel20.BackColor = SystemColors.ControlLightLight;
+            panel20.BorderStyle = BorderStyle.FixedSingle;
+            panel20.Controls.Add(btnDashboardCourses);
+            panel20.Controls.Add(label38);
+            panel20.Controls.Add(lblCourses);
+            panel20.Location = new Point(403, 156);
+            panel20.Name = "panel20";
+            panel20.Size = new Size(363, 80);
+            panel20.TabIndex = 28;
             // 
-            // pictureBox10
+            // btnDashboardCourses
             // 
-            pictureBox10.BackColor = Color.Maroon;
-            pictureBox10.Image = (Image)resources.GetObject("pictureBox10.Image");
-            pictureBox10.Location = new Point(3, 3);
-            pictureBox10.Name = "pictureBox10";
-            pictureBox10.Size = new Size(66, 74);
-            pictureBox10.SizeMode = PictureBoxSizeMode.CenterImage;
-            pictureBox10.TabIndex = 20;
-            pictureBox10.TabStop = false;
-            // 
-            // label40
-            // 
-            label40.AutoSize = true;
-            label40.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label40.ForeColor = Color.DimGray;
-            label40.Location = new Point(93, 38);
-            label40.Name = "label40";
-            label40.Size = new Size(177, 17);
-            label40.TabIndex = 19;
-            label40.Text = "Check your enrolled students";
-            // 
-            // label41
-            // 
-            label41.AutoSize = true;
-            label41.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label41.ForeColor = Color.DimGray;
-            label41.Location = new Point(86, 13);
-            label41.Name = "label41";
-            label41.Size = new Size(137, 21);
-            label41.TabIndex = 17;
-            label41.Text = "View Enrollment";
-            // 
-            // panel38
-            // 
-            panel38.BorderStyle = BorderStyle.FixedSingle;
-            panel38.Controls.Add(pictureBox9);
-            panel38.Controls.Add(label38);
-            panel38.Controls.Add(label39);
-            panel38.Location = new Point(403, 56);
-            panel38.Name = "panel38";
-            panel38.Size = new Size(363, 80);
-            panel38.TabIndex = 24;
-            // 
-            // pictureBox9
-            // 
-            pictureBox9.BackColor = Color.Maroon;
-            pictureBox9.Image = (Image)resources.GetObject("pictureBox9.Image");
-            pictureBox9.Location = new Point(3, 3);
-            pictureBox9.Name = "pictureBox9";
-            pictureBox9.Size = new Size(66, 74);
-            pictureBox9.SizeMode = PictureBoxSizeMode.CenterImage;
-            pictureBox9.TabIndex = 20;
-            pictureBox9.TabStop = false;
+            btnDashboardCourses.BackColor = Color.Maroon;
+            btnDashboardCourses.FlatStyle = FlatStyle.Popup;
+            btnDashboardCourses.Image = Properties.Resources.graduation_cap_24;
+            btnDashboardCourses.Location = new Point(12, 11);
+            btnDashboardCourses.Name = "btnDashboardCourses";
+            btnDashboardCourses.Size = new Size(56, 54);
+            btnDashboardCourses.TabIndex = 20;
+            btnDashboardCourses.UseVisualStyleBackColor = false;
+            btnDashboardCourses.Click += btnDashboardCourses_Click;
             // 
             // label38
             // 
             label38.AutoSize = true;
             label38.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label38.ForeColor = Color.DimGray;
-            label38.Location = new Point(93, 38);
+            label38.Location = new Point(74, 40);
             label38.Name = "label38";
-            label38.Size = new Size(177, 17);
+            label38.Size = new Size(154, 17);
             label38.TabIndex = 19;
-            label38.Text = "Check your enrolled students";
+            label38.Text = "Browse available courses";
             // 
-            // label39
+            // lblCourses
             // 
-            label39.AutoSize = true;
-            label39.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label39.ForeColor = Color.DimGray;
-            label39.Location = new Point(86, 13);
-            label39.Name = "label39";
-            label39.Size = new Size(137, 21);
-            label39.TabIndex = 17;
-            label39.Text = "View Enrollment";
+            lblCourses.AutoSize = true;
+            lblCourses.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblCourses.ForeColor = Color.DimGray;
+            lblCourses.Location = new Point(74, 19);
+            lblCourses.Name = "lblCourses";
+            lblCourses.Size = new Size(69, 21);
+            lblCourses.TabIndex = 17;
+            lblCourses.Text = "Courses";
             // 
-            // panel37
+            // panel3
             // 
-            panel37.BorderStyle = BorderStyle.FixedSingle;
-            panel37.Controls.Add(pictureBox8);
-            panel37.Controls.Add(label36);
-            panel37.Controls.Add(label37);
-            panel37.Location = new Point(18, 157);
-            panel37.Name = "panel37";
-            panel37.Size = new Size(363, 80);
-            panel37.TabIndex = 23;
+            panel3.BackColor = SystemColors.ControlLightLight;
+            panel3.BorderStyle = BorderStyle.FixedSingle;
+            panel3.Controls.Add(button3);
+            panel3.Controls.Add(label36);
+            panel3.Controls.Add(label37);
+            panel3.Location = new Point(403, 56);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(363, 80);
+            panel3.TabIndex = 27;
             // 
-            // pictureBox8
+            // button3
             // 
-            pictureBox8.BackColor = Color.Maroon;
-            pictureBox8.Image = (Image)resources.GetObject("pictureBox8.Image");
-            pictureBox8.Location = new Point(3, 3);
-            pictureBox8.Name = "pictureBox8";
-            pictureBox8.Size = new Size(66, 74);
-            pictureBox8.SizeMode = PictureBoxSizeMode.CenterImage;
-            pictureBox8.TabIndex = 20;
-            pictureBox8.TabStop = false;
+            button3.BackColor = Color.Maroon;
+            button3.FlatStyle = FlatStyle.Popup;
+            button3.Image = Properties.Resources.calendar_10_24;
+            button3.Location = new Point(12, 11);
+            button3.Name = "button3";
+            button3.Size = new Size(56, 54);
+            button3.TabIndex = 20;
+            button3.UseVisualStyleBackColor = false;
             // 
             // label36
             // 
             label36.AutoSize = true;
             label36.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label36.ForeColor = Color.DimGray;
-            label36.Location = new Point(93, 38);
+            label36.Location = new Point(74, 40);
             label36.Name = "label36";
-            label36.Size = new Size(177, 17);
+            label36.Size = new Size(152, 17);
             label36.TabIndex = 19;
-            label36.Text = "Check your enrolled students";
+            label36.Text = "View your class schedule";
             // 
             // label37
             // 
             label37.AutoSize = true;
             label37.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label37.ForeColor = Color.DimGray;
-            label37.Location = new Point(86, 13);
+            label37.Location = new Point(74, 19);
             label37.Name = "label37";
-            label37.Size = new Size(137, 21);
+            label37.Size = new Size(136, 21);
             label37.TabIndex = 17;
-            label37.Text = "View Enrollment";
+            label37.Text = "Course Schedule";
+            // 
+            // panel1
+            // 
+            panel1.BackColor = SystemColors.ControlLightLight;
+            panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(btnDashboardPaymentStatus);
+            panel1.Controls.Add(label10);
+            panel1.Controls.Add(label14);
+            panel1.Location = new Point(18, 156);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(363, 80);
+            panel1.TabIndex = 26;
+            // 
+            // btnDashboardPaymentStatus
+            // 
+            btnDashboardPaymentStatus.BackColor = Color.Maroon;
+            btnDashboardPaymentStatus.FlatStyle = FlatStyle.Popup;
+            btnDashboardPaymentStatus.Image = Properties.Resources.banknotes_24;
+            btnDashboardPaymentStatus.Location = new Point(12, 11);
+            btnDashboardPaymentStatus.Name = "btnDashboardPaymentStatus";
+            btnDashboardPaymentStatus.Size = new Size(56, 54);
+            btnDashboardPaymentStatus.TabIndex = 20;
+            btnDashboardPaymentStatus.UseVisualStyleBackColor = false;
+            btnDashboardPaymentStatus.Click += btnDashboardPaymentStatus_Click;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label10.ForeColor = Color.DimGray;
+            label10.Location = new Point(74, 40);
+            label10.Name = "label10";
+            label10.Size = new Size(140, 17);
+            label10.TabIndex = 19;
+            label10.Text = "Check account balance";
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label14.ForeColor = Color.DimGray;
+            label14.Location = new Point(74, 19);
+            label14.Name = "label14";
+            label14.Size = new Size(129, 21);
+            label14.TabIndex = 17;
+            label14.Text = "Payment Status";
             // 
             // panel41
             // 
             panel41.BackColor = SystemColors.ControlLightLight;
             panel41.BorderStyle = BorderStyle.FixedSingle;
-            panel41.Controls.Add(pictureBox7);
+            panel41.Controls.Add(btnDashboardViewEnrollment);
             panel41.Controls.Add(label44);
             panel41.Controls.Add(label45);
             panel41.Location = new Point(18, 56);
@@ -2051,34 +2456,35 @@ namespace PUPAcadPortal
             panel41.Size = new Size(363, 80);
             panel41.TabIndex = 22;
             // 
-            // pictureBox7
+            // btnDashboardViewEnrollment
             // 
-            pictureBox7.BackColor = Color.Maroon;
-            pictureBox7.Image = (Image)resources.GetObject("pictureBox7.Image");
-            pictureBox7.Location = new Point(3, 3);
-            pictureBox7.Name = "pictureBox7";
-            pictureBox7.Size = new Size(66, 74);
-            pictureBox7.SizeMode = PictureBoxSizeMode.CenterImage;
-            pictureBox7.TabIndex = 20;
-            pictureBox7.TabStop = false;
+            btnDashboardViewEnrollment.BackColor = Color.Maroon;
+            btnDashboardViewEnrollment.FlatStyle = FlatStyle.Popup;
+            btnDashboardViewEnrollment.Image = Properties.Resources.literature_24;
+            btnDashboardViewEnrollment.Location = new Point(12, 11);
+            btnDashboardViewEnrollment.Name = "btnDashboardViewEnrollment";
+            btnDashboardViewEnrollment.Size = new Size(56, 54);
+            btnDashboardViewEnrollment.TabIndex = 20;
+            btnDashboardViewEnrollment.UseVisualStyleBackColor = false;
+            btnDashboardViewEnrollment.Click += btnDashboardViewEnrollment_Click;
             // 
             // label44
             // 
             label44.AutoSize = true;
             label44.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label44.ForeColor = Color.DimGray;
-            label44.Location = new Point(93, 38);
+            label44.Location = new Point(74, 40);
             label44.Name = "label44";
-            label44.Size = new Size(177, 17);
+            label44.Size = new Size(175, 17);
             label44.TabIndex = 19;
-            label44.Text = "Check your enrolled students";
+            label44.Text = "Check your enrolled subjects";
             // 
             // label45
             // 
             label45.AutoSize = true;
             label45.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label45.ForeColor = Color.DimGray;
-            label45.Location = new Point(86, 13);
+            label45.Location = new Point(74, 19);
             label45.Name = "label45";
             label45.Size = new Size(137, 21);
             label45.TabIndex = 17;
@@ -2095,17 +2501,30 @@ namespace PUPAcadPortal
             label15.TabIndex = 16;
             label15.Text = "Quick Actions";
             // 
-            // panel33
+            // pnlEnrolleft
             // 
-            panel33.BackColor = Color.White;
-            panel33.BorderStyle = BorderStyle.Fixed3D;
-            panel33.Controls.Add(label54);
-            panel33.Controls.Add(label55);
-            panel33.Location = new Point(938, 149);
-            panel33.Margin = new Padding(3, 2, 3, 2);
-            panel33.Name = "panel33";
-            panel33.Size = new Size(280, 95);
-            panel33.TabIndex = 24;
+            pnlEnrolleft.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            pnlEnrolleft.BackColor = Color.White;
+            pnlEnrolleft.BorderStyle = BorderStyle.Fixed3D;
+            pnlEnrolleft.Controls.Add(pictureBox13);
+            pnlEnrolleft.Controls.Add(label54);
+            pnlEnrolleft.Controls.Add(label55);
+            pnlEnrolleft.Location = new Point(938, 149);
+            pnlEnrolleft.Margin = new Padding(3, 2, 3, 2);
+            pnlEnrolleft.Name = "pnlEnrolleft";
+            pnlEnrolleft.Size = new Size(263, 95);
+            pnlEnrolleft.TabIndex = 24;
+            // 
+            // pictureBox13
+            // 
+            pictureBox13.BackColor = Color.Maroon;
+            pictureBox13.Image = Properties.Resources.exclamation_32;
+            pictureBox13.Location = new Point(183, 11);
+            pictureBox13.Name = "pictureBox13";
+            pictureBox13.Size = new Size(66, 68);
+            pictureBox13.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox13.TabIndex = 24;
+            pictureBox13.TabStop = false;
             // 
             // label54
             // 
@@ -2114,9 +2533,9 @@ namespace PUPAcadPortal
             label54.ForeColor = Color.DimGray;
             label54.Location = new Point(14, 21);
             label54.Name = "label54";
-            label54.Size = new Size(118, 21);
+            label54.Size = new Size(120, 21);
             label54.TabIndex = 18;
-            label54.Text = "Enrolled Units";
+            label54.Text = "Pending Items";
             // 
             // label55
             // 
@@ -2126,21 +2545,33 @@ namespace PUPAcadPortal
             label55.ForeColor = Color.Black;
             label55.Location = new Point(13, 34);
             label55.Name = "label55";
-            label55.Size = new Size(51, 40);
+            label55.Size = new Size(34, 40);
             label55.TabIndex = 19;
-            label55.Text = "21";
+            label55.Text = "2";
             // 
-            // panel34
+            // pnlCurrentSemesterCard
             // 
-            panel34.BackColor = Color.White;
-            panel34.BorderStyle = BorderStyle.Fixed3D;
-            panel34.Controls.Add(label52);
-            panel34.Controls.Add(label53);
-            panel34.Location = new Point(627, 149);
-            panel34.Margin = new Padding(3, 2, 3, 2);
-            panel34.Name = "panel34";
-            panel34.Size = new Size(280, 95);
-            panel34.TabIndex = 23;
+            pnlCurrentSemesterCard.BackColor = Color.White;
+            pnlCurrentSemesterCard.BorderStyle = BorderStyle.Fixed3D;
+            pnlCurrentSemesterCard.Controls.Add(pictureBox12);
+            pnlCurrentSemesterCard.Controls.Add(label52);
+            pnlCurrentSemesterCard.Controls.Add(label53);
+            pnlCurrentSemesterCard.Location = new Point(627, 149);
+            pnlCurrentSemesterCard.Margin = new Padding(3, 2, 3, 2);
+            pnlCurrentSemesterCard.Name = "pnlCurrentSemesterCard";
+            pnlCurrentSemesterCard.Size = new Size(280, 95);
+            pnlCurrentSemesterCard.TabIndex = 23;
+            // 
+            // pictureBox12
+            // 
+            pictureBox12.BackColor = Color.Maroon;
+            pictureBox12.Image = (Image)resources.GetObject("pictureBox12.Image");
+            pictureBox12.Location = new Point(196, 11);
+            pictureBox12.Name = "pictureBox12";
+            pictureBox12.Size = new Size(66, 68);
+            pictureBox12.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox12.TabIndex = 23;
+            pictureBox12.TabStop = false;
             // 
             // label52
             // 
@@ -2165,17 +2596,29 @@ namespace PUPAcadPortal
             label53.TabIndex = 19;
             label53.Text = "2nd Sem";
             // 
-            // panel35
+            // pnlEnrollmentStatusCard
             // 
-            panel35.BackColor = Color.White;
-            panel35.BorderStyle = BorderStyle.Fixed3D;
-            panel35.Controls.Add(label70);
-            panel35.Controls.Add(label71);
-            panel35.Location = new Point(323, 149);
-            panel35.Margin = new Padding(3, 2, 3, 2);
-            panel35.Name = "panel35";
-            panel35.Size = new Size(280, 95);
-            panel35.TabIndex = 22;
+            pnlEnrollmentStatusCard.BackColor = Color.White;
+            pnlEnrollmentStatusCard.BorderStyle = BorderStyle.Fixed3D;
+            pnlEnrollmentStatusCard.Controls.Add(pictureBox11);
+            pnlEnrollmentStatusCard.Controls.Add(label70);
+            pnlEnrollmentStatusCard.Controls.Add(label71);
+            pnlEnrollmentStatusCard.Location = new Point(323, 149);
+            pnlEnrollmentStatusCard.Margin = new Padding(3, 2, 3, 2);
+            pnlEnrollmentStatusCard.Name = "pnlEnrollmentStatusCard";
+            pnlEnrollmentStatusCard.Size = new Size(280, 95);
+            pnlEnrollmentStatusCard.TabIndex = 22;
+            // 
+            // pictureBox11
+            // 
+            pictureBox11.BackColor = Color.Maroon;
+            pictureBox11.Image = Properties.Resources.approval_32;
+            pictureBox11.Location = new Point(196, 11);
+            pictureBox11.Name = "pictureBox11";
+            pictureBox11.Size = new Size(66, 68);
+            pictureBox11.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox11.TabIndex = 22;
+            pictureBox11.TabStop = false;
             // 
             // label70
             // 
@@ -2200,17 +2643,29 @@ namespace PUPAcadPortal
             label71.TabIndex = 17;
             label71.Text = "Confirmed";
             // 
-            // panel36
+            // pnlEnrolledUnitsCard
             // 
-            panel36.BackColor = Color.White;
-            panel36.BorderStyle = BorderStyle.Fixed3D;
-            panel36.Controls.Add(label72);
-            panel36.Controls.Add(label73);
-            panel36.Location = new Point(22, 149);
-            panel36.Margin = new Padding(3, 2, 3, 2);
-            panel36.Name = "panel36";
-            panel36.Size = new Size(280, 95);
-            panel36.TabIndex = 21;
+            pnlEnrolledUnitsCard.BackColor = Color.White;
+            pnlEnrolledUnitsCard.BorderStyle = BorderStyle.Fixed3D;
+            pnlEnrolledUnitsCard.Controls.Add(pictureBox6);
+            pnlEnrolledUnitsCard.Controls.Add(label72);
+            pnlEnrolledUnitsCard.Controls.Add(label73);
+            pnlEnrolledUnitsCard.Location = new Point(22, 149);
+            pnlEnrolledUnitsCard.Margin = new Padding(3, 2, 3, 2);
+            pnlEnrolledUnitsCard.Name = "pnlEnrolledUnitsCard";
+            pnlEnrolledUnitsCard.Size = new Size(280, 95);
+            pnlEnrolledUnitsCard.TabIndex = 21;
+            // 
+            // pictureBox6
+            // 
+            pictureBox6.BackColor = Color.Maroon;
+            pictureBox6.Image = Properties.Resources.book_stack_32;
+            pictureBox6.Location = new Point(196, 11);
+            pictureBox6.Name = "pictureBox6";
+            pictureBox6.Size = new Size(66, 68);
+            pictureBox6.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox6.TabIndex = 21;
+            pictureBox6.TabStop = false;
             // 
             // label72
             // 
@@ -2235,6 +2690,38 @@ namespace PUPAcadPortal
             label73.TabIndex = 15;
             label73.Text = "21";
             // 
+            // pnlDashboardGreetingsContainer
+            // 
+            pnlDashboardGreetingsContainer.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            pnlDashboardGreetingsContainer.BackColor = Color.Maroon;
+            pnlDashboardGreetingsContainer.Controls.Add(lblDashboardGreetingDesc);
+            pnlDashboardGreetingsContainer.Controls.Add(lblDashboardGreeting);
+            pnlDashboardGreetingsContainer.ForeColor = Color.White;
+            pnlDashboardGreetingsContainer.Location = new Point(23, 21);
+            pnlDashboardGreetingsContainer.Margin = new Padding(3, 2, 3, 2);
+            pnlDashboardGreetingsContainer.Name = "pnlDashboardGreetingsContainer";
+            pnlDashboardGreetingsContainer.Size = new Size(1178, 102);
+            pnlDashboardGreetingsContainer.TabIndex = 0;
+            // 
+            // lblDashboardGreetingDesc
+            // 
+            lblDashboardGreetingDesc.AutoSize = true;
+            lblDashboardGreetingDesc.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblDashboardGreetingDesc.Location = new Point(20, 57);
+            lblDashboardGreetingDesc.Name = "lblDashboardGreetingDesc";
+            lblDashboardGreetingDesc.Size = new Size(326, 21);
+            lblDashboardGreetingDesc.TabIndex = 1;
+            lblDashboardGreetingDesc.Text = "Track your enrollment and academic progress";
+            // 
+            // lblDashboardGreeting
+            // 
+            lblDashboardGreeting.AutoSize = true;
+            lblDashboardGreeting.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblDashboardGreeting.Location = new Point(10, 14);
+            lblDashboardGreeting.Name = "lblDashboardGreeting";
+            lblDashboardGreeting.Size = new Size(398, 37);
+            lblDashboardGreeting.TabIndex = 0;
+            lblDashboardGreeting.Text = "Welcome back, John DoReMi!";
             // panel14
             // 
             panel14.BackColor = Color.Maroon;
@@ -2355,8 +2842,8 @@ namespace PUPAcadPortal
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
             ClientSize = new Size(1512, 881);
-            Controls.Add(panel3);
             Controls.Add(pnlViewDetails);
+            Controls.Add(pnlContainerStudentPortal);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "StudentPortal";
             StartPosition = FormStartPosition.CenterScreen;
@@ -2367,9 +2854,10 @@ namespace PUPAcadPortal
             flowLayoutPanel1.ResumeLayout(false);
             panel7.ResumeLayout(false);
             panel8.ResumeLayout(false);
-            panel9.ResumeLayout(false);
             panel10.ResumeLayout(false);
             panel11.ResumeLayout(false);
+            pnllmsSubmenu.ResumeLayout(false);
+            panel9.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel5.ResumeLayout(false);
             panel5.PerformLayout();
@@ -2382,50 +2870,57 @@ namespace PUPAcadPortal
             ((System.ComponentModel.ISupportInitialize)dgvAccounts).EndInit();
             pnlAccountsSelectSem.ResumeLayout(false);
             pnlAccountsSelectSem.PerformLayout();
-            panel20.ResumeLayout(false);
-            panel20.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
-            panel21.ResumeLayout(false);
-            panel21.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
+            pnlBalance.ResumeLayout(false);
+            pnlBalance.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pbBalance).EndInit();
+            pnlTotalPaid.ResumeLayout(false);
+            pnlTotalPaid.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pbPaid).EndInit();
             pnlAccountsFreeEd.ResumeLayout(false);
             pnlAccountsFreeEd.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbFreeEducProg).EndInit();
+            pnlTotalAssessment.ResumeLayout(false);
+            pnlTotalAssessment.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pbTotalAssessment).EndInit();
             pnlOnlinePayment.ResumeLayout(false);
             pnlOnlinePayment.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             pnlCashier.ResumeLayout(false);
             pnlCashier.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             pnlEnrollStatusCard.ResumeLayout(false);
             pnlEnrollStatusCard.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
             pnlEnrollContent.ResumeLayout(false);
             pnlEnrollContent.PerformLayout();
+            pnlEnrollmentConfirmedDGV.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvEnrollmentConfirmed).EndInit();
+            pnlContainerEnrollmentDGV.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvEnrollment).EndInit();
             pnlEnrollRightCard.ResumeLayout(false);
             pnlEnrollRightCard.PerformLayout();
             pnlEnrollMiddleCard.ResumeLayout(false);
             pnlEnrollMiddleCard.PerformLayout();
             pnlEnrollLeftCard.ResumeLayout(false);
             pnlEnrollLeftCard.PerformLayout();
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvEnrollment).EndInit();
+            pnlTotalUnits.ResumeLayout(false);
+            pnlTotalUnits.PerformLayout();
             pnlEnrollSearchbar.ResumeLayout(false);
             pnlEnrollSearchbar.PerformLayout();
             pnlViewDetails.ResumeLayout(false);
             pnlViewDetails.PerformLayout();
+            pnlContainerStudentPortal.ResumeLayout(false);
             panel3.ResumeLayout(false);
             pnlAccountsContentHolder.ResumeLayout(false);
             pnlDashboardContent.ResumeLayout(false);
-            panel18.ResumeLayout(false);
-            panel18.PerformLayout();
+            pnlAnnouncementsContainer.ResumeLayout(false);
+            pnlAnnouncementsContainer.PerformLayout();
             panel25.ResumeLayout(false);
             panel25.PerformLayout();
             panel23.ResumeLayout(false);
             panel23.PerformLayout();
-            panel19.ResumeLayout(false);
-            panel19.PerformLayout();
+            pnlUpcomingEventsContainer.ResumeLayout(false);
+            pnlUpcomingEventsContainer.PerformLayout();
             panel31.ResumeLayout(false);
             panel31.PerformLayout();
             panel32.ResumeLayout(false);
@@ -2438,19 +2933,30 @@ namespace PUPAcadPortal
             panel27.PerformLayout();
             panel28.ResumeLayout(false);
             panel28.PerformLayout();
-            panel17.ResumeLayout(false);
-            panel17.PerformLayout();
-            panel39.ResumeLayout(false);
-            panel39.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox10).EndInit();
-            panel38.ResumeLayout(false);
-            panel38.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
-            panel37.ResumeLayout(false);
-            panel37.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
+            pnlQuickActionsContainer.ResumeLayout(false);
+            pnlQuickActionsContainer.PerformLayout();
+            panel20.ResumeLayout(false);
+            panel20.PerformLayout();
+            panel3.ResumeLayout(false);
+            panel3.PerformLayout();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             panel41.ResumeLayout(false);
             panel41.PerformLayout();
+            pnlEnrolleft.ResumeLayout(false);
+            pnlEnrolleft.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox13).EndInit();
+            pnlCurrentSemesterCard.ResumeLayout(false);
+            pnlCurrentSemesterCard.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox12).EndInit();
+            pnlEnrollmentStatusCard.ResumeLayout(false);
+            pnlEnrollmentStatusCard.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox11).EndInit();
+            pnlEnrolledUnitsCard.ResumeLayout(false);
+            pnlEnrolledUnitsCard.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
+            pnlDashboardGreetingsContainer.ResumeLayout(false);
+            pnlDashboardGreetingsContainer.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox7).EndInit();
             panel33.ResumeLayout(false);
             panel33.PerformLayout();
@@ -2474,7 +2980,7 @@ namespace PUPAcadPortal
         #endregion
 
         private Panel pnlSidebar;
-        private Panel panel3;
+        private Panel pnlContainerStudentPortal;
         private Panel panel4;
         private Panel panel5;
         private PictureBox pictureBox1;
@@ -2514,11 +3020,11 @@ namespace PUPAcadPortal
         private TextBox txtEnrollSearch;
         private Panel pnlEnrollSearchbar;
         private DataGridView dgvEnrollment;
-        private Panel panel2;
+        private Panel pnlTotalUnits;
         private Label label6;
         private Label lblEnrollTotalUnitsValue;
         private Panel pnlEnrollRightCard;
-        private Label label12;
+        private Label lblCurrentSectionIndicator;
         private Label label13;
         private Panel pnlEnrollMiddleCard;
         private Label lblMaximumUnitsValue;
@@ -2532,7 +3038,7 @@ namespace PUPAcadPortal
         private ToolStripMenuItem dropSubjectToolStripMenuItem;
         private Panel pnlViewDetails;
         private Button btnEnrollCloseDetails;
-        private Label label7;
+        private Label lblSubjectDetails;
         private DataGridViewCheckBoxColumn colSelect;
         private DataGridViewTextBoxColumn colCode;
         private DataGridViewTextBoxColumn colTitle;
@@ -2540,32 +3046,32 @@ namespace PUPAcadPortal
         private DataGridViewTextBoxColumn colSchedule;
         private DataGridViewTextBoxColumn colStatus;
         private DataGridViewTextBoxColumn colAction;
-        private Panel panel1;
+        private Panel pnlTotalAssessment;
         private Label lblAccountsandPayments;
-        private Label lblViewPHAB;
+        private Label lblDescriptionAccsPay;
         private Label lblTotalAssessment;
-        private PictureBox pictureBox3;
+        private PictureBox pbTotalAssessment;
         private Label lblTAPeso;
-        private PictureBox pictureBox5;
-        private PictureBox pictureBox4;
+        private PictureBox pbBalance;
+        private PictureBox pbPaid;
         private Panel pnlAccountsFreeEd;
         private Label lblFreeEducProg;
-        private Label lblDescription;
-        private Panel panel20;
-        private Panel panel21;
+        private Label lblDescriptionFreeEducProg;
+        private Panel pnlBalance;
+        private Panel pnlTotalPaid;
         private Label lblBalancePeso;
         private Label lblBalance;
         private Label lblTPPeso;
         private Label lblTotalPaid;
-        private Label lblDescription2;
-        private PictureBox pictureBox6;
+        private Label lblNoteFreeEducProg;
+        private PictureBox pbFreeEducProg;
         private Panel pnlAccountsSelectSem;
-        private ComboBox comboBox1;
+        private ComboBox cmbSelectSem;
         private Label lblSelSem;
         private Button btnAccountsDownloadStatement;
         private Label lblPaymentHistory;
         private DataGridView dgvAccounts;
-        private Label lblPaymentMethods2;
+        private Label lblPaymentMethods;
         private Panel pnlOnlinePayment;
         private Label lblOnlinePayTitle;
         private Label lblOnlinePayDesc;
@@ -2585,21 +3091,21 @@ namespace PUPAcadPortal
         private DataGridViewTextBoxColumn colAccountsDueDate;
         private DataGridViewTextBoxColumn colAccountsStatus;
         private DataGridViewTextBoxColumn colAccountsPaidDate;
-        private Panel panel14;
-        private Label label10;
-        private Label label14;
-        private Panel panel33;
-        private Panel panel34;
-        private Panel panel35;
+        private Panel pnlDashboardGreetingsContainer;
+        private Label lblDashboardGreeting;
+        private Label lblDashboardGreetingDesc;
+        private Panel pnlEnrolleft;
+        private Panel pnlCurrentSemesterCard;
+        private Panel pnlEnrollmentStatusCard;
         private Label label70;
         private Label label71;
-        private Panel panel36;
+        private Panel pnlEnrolledUnitsCard;
         private Label label72;
         private Label label73;
-        private Panel panel22;
-        private Panel panel18;
-        private Panel panel19;
-        private Panel panel17;
+        private Panel pnlDashboardSpaceProvider;
+        private Panel pnlAnnouncementsContainer;
+        private Panel pnlUpcomingEventsContainer;
+        private Panel pnlQuickActionsContainer;
         private Label label17;
         private Label label16;
         private Label label15;
@@ -2634,22 +3140,46 @@ namespace PUPAcadPortal
         private Panel panel41;
         private Label label44;
         private Label label45;
-        private PictureBox pictureBox7;
         private Label label54;
         private Label label55;
         private Label label52;
         private Label label53;
-        private Panel panel39;
-        private PictureBox pictureBox10;
-        private Label label40;
-        private Label label41;
-        private Panel panel38;
-        private PictureBox pictureBox9;
+        private PictureBox pictureBox3;
+        private PictureBox pictureBox4;
+        private Panel pnlSpaceProviderAccounts;
+        private PictureBox pictureBox5;
+        private PictureBox pictureBox13;
+        private PictureBox pictureBox12;
+        private PictureBox pictureBox11;
+        private PictureBox pictureBox6;
+        private Button btnDashboardViewEnrollment;
+        private Panel panel20;
+        private Button btnDashboardCourses;
         private Label label38;
-        private Label label39;
-        private Panel panel37;
-        private PictureBox pictureBox8;
+        private Label lblCourses;
+        private Panel panel3;
+        private Button button3;
         private Label label36;
         private Label label37;
+        private Panel panel1;
+        private Button btnDashboardPaymentStatus;
+        private Label label10;
+        private Label label14;
+        private Button btnDownloadCOR;
+        private Panel pnlContainerEnrollmentDGV;
+        private Panel pnlEnrollmentConfirmedDGV;
+        private DataGridView dgvEnrollmentConfirmed;
+        private Button btnSaveAndAssess;
+        private DataGridViewTextBoxColumn colCode2;
+        private DataGridViewTextBoxColumn colourseTitle2;
+        private DataGridViewTextBoxColumn colUnits2;
+        private DataGridViewTextBoxColumn colSchedule2;
+        private DataGridViewTextBoxColumn colStatus2;
+        private DataGridViewTextBoxColumn colAction2;
+        private Label lblDetailCode;
+        private Label lblDetailTitle;
+        private Label lblDetailUnits;
+        private Label lblDetailStatus;
+        private TextBox txtDetailSchedule;
     }
 }

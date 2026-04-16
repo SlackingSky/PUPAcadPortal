@@ -308,6 +308,7 @@ namespace PUPAcadPortal
             txtUsername.PlaceholderText = "Student Number";
             txtUsername.Size = new Size(328, 19);
             txtUsername.TabIndex = 1;
+            txtUsername.KeyDown += txtUsername_KeyDown;
             // 
             // label4
             // 
