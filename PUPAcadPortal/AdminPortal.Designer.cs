@@ -145,6 +145,32 @@
             pictureBox8 = new PictureBox();
             pnlGradesManagementContent = new Panel();
             pnlGMBottomExtension = new Panel();
+            panel49 = new Panel();
+            panel19 = new Panel();
+            button8 = new Button();
+            textBox24 = new TextBox();
+            button7 = new Button();
+            button4 = new Button();
+            label93 = new Label();
+            textBox22 = new TextBox();
+            label95 = new Label();
+            textBox23 = new TextBox();
+            label91 = new Label();
+            textBox19 = new TextBox();
+            label92 = new Label();
+            textBox21 = new TextBox();
+            comboBox10 = new ComboBox();
+            label41 = new Label();
+            textBox18 = new TextBox();
+            label90 = new Label();
+            label40 = new Label();
+            textBox17 = new TextBox();
+            label94 = new Label();
+            textBox20 = new TextBox();
+            comboBox7 = new ComboBox();
+            comboBox4 = new ComboBox();
+            label43 = new Label();
+            label39 = new Label();
             pnlGradesManagementContainer = new Panel();
             dgvGrades = new DataGridView();
             btnGMSearch2 = new Button();
@@ -865,7 +891,7 @@
             btnAccountingRecords.FlatStyle = FlatStyle.Flat;
             btnAccountingRecords.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
             btnAccountingRecords.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            btnAccountingRecords.Image = Properties.Resources.Accounts1;
+            btnAccountingRecords.Image = Properties.Resources.Accounts;
             btnAccountingRecords.Location = new Point(-5, 0);
             btnAccountingRecords.Name = "btnAccountingRecords";
             btnAccountingRecords.Padding = new Padding(16, 0, 0, 0);
@@ -1200,6 +1226,337 @@
             panel3.TabIndex = 0;
             // 
             // pnlAccountingRecordsContent
+            // pnlGradesManagementContent
+            // 
+            pnlGradesManagementContent.AutoScroll = true;
+            pnlGradesManagementContent.BackColor = SystemColors.Control;
+            pnlGradesManagementContent.Controls.Add(panel49);
+            pnlGradesManagementContent.Controls.Add(panel19);
+            pnlGradesManagementContent.Controls.Add(pnlGradesManagementContainer);
+            pnlGradesManagementContent.Controls.Add(button5);
+            pnlGradesManagementContent.Controls.Add(label21);
+            pnlGradesManagementContent.Controls.Add(label37);
+            pnlGradesManagementContent.Controls.Add(pictureBox6);
+            pnlGradesManagementContent.Location = new Point(256, 72);
+            pnlGradesManagementContent.Name = "pnlGradesManagementContent";
+            pnlGradesManagementContent.Size = new Size(1256, 850);
+            pnlGradesManagementContent.TabIndex = 8;
+            pnlGradesManagementContent.Visible = false;
+            // 
+            // panel49
+            // 
+            panel49.BackColor = SystemColors.Control;
+            panel49.Location = new Point(37, 1008);
+            panel49.Name = "panel49";
+            panel49.Size = new Size(1195, 170);
+            panel49.TabIndex = 30;
+            // 
+            // panel19
+            // 
+            panel19.BackColor = SystemColors.ControlLightLight;
+            panel19.Controls.Add(button8);
+            panel19.Controls.Add(textBox24);
+            panel19.Controls.Add(button7);
+            panel19.Controls.Add(button4);
+            panel19.Controls.Add(label93);
+            panel19.Controls.Add(textBox22);
+            panel19.Controls.Add(label95);
+            panel19.Controls.Add(textBox23);
+            panel19.Controls.Add(label91);
+            panel19.Controls.Add(textBox19);
+            panel19.Controls.Add(label92);
+            panel19.Controls.Add(textBox21);
+            panel19.Controls.Add(comboBox10);
+            panel19.Controls.Add(label41);
+            panel19.Controls.Add(textBox18);
+            panel19.Controls.Add(label90);
+            panel19.Controls.Add(label40);
+            panel19.Controls.Add(textBox17);
+            panel19.Controls.Add(label94);
+            panel19.Controls.Add(textBox20);
+            panel19.Controls.Add(comboBox7);
+            panel19.Controls.Add(comboBox4);
+            panel19.Controls.Add(label43);
+            panel19.Controls.Add(label39);
+            panel19.Location = new Point(32, 102);
+            panel19.Name = "panel19";
+            panel19.Size = new Size(1195, 557);
+            panel19.TabIndex = 14;
+            // 
+            // button8
+            // 
+            button8.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            button8.BackColor = Color.Maroon;
+            button8.FlatStyle = FlatStyle.Flat;
+            button8.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button8.ForeColor = Color.White;
+            button8.Image = Properties.Resources.search_3_16;
+            button8.Location = new Point(1048, 99);
+            button8.Name = "button8";
+            button8.Size = new Size(123, 33);
+            button8.TabIndex = 57;
+            button8.Text = "Search";
+            button8.TextAlign = ContentAlignment.MiddleRight;
+            button8.TextImageRelation = TextImageRelation.ImageBeforeText;
+            button8.UseVisualStyleBackColor = false;
+            // 
+            // textBox24
+            // 
+            textBox24.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBox24.BorderStyle = BorderStyle.FixedSingle;
+            textBox24.Font = new Font("Segoe UI", 12F);
+            textBox24.Location = new Point(178, 101);
+            textBox24.Name = "textBox24";
+            textBox24.PlaceholderText = "Search by student name, ID, or subject...";
+            textBox24.Size = new Size(861, 29);
+            textBox24.TabIndex = 56;
+            // 
+            // button7
+            // 
+            button7.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            button7.BackColor = Color.White;
+            button7.FlatStyle = FlatStyle.Popup;
+            button7.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button7.ForeColor = Color.Black;
+            button7.Location = new Point(833, 476);
+            button7.Name = "button7";
+            button7.Size = new Size(158, 53);
+            button7.TabIndex = 55;
+            button7.Text = "Clear Form";
+            button7.TextImageRelation = TextImageRelation.ImageBeforeText;
+            button7.UseVisualStyleBackColor = false;
+            // 
+            // button4
+            // 
+            button4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            button4.BackColor = Color.Maroon;
+            button4.FlatStyle = FlatStyle.Popup;
+            button4.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button4.ForeColor = Color.White;
+            button4.Image = Properties.Resources.save_16;
+            button4.Location = new Point(1005, 476);
+            button4.Name = "button4";
+            button4.Size = new Size(166, 53);
+            button4.TabIndex = 54;
+            button4.Text = " Save Grades";
+            button4.TextAlign = ContentAlignment.MiddleRight;
+            button4.TextImageRelation = TextImageRelation.ImageBeforeText;
+            button4.UseVisualStyleBackColor = false;
+            // 
+            // label93
+            // 
+            label93.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label93.AutoSize = true;
+            label93.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label93.ForeColor = Color.Black;
+            label93.Location = new Point(624, 377);
+            label93.Name = "label93";
+            label93.Size = new Size(72, 21);
+            label93.TabIndex = 53;
+            label93.Text = "Remarks";
+            // 
+            // textBox22
+            // 
+            textBox22.BorderStyle = BorderStyle.FixedSingle;
+            textBox22.CharacterCasing = CharacterCasing.Upper;
+            textBox22.Font = new Font("Segoe UI", 12F);
+            textBox22.Location = new Point(627, 403);
+            textBox22.Name = "textBox22";
+            textBox22.PlaceholderText = "eg., PASSING";
+            textBox22.Size = new Size(544, 29);
+            textBox22.TabIndex = 52;
+            // 
+            // label95
+            // 
+            label95.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label95.AutoSize = true;
+            label95.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label95.ForeColor = Color.Black;
+            label95.Location = new Point(27, 377);
+            label95.Name = "label95";
+            label95.Size = new Size(226, 21);
+            label95.TabIndex = 51;
+            label95.Text = "Final Rating (Auto-Calculated)";
+            // 
+            // textBox23
+            // 
+            textBox23.BorderStyle = BorderStyle.FixedSingle;
+            textBox23.CharacterCasing = CharacterCasing.Upper;
+            textBox23.Font = new Font("Segoe UI", 12F);
+            textBox23.Location = new Point(30, 403);
+            textBox23.Name = "textBox23";
+            textBox23.PlaceholderText = "1.33";
+            textBox23.Size = new Size(571, 29);
+            textBox23.TabIndex = 50;
+            // 
+            // label91
+            // 
+            label91.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label91.AutoSize = true;
+            label91.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label91.ForeColor = Color.Black;
+            label91.Location = new Point(624, 295);
+            label91.Name = "label91";
+            label91.Size = new Size(91, 21);
+            label91.TabIndex = 49;
+            label91.Text = "Final Grade";
+            // 
+            // textBox19
+            // 
+            textBox19.BorderStyle = BorderStyle.FixedSingle;
+            textBox19.CharacterCasing = CharacterCasing.Upper;
+            textBox19.Font = new Font("Segoe UI", 12F);
+            textBox19.Location = new Point(627, 321);
+            textBox19.Name = "textBox19";
+            textBox19.PlaceholderText = " e.g., 1.50";
+            textBox19.Size = new Size(544, 29);
+            textBox19.TabIndex = 48;
+            // 
+            // label92
+            // 
+            label92.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label92.AutoSize = true;
+            label92.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label92.ForeColor = Color.Black;
+            label92.Location = new Point(27, 295);
+            label92.Name = "label92";
+            label92.Size = new Size(122, 21);
+            label92.TabIndex = 47;
+            label92.Text = "Midterm Grade";
+            // 
+            // textBox21
+            // 
+            textBox21.BorderStyle = BorderStyle.FixedSingle;
+            textBox21.CharacterCasing = CharacterCasing.Upper;
+            textBox21.Font = new Font("Segoe UI", 12F);
+            textBox21.Location = new Point(30, 321);
+            textBox21.Name = "textBox21";
+            textBox21.PlaceholderText = " e.g., 1.25";
+            textBox21.Size = new Size(571, 29);
+            textBox21.TabIndex = 46;
+            // 
+            // comboBox10
+            // 
+            comboBox10.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            comboBox10.FormattingEnabled = true;
+            comboBox10.Items.AddRange(new object[] { "1st Semester ", "2nd Semester", "Summer Term" });
+            comboBox10.Location = new Point(27, 247);
+            comboBox10.Name = "comboBox10";
+            comboBox10.Size = new Size(571, 29);
+            comboBox10.TabIndex = 45;
+            // 
+            // label41
+            // 
+            label41.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label41.AutoSize = true;
+            label41.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label41.ForeColor = Color.Black;
+            label41.Location = new Point(622, 220);
+            label41.Name = "label41";
+            label41.Size = new Size(117, 21);
+            label41.TabIndex = 44;
+            label41.Text = "Academic Year";
+            // 
+            // textBox18
+            // 
+            textBox18.BorderStyle = BorderStyle.FixedSingle;
+            textBox18.CharacterCasing = CharacterCasing.Upper;
+            textBox18.Font = new Font("Segoe UI", 12F);
+            textBox18.Location = new Point(625, 246);
+            textBox18.Name = "textBox18";
+            textBox18.PlaceholderText = " e.g., 2025 - 2026";
+            textBox18.Size = new Size(546, 29);
+            textBox18.TabIndex = 43;
+            // 
+            // label90
+            // 
+            label90.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label90.AutoSize = true;
+            label90.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label90.ForeColor = Color.Black;
+            label90.Location = new Point(25, 220);
+            label90.Name = "label90";
+            label90.Size = new Size(79, 21);
+            label90.TabIndex = 42;
+            label90.Text = "Semester";
+            // 
+            // label40
+            // 
+            label40.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label40.AutoSize = true;
+            label40.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label40.ForeColor = Color.Black;
+            label40.Location = new Point(621, 143);
+            label40.Name = "label40";
+            label40.Size = new Size(112, 21);
+            label40.TabIndex = 40;
+            label40.Text = "Subject Name";
+            // 
+            // textBox17
+            // 
+            textBox17.BorderStyle = BorderStyle.FixedSingle;
+            textBox17.CharacterCasing = CharacterCasing.Upper;
+            textBox17.Font = new Font("Segoe UI", 12F);
+            textBox17.Location = new Point(624, 169);
+            textBox17.Name = "textBox17";
+            textBox17.PlaceholderText = " e.g., Introduction to Programming";
+            textBox17.Size = new Size(547, 29);
+            textBox17.TabIndex = 39;
+            // 
+            // label94
+            // 
+            label94.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label94.AutoSize = true;
+            label94.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label94.ForeColor = Color.Black;
+            label94.Location = new Point(24, 143);
+            label94.Name = "label94";
+            label94.Size = new Size(108, 21);
+            label94.TabIndex = 33;
+            label94.Text = "Subject Code";
+            // 
+            // textBox20
+            // 
+            textBox20.BorderStyle = BorderStyle.FixedSingle;
+            textBox20.CharacterCasing = CharacterCasing.Upper;
+            textBox20.Font = new Font("Segoe UI", 12F);
+            textBox20.Location = new Point(27, 169);
+            textBox20.Name = "textBox20";
+            textBox20.PlaceholderText = " e.g., COMP 001";
+            textBox20.Size = new Size(571, 29);
+            textBox20.TabIndex = 32;
+            // 
+            // comboBox7
+            // 
+            comboBox7.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            comboBox7.FormattingEnabled = true;
+            comboBox7.Location = new Point(81, 99);
+            comboBox7.Name = "comboBox7";
+            comboBox7.Size = new Size(91, 29);
+            comboBox7.TabIndex = 31;
+            comboBox7.Text = "Program";
+            // 
+            // comboBox4
+            // 
+            comboBox4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            comboBox4.FormattingEnabled = true;
+            comboBox4.Location = new Point(24, 99);
+            comboBox4.Name = "comboBox4";
+            comboBox4.Size = new Size(51, 29);
+            comboBox4.TabIndex = 30;
+            comboBox4.Text = "Year";
+            // 
+            // label43
+            // 
+            label43.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label43.AutoSize = true;
+            label43.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label43.ForeColor = Color.Black;
+            label43.Location = new Point(24, 71);
+            label43.Name = "label43";
+            label43.Size = new Size(117, 21);
+            label43.TabIndex = 25;
+            label43.Text = "Select Student";
             // 
             pnlAccountingRecordsContent.AutoScroll = true;
             pnlAccountingRecordsContent.BackColor = SystemColors.ControlLight;
@@ -1280,6 +1637,18 @@
             pictureBox13.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox13.TabIndex = 23;
             pictureBox13.TabStop = false;
+            pnlGradesManagementContainer.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pnlGradesManagementContainer.AutoScroll = true;
+            pnlGradesManagementContainer.BackColor = SystemColors.ControlLightLight;
+            pnlGradesManagementContainer.BorderStyle = BorderStyle.FixedSingle;
+            pnlGradesManagementContainer.Controls.Add(label38);
+            pnlGradesManagementContainer.Controls.Add(pictureBox7);
+            pnlGradesManagementContainer.Controls.Add(button6);
+            pnlGradesManagementContainer.Controls.Add(textBox5);
+            pnlGradesManagementContainer.Location = new Point(31, 680);
+            pnlGradesManagementContainer.Name = "pnlGradesManagementContainer";
+            pnlGradesManagementContainer.Size = new Size(1208, 1693);
+            pnlGradesManagementContainer.TabIndex = 13;
             // 
             // label60
             // 
@@ -1366,6 +1735,368 @@
             pnlARTotalAmount.Name = "pnlARTotalAmount";
             pnlARTotalAmount.Size = new Size(368, 95);
             pnlARTotalAmount.TabIndex = 18;
+            // button2
+            // 
+            button2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            button2.FlatAppearance.BorderColor = Color.Gray;
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button2.Location = new Point(513, 756);
+            button2.Name = "button2";
+            button2.Size = new Size(147, 37);
+            button2.TabIndex = 53;
+            button2.Text = "Clear Form";
+            button2.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            button1.BackColor = Color.Maroon;
+            button1.FlatAppearance.BorderColor = Color.Maroon;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button1.ForeColor = Color.White;
+            button1.Image = Properties.Resources.professor_16;
+            button1.Location = new Point(666, 755);
+            button1.Name = "button1";
+            button1.Size = new Size(215, 37);
+            button1.TabIndex = 52;
+            button1.Text = "Register Professor";
+            button1.TextAlign = ContentAlignment.MiddleRight;
+            button1.TextImageRelation = TextImageRelation.ImageBeforeText;
+            button1.UseVisualStyleBackColor = false;
+            // 
+            // comboBox3
+            // 
+            comboBox3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            comboBox3.FormattingEnabled = true;
+            comboBox3.Items.AddRange(new object[] { "Full-Time", "Part-Time", "Contractual", "Visiting Professor" });
+            comboBox3.Location = new Point(439, 707);
+            comboBox3.Name = "comboBox3";
+            comboBox3.Size = new Size(442, 23);
+            comboBox3.TabIndex = 51;
+            comboBox3.Text = "Select Employment Status";
+            // 
+            // comboBox2
+            // 
+            comboBox2.FormattingEnabled = true;
+            comboBox2.Items.AddRange(new object[] { "Computer Science", "Information Technology", "Engineering", "Business Administration", "Accountancy", "Education", "Liberal Arts", "Natural Sciences" });
+            comboBox2.Location = new Point(26, 643);
+            comboBox2.Name = "comboBox2";
+            comboBox2.Size = new Size(396, 23);
+            comboBox2.TabIndex = 50;
+            comboBox2.Text = "Select Department";
+            // 
+            // comboBox1
+            // 
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Items.AddRange(new object[] { "Bachelor's Degree", "Master's Degree", "Doctorate (PhD)", "Post-Doctorate" });
+            comboBox1.Location = new Point(26, 707);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(396, 23);
+            comboBox1.TabIndex = 49;
+            comboBox1.Text = "Select Education Level";
+            // 
+            // label7
+            // 
+            label7.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label7.AutoSize = true;
+            label7.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label7.ForeColor = Color.Black;
+            label7.Location = new Point(436, 681);
+            label7.Name = "label7";
+            label7.Size = new Size(151, 21);
+            label7.TabIndex = 48;
+            label7.Text = "Employment Status";
+            // 
+            // label13
+            // 
+            label13.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label13.AutoSize = true;
+            label13.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label13.ForeColor = Color.Black;
+            label13.Location = new Point(436, 617);
+            label13.Name = "label13";
+            label13.Size = new Size(110, 21);
+            label13.TabIndex = 46;
+            label13.Text = "Specialization";
+            // 
+            // textBox7
+            // 
+            textBox7.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBox7.BorderStyle = BorderStyle.FixedSingle;
+            textBox7.CharacterCasing = CharacterCasing.Upper;
+            textBox7.Location = new Point(439, 643);
+            textBox7.Name = "textBox7";
+            textBox7.PlaceholderText = " e.g., Artificial Intelligence";
+            textBox7.Size = new Size(442, 23);
+            textBox7.TabIndex = 45;
+            // 
+            // label18
+            // 
+            label18.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label18.AutoSize = true;
+            label18.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label18.ForeColor = Color.Black;
+            label18.Location = new Point(23, 681);
+            label18.Name = "label18";
+            label18.Size = new Size(185, 21);
+            label18.TabIndex = 43;
+            label18.Text = "Highest Education Level";
+            // 
+            // label19
+            // 
+            label19.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label19.AutoSize = true;
+            label19.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label19.ForeColor = Color.Black;
+            label19.Location = new Point(23, 617);
+            label19.Name = "label19";
+            label19.Size = new Size(98, 21);
+            label19.TabIndex = 41;
+            label19.Text = "Department";
+            // 
+            // panel18
+            // 
+            panel18.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panel18.BackColor = Color.Maroon;
+            panel18.Location = new Point(23, 595);
+            panel18.Margin = new Padding(0);
+            panel18.Name = "panel18";
+            panel18.Size = new Size(861, 3);
+            panel18.TabIndex = 39;
+            // 
+            // label20
+            // 
+            label20.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label20.AutoSize = true;
+            label20.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label20.ForeColor = Color.Black;
+            label20.Location = new Point(23, 560);
+            label20.Name = "label20";
+            label20.Size = new Size(248, 30);
+            label20.TabIndex = 38;
+            label20.Text = "Professional Information";
+            // 
+            // dateTimePicker1
+            // 
+            dateTimePicker1.Location = new Point(26, 231);
+            dateTimePicker1.Name = "dateTimePicker1";
+            dateTimePicker1.Size = new Size(396, 23);
+            dateTimePicker1.TabIndex = 37;
+            dateTimePicker1.Value = new DateTime(2026, 4, 4, 22, 34, 4, 0);
+            // 
+            // textBox2
+            // 
+            textBox2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBox2.BorderStyle = BorderStyle.FixedSingle;
+            textBox2.Location = new Point(26, 425);
+            textBox2.Multiline = true;
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(855, 114);
+            textBox2.TabIndex = 36;
+            // 
+            // maskedTextBox1
+            // 
+            maskedTextBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            maskedTextBox1.BorderStyle = BorderStyle.FixedSingle;
+            maskedTextBox1.Location = new Point(439, 363);
+            maskedTextBox1.Mask = "(+63) 000-000-0000";
+            maskedTextBox1.Name = "maskedTextBox1";
+            maskedTextBox1.Size = new Size(442, 23);
+            maskedTextBox1.TabIndex = 34;
+            // 
+            // label12
+            // 
+            label12.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label12.AutoSize = true;
+            label12.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label12.ForeColor = Color.Black;
+            label12.Location = new Point(436, 337);
+            label12.Name = "label12";
+            label12.Size = new Size(120, 21);
+            label12.TabIndex = 33;
+            label12.Text = "Phone Number";
+            // 
+            // label14
+            // 
+            label14.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label14.AutoSize = true;
+            label14.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label14.ForeColor = Color.Black;
+            label14.Location = new Point(23, 401);
+            label14.Name = "label14";
+            label14.Size = new Size(70, 21);
+            label14.TabIndex = 30;
+            label14.Text = "Address";
+            // 
+            // label15
+            // 
+            label15.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label15.AutoSize = true;
+            label15.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label15.ForeColor = Color.Black;
+            label15.Location = new Point(23, 337);
+            label15.Name = "label15";
+            label15.Size = new Size(112, 21);
+            label15.TabIndex = 28;
+            label15.Text = "Email Address";
+            // 
+            // textBox8
+            // 
+            textBox8.BorderStyle = BorderStyle.FixedSingle;
+            textBox8.CharacterCasing = CharacterCasing.Upper;
+            textBox8.Location = new Point(26, 361);
+            textBox8.Name = "textBox8";
+            textBox8.PlaceholderText = " professor@pup.edu.ph";
+            textBox8.Size = new Size(396, 23);
+            textBox8.TabIndex = 27;
+            // 
+            // panel17
+            // 
+            panel17.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panel17.BackColor = Color.Maroon;
+            panel17.Location = new Point(23, 315);
+            panel17.Margin = new Padding(0);
+            panel17.Name = "panel17";
+            panel17.Size = new Size(861, 3);
+            panel17.TabIndex = 26;
+            // 
+            // label16
+            // 
+            label16.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label16.AutoSize = true;
+            label16.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label16.ForeColor = Color.Black;
+            label16.Location = new Point(23, 280);
+            label16.Name = "label16";
+            label16.Size = new Size(208, 30);
+            label16.TabIndex = 25;
+            label16.Text = "Contact Information";
+            // 
+            // label9
+            // 
+            label9.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label9.AutoSize = true;
+            label9.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label9.ForeColor = Color.Black;
+            label9.Location = new Point(436, 147);
+            label9.Name = "label9";
+            label9.Size = new Size(86, 21);
+            label9.TabIndex = 23;
+            label9.Text = "Last Name";
+            // 
+            // textBox4
+            // 
+            textBox4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBox4.BorderStyle = BorderStyle.FixedSingle;
+            textBox4.CharacterCasing = CharacterCasing.Upper;
+            textBox4.Location = new Point(439, 173);
+            textBox4.Name = "textBox4";
+            textBox4.PlaceholderText = " Enter last name";
+            textBox4.Size = new Size(442, 23);
+            textBox4.TabIndex = 22;
+            // 
+            // label11
+            // 
+            label11.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label11.AutoSize = true;
+            label11.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label11.ForeColor = Color.Black;
+            label11.Location = new Point(436, 83);
+            label11.Name = "label11";
+            label11.Size = new Size(88, 21);
+            label11.TabIndex = 21;
+            label11.Text = "First Name";
+            // 
+            // textBox6
+            // 
+            textBox6.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBox6.BorderStyle = BorderStyle.FixedSingle;
+            textBox6.CharacterCasing = CharacterCasing.Upper;
+            textBox6.Location = new Point(439, 109);
+            textBox6.Name = "textBox6";
+            textBox6.PlaceholderText = " Enter first name";
+            textBox6.Size = new Size(442, 23);
+            textBox6.TabIndex = 20;
+            // 
+            // label10
+            // 
+            label10.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label10.AutoSize = true;
+            label10.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label10.ForeColor = Color.Black;
+            label10.Location = new Point(23, 207);
+            label10.Name = "label10";
+            label10.Size = new Size(103, 21);
+            label10.TabIndex = 19;
+            label10.Text = "Date of Birth";
+            // 
+            // label8
+            // 
+            label8.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label8.AutoSize = true;
+            label8.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label8.ForeColor = Color.Black;
+            label8.Location = new Point(23, 147);
+            label8.Name = "label8";
+            label8.Size = new Size(109, 21);
+            label8.TabIndex = 15;
+            label8.Text = "Middle Name";
+            // 
+            // textBox3
+            // 
+            textBox3.BorderStyle = BorderStyle.FixedSingle;
+            textBox3.CharacterCasing = CharacterCasing.Upper;
+            textBox3.Location = new Point(26, 171);
+            textBox3.Name = "textBox3";
+            textBox3.PlaceholderText = " Enter middle name";
+            textBox3.Size = new Size(396, 23);
+            textBox3.TabIndex = 14;
+            // 
+            // label6
+            // 
+            label6.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label6.ForeColor = Color.Black;
+            label6.Location = new Point(23, 83);
+            label6.Name = "label6";
+            label6.Size = new Size(100, 21);
+            label6.TabIndex = 11;
+            label6.Text = "Professor ID";
+            // 
+            // textBox1
+            // 
+            textBox1.BorderStyle = BorderStyle.FixedSingle;
+            textBox1.CharacterCasing = CharacterCasing.Upper;
+            textBox1.Location = new Point(26, 109);
+            textBox1.Name = "textBox1";
+            textBox1.PlaceholderText = " e.g., PROF-001";
+            textBox1.Size = new Size(396, 23);
+            textBox1.TabIndex = 10;
+            // 
+            // panel8
+            // 
+            panel8.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panel8.BackColor = Color.Maroon;
+            panel8.Location = new Point(23, 61);
+            panel8.Margin = new Padding(0);
+            panel8.Name = "panel8";
+            panel8.Size = new Size(861, 3);
+            panel8.TabIndex = 9;
+            // 
+            // label5
+            // 
+            label5.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5.ForeColor = Color.Black;
+            label5.Location = new Point(23, 26);
+            label5.Name = "label5";
+            label5.Size = new Size(213, 30);
+            label5.TabIndex = 6;
+            label5.Text = "Personal Information";
             // 
             // pictureBox11
             // 
@@ -2127,6 +2858,16 @@
             label88.Size = new Size(272, 21);
             label88.TabIndex = 16;
             label88.Text = "Maria Santos registered as student";
+            pictureBox11.BackColor = Color.Maroon;
+            pictureBox11.BackgroundImageLayout = ImageLayout.Zoom;
+            pictureBox11.BorderStyle = BorderStyle.FixedSingle;
+            pictureBox11.Image = Properties.Resources.card_inserting_48;
+            pictureBox11.Location = new Point(267, 13);
+            pictureBox11.Name = "pictureBox11";
+            pictureBox11.Size = new Size(80, 66);
+            pictureBox11.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox11.TabIndex = 21;
+            pictureBox11.TabStop = false;
             // 
             // label89
             // 
@@ -2604,7 +3345,7 @@
             btnStudentRegistration.FlatStyle = FlatStyle.Flat;
             btnStudentRegistration.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnStudentRegistration.ForeColor = Color.White;
-            btnStudentRegistration.Image = Properties.Resources.student_2_161;
+            btnStudentRegistration.Image = Properties.Resources.student_2_16;
             btnStudentRegistration.Location = new Point(662, 677);
             btnStudentRegistration.Name = "btnStudentRegistration";
             btnStudentRegistration.Size = new Size(215, 37);

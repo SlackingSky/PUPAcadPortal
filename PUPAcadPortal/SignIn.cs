@@ -47,47 +47,35 @@ namespace PUPAcadPortal
             txtPassword.UseSystemPasswordChar = !txtPassword.UseSystemPasswordChar;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnSignIn_Click(object sender, EventArgs e)
         {
-            string username = txtUsername.Text.Trim();
-            string password = txtPassword.Text;
-
-            // For demo purposes, only check username. 
-            // In a real app, validate both username and password against a database.
-            if (string.IsNullOrEmpty(username))
+            if (txtUsername.Text.ToLower() == "student")
             {
-                MessageBox.Show("Please enter your username.", "Login Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (username.Equals("a", StringComparison.OrdinalIgnoreCase))
-            {
-                // Open Admin Portal
-                this.Hide();
-                AdminPortal adminPortal = new AdminPortal();
-                adminPortal.WindowState = this.WindowState;
-                adminPortal.Show();
-            }
-            else if (username.Equals("s", StringComparison.OrdinalIgnoreCase))
-            {
-                // Open Student Portal
                 this.Hide();
                 StudentPortal studentPortal = new StudentPortal();
                 studentPortal.WindowState = this.WindowState;
+                studentPortal.StartPosition = FormStartPosition.CenterScreen;
                 studentPortal.Show();
+            }
+            else if (txtUsername.Text.ToLower() == "admin")
+            {
+                this.Hide();
+                AdminPortal adminPortal = new AdminPortal();
+                adminPortal.WindowState = this.WindowState;
+                adminPortal.StartPosition = FormStartPosition.CenterScreen;
+                adminPortal.Show();
+            }
+            else if (txtUsername.Text.ToLower() == "instructor")
+            {
+                this.Hide();
+                InstructorPortal instructorPortal = new InstructorPortal();
+                instructorPortal.WindowState = this.WindowState;
+                instructorPortal.StartPosition = FormStartPosition.CenterScreen;
+                instructorPortal.Show();
             }
             else
             {
-                MessageBox.Show("Invalid username. Please enter 'a' for admin or 's' for student.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void txtUsername_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                button1.PerformClick();
-                e.SuppressKeyPress = true;
+                MessageBox.Show("Invalid username. Please enter 'student', 'admin', or 'instructor'.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
