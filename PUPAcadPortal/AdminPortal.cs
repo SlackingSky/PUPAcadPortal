@@ -34,7 +34,7 @@ namespace PUPAcadPortal
             // Attach resize event handlers for sub-content panels that require dynamic resizing
             pnlEnrolledStudentsContent.Layout += (s, e) => ResizeEnrolledStudentsContent();
             pnlAccountingRecordsContent.Layout += (s, e) => ResizeAccountingRecordsContent();
-            
+
 
             // Attach event handlers for filtering controls in View All Users
             btnSearch.Click += (s, e) => ApplyFiltersAndRefresh();
@@ -130,7 +130,7 @@ namespace PUPAcadPortal
             if (pnlAccountingRecordsContent.Visible)
             {
                 FitContentPanel(pnlAccountingRecordsContent);
-                ResizeAccountingRecordsContent(); 
+                ResizeAccountingRecordsContent();
             }
             if (pnlEnrolledStudentsContent.Visible)
             {
@@ -425,7 +425,7 @@ namespace PUPAcadPortal
             cmbGMStudent.DisplayMember = "Name";
             cmbGMStudent.ValueMember = "ID";
 
-            
+
         }
 
         private void UpdateGradesPlaceholderVisibility()
