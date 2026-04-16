@@ -1064,9 +1064,9 @@
             roundedPanel36.BackColor = Color.Maroon;
             roundedPanel36.BorderRadius = 10;
             roundedPanel36.Controls.Add(roundedPanel37);
-            roundedPanel36.Location = new Point(120, 166);
+            roundedPanel36.Location = new Point(101, 172);
             roundedPanel36.Name = "roundedPanel36";
-            roundedPanel36.Size = new Size(856, 520);
+            roundedPanel36.Size = new Size(1254, 670);
             roundedPanel36.TabIndex = 1;
             roundedPanel36.Visible = false;
             roundedPanel36.Paint += roundedPanel36_Paint;
@@ -1080,16 +1080,16 @@
             roundedPanel37.Controls.Add(label40);
             roundedPanel37.Location = new Point(21, 21);
             roundedPanel37.Name = "roundedPanel37";
-            roundedPanel37.Size = new Size(811, 469);
+            roundedPanel37.Size = new Size(1191, 621);
             roundedPanel37.TabIndex = 0;
             // 
             // button8
             // 
             button8.BackColor = Color.Maroon;
             button8.ForeColor = Color.White;
-            button8.Location = new Point(689, 424);
+            button8.Location = new Point(1020, 548);
             button8.Name = "button8";
-            button8.Size = new Size(94, 29);
+            button8.Size = new Size(136, 55);
             button8.TabIndex = 7;
             button8.Text = "Back";
             button8.UseVisualStyleBackColor = false;
@@ -1099,10 +1099,10 @@
             // 
             listBox1.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             listBox1.FormattingEnabled = true;
-            listBox1.Items.AddRange(new object[] { "Attendance (10%)                                   - 10", "Recitation / Class Participation (15%)    - 15", "Seatwork / Short Quiz (15%)                  - 15", "Assignment / Project (15%)                    - 15", "Long Quiz (25%)                                      - 25", "Major Examination (30%)                       - 30", "Grade Computation                             100  -> 1.00" });
-            listBox1.Location = new Point(148, 62);
+            listBox1.Items.AddRange(new object[] { "Attendance (10%)\t\t\t\t- \t10%", "Recitation / Class Participation (15%)\t\t- \t15%", "Seatwork / Short Quiz (15%)\t\t\t- \t15%", "Assignment / Project (15%)\t\t\t- \t15%", "Long Quiz (25%)\t\t\t\t- \t25%", "Major Examination (30%)\t\t\t- \t30%", "", "Grade Computation\t\t\t\t- \t100%", "PUP Grade Conversion\t\t\t- \t1.00" });
+            listBox1.Location = new Point(249, 63);
             listBox1.Name = "listBox1";
-            listBox1.Size = new Size(518, 345);
+            listBox1.Size = new Size(697, 531);
             listBox1.TabIndex = 6;
             // 
             // label40
