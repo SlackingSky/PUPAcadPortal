@@ -17,42 +17,86 @@ namespace PUPAcadPortal
         {
             InitializeComponent();
 
-            // Show the dashboard by default when the app opens
+            if (panel3 != null)
+            {
+                panel3.Dock = DockStyle.Fill;
+            }
+
+            SetupQuickActions();
+
             if (btnDashboard != null)
             {
                 changeButtonColor(btnDashboard);
                 showContent(btnDashboard);
             }
 
-            // Buhayin ang logic para sa Grades (Auto-Compute at Search)
             SetupGradeLogic();
         }
 
-        // --- GRADE MANAGEMENT LOGIC (AUTO-COMPUTE & SEARCH) ---
+        // --- NEW: QUICK ACTIONS CLICK FIX ---
+        private void SetupQuickActions()
+        {
+            void BindClick(Control ctrl, EventHandler handler)
+            {
+                if (ctrl == null) return;
+
+                ctrl.Click += handler;
+                ctrl.Cursor = Cursors.Hand;
+
+                foreach (Control child in ctrl.Controls)
+                {
+                    BindClick(child, handler);
+                }
+            }
+
+            BindClick(panel105, panel105_Click);
+            BindClick(panel103, panel103_Click);
+            BindClick(panel102, panel102_Click);
+            BindClick(panel104, panel104_Click);
+        }
+
+        // --- GRADE MANAGEMENT LOGIC ---
         private void SetupGradeLogic()
         {
-            // 1. LALAGYAN NG SAMPLE DATA (Para may ma-test ka agad)
+            if (dataGridView1 != null)
+            {
+                dataGridView1.AllowUserToAddRows = false;
+                dataGridView1.AllowUserToOrderColumns = false;
+                dataGridView1.AllowUserToResizeColumns = false;
+                dataGridView1.AllowUserToResizeRows = false;
+
+                // --- FIX 1.5: Anchor to stretch downward, and AutoSize to fill the gray space ---
+                dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+                dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            }
+
+            if (cmbSelectCourse != null && cmbSelectCourse.Items.Count == 0)
+            {
+                cmbSelectCourse.Items.Add("IT 101 - Introduction to Computing");
+                cmbSelectCourse.Items.Add("CS 102 - Data Structures");
+                cmbSelectCourse.Items.Add("IS 103 - Database Management");
+            }
+
             if (dataGridView1 != null && dataGridView1.Rows.Count == 0)
             {
-                dataGridView1.Rows.Add("2021-00001-MN-0", "John Doe", "85", "88");
-                dataGridView1.Rows.Add("2021-00002-MN-0", "Jane Smith", "92", "95");
-                dataGridView1.Rows.Add("2021-00003-MN-0", "Robert Johnson", "78", "82");
-                dataGridView1.Rows.Add("2021-00004-MN-0", "Maria Garcia", "88", "90");
-                dataGridView1.Rows.Add("2021-00005-MN-0", "Michael Chen", "72", "75");
-                dataGridView1.Rows.Add("2021-00006-MN-0", "Sarah Williams", "", "");
+                dataGridView1.Rows.Add("2021-00001-SM-0", "Eisen Nodesca", "85", "88");
+                dataGridView1.Rows.Add("2021-00002-SM-0", "Clarisa Matias", "92", "95");
+                dataGridView1.Rows.Add("2021-00003-SM-0", "Trisha Walang Last Name", "78", "82");
+                dataGridView1.Rows.Add("2021-00004-SM-0", "Liza Soberano", "88", "90");
+                dataGridView1.Rows.Add("2021-00005-SM-0", "Kween Yasmin", "72", "75");
+                dataGridView1.Rows.Add("2021-00006-SM-0", "Maine Love Alden", "98", "89");
             }
 
             // 2. AUTO-CALCULATE GRADES LOGIC
             if (dataGridView1 != null)
             {
-                // Ginagamit ang IList para maiwasan ang Visual Studio compiler bugs
-                dataGridView1.CellValueChanged += (s, e) => {
-                    // I-check kung Midterm (Column 2) o Finals (Column 3) ang in-edit
+                dataGridView1.CellValueChanged += (s, e) =>
+                {
                     if (e.RowIndex >= 0 && (e.ColumnIndex == 2 || e.ColumnIndex == 3))
                     {
                         IList cells = dataGridView1.Rows[e.RowIndex].Cells;
 
-                        // BINALIK YUNG MGA NUMBERS SA BRACKET DITO!
+                        // FIX: Re-applied the missing array indexes so it won't crash!
                         DataGridViewCell midCell = (DataGridViewCell)cells;
                         DataGridViewCell finCell = (DataGridViewCell)cells;
                         DataGridViewCell avgCell = (DataGridViewCell)cells;
@@ -62,7 +106,6 @@ namespace PUPAcadPortal
                         bool hasMid = double.TryParse(Convert.ToString(midCell.Value), out m);
                         bool hasFin = double.TryParse(Convert.ToString(finCell.Value), out f);
 
-                        // Kung may laman pareho ang Midterm at Finals, i-compute
                         if (hasMid && hasFin)
                         {
                             double avg = (m + f) / 2.0;
@@ -89,7 +132,6 @@ namespace PUPAcadPortal
 
                     if (dataGridView1 != null)
                     {
-                        // Kailangan i-null ang CurrentCell para makapag-hide tayo ng rows nang walang error
                         dataGridView1.CurrentCell = null;
 
                         foreach (DataGridViewRow r in dataGridView1.Rows)
@@ -97,14 +139,14 @@ namespace PUPAcadPortal
                             if (r.IsNewRow) continue;
 
                             IList cells = r.Cells;
-                            // BINALIK YUNG MGA NUMBERS SA BRACKET DITO!
-                            DataGridViewCell cell0 = (DataGridViewCell)cells; // Student Number
-                            DataGridViewCell cell1 = (DataGridViewCell)cells; // Name
+
+                            // FIX: Re-applied the missing array indexes here too!
+                            DataGridViewCell cell0 = (DataGridViewCell)cells;
+                            DataGridViewCell cell1 = (DataGridViewCell)cells;
 
                             string sn = cell0.Value != null ? cell0.Value.ToString().ToLower() : "";
                             string nm = cell1.Value != null ? cell1.Value.ToString().ToLower() : "";
 
-                            // I-hide o i-show ang row depende kung may match
                             r.Visible = string.IsNullOrEmpty(q) || sn.Contains(q) || nm.Contains(q);
                         }
                     }
@@ -180,12 +222,12 @@ namespace PUPAcadPortal
         {
             if (e.CloseReason == CloseReason.UserClosing)
             {
-                if (MessageBox.Show("Are you sure you want to exit?", "Confirm Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                DialogResult result = MessageBox.Show("Are you sure you want to exit?", "Confirm Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.No)
                 {
                     e.Cancel = true;
                 }
-                else
-                    Application.Exit();
             }
         }
 
@@ -227,6 +269,27 @@ namespace PUPAcadPortal
             this.Close();
         }
 
+        // --- QUICK ACTIONS REDIRECTS ---
+        private void panel105_Click(object sender, EventArgs e) { if (btnGrades != null) btnGrades_Click(btnGrades, e); }
+        private void panel103_Click(object sender, EventArgs e) { if (btnGrades != null) btnGrades_Click(btnGrades, e); }
+        private void panel102_Click(object sender, EventArgs e) { if (btnGrades != null) btnGrades_Click(btnGrades, e); }
+        private void panel104_Click(object sender, EventArgs e) { if (btnCourses != null) btnCourses_Click(btnCourses, e); }
+
+        private void button2_Click(object sender, EventArgs e) { if (btnGrades != null) btnGrades_Click(btnGrades, e); }
+        private void button4_Click(object sender, EventArgs e) { if (btnCourses != null) btnCourses_Click(btnCourses, e); }
+        private void button6_Click(object sender, EventArgs e) { if (btnGrades != null) btnGrades_Click(btnGrades, e); }
+
+        // --- SUBMIT FINAL GRADES BUTTON FIX ---
+        private void button9_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Are you sure you want to submit all final grades? This action cannot be undone.", "Submit Final Grades", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                MessageBox.Show("Grades submitted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
         // --- EMPTY EVENT HANDLERS (DO NOT DELETE) ---
         private void pnlCoursesContent_Paint(object sender, PaintEventArgs e) { }
         private void label2_Click(object sender, EventArgs e) { }
@@ -261,15 +324,11 @@ namespace PUPAcadPortal
         private void label36_Click(object sender, EventArgs e) { }
         private void cmbSelectCourse_Paint(object sender, PaintEventArgs e) { }
         private void flowLayoutPanel2_Paint_1(object sender, PaintEventArgs e) { }
-        private void button2_Click(object sender, EventArgs e) { }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
         private void label37_Click(object sender, EventArgs e) { }
         private void label38_Click(object sender, EventArgs e) { }
-        private void button4_Click(object sender, EventArgs e) { }
         private void panel46_Paint(object sender, PaintEventArgs e) { }
-        private void button6_Click(object sender, EventArgs e) { }
         private void panel87_Paint(object sender, PaintEventArgs e) { }
-        private void button9_Click(object sender, EventArgs e) { }
         private void label44_Click(object sender, EventArgs e) { }
         private void panel89_Paint(object sender, PaintEventArgs e) { }
         private void label44_Click_1(object sender, EventArgs e) { }
@@ -279,6 +338,63 @@ namespace PUPAcadPortal
         private void tableLayoutPanel8_Paint(object sender, PaintEventArgs e) { }
         private void label83_Click(object sender, EventArgs e) { }
         private void panel93_Paint(object sender, PaintEventArgs e) { }
+        private void panel101_Paint(object sender, PaintEventArgs e) { }
+        private void pictureBox20_Click(object sender, EventArgs e) { }
+        private void pictureBox21_Click(object sender, EventArgs e) { }
+        private void label109_Click(object sender, EventArgs e) { }
+        private void label116_Click(object sender, EventArgs e) { }
+        private void panel107_Paint(object sender, PaintEventArgs e) { }
+
+        // Empty Paint events 
+        private void panel105_Paint(object sender, PaintEventArgs e) { }
+        private void panel103_Paint(object sender, PaintEventArgs e) { }
+        private void panel102_Paint(object sender, PaintEventArgs e) { }
+        private void panel104_Paint(object sender, PaintEventArgs e) { }
+
+        private void panel41_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panel114_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panel114_Paint_1(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label114_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pnlCoursesContent_Paint_1(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label39_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button5_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 
     // --- DATA MODEL ---
