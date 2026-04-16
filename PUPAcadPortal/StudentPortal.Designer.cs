@@ -30,15 +30,15 @@ namespace PUPAcadPortal
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle15 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle16 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle17 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle18 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StudentPortal));
             pnlSidebar = new Panel();
             flowLayoutPanel1 = new FlowLayoutPanel();
@@ -161,8 +161,6 @@ namespace PUPAcadPortal
             btnEnrollCloseDetails = new Button();
             lblSubjectDetails = new Label();
             pnlContainerStudentPortal = new Panel();
-            label7 = new Label();
-            panel3 = new Panel();
             pnlAccountsContentHolder = new Panel();
             pnlDashboardContent = new Panel();
             pnlDashboardSpaceProvider = new Panel();
@@ -235,9 +233,6 @@ namespace PUPAcadPortal
             pnlDashboardGreetingsContainer = new Panel();
             lblDashboardGreetingDesc = new Label();
             lblDashboardGreeting = new Label();
-            panel14 = new Panel();
-            label14 = new Label();
-            label10 = new Label();
             pnlHeader = new Panel();
             panel15 = new Panel();
             panel16 = new Panel();
@@ -290,7 +285,6 @@ namespace PUPAcadPortal
             pnlEnrollSearchbar.SuspendLayout();
             pnlViewDetails.SuspendLayout();
             pnlContainerStudentPortal.SuspendLayout();
-            panel3.SuspendLayout();
             pnlAccountsContentHolder.SuspendLayout();
             pnlDashboardContent.SuspendLayout();
             pnlAnnouncementsContainer.SuspendLayout();
@@ -317,12 +311,6 @@ namespace PUPAcadPortal
             pnlEnrolledUnitsCard.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
             pnlDashboardGreetingsContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
-            panel33.SuspendLayout();
-            panel34.SuspendLayout();
-            panel35.SuspendLayout();
-            panel36.SuspendLayout();
-            panel14.SuspendLayout();
             pnlHeader.SuspendLayout();
             panel15.SuspendLayout();
             panel16.SuspendLayout();
@@ -430,38 +418,6 @@ namespace PUPAcadPortal
             btnEnrollment.UseVisualStyleBackColor = true;
             btnEnrollment.Click += btnEnrollment_Click;
             // 
-            // panel9
-            // 
-            panel9.Controls.Add(btnCourses);
-            panel9.Location = new Point(0, 112);
-            panel9.Margin = new Padding(0);
-            panel9.Name = "panel9";
-            panel9.Size = new Size(256, 48);
-            panel9.TabIndex = 2;
-            panel9.Visible = false;
-            // 
-            // btnCourses
-            // 
-            btnCourses.BackgroundImageLayout = ImageLayout.None;
-            btnCourses.Cursor = Cursors.Hand;
-            btnCourses.FlatAppearance.BorderSize = 0;
-            btnCourses.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            btnCourses.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            btnCourses.FlatStyle = FlatStyle.Flat;
-            btnCourses.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            btnCourses.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            btnCourses.Image = Properties.Resources.Course;
-            btnCourses.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCourses.Location = new Point(0, 0);
-            btnCourses.Name = "btnCourses";
-            btnCourses.Padding = new Padding(16, 0, 0, 0);
-            btnCourses.Size = new Size(256, 48);
-            btnCourses.TabIndex = 3;
-            btnCourses.Text = " Courses";
-            btnCourses.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnCourses.UseVisualStyleBackColor = true;
-            btnCourses.Click += btnCourses_Click;
-            // 
             // panel10
             // 
             panel10.Controls.Add(btnAccounts);
@@ -543,6 +499,7 @@ namespace PUPAcadPortal
             panel9.Name = "panel9";
             panel9.Size = new Size(256, 48);
             panel9.TabIndex = 2;
+            panel9.Visible = false;
             // 
             // btnCourses
             // 
@@ -724,14 +681,14 @@ namespace PUPAcadPortal
             dgvAccounts.BackgroundColor = Color.White;
             dgvAccounts.BorderStyle = BorderStyle.None;
             dgvAccounts.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(245, 247, 250);
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle1.ForeColor = Color.FromArgb(60, 60, 60);
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dgvAccounts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = Color.FromArgb(245, 247, 250);
+            dataGridViewCellStyle10.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle10.ForeColor = Color.FromArgb(60, 60, 60);
+            dataGridViewCellStyle10.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.True;
+            dgvAccounts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             dgvAccounts.ColumnHeadersHeight = 45;
             dgvAccounts.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dgvAccounts.Columns.AddRange(new DataGridViewColumn[] { colAccountsRefID, colAccountsDescription, colAccountsAmount, colAccountsDueDate, colAccountsStatus, colAccountsPaidDate });
@@ -910,28 +867,6 @@ namespace PUPAcadPortal
             pnlTotalPaid.Name = "pnlTotalPaid";
             pnlTotalPaid.Size = new Size(387, 133);
             pnlTotalPaid.TabIndex = 5;
-            // pictureBox5
-            // 
-            pictureBox5.BackColor = Color.Maroon;
-            pictureBox5.BorderStyle = BorderStyle.Fixed3D;
-            pictureBox5.Location = new Point(281, 24);
-            pictureBox5.Name = "pictureBox5";
-            pictureBox5.Size = new Size(95, 81);
-            pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox5.TabIndex = 3;
-            pictureBox5.TabStop = false;
-            // 
-            // panel21
-            // 
-            panel21.BackColor = SystemColors.ControlLightLight;
-            panel21.BorderStyle = BorderStyle.FixedSingle;
-            panel21.Controls.Add(lblTPPeso);
-            panel21.Controls.Add(lblTotalPaid);
-            panel21.Controls.Add(pictureBox4);
-            panel21.Location = new Point(428, 111);
-            panel21.Name = "panel21";
-            panel21.Size = new Size(387, 133);
-            panel21.TabIndex = 5;
             // 
             // lblTPPeso
             // 
@@ -1251,6 +1186,7 @@ namespace PUPAcadPortal
             // pictureBox5
             // 
             pictureBox5.BackColor = Color.Green;
+            pictureBox5.BorderStyle = BorderStyle.Fixed3D;
             pictureBox5.Image = Properties.Resources.Enrollment2;
             pictureBox5.Location = new Point(13, 13);
             pictureBox5.Name = "pictureBox5";
@@ -1337,14 +1273,14 @@ namespace PUPAcadPortal
             dgvEnrollmentConfirmed.BackgroundColor = Color.White;
             dgvEnrollmentConfirmed.CellBorderStyle = DataGridViewCellBorderStyle.None;
             dgvEnrollmentConfirmed.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.Maroon;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dataGridViewCellStyle2.ForeColor = Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            dgvEnrollmentConfirmed.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = Color.Maroon;
+            dataGridViewCellStyle11.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle11.ForeColor = Color.White;
+            dataGridViewCellStyle11.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = DataGridViewTriState.True;
+            dgvEnrollmentConfirmed.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
             dgvEnrollmentConfirmed.ColumnHeadersHeight = 29;
             dgvEnrollmentConfirmed.Columns.AddRange(new DataGridViewColumn[] { colCode2, colourseTitle2, colUnits2, colSchedule2, colStatus2, colAction2 });
             dgvEnrollmentConfirmed.Dock = DockStyle.Fill;
@@ -1384,8 +1320,8 @@ namespace PUPAcadPortal
             // colUnits2
             // 
             colUnits2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            colUnits2.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            colUnits2.DefaultCellStyle = dataGridViewCellStyle12;
             colUnits2.FillWeight = 92.978F;
             colUnits2.HeaderText = "Units";
             colUnits2.MinimumWidth = 6;
@@ -1405,8 +1341,8 @@ namespace PUPAcadPortal
             // 
             // colStatus2
             // 
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            colStatus2.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle13.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            colStatus2.DefaultCellStyle = dataGridViewCellStyle13;
             colStatus2.FillWeight = 92.978F;
             colStatus2.HeaderText = "Status";
             colStatus2.MinimumWidth = 6;
@@ -1417,10 +1353,10 @@ namespace PUPAcadPortal
             // colAction2
             // 
             colAction2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.Font = new Font("Segoe UI", 9F, FontStyle.Underline);
-            dataGridViewCellStyle5.ForeColor = Color.Maroon;
-            colAction2.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle14.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle14.Font = new Font("Segoe UI", 9F, FontStyle.Underline);
+            dataGridViewCellStyle14.ForeColor = Color.Maroon;
+            colAction2.DefaultCellStyle = dataGridViewCellStyle14;
             colAction2.HeaderText = "Action";
             colAction2.MinimumWidth = 6;
             colAction2.Name = "colAction2";
@@ -1478,14 +1414,14 @@ namespace PUPAcadPortal
             dgvEnrollment.BackgroundColor = Color.White;
             dgvEnrollment.CellBorderStyle = DataGridViewCellBorderStyle.None;
             dgvEnrollment.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = Color.Maroon;
-            dataGridViewCellStyle6.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dataGridViewCellStyle6.ForeColor = Color.White;
-            dataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
-            dgvEnrollment.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle15.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle15.BackColor = Color.Maroon;
+            dataGridViewCellStyle15.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle15.ForeColor = Color.White;
+            dataGridViewCellStyle15.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle15.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle15.WrapMode = DataGridViewTriState.True;
+            dgvEnrollment.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle15;
             dgvEnrollment.ColumnHeadersHeight = 29;
             dgvEnrollment.Columns.AddRange(new DataGridViewColumn[] { colSelect, colCode, colTitle, colUnits, colSchedule, colStatus, colAction });
             dgvEnrollment.Dock = DockStyle.Fill;
@@ -1537,8 +1473,8 @@ namespace PUPAcadPortal
             // colUnits
             // 
             colUnits.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            colUnits.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle16.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            colUnits.DefaultCellStyle = dataGridViewCellStyle16;
             colUnits.FillWeight = 92.978F;
             colUnits.HeaderText = "Units";
             colUnits.MinimumWidth = 6;
@@ -1558,8 +1494,8 @@ namespace PUPAcadPortal
             // 
             // colStatus
             // 
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            colStatus.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle17.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            colStatus.DefaultCellStyle = dataGridViewCellStyle17;
             colStatus.FillWeight = 92.978F;
             colStatus.HeaderText = "Status";
             colStatus.MinimumWidth = 6;
@@ -1570,10 +1506,10 @@ namespace PUPAcadPortal
             // colAction
             // 
             colAction.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.Font = new Font("Segoe UI", 9F, FontStyle.Underline);
-            dataGridViewCellStyle9.ForeColor = Color.Maroon;
-            colAction.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle18.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle18.Font = new Font("Segoe UI", 9F, FontStyle.Underline);
+            dataGridViewCellStyle18.ForeColor = Color.Maroon;
+            colAction.DefaultCellStyle = dataGridViewCellStyle18;
             colAction.HeaderText = "Action";
             colAction.MinimumWidth = 6;
             colAction.Name = "colAction";
@@ -1886,9 +1822,9 @@ namespace PUPAcadPortal
             // 
             // pnlContainerStudentPortal
             // 
+            pnlContainerStudentPortal.Controls.Add(pnlDashboardContent);
             pnlContainerStudentPortal.Controls.Add(pnlEnrollContent);
             pnlContainerStudentPortal.Controls.Add(pnlAccountsContentHolder);
-            pnlContainerStudentPortal.Controls.Add(pnlDashboardContent);
             pnlContainerStudentPortal.Controls.Add(pnlHeader);
             pnlContainerStudentPortal.Controls.Add(pnlSidebar);
             pnlContainerStudentPortal.Dock = DockStyle.Fill;
@@ -1896,17 +1832,6 @@ namespace PUPAcadPortal
             pnlContainerStudentPortal.Name = "pnlContainerStudentPortal";
             pnlContainerStudentPortal.Size = new Size(1512, 881);
             pnlContainerStudentPortal.TabIndex = 0;
-            // 
-            // pnlAccountsContentHolder
-            // 
-            pnlAccountsContentHolder.AutoScroll = true;
-            pnlAccountsContentHolder.BackColor = SystemColors.ActiveCaption;
-            pnlAccountsContentHolder.Controls.Add(pnlAccountsContent);
-            pnlAccountsContentHolder.Location = new Point(256, 72);
-            pnlAccountsContentHolder.Name = "pnlAccountsContentHolder";
-            pnlAccountsContentHolder.Size = new Size(1256, 809);
-            pnlAccountsContentHolder.TabIndex = 6;
-            pnlAccountsContentHolder.Visible = false;
             // 
             // pnlAccountsContentHolder
             // 
@@ -2425,24 +2350,24 @@ namespace PUPAcadPortal
             // label10
             // 
             label10.AutoSize = true;
-            label10.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label10.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             label10.ForeColor = Color.DimGray;
-            label10.Location = new Point(74, 40);
+            label10.Location = new Point(74, 19);
             label10.Name = "label10";
-            label10.Size = new Size(140, 17);
-            label10.TabIndex = 19;
-            label10.Text = "Check account balance";
+            label10.Size = new Size(129, 21);
+            label10.TabIndex = 0;
+            label10.Text = "Payment Status";
             // 
             // label14
             // 
             label14.AutoSize = true;
-            label14.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label14.Font = new Font("Segoe UI", 9.75F);
             label14.ForeColor = Color.DimGray;
-            label14.Location = new Point(74, 19);
+            label14.Location = new Point(74, 40);
             label14.Name = "label14";
-            label14.Size = new Size(129, 21);
-            label14.TabIndex = 17;
-            label14.Text = "Payment Status";
+            label14.Size = new Size(140, 17);
+            label14.TabIndex = 1;
+            label14.Text = "Check account balance";
             // 
             // panel41
             // 
@@ -2565,7 +2490,6 @@ namespace PUPAcadPortal
             // pictureBox12
             // 
             pictureBox12.BackColor = Color.Maroon;
-            pictureBox12.Image = (Image)resources.GetObject("pictureBox12.Image");
             pictureBox12.Location = new Point(196, 11);
             pictureBox12.Name = "pictureBox12";
             pictureBox12.Size = new Size(66, 68);
@@ -2722,37 +2646,6 @@ namespace PUPAcadPortal
             lblDashboardGreeting.Size = new Size(398, 37);
             lblDashboardGreeting.TabIndex = 0;
             lblDashboardGreeting.Text = "Welcome back, John DoReMi!";
-            // panel14
-            // 
-            panel14.BackColor = Color.Maroon;
-            panel14.Controls.Add(label14);
-            panel14.Controls.Add(label10);
-            panel14.ForeColor = Color.White;
-            panel14.Location = new Point(23, 21);
-            panel14.Margin = new Padding(3, 2, 3, 2);
-            panel14.Name = "panel14";
-            panel14.Size = new Size(1195, 102);
-            panel14.TabIndex = 0;
-            // 
-            // label14
-            // 
-            label14.AutoSize = true;
-            label14.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label14.Location = new Point(20, 57);
-            label14.Name = "label14";
-            label14.Size = new Size(326, 21);
-            label14.TabIndex = 1;
-            label14.Text = "Track your enrollment and academic progress";
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label10.Location = new Point(10, 14);
-            label10.Name = "label10";
-            label10.Size = new Size(398, 37);
-            label10.TabIndex = 0;
-            label10.Text = "Welcome back, John DoReMi!";
             // 
             // pnlHeader
             // 
@@ -2910,7 +2803,6 @@ namespace PUPAcadPortal
             pnlViewDetails.ResumeLayout(false);
             pnlViewDetails.PerformLayout();
             pnlContainerStudentPortal.ResumeLayout(false);
-            panel3.ResumeLayout(false);
             pnlAccountsContentHolder.ResumeLayout(false);
             pnlDashboardContent.ResumeLayout(false);
             pnlAnnouncementsContainer.ResumeLayout(false);
@@ -2957,17 +2849,6 @@ namespace PUPAcadPortal
             ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
             pnlDashboardGreetingsContainer.ResumeLayout(false);
             pnlDashboardGreetingsContainer.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox7).EndInit();
-            panel33.ResumeLayout(false);
-            panel33.PerformLayout();
-            panel34.ResumeLayout(false);
-            panel34.PerformLayout();
-            panel35.ResumeLayout(false);
-            panel35.PerformLayout();
-            panel36.ResumeLayout(false);
-            panel36.PerformLayout();
-            panel14.ResumeLayout(false);
-            panel14.PerformLayout();
             pnlHeader.ResumeLayout(false);
             panel15.ResumeLayout(false);
             panel15.PerformLayout();

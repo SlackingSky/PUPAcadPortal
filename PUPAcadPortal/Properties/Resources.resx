@@ -216,6 +216,7 @@
   </data>
   <data name="credit-card-6-481" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\credit-card-6-481.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Screenshot 2026-03-25 202152" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Screenshot 2026-03-25 202152.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -263,6 +264,7 @@
   </data>
   <data name="warning-4-128" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\warning-4-1281.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="pupbackgradient" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pupbackgradient.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -286,6 +288,7 @@
   </data>
   <data name="pupbackgradient" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pupbackgradient.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Lock" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Lock.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -378,6 +381,7 @@
   <data name="Screenshot 2026-03-25 202106" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Screenshot 2026-03-25 202106.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  </data>
   <data name="card-inserting-48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\card-inserting-48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -401,6 +405,7 @@
   </data>
   <data name="input" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\input.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="plus-8-24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\plus-8-24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -472,6 +477,7 @@
   </data>
   <data name="x-mark-3-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\x-mark-3-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="save-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\save-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
