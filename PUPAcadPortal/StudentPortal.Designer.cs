@@ -1064,7 +1064,7 @@
             roundedPanel36.BackColor = Color.Maroon;
             roundedPanel36.BorderRadius = 10;
             roundedPanel36.Controls.Add(roundedPanel37);
-            roundedPanel36.Location = new Point(101, 172);
+            roundedPanel36.Location = new Point(109, 187);
             roundedPanel36.Name = "roundedPanel36";
             roundedPanel36.Size = new Size(1254, 670);
             roundedPanel36.TabIndex = 1;
@@ -1165,9 +1165,9 @@
             label38.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label38.Location = new Point(55, 7);
             label38.Name = "label38";
-            label38.Size = new Size(56, 31);
+            label38.Size = new Size(55, 31);
             label38.TabIndex = 1;
-            label38.Text = "       ";
+            label38.Text = "1.00";
             // 
             // label39
             // 
@@ -1229,9 +1229,9 @@
             label36.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label36.Location = new Point(55, 7);
             label36.Name = "label36";
-            label36.Size = new Size(56, 31);
+            label36.Size = new Size(55, 31);
             label36.TabIndex = 1;
-            label36.Text = "       ";
+            label36.Text = "1.00";
             // 
             // label37
             // 
@@ -1293,9 +1293,9 @@
             label34.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label34.Location = new Point(55, 7);
             label34.Name = "label34";
-            label34.Size = new Size(56, 31);
+            label34.Size = new Size(55, 31);
             label34.TabIndex = 1;
-            label34.Text = "       ";
+            label34.Text = "1.00";
             // 
             // label35
             // 
@@ -1475,9 +1475,9 @@
             label32.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label32.Location = new Point(55, 7);
             label32.Name = "label32";
-            label32.Size = new Size(56, 31);
+            label32.Size = new Size(55, 31);
             label32.TabIndex = 1;
-            label32.Text = "       ";
+            label32.Text = "1.00";
             // 
             // label33
             // 
@@ -1539,9 +1539,9 @@
             label27.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label27.Location = new Point(55, 7);
             label27.Name = "label27";
-            label27.Size = new Size(56, 31);
+            label27.Size = new Size(55, 31);
             label27.TabIndex = 1;
-            label27.Text = "       ";
+            label27.Text = "1.00";
             // 
             // label31
             // 

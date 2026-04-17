@@ -112,8 +112,6 @@
             Exam = new DataGridViewTextBoxColumn();
             Grade = new DataGridViewTextBoxColumn();
             panel52 = new Panel();
-            roundedPanel30 = new RoundedPanel();
-            comboBox14 = new ComboBox();
             label128 = new Label();
             panel43 = new Panel();
             btnRelease = new Button();
@@ -499,6 +497,8 @@
             timer1 = new System.Windows.Forms.Timer(components);
             sideBarTimer = new System.Windows.Forms.Timer(components);
             roundedPanel20 = new RoundedPanel();
+            roundedPanel30 = new RoundedPanel();
+            comboBox14 = new ComboBox();
             button29 = new Button();
             pnlSidebar.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
@@ -535,7 +535,6 @@
             pnlGrades.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             panel52.SuspendLayout();
-            roundedPanel30.SuspendLayout();
             panel43.SuspendLayout();
             roundedPanel28.SuspendLayout();
             pnlSubMenu.SuspendLayout();
@@ -678,6 +677,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox10).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox15).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox22).BeginInit();
+            roundedPanel30.SuspendLayout();
             SuspendLayout();
             // 
             // button29
@@ -1766,31 +1766,12 @@
             panel52.Size = new Size(1453, 92);
             panel52.TabIndex = 4;
             // 
-            // roundedPanel30
-            // 
-            roundedPanel30.BackColor = Color.Maroon;
-            roundedPanel30.BorderRadius = 10;
-            roundedPanel30.Controls.Add(comboBox14);
-            roundedPanel30.Location = new Point(278, 21);
-            roundedPanel30.Name = "roundedPanel30";
-            roundedPanel30.Size = new Size(372, 51);
-            roundedPanel30.TabIndex = 1;
-            // 
-            // comboBox14
-            // 
-            comboBox14.FormattingEnabled = true;
-            comboBox14.Items.AddRange(new object[] { "Midterm Period", "Finalterm Period" });
-            comboBox14.Location = new Point(23, 11);
-            comboBox14.Name = "comboBox14";
-            comboBox14.Size = new Size(328, 28);
-            comboBox14.TabIndex = 0;
-            // 
             // label128
             // 
             label128.AutoSize = true;
             label128.BackColor = Color.White;
             label128.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label128.Location = new Point(26, 28);
+            label128.Location = new Point(21, 28);
             label128.Name = "label128";
             label128.Size = new Size(171, 31);
             label128.TabIndex = 0;
@@ -1839,16 +1820,17 @@
             roundedPanel28.Controls.Add(comboBox13);
             roundedPanel28.Location = new Point(278, 21);
             roundedPanel28.Name = "roundedPanel28";
-            roundedPanel28.Size = new Size(372, 51);
+            roundedPanel28.Size = new Size(440, 59);
             roundedPanel28.TabIndex = 1;
             // 
             // comboBox13
             // 
+            comboBox13.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboBox13.FormattingEnabled = true;
-            comboBox13.Items.AddRange(new object[] { "BSIT 2-2 | Introduction to Programming 1", "BSIT 2-2 | Information Management", "" });
-            comboBox13.Location = new Point(23, 11);
+            comboBox13.Items.AddRange(new object[] { "BSIT 2-2 | Introduction to Programming 1", "BSIT 2-2 | Principles of Accounting", "BSIT 2-2 | PATHFIT 4", "BSIT 2-2 | Human Computer Interaction", "BSIT 2-2 | Information Management", "BSIT 2-2 | Integrative Programming and Technologies 1", "" });
+            comboBox13.Location = new Point(14, 14);
             comboBox13.Name = "comboBox13";
-            comboBox13.Size = new Size(328, 28);
+            comboBox13.Size = new Size(414, 28);
             comboBox13.TabIndex = 0;
             // 
             // label5
@@ -1856,11 +1838,11 @@
             label5.AutoSize = true;
             label5.BackColor = Color.White;
             label5.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(26, 28);
+            label5.Location = new Point(13, 32);
             label5.Name = "label5";
-            label5.Size = new Size(227, 31);
+            label5.Size = new Size(266, 31);
             label5.TabIndex = 0;
-            label5.Text = "Course & Year-Section";
+            label5.Text = "Course and Year-Section";
             // 
             // pnlSubMenu
             // 
@@ -6411,6 +6393,26 @@
             roundedPanel20.Size = new Size(588, 313);
             roundedPanel20.TabIndex = 19;
             // 
+            // roundedPanel30
+            // 
+            roundedPanel30.BackColor = Color.Maroon;
+            roundedPanel30.BorderRadius = 10;
+            roundedPanel30.Controls.Add(comboBox14);
+            roundedPanel30.Location = new Point(278, 17);
+            roundedPanel30.Name = "roundedPanel30";
+            roundedPanel30.Size = new Size(440, 59);
+            roundedPanel30.TabIndex = 2;
+            // 
+            // comboBox14
+            // 
+            comboBox14.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            comboBox14.FormattingEnabled = true;
+            comboBox14.Items.AddRange(new object[] { "Midterm Period", "Finalterm Period", "" });
+            comboBox14.Location = new Point(14, 14);
+            comboBox14.Name = "comboBox14";
+            comboBox14.Size = new Size(414, 28);
+            comboBox14.TabIndex = 0;
+            // 
             // InstructorPortal
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -6467,7 +6469,6 @@
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             panel52.ResumeLayout(false);
             panel52.PerformLayout();
-            roundedPanel30.ResumeLayout(false);
             panel43.ResumeLayout(false);
             panel43.PerformLayout();
             roundedPanel28.ResumeLayout(false);
@@ -6660,6 +6661,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox10).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox15).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox22).EndInit();
+            roundedPanel30.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -7126,8 +7128,6 @@
         private Button btnRelease;
         private Button btnSave;
         private Panel panel52;
-        private RoundedPanel roundedPanel30;
-        private ComboBox comboBox14;
         private Label label128;
         private DataGridView dataGridView1;
         private DataGridViewTextBoxColumn StudentID;
@@ -7138,5 +7138,7 @@
         private DataGridViewTextBoxColumn Assignment;
         private DataGridViewTextBoxColumn Exam;
         private DataGridViewTextBoxColumn Grade;
+        private RoundedPanel roundedPanel30;
+        private ComboBox comboBox14;
     }
 }
