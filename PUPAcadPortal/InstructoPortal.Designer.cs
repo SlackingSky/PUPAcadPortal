@@ -1893,7 +1893,7 @@
             // 
             comboBox13.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboBox13.FormattingEnabled = true;
-            comboBox13.Items.AddRange(new object[] { "BSIT 2-2 | Introduction to Programming 1", "BSIT 2-2 | Principles of Accounting", "BSIT 2-2 | PATHFIT 4", "BSIT 2-2 | Human Computer Interaction", "BSIT 2-2 | Information Management", "BSIT 2-2 | Integrative Programming and Technologies 1", "" });
+            comboBox13.Items.AddRange(new object[] { "BSIT 2-2 | Introduction to Programming 1", "BSIT 2-2 | Principles of Accounting", "BSIT 2-2 | PATHFIT 4", "BSIT 2-2 | Human Computer Interaction", "BSIT 2-2 | Information Management", "BSIT 2-2 | Programming and Technologies 1" });
             comboBox13.Location = new Point(14, 14);
             comboBox13.Name = "comboBox13";
             comboBox13.Size = new Size(414, 28);
