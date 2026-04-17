@@ -28,6 +28,18 @@ namespace PUPAcadPortal
             //aalisin ung border ng datetimepicker sa attendance tab | d ko alam kung sakin lng kasi nagbubug / nawawala ung button for the date :) - hansukal
             // Removes 2 pixels from every side of the control
             //dateTimePicker3.Region = new Region(new Rectangle(2, 2, dateTimePicker1.Width - 4, dateTimePicker1.Height - 4));
+
+            string[] row1 = { "2024-00074-SM-0", "Ablong, Adrian P." };
+            string[] row2 = { "2024-00194-SM-0", "Alcaiz, Jared B." };
+            string[] row3 = { "2024-00146-SM-0", "Amar, Charles Manuel C." };
+            string[] row4 = { "2024-00123-SM-0", "Amen, Jessie C." };
+            string[] row5 = { "2024-00274-SM-0", "Amolata, Jhayphee V." };
+
+            dataGridView1.Rows.Add(row1);
+            dataGridView1.Rows.Add(row2);
+            dataGridView1.Rows.Add(row3);
+            dataGridView1.Rows.Add(row4);
+            dataGridView1.Rows.Add(row5);
         }
 
 
@@ -655,14 +667,11 @@ namespace PUPAcadPortal
 
         }
 
-        private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        private void button45_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void dataGridView1_CellContentClick_2(object sender, DataGridViewCellEventArgs e)
-        {
-
+            dataGridView1.Visible = true;
+            button46.Visible = true;
+            button47.Visible = true;
         }
     }
 }
