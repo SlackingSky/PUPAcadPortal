@@ -340,5 +340,20 @@ namespace PUPAcadPortal
         {
 
         }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            roundedPanel6.Visible = true;
+            roundedPanel21.Visible = true;
+            roundedPanel23.Visible = true;
+            roundedPanel30.Visible = true;
+            roundedPanel32.Visible = true;
+            roundedPanel34.Visible = true;
+        }
+
+        private void pnlGrades_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

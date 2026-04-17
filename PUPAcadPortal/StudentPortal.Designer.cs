@@ -86,6 +86,7 @@
             label34 = new Label();
             label35 = new Label();
             panel57 = new Panel();
+            button12 = new Button();
             roundedPanel38 = new RoundedPanel();
             comboBox10 = new ComboBox();
             btnGenerate = new Button();
@@ -1058,15 +1059,16 @@
             pnlGrades.Size = new Size(1453, 1319);
             pnlGrades.TabIndex = 12;
             pnlGrades.Visible = false;
+            pnlGrades.Paint += pnlGrades_Paint;
             // 
             // roundedPanel36
             // 
             roundedPanel36.BackColor = Color.Maroon;
             roundedPanel36.BorderRadius = 10;
             roundedPanel36.Controls.Add(roundedPanel37);
-            roundedPanel36.Location = new Point(109, 187);
+            roundedPanel36.Location = new Point(116, 162);
             roundedPanel36.Name = "roundedPanel36";
-            roundedPanel36.Size = new Size(1254, 670);
+            roundedPanel36.Size = new Size(1214, 334);
             roundedPanel36.TabIndex = 1;
             roundedPanel36.Visible = false;
             roundedPanel36.Paint += roundedPanel36_Paint;
@@ -1078,16 +1080,16 @@
             roundedPanel37.Controls.Add(button8);
             roundedPanel37.Controls.Add(listBox1);
             roundedPanel37.Controls.Add(label40);
-            roundedPanel37.Location = new Point(21, 21);
+            roundedPanel37.Location = new Point(20, 21);
             roundedPanel37.Name = "roundedPanel37";
-            roundedPanel37.Size = new Size(1191, 621);
+            roundedPanel37.Size = new Size(1169, 287);
             roundedPanel37.TabIndex = 0;
             // 
             // button8
             // 
             button8.BackColor = Color.Maroon;
             button8.ForeColor = Color.White;
-            button8.Location = new Point(1020, 548);
+            button8.Location = new Point(978, 222);
             button8.Name = "button8";
             button8.Size = new Size(136, 55);
             button8.TabIndex = 7;
@@ -1097,12 +1099,12 @@
             // 
             // listBox1
             // 
-            listBox1.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            listBox1.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             listBox1.FormattingEnabled = true;
-            listBox1.Items.AddRange(new object[] { "Attendance (10%)\t\t\t\t- \t10%", "Recitation / Class Participation (15%)\t\t- \t15%", "Seatwork / Short Quiz (15%)\t\t\t- \t15%", "Assignment / Project (15%)\t\t\t- \t15%", "Long Quiz (25%)\t\t\t\t- \t25%", "Major Examination (30%)\t\t\t- \t30%", "", "Grade Computation\t\t\t\t- \t100%", "PUP Grade Conversion\t\t\t- \t1.00" });
-            listBox1.Location = new Point(249, 63);
+            listBox1.Items.AddRange(new object[] { "Attendance (10%)\t\t\t- 10%\tAssignment / Project (15%)\t\t- \t15%", "Recitation / Class Participation (15%)\t- 15%\tLong Quiz (25%)\t\t\t- \t25%", "Seatwork / Short Quiz (15%)\t- 15%\tMajor Examination (30%)\t\t- \t30%", "", "Grade Computation\t\t\t- \t100%", "PUP Grade Conversion\t\t\t- \t1.00" });
+            listBox1.Location = new Point(52, 63);
             listBox1.Name = "listBox1";
-            listBox1.Size = new Size(697, 531);
+            listBox1.Size = new Size(819, 188);
             listBox1.TabIndex = 6;
             // 
             // label40
@@ -1124,6 +1126,7 @@
             roundedPanel34.Name = "roundedPanel34";
             roundedPanel34.Size = new Size(885, 128);
             roundedPanel34.TabIndex = 5;
+            roundedPanel34.Visible = false;
             // 
             // panel63
             // 
@@ -1188,6 +1191,7 @@
             roundedPanel32.Name = "roundedPanel32";
             roundedPanel32.Size = new Size(885, 128);
             roundedPanel32.TabIndex = 4;
+            roundedPanel32.Visible = false;
             // 
             // panel62
             // 
@@ -1248,10 +1252,11 @@
             roundedPanel30.BackColor = Color.Maroon;
             roundedPanel30.BorderRadius = 10;
             roundedPanel30.Controls.Add(panel61);
-            roundedPanel30.Location = new Point(271, 547);
+            roundedPanel30.Location = new Point(271, 546);
             roundedPanel30.Name = "roundedPanel30";
             roundedPanel30.Size = new Size(885, 128);
             roundedPanel30.TabIndex = 3;
+            roundedPanel30.Visible = false;
             // 
             // panel61
             // 
@@ -1310,6 +1315,7 @@
             // panel57
             // 
             panel57.BackColor = Color.White;
+            panel57.Controls.Add(button12);
             panel57.Controls.Add(roundedPanel38);
             panel57.Controls.Add(btnGenerate);
             panel57.Controls.Add(label5);
@@ -1317,6 +1323,19 @@
             panel57.Name = "panel57";
             panel57.Size = new Size(1450, 85);
             panel57.TabIndex = 2;
+            // 
+            // button12
+            // 
+            button12.BackColor = Color.Maroon;
+            button12.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button12.ForeColor = Color.White;
+            button12.Location = new Point(533, 14);
+            button12.Name = "button12";
+            button12.Size = new Size(270, 54);
+            button12.TabIndex = 6;
+            button12.Text = "View Grades";
+            button12.UseVisualStyleBackColor = false;
+            button12.Click += button12_Click;
             // 
             // roundedPanel38
             // 
@@ -1369,6 +1388,7 @@
             roundedPanel6.Name = "roundedPanel6";
             roundedPanel6.Size = new Size(885, 128);
             roundedPanel6.TabIndex = 1;
+            roundedPanel6.Visible = false;
             // 
             // panel58
             // 
@@ -1434,6 +1454,7 @@
             roundedPanel23.Name = "roundedPanel23";
             roundedPanel23.Size = new Size(885, 128);
             roundedPanel23.TabIndex = 3;
+            roundedPanel23.Visible = false;
             // 
             // panel60
             // 
@@ -1498,6 +1519,7 @@
             roundedPanel21.Name = "roundedPanel21";
             roundedPanel21.Size = new Size(885, 128);
             roundedPanel21.TabIndex = 2;
+            roundedPanel21.Visible = false;
             // 
             // panel59
             // 
@@ -5217,5 +5239,6 @@
         private Button button8;
         private RoundedPanel roundedPanel38;
         private ComboBox comboBox10;
+        private Button button12;
     }
 }
