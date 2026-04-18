@@ -12,6 +12,7 @@ namespace PUPAcadPortal
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new InstructorPortal());
+            //Application.Run(new StudentPortal());
         }
     }
 }

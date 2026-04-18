@@ -5,18 +5,20 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace PUPAcadPortal
 {
     public partial class AddNotesForm : Form
     {
-        public string NoteText { get; private set; }
+        public string NoteText { get; private set; } = "";
         public bool IsDeleted { get; private set; } = false;
 
         public AddNotesForm(DateTime selectedDate, string existingNote = "")
         {
             InitializeComponent();
-            txtDate.Text = selectedDate.ToString("MMMM dd, yyyy");
+            this.Text = "Note — " + selectedDate.ToString("MMMM dd, yyyy");
+            lblDateVal.Text = selectedDate.ToString("MMMM dd, yyyy");
             txtNote.Text = existingNote;
         }
 
@@ -24,9 +26,8 @@ namespace PUPAcadPortal
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            NoteText = txtNote.Text;
-            IsDeleted = false;
-            this.DialogResult = DialogResult.OK;
+            NoteText = txtNote.Text.Trim();
+            this.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.Close();
         }
 
@@ -37,16 +38,11 @@ namespace PUPAcadPortal
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show(
-                "Delete this note?",
-                "Confirm Delete",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning);
-
-            if (result == DialogResult.Yes)
+            if (MessageBox.Show("Delete this note?", "Confirm Delete",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 IsDeleted = true;
-                this.DialogResult = DialogResult.OK;
+                this.DialogResult = System.Windows.Forms.DialogResult.OK;
                 this.Close();
             }
         }

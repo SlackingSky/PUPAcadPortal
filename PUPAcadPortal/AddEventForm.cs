@@ -18,7 +18,6 @@ namespace PUPAcadPortal
 
             InitializeComponent();
 
-            this.Text = "Add Event \u2014 " + _date.ToString("MMMM dd, yyyy");
             lblDateValue.Text = _date.ToString("MMMM dd, yyyy");
 
             foreach (var t in Enum.GetValues(typeof(EventType)))
@@ -59,5 +58,10 @@ namespace PUPAcadPortal
         }
 
         private void btnCancel_Click(object sender, EventArgs e) => this.Close();
+
+        private void AddEventForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

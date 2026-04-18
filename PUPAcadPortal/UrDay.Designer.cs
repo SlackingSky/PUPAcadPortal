@@ -28,84 +28,83 @@
         /// </summary>
         private void InitializeComponent()
         {
-            lblDay = new Label();
-            lblNote = new Label();
-            lblAnnouncement = new Label();
-            chkSelect = new CheckBox();
-            panel1 = new Panel();
-            SuspendLayout();
-            // 
+            this.lblDay = new System.Windows.Forms.Label();
+            this.chkSelect = new System.Windows.Forms.CheckBox();
+            this.lblNote = new System.Windows.Forms.Label();
+            this.lblAnnouncement = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.SuspendLayout();
+
             // lblDay
-            // 
-            lblDay.BackColor = Color.Transparent;
-            lblDay.Font = new Font("Segoe UI", 9F);
-            lblDay.Location = new Point(4, 4);
-            lblDay.Name = "lblDay";
-            lblDay.Size = new Size(28, 28);
-            lblDay.TabIndex = 0;
-            lblDay.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // lblNote
-            // 
-            lblNote.AutoEllipsis = true;
-            lblNote.BackColor = Color.FromArgb(100, 100, 100);
-            lblNote.Font = new Font("Segoe UI", 6.8F);
-            lblNote.ForeColor = Color.White;
-            lblNote.Location = new Point(2, 52);
-            lblNote.Name = "lblNote";
-            lblNote.Padding = new Padding(3, 0, 0, 0);
-            lblNote.Size = new Size(130, 16);
-            lblNote.TabIndex = 1;
-            lblNote.Visible = false;
-            // 
-            // lblAnnouncement
-            // 
-            lblAnnouncement.AutoEllipsis = true;
-            lblAnnouncement.BackColor = Color.FromArgb(255, 140, 0);
-            lblAnnouncement.Font = new Font("Segoe UI", 6.8F);
-            lblAnnouncement.ForeColor = Color.White;
-            lblAnnouncement.Location = new Point(2, 70);
-            lblAnnouncement.Name = "lblAnnouncement";
-            lblAnnouncement.Padding = new Padding(3, 0, 0, 0);
-            lblAnnouncement.Size = new Size(130, 16);
-            lblAnnouncement.TabIndex = 2;
-            lblAnnouncement.Visible = false;
-            // 
+            this.lblDay.AutoSize = false;
+            this.lblDay.Size = new System.Drawing.Size(28, 28);
+            this.lblDay.Location = new System.Drawing.Point(4, 4);
+            this.lblDay.Font = new System.Drawing.Font("Segoe UI", 9f);
+            this.lblDay.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblDay.BackColor = System.Drawing.Color.Transparent;
+            this.lblDay.Name = "lblDay";
+            this.lblDay.TabIndex = 0;
+
             // chkSelect
-            // 
-            chkSelect.AutoSize = true;
-            chkSelect.Location = new Point(110, 4);
-            chkSelect.Name = "chkSelect";
-            chkSelect.Size = new Size(15, 14);
-            chkSelect.TabIndex = 3;
-            chkSelect.Visible = false;
-            // 
+            this.chkSelect.Location = new System.Drawing.Point(2, 2);
+            this.chkSelect.Size = new System.Drawing.Size(16, 16);
+            this.chkSelect.Visible = false;
+            this.chkSelect.Name = "chkSelect";
+            this.chkSelect.TabIndex = 1;
+
+            // lblNote
+            this.lblNote.AutoSize = false;
+            this.lblNote.AutoEllipsis = true;
+            this.lblNote.Text = "";
+            this.lblNote.Font = new System.Drawing.Font("Segoe UI", 6.8f);
+            this.lblNote.ForeColor = System.Drawing.Color.White;
+            this.lblNote.BackColor = System.Drawing.Color.FromArgb(100, 100, 100);
+            this.lblNote.Size = new System.Drawing.Size(156, 16);
+            this.lblNote.Location = new System.Drawing.Point(2, 34);
+            this.lblNote.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblNote.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.lblNote.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblNote.Visible = false;
+            this.lblNote.Name = "lblNote";
+            this.lblNote.TabIndex = 2;
+
+            // lblAnnouncement
+            this.lblAnnouncement.AutoSize = false;
+            this.lblAnnouncement.AutoEllipsis = true;
+            this.lblAnnouncement.Text = "";
+            this.lblAnnouncement.Font = new System.Drawing.Font("Segoe UI", 6.8f);
+            this.lblAnnouncement.ForeColor = System.Drawing.Color.White;
+            this.lblAnnouncement.BackColor = System.Drawing.Color.FromArgb(255, 140, 0);
+            this.lblAnnouncement.Size = new System.Drawing.Size(156, 16);
+            this.lblAnnouncement.Location = new System.Drawing.Point(2, 52);
+            this.lblAnnouncement.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblAnnouncement.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.lblAnnouncement.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblAnnouncement.Visible = false;
+            this.lblAnnouncement.Name = "lblAnnouncement";
+            this.lblAnnouncement.TabIndex = 3;
+
             // panel1
-            // 
-            panel1.BackColor = Color.Transparent;
-            panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(134, 141);
-            panel1.TabIndex = 4;
-            panel1.Click += panel1_Click;
-            panel1.Paint += panel1_Paint;
-            // 
-            // UrDay
-            // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.White;
-            Controls.Add(lblDay);
-            Controls.Add(lblNote);
-            Controls.Add(lblAnnouncement);
-            Controls.Add(chkSelect);
-            Controls.Add(panel1);
-            Name = "UrDay";
-            Size = new Size(134, 141);
-            Load += UrDay_Load;
-            ResumeLayout(false);
-            PerformLayout();
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.Name = "panel1";
+            this.panel1.TabIndex = 4;
+            this.panel1.Click += new System.EventHandler(this.panel1_Click);
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+
+            // UserControl
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
+            this.Size = new System.Drawing.Size(160, 110);
+            this.Name = "UrDay";
+            this.Load += new System.EventHandler(this.UrDay_Load);
+            this.Controls.Add(this.lblDay);
+            this.Controls.Add(this.chkSelect);
+            this.Controls.Add(this.lblNote);
+            this.Controls.Add(this.lblAnnouncement);
+            this.Controls.Add(this.panel1);
+            this.ResumeLayout(false);
         }
 
         #endregion

@@ -1398,8 +1398,7 @@
             pnlCalendar.Margin = new Padding(0);
             pnlCalendar.Name = "pnlCalendar";
             pnlCalendar.Size = new Size(1272, 989);
-            pnlCalendar.TabIndex = 12;
-            pnlCalendar.Visible = false;
+            pnlCalendar.TabIndex = 50;
             // 
             // lblMonthYear
             // 
@@ -1419,6 +1418,7 @@
             FPLmonth.Name = "FPLmonth";
             FPLmonth.Size = new Size(1239, 635);
             FPLmonth.TabIndex = 0;
+            FPLmonth.Paint += FPLmonth_Paint;
             // 
             // pnlSubMenu
             // 
@@ -6331,6 +6331,8 @@
         private Button button40;
         private Label lblMonthYear;
         private FlowLayoutPanel FPLmonth;
+        private System.Windows.Forms.PictureBox picPrev;
+        private System.Windows.Forms.PictureBox picNext;
 
     }
 }

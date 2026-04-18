@@ -786,5 +786,10 @@ namespace PUPAcadPortal
                 }
             }
         }
+
+        private void FPLmonth_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
