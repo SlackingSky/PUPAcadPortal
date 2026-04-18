@@ -17,7 +17,6 @@ namespace PUPAcadPortal
         public AddNotesForm(DateTime selectedDate, string existingNote = "")
         {
             InitializeComponent();
-            this.Text = "Note — " + selectedDate.ToString("MMMM dd, yyyy");
             lblDateVal.Text = selectedDate.ToString("MMMM dd, yyyy");
             txtNote.Text = existingNote;
         }
