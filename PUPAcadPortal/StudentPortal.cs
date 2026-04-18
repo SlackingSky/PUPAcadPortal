@@ -166,22 +166,53 @@ namespace PUPAcadPortal
 
         private void buttonRounded2_Click(object sender, EventArgs e)
         {
-            pnlVA.BringToFront();
-            pnlVA.Visible = true;
+            pnlRA.BringToFront();
+            pnlRA.Visible = true;
         }
 
         private void buttonRounded6_Click(object sender, EventArgs e)
         {
-            pnlToday.BringToFront();
-            pnlToday.Visible = true;
+            pnlAll.BringToFront();
+            pnlAll.Visible = true;
             pnlVA.Visible = false;
         }
 
         private void buttonRounded7_Click(object sender, EventArgs e)
         {
-            pnlToday.BringToFront();
-            pnlToday.Visible = true;
+            pnlAll.BringToFront();
+            pnlAll.Visible = true;
             pnlVA.Visible = false;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            pnlAll.BringToFront();
+            pnlAll.Visible = true;
+        }
+
+        private void buttonRounded1_Click(object sender, EventArgs e)
+        {
+            pnlVA.BringToFront();
+            pnlVA.Visible = true;
+        }
+
+        private void buttonRounded9_Click(object sender, EventArgs e)
+        {
+            pnlVA.BringToFront();
+            pnlVA.Visible = true;
+        }
+
+        private void buttonRounded10_Click(object sender, EventArgs e)
+        {
+            pnlRA.BringToFront();
+            pnlRA.Visible = true;
+        }
+
+        private void buttonRounded15_Click(object sender, EventArgs e)
+        {
+            pnlAll.BringToFront();
+            pnlAll.Visible = true;
+            pnlRA.Visible = false;
         }
     }
 }
