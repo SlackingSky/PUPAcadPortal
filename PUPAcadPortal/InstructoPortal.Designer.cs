@@ -58,16 +58,8 @@
             panel13 = new Panel();
             btnLogout = new Button();
             pnlCreateAct = new Panel();
-            pnlQuiz1 = new Panel();
-            panel49 = new Panel();
-            label119 = new Label();
-            flowLayoutPanel3 = new FlowLayoutPanel();
-            pnlControlBar = new Panel();
-            tableLayoutPanel24 = new TableLayoutPanel();
-            btnRemove = new buttonRounded();
-            btnAddPanel = new buttonRounded();
-            btnSaveQuiz = new buttonRounded();
             pnlAssign = new Panel();
+            lblFileNameDisplay = new Label();
             pnlAttachAss = new RoundedPanel();
             btnDoneAttach = new Button();
             btnAttachCancel = new Button();
@@ -83,6 +75,15 @@
             roundedPanel12 = new RoundedPanel();
             textBox22 = new TextBox();
             label117 = new Label();
+            pnlQuiz1 = new Panel();
+            panel49 = new Panel();
+            label119 = new Label();
+            flowLayoutPanel3 = new FlowLayoutPanel();
+            pnlControlBar = new Panel();
+            tableLayoutPanel24 = new TableLayoutPanel();
+            btnRemove = new buttonRounded();
+            btnAddPanel = new buttonRounded();
+            btnSaveQuiz = new buttonRounded();
             panel45 = new Panel();
             roundedPanel23 = new RoundedPanel();
             cmbBXActType = new ComboBox();
@@ -547,11 +548,6 @@
             panel12.SuspendLayout();
             panel13.SuspendLayout();
             pnlCreateAct.SuspendLayout();
-            pnlQuiz1.SuspendLayout();
-            panel49.SuspendLayout();
-            flowLayoutPanel3.SuspendLayout();
-            pnlControlBar.SuspendLayout();
-            tableLayoutPanel24.SuspendLayout();
             pnlAssign.SuspendLayout();
             pnlAttachAss.SuspendLayout();
             roundedPanel29.SuspendLayout();
@@ -559,6 +555,11 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox46).BeginInit();
             roundedPanel11.SuspendLayout();
             roundedPanel12.SuspendLayout();
+            pnlQuiz1.SuspendLayout();
+            panel49.SuspendLayout();
+            flowLayoutPanel3.SuspendLayout();
+            pnlControlBar.SuspendLayout();
+            tableLayoutPanel24.SuspendLayout();
             panel45.SuspendLayout();
             roundedPanel23.SuspendLayout();
             roundedPanel22.SuspendLayout();
@@ -1168,8 +1169,8 @@
             // pnlCreateAct
             // 
             pnlCreateAct.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            pnlCreateAct.Controls.Add(pnlQuiz1);
             pnlCreateAct.Controls.Add(pnlAssign);
+            pnlCreateAct.Controls.Add(pnlQuiz1);
             pnlCreateAct.Controls.Add(panel45);
             pnlCreateAct.Controls.Add(panel44);
             pnlCreateAct.Controls.Add(panel46);
@@ -1179,135 +1180,11 @@
             pnlCreateAct.TabIndex = 1;
             pnlCreateAct.Visible = false;
             // 
-            // pnlQuiz1
-            // 
-            pnlQuiz1.AllowDrop = true;
-            pnlQuiz1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            pnlQuiz1.BackColor = SystemColors.Control;
-            pnlQuiz1.Controls.Add(panel49);
-            pnlQuiz1.Controls.Add(flowLayoutPanel3);
-            pnlQuiz1.Location = new Point(0, 248);
-            pnlQuiz1.Name = "pnlQuiz1";
-            pnlQuiz1.Size = new Size(1453, 653);
-            pnlQuiz1.TabIndex = 7;
-            pnlQuiz1.Visible = false;
-            // 
-            // panel49
-            // 
-            panel49.BackColor = Color.White;
-            panel49.Controls.Add(label119);
-            panel49.Dock = DockStyle.Top;
-            panel49.Location = new Point(0, 0);
-            panel49.Name = "panel49";
-            panel49.Size = new Size(1453, 49);
-            panel49.TabIndex = 13;
-            // 
-            // label119
-            // 
-            label119.AutoSize = true;
-            label119.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label119.Location = new Point(44, 9);
-            label119.Name = "label119";
-            label119.Size = new Size(338, 31);
-            label119.TabIndex = 12;
-            label119.Text = "Quiz Creation - Multiple Choice";
-            // 
-            // flowLayoutPanel3
-            // 
-            flowLayoutPanel3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            flowLayoutPanel3.AutoScroll = true;
-            flowLayoutPanel3.BackColor = SystemColors.Control;
-            flowLayoutPanel3.Controls.Add(pnlControlBar);
-            flowLayoutPanel3.FlowDirection = FlowDirection.TopDown;
-            flowLayoutPanel3.Location = new Point(59, 53);
-            flowLayoutPanel3.Name = "flowLayoutPanel3";
-            flowLayoutPanel3.Size = new Size(1384, 530);
-            flowLayoutPanel3.TabIndex = 10;
-            flowLayoutPanel3.WrapContents = false;
-            flowLayoutPanel3.Resize += flowLayoutPanel3_Resize;
-            // 
-            // pnlControlBar
-            // 
-            pnlControlBar.Anchor = AnchorStyles.None;
-            pnlControlBar.Controls.Add(tableLayoutPanel24);
-            pnlControlBar.Location = new Point(3, 3);
-            pnlControlBar.Name = "pnlControlBar";
-            pnlControlBar.Size = new Size(1328, 52);
-            pnlControlBar.TabIndex = 0;
-            // 
-            // tableLayoutPanel24
-            // 
-            tableLayoutPanel24.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            tableLayoutPanel24.ColumnCount = 5;
-            tableLayoutPanel24.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel24.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 44.4460373F));
-            tableLayoutPanel24.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 44.4460373F));
-            tableLayoutPanel24.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 11.1079245F));
-            tableLayoutPanel24.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 36F));
-            tableLayoutPanel24.Controls.Add(btnRemove, 2, 0);
-            tableLayoutPanel24.Controls.Add(btnAddPanel, 1, 0);
-            tableLayoutPanel24.Controls.Add(btnSaveQuiz, 3, 0);
-            tableLayoutPanel24.Location = new Point(5, 3);
-            tableLayoutPanel24.Name = "tableLayoutPanel24";
-            tableLayoutPanel24.RowCount = 1;
-            tableLayoutPanel24.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel24.Size = new Size(1320, 45);
-            tableLayoutPanel24.TabIndex = 1;
-            // 
-            // btnRemove
-            // 
-            btnRemove.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnRemove.BackColor = Color.FromArgb(128, 0, 0);
-            btnRemove.BorderRadius = 10;
-            btnRemove.FlatAppearance.BorderSize = 0;
-            btnRemove.FlatStyle = FlatStyle.Flat;
-            btnRemove.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
-            btnRemove.ForeColor = Color.White;
-            btnRemove.Location = new Point(1021, 3);
-            btnRemove.Name = "btnRemove";
-            btnRemove.Size = new Size(118, 32);
-            btnRemove.TabIndex = 13;
-            btnRemove.Text = "Remove";
-            btnRemove.UseVisualStyleBackColor = false;
-            btnRemove.Click += btnRemove_Click;
-            // 
-            // btnAddPanel
-            // 
-            btnAddPanel.BackColor = Color.FromArgb(128, 0, 0);
-            btnAddPanel.BorderRadius = 10;
-            btnAddPanel.FlatAppearance.BorderSize = 0;
-            btnAddPanel.FlatStyle = FlatStyle.Flat;
-            btnAddPanel.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
-            btnAddPanel.ForeColor = Color.White;
-            btnAddPanel.Location = new Point(23, 3);
-            btnAddPanel.Name = "btnAddPanel";
-            btnAddPanel.Size = new Size(118, 32);
-            btnAddPanel.TabIndex = 11;
-            btnAddPanel.Text = "Add Question";
-            btnAddPanel.UseVisualStyleBackColor = false;
-            btnAddPanel.Click += btnAddPanel_Click;
-            // 
-            // btnSaveQuiz
-            // 
-            btnSaveQuiz.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnSaveQuiz.BackColor = Color.FromArgb(128, 0, 0);
-            btnSaveQuiz.BorderRadius = 10;
-            btnSaveQuiz.FlatAppearance.BorderSize = 0;
-            btnSaveQuiz.FlatStyle = FlatStyle.Flat;
-            btnSaveQuiz.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
-            btnSaveQuiz.ForeColor = Color.White;
-            btnSaveQuiz.Location = new Point(1163, 3);
-            btnSaveQuiz.Name = "btnSaveQuiz";
-            btnSaveQuiz.Size = new Size(116, 32);
-            btnSaveQuiz.TabIndex = 12;
-            btnSaveQuiz.Text = "Save";
-            btnSaveQuiz.UseVisualStyleBackColor = false;
-            btnSaveQuiz.Click += btnSaveQuiz_Click;
-            // 
             // pnlAssign
             // 
             pnlAssign.AutoScroll = true;
             pnlAssign.BackColor = Color.White;
+            pnlAssign.Controls.Add(lblFileNameDisplay);
             pnlAssign.Controls.Add(pnlAttachAss);
             pnlAssign.Controls.Add(btnCancelAssign);
             pnlAssign.Controls.Add(btnAssignAttach);
@@ -1320,6 +1197,16 @@
             pnlAssign.Size = new Size(1453, 654);
             pnlAssign.TabIndex = 10;
             pnlAssign.Visible = false;
+            // 
+            // lblFileNameDisplay
+            // 
+            lblFileNameDisplay.AutoSize = true;
+            lblFileNameDisplay.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            lblFileNameDisplay.Location = new Point(187, 491);
+            lblFileNameDisplay.Name = "lblFileNameDisplay";
+            lblFileNameDisplay.Size = new Size(187, 31);
+            lblFileNameDisplay.TabIndex = 19;
+            lblFileNameDisplay.Text = "No File Attached";
             // 
             // pnlAttachAss
             // 
@@ -1510,6 +1397,131 @@
             label117.Size = new Size(136, 31);
             label117.TabIndex = 13;
             label117.Text = "Instructions";
+            // 
+            // pnlQuiz1
+            // 
+            pnlQuiz1.AllowDrop = true;
+            pnlQuiz1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            pnlQuiz1.BackColor = SystemColors.Control;
+            pnlQuiz1.Controls.Add(panel49);
+            pnlQuiz1.Controls.Add(flowLayoutPanel3);
+            pnlQuiz1.Location = new Point(0, 248);
+            pnlQuiz1.Name = "pnlQuiz1";
+            pnlQuiz1.Size = new Size(1453, 653);
+            pnlQuiz1.TabIndex = 7;
+            pnlQuiz1.Visible = false;
+            // 
+            // panel49
+            // 
+            panel49.BackColor = Color.White;
+            panel49.Controls.Add(label119);
+            panel49.Dock = DockStyle.Top;
+            panel49.Location = new Point(0, 0);
+            panel49.Name = "panel49";
+            panel49.Size = new Size(1453, 49);
+            panel49.TabIndex = 13;
+            // 
+            // label119
+            // 
+            label119.AutoSize = true;
+            label119.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label119.Location = new Point(44, 9);
+            label119.Name = "label119";
+            label119.Size = new Size(338, 31);
+            label119.TabIndex = 12;
+            label119.Text = "Quiz Creation - Multiple Choice";
+            // 
+            // flowLayoutPanel3
+            // 
+            flowLayoutPanel3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            flowLayoutPanel3.AutoScroll = true;
+            flowLayoutPanel3.BackColor = SystemColors.Control;
+            flowLayoutPanel3.Controls.Add(pnlControlBar);
+            flowLayoutPanel3.FlowDirection = FlowDirection.TopDown;
+            flowLayoutPanel3.Location = new Point(59, 53);
+            flowLayoutPanel3.Name = "flowLayoutPanel3";
+            flowLayoutPanel3.Size = new Size(1384, 530);
+            flowLayoutPanel3.TabIndex = 10;
+            flowLayoutPanel3.WrapContents = false;
+            flowLayoutPanel3.Resize += flowLayoutPanel3_Resize;
+            // 
+            // pnlControlBar
+            // 
+            pnlControlBar.Anchor = AnchorStyles.None;
+            pnlControlBar.Controls.Add(tableLayoutPanel24);
+            pnlControlBar.Location = new Point(3, 3);
+            pnlControlBar.Name = "pnlControlBar";
+            pnlControlBar.Size = new Size(1328, 52);
+            pnlControlBar.TabIndex = 0;
+            // 
+            // tableLayoutPanel24
+            // 
+            tableLayoutPanel24.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel24.ColumnCount = 5;
+            tableLayoutPanel24.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel24.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 44.4460373F));
+            tableLayoutPanel24.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 44.4460373F));
+            tableLayoutPanel24.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 11.1079245F));
+            tableLayoutPanel24.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 36F));
+            tableLayoutPanel24.Controls.Add(btnRemove, 2, 0);
+            tableLayoutPanel24.Controls.Add(btnAddPanel, 1, 0);
+            tableLayoutPanel24.Controls.Add(btnSaveQuiz, 3, 0);
+            tableLayoutPanel24.Location = new Point(5, 3);
+            tableLayoutPanel24.Name = "tableLayoutPanel24";
+            tableLayoutPanel24.RowCount = 1;
+            tableLayoutPanel24.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel24.Size = new Size(1320, 45);
+            tableLayoutPanel24.TabIndex = 1;
+            // 
+            // btnRemove
+            // 
+            btnRemove.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnRemove.BackColor = Color.FromArgb(128, 0, 0);
+            btnRemove.BorderRadius = 10;
+            btnRemove.FlatAppearance.BorderSize = 0;
+            btnRemove.FlatStyle = FlatStyle.Flat;
+            btnRemove.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
+            btnRemove.ForeColor = Color.White;
+            btnRemove.Location = new Point(1021, 3);
+            btnRemove.Name = "btnRemove";
+            btnRemove.Size = new Size(118, 32);
+            btnRemove.TabIndex = 13;
+            btnRemove.Text = "Remove";
+            btnRemove.UseVisualStyleBackColor = false;
+            btnRemove.Click += btnRemove_Click;
+            // 
+            // btnAddPanel
+            // 
+            btnAddPanel.BackColor = Color.FromArgb(128, 0, 0);
+            btnAddPanel.BorderRadius = 10;
+            btnAddPanel.FlatAppearance.BorderSize = 0;
+            btnAddPanel.FlatStyle = FlatStyle.Flat;
+            btnAddPanel.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
+            btnAddPanel.ForeColor = Color.White;
+            btnAddPanel.Location = new Point(23, 3);
+            btnAddPanel.Name = "btnAddPanel";
+            btnAddPanel.Size = new Size(118, 32);
+            btnAddPanel.TabIndex = 11;
+            btnAddPanel.Text = "Add Question";
+            btnAddPanel.UseVisualStyleBackColor = false;
+            btnAddPanel.Click += btnAddPanel_Click;
+            // 
+            // btnSaveQuiz
+            // 
+            btnSaveQuiz.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnSaveQuiz.BackColor = Color.FromArgb(128, 0, 0);
+            btnSaveQuiz.BorderRadius = 10;
+            btnSaveQuiz.FlatAppearance.BorderSize = 0;
+            btnSaveQuiz.FlatStyle = FlatStyle.Flat;
+            btnSaveQuiz.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
+            btnSaveQuiz.ForeColor = Color.White;
+            btnSaveQuiz.Location = new Point(1163, 3);
+            btnSaveQuiz.Name = "btnSaveQuiz";
+            btnSaveQuiz.Size = new Size(116, 32);
+            btnSaveQuiz.TabIndex = 12;
+            btnSaveQuiz.Text = "Save";
+            btnSaveQuiz.UseVisualStyleBackColor = false;
+            btnSaveQuiz.Click += btnSaveQuiz_Click;
             // 
             // panel45
             // 
@@ -1718,8 +1730,8 @@
             // pnlSubMenu
             // 
             pnlSubMenu.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            pnlSubMenu.Controls.Add(pnlCreateAct);
             pnlSubMenu.Controls.Add(pnlLMSActivities);
+            pnlSubMenu.Controls.Add(pnlCreateAct);
             pnlSubMenu.Controls.Add(pnlPostedAct);
             pnlSubMenu.Controls.Add(pnlLMSFiles);
             pnlSubMenu.Controls.Add(pnlGenChats);
@@ -6959,12 +6971,6 @@
             panel12.ResumeLayout(false);
             panel13.ResumeLayout(false);
             pnlCreateAct.ResumeLayout(false);
-            pnlQuiz1.ResumeLayout(false);
-            panel49.ResumeLayout(false);
-            panel49.PerformLayout();
-            flowLayoutPanel3.ResumeLayout(false);
-            pnlControlBar.ResumeLayout(false);
-            tableLayoutPanel24.ResumeLayout(false);
             pnlAssign.ResumeLayout(false);
             pnlAssign.PerformLayout();
             pnlAttachAss.ResumeLayout(false);
@@ -6975,6 +6981,12 @@
             roundedPanel11.ResumeLayout(false);
             roundedPanel12.ResumeLayout(false);
             roundedPanel12.PerformLayout();
+            pnlQuiz1.ResumeLayout(false);
+            panel49.ResumeLayout(false);
+            panel49.PerformLayout();
+            flowLayoutPanel3.ResumeLayout(false);
+            pnlControlBar.ResumeLayout(false);
+            tableLayoutPanel24.ResumeLayout(false);
             panel45.ResumeLayout(false);
             panel45.PerformLayout();
             roundedPanel23.ResumeLayout(false);
@@ -7709,5 +7721,6 @@
         private Panel panel60;
         private Label label145;
         private FlowLayoutPanel ManageAct;
+        public Label lblFileNameDisplay;
     }
 }

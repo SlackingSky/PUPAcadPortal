@@ -1,50 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.ComponentModel; // Required for the attributes below
 
 namespace PUPAcadPortal
 {
     public partial class ActivityItem : UserControl
     {
+        // Add these attributes to hide them from the WinForms Designer
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string SavedInstructions { get; set; }
+
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string SavedAttachedFilePath { get; set; }
+
+        // Do the same for your existing fields to be safe
+        [Browsable(false)]
+        public string SavedQuestion;
+
+        [Browsable(false)]
+        public string[] SavedChoices = new string[4];
+
+        [Browsable(false)]
+        public string SavedTitle;
+
         public ActivityItem()
         {
             InitializeComponent();
         }
 
-        private void actPic_Click(object sender, EventArgs e)
-        {
-
-        }
-        public void SetActivityData(string title, string dueDate, Image icon)
-        {
-            lblTitle.Text = title;
-            lblDueDate.Text = $"Due : {dueDate}";
-            actPic.Image = icon;
-        }
-
-        public string SavedQuestion;
-        public string[] SavedChoices = new string[4];
-        public string SavedTitle;
-
-        // You also need a public method to receive the data
-        public void UpdateCardData(string title, string q, string a, string b, string c, string d)
-        {
-            lblTitle.Text = title;
-            SavedTitle = title;
-            SavedQuestion = q;
-            SavedChoices[0] = a;
-            SavedChoices[1] = b;
-            SavedChoices[2] = c;
-            SavedChoices[3] = d;
-        }
-
-        private void btnEdit_Click(object sender, EventArgs e)
-        {
-
-        }
+        // ... rest of your code ...
     }
 }

@@ -87,7 +87,6 @@
             btnEdit.Size = new Size(44, 43);
             btnEdit.TabIndex = 13;
             btnEdit.UseVisualStyleBackColor = false;
-            btnEdit.Click += btnEdit_Click;
             // 
             // lblDueDate
             // 
@@ -115,7 +114,6 @@
             actPic.SizeMode = PictureBoxSizeMode.StretchImage;
             actPic.TabIndex = 9;
             actPic.TabStop = false;
-            actPic.Click += actPic_Click;
             // 
             // btnRemove
             // 
