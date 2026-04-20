@@ -1017,5 +1017,11 @@ namespace PUPAcadPortal
         {
 
         }
+
+        private void button49Canel_Click(object sender, EventArgs e)
+        {
+            pnlCreateAnnounce1.Visible = false;
+            pnlCreateAnnounce1.SendToBack();
+        }
     }
 }
