@@ -1,6 +1,6 @@
 ﻿namespace PUPAcadPortal
 {
-    partial class ucQuestionCard
+    partial class quizCreation
     {
         /// <summary> 
         /// Required designer variable.
@@ -379,12 +379,12 @@
             Ques.Size = new Size(1073, 93);
             Ques.TabIndex = 13;
             // 
-            // ucQuestionCard
+            // quizCreation
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(roundedPanel23);
-            Name = "ucQuestionCard";
+            Name = "quizCreation";
             Size = new Size(1250, 412);
             Load += ucQuestionCard_Load;
             roundedPanel23.ResumeLayout(false);
@@ -425,10 +425,8 @@
         private RoundedPanel roundedPanel23;
         private RoundedPanel roundedPanel24;
         private Panel panel1;
-        private TextBox textBox1;
         private Panel panel52;
         private Panel panel53;
-        private TextBox Ques;
         private Label label1;
         private Panel panel2;
         private Panel panel13;
@@ -436,21 +434,23 @@
         private Panel panel15;
         private Label label4;
         private Panel panel16;
-        private TextBox textBox4;
         private Panel panel9;
         private Panel panel10;
         private Panel panel11;
         private Label label3;
         private Panel panel12;
-        private TextBox textBox3;
         private Panel panel5;
         private Panel panel6;
         private Panel panel7;
         private Label label2;
         private Panel panel8;
-        private TextBox textBox2;
         private Panel panel4;
         private Panel panel3;
         public Label lblQuestionNumber;
+        public TextBox Ques;
+        public TextBox textBox1;
+        public TextBox textBox4;
+        public TextBox textBox3;
+        public TextBox textBox2;
     }
 }

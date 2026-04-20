@@ -5,15 +5,22 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Security.Policy;
 using System.Text;
 using System.Windows.Forms;
 using static PUPAcadPortal.InstructorPortal;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
 
 namespace PUPAcadPortal
+
 {
     public partial class InstructorPortal : Form
     {
+        private bool isEditing = false; // New flag to stop event interference
+        private ActivityItem currentEditingItem = null;
         private Button clickedButton;
         private Color defaultColor = Color.Maroon;
         private Color selectedColor = Color.FromArgb(109, 0, 0);
@@ -278,26 +285,8 @@ namespace PUPAcadPortal
 
         private void cmbBXActType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Get the selected text safely
-            string selectedAction = cmbBXActType.SelectedItem?.ToString();
-
-            // First, hide all panels to "reset" the view
-            pnlQuiz1.Visible = false;
-            pnlAssign.Visible = false;
-
-            // Now, show only the one that matches the selection
-            switch (selectedAction)
-            {
-                case "Quiz":
-                    pnlQuiz1.Visible = true;
-                    pnlQuiz1.BringToFront();
-                    break;
-
-                case "Assignment":
-                    pnlAssign.Visible = true;
-                    pnlAssign.BringToFront();
-                    break;
-            }
+            pnlQuiz1.Visible = (cmbBXActType.Text == "Quiz");
+            pnlAssign.Visible = (cmbBXActType.Text == "Assignment");
         }
 
         private void btnAssignAttach_Click(object sender, EventArgs e)
@@ -330,7 +319,7 @@ namespace PUPAcadPortal
         // --- BUTTON 1: ADD QUESTION ---
         private void btnAddPanel_Click(object sender, EventArgs e)
         {
-            ucQuestionCard newCard = new ucQuestionCard();
+            quizCreation newCard = new quizCreation();
             // Match your new size
             newCard.Width = 1250;
             newCard.Height = 423;
@@ -367,7 +356,7 @@ namespace PUPAcadPortal
         // --- BUTTON 2: REMOVE LAST QUESTION ---
         private void btnRemove_Click(object sender, EventArgs e)
         {
-            var lastCard = flowLayoutPanel3.Controls.OfType<ucQuestionCard>().LastOrDefault();
+            var lastCard = flowLayoutPanel3.Controls.OfType<quizCreation>().LastOrDefault();
 
             if (lastCard != null)
             {
@@ -380,19 +369,137 @@ namespace PUPAcadPortal
         }
 
         // --- BUTTON 3: SAVE & EXIT ---
+
         private void btnSaveQuiz_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Do you want to save this quiz before exiting?",
-                                                "Save Quiz", MessageBoxButtons.YesNoCancel);
 
-            if (result == DialogResult.Yes)
+            if (string.IsNullOrWhiteSpace(txtActTitle.Text)) return;
+
+            // Find the specific question card instance in flowLayoutPanel3
+            var activeQuizCard = flowLayoutPanel3.Controls.OfType<quizCreation>().FirstOrDefault();
+
+            if (activeQuizCard == null)
             {
-                // Add your Save Logic here later
-                this.Close();
+                MessageBox.Show("Please add a question card first!");
+                return;
             }
-            else if (result == DialogResult.No)
+
+            if (MessageBox.Show("Save Activity?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                this.Close();
+                ActivityItem targetItem;
+
+                if (currentEditingItem == null)
+                {
+                    // CREATE NEW
+                    targetItem = new ActivityItem();
+                    targetItem.Width = ManageAct.ClientSize.Width - 35;
+                    targetItem.Height = 187;
+                    ManageAct.Controls.Add(targetItem);
+                    ManageAct.Controls.SetChildIndex(targetItem, 0);
+
+                    // --- WIRE UP THE BUTTONS (Must be Public in Designer) ---
+
+                    targetItem.btnEdit.Click += (s, ev) =>
+                    {
+                        LoadItemForEditing(targetItem);
+                        // Switch to the Quiz Creation tab so you can see the data loaded
+                        // tabControl1.SelectedTab = tabPageQuiz; 
+                    };
+
+                    targetItem.btnRemove.Click += (s, ev) =>
+                    {
+                        if (MessageBox.Show("Delete this activity?", "Remove", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        {
+                            ManageAct.Controls.Remove(targetItem);
+                        }
+                    };
+                }
+                else
+                {
+                    // EDIT EXISTING
+                    targetItem = currentEditingItem;
+                }
+
+                // --- VISUAL UPDATES ---
+                targetItem.lblTitle.Text = txtActTitle.Text;
+                targetItem.lblDueDate.Text = "Due : " + dateTimePicker1.Value.ToString("MMMM dd, hh:mm tt");
+
+                // Match the image to the activity type
+                targetItem.actPic.Image = (cmbBXActType.Text == "Quiz") ? Properties.Resources.quiz : Properties.Resources.paper;
+
+                // --- SAVE DATA TO CARD VARIABLES ---
+                targetItem.SavedTitle = txtActTitle.Text;
+                targetItem.SavedQuestion = activeQuizCard.Ques.Text;
+                targetItem.SavedChoices[0] = activeQuizCard.textBox1.Text;
+                targetItem.SavedChoices[1] = activeQuizCard.textBox2.Text;
+                targetItem.SavedChoices[2] = activeQuizCard.textBox3.Text;
+                targetItem.SavedChoices[3] = activeQuizCard.textBox4.Text;
+
+                // Reset the interface for the next entry
+                ClearAllInputs();
+                currentEditingItem = null;
+                pnlCreateAct.Visible = false;
+            }
+        }
+
+        private void LoadItemForEditing(ActivityItem item)
+        {
+            currentEditingItem = item;
+
+            // 1. UNSUBSCRIBE from the event temporarily
+            cmbBXActType.SelectedIndexChanged -= cmbBXActType_SelectedIndexChanged;
+
+            var activeQuizCard = flowLayoutPanel3.Controls.OfType<quizCreation>().FirstOrDefault();
+
+            if (activeQuizCard != null)
+            {
+                pnlCreateAct.Visible = true;
+                pnlCreateAct.BringToFront();
+
+                // 2. Set the UI based on the saved image
+                if (item.actPic.Image == Properties.Resources.quiz)
+                {
+                    cmbBXActType.Text = "Quiz";
+                    pnlQuiz1.Visible = true;
+                    pnlQuiz1.BringToFront();
+                    pnlAssign.Visible = false;
+                }
+                else
+                {
+                    cmbBXActType.Text = "Assignment";
+                    pnlAssign.Visible = true;
+                    pnlAssign.BringToFront();
+                    pnlQuiz1.Visible = false;
+                }
+
+                // 3. Load the Text Data
+                txtActTitle.Text = item.SavedTitle;
+                activeQuizCard.Ques.Text = item.SavedQuestion;
+                activeQuizCard.textBox1.Text = item.SavedChoices[0];
+                activeQuizCard.textBox2.Text = item.SavedChoices[1];
+                activeQuizCard.textBox3.Text = item.SavedChoices[2];
+                activeQuizCard.textBox4.Text = item.SavedChoices[3];
+            }
+
+            // 4. RE-SUBSCRIBE so the user can still switch types manually
+            cmbBXActType.SelectedIndexChanged += cmbBXActType_SelectedIndexChanged;
+        }
+
+        private void ClearAllInputs()
+        {
+            // Clear the main title
+            txtActTitle.Clear();
+
+            // Clear the specific card inside the flow layout
+            var quizCard = flowLayoutPanel3.Controls.OfType<quizCreation>().FirstOrDefault();
+
+            if (quizCard != null)
+            {
+                quizCard.Ques.Clear();
+                quizCard.textBox1.Clear();
+                quizCard.textBox2.Clear();
+                quizCard.textBox3.Clear();
+                quizCard.textBox4.Clear();
             }
         }
 
@@ -418,7 +525,7 @@ namespace PUPAcadPortal
             // Loop through only the UserControls (ignoring the control bar)
             foreach (Control ctrl in flowLayoutPanel3.Controls)
             {
-                if (ctrl is ucQuestionCard card)
+                if (ctrl is quizCreation card)
                 {
                     card.lblQuestionNumber.Text = "Question " + count;
                     count++;
@@ -546,7 +653,17 @@ namespace PUPAcadPortal
             // This ensures that when the window gets bigger, the cards stretch to fit.
             flowLayoutPanelAnnouncements.Resize += (s, e) => UpdateCardWidths();
 
+            // ENSURE LMS PANELS START HIDDEN
+            pnlCreateAct.Visible = false;
+            pnlQuiz1.Visible = false;
+            pnlAssign.Visible = false;
 
+            // Set a default value for the ComboBox so it's never "null"
+            if (cmbBXActType.Items.Count > 0)
+                cmbBXActType.SelectedIndex = 0;
+
+            // This ensures that when the window gets bigger, the cards stretch to fit.
+            flowLayoutPanelAnnouncements.Resize += (s, ev) => UpdateCardWidths();
         }
 
         private void UpdateCardWidths()
@@ -1022,6 +1139,55 @@ namespace PUPAcadPortal
         {
             pnlCreateAnnounce1.Visible = false;
             pnlCreateAnnounce1.SendToBack();
+        }
+
+        private void ManageAct_Resize(object sender, EventArgs e)
+        {
+            ManageAct.SuspendLayout();
+            foreach (Control c in ManageAct.Controls)
+            {
+                // This makes sure that when the window gets bigger, 
+                // every single UC inside grows to match the new width.
+                c.Width = ManageAct.ClientSize.Width - 35;
+            }
+            ManageAct.ResumeLayout();
+        }
+
+        private void btnSaveAss_Click(object sender, EventArgs e)
+        {
+            // 1. Validation for Quiz Title
+            if (string.IsNullOrWhiteSpace(txtActTitle.Text))
+            {
+                MessageBox.Show("Please enter a Quiz Title.", "Required Field", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 2. Confirmation
+            if (MessageBox.Show("Create this Quiz card?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                // 3. Create the ActivityItem UserControl
+                ActivityItem newItem = new ActivityItem();
+
+                // 4. Assign Data (Pulling from txtActTitle)
+                newItem.lblTitle.Text = txtActTitle.Text;
+                newItem.lblDueDate.Text = "Due : " + dateTimePicker1.Value.ToString("MMMM dd, hh:mm tt");
+
+                // Use your 'quiz' resource icon
+                newItem.actPic.Image = Properties.Resources.paper;
+
+                // 5. THE WIDTH FIX: Ensure it fills the ManageAct panel
+                // We use -40 to account for the vertical scrollbar width
+                newItem.Width = ManageAct.ClientSize.Width - 40;
+                newItem.Height = 187; // Your specific designed height
+
+                // 6. POSITIONING: Add to collection and move to index 0 (The Top)
+                ManageAct.Controls.Add(newItem);
+                ManageAct.Controls.SetChildIndex(newItem, 0);
+
+                // 7. Success Feedback & Reset
+                txtActTitle.Clear();
+                ManageAct.ScrollControlIntoView(newItem);
+            }
         }
     }
 }

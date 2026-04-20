@@ -8,9 +8,9 @@ using System.Windows.Forms;
 
 namespace PUPAcadPortal
 {
-    public partial class ucQuestionCard : UserControl
+    public partial class quizCreation : UserControl
     {
-        public ucQuestionCard()
+        public quizCreation()
         {
             InitializeComponent();
         }
