@@ -542,7 +542,7 @@
             pnlEditSchedule.Cursor = Cursors.Hand;
             pnlEditSchedule.Location = new Point(3, 448);
             pnlEditSchedule.Name = "pnlEditSchedule";
-            pnlEditSchedule.Size = new Size(1549, 1322);
+            pnlEditSchedule.Size = new Size(1948, 1322);
             pnlEditSchedule.TabIndex = 8;
             pnlEditSchedule.Paint += pnlEditSchedule_Paint;
             // 
@@ -557,7 +557,7 @@
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1549, 96);
+            panel1.Size = new Size(1948, 96);
             panel1.TabIndex = 7;
             // 
             // btnClearSchedule
@@ -567,7 +567,7 @@
             btnClearSchedule.FlatAppearance.BorderSize = 0;
             btnClearSchedule.FlatStyle = FlatStyle.Flat;
             btnClearSchedule.ForeColor = Color.White;
-            btnClearSchedule.Location = new Point(1136, 47);
+            btnClearSchedule.Location = new Point(1458, 47);
             btnClearSchedule.Name = "btnClearSchedule";
             btnClearSchedule.Size = new Size(139, 36);
             btnClearSchedule.TabIndex = 4;
@@ -582,7 +582,7 @@
             btnSaveSchedule.FlatAppearance.BorderSize = 0;
             btnSaveSchedule.FlatStyle = FlatStyle.Flat;
             btnSaveSchedule.ForeColor = Color.White;
-            btnSaveSchedule.Location = new Point(1290, 47);
+            btnSaveSchedule.Location = new Point(1298, 47);
             btnSaveSchedule.Name = "btnSaveSchedule";
             btnSaveSchedule.Size = new Size(139, 36);
             btnSaveSchedule.TabIndex = 3;
@@ -631,12 +631,12 @@
             dgvEditSchedule.BackgroundColor = Color.White;
             dgvEditSchedule.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvEditSchedule.Columns.AddRange(new DataGridViewColumn[] { ESCourseCode, ESCourseTitle, ESLab, ESLec, ESTotalUnits, ESSection, ESDay, ESStartTime, EsEndTime, ESRoom, ESInstructor });
-            dgvEditSchedule.Location = new Point(15, 119);
+            dgvEditSchedule.Location = new Point(30, 119);
             dgvEditSchedule.Name = "dgvEditSchedule";
             dgvEditSchedule.RowHeadersVisible = false;
             dgvEditSchedule.RowHeadersWidth = 51;
             dgvEditSchedule.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvEditSchedule.Size = new Size(1414, 660);
+            dgvEditSchedule.Size = new Size(1570, 660);
             dgvEditSchedule.TabIndex = 6;
             dgvEditSchedule.CellContentClick += dgvEditSchedule_CellContentClick;
             // 
@@ -737,14 +737,14 @@
             dgvSchedule.ColumnHeadersHeight = 30;
             dgvSchedule.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dgvSchedule.Columns.AddRange(new DataGridViewColumn[] { CourseCode, CourseTitle, Lab, Lec, TotalUnits, Year });
-            dgvSchedule.Location = new Point(18, 189);
+            dgvSchedule.Location = new Point(30, 183);
             dgvSchedule.MultiSelect = false;
             dgvSchedule.Name = "dgvSchedule";
             dgvSchedule.RowHeadersVisible = false;
             dgvSchedule.RowHeadersWidth = 51;
             dgvSchedule.ScrollBars = ScrollBars.Vertical;
             dgvSchedule.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvSchedule.Size = new Size(1414, 660);
+            dgvSchedule.Size = new Size(1570, 660);
             dgvSchedule.TabIndex = 7;
             // 
             // CourseCode
@@ -1011,13 +1011,15 @@
             // 
             // pnlSchedule
             // 
+            pnlSchedule.AutoScroll = true;
             pnlSchedule.BackColor = Color.White;
             pnlSchedule.Controls.Add(dgvScheduleView);
             pnlSchedule.Controls.Add(panel10);
             pnlSchedule.ForeColor = SystemColors.ActiveCaption;
-            pnlSchedule.Location = new Point(0, 114);
+            pnlSchedule.Location = new Point(0, 0);
             pnlSchedule.Name = "pnlSchedule";
-            pnlSchedule.Size = new Size(1453, 1205);
+            pnlSchedule.Padding = new Padding(10, 0, 10, 0);
+            pnlSchedule.Size = new Size(1954, 1561);
             pnlSchedule.TabIndex = 7;
             // 
             // dgvScheduleView
@@ -1025,18 +1027,18 @@
             dgvScheduleView.AllowUserToDeleteRows = false;
             dgvScheduleView.AllowUserToResizeColumns = false;
             dgvScheduleView.AllowUserToResizeRows = false;
-            dgvScheduleView.BackgroundColor = SystemColors.ActiveCaptionText;
+            dgvScheduleView.BackgroundColor = Color.White;
             dgvScheduleView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvScheduleView.Columns.AddRange(new DataGridViewColumn[] { CourseCode1, CourseTitle1, Lec1, Lab1, TotalUnits1, Section1, Day1, Start1, End1, Room1, Instructor1 });
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = SystemColors.Window;
             dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle1.ForeColor = SystemColors.ActiveCaption;
+            dataGridViewCellStyle1.ForeColor = SystemColors.ActiveCaptionText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
             dgvScheduleView.DefaultCellStyle = dataGridViewCellStyle1;
-            dgvScheduleView.Location = new Point(15, 119);
+            dgvScheduleView.Location = new Point(30, 119);
             dgvScheduleView.Name = "dgvScheduleView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
@@ -1048,8 +1050,8 @@
             dgvScheduleView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvScheduleView.RowHeadersVisible = false;
             dgvScheduleView.RowHeadersWidth = 51;
-            dgvScheduleView.ScrollBars = ScrollBars.None;
-            dgvScheduleView.Size = new Size(1414, 586);
+            dgvScheduleView.ScrollBars = ScrollBars.Vertical;
+            dgvScheduleView.Size = new Size(1570, 660);
             dgvScheduleView.TabIndex = 1;
             // 
             // CourseCode1
@@ -1140,7 +1142,7 @@
             panel10.Controls.Add(label5);
             panel10.Location = new Point(0, 0);
             panel10.Name = "panel10";
-            panel10.Size = new Size(1450, 96);
+            panel10.Size = new Size(1600, 96);
             panel10.TabIndex = 0;
             // 
             // btnPrint
@@ -1148,7 +1150,7 @@
             btnPrint.BackColor = Color.FromArgb(109, 0, 0);
             btnPrint.FlatStyle = FlatStyle.Flat;
             btnPrint.ForeColor = Color.White;
-            btnPrint.Location = new Point(1338, 49);
+            btnPrint.Location = new Point(1498, 49);
             btnPrint.Name = "btnPrint";
             btnPrint.Size = new Size(94, 38);
             btnPrint.TabIndex = 10;
@@ -1161,7 +1163,7 @@
             btnExportExcel.BackColor = Color.FromArgb(109, 0, 0);
             btnExportExcel.FlatStyle = FlatStyle.Flat;
             btnExportExcel.ForeColor = Color.White;
-            btnExportExcel.Location = new Point(989, 49);
+            btnExportExcel.Location = new Point(1115, 49);
             btnExportExcel.Name = "btnExportExcel";
             btnExportExcel.Size = new Size(136, 38);
             btnExportExcel.TabIndex = 9;
@@ -1174,7 +1176,7 @@
             btnExportPDF.BackColor = Color.FromArgb(109, 0, 0);
             btnExportPDF.FlatStyle = FlatStyle.Flat;
             btnExportPDF.ForeColor = Color.White;
-            btnExportPDF.Location = new Point(1139, 49);
+            btnExportPDF.Location = new Point(1269, 49);
             btnExportPDF.Name = "btnExportPDF";
             btnExportPDF.Size = new Size(136, 38);
             btnExportPDF.TabIndex = 8;
@@ -1222,10 +1224,9 @@
             pnlCurrentSemester.Controls.Add(dgvSchedule);
             pnlCurrentSemester.Controls.Add(panel2);
             pnlCurrentSemester.Controls.Add(pnlEditSchedule);
-            pnlCurrentSemester.Dock = DockStyle.Fill;
             pnlCurrentSemester.Location = new Point(0, 0);
             pnlCurrentSemester.Name = "pnlCurrentSemester";
-            pnlCurrentSemester.Size = new Size(1471, 1561);
+            pnlCurrentSemester.Size = new Size(1954, 1560);
             pnlCurrentSemester.TabIndex = 0;
             // 
             // panel2
@@ -1241,7 +1242,8 @@
             panel2.Dock = DockStyle.Top;
             panel2.Location = new Point(0, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1471, 183);
+            panel2.Padding = new Padding(20, 0, 20, 0);
+            panel2.Size = new Size(1954, 183);
             panel2.TabIndex = 8;
             // 
             // btnSetCurrent
@@ -1251,9 +1253,9 @@
             btnSetCurrent.FlatAppearance.BorderSize = 0;
             btnSetCurrent.FlatStyle = FlatStyle.Flat;
             btnSetCurrent.ForeColor = Color.White;
-            btnSetCurrent.Location = new Point(1269, 131);
+            btnSetCurrent.Location = new Point(1398, 131);
             btnSetCurrent.Name = "btnSetCurrent";
-            btnSetCurrent.Size = new Size(181, 36);
+            btnSetCurrent.Size = new Size(202, 36);
             btnSetCurrent.TabIndex = 6;
             btnSetCurrent.Text = "Set as Current Semester";
             btnSetCurrent.UseVisualStyleBackColor = false;
@@ -1264,7 +1266,7 @@
             lblSemesterSetup.AutoSize = true;
             lblSemesterSetup.BackColor = Color.White;
             lblSemesterSetup.Font = new Font("Arial", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblSemesterSetup.Location = new Point(15, 17);
+            lblSemesterSetup.Location = new Point(20, 17);
             lblSemesterSetup.Name = "lblSemesterSetup";
             lblSemesterSetup.Size = new Size(242, 35);
             lblSemesterSetup.TabIndex = 0;
@@ -1285,7 +1287,7 @@
             // 
             lblCourseList.AutoSize = true;
             lblCourseList.Font = new Font("Arial", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblCourseList.Location = new Point(10, 131);
+            lblCourseList.Location = new Point(20, 131);
             lblCourseList.Name = "lblCourseList";
             lblCourseList.Size = new Size(413, 33);
             lblCourseList.TabIndex = 3;
@@ -1295,7 +1297,7 @@
             // 
             lblSY.AutoSize = true;
             lblSY.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblSY.Location = new Point(18, 61);
+            lblSY.Location = new Point(20, 61);
             lblSY.Name = "lblSY";
             lblSY.Size = new Size(128, 23);
             lblSY.TabIndex = 1;
@@ -1305,7 +1307,7 @@
             // 
             lblSem.AutoSize = true;
             lblSem.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblSem.Location = new Point(18, 93);
+            lblSem.Location = new Point(20, 93);
             lblSem.Name = "lblSem";
             lblSem.Size = new Size(107, 23);
             lblSem.TabIndex = 2;
