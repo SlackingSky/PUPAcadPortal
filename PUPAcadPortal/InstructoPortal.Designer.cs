@@ -1678,6 +1678,8 @@
             // pnlGrades
             // 
             pnlGrades.AutoScroll = true;
+            pnlGrades.AutoSize = true;
+            pnlGrades.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             pnlGrades.BackColor = SystemColors.Control;
             pnlGrades.CausesValidation = false;
             pnlGrades.Controls.Add(button47);
@@ -1695,25 +1697,28 @@
             // 
             // button47
             // 
+            button47.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             button47.BackColor = Color.Maroon;
             button47.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button47.ForeColor = Color.White;
-            button47.Location = new Point(916, 864);
+            button47.Location = new Point(909, 856);
             button47.Name = "button47";
-            button47.Size = new Size(159, 50);
+            button47.Size = new Size(154, 51);
             button47.TabIndex = 6;
             button47.Text = "Save";
             button47.UseVisualStyleBackColor = false;
             button47.Visible = false;
+            button47.Click += button47_Click;
             // 
             // button46
             // 
+            button46.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             button46.BackColor = Color.Maroon;
             button46.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button46.ForeColor = Color.White;
-            button46.Location = new Point(1085, 864);
+            button46.Location = new Point(1073, 856);
             button46.Name = "button46";
-            button46.Size = new Size(325, 50);
+            button46.Size = new Size(299, 51);
             button46.TabIndex = 5;
             button46.Text = "Release Grades";
             button46.UseVisualStyleBackColor = false;
@@ -1721,6 +1726,8 @@
             // 
             // dataGridView1
             // 
+            dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.BackgroundColor = Color.White;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { StudentID, StudentName, Attendance, Recitation, Activities, Assignment, Exam, Grade });
@@ -1737,74 +1744,68 @@
             StudentID.HeaderText = "Student ID";
             StudentID.MinimumWidth = 6;
             StudentID.Name = "StudentID";
-            StudentID.Width = 270;
             // 
             // StudentName
             // 
             StudentName.HeaderText = "Student Name";
             StudentName.MinimumWidth = 6;
             StudentName.Name = "StudentName";
-            StudentName.Width = 250;
             // 
             // Attendance
             // 
             Attendance.HeaderText = "Attendance";
             Attendance.MinimumWidth = 6;
             Attendance.Name = "Attendance";
-            Attendance.Width = 125;
             // 
             // Recitation
             // 
             Recitation.HeaderText = "Recitation/Class Participation";
             Recitation.MinimumWidth = 6;
             Recitation.Name = "Recitation";
-            Recitation.Width = 125;
             // 
             // Activities
             // 
             Activities.HeaderText = "Seatwork / Short Quiz";
             Activities.MinimumWidth = 6;
             Activities.Name = "Activities";
-            Activities.Width = 125;
             // 
             // Assignment
             // 
             Assignment.HeaderText = "Assignment / Project";
             Assignment.MinimumWidth = 6;
             Assignment.Name = "Assignment";
-            Assignment.Width = 125;
             // 
             // Exam
             // 
             Exam.HeaderText = "Major Examination";
             Exam.MinimumWidth = 6;
             Exam.Name = "Exam";
-            Exam.Width = 125;
             // 
             // Grade
             // 
             Grade.HeaderText = "Grade";
             Grade.MinimumWidth = 6;
             Grade.Name = "Grade";
-            Grade.Width = 125;
             // 
             // panel52
             // 
+            panel52.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel52.BackColor = Color.White;
             panel52.Controls.Add(button45);
             panel52.Controls.Add(roundedPanel30);
             panel52.Controls.Add(label128);
-            panel52.Location = new Point(0, 130);
+            panel52.Location = new Point(0, 129);
             panel52.Name = "panel52";
-            panel52.Size = new Size(1453, 92);
+            panel52.Size = new Size(1453, 80);
             panel52.TabIndex = 4;
             // 
             // button45
             // 
+            button45.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             button45.BackColor = Color.Maroon;
             button45.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button45.ForeColor = Color.White;
-            button45.Location = new Point(1078, 24);
+            button45.Location = new Point(1118, 13);
             button45.Name = "button45";
             button45.Size = new Size(325, 50);
             button45.TabIndex = 4;
@@ -1817,7 +1818,7 @@
             roundedPanel30.BackColor = Color.Maroon;
             roundedPanel30.BorderRadius = 10;
             roundedPanel30.Controls.Add(comboBox14);
-            roundedPanel30.Location = new Point(278, 17);
+            roundedPanel30.Location = new Point(280, 12);
             roundedPanel30.Name = "roundedPanel30";
             roundedPanel30.Size = new Size(440, 59);
             roundedPanel30.TabIndex = 2;
@@ -1845,18 +1846,20 @@
             // 
             // panel43
             // 
+            panel43.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel43.BackColor = Color.White;
             panel43.Controls.Add(btnSave);
             panel43.Controls.Add(btnRelease);
             panel43.Controls.Add(roundedPanel28);
             panel43.Controls.Add(label5);
-            panel43.Location = new Point(0, 19);
+            panel43.Location = new Point(0, 16);
             panel43.Name = "panel43";
-            panel43.Size = new Size(1453, 92);
+            panel43.Size = new Size(1453, 86);
             panel43.TabIndex = 2;
             // 
             // btnSave
             // 
+            btnSave.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnSave.BackColor = Color.Maroon;
             btnSave.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSave.ForeColor = Color.White;
@@ -1869,12 +1872,13 @@
             // 
             // btnRelease
             // 
+            btnRelease.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnRelease.BackColor = Color.Maroon;
             btnRelease.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnRelease.ForeColor = Color.White;
             btnRelease.Location = new Point(1121, 22);
             btnRelease.Name = "btnRelease";
-            btnRelease.Size = new Size(311, 49);
+            btnRelease.Size = new Size(319, 49);
             btnRelease.TabIndex = 3;
             btnRelease.Text = "Release Grades";
             btnRelease.UseVisualStyleBackColor = false;
@@ -1884,7 +1888,7 @@
             roundedPanel28.BackColor = Color.Maroon;
             roundedPanel28.BorderRadius = 10;
             roundedPanel28.Controls.Add(comboBox13);
-            roundedPanel28.Location = new Point(278, 21);
+            roundedPanel28.Location = new Point(279, 14);
             roundedPanel28.Name = "roundedPanel28";
             roundedPanel28.Size = new Size(440, 59);
             roundedPanel28.TabIndex = 1;
@@ -6511,6 +6515,7 @@
             roundedPanel21.ResumeLayout(false);
             roundedPanel21.PerformLayout();
             panel3.ResumeLayout(false);
+            panel3.PerformLayout();
             pnlGrades.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             panel52.ResumeLayout(false);

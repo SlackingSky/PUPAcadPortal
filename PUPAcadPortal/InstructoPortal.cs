@@ -29,6 +29,7 @@ namespace PUPAcadPortal
             // Removes 2 pixels from every side of the control
             //dateTimePicker3.Region = new Region(new Rectangle(2, 2, dateTimePicker1.Width - 4, dateTimePicker1.Height - 4));
 
+            //Temporary Data (Grade Feature)
             string[] row1 = { "2024-00074-SM-0", "Ablong, Adrian P." };
             string[] row2 = { "2024-00194-SM-0", "Alcaiz, Jared B." };
             string[] row3 = { "2024-00146-SM-0", "Amar, Charles Manuel C." };
@@ -672,6 +673,11 @@ namespace PUPAcadPortal
             dataGridView1.Visible = true;
             button46.Visible = true;
             button47.Visible = true;
+        }
+
+        private void button47_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
