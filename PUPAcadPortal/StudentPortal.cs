@@ -294,8 +294,10 @@ namespace PUPAcadPortal
 
         private void btnGenerate_Click(object sender, EventArgs e)
         {
+            //Define the path to the source file in the application's local "Resources" folder
             string sourceFile = Path.Combine(Application.StartupPath, "Resources", "COG-MTECH.pdf");
 
+            //Check if the source file exists
             if (!File.Exists(sourceFile))
             {
                 MessageBox.Show("Error: COG-MTECH.pdf was not found in the Resources folder.",
@@ -303,16 +305,21 @@ namespace PUPAcadPortal
                 return;
             }
 
+            //Initialize the SaveFileDialog to allow user to select the save location and filename
             using (SaveFileDialog sfd = new SaveFileDialog())
             {
+                //Set file type filters, default filename and dialog title
                 sfd.Filter = "PDF Documents (.pdf)|.pdf";
                 sfd.FileName = "COG-MTECH.pdf";
                 sfd.Title = "Save COG-MTECH Report";
 
+                //Opens dialog and check if user clicked "Save"
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
                     try
                     {
+                        //Perform the file copy operation to the user's specified location
+                        //The parameter "true" allows overwriting existing files
                         File.Copy(sourceFile, sfd.FileName, true);
 
                         MessageBox.Show("COG-MTECH.pdf has been saved successfully!",

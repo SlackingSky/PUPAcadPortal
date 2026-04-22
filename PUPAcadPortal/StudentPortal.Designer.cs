@@ -1063,18 +1063,20 @@
             // 
             // roundedPanel36
             // 
+            roundedPanel36.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             roundedPanel36.BackColor = Color.Maroon;
             roundedPanel36.BorderRadius = 10;
             roundedPanel36.Controls.Add(roundedPanel37);
-            roundedPanel36.Location = new Point(116, 162);
+            roundedPanel36.Location = new Point(144, 157);
             roundedPanel36.Name = "roundedPanel36";
-            roundedPanel36.Size = new Size(1214, 334);
+            roundedPanel36.Size = new Size(1156, 334);
             roundedPanel36.TabIndex = 1;
             roundedPanel36.Visible = false;
             roundedPanel36.Paint += roundedPanel36_Paint;
             // 
             // roundedPanel37
             // 
+            roundedPanel37.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             roundedPanel37.BackColor = Color.White;
             roundedPanel37.BorderRadius = 10;
             roundedPanel37.Controls.Add(button8);
@@ -1082,14 +1084,15 @@
             roundedPanel37.Controls.Add(label40);
             roundedPanel37.Location = new Point(20, 21);
             roundedPanel37.Name = "roundedPanel37";
-            roundedPanel37.Size = new Size(1169, 287);
+            roundedPanel37.Size = new Size(1111, 287);
             roundedPanel37.TabIndex = 0;
             // 
             // button8
             // 
+            button8.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             button8.BackColor = Color.Maroon;
             button8.ForeColor = Color.White;
-            button8.Location = new Point(978, 222);
+            button8.Location = new Point(920, 222);
             button8.Name = "button8";
             button8.Size = new Size(136, 55);
             button8.TabIndex = 7;
@@ -1099,12 +1102,13 @@
             // 
             // listBox1
             // 
+            listBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             listBox1.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             listBox1.FormattingEnabled = true;
             listBox1.Items.AddRange(new object[] { "Attendance (10%)\t\t\t- 10%\tAssignment / Project (15%)\t\t- \t15%", "Recitation / Class Participation (15%)\t- 15%\tLong Quiz (25%)\t\t\t- \t25%", "Seatwork / Short Quiz (15%)\t- 15%\tMajor Examination (30%)\t\t- \t30%", "", "Grade Computation\t\t\t- \t100%", "PUP Grade Conversion\t\t\t- \t1.00" });
             listBox1.Location = new Point(52, 63);
             listBox1.Name = "listBox1";
-            listBox1.Size = new Size(819, 188);
+            listBox1.Size = new Size(790, 188);
             listBox1.TabIndex = 6;
             // 
             // label40
@@ -1119,10 +1123,11 @@
             // 
             // roundedPanel34
             // 
+            roundedPanel34.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             roundedPanel34.BackColor = Color.Maroon;
             roundedPanel34.BorderRadius = 10;
             roundedPanel34.Controls.Add(panel63);
-            roundedPanel34.Location = new Point(271, 827);
+            roundedPanel34.Location = new Point(271, 778);
             roundedPanel34.Name = "roundedPanel34";
             roundedPanel34.Size = new Size(885, 128);
             roundedPanel34.TabIndex = 5;
@@ -1130,6 +1135,7 @@
             // 
             // panel63
             // 
+            panel63.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel63.BackColor = Color.White;
             panel63.Controls.Add(button7);
             panel63.Controls.Add(roundedPanel35);
@@ -1141,6 +1147,7 @@
             // 
             // button7
             // 
+            button7.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             button7.BackColor = Color.Maroon;
             button7.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button7.ForeColor = Color.White;
@@ -1153,6 +1160,7 @@
             // 
             // roundedPanel35
             // 
+            roundedPanel35.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             roundedPanel35.BackColor = Color.Maroon;
             roundedPanel35.BorderRadius = 10;
             roundedPanel35.Controls.Add(label38);
@@ -1178,16 +1186,17 @@
             label39.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label39.Location = new Point(24, 24);
             label39.Name = "label39";
-            label39.Size = new Size(420, 28);
+            label39.Size = new Size(316, 28);
             label39.TabIndex = 1;
-            label39.Text = "Integrative Programming and Technologies 1";
+            label39.Text = "Programming and Technologies 1";
             // 
             // roundedPanel32
             // 
+            roundedPanel32.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             roundedPanel32.BackColor = Color.Maroon;
             roundedPanel32.BorderRadius = 10;
             roundedPanel32.Controls.Add(panel62);
-            roundedPanel32.Location = new Point(271, 689);
+            roundedPanel32.Location = new Point(271, 645);
             roundedPanel32.Name = "roundedPanel32";
             roundedPanel32.Size = new Size(885, 128);
             roundedPanel32.TabIndex = 4;
@@ -1195,6 +1204,7 @@
             // 
             // panel62
             // 
+            panel62.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel62.BackColor = Color.White;
             panel62.Controls.Add(button6);
             panel62.Controls.Add(roundedPanel33);
@@ -1206,6 +1216,7 @@
             // 
             // button6
             // 
+            button6.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             button6.BackColor = Color.Maroon;
             button6.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button6.ForeColor = Color.White;
@@ -1218,6 +1229,7 @@
             // 
             // roundedPanel33
             // 
+            roundedPanel33.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             roundedPanel33.BackColor = Color.Maroon;
             roundedPanel33.BorderRadius = 10;
             roundedPanel33.Controls.Add(label36);
@@ -1249,10 +1261,11 @@
             // 
             // roundedPanel30
             // 
+            roundedPanel30.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             roundedPanel30.BackColor = Color.Maroon;
             roundedPanel30.BorderRadius = 10;
             roundedPanel30.Controls.Add(panel61);
-            roundedPanel30.Location = new Point(271, 546);
+            roundedPanel30.Location = new Point(271, 513);
             roundedPanel30.Name = "roundedPanel30";
             roundedPanel30.Size = new Size(885, 128);
             roundedPanel30.TabIndex = 3;
@@ -1260,6 +1273,7 @@
             // 
             // panel61
             // 
+            panel61.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel61.BackColor = Color.White;
             panel61.Controls.Add(button5);
             panel61.Controls.Add(roundedPanel31);
@@ -1271,6 +1285,7 @@
             // 
             // button5
             // 
+            button5.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             button5.BackColor = Color.Maroon;
             button5.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button5.ForeColor = Color.White;
@@ -1283,6 +1298,7 @@
             // 
             // roundedPanel31
             // 
+            roundedPanel31.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             roundedPanel31.BackColor = Color.Maroon;
             roundedPanel31.BorderRadius = 10;
             roundedPanel31.Controls.Add(label34);
@@ -1314,6 +1330,7 @@
             // 
             // panel57
             // 
+            panel57.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel57.BackColor = Color.White;
             panel57.Controls.Add(button12);
             panel57.Controls.Add(roundedPanel38);
@@ -1358,6 +1375,7 @@
             // 
             // btnGenerate
             // 
+            btnGenerate.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnGenerate.BackColor = Color.Maroon;
             btnGenerate.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnGenerate.ForeColor = Color.White;
@@ -1381,10 +1399,11 @@
             // 
             // roundedPanel6
             // 
+            roundedPanel6.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             roundedPanel6.BackColor = Color.Maroon;
             roundedPanel6.BorderRadius = 10;
             roundedPanel6.Controls.Add(panel58);
-            roundedPanel6.Location = new Point(271, 129);
+            roundedPanel6.Location = new Point(271, 117);
             roundedPanel6.Name = "roundedPanel6";
             roundedPanel6.Size = new Size(885, 128);
             roundedPanel6.TabIndex = 1;
@@ -1392,6 +1411,7 @@
             // 
             // panel58
             // 
+            panel58.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel58.BackColor = Color.White;
             panel58.Controls.Add(button1);
             panel58.Controls.Add(roundedPanel20);
@@ -1403,6 +1423,7 @@
             // 
             // button1
             // 
+            button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             button1.BackColor = Color.Maroon;
             button1.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.White;
@@ -1416,6 +1437,7 @@
             // 
             // roundedPanel20
             // 
+            roundedPanel20.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             roundedPanel20.BackColor = Color.Maroon;
             roundedPanel20.BorderRadius = 10;
             roundedPanel20.Controls.Add(label26);
@@ -1447,10 +1469,11 @@
             // 
             // roundedPanel23
             // 
+            roundedPanel23.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             roundedPanel23.BackColor = Color.Maroon;
             roundedPanel23.BorderRadius = 10;
             roundedPanel23.Controls.Add(panel60);
-            roundedPanel23.Location = new Point(271, 405);
+            roundedPanel23.Location = new Point(271, 382);
             roundedPanel23.Name = "roundedPanel23";
             roundedPanel23.Size = new Size(885, 128);
             roundedPanel23.TabIndex = 3;
@@ -1458,6 +1481,7 @@
             // 
             // panel60
             // 
+            panel60.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel60.BackColor = Color.White;
             panel60.Controls.Add(button4);
             panel60.Controls.Add(roundedPanel28);
@@ -1469,6 +1493,7 @@
             // 
             // button4
             // 
+            button4.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             button4.BackColor = Color.Maroon;
             button4.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button4.ForeColor = Color.White;
@@ -1481,6 +1506,7 @@
             // 
             // roundedPanel28
             // 
+            roundedPanel28.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             roundedPanel28.BackColor = Color.Maroon;
             roundedPanel28.BorderRadius = 10;
             roundedPanel28.Controls.Add(label32);
@@ -1512,10 +1538,11 @@
             // 
             // roundedPanel21
             // 
+            roundedPanel21.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             roundedPanel21.BackColor = Color.Maroon;
             roundedPanel21.BorderRadius = 10;
             roundedPanel21.Controls.Add(panel59);
-            roundedPanel21.Location = new Point(271, 266);
+            roundedPanel21.Location = new Point(271, 249);
             roundedPanel21.Name = "roundedPanel21";
             roundedPanel21.Size = new Size(885, 128);
             roundedPanel21.TabIndex = 2;
@@ -1523,6 +1550,7 @@
             // 
             // panel59
             // 
+            panel59.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel59.BackColor = Color.White;
             panel59.Controls.Add(button2);
             panel59.Controls.Add(roundedPanel22);
@@ -1534,6 +1562,7 @@
             // 
             // button2
             // 
+            button2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             button2.BackColor = Color.Maroon;
             button2.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button2.ForeColor = Color.White;
@@ -1546,6 +1575,7 @@
             // 
             // roundedPanel22
             // 
+            roundedPanel22.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             roundedPanel22.BackColor = Color.Maroon;
             roundedPanel22.BorderRadius = 10;
             roundedPanel22.Controls.Add(label27);
