@@ -936,7 +936,7 @@
             btnUpdateCurriculum.BackColor = Color.FromArgb(109, 0, 0);
             btnUpdateCurriculum.FlatStyle = FlatStyle.Flat;
             btnUpdateCurriculum.ForeColor = Color.White;
-            btnUpdateCurriculum.Location = new Point(1280, 800);
+            btnUpdateCurriculum.Location = new Point(1283, 800);
             btnUpdateCurriculum.Name = "btnUpdateCurriculum";
             btnUpdateCurriculum.Size = new Size(160, 36);
             btnUpdateCurriculum.TabIndex = 11;
