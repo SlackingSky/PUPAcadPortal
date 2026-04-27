@@ -164,8 +164,6 @@ namespace PUPAcadPortal
                 var mnuRemove = new ToolStripMenuItem("🗑  Remove Event");
                 _ctxMenu.Items.Add(mnuRemove);
 
-                var mnuRemoveAnnounce = new ToolStripMenuItem("🔔 Remove Announcement");
-                _ctxMenu.Items.Add(mnuRemoveAnnounce);
 
                 _ctxMenu.Opening += (s, e) =>
                 {
@@ -203,15 +201,7 @@ namespace PUPAcadPortal
                         mnuRemove.DropDownItems.Add(item);
                     }
 
-                    bool hasAnnounce =
-                        _isCurrentMonth &&
-                        SharedCalendarData.InstructorAnnouncements.ContainsKey(_fullDate) &&
-                        !string.IsNullOrWhiteSpace(SharedCalendarData.InstructorAnnouncements[_fullDate]);
-
-                    mnuRemoveAnnounce.Enabled = hasAnnounce;
-                    mnuRemoveAnnounce.Click -= OnRemoveAnnouncement;
-                    if (hasAnnounce)
-                        mnuRemoveAnnounce.Click += OnRemoveAnnouncement;
+                    
                 };
             }
             else

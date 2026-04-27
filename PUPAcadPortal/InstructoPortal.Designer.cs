@@ -1228,7 +1228,19 @@
             panel46.Size = new Size(1271, 13);
             panel46.TabIndex = 6;
             // 
-            
+            // btnDoneAttach
+            // 
+            btnDoneAttach.Location = new Point(0, 0);
+            btnDoneAttach.Name = "btnDoneAttach";
+            btnDoneAttach.Size = new Size(75, 23);
+            btnDoneAttach.TabIndex = 0;
+            // 
+            // btnAttachCancel
+            // 
+            btnAttachCancel.Location = new Point(0, 0);
+            btnAttachCancel.Name = "btnAttachCancel";
+            btnAttachCancel.Size = new Size(75, 23);
+            btnAttachCancel.TabIndex = 0;
             // 
             // panel48
             // 
