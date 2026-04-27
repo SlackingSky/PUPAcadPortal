@@ -597,15 +597,7 @@ namespace PUPAcadPortal
         bool expand = false;
         private void timer1_Tick(object sender, EventArgs e) { }
         private void StatusBtn_Click(object sender, EventArgs e) { timer1.Start(); }
-        private void CreateAnnounce_Click(object sender, EventArgs e)
-        {
-            pnlCreateAnnounce.Visible = !pnlCreateAnnounce.Visible;
-            if (pnlCreateAnnounce.Visible)
-            {
-                pnlCreateAnnounce.BringToFront();
-                pnlCreateAnnounce.Location = new Point((this.Width - pnlCreateAnnounce.Width) / 4, (this.Height - pnlCreateAnnounce.Height) / 4);
-            }
-        }
+        
         private void StatusBtn2_Click(object sender, EventArgs e) { timer1.Start(); }
         private void Sub1_Paint(object sender, PaintEventArgs e) { }
         bool sidebarExpand;
@@ -613,9 +605,7 @@ namespace PUPAcadPortal
         private void btnAssign_Click(object sender, EventArgs e) { pnlLMSAct.Visible = true; pnlLMSAct.BringToFront(); }
         private void btnClassFiles_Click(object sender, EventArgs e) { pnlClassFiles.Visible = true; pnlClassFiles.BringToFront(); }
         private void pnlAttendance_Paint(object sender, PaintEventArgs e) { }
-        private void CreateAnnounce_Click_1(object sender, EventArgs e) { pnlCreateAnnounce.Visible = true; pnlCreateAnnounce.BringToFront(); }
-        private void btnCancelPost_Click(object sender, EventArgs e) { pnlCreateAnnounce.Visible = false; pnlAnnounce.BringToFront(); }
-
+        
         private void btnGo1_Click(object sender, EventArgs e)
         {
             pnlSubMenu.Visible = true; pnlSubMenu.BringToFront();
@@ -634,35 +624,9 @@ namespace PUPAcadPortal
             if (sel == "Quiz") { pnlQuiz1.Visible = true; pnlQuiz1.BringToFront(); }
             else if (sel == "Assignment") { pnlAssign.Visible = true; pnlAssign.BringToFront(); }
         }
-        private void btnAssignAttach_Click(object sender, EventArgs e) { pnlAttachAss.Visible = true; pnlAttachAss.BringToFront(); }
-        private void btnAttachCancel_Click(object sender, EventArgs e) { pnlAttachAss.Visible = false; }
-        private void btnAttachDone_Click(object sender, EventArgs e) { pnlAttachAss.Visible = false; }
-        private void btnAttachCancel_Click_1(object sender, EventArgs e) { pnlAttachAss.Visible = false; }
-        private void btnDoneAttach_Click(object sender, EventArgs e) { pnlAttachAss.Visible = false; }
-        private void btnAddPanel_Click(object sender, EventArgs e)
-        {
-            ucQuestionCard newCard = new ucQuestionCard();
-            newCard.Width = 1250; newCard.Height = 423;
-            flowLayoutPanel3.Controls.Add(newCard);
-            int centeredMargin = (flowLayoutPanel3.Width - 1250 - 25) / 2;
-            if (centeredMargin < 0) centeredMargin = 57;
-            foreach (Control ctrl in flowLayoutPanel3.Controls)
-            {
-                ctrl.Width = 1250;
-                ctrl.Margin = new Padding(centeredMargin, 10, 10, 10);
-                ctrl.Left = 0;
-            }
-            RenumberQuestions();
-            if (flowLayoutPanel3.Controls.Contains(pnlControlBar))
-                flowLayoutPanel3.Controls.SetChildIndex(pnlControlBar, -1);
-            flowLayoutPanel3.ScrollControlIntoView(pnlControlBar);
-        }
+       
 
-        private void btnRemove_Click(object sender, EventArgs e)
-        {
-            var last = flowLayoutPanel3.Controls.OfType<ucQuestionCard>().LastOrDefault();
-            if (last != null) { flowLayoutPanel3.Controls.Remove(last); last.Dispose(); RenumberQuestions(); }
-        }
+       
 
         private void btnSaveQuiz_Click(object sender, EventArgs e)
         {
@@ -678,12 +642,7 @@ namespace PUPAcadPortal
                 ctrl.Margin = new Padding(newMargin, 10, 10, 10);
         }
 
-        private void RenumberQuestions()
-        {
-            int count = 1;
-            foreach (Control ctrl in flowLayoutPanel3.Controls)
-                if (ctrl is ucQuestionCard card) { card.lblQuestionNumber.Text = "Question " + count; count++; }
-        }
+        
 
         private void pnlLMSFiles_DragDrop(object sender, DragEventArgs e)
         {

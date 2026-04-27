@@ -145,10 +145,6 @@ namespace PUPAcadPortal
 
             if (!_isStudent)
             {
-
-                var addAnnounce = new ToolStripMenuItem("📢 Add / Edit Announcement",
-                 null, (s, e) => OpenAnnouncementDialog());
-
                 var addEvent = new ToolStripMenuItem("🗓  Add Event");
                 addEvent.DropDownItems.Add(new ToolStripMenuItem("📘 Class", null, (s, e) => QuickAddEvent(EventType.Class)));
                 addEvent.DropDownItems.Add(new ToolStripMenuItem("📝 Exam", null, (s, e) => QuickAddEvent(EventType.Exam)));
@@ -159,8 +155,6 @@ namespace PUPAcadPortal
 
                 _ctxMenu.Items.AddRange(new ToolStripItem[]
                 {
-                    addAnnounce,
-                    new ToolStripSeparator(),
                     addEvent,
                     new ToolStripSeparator(),
                     addNote,
@@ -183,7 +177,6 @@ namespace PUPAcadPortal
                     foreach (var ev in events)
                     {
                         var capturedEv = ev;
-
                         string prefix = capturedEv.Type switch
                         {
                             EventType.Class => "📘",
@@ -193,10 +186,7 @@ namespace PUPAcadPortal
                             EventType.Cancelled => "🚫",
                             _ => "📅",
                         };
-
-                        var item = new ToolStripMenuItem(
-                            $"{prefix} [{capturedEv.GetTypeLabel()}]  {capturedEv.Title}");
-
+                        var item = new ToolStripMenuItem($"{prefix} [{capturedEv.GetTypeLabel()}]  {capturedEv.Title}");
                         item.Click += (ss, ee) =>
                         {
                             if (MessageBox.Show(
@@ -207,30 +197,80 @@ namespace PUPAcadPortal
                             {
                                 SharedCalendarData.RemoveEvent(_fullDate, capturedEv);
                                 RefreshEventPills();
-                                DaySelected?.Invoke(_fullDate);   // refreshes bottom panel
+                                DaySelected?.Invoke(_fullDate);
                             }
                         };
-
                         mnuRemove.DropDownItems.Add(item);
                     }
 
                     bool hasAnnounce =
                         _isCurrentMonth &&
                         SharedCalendarData.InstructorAnnouncements.ContainsKey(_fullDate) &&
-                        !string.IsNullOrWhiteSpace(
-                            SharedCalendarData.InstructorAnnouncements[_fullDate]);
+                        !string.IsNullOrWhiteSpace(SharedCalendarData.InstructorAnnouncements[_fullDate]);
 
                     mnuRemoveAnnounce.Enabled = hasAnnounce;
-
-                    mnuRemoveAnnounce.Click -= OnRemoveAnnouncement;   // prevent double-subscribe
+                    mnuRemoveAnnounce.Click -= OnRemoveAnnouncement;
                     if (hasAnnounce)
                         mnuRemoveAnnounce.Click += OnRemoveAnnouncement;
                 };
             }
             else
             {
+                var addEvent = new ToolStripMenuItem("🗓  Add My Event");
+                addEvent.DropDownItems.Add(new ToolStripMenuItem("📘 Class", null, (s, e) => QuickAddEvent(EventType.Class)));
+                addEvent.DropDownItems.Add(new ToolStripMenuItem("📝 Exam", null, (s, e) => QuickAddEvent(EventType.Exam)));
+                addEvent.DropDownItems.Add(new ToolStripMenuItem("📌 Deadline", null, (s, e) => QuickAddEvent(EventType.Deadline)));
+                addEvent.DropDownItems.Add(new ToolStripMenuItem("🩺 Consultation", null, (s, e) => QuickAddEvent(EventType.Consultation)));
+
                 var addNote = new ToolStripMenuItem("🗒  Add / Edit Note", null, (s, e) => OpenNotesDialog());
-                _ctxMenu.Items.Add(addNote);
+
+                _ctxMenu.Items.AddRange(new ToolStripItem[]
+                {
+                    addEvent,
+                    new ToolStripSeparator(),
+                    addNote,
+                    new ToolStripSeparator(),
+                });
+
+                var mnuRemove = new ToolStripMenuItem("🗑  Remove My Event");
+                _ctxMenu.Items.Add(mnuRemove);
+
+                _ctxMenu.Opening += (s, e) =>
+                {
+                    mnuRemove.DropDownItems.Clear();
+                    var personalEvents = SharedCalendarData.GetStudentEventsForDate(_fullDate);
+
+                    mnuRemove.Enabled = _isCurrentMonth && personalEvents.Count > 0;
+
+                    foreach (var ev in personalEvents)
+                    {
+                        var capturedEv = ev;
+                        string prefix = capturedEv.Type switch
+                        {
+                            EventType.Class => "📘",
+                            EventType.Exam => "📝",
+                            EventType.Deadline => "📌",
+                            EventType.Consultation => "🩺",
+                            EventType.Cancelled => "🚫",
+                            _ => "📅",
+                        };
+                        var item = new ToolStripMenuItem($"{prefix} [{capturedEv.GetTypeLabel()}]  {capturedEv.Title}");
+                        item.Click += (ss, ee) =>
+                        {
+                            if (MessageBox.Show(
+                                    $"Remove \"{capturedEv.Title}\" from {_fullDate:MMMM dd, yyyy}?",
+                                    "Confirm Remove",
+                                    MessageBoxButtons.YesNo,
+                                    MessageBoxIcon.Question) == DialogResult.Yes)
+                            {
+                                SharedCalendarData.RemoveStudentEvent(_fullDate, capturedEv);
+                                RefreshEventPills();
+                                DaySelected?.Invoke(_fullDate);
+                            }
+                        };
+                        mnuRemove.DropDownItems.Add(item);
+                    }
+                };
             }
 
             this.ContextMenuStrip = _ctxMenu;
@@ -265,49 +305,11 @@ namespace PUPAcadPortal
             };
             pnlH.Controls.Add(lH);
 
-            var lbl = new Label
-            {
-                Text = "Announcement text:",
-                Left = 12,
-                Top = 54,
-                AutoSize = true,
-                Font = new Font("Segoe UI", 9f),
-                ForeColor = Color.FromArgb(60, 60, 60)
-            };
-            var txt = new TextBox
-            {
-                Left = 12,
-                Top = 73,
-                Width = 360,
-                Height = 56,
-                Multiline = true,
-                ScrollBars = ScrollBars.Vertical,
-                Text = existing,
-                Font = new Font("Segoe UI", 9f)
-            };
-            var btnOk = new Button
-            {
-                Text = "Save",
-                Left = 188,
-                Top = 138,
-                Width = 90,
-                Height = 30,
-                BackColor = Color.Maroon,
-                ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat,
-                DialogResult = DialogResult.OK
-            };
+            var lbl = new Label { Text = "Announcement text:", Left = 12, Top = 54, AutoSize = true, Font = new Font("Segoe UI", 9f), ForeColor = Color.FromArgb(60, 60, 60) };
+            var txt = new TextBox { Left = 12, Top = 73, Width = 360, Height = 56, Multiline = true, ScrollBars = ScrollBars.Vertical, Text = existing, Font = new Font("Segoe UI", 9f) };
+            var btnOk = new Button { Text = "Save", Left = 188, Top = 138, Width = 90, Height = 30, BackColor = Color.Maroon, ForeColor = Color.White, FlatStyle = FlatStyle.Flat, DialogResult = DialogResult.OK };
             btnOk.FlatAppearance.BorderSize = 0;
-            var btnCnl = new Button
-            {
-                Text = "Cancel",
-                Left = 286,
-                Top = 138,
-                Width = 90,
-                Height = 30,
-                FlatStyle = FlatStyle.Flat,
-                DialogResult = DialogResult.Cancel
-            };
+            var btnCnl = new Button { Text = "Cancel", Left = 286, Top = 138, Width = 90, Height = 30, FlatStyle = FlatStyle.Flat, DialogResult = DialogResult.Cancel };
             frm.Controls.AddRange(new Control[] { pnlH, lbl, txt, btnOk, btnCnl });
             frm.AcceptButton = btnOk;
             frm.CancelButton = btnCnl;
@@ -327,8 +329,7 @@ namespace PUPAcadPortal
         private void OnRemoveAnnouncement(object sender, EventArgs e)
         {
             string title = SharedCalendarData.InstructorAnnouncements.ContainsKey(_fullDate)
-                ? SharedCalendarData.InstructorAnnouncements[_fullDate]
-                : "";
+                ? SharedCalendarData.InstructorAnnouncements[_fullDate] : "";
 
             if (MessageBox.Show(
                     $"Remove the announcement for {_fullDate:MMMM dd, yyyy}?\n\n\"{title}\"",
@@ -348,12 +349,15 @@ namespace PUPAcadPortal
             if (!_isCurrentMonth) return;
 
             using var dlg = new AddEventForm(_fullDate, type);
-            if (dlg.ShowDialog() == DialogResult.OK && dlg.CreatedEvent != null)
-            {
+            if (dlg.ShowDialog() != DialogResult.OK || dlg.CreatedEvent == null) return;
+
+            if (_isStudent)
+                SharedCalendarData.AddStudentEvent(_fullDate, dlg.CreatedEvent);
+            else
                 SharedCalendarData.AddEvent(_fullDate, dlg.CreatedEvent);
-                RefreshEventPills();
-                DaySelected?.Invoke(_fullDate);
-            }
+
+            RefreshEventPills();
+            DaySelected?.Invoke(_fullDate);
         }
 
         public void RefreshEventPills()
@@ -361,12 +365,12 @@ namespace PUPAcadPortal
             foreach (var lbl in _eventPills) this.Controls.Remove(lbl);
             _eventPills.Clear();
 
-            var events = SharedCalendarData.GetEventsForDate(_fullDate);
-            foreach (var ev in events)
+            var sharedEvents = SharedCalendarData.GetEventsForDate(_fullDate);
+            foreach (var ev in sharedEvents)
             {
-                var pill = MakePill(ev.Title, ev.GetColor());
+                var pill = MakePill(ev.Title, ev.GetColor(), isPersonal: false);
                 pill.Tag = ev;
-                pill.Click += (s, e) => ShowEventDetails(ev);
+                pill.Click += (s, e) => ShowEventDetails(ev, isPersonal: false);
 
                 var tip = new ToolTip();
                 string tipText = ev.GetTypeLabel();
@@ -379,15 +383,37 @@ namespace PUPAcadPortal
                 pill.BringToFront();
             }
 
+            if (_isStudent)
+            {
+                var personalEvents = SharedCalendarData.GetStudentEventsForDate(_fullDate);
+                foreach (var ev in personalEvents)
+                {
+                    Color personalColor = BlendWithWhite(ev.GetColor(), 0.70f);
+                    var pill = MakePill("🔒 " + ev.Title, personalColor, isPersonal: true);
+                    pill.Tag = ev;
+                    pill.Click += (s, e) => ShowEventDetails(ev, isPersonal: true);
+
+                    var tip = new ToolTip();
+                    string tipText = "[MY EVENT] " + ev.GetTypeLabel();
+                    if (!string.IsNullOrEmpty(ev.StartTime)) tipText += $"  {ev.StartTime}";
+                    if (!string.IsNullOrEmpty(ev.Room)) tipText += $"  •  {ev.Room}";
+                    tip.SetToolTip(pill, tipText);
+
+                    _eventPills.Add(pill);
+                    this.Controls.Add(pill);
+                    pill.BringToFront();
+                }
+            }
+
             RepositionPills();
         }
 
-        private void ShowEventDetails(CalendarEvent ev)
+        private void ShowEventDetails(CalendarEvent ev, bool isPersonal)
         {
-            string msg = $"[{ev.GetTypeLabel()}]  {ev.Title}\n";
+            string header = isPersonal ? "[MY EVENT]" : $"[{ev.GetTypeLabel()}]";
+            string msg = $"{header}  {ev.Title}\n";
             if (!string.IsNullOrEmpty(ev.StartTime))
-                msg += $"Time: {ev.StartTime}" +
-                       (string.IsNullOrEmpty(ev.EndTime) ? "" : $" – {ev.EndTime}") + "\n";
+                msg += $"Time: {ev.StartTime}" + (string.IsNullOrEmpty(ev.EndTime) ? "" : $" – {ev.EndTime}") + "\n";
             if (!string.IsNullOrEmpty(ev.Room))
                 msg += $"Room: {ev.Room}\n";
             if (!string.IsNullOrEmpty(ev.Description))
@@ -398,15 +424,24 @@ namespace PUPAcadPortal
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private Label MakePill(string text, Color back)
+        private static Color BlendWithWhite(Color c, float ratio)
+        {
+            ratio = Math.Max(0f, Math.Min(1f, ratio));
+            return Color.FromArgb(
+                (int)(c.R + (255 - c.R) * (1f - ratio)),
+                (int)(c.G + (255 - c.G) * (1f - ratio)),
+                (int)(c.B + (255 - c.B) * (1f - ratio)));
+        }
+
+        private Label MakePill(string text, Color back, bool isPersonal = false)
         {
             return new Label
             {
                 AutoSize = false,
                 AutoEllipsis = true,
                 Text = text,
-                Font = new Font("Segoe UI", 6.8f),
-                ForeColor = Color.White,
+                Font = new Font("Segoe UI", 6.8f, isPersonal ? FontStyle.Italic : FontStyle.Regular),
+                ForeColor = isPersonal ? Color.FromArgb(40, 40, 40) : Color.White,
                 BackColor = back,
                 Size = new Size(this.Width - 4, 16),
                 TextAlign = ContentAlignment.MiddleLeft,
@@ -456,8 +491,7 @@ namespace PUPAcadPortal
         {
             if (lblAnnouncement == null) return;
             bool has = SharedCalendarData.InstructorAnnouncements.ContainsKey(_fullDate)
-                       && !string.IsNullOrWhiteSpace(
-                              SharedCalendarData.InstructorAnnouncements[_fullDate]);
+                       && !string.IsNullOrWhiteSpace(SharedCalendarData.InstructorAnnouncements[_fullDate]);
             lblAnnouncement.Text = has ? SharedCalendarData.InstructorAnnouncements[_fullDate] : "";
             lblAnnouncement.Visible = has;
             RepositionPills();
@@ -506,7 +540,7 @@ namespace PUPAcadPortal
             Color borderColor = _isSelected
                 ? Color.FromArgb(66, 133, 244)
                 : _isHovered && _isCurrentMonth
-                    ? Color.FromArgb(200, 80, 40)  
+                    ? Color.FromArgb(200, 80, 40)
                     : Color.FromArgb(210, 210, 210);
             int penWidth = (_isSelected || _isHovered) ? 2 : 1;
             using (var pen = new Pen(borderColor, penWidth))

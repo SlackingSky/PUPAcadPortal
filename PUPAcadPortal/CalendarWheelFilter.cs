@@ -3,17 +3,14 @@ using System.Windows.Forms;
 
 namespace PUPAcadPortal
 {
-    /// <summary>
-    /// Message filter that intercepts mouse-wheel events over a target control
-    /// and forwards them as a scroll delta to a callback.
-    /// Fixes CS0246: CalendarWheelFilter not found.
-    /// </summary>
     public class CalendarWheelFilter : IMessageFilter
     {
         private const int WM_MOUSEWHEEL = 0x020A;
+        private const int WHEEL_DELTA = 120;   
 
         private readonly Control _target;
-        private readonly Action<int> _onScroll; 
+        private readonly Action<int> _onScroll;
+        private int _accumulated = 0;
 
         public CalendarWheelFilter(Control target, Action<int> onScroll)
         {
@@ -33,9 +30,16 @@ namespace PUPAcadPortal
             if (!targetRect.Contains(cursorPos)) return false;
 
             int delta = (short)(((int)m.WParam >> 16) & 0xFFFF);
-            _onScroll?.Invoke(delta);
+            _accumulated += delta;
 
-            return true; 
+            if (Math.Abs(_accumulated) >= WHEEL_DELTA)
+            {
+                int direction = _accumulated > 0 ? WHEEL_DELTA : -WHEEL_DELTA;
+                _accumulated = 0;
+                _onScroll?.Invoke(direction);
+            }
+
+            return true;   
         }
     }
 }

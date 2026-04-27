@@ -6,10 +6,8 @@ using System.Text;
 
 namespace PUPAcadPortal
 {
-    //  Event types 
     public enum EventType { Class, Exam, Deadline, Cancelled, Consultation }
 
-    //  Single calendar event 
     public class CalendarEvent
     {
         public string Title { get; set; } = "";
@@ -46,21 +44,21 @@ namespace PUPAcadPortal
         }
     }
 
-    //  Shared data hub 
     public static class SharedCalendarData
     {
         private static readonly string SaveFolder =
             Path.Combine(Environment.GetFolderPath(
                 Environment.SpecialFolder.ApplicationData), "PUPAcadPortal");
 
-        //  Current calendar position 
         public static int CurrentYear = DateTime.Now.Year;
         public static int CurrentMonth = DateTime.Now.Month;
 
-        //  Data stores 
         public static Dictionary<DateTime, string> InstructorAnnouncements = new Dictionary<DateTime, string>();
         public static Dictionary<DateTime, string> StudentNotes = new Dictionary<DateTime, string>();
+
         public static Dictionary<DateTime, List<CalendarEvent>> Events = new Dictionary<DateTime, List<CalendarEvent>>();
+
+        public static Dictionary<DateTime, List<CalendarEvent>> StudentEvents = new Dictionary<DateTime, List<CalendarEvent>>();
 
         public static Dictionary<DateTime, string> Holidays = new Dictionary<DateTime, string>
         {
@@ -142,12 +140,32 @@ namespace PUPAcadPortal
             SaveData();
         }
 
-        /// <summary>
-        /// Returns the next <paramref name="count"/> events from today (across all types).
-        /// FIX CS1061: tuple element is accessed as .Date (DateTime) and .Ev (CalendarEvent)
-        /// using named tuple syntax so callers can write  (d, ev)  cleanly.
-        /// </summary>
-        public static List<(DateTime Date, CalendarEvent Ev)> GetUpcoming(int count = 5)
+
+        public static List<CalendarEvent> GetStudentEventsForDate(DateTime date)
+        {
+            var key = date.Date;
+            return StudentEvents.ContainsKey(key) ? StudentEvents[key] : new List<CalendarEvent>();
+        }
+
+        public static void AddStudentEvent(DateTime date, CalendarEvent ev)
+        {
+            var key = date.Date;
+            if (!StudentEvents.ContainsKey(key)) StudentEvents[key] = new List<CalendarEvent>();
+            StudentEvents[key].Add(ev);
+            SaveData();
+        }
+
+        public static void RemoveStudentEvent(DateTime date, CalendarEvent ev)
+        {
+            var key = date.Date;
+            if (StudentEvents.ContainsKey(key)) StudentEvents[key].Remove(ev);
+            SaveData();
+        }
+
+
+        public static List<(DateTime Date, CalendarEvent Ev)> GetUpcoming(
+            int count = 5,
+            bool includeStudentEvents = false)
         {
             var result = new List<(DateTime Date, CalendarEvent Ev)>();
             DateTime today = DateTime.Now.Date;
@@ -156,10 +174,20 @@ namespace PUPAcadPortal
             {
                 if (kv.Key < today) continue;
                 foreach (var ev in kv.Value)
-                    result.Add((kv.Key, ev));   
+                    result.Add((kv.Key, ev));
             }
 
-            result.Sort((a, b) => a.Date.CompareTo(b.Date));   
+            if (includeStudentEvents)
+            {
+                foreach (var kv in StudentEvents)
+                {
+                    if (kv.Key < today) continue;
+                    foreach (var ev in kv.Value)
+                        result.Add((kv.Key, ev));
+                }
+            }
+
+            result.Sort((a, b) => a.Date.CompareTo(b.Date));
 
             if (result.Count > count)
                 result.RemoveRange(count, result.Count - count);
@@ -167,25 +195,23 @@ namespace PUPAcadPortal
             return result;
         }
 
+
         public static void SaveData()
         {
             try
             {
                 Directory.CreateDirectory(SaveFolder);
 
-                // Student notes
                 var sb = new StringBuilder();
                 foreach (var kv in StudentNotes)
                     sb.AppendLine($"{kv.Key:yyyy-MM-dd}|{Escape(kv.Value)}");
                 File.WriteAllText(Path.Combine(SaveFolder, "student_notes.txt"), sb.ToString(), Encoding.UTF8);
 
-                // Instructor announcements
                 sb.Clear();
                 foreach (var kv in InstructorAnnouncements)
                     sb.AppendLine($"{kv.Key:yyyy-MM-dd}|{Escape(kv.Value)}");
                 File.WriteAllText(Path.Combine(SaveFolder, "announcements.txt"), sb.ToString(), Encoding.UTF8);
 
-                // Events
                 sb.Clear();
                 foreach (var kv in Events)
                     foreach (var ev in kv.Value)
@@ -197,7 +223,19 @@ namespace PUPAcadPortal
                             Escape(ev.StartTime),
                             Escape(ev.EndTime),
                             Escape(ev.Room)));
-                File.WriteAllText(Path.Combine(SaveFolder, "events.txt"), sb.ToString(), Encoding.UTF8);
+                File.WriteAllText(Path.Combine(SaveFolder, "events.txt"), sb.ToString(), Encoding.UTF8);            
+                sb.Clear();
+                foreach (var kv in StudentEvents)
+                    foreach (var ev in kv.Value)
+                        sb.AppendLine(string.Join("|",
+                            kv.Key.ToString("yyyy-MM-dd"),
+                            (int)ev.Type,
+                            Escape(ev.Title),
+                            Escape(ev.Description),
+                            Escape(ev.StartTime),
+                            Escape(ev.EndTime),
+                            Escape(ev.Room)));
+                File.WriteAllText(Path.Combine(SaveFolder, "student_events.txt"), sb.ToString(), Encoding.UTF8);
             }
             catch { }
         }
@@ -206,7 +244,6 @@ namespace PUPAcadPortal
         {
             try
             {
-                // Student notes
                 string path = Path.Combine(SaveFolder, "student_notes.txt");
                 if (File.Exists(path))
                     foreach (var line in File.ReadAllLines(path, Encoding.UTF8))
@@ -216,7 +253,6 @@ namespace PUPAcadPortal
                             StudentNotes[d.Date] = Unescape(p[1]);
                     }
 
-                // Instructor announcements
                 path = Path.Combine(SaveFolder, "announcements.txt");
                 if (File.Exists(path))
                     foreach (var line in File.ReadAllLines(path, Encoding.UTF8))
@@ -226,7 +262,6 @@ namespace PUPAcadPortal
                             InstructorAnnouncements[d.Date] = Unescape(p[1]);
                     }
 
-                // Events
                 path = Path.Combine(SaveFolder, "events.txt");
                 if (File.Exists(path))
                     foreach (var line in File.ReadAllLines(path, Encoding.UTF8))
@@ -237,6 +272,27 @@ namespace PUPAcadPortal
                             if (!Events.ContainsKey(d.Date))
                                 Events[d.Date] = new List<CalendarEvent>();
                             Events[d.Date].Add(new CalendarEvent
+                            {
+                                Type = (EventType)int.Parse(p[1]),
+                                Title = Unescape(p[2]),
+                                Description = Unescape(p[3]),
+                                StartTime = Unescape(p[4]),
+                                EndTime = Unescape(p[5]),
+                                Room = Unescape(p[6]),
+                            });
+                        }
+                    }
+
+                path = Path.Combine(SaveFolder, "student_events.txt");
+                if (File.Exists(path))
+                    foreach (var line in File.ReadAllLines(path, Encoding.UTF8))
+                    {
+                        var p = line.Split('|');
+                        if (p.Length >= 7 && DateTime.TryParse(p[0], out DateTime d))
+                        {
+                            if (!StudentEvents.ContainsKey(d.Date))
+                                StudentEvents[d.Date] = new List<CalendarEvent>();
+                            StudentEvents[d.Date].Add(new CalendarEvent
                             {
                                 Type = (EventType)int.Parse(p[1]),
                                 Title = Unescape(p[2]),

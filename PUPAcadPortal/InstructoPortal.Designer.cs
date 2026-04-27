@@ -1228,31 +1228,7 @@
             panel46.Size = new Size(1271, 13);
             panel46.TabIndex = 6;
             // 
-            // btnDoneAttach
-            // 
-            btnDoneAttach.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnDoneAttach.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnDoneAttach.ForeColor = Color.Maroon;
-            btnDoneAttach.Location = new Point(630, 421);
-            btnDoneAttach.Name = "btnDoneAttach";
-            btnDoneAttach.Size = new Size(95, 38);
-            btnDoneAttach.TabIndex = 23;
-            btnDoneAttach.Text = "Done";
-            btnDoneAttach.UseVisualStyleBackColor = true;
-            btnDoneAttach.Click += btnDoneAttach_Click;
-            // 
-            // btnAttachCancel
-            // 
-            btnAttachCancel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnAttachCancel.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnAttachCancel.ForeColor = Color.Maroon;
-            btnAttachCancel.Location = new Point(519, 421);
-            btnAttachCancel.Name = "btnAttachCancel";
-            btnAttachCancel.Size = new Size(95, 38);
-            btnAttachCancel.TabIndex = 22;
-            btnAttachCancel.Text = "Cancel";
-            btnAttachCancel.UseVisualStyleBackColor = true;
-            btnAttachCancel.Click += btnAttachCancel_Click_1;
+            
             // 
             // panel48
             // 
@@ -1812,7 +1788,6 @@
             CreateAnnounce.Text = "    Create Announcement";
             CreateAnnounce.TextImageRelation = TextImageRelation.ImageBeforeText;
             CreateAnnounce.UseVisualStyleBackColor = false;
-            CreateAnnounce.Click += CreateAnnounce_Click_1;
             // 
             // panel2
             // 
@@ -4005,7 +3980,6 @@
             btnCancelPost.TabIndex = 9;
             btnCancelPost.Text = "Cancel";
             btnCancelPost.UseVisualStyleBackColor = true;
-            btnCancelPost.Click += btnCancelPost_Click;
             // 
             // btnPostAnnounce
             // 
@@ -5919,26 +5893,18 @@
         private Panel pnlGrades;
         private Label label5;
         private System.Windows.Forms.Timer timer1;
-        private RoundedPanel roundedPanel13;
         private PictureBox pictureBox14;
-        private RoundedPanel roundedPanel14;
         private PictureBox pictureBox13;
-        private RoundedPanel roundedPanel15;
         private PictureBox pictureBox12;
-        private RoundedPanel roundedPanel16;
         private PictureBox pictureBox11;
-        private RoundedPanel roundedPanel17;
         private TextBox textBox8;
         private PictureBox pictureBox10;
-        private RoundedPanel roundedPanel18;
         private PictureBox pictureBox15;
-        private RoundedPanel pnlCreateAnnounce;
         private Label label10;
         private Label label45;
         private TextBox textBox10;
         private TextBox textBox9;
         private Label label44;
-        private RoundedPanel roundedPanel19;
         private Button button28;
         private Label label48;
         private Label label49;
@@ -5958,10 +5924,8 @@
         private Label lblProf1;
         private Label lblSub1;
         private PictureBox pictureBox22;
-        private RoundedPanel roundedPanel26;
         private Panel panel10;
         private System.Windows.Forms.Timer sideBarTimer;
-        private RoundedPanel roundedPanel25;
         private Button button36;
         private Button button37;
         private Label label56;
@@ -5985,7 +5949,6 @@
         private Label label28;
         private Label label24;
         private TextBox textBox2;
-        private RoundedPanel roundedPanel7;
         private FlowLayoutPanel flowLayoutPanel2;
         private Button button4;
         private Button button5;
@@ -5998,7 +5961,6 @@
         private Label label32;
         private Label label31;
         private PictureBox pictureBox3;
-        private RoundedPanel roundedPanel9;
         private TextBox textBox1;
         private PictureBox pictureBox9;
         private Label label27;
@@ -6013,16 +5975,12 @@
         private Label label17;
         private Label label16;
         private Label label15;
-        private RoundedPanel roundedPanel4;
         private Label label14;
-        private RoundedPanel roundedPanel3;
         private Label label13;
         private Label label12;
         private Panel panel14;
         private Label label6;
         private Panel panel17;
-        private RoundedPanel roundedPanel27;
-        private RoundedPanel roundedPanel28;
         private FlowLayoutPanel flowLayoutPanel7;
         private Button button20;
         private Button button21;
@@ -6047,7 +6005,6 @@
         private Label label58;
         private Label label59;
         private PictureBox pictureBox23;
-        private RoundedPanel roundedPanel10;
         private FlowLayoutPanel flowLayoutPanel5;
         private Button button12;
         private Button button13;
@@ -6060,7 +6017,6 @@
         private Label label41;
         private Label label42;
         private PictureBox pictureBox8;
-        private RoundedPanel roundedPanel8;
         private FlowLayoutPanel flowLayoutPanel4;
         private Button button1;
         private Button button2;
@@ -6218,18 +6174,10 @@
         private Button btnCreateAct;
         private Label label108;
         private Button btnPostDelete;
-        private buttonRounded btnPost;
         private Button button26;
-        private buttonRounded buttonRounded6;
         private Button button25;
-        private buttonRounded buttonRounded5;
-        private RoundedPanel roundedPanel6;
-        private RoundedPanel roundedPanel5;
         private Button button24;
-        private buttonRounded buttonRounded4;
         private Panel panel47;
-        private RoundedPanel roundedPanel20;
-        private buttonRounded btnAttachDone;
         protected Button btnBack;
         protected Button btnLMSFiles;
         protected Button btnLMSActSub;
@@ -6237,13 +6185,11 @@
         private DateTimePicker dateTimePicker2;
         private Label label112;
         private Panel pnlSubject;
-        private RoundedPanel roundedPanel2;
         private Label lblSection2Sched;
         private Label lblSubject2;
         private Label lblSection2;
         private PictureBox pictureBox45;
         private Button btnGo2;
-        private RoundedPanel roundedPanel1;
         private Label lblSection1Sched;
         private Label lblSubject1;
         private Label lblsection1;
@@ -6254,7 +6200,6 @@
         private Label label8;
         private DateTimePicker dateTimePicker3;
         private ComboBox cmbbxCourseSelection;
-        private RoundedPanel roundedPanel24;
         private Label label11;
         private Label label72;
         private Label label73;
@@ -6275,19 +6220,12 @@
         private Label label121;
         private Panel pnlCreateAct;
         private Panel pnlAssign;
-        private RoundedPanel pnlAttachAss;
         private Button btnDoneAttach;
         private Button btnAttachCancel;
-        private RoundedPanel roundedPanel29;
         private Panel panel48;
         private Label label118;
         private Label label115;
         private PictureBox pictureBox46;
-        private buttonRounded btnCancelAssign;
-        private buttonRounded btnAssignAttach;
-        private buttonRounded btnSaveAss;
-        private RoundedPanel roundedPanel11;
-        private RoundedPanel roundedPanel12;
         private TextBox textBox22;
         private Label label117;
         private Panel pnlQuiz1;
@@ -6296,15 +6234,9 @@
         private FlowLayoutPanel flowLayoutPanel3;
         private Panel pnlControlBar;
         private TableLayoutPanel tableLayoutPanel24;
-        private buttonRounded btnRemove;
-        private buttonRounded btnAddPanel;
-        private buttonRounded btnSaveQuiz;
         private Panel panel45;
-        private RoundedPanel roundedPanel23;
         private ComboBox cmbBXActType;
-        private RoundedPanel roundedPanel22;
         private DateTimePicker dateTimePicker1;
-        private RoundedPanel roundedPanel21;
         private TextBox txtActTitle;
         private Panel panel51;
         private Panel panel50;
