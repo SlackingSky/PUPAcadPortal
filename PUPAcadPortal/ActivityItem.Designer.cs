@@ -36,7 +36,7 @@
             lblTitle = new Label();
             actPic = new PictureBox();
             btnRemove = new Button();
-            buttonRounded5 = new buttonRounded();
+            btnPostAct = new buttonRounded();
             roundedPanel8.SuspendLayout();
             roundedPanel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)actPic).BeginInit();
@@ -68,7 +68,7 @@
             roundedPanel7.Controls.Add(lblTitle);
             roundedPanel7.Controls.Add(actPic);
             roundedPanel7.Controls.Add(btnRemove);
-            roundedPanel7.Controls.Add(buttonRounded5);
+            roundedPanel7.Controls.Add(btnPostAct);
             roundedPanel7.Location = new Point(20, 4);
             roundedPanel7.Name = "roundedPanel7";
             roundedPanel7.Size = new Size(1385, 164);
@@ -108,7 +108,7 @@
             // 
             // actPic
             // 
-            actPic.Location = new Point(42, 39);
+            actPic.Location = new Point(82, 39);
             actPic.Name = "actPic";
             actPic.Size = new Size(80, 77);
             actPic.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -128,22 +128,24 @@
             btnRemove.Size = new Size(44, 43);
             btnRemove.TabIndex = 9;
             btnRemove.UseVisualStyleBackColor = false;
+            btnRemove.Click += btnRemove_Click;
             // 
-            // buttonRounded5
+            // btnPostAct
             // 
-            buttonRounded5.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            buttonRounded5.BackColor = Color.FromArgb(128, 0, 0);
-            buttonRounded5.BorderRadius = 10;
-            buttonRounded5.FlatAppearance.BorderSize = 0;
-            buttonRounded5.FlatStyle = FlatStyle.Flat;
-            buttonRounded5.Font = new Font("Arial", 16.2F, FontStyle.Regular, GraphicsUnit.Pixel);
-            buttonRounded5.ForeColor = Color.White;
-            buttonRounded5.Location = new Point(1229, 58);
-            buttonRounded5.Name = "buttonRounded5";
-            buttonRounded5.Size = new Size(130, 43);
-            buttonRounded5.TabIndex = 10;
-            buttonRounded5.Text = "Post";
-            buttonRounded5.UseVisualStyleBackColor = false;
+            btnPostAct.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnPostAct.BackColor = Color.FromArgb(128, 0, 0);
+            btnPostAct.BorderRadius = 10;
+            btnPostAct.FlatAppearance.BorderSize = 0;
+            btnPostAct.FlatStyle = FlatStyle.Flat;
+            btnPostAct.Font = new Font("Arial", 16.2F, FontStyle.Regular, GraphicsUnit.Pixel);
+            btnPostAct.ForeColor = Color.White;
+            btnPostAct.Location = new Point(1229, 58);
+            btnPostAct.Name = "btnPostAct";
+            btnPostAct.Size = new Size(130, 43);
+            btnPostAct.TabIndex = 10;
+            btnPostAct.Text = "Post";
+            btnPostAct.UseVisualStyleBackColor = false;
+            btnPostAct.Click += btnPostAct_Click;
             // 
             // ActivityItem
             // 
@@ -164,11 +166,11 @@
 
         private RoundedPanel roundedPanel8;
         private RoundedPanel roundedPanel7;
-        private buttonRounded buttonRounded5;
         public Label lblDueDate;
         public Label lblTitle;
         public PictureBox actPic;
         public Button btnEdit;
         public Button btnRemove;
+        public buttonRounded btnPostAct;
     }
 }

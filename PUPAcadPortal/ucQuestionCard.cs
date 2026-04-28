@@ -13,12 +13,13 @@ namespace PUPAcadPortal
         public quizCreation()
         {
             InitializeComponent();
+
         }
 
         private void ucQuestionCard_Load(object sender, EventArgs e)
         {
             // Initial label state
-            lblCorrectAns.Text = "Correct Answer: ";
+            lblCorrectAns.Text = "Selected Correct Answer: ";
         }
 
         private void cmbCorrectAnswer_SelectedIndexChanged(object sender, EventArgs e)
@@ -28,7 +29,7 @@ namespace PUPAcadPortal
             {
                 // Update the label text immediately
                 // Make sure 'lblCorrectAns' matches the Name in your Properties window
-                lblCorrectAns.Text = "Correct Answer: " + cmbCorrectAnswer.SelectedItem.ToString();
+                lblCorrectAns.Text = "Selected Correct Answer: " + cmbCorrectAnswer.SelectedItem.ToString();
             }
         }
     }

@@ -20,7 +20,7 @@ namespace PUPAcadPortal
     public partial class InstructorPortal : Form
     {
         private bool isEditing = false; // New flag to stop event interference
-        private ActivityItem currentEditingItem = null;
+        private ActivityItem? currentEditingItem = null;
         private Button clickedButton;
         private Color defaultColor = Color.Maroon;
         private Color selectedColor = Color.FromArgb(109, 0, 0);
@@ -30,12 +30,11 @@ namespace PUPAcadPortal
         int editingAnnouncementId = -1;
 
         private string tempAttachedPath = "";
-        private quizCreation activeQuizCard;
         public InstructorPortal()
         {
             InitializeComponent();
             pnlAttendance.AutoScrollMinSize = new Size(0, 1000);
-
+            this.DoubleBuffered = true;
             // DateTimePicker Formatting
             dateTimePicker1.Format = DateTimePickerFormat.Custom;
             dateTimePicker1.CustomFormat = "MM/dd/yyyy hh:mm tt";
@@ -51,15 +50,13 @@ namespace PUPAcadPortal
 
         private void changeButtonColor(Button button)
         {
+            if (button == null) return; // Add a "Guard Clause" to stop if null
+
             if (clickedButton != null)
             {
                 clickedButton.BackColor = defaultColor;
             }
             clickedButton = button;
-            pnlYellow.Visible = true;
-            pnlYellow.Parent = clickedButton.Parent;
-            pnlYellow.BringToFront();
-            clickedButton.BackColor = selectedColor;
         }
 
         //Method na nagpapakita ng content ng bawat button, wala akong maisip na iba kaya eto
@@ -361,42 +358,38 @@ namespace PUPAcadPortal
         private void btnAddPanel_Click(object sender, EventArgs e)
         {
             quizCreation newCard = new quizCreation();
-
-            // ✅ Updated to your new UC size: 1250, 456
             newCard.Width = 1250;
             newCard.Height = 456;
 
-            // Add the card to the panel first
             flowLayoutPanel3.Controls.Add(newCard);
 
-            // ✅ FIX: Calculate margin using the new dimensions
-            // 25 is a buffer for the vertical scrollbar to prevent horizontal clipping
+            // Apply the modern flat design centering
             int centeredMargin = (flowLayoutPanel3.Width - 1250 - 25) / 2;
-
-            // Fallback to 10px instead of 57 to keep the card visible on smaller screens
             if (centeredMargin < 0) centeredMargin = 10;
 
             foreach (Control ctrl in flowLayoutPanel3.Controls)
             {
-                // Force the width to ensure the "flat design" look remains uniform
                 ctrl.Width = 1250;
                 ctrl.Margin = new Padding(centeredMargin, 10, 10, 10);
-
-                // Remove any internal offsets that might cause shifting
-                ctrl.Left = 0;
             }
 
-            // Renumber questions (e.g., Question 1, Question 2)
             RenumberQuestions();
 
-            // Ensure the Add/Remove/Save button bar stays at the bottom
+            // Ensure control bar is at the end
             if (flowLayoutPanel3.Controls.Contains(pnlControlBar))
             {
                 flowLayoutPanel3.Controls.SetChildIndex(pnlControlBar, -1);
             }
 
-            // ✅ FIX: Focus on the NEW CARD so the screen doesn't jump to the bottom
-            flowLayoutPanel3.ScrollControlIntoView(newCard);
+            flowLayoutPanel3.PerformLayout();
+
+            // ✅ THE FIX: Scroll to the TOP of the new card specifically
+            this.BeginInvoke((MethodInvoker)delegate {
+                // By setting the AutoScrollPosition to the Top of the newCard,
+                // you frame the 456px card inside the 591px panel.
+                // The buttons will naturally appear in the remaining 135px of space.
+                flowLayoutPanel3.AutoScrollPosition = new Point(0, newCard.Top - flowLayoutPanel3.AutoScrollPosition.Y);
+            });
         }
 
         // --- BUTTON 2: REMOVE LAST QUESTION ---
@@ -419,16 +412,29 @@ namespace PUPAcadPortal
         private void btnSaveQuiz_Click(object sender, EventArgs e)
         {
 
-            if (string.IsNullOrWhiteSpace(txtActTitle.Text)) return;
-
-            var activeQuizCard = flowLayoutPanel3.Controls.OfType<quizCreation>().FirstOrDefault();
-            if (activeQuizCard == null)
+            if (string.IsNullOrWhiteSpace(txtActTitle.Text))
             {
-                MessageBox.Show("Please add a question card first!");
+                MessageBox.Show("Please enter an Activity Title.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtActTitle.Focus();
                 return;
             }
 
-            if (MessageBox.Show("Save Quiz Activity?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            var activeQuizCard = flowLayoutPanel3.Controls.OfType<quizCreation>().FirstOrDefault();
+
+            if (activeQuizCard == null)
+            {
+                MessageBox.Show("Please add a question card first!", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Added validation for the quiz content itself
+            if (string.IsNullOrWhiteSpace(activeQuizCard.Ques.Text) || string.IsNullOrWhiteSpace(activeQuizCard.cmbCorrectAnswer.Text))
+            {
+                MessageBox.Show("Please ensure the question and the correct answer are provided.", "Incomplete Quiz", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (MessageBox.Show("Save Quiz Activity?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 ActivityItem targetItem;
 
@@ -441,7 +447,7 @@ namespace PUPAcadPortal
 
                     targetItem.btnEdit.Click += (s, ev) => LoadItemForEditing(targetItem);
                     targetItem.btnRemove.Click += (s, ev) => {
-                        if (MessageBox.Show("Delete this activity?", "Remove", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        if (MessageBox.Show("Delete this activity?", "Remove", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                             ManageAct.Controls.Remove(targetItem);
                     };
 
@@ -479,6 +485,8 @@ namespace PUPAcadPortal
                 ClearAllInputs();
                 currentEditingItem = null;
                 pnlCreateAct.Visible = false;
+
+                MessageBox.Show("Quiz saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -716,6 +724,24 @@ namespace PUPAcadPortal
 
             // This ensures that when the window gets bigger, the cards stretch to fit.
             flowLayoutPanelAnnouncements.Resize += (s, ev) => UpdateCardWidths();
+
+            // Fixes the width of the cards in the Management area
+            foreach (Control ctrl in ManageAct.Controls)
+            {
+                if (ctrl is ActivityItem item)
+                {
+                    item.Width = ManageAct.ClientSize.Width - 35;
+                }
+            }
+
+            // Fixes the width of the cards in the Posted area
+            foreach (Control ctrl in FlowPostedAct.Controls)
+            {
+                if (ctrl is ActivityItem item)
+                {
+                    item.Width = FlowPostedAct.ClientSize.Width - 35;
+                }
+            }
         }
 
         private void UpdateCardWidths()
@@ -1225,11 +1251,10 @@ namespace PUPAcadPortal
                     targetItem.Width = ManageAct.ClientSize.Width - 40;
                     targetItem.Height = 187;
 
+                    // ONLY keep the Edit logic here, because editing depends on the Form's variables.
                     targetItem.btnEdit.Click += (s, ev) => LoadItemForEditing(targetItem);
-                    targetItem.btnRemove.Click += (s, ev) => {
-                        if (MessageBox.Show("Delete this assignment?", "Remove", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                            ManageAct.Controls.Remove(targetItem);
-                    };
+
+                    // REMOVED: targetItem.btnRemove.Click += ... (The UC handles this internally now)
 
                     ManageAct.Controls.Add(targetItem);
                     ManageAct.Controls.SetChildIndex(targetItem, 0);
@@ -1239,11 +1264,9 @@ namespace PUPAcadPortal
                     targetItem = currentEditingItem;
                 }
 
-                // --- THE FIX: LABEL THE CARD ---
                 targetItem.Tag = "ASSIGNMENT";
                 targetItem.actPic.Image = Properties.Resources.paper;
 
-                // --- UPDATE DATA ---
                 targetItem.lblTitle.Text = txtActTitle.Text;
                 targetItem.SavedTitle = txtActTitle.Text;
                 targetItem.lblDueDate.Text = "Due : " + dateTimePicker1.Value.ToString("MMMM dd, hh:mm tt");

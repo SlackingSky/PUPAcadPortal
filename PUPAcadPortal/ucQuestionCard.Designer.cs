@@ -98,9 +98,9 @@
             roundedPanel24.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             roundedPanel24.BackColor = Color.White;
             roundedPanel24.BorderRadius = 10;
+            roundedPanel24.Controls.Add(cmbCorrectAnswer);
             roundedPanel24.Controls.Add(label5);
             roundedPanel24.Controls.Add(lblCorrectAns);
-            roundedPanel24.Controls.Add(cmbCorrectAnswer);
             roundedPanel24.Controls.Add(panel13);
             roundedPanel24.Controls.Add(panel9);
             roundedPanel24.Controls.Add(panel5);
@@ -117,17 +117,17 @@
             label5.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
-            label5.Location = new Point(810, 8);
+            label5.Location = new Point(840, 5);
             label5.Name = "label5";
-            label5.Size = new Size(173, 31);
+            label5.Size = new Size(186, 31);
             label5.TabIndex = 22;
-            label5.Text = "Correct Answer";
+            label5.Text = "Correct Answer: ";
             // 
             // lblCorrectAns
             // 
             lblCorrectAns.AutoSize = true;
             lblCorrectAns.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
-            lblCorrectAns.Location = new Point(55, 400);
+            lblCorrectAns.Location = new Point(47, 400);
             lblCorrectAns.Name = "lblCorrectAns";
             lblCorrectAns.Size = new Size(243, 31);
             lblCorrectAns.TabIndex = 21;
@@ -140,9 +140,9 @@
             cmbCorrectAnswer.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
             cmbCorrectAnswer.FormattingEnabled = true;
             cmbCorrectAnswer.Items.AddRange(new object[] { "A", "B", "C", "D" });
-            cmbCorrectAnswer.Location = new Point(989, 2);
+            cmbCorrectAnswer.Location = new Point(1040, 2);
             cmbCorrectAnswer.Name = "cmbCorrectAnswer";
-            cmbCorrectAnswer.Size = new Size(151, 39);
+            cmbCorrectAnswer.Size = new Size(98, 39);
             cmbCorrectAnswer.TabIndex = 20;
             cmbCorrectAnswer.SelectedIndexChanged += cmbCorrectAnswer_SelectedIndexChanged;
             // 
