@@ -1169,8 +1169,8 @@
             // pnlCreateAct
             // 
             pnlCreateAct.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            pnlCreateAct.Controls.Add(pnlAssign);
             pnlCreateAct.Controls.Add(pnlQuiz1);
+            pnlCreateAct.Controls.Add(pnlAssign);
             pnlCreateAct.Controls.Add(panel45);
             pnlCreateAct.Controls.Add(panel44);
             pnlCreateAct.Controls.Add(panel46);
@@ -1730,8 +1730,8 @@
             // pnlSubMenu
             // 
             pnlSubMenu.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            pnlSubMenu.Controls.Add(pnlLMSActivities);
             pnlSubMenu.Controls.Add(pnlCreateAct);
+            pnlSubMenu.Controls.Add(pnlLMSActivities);
             pnlSubMenu.Controls.Add(pnlPostedAct);
             pnlSubMenu.Controls.Add(pnlLMSFiles);
             pnlSubMenu.Controls.Add(pnlGenChats);

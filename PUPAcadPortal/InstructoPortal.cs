@@ -429,6 +429,7 @@ namespace PUPAcadPortal
 
                 if (currentEditingItem == null)
                 {
+                    // CREATE NEW
                     targetItem = new ActivityItem();
                     targetItem.Width = ManageAct.ClientSize.Width - 35;
                     targetItem.Height = 187;
@@ -444,23 +445,31 @@ namespace PUPAcadPortal
                 }
                 else
                 {
+                    // EDIT EXISTING
                     targetItem = currentEditingItem;
                 }
 
-                // --- THE FIX: LABEL THE CARD ---
+                // --- TAG AND ICON ---
                 targetItem.Tag = "QUIZ";
                 targetItem.actPic.Image = Properties.Resources.quiz;
 
-                // --- UPDATE DATA ---
+                // --- VISUAL UPDATES ---
                 targetItem.lblTitle.Text = txtActTitle.Text;
-                targetItem.SavedTitle = txtActTitle.Text;
-                targetItem.lblDueDate.Text = "Due : " + dateTimePicker1.Value.ToString("MMMM dd, hh:mm tt");
+                targetItem.lblDueDate.Text = "Due : " + dateTimePicker1.Value.ToString("MM/dd/yyyy hh:mm tt");
 
+                // Update the label INSIDE the quizCreation control for feedback
+                activeQuizCard.lblCorrectAns.Text = "Correct: " + activeQuizCard.cmbCorrectAnswer.Text;
+
+                // --- SAVE DATA TO CARD ---
+                targetItem.SavedTitle = txtActTitle.Text;
                 targetItem.SavedQuestion = activeQuizCard.Ques.Text;
                 targetItem.SavedChoices[0] = activeQuizCard.textBox1.Text;
                 targetItem.SavedChoices[1] = activeQuizCard.textBox2.Text;
                 targetItem.SavedChoices[2] = activeQuizCard.textBox3.Text;
                 targetItem.SavedChoices[3] = activeQuizCard.textBox4.Text;
+
+                // Store the correct answer in the ActivityItem
+                targetItem.SavedCorrectAnswer = activeQuizCard.cmbCorrectAnswer.Text;
 
                 ClearAllInputs();
                 currentEditingItem = null;
@@ -473,19 +482,16 @@ namespace PUPAcadPortal
             currentEditingItem = item;
             isEditing = true;
 
-            // Stop event interference
             cmbBXActType.SelectedIndexChanged -= cmbBXActType_SelectedIndexChanged;
 
             pnlCreateAct.Visible = true;
             pnlCreateAct.BringToFront();
             txtActTitle.Text = item.SavedTitle;
 
-            // Use the TAG to decide which panel to show
             if (item.Tag?.ToString() == "ASSIGNMENT")
             {
                 cmbBXActType.Text = "Assignment";
-
-                pnlAssign.Visible = true;      // Change this to pnlAss if that is your name
+                pnlAssign.Visible = true;
                 pnlAssign.BringToFront();
                 pnlQuiz1.Visible = false;
 
@@ -497,7 +503,6 @@ namespace PUPAcadPortal
             else // Logic for QUIZ
             {
                 cmbBXActType.Text = "Quiz";
-
                 pnlQuiz1.Visible = true;
                 pnlQuiz1.BringToFront();
                 pnlAssign.Visible = false;
@@ -510,6 +515,10 @@ namespace PUPAcadPortal
                     activeQuizCard.textBox2.Text = item.SavedChoices[1];
                     activeQuizCard.textBox3.Text = item.SavedChoices[2];
                     activeQuizCard.textBox4.Text = item.SavedChoices[3];
+
+                    // Load correct answer back to ComboBox and Label inside UC
+                    activeQuizCard.cmbCorrectAnswer.Text = item.SavedCorrectAnswer;
+                    activeQuizCard.lblCorrectAns.Text = "Correct: " + item.SavedCorrectAnswer;
                 }
             }
 

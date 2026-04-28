@@ -30,6 +30,8 @@
         {
             roundedPanel23 = new RoundedPanel();
             roundedPanel24 = new RoundedPanel();
+            lblCorrectAns = new Label();
+            cmbCorrectAnswer = new ComboBox();
             panel13 = new Panel();
             panel14 = new Panel();
             panel15 = new Panel();
@@ -58,6 +60,7 @@
             lblQuestionNumber = new Label();
             panel53 = new Panel();
             Ques = new TextBox();
+            label5 = new Label();
             roundedPanel23.SuspendLayout();
             roundedPanel24.SuspendLayout();
             panel13.SuspendLayout();
@@ -87,7 +90,7 @@
             roundedPanel23.Controls.Add(roundedPanel24);
             roundedPanel23.Location = new Point(17, 5);
             roundedPanel23.Name = "roundedPanel23";
-            roundedPanel23.Size = new Size(1212, 401);
+            roundedPanel23.Size = new Size(1212, 448);
             roundedPanel23.TabIndex = 10;
             // 
             // roundedPanel24
@@ -95,6 +98,9 @@
             roundedPanel24.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             roundedPanel24.BackColor = Color.White;
             roundedPanel24.BorderRadius = 10;
+            roundedPanel24.Controls.Add(label5);
+            roundedPanel24.Controls.Add(lblCorrectAns);
+            roundedPanel24.Controls.Add(cmbCorrectAnswer);
             roundedPanel24.Controls.Add(panel13);
             roundedPanel24.Controls.Add(panel9);
             roundedPanel24.Controls.Add(panel5);
@@ -103,8 +109,30 @@
             roundedPanel24.Controls.Add(panel53);
             roundedPanel24.Location = new Point(0, 8);
             roundedPanel24.Name = "roundedPanel24";
-            roundedPanel24.Size = new Size(1212, 395);
+            roundedPanel24.Size = new Size(1212, 440);
             roundedPanel24.TabIndex = 0;
+            // 
+            // lblCorrectAns
+            // 
+            lblCorrectAns.AutoSize = true;
+            lblCorrectAns.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            lblCorrectAns.Location = new Point(55, 400);
+            lblCorrectAns.Name = "lblCorrectAns";
+            lblCorrectAns.Size = new Size(243, 31);
+            lblCorrectAns.TabIndex = 21;
+            lblCorrectAns.Text = "Correct Answer: None";
+            // 
+            // cmbCorrectAnswer
+            // 
+            cmbCorrectAnswer.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            cmbCorrectAnswer.FlatStyle = FlatStyle.Flat;
+            cmbCorrectAnswer.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            cmbCorrectAnswer.FormattingEnabled = true;
+            cmbCorrectAnswer.Items.AddRange(new object[] { "A", "B", "C", "D" });
+            cmbCorrectAnswer.Location = new Point(989, 2);
+            cmbCorrectAnswer.Name = "cmbCorrectAnswer";
+            cmbCorrectAnswer.Size = new Size(151, 39);
+            cmbCorrectAnswer.TabIndex = 20;
             // 
             // panel13
             // 
@@ -379,16 +407,28 @@
             Ques.Size = new Size(1073, 93);
             Ques.TabIndex = 13;
             // 
+            // label5
+            // 
+            label5.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            label5.Location = new Point(810, 8);
+            label5.Name = "label5";
+            label5.Size = new Size(173, 31);
+            label5.TabIndex = 22;
+            label5.Text = "Correct Answer";
+            // 
             // quizCreation
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(roundedPanel23);
             Name = "quizCreation";
-            Size = new Size(1250, 412);
+            Size = new Size(1250, 456);
             Load += ucQuestionCard_Load;
             roundedPanel23.ResumeLayout(false);
             roundedPanel24.ResumeLayout(false);
+            roundedPanel24.PerformLayout();
             panel13.ResumeLayout(false);
             panel14.ResumeLayout(false);
             panel15.ResumeLayout(false);
@@ -452,5 +492,8 @@
         public TextBox textBox4;
         public TextBox textBox3;
         public TextBox textBox2;
+        public ComboBox cmbCorrectAnswer;
+        public Label lblCorrectAns;
+        private Label label5;
     }
 }
