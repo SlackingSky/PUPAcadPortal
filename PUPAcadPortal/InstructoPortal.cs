@@ -60,6 +60,18 @@ namespace PUPAcadPortal
 
             // ✅ FIX: Wire the resize event ONLY ONCE here.
             // If you put this inside a Click event, it stacks and causes the "creeping" movement.
+            //Temporary Data (Grade Feature)
+            string[] row1 = { "2024-00074-SM-0", "Ablong, Adrian P." };
+            string[] row2 = { "2024-00194-SM-0", "Alcaiz, Jared B." };
+            string[] row3 = { "2024-00146-SM-0", "Amar, Charles Manuel C." };
+            string[] row4 = { "2024-00123-SM-0", "Amen, Jessie C." };
+            string[] row5 = { "2024-00274-SM-0", "Amolata, Jhayphee V." };
+
+            dataGridView1.Rows.Add(row1);
+            dataGridView1.Rows.Add(row2);
+            dataGridView1.Rows.Add(row3);
+            dataGridView1.Rows.Add(row4);
+            dataGridView1.Rows.Add(row5);
 
         }
 
@@ -1764,6 +1776,13 @@ namespace PUPAcadPortal
 
             // Optional: Refresh the management flow layout to ensure no UI ghosts
             ManageAct.Refresh();
+        }
+
+        private void button45_Click(object sender, EventArgs e)
+        {
+            dataGridView1.Visible = true;
+            button46.Visible = true;
+            button47.Visible = true;
         }
     }
 }

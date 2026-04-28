@@ -102,6 +102,29 @@
             pnlCoursesContent = new Panel();
             pnlGradesContent = new Panel();
             panel3 = new Panel();
+            pnlGrades = new Panel();
+            button47 = new Button();
+            button46 = new Button();
+            dataGridView1 = new DataGridView();
+            StudentID = new DataGridViewTextBoxColumn();
+            StudentName = new DataGridViewTextBoxColumn();
+            Attendance = new DataGridViewTextBoxColumn();
+            Recitation = new DataGridViewTextBoxColumn();
+            Activities = new DataGridViewTextBoxColumn();
+            Assignment = new DataGridViewTextBoxColumn();
+            Exam = new DataGridViewTextBoxColumn();
+            Grade = new DataGridViewTextBoxColumn();
+            panel61 = new Panel();
+            button45 = new Button();
+            roundedPanel30 = new RoundedPanel();
+            comboBox14 = new ComboBox();
+            label128 = new Label();
+            panel62 = new Panel();
+            btnSave = new Button();
+            btnRelease = new Button();
+            roundedPanel28 = new RoundedPanel();
+            comboBox13 = new ComboBox();
+            label5 = new Label();
             pnlCalendar = new Panel();
             lblMonthYear = new Label();
             FPLmonth = new FlowLayoutPanel();
@@ -371,8 +394,6 @@
             pictureBox43 = new PictureBox();
             pnlLMSAct = new Panel();
             label60 = new Label();
-            pnlGrades = new Panel();
-            label5 = new Label();
             pnlHeader = new Panel();
             panel23 = new Panel();
             pnlCourseFiles = new Panel();
@@ -539,6 +560,12 @@
             roundedPanel21.SuspendLayout();
             panel44.SuspendLayout();
             panel3.SuspendLayout();
+            pnlGrades.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            panel61.SuspendLayout();
+            roundedPanel30.SuspendLayout();
+            panel62.SuspendLayout();
+            roundedPanel28.SuspendLayout();
             pnlCalendar.SuspendLayout();
             pnlSubMenu.SuspendLayout();
             pnlViewActivity.SuspendLayout();
@@ -646,7 +673,6 @@
             roundedPanel18.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox43).BeginInit();
             pnlLMSAct.SuspendLayout();
-            pnlGrades.SuspendLayout();
             pnlHeader.SuspendLayout();
             panel23.SuspendLayout();
             pnlCourseFiles.SuspendLayout();
@@ -1686,6 +1712,7 @@
             // panel3
             // 
             panel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panel3.Controls.Add(pnlGrades);
             panel3.Controls.Add(pnlCalendar);
             panel3.Controls.Add(pnlSubMenu);
             panel3.Controls.Add(pnlCreateAnnounce1);
@@ -1694,7 +1721,6 @@
             panel3.Controls.Add(pnlAnnouncement);
             panel3.Controls.Add(pnlAnnounce);
             panel3.Controls.Add(pnlLMSAct);
-            panel3.Controls.Add(pnlGrades);
             panel3.Controls.Add(pnlHeader);
             panel3.Controls.Add(pnlCoursesContent);
             panel3.Controls.Add(pnlGradesContent);
@@ -1704,6 +1730,255 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(1528, 1061);
             panel3.TabIndex = 0;
+            // 
+            // pnlGrades
+            // 
+            pnlGrades.AutoScroll = true;
+            pnlGrades.AutoSize = true;
+            pnlGrades.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            pnlGrades.BackColor = SystemColors.Control;
+            pnlGrades.CausesValidation = false;
+            pnlGrades.Controls.Add(button47);
+            pnlGrades.Controls.Add(button46);
+            pnlGrades.Controls.Add(dataGridView1);
+            pnlGrades.Controls.Add(panel61);
+            pnlGrades.Controls.Add(panel62);
+            pnlGrades.Dock = DockStyle.Fill;
+            pnlGrades.Location = new Point(256, 72);
+            pnlGrades.Margin = new Padding(0);
+            pnlGrades.Name = "pnlGrades";
+            pnlGrades.Size = new Size(1272, 989);
+            pnlGrades.TabIndex = 52;
+            pnlGrades.Visible = false;
+            // 
+            // button47
+            // 
+            button47.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            button47.BackColor = Color.Maroon;
+            button47.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button47.ForeColor = Color.White;
+            button47.Location = new Point(1868, 1531);
+            button47.Margin = new Padding(3, 2, 3, 2);
+            button47.Name = "button47";
+            button47.Size = new Size(135, 38);
+            button47.TabIndex = 6;
+            button47.Text = "Save";
+            button47.UseVisualStyleBackColor = false;
+            button47.Visible = false;
+            // 
+            // button46
+            // 
+            button46.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            button46.BackColor = Color.Maroon;
+            button46.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button46.ForeColor = Color.White;
+            button46.Location = new Point(2012, 1531);
+            button46.Margin = new Padding(3, 2, 3, 2);
+            button46.Name = "button46";
+            button46.Size = new Size(262, 38);
+            button46.TabIndex = 5;
+            button46.Text = "Release Grades";
+            button46.UseVisualStyleBackColor = false;
+            button46.Visible = false;
+            // 
+            // dataGridView1
+            // 
+            dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.BackgroundColor = Color.White;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { StudentID, StudentName, Attendance, Recitation, Activities, Assignment, Exam, Grade });
+            dataGridView1.Location = new Point(60, 212);
+            dataGridView1.Margin = new Padding(3, 2, 3, 2);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowHeadersWidth = 51;
+            dataGridView1.Size = new Size(1159, 406);
+            dataGridView1.TabIndex = 5;
+            dataGridView1.Visible = false;
+            // 
+            // StudentID
+            // 
+            StudentID.HeaderText = "Student ID";
+            StudentID.MinimumWidth = 6;
+            StudentID.Name = "StudentID";
+            // 
+            // StudentName
+            // 
+            StudentName.HeaderText = "Student Name";
+            StudentName.MinimumWidth = 6;
+            StudentName.Name = "StudentName";
+            // 
+            // Attendance
+            // 
+            Attendance.HeaderText = "Attendance";
+            Attendance.MinimumWidth = 6;
+            Attendance.Name = "Attendance";
+            // 
+            // Recitation
+            // 
+            Recitation.HeaderText = "Recitation/Class Participation";
+            Recitation.MinimumWidth = 6;
+            Recitation.Name = "Recitation";
+            // 
+            // Activities
+            // 
+            Activities.HeaderText = "Seatwork / Short Quiz";
+            Activities.MinimumWidth = 6;
+            Activities.Name = "Activities";
+            // 
+            // Assignment
+            // 
+            Assignment.HeaderText = "Assignment / Project";
+            Assignment.MinimumWidth = 6;
+            Assignment.Name = "Assignment";
+            // 
+            // Exam
+            // 
+            Exam.HeaderText = "Major Examination";
+            Exam.MinimumWidth = 6;
+            Exam.Name = "Exam";
+            // 
+            // Grade
+            // 
+            Grade.HeaderText = "Grade";
+            Grade.MinimumWidth = 6;
+            Grade.Name = "Grade";
+            // 
+            // panel61
+            // 
+            panel61.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panel61.BackColor = Color.White;
+            panel61.Controls.Add(button45);
+            panel61.Controls.Add(roundedPanel30);
+            panel61.Controls.Add(label128);
+            panel61.Location = new Point(0, 97);
+            panel61.Margin = new Padding(3, 2, 3, 2);
+            panel61.Name = "panel61";
+            panel61.Size = new Size(1272, 60);
+            panel61.TabIndex = 4;
+            // 
+            // button45
+            // 
+            button45.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            button45.BackColor = Color.Maroon;
+            button45.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button45.ForeColor = Color.White;
+            button45.Location = new Point(979, 10);
+            button45.Margin = new Padding(3, 2, 3, 2);
+            button45.Name = "button45";
+            button45.Size = new Size(284, 38);
+            button45.TabIndex = 4;
+            button45.Text = "Input Records";
+            button45.UseVisualStyleBackColor = false;
+            button45.Click += button45_Click;
+            // 
+            // roundedPanel30
+            // 
+            roundedPanel30.BackColor = Color.Maroon;
+            roundedPanel30.BorderRadius = 10;
+            roundedPanel30.Controls.Add(comboBox14);
+            roundedPanel30.Location = new Point(245, 9);
+            roundedPanel30.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel30.Name = "roundedPanel30";
+            roundedPanel30.Size = new Size(385, 44);
+            roundedPanel30.TabIndex = 2;
+            // 
+            // comboBox14
+            // 
+            comboBox14.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            comboBox14.FormattingEnabled = true;
+            comboBox14.Items.AddRange(new object[] { "Midterm Period", "Finalterm Period", "" });
+            comboBox14.Location = new Point(12, 10);
+            comboBox14.Margin = new Padding(3, 2, 3, 2);
+            comboBox14.Name = "comboBox14";
+            comboBox14.Size = new Size(363, 23);
+            comboBox14.TabIndex = 0;
+            // 
+            // label128
+            // 
+            label128.AutoSize = true;
+            label128.BackColor = Color.White;
+            label128.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label128.Location = new Point(18, 21);
+            label128.Name = "label128";
+            label128.Size = new Size(139, 25);
+            label128.TabIndex = 0;
+            label128.Text = "Grading Period";
+            // 
+            // panel62
+            // 
+            panel62.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panel62.BackColor = Color.White;
+            panel62.Controls.Add(btnSave);
+            panel62.Controls.Add(btnRelease);
+            panel62.Controls.Add(roundedPanel28);
+            panel62.Controls.Add(label5);
+            panel62.Location = new Point(0, 12);
+            panel62.Margin = new Padding(3, 2, 3, 2);
+            panel62.Name = "panel62";
+            panel62.Size = new Size(1272, 60);
+            panel62.TabIndex = 2;
+            // 
+            // btnSave
+            // 
+            btnSave.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnSave.BackColor = Color.Maroon;
+            btnSave.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSave.ForeColor = Color.White;
+            btnSave.Location = new Point(827, 10);
+            btnSave.Margin = new Padding(3, 2, 3, 2);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(145, 37);
+            btnSave.TabIndex = 2;
+            btnSave.Text = "Save";
+            btnSave.UseVisualStyleBackColor = false;
+            // 
+            // btnRelease
+            // 
+            btnRelease.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnRelease.BackColor = Color.Maroon;
+            btnRelease.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnRelease.ForeColor = Color.White;
+            btnRelease.Location = new Point(979, 10);
+            btnRelease.Margin = new Padding(3, 2, 3, 2);
+            btnRelease.Name = "btnRelease";
+            btnRelease.Size = new Size(279, 37);
+            btnRelease.TabIndex = 3;
+            btnRelease.Text = "Release Grades";
+            btnRelease.UseVisualStyleBackColor = false;
+            // 
+            // roundedPanel28
+            // 
+            roundedPanel28.BackColor = Color.Maroon;
+            roundedPanel28.BorderRadius = 10;
+            roundedPanel28.Controls.Add(comboBox13);
+            roundedPanel28.Location = new Point(244, 10);
+            roundedPanel28.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel28.Name = "roundedPanel28";
+            roundedPanel28.Size = new Size(385, 44);
+            roundedPanel28.TabIndex = 1;
+            // 
+            // comboBox13
+            // 
+            comboBox13.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            comboBox13.FormattingEnabled = true;
+            comboBox13.Items.AddRange(new object[] { "BSIT 2-2 | Introduction to Programming 1", "BSIT 2-2 | Principles of Accounting", "BSIT 2-2 | PATHFIT 4", "BSIT 2-2 | Human Computer Interaction", "BSIT 2-2 | Information Management", "BSIT 2-2 | Programming and Technologies 1" });
+            comboBox13.Location = new Point(12, 10);
+            comboBox13.Margin = new Padding(3, 2, 3, 2);
+            comboBox13.Name = "comboBox13";
+            comboBox13.Size = new Size(363, 23);
+            comboBox13.TabIndex = 0;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.BackColor = Color.White;
+            label5.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5.Location = new Point(11, 24);
+            label5.Name = "label5";
+            label5.Size = new Size(219, 25);
+            label5.TabIndex = 0;
+            label5.Text = "Course and Year-Section";
             // 
             // pnlCalendar
             // 
@@ -5151,29 +5426,6 @@
             label60.TabIndex = 0;
             label60.Text = "LMS Act";
             // 
-            // pnlGrades
-            // 
-            pnlGrades.AutoScroll = true;
-            pnlGrades.BackColor = SystemColors.Control;
-            pnlGrades.CausesValidation = false;
-            pnlGrades.Controls.Add(label5);
-            pnlGrades.Dock = DockStyle.Fill;
-            pnlGrades.Location = new Point(256, 72);
-            pnlGrades.Margin = new Padding(0);
-            pnlGrades.Name = "pnlGrades";
-            pnlGrades.Size = new Size(1272, 989);
-            pnlGrades.TabIndex = 15;
-            pnlGrades.Visible = false;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(122, 22);
-            label5.Name = "label5";
-            label5.Size = new Size(43, 15);
-            label5.TabIndex = 0;
-            label5.Text = "Grades";
-            // 
             // pnlHeader
             // 
             pnlHeader.BackColor = Color.FromArgb(42, 42, 42);
@@ -6768,6 +7020,15 @@
             panel44.ResumeLayout(false);
             panel44.PerformLayout();
             panel3.ResumeLayout(false);
+            panel3.PerformLayout();
+            pnlGrades.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            panel61.ResumeLayout(false);
+            panel61.PerformLayout();
+            roundedPanel30.ResumeLayout(false);
+            panel62.ResumeLayout(false);
+            panel62.PerformLayout();
+            roundedPanel28.ResumeLayout(false);
             pnlCalendar.ResumeLayout(false);
             pnlCalendar.PerformLayout();
             pnlSubMenu.ResumeLayout(false);
@@ -6926,8 +7187,6 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox43).EndInit();
             pnlLMSAct.ResumeLayout(false);
             pnlLMSAct.PerformLayout();
-            pnlGrades.ResumeLayout(false);
-            pnlGrades.PerformLayout();
             pnlHeader.ResumeLayout(false);
             panel23.ResumeLayout(false);
             pnlCourseFiles.ResumeLayout(false);
@@ -7010,8 +7269,6 @@
         private Button btnActivities;
         private Button btnSubjectIns;
         private Button btnAnnounceIns;
-        private Panel pnlGrades;
-        private Label label5;
         private System.Windows.Forms.Timer timer1;
         private RoundedPanel roundedPanel13;
         private PictureBox pictureBox14;
@@ -7452,5 +7709,28 @@
         private Panel pnlCalendar;
         private Label lblMonthYear;
         private FlowLayoutPanel FPLmonth;
+        private Panel pnlGrades;
+        private Button button47;
+        private Button button46;
+        private DataGridView dataGridView1;
+        private DataGridViewTextBoxColumn StudentID;
+        private DataGridViewTextBoxColumn StudentName;
+        private DataGridViewTextBoxColumn Attendance;
+        private DataGridViewTextBoxColumn Recitation;
+        private DataGridViewTextBoxColumn Activities;
+        private DataGridViewTextBoxColumn Assignment;
+        private DataGridViewTextBoxColumn Exam;
+        private DataGridViewTextBoxColumn Grade;
+        private Panel panel61;
+        private Button button45;
+        private RoundedPanel roundedPanel30;
+        private ComboBox comboBox14;
+        private Label label128;
+        private Panel panel62;
+        private Button btnSave;
+        private Button btnRelease;
+        private RoundedPanel roundedPanel28;
+        private ComboBox comboBox13;
+        private Label label5;
     }
 }
