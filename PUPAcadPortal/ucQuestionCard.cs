@@ -23,8 +23,13 @@ namespace PUPAcadPortal
 
         private void cmbCorrectAnswer_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Update the label only within this file
-            lblCorrectAns.Text = "Correct: " + cmbCorrectAnswer.Text;
+            // Check if an item is actually selected to avoid null errors
+            if (cmbCorrectAnswer.SelectedItem != null)
+            {
+                // Update the label text immediately
+                // Make sure 'lblCorrectAns' matches the Name in your Properties window
+                lblCorrectAns.Text = "Correct Answer: " + cmbCorrectAnswer.SelectedItem.ToString();
+            }
         }
     }
 }

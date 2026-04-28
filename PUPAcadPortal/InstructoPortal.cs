@@ -361,37 +361,42 @@ namespace PUPAcadPortal
         private void btnAddPanel_Click(object sender, EventArgs e)
         {
             quizCreation newCard = new quizCreation();
-            // Match your new size
-            newCard.Width = 1250;
-            newCard.Height = 423;
 
+            // ✅ Updated to your new UC size: 1250, 456
+            newCard.Width = 1250;
+            newCard.Height = 456;
+
+            // Add the card to the panel first
             flowLayoutPanel3.Controls.Add(newCard);
 
-            // --- THE ALIGNMENT FIX ---
-            // Calculate the margin based on your 1363px panel width
+            // ✅ FIX: Calculate margin using the new dimensions
+            // 25 is a buffer for the vertical scrollbar to prevent horizontal clipping
             int centeredMargin = (flowLayoutPanel3.Width - 1250 - 25) / 2;
-            if (centeredMargin < 0) centeredMargin = 57;
+
+            // Fallback to 10px instead of 57 to keep the card visible on smaller screens
+            if (centeredMargin < 0) centeredMargin = 10;
 
             foreach (Control ctrl in flowLayoutPanel3.Controls)
             {
-                // Force EVERY control to be exactly 1250 wide
+                // Force the width to ensure the "flat design" look remains uniform
                 ctrl.Width = 1250;
-
-                // Force EVERY control to have the exact same left margin
                 ctrl.Margin = new Padding(centeredMargin, 10, 10, 10);
 
-                // Remove any internal offsets
+                // Remove any internal offsets that might cause shifting
                 ctrl.Left = 0;
             }
 
+            // Renumber questions (e.g., Question 1, Question 2)
             RenumberQuestions();
 
+            // Ensure the Add/Remove/Save button bar stays at the bottom
             if (flowLayoutPanel3.Controls.Contains(pnlControlBar))
             {
                 flowLayoutPanel3.Controls.SetChildIndex(pnlControlBar, -1);
             }
 
-            flowLayoutPanel3.ScrollControlIntoView(pnlControlBar);
+            // ✅ FIX: Focus on the NEW CARD so the screen doesn't jump to the bottom
+            flowLayoutPanel3.ScrollControlIntoView(newCard);
         }
 
         // --- BUTTON 2: REMOVE LAST QUESTION ---
@@ -551,17 +556,18 @@ namespace PUPAcadPortal
 
         private void flowLayoutPanel3_Resize(object sender, EventArgs e) // sa quiz din ung pinakapanel ng insert quiz
         {
-            // Calculate new centering margin based on current panel width
-            // Formula: (Current Width - Card Width - Scrollbar Width) / 2
+            // ✅ Ensure 1250 is the anchor for centering
             int newMargin = (flowLayoutPanel3.Width - 1250 - 25) / 2;
 
-            // If the window is small, don't let the margin go negative
             if (newMargin < 0) newMargin = 10;
 
             foreach (Control ctrl in flowLayoutPanel3.Controls)
             {
-                // Apply the new margin to every card and the control bar
+                // Apply the new margin to every card
                 ctrl.Margin = new Padding(newMargin, 10, 10, 10);
+
+                // Optional: Ensure the control hasn't accidentally resized itself
+                ctrl.Size = new Size(1250, 456);
             }
         }
 

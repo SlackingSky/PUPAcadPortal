@@ -30,6 +30,7 @@
         {
             roundedPanel23 = new RoundedPanel();
             roundedPanel24 = new RoundedPanel();
+            label5 = new Label();
             lblCorrectAns = new Label();
             cmbCorrectAnswer = new ComboBox();
             panel13 = new Panel();
@@ -60,7 +61,6 @@
             lblQuestionNumber = new Label();
             panel53 = new Panel();
             Ques = new TextBox();
-            label5 = new Label();
             roundedPanel23.SuspendLayout();
             roundedPanel24.SuspendLayout();
             panel13.SuspendLayout();
@@ -112,6 +112,17 @@
             roundedPanel24.Size = new Size(1212, 440);
             roundedPanel24.TabIndex = 0;
             // 
+            // label5
+            // 
+            label5.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            label5.Location = new Point(810, 8);
+            label5.Name = "label5";
+            label5.Size = new Size(173, 31);
+            label5.TabIndex = 22;
+            label5.Text = "Correct Answer";
+            // 
             // lblCorrectAns
             // 
             lblCorrectAns.AutoSize = true;
@@ -133,6 +144,7 @@
             cmbCorrectAnswer.Name = "cmbCorrectAnswer";
             cmbCorrectAnswer.Size = new Size(151, 39);
             cmbCorrectAnswer.TabIndex = 20;
+            cmbCorrectAnswer.SelectedIndexChanged += cmbCorrectAnswer_SelectedIndexChanged;
             // 
             // panel13
             // 
@@ -407,22 +419,12 @@
             Ques.Size = new Size(1073, 93);
             Ques.TabIndex = 13;
             // 
-            // label5
-            // 
-            label5.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
-            label5.Location = new Point(810, 8);
-            label5.Name = "label5";
-            label5.Size = new Size(173, 31);
-            label5.TabIndex = 22;
-            label5.Text = "Correct Answer";
-            // 
             // quizCreation
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             Controls.Add(roundedPanel23);
+            MaximumSize = new Size(1250, 456);
+            MinimumSize = new Size(1250, 456);
             Name = "quizCreation";
             Size = new Size(1250, 456);
             Load += ucQuestionCard_Load;
