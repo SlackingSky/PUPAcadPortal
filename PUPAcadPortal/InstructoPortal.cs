@@ -384,7 +384,8 @@ namespace PUPAcadPortal
             flowLayoutPanel3.PerformLayout();
 
             // ✅ THE FIX: Scroll to the TOP of the new card specifically
-            this.BeginInvoke((MethodInvoker)delegate {
+            this.BeginInvoke((MethodInvoker)delegate
+            {
                 // By setting the AutoScrollPosition to the Top of the newCard,
                 // you frame the 456px card inside the 591px panel.
                 // The buttons will naturally appear in the remaining 135px of space.
@@ -420,17 +421,9 @@ namespace PUPAcadPortal
             }
 
             var activeQuizCard = flowLayoutPanel3.Controls.OfType<quizCreation>().FirstOrDefault();
-
             if (activeQuizCard == null)
             {
                 MessageBox.Show("Please add a question card first!", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // Added validation for the quiz content itself
-            if (string.IsNullOrWhiteSpace(activeQuizCard.Ques.Text) || string.IsNullOrWhiteSpace(activeQuizCard.cmbCorrectAnswer.Text))
-            {
-                MessageBox.Show("Please ensure the question and the correct answer are provided.", "Incomplete Quiz", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -440,53 +433,39 @@ namespace PUPAcadPortal
 
                 if (currentEditingItem == null)
                 {
-                    // CREATE NEW
                     targetItem = new ActivityItem();
                     targetItem.Width = ManageAct.ClientSize.Width - 35;
                     targetItem.Height = 187;
 
                     targetItem.btnEdit.Click += (s, ev) => LoadItemForEditing(targetItem);
-                    targetItem.btnRemove.Click += (s, ev) => {
-                        if (MessageBox.Show("Delete this activity?", "Remove", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                            ManageAct.Controls.Remove(targetItem);
-                    };
+
+                    // --- REMOVED THE btnRemove.Click LISTENER FROM HERE ---
+                    // It is now handled internally by the ActivityItem class.
 
                     ManageAct.Controls.Add(targetItem);
                     ManageAct.Controls.SetChildIndex(targetItem, 0);
                 }
                 else
                 {
-                    // EDIT EXISTING
                     targetItem = currentEditingItem;
                 }
 
-                // --- TAG AND ICON ---
                 targetItem.Tag = "QUIZ";
                 targetItem.actPic.Image = Properties.Resources.quiz;
-
-                // --- VISUAL UPDATES ---
                 targetItem.lblTitle.Text = txtActTitle.Text;
                 targetItem.lblDueDate.Text = "Due : " + dateTimePicker1.Value.ToString("MM/dd/yyyy hh:mm tt");
-
-                // Update the label INSIDE the quizCreation control for feedback
-                activeQuizCard.lblCorrectAns.Text = "Correct: " + activeQuizCard.cmbCorrectAnswer.Text;
-
-                // --- SAVE DATA TO CARD ---
                 targetItem.SavedTitle = txtActTitle.Text;
                 targetItem.SavedQuestion = activeQuizCard.Ques.Text;
                 targetItem.SavedChoices[0] = activeQuizCard.textBox1.Text;
                 targetItem.SavedChoices[1] = activeQuizCard.textBox2.Text;
                 targetItem.SavedChoices[2] = activeQuizCard.textBox3.Text;
                 targetItem.SavedChoices[3] = activeQuizCard.textBox4.Text;
-
-                // Store the correct answer in the ActivityItem
                 targetItem.SavedCorrectAnswer = activeQuizCard.cmbCorrectAnswer.Text;
 
                 ClearAllInputs();
                 currentEditingItem = null;
                 pnlCreateAct.Visible = false;
 
-                MessageBox.Show("Quiz saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -918,8 +897,7 @@ namespace PUPAcadPortal
                     a.Title = txtAnnTitle.Text;
                     a.Description = txtAnnDesc.Text;
                     a.Date = dateTimePicker4.Value;
-                    a.IsPinned = checkPinned.Checked;
-                    a.IsUrgent = chckUrgent.Checked;
+
                 }
             }
             else
@@ -930,8 +908,6 @@ namespace PUPAcadPortal
                     Title = txtAnnTitle.Text,
                     Description = txtAnnDesc.Text,
                     Date = dateTimePicker4.Value,
-                    IsPinned = checkPinned.Checked,
-                    IsUrgent = chckUrgent.Checked,
                     Status = "active"
                 });
             }
@@ -940,8 +916,6 @@ namespace PUPAcadPortal
             editingAnnouncementId = -1;
             txtAnnTitle.Clear();
             txtAnnDesc.Clear();
-            checkPinned.Checked = false;
-            chckUrgent.Checked = false;
 
             // This hides the panel after the announcement is saved
             pnlCreateAnnounce1.Visible = false;
@@ -1153,8 +1127,6 @@ namespace PUPAcadPortal
             txtAnnTitle.Text = a.Title;
             txtAnnDesc.Text = a.Description;
             dateTimePicker4.Value = a.Date;
-            checkPinned.Checked = a.IsPinned;
-            chckUrgent.Checked = a.IsUrgent;
 
             // Ensure correct panel name (pnlCreateAnnounce)
             pnlCreateAnnounce1.Visible = true;
@@ -1278,6 +1250,30 @@ namespace PUPAcadPortal
                 currentEditingItem = null;
                 pnlCreateAct.Visible = false;
             }
+        }
+
+        private void btnCancelAssign_Click(object sender, EventArgs e)
+        {
+            // 1. Clear all Text fields
+            txtActTitle.Clear();
+            textBox22.Clear();
+
+            // 2. Reset Labels and ComboBoxes
+            lblFileNameDisplay.Text = "No file selected"; // Or string.Empty
+            cmbBXActType.SelectedIndex = -1; // Deselects the current item
+
+            // 3. Reset the DatePicker to current time (Optional but recommended)
+            dateTimePicker1.Value = DateTime.Now;
+
+            // 4. Reset internal tracking variables
+            currentEditingItem = null;
+            tempAttachedPath = string.Empty;
+
+            // 5. Hide the creation panel and return to the main view
+            pnlCreateAct.Visible = false;
+
+            // Optional: Refresh the management flow layout to ensure no UI ghosts
+            ManageAct.Refresh();
         }
     }
 }

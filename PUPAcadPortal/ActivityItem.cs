@@ -86,7 +86,7 @@ namespace PUPAcadPortal
 
             if (currentState == "post")
             {
-                if (MessageBox.Show("Post this activity to the class?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (MessageBox.Show("Post this activity to the class?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     mainForm.FlowPostedAct.Controls.Add(this);
                     mainForm.FlowPostedAct.Controls.SetChildIndex(this, 0);
@@ -94,19 +94,15 @@ namespace PUPAcadPortal
                     this.btnEdit.Visible = false;
                     this.btnPostAct.Text = "View";
 
-                    // Position trash icon near the 'View' button
+                    // Correct dynamic placement for full-screen support
                     btnRemove.Location = new Point(this.Width - 250, 58);
-
                 }
             }
             else if (currentState == "view")
             {
-                if (mainForm.pnlViewActivity != null)
-                {
-                    mainForm.pnlViewActivity.Visible = true;
-                    mainForm.pnlViewActivity.BringToFront();
-                    mainForm.pnlViewActivity.Dock = DockStyle.Fill;
-                }
+                mainForm.pnlViewActivity.Visible = true;
+                mainForm.pnlViewActivity.BringToFront();
+                mainForm.pnlViewActivity.Dock = DockStyle.Fill;
             }
         }
 
