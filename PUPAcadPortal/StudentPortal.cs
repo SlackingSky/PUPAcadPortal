@@ -214,5 +214,10 @@ namespace PUPAcadPortal
             pnlAll.Visible = true;
             pnlRA.Visible = false;
         }
+
+        private void label44_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
