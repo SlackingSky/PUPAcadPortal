@@ -30,9 +30,9 @@
         {
             roundedPanel23 = new RoundedPanel();
             roundedPanel24 = new RoundedPanel();
+            cmbCorrectAnswer = new ComboBox();
             label5 = new Label();
             lblCorrectAns = new Label();
-            cmbCorrectAnswer = new ComboBox();
             panel13 = new Panel();
             panel14 = new Panel();
             panel15 = new Panel();
@@ -112,6 +112,19 @@
             roundedPanel24.Size = new Size(1212, 440);
             roundedPanel24.TabIndex = 0;
             // 
+            // cmbCorrectAnswer
+            // 
+            cmbCorrectAnswer.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            cmbCorrectAnswer.FlatStyle = FlatStyle.Flat;
+            cmbCorrectAnswer.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            cmbCorrectAnswer.FormattingEnabled = true;
+            cmbCorrectAnswer.Items.AddRange(new object[] { "A", "B", "C", "D" });
+            cmbCorrectAnswer.Location = new Point(1040, 2);
+            cmbCorrectAnswer.Name = "cmbCorrectAnswer";
+            cmbCorrectAnswer.Size = new Size(98, 39);
+            cmbCorrectAnswer.TabIndex = 20;
+            cmbCorrectAnswer.SelectedIndexChanged += cmbCorrectAnswer_SelectedIndexChanged;
+            // 
             // label5
             // 
             label5.Anchor = AnchorStyles.Top | AnchorStyles.Right;
@@ -132,19 +145,6 @@
             lblCorrectAns.Size = new Size(243, 31);
             lblCorrectAns.TabIndex = 21;
             lblCorrectAns.Text = "Correct Answer: None";
-            // 
-            // cmbCorrectAnswer
-            // 
-            cmbCorrectAnswer.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            cmbCorrectAnswer.FlatStyle = FlatStyle.Flat;
-            cmbCorrectAnswer.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
-            cmbCorrectAnswer.FormattingEnabled = true;
-            cmbCorrectAnswer.Items.AddRange(new object[] { "A", "B", "C", "D" });
-            cmbCorrectAnswer.Location = new Point(1040, 2);
-            cmbCorrectAnswer.Name = "cmbCorrectAnswer";
-            cmbCorrectAnswer.Size = new Size(98, 39);
-            cmbCorrectAnswer.TabIndex = 20;
-            cmbCorrectAnswer.SelectedIndexChanged += cmbCorrectAnswer_SelectedIndexChanged;
             // 
             // panel13
             // 
@@ -378,6 +378,7 @@
             textBox1.Location = new Point(3, 4);
             textBox1.Multiline = true;
             textBox1.Name = "textBox1";
+            textBox1.PlaceholderText = " ";
             textBox1.Size = new Size(1018, 41);
             textBox1.TabIndex = 13;
             // 
@@ -413,9 +414,11 @@
             // 
             Ques.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             Ques.BorderStyle = BorderStyle.None;
+            Ques.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Ques.Location = new Point(5, 4);
             Ques.Multiline = true;
             Ques.Name = "Ques";
+            Ques.PlaceholderText = " Question Here";
             Ques.Size = new Size(1073, 93);
             Ques.TabIndex = 13;
             // 
