@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Linq;
+using System.IO;
 using System.Drawing;
 using System.Globalization;
 using System.Text;
@@ -770,11 +772,6 @@ namespace PUPAcadPortal
             pnlGrades.Visible = true;
         }
 
-        private void btnGo1_Click(object sender, EventArgs e) // ALA TO WAG MAG PASTE NG CODE DITO PLZZZZZ MALI NADELETE KO NA TO
-        {
-           
-        }
-
         private void btnBack_Click(object sender, EventArgs e)
         {
             pnlSubject.BringToFront();
@@ -919,6 +916,73 @@ namespace PUPAcadPortal
             pnlSubMenu.Visible = true;
             pnlLMSActivities.BringToFront();
             pnlLMSActivities.Visible = true;
+        }
+
+        private void btnGenerate_Click(object sender, EventArgs e)
+        {
+            //Define the path to the source file in the application's local "Resources" folder
+            string sourceFile = Path.Combine(Application.StartupPath, "Resources", "COG-MTECH.pdf");
+
+            //Check if the source file exists
+            if (!File.Exists(sourceFile))
+            {
+                MessageBox.Show("Error: COG-MTECH.pdf was not found in the Resources folder.",
+                                "Missing File", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            //Initialize the SaveFileDialog to allow user to select the save location and filename
+            using (SaveFileDialog sfd = new SaveFileDialog())
+            {
+                //Set file type filters, default filename and dialog title
+                sfd.Filter = "PDF Documents (.pdf)|.pdf";
+                sfd.FileName = "COG-MTECH.pdf";
+                sfd.Title = "Save COG-MTECH Report";
+
+                //Opens dialog and check if user clicked "Save"
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        //Perform the file copy operation to the user's specified location
+                        //The parameter "true" allows overwriting existing files
+                        File.Copy(sourceFile, sfd.FileName, true);
+
+                        MessageBox.Show("COG-MTECH.pdf has been saved successfully!",
+                                        "Download Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("An error occurred: " + ex.Message);
+                    }
+                }
+            }
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            roundedPanel36.Visible = false;
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            roundedPanel36.Visible = true;
+            roundedPanel36.BringToFront();
+        }
+
+        private void roundedPanel36_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void btnViewGrades_Click(object sender, EventArgs e)
+        {
+            fpnlGradesList.Visible = !fpnlGradesList.Visible;
+        }
+
+        private void pnlGrades_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
