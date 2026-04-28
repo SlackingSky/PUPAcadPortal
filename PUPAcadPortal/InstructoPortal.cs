@@ -448,5 +448,28 @@ namespace PUPAcadPortal
         {
             pnlStudents1.Visible = false;
         }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonRounded15_Click(object sender, EventArgs e)
+        {
+            pnlStudents1.BringToFront();
+            pnlGrade.Visible = false;
+        }
+
+        private void button9_Click_1(object sender, EventArgs e)
+        {
+            pnlGrade.Visible = true;
+            pnlGrade.BringToFront();
+        }
+
+        private void buttonRounded16_Click(object sender, EventArgs e)
+        {
+            lblScore.Text = rtxtScore.Text;
+            MessageBox.Show("Score saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }
