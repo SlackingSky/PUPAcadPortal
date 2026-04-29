@@ -1044,5 +1044,26 @@ namespace PUPAcadPortal
             pnlAll.Visible = true;
             pnlRA.Visible = false;
         }
+
+        private void cmbbxCourseSelection_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Get the currently selected text
+            string selectedCourse = cmbbxCourseSelection.SelectedItem.ToString();
+
+            // Reset visibility for all panels first (clean slate)
+            pnlAttIntro.Visible = false;
+            pnlAttAcc.Visible = false;
+
+            if (selectedCourse == "Introduction to Programming")
+            {
+                pnlAttIntro.Visible = true;
+               
+            }
+            else if (selectedCourse == "Principles of Accounting")
+            {
+                pnlAttAcc.Visible = true;
+              
+            }
+        }
     }
 }
