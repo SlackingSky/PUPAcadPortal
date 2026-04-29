@@ -1327,7 +1327,7 @@
             label2.Name = "label2";
             label2.Size = new Size(172, 16);
             label2.TabIndex = 1;
-            label2.Text = "Professor";
+            label2.Text = "Instructor";
             label2.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // label1
