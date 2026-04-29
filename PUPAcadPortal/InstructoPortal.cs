@@ -116,16 +116,16 @@ namespace PUPAcadPortal
         // --- GRADE MANAGEMENT LOGIC ---
         private void SetupGradeLogic()
         {
-            if (dataGridView1 != null)
-            {
-                dataGridView1.AllowUserToAddRows = false;
-                dataGridView1.AllowUserToOrderColumns = false;
-                dataGridView1.AllowUserToResizeColumns = false;
-                dataGridView1.AllowUserToResizeRows = false;
+            if (dataGridView2 != null)
+            {               
+                dataGridView2.AllowUserToAddRows = false;
+                dataGridView2.AllowUserToOrderColumns = false;
+                dataGridView2.AllowUserToResizeColumns = false;
+                dataGridView2.AllowUserToResizeRows = false;
 
                 // --- FIX 1.5: Anchor to stretch downward, and AutoSize to fill the gray space ---
-                dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-                dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                dataGridView2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+                dataGridView2.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             }
 
             if (cmbSelectCourse != null && cmbSelectCourse.Items.Count == 0)
@@ -135,25 +135,24 @@ namespace PUPAcadPortal
                 cmbSelectCourse.Items.Add("IS 103 - Database Management");
             }
 
-            if (dataGridView1 != null && dataGridView1.Rows.Count == 0)
+            if (dataGridView2 != null && dataGridView2.Rows.Count == 0)
             {
-                dataGridView1.Rows.Add("2021-00001-SM-0", "Eisen Nodesca", "85", "88");
-                dataGridView1.Rows.Add("2021-00002-SM-0", "Clarisa Matias", "92", "95");
-                dataGridView1.Rows.Add("2021-00003-SM-0", "Trisha Walang Last Name", "78", "82");
-                dataGridView1.Rows.Add("2021-00004-SM-0", "Liza Soberano", "88", "90");
-                dataGridView1.Rows.Add("2021-00005-SM-0", "Kween Yasmin", "72", "75");
-                dataGridView1.Rows.Add("2021-00006-SM-0", "Maine Love Alden", "98", "89");
+                dataGridView2.Rows.Add("2021-00001-SM-0", "Eisen Nodesca", "85", "88");
+                dataGridView2.Rows.Add("2021-00002-SM-0", "Clarisa Matias", "92", "95");
+                dataGridView2.Rows.Add("2021-00003-SM-0", "Trisha Walang Last Name", "78", "82");
+                dataGridView2.Rows.Add("2021-00004-SM-0", "Liza Soberano", "88", "90");
+                dataGridView2.Rows.Add("2021-00005-SM-0", "Kween Yasmin", "72", "75");
+                dataGridView2.Rows.Add("2021-00006-SM-0", "Maine Love Alden", "98", "89");
             }
 
             // 2. AUTO-CALCULATE GRADES LOGIC
-            if (dataGridView1 != null)
+            if (dataGridView2 != null)
             {
-                dataGridView1.CellValueChanged += (s, e) =>
+                dataGridView2.CellValueChanged += (s, e) =>
                 {
                     if (e.RowIndex >= 0 && (e.ColumnIndex == 2 || e.ColumnIndex == 3))
                     {
-                        IList cells = dataGridView1.Rows[e.RowIndex].Cells;
-
+                        IList cells = dataGridView2.Rows[e.RowIndex].Cells;
                         // FIX: Re-applied the missing array indexes so it won't crash!
                         DataGridViewCell midCell = (DataGridViewCell)cells;
                         DataGridViewCell finCell = (DataGridViewCell)cells;
@@ -188,11 +187,11 @@ namespace PUPAcadPortal
                 {
                     string q = textBox1.Text != null ? textBox1.Text.Trim().ToLower() : "";
 
-                    if (dataGridView1 != null)
+                    if (dataGridView2 != null)
                     {
-                        dataGridView1.CurrentCell = null;
+                        dataGridView2.CurrentCell = null;
 
-                        foreach (DataGridViewRow r in dataGridView1.Rows)
+                        foreach (DataGridViewRow r in dataGridView2.Rows)
                         {
                             if (r.IsNewRow) continue;
 
@@ -239,13 +238,12 @@ namespace PUPAcadPortal
                     this.Controls.Add(pnlYellow);
             }
 
-            if (clickedButton != null && clickedButton.Parent != null)
-            {
-                clickedButton.BackColor = selectedColor;
-                pnlYellow.Visible = true;
-                pnlYellow.Location = new Point(0, clickedButton.Location.Y);
-                pnlYellow.BringToFront();
-            }
+            clickedButton.BackColor = selectedColor;
+            pnlYellow.Visible = true;
+            pnlYellow.Parent = button;
+            pnlYellow.Height = button.Height;
+            pnlYellow.BringToFront();
+
         }
 
         //Method na nagpapakita ng content ng bawat button, wala akong maisip na iba kaya eto
@@ -253,10 +251,17 @@ namespace PUPAcadPortal
         {
             if (button == null) return;
 
-            var contents = new Dictionary<Button, Panel>();
-            if (btnDashboard != null && pnlDashboardContent != null) contents.Add(btnDashboard, pnlDashboardContent);
-            if (btnGrades != null && pnlGradesContent != null) contents.Add(btnGrades, pnlGradesContent);
-            if (btnCourses != null && pnlCoursesContent != null) contents.Add(btnCourses, pnlCoursesContent);
+            var contents = new Dictionary<Button, Panel>() 
+            {
+                { btnDashboard, pnlDashboardContent },
+                { btnGrades, pnlGradesContent },
+                { btnAnnounceIns, pnlAnnouncement  },
+                { btnCalendarIns, pnlCalendar },
+                { btnSubjectIns, pnlSubject },
+                { btnActivitiesIns, pnlLMSAct },
+                { btnAttendanceIns, pnlAttendance },
+                { btnGradeIns, pnlGrades }
+            };
 
             foreach (var content in contents)
             {
@@ -331,39 +336,38 @@ namespace PUPAcadPortal
 
         private void btnAnnounceIns_Click(object sender, EventArgs e)
         {
-            pnlCreateAnnounce1.Visible = false;
-            pnlAnnouncement.BringToFront();
-            pnlAnnouncement.Visible = true;
+            changeButtonColor(sender as Button);
+            showContent(clickedButton);
         }
 
         private void btnCalendarIns_Click(object sender, EventArgs e)
         {
-            pnlCalendar.BringToFront();
-            pnlCalendar.Visible = true;
+            changeButtonColor(sender as Button);
+            showContent(clickedButton);
         }
 
         private void btnSubjectIns_Click(object sender, EventArgs e)
         {
-            pnlSubject.BringToFront();
-            pnlSubject.Visible = true;
+            changeButtonColor(sender as Button);
+            showContent(clickedButton);
         }
 
         private void btnActivitiesIns_Click(object sender, EventArgs e)
         {
-            pnlLMSAct.BringToFront();
-            pnlLMSAct.Visible = true;
+            changeButtonColor(sender as Button);
+            showContent(clickedButton);
         }
 
         private void btnAttendanceIns_Click(object sender, EventArgs e)
         {
-            pnlAttendance.BringToFront();
-            pnlAttendance.Visible = true;
+            changeButtonColor(sender as Button);
+            showContent(clickedButton);
         }
 
         private void btnGradeIns_Click(object sender, EventArgs e)
         {
-            pnlGrades.BringToFront();
-            pnlGrades.Visible = true;
+            changeButtonColor(sender as Button);
+            showContent(clickedButton);
         }
 
         private void label24_Click(object sender, EventArgs e)
