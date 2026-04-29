@@ -970,19 +970,79 @@ namespace PUPAcadPortal
             roundedPanel36.BringToFront();
         }
 
-        private void roundedPanel36_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void btnViewGrades_Click(object sender, EventArgs e)
         {
             fpnlGradesList.Visible = !fpnlGradesList.Visible;
         }
 
-        private void pnlGrades_Paint(object sender, PaintEventArgs e)
-        {
 
+        private void btnThisWeek_Click(object sender, EventArgs e)
+        {
+            pnlTW.BringToFront();
+            pnlTW.Visible = true;
+        }
+
+        private void btnToday_Click(object sender, EventArgs e)
+        {
+            pnlToday.BringToFront();
+            pnlToday.Visible = true;
+        }
+
+        private void btnNextWeek_Click(object sender, EventArgs e)
+        {
+            pnlNW.BringToFront();
+            pnlNW.Visible = true;
+        }
+
+        private void buttonRounded2_Click(object sender, EventArgs e)
+        {
+            pnlRA.BringToFront();
+            pnlRA.Visible = true;
+        }
+
+        private void buttonRounded6_Click(object sender, EventArgs e)
+        {
+            pnlAll.BringToFront();
+            pnlAll.Visible = true;
+            pnlVA.Visible = false;
+        }
+
+        private void buttonRounded7_Click(object sender, EventArgs e)
+        {
+            pnlAll.BringToFront();
+            pnlAll.Visible = true;
+            pnlVA.Visible = false;
+        }
+
+        private void btnAll_Click(object sender, EventArgs e)
+        {
+            pnlAll.BringToFront();
+            pnlAll.Visible = true;
+        }
+
+        private void buttonRounded1_Click(object sender, EventArgs e)
+        {
+            pnlVA.BringToFront();
+            pnlVA.Visible = true;
+        }
+
+        private void buttonRounded9_Click(object sender, EventArgs e)
+        {
+            pnlVA.BringToFront();
+            pnlVA.Visible = true;
+        }
+
+        private void buttonRounded10_Click(object sender, EventArgs e)
+        {
+            pnlRA.BringToFront();
+            pnlRA.Visible = true;
+        }
+
+        private void buttonRounded15_Click(object sender, EventArgs e)
+        {
+            pnlAll.BringToFront();
+            pnlAll.Visible = true;
+            pnlRA.Visible = false;
         }
     }
 }
