@@ -41,7 +41,7 @@ namespace PUPAcadPortal
             BuildDayHeaders();
             BuildBottomPanel(); 
             txtEnrollSearch.KeyDown += txtEnrollSearch_KeyDown;
-            this.Resize += StudentPortal_EnrollmentResize;
+            //this.Resize += StudentPortal_EnrollmentResize; Breaks enrollment bottom cards, instead of being in the middle: Brylle
             this.Resize += StudentPortal_AccountsResize;
             pnlContainerStudentPortal.Dock = DockStyle.Fill;
             pnlContainerStudentPortal.AutoScroll = true;
@@ -509,7 +509,7 @@ namespace PUPAcadPortal
             }
             clickedButton = button;
             pnlYellow.Visible = true;
-            pnlYellow.Parent = clickedButton.Parent;
+            pnlYellow.Parent = clickedButton;
             pnlYellow.BringToFront();
             clickedButton.BackColor = selectedColor;
         }
@@ -517,19 +517,28 @@ namespace PUPAcadPortal
         //Method na nagpapakita ng content ng bawat button, wala akong maisip na iba kaya eto
         private void showContent(Button button)
         {
-            Dictionary<Button, Panel> contents = new Dictionary<Button, Panel> { };
-            contents.Add(btnDashboard, pnlDashboardContent);
-            contents.Add(btnEnrollment, pnlEnrollContent);
-            contents.Add(btnCourses, pnlCoursesContent);
-            contents.Add(btnAccounts, pnlAccountsContentHolder);
+            Dictionary<Button, Panel> contents = new Dictionary<Button, Panel> 
+            {
+                { btnDashboard, pnlDashboardContent },
+                { btnEnrollment, pnlEnrollContent },
+                { btnAccounts, pnlAccountsContentHolder  },
+                { btnAnnounce, pnlAnnounce  },
+                { btnCalendar, pnlCalendar  },
+                { btnSubject, pnlSubject  },
+                { btnActivities, pnlActivities  },
+                { btnAttendance, pnlAttendance  },
+                { btnGrade, pnlGrades  },
+            };
             //Kada button na aadd, maglagay ng panel sa form at lagay dito
             foreach (KeyValuePair<Button, Panel> content in contents)
             {
                 if (content.Key == clickedButton)
                 {
                     //Automatic positioning, wag pakialaman maliban nalang kung binago ang position ng sidebar
-                    content.Value.Location = new Point(pnlSidebar.Size.Width, pnlHeader.Size.Height);
+                    content.Value.Parent = pnlContainerStudentPortal;
+                    content.Value.Dock = DockStyle.Fill;
                     content.Value.Visible = true;
+                    content.Value.BringToFront();
                 }
                 else
                 {
@@ -732,8 +741,6 @@ namespace PUPAcadPortal
         }
         private void btnLMS_Click(object sender, EventArgs e)
         {
-            changeButtonColor(sender as Button);
-            showContent(clickedButton);
             pnllmsSubmenu.Visible = !pnllmsSubmenu.Visible;
             if (pnllmsSubmenu.Visible)
                 btnLMS.Text = " LMS                                       ⌄";
@@ -747,39 +754,38 @@ namespace PUPAcadPortal
 
         private void btnAnnounce_Click(object sender, EventArgs e)
         {
-            pnlAnnounce.BringToFront();
-            pnlAnnounce.Visible = true;
+            changeButtonColor(sender as Button);
+            showContent(clickedButton);
         }
 
         private void btnCalendar_Click(object sender, EventArgs e)
         {
-            pnlSubject.Visible = false;
-            pnlCalendar.BringToFront();
-            pnlCalendar.Visible = true;
+            changeButtonColor(sender as Button);
+            showContent(clickedButton);
         }
 
         private void btnSubject_Click(object sender, EventArgs e)
         {
-            pnlSubject.BringToFront();
-            pnlSubject.Visible = true;
+            changeButtonColor(sender as Button);
+            showContent(clickedButton);
         }
 
         private void btnActivities_Click(object sender, EventArgs e)
         {
-            pnlActivities.BringToFront();
-            pnlActivities.Visible = true;
+            changeButtonColor(sender as Button);
+            showContent(clickedButton);
         }
 
         private void btnAttendance_Click(object sender, EventArgs e)
         {
-            pnlAttendance.BringToFront();
-            pnlAttendance.Visible = true;
+            changeButtonColor(sender as Button);
+            showContent(clickedButton);
         }
 
         private void btnGrade_Click(object sender, EventArgs e)
         {
-            pnlGrades.BringToFront();
-            pnlGrades.Visible = true;
+            changeButtonColor(sender as Button);
+            showContent(clickedButton);
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -1298,9 +1304,10 @@ namespace PUPAcadPortal
 
         private void Enrollment_ShowOverlay()
         {
+            pnlViewDetails.Parent = pnlEnrollContent;
             pnlViewDetails.BringToFront();
             pnlViewDetails.Visible = true;
-            pnlViewDetails.Location = new Point((ClientSize.Width - pnlViewDetails.Width) / 2, (ClientSize.Height - pnlViewDetails.Height) / 2);
+            pnlViewDetails.Location = new Point((pnlViewDetails.Parent.Width - pnlViewDetails.Width) / 2, (pnlViewDetails.Parent.Height - pnlViewDetails.Height) / 2);
         }
         private void Enrollment_HideOverlay() => pnlViewDetails.Visible = false;
         private void Enrollment_viewDetailsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1710,6 +1717,9 @@ namespace PUPAcadPortal
             pnlTotalAssessment.Left = SidePadding;
             pnlTotalPaid.Left = SidePadding + cardWidth + CardGap;
             pnlBalance.Left = SidePadding + (cardWidth * 2) + (CardGap * 2);
+            pbPaid.Left = (pnlTotalPaid.Width - 95) - 30;
+            pbTotalAssessment.Left = (pnlTotalPaid.Width - 95) - 30;
+            pbBalance.Left = (pnlTotalPaid.Width - 95) - 30;
 
             // --- Free Education panel (full width) ---
             pnlAccountsFreeEd.Width = contentWidth;
@@ -1752,6 +1762,8 @@ namespace PUPAcadPortal
             pnlCashier.Left = SidePadding + paymentCardWidth + CardGap;
             pnlOnlinePayment.Top = lblPaymentMethods.Bottom + 10;
             pnlCashier.Top = lblPaymentMethods.Bottom + 10;
+            btnPaymentSlip.Width = pnlOnlinePayment.Width - 25;
+            btnPayOnline.Width = pnlOnlinePayment.Width - 25;
 
             // --- Enrollment Status section ---
             lblEnrollStatus.Top = pnlOnlinePayment.Bottom + 20;
@@ -1770,17 +1782,15 @@ namespace PUPAcadPortal
         // ─────────────────────────────────────────────────────────────────
         private void btnDashboardViewEnrollment_Click(object sender, EventArgs e)
         {
-            changeButtonColor(sender as Button);
             btnEnrollment.PerformClick();
         }
         private void btnDashboardCourses_Click(object sender, EventArgs e)
         {
-            changeButtonColor(sender as Button);
-            btnCourses.PerformClick();
+            pnllmsSubmenu.Visible = true;
+            btnSubject.PerformClick();
         }
         private void btnDashboardPaymentStatus_Click(object sender, EventArgs e)
         {
-            changeButtonColor(sender as Button);
             btnAccounts.PerformClick();
         }
 
@@ -1832,6 +1842,27 @@ namespace PUPAcadPortal
         private void btnPaymentSlip_Click(object sender, EventArgs e)
         {
             MessageBox.Show("A payment slip would be generated here (demo).", "Pay at the Cashier", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void cmbbxCourseSelection_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Get the currently selected text
+            string selectedCourse = cmbbxCourseSelection.SelectedItem.ToString();
+
+            // Reset visibility for all panels first (clean slate)
+            pnlAttIntro.Visible = false;
+            pnlAttAcc.Visible = false;
+
+            if (selectedCourse == "Introduction to Programming")
+            {
+                pnlAttIntro.Visible = true;
+
+            }
+            else if (selectedCourse == "Principles of Accounting")
+            {
+                pnlAttAcc.Visible = true;
+
+            }
         }
     }
 }

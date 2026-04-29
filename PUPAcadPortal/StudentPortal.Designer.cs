@@ -29,16 +29,16 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StudentPortal));
+            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle15 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle16 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle17 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle18 = new DataGridViewCellStyle();
             pnlSidebar = new Panel();
             panel4 = new Panel();
             panel5 = new Panel();
@@ -70,6 +70,380 @@
             btnLogout = new Button();
             pnlCoursesContent = new Panel();
             pnlContainerStudentPortal = new Panel();
+            pnlAttendance = new Panel();
+            panel17 = new Panel();
+            pnlAttIntro = new Panel();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            panel33 = new Panel();
+            label93 = new Label();
+            panel32 = new Panel();
+            label92 = new Label();
+            tableLayoutPanel8 = new TableLayoutPanel();
+            label89 = new Label();
+            tableLayoutPanel7 = new TableLayoutPanel();
+            label88 = new Label();
+            tableLayoutPanel6 = new TableLayoutPanel();
+            label87 = new Label();
+            tableLayoutPanel5 = new TableLayoutPanel();
+            label86 = new Label();
+            tableLayoutPanel4 = new TableLayoutPanel();
+            label76 = new Label();
+            tableLayoutPanel2 = new TableLayoutPanel();
+            label77 = new Label();
+            panel31 = new Panel();
+            label78 = new Label();
+            panel30 = new Panel();
+            label79 = new Label();
+            panel29 = new Panel();
+            label80 = new Label();
+            panel34 = new Panel();
+            label81 = new Label();
+            panel85 = new Panel();
+            label82 = new Label();
+            panel88 = new Panel();
+            label83 = new Label();
+            panel89 = new Panel();
+            label84 = new Label();
+            tableLayoutPanel20 = new TableLayoutPanel();
+            textBox19 = new TextBox();
+            tableLayoutPanel19 = new TableLayoutPanel();
+            textBox18 = new TextBox();
+            tableLayoutPanel18 = new TableLayoutPanel();
+            textBox17 = new TextBox();
+            tableLayoutPanel17 = new TableLayoutPanel();
+            textBox16 = new TextBox();
+            tableLayoutPanel16 = new TableLayoutPanel();
+            textBox15 = new TextBox();
+            tableLayoutPanel15 = new TableLayoutPanel();
+            textBox14 = new TextBox();
+            tableLayoutPanel12 = new TableLayoutPanel();
+            textBox13 = new TextBox();
+            tableLayoutPanel14 = new TableLayoutPanel();
+            textBox12 = new TextBox();
+            tableLayoutPanel13 = new TableLayoutPanel();
+            textBox2 = new TextBox();
+            tableLayoutPanel3 = new TableLayoutPanel();
+            label85 = new Label();
+            tableLayoutPanel9 = new TableLayoutPanel();
+            label90 = new Label();
+            tableLayoutPanel10 = new TableLayoutPanel();
+            label91 = new Label();
+            pnlAttAcc = new Panel();
+            tableLayoutPanel21 = new TableLayoutPanel();
+            panel3 = new Panel();
+            label94 = new Label();
+            panel14 = new Panel();
+            label95 = new Label();
+            tableLayoutPanel22 = new TableLayoutPanel();
+            label6 = new Label();
+            tableLayoutPanel23 = new TableLayoutPanel();
+            label11 = new Label();
+            tableLayoutPanel24 = new TableLayoutPanel();
+            label23 = new Label();
+            tableLayoutPanel26 = new TableLayoutPanel();
+            label24 = new Label();
+            tableLayoutPanel27 = new TableLayoutPanel();
+            label28 = new Label();
+            tableLayoutPanel28 = new TableLayoutPanel();
+            label29 = new Label();
+            panel19 = new Panel();
+            label30 = new Label();
+            panel20 = new Panel();
+            label46 = new Label();
+            panel21 = new Panel();
+            label66 = new Label();
+            panel22 = new Panel();
+            label67 = new Label();
+            panel24 = new Panel();
+            label68 = new Label();
+            panel27 = new Panel();
+            label69 = new Label();
+            panel28 = new Panel();
+            label70 = new Label();
+            tableLayoutPanel29 = new TableLayoutPanel();
+            textBox3 = new TextBox();
+            tableLayoutPanel30 = new TableLayoutPanel();
+            textBox4 = new TextBox();
+            tableLayoutPanel31 = new TableLayoutPanel();
+            textBox5 = new TextBox();
+            tableLayoutPanel32 = new TableLayoutPanel();
+            textBox6 = new TextBox();
+            tableLayoutPanel33 = new TableLayoutPanel();
+            textBox7 = new TextBox();
+            tableLayoutPanel34 = new TableLayoutPanel();
+            textBox8 = new TextBox();
+            tableLayoutPanel35 = new TableLayoutPanel();
+            textBox9 = new TextBox();
+            tableLayoutPanel36 = new TableLayoutPanel();
+            textBox10 = new TextBox();
+            tableLayoutPanel37 = new TableLayoutPanel();
+            textBox20 = new TextBox();
+            tableLayoutPanel38 = new TableLayoutPanel();
+            label71 = new Label();
+            tableLayoutPanel39 = new TableLayoutPanel();
+            label74 = new Label();
+            tableLayoutPanel40 = new TableLayoutPanel();
+            label75 = new Label();
+            panel90 = new Panel();
+            label168 = new Label();
+            panel91 = new Panel();
+            label169 = new Label();
+            label189 = new Label();
+            label190 = new Label();
+            label191 = new Label();
+            label192 = new Label();
+            label193 = new Label();
+            label194 = new Label();
+            label195 = new Label();
+            label196 = new Label();
+            label197 = new Label();
+            lblAttendancePercent = new Label();
+            label198 = new Label();
+            label199 = new Label();
+            panel92 = new Panel();
+            textBox11 = new TextBox();
+            pictureBox29 = new PictureBox();
+            label200 = new Label();
+            label201 = new Label();
+            panel93 = new Panel();
+            cmbbxCourseSelection = new ComboBox();
+            label202 = new Label();
+            pnlActivities = new Panel();
+            panel68 = new Panel();
+            label134 = new Label();
+            panel69 = new Panel();
+            roundedPanel74 = new RoundedPanel();
+            label135 = new Label();
+            label136 = new Label();
+            roundedPanel75 = new RoundedPanel();
+            label137 = new Label();
+            panel70 = new Panel();
+            label138 = new Label();
+            panel71 = new Panel();
+            roundedPanel76 = new RoundedPanel();
+            label139 = new Label();
+            label140 = new Label();
+            roundedPanel77 = new RoundedPanel();
+            label141 = new Label();
+            label142 = new Label();
+            roundedPanel78 = new RoundedPanel();
+            label143 = new Label();
+            label144 = new Label();
+            panel72 = new Panel();
+            btnNextWeek = new Button();
+            btnThisWeek = new Button();
+            btnToday = new Button();
+            btnAll = new Button();
+            panel73 = new Panel();
+            label145 = new Label();
+            label146 = new Label();
+            pnlVA = new Panel();
+            panel66 = new Panel();
+            groupBox4 = new GroupBox();
+            roundedPanel55 = new RoundedPanel();
+            label110 = new Label();
+            roundedPanel56 = new RoundedPanel();
+            radioButton13 = new RadioButton();
+            radioButton14 = new RadioButton();
+            radioButton15 = new RadioButton();
+            radioButton16 = new RadioButton();
+            buttonRounded6 = new buttonRounded();
+            groupBox3 = new GroupBox();
+            roundedPanel57 = new RoundedPanel();
+            label111 = new Label();
+            roundedPanel58 = new RoundedPanel();
+            radioButton9 = new RadioButton();
+            radioButton10 = new RadioButton();
+            radioButton11 = new RadioButton();
+            radioButton12 = new RadioButton();
+            groupBox2 = new GroupBox();
+            roundedPanel59 = new RoundedPanel();
+            label112 = new Label();
+            roundedPanel60 = new RoundedPanel();
+            radioButton5 = new RadioButton();
+            radioButton6 = new RadioButton();
+            radioButton7 = new RadioButton();
+            radioButton8 = new RadioButton();
+            groupBox1 = new GroupBox();
+            roundedPanel61 = new RoundedPanel();
+            label113 = new Label();
+            roundedPanel62 = new RoundedPanel();
+            radioButton4 = new RadioButton();
+            radioButton3 = new RadioButton();
+            radioButton2 = new RadioButton();
+            radioButton1 = new RadioButton();
+            panel67 = new Panel();
+            buttonRounded7 = new buttonRounded();
+            roundedPanel63 = new RoundedPanel();
+            label114 = new Label();
+            label116 = new Label();
+            pnlRA = new Panel();
+            panel64 = new Panel();
+            buttonRounded15 = new buttonRounded();
+            groupBox5 = new GroupBox();
+            roundedPanel46 = new RoundedPanel();
+            label102 = new Label();
+            roundedPanel47 = new RoundedPanel();
+            radioButton17 = new RadioButton();
+            radioButton18 = new RadioButton();
+            radioButton19 = new RadioButton();
+            radioButton20 = new RadioButton();
+            groupBox6 = new GroupBox();
+            roundedPanel48 = new RoundedPanel();
+            label103 = new Label();
+            roundedPanel49 = new RoundedPanel();
+            radioButton21 = new RadioButton();
+            radioButton22 = new RadioButton();
+            radioButton23 = new RadioButton();
+            radioButton24 = new RadioButton();
+            groupBox7 = new GroupBox();
+            roundedPanel50 = new RoundedPanel();
+            label104 = new Label();
+            roundedPanel51 = new RoundedPanel();
+            radioButton25 = new RadioButton();
+            radioButton26 = new RadioButton();
+            radioButton27 = new RadioButton();
+            radioButton28 = new RadioButton();
+            groupBox8 = new GroupBox();
+            roundedPanel52 = new RoundedPanel();
+            label105 = new Label();
+            roundedPanel53 = new RoundedPanel();
+            radioButton29 = new RadioButton();
+            radioButton30 = new RadioButton();
+            radioButton31 = new RadioButton();
+            radioButton32 = new RadioButton();
+            panel65 = new Panel();
+            roundedPanel54 = new RoundedPanel();
+            label107 = new Label();
+            label109 = new Label();
+            pnlAll = new Panel();
+            roundedPanel64 = new RoundedPanel();
+            pictureBox38 = new PictureBox();
+            label117 = new Label();
+            buttonRounded11 = new buttonRounded();
+            roundedPanel65 = new RoundedPanel();
+            label119 = new Label();
+            label120 = new Label();
+            roundedPanel66 = new RoundedPanel();
+            pictureBox39 = new PictureBox();
+            label122 = new Label();
+            buttonRounded12 = new buttonRounded();
+            roundedPanel67 = new RoundedPanel();
+            label123 = new Label();
+            label124 = new Label();
+            roundedPanel68 = new RoundedPanel();
+            pictureBox40 = new PictureBox();
+            label125 = new Label();
+            buttonRounded8 = new buttonRounded();
+            roundedPanel69 = new RoundedPanel();
+            label126 = new Label();
+            label127 = new Label();
+            roundedPanel70 = new RoundedPanel();
+            pictureBox41 = new PictureBox();
+            label128 = new Label();
+            buttonRounded9 = new buttonRounded();
+            roundedPanel71 = new RoundedPanel();
+            label129 = new Label();
+            label130 = new Label();
+            roundedPanel72 = new RoundedPanel();
+            pictureBox42 = new PictureBox();
+            label131 = new Label();
+            buttonRounded10 = new buttonRounded();
+            roundedPanel73 = new RoundedPanel();
+            label132 = new Label();
+            label133 = new Label();
+            pnlToday = new Panel();
+            roundedPanel35 = new RoundedPanel();
+            pictureBox35 = new PictureBox();
+            label73 = new Label();
+            buttonRounded4 = new buttonRounded();
+            roundedPanel39 = new RoundedPanel();
+            label96 = new Label();
+            roundedPanel40 = new RoundedPanel();
+            pictureBox36 = new PictureBox();
+            label97 = new Label();
+            buttonRounded3 = new buttonRounded();
+            roundedPanel43 = new RoundedPanel();
+            label98 = new Label();
+            roundedPanel44 = new RoundedPanel();
+            pictureBox37 = new PictureBox();
+            label99 = new Label();
+            buttonRounded2 = new buttonRounded();
+            roundedPanel45 = new RoundedPanel();
+            label100 = new Label();
+            label101 = new Label();
+            pnlTW = new Panel();
+            roundedPanel26 = new RoundedPanel();
+            pictureBox13 = new PictureBox();
+            label61 = new Label();
+            buttonRounded5 = new buttonRounded();
+            roundedPanel27 = new RoundedPanel();
+            label62 = new Label();
+            label63 = new Label();
+            roundedPanel31 = new RoundedPanel();
+            pictureBox14 = new PictureBox();
+            label64 = new Label();
+            buttonRounded1 = new buttonRounded();
+            roundedPanel33 = new RoundedPanel();
+            label65 = new Label();
+            label72 = new Label();
+            pnlNW = new Panel();
+            roundedPanel41 = new RoundedPanel();
+            pictureBox12 = new PictureBox();
+            label7 = new Label();
+            buttonRounded13 = new buttonRounded();
+            roundedPanel42 = new RoundedPanel();
+            label59 = new Label();
+            label60 = new Label();
+            pnlGrades = new Panel();
+            fpnlGradesList = new FlowLayoutPanel();
+            roundedPanel1 = new RoundedPanel();
+            panel58 = new Panel();
+            button11 = new Button();
+            roundedPanel2 = new RoundedPanel();
+            label53 = new Label();
+            label54 = new Label();
+            roundedPanel10 = new RoundedPanel();
+            panel59 = new Panel();
+            button7 = new Button();
+            roundedPanel8 = new RoundedPanel();
+            label9 = new Label();
+            label58 = new Label();
+            roundedPanel7 = new RoundedPanel();
+            panel60 = new Panel();
+            button9 = new Button();
+            roundedPanel11 = new RoundedPanel();
+            label48 = new Label();
+            label56 = new Label();
+            roundedPanel30 = new RoundedPanel();
+            panel61 = new Panel();
+            button10 = new Button();
+            roundedPanel12 = new RoundedPanel();
+            label50 = new Label();
+            label51 = new Label();
+            roundedPanel32 = new RoundedPanel();
+            panel62 = new Panel();
+            button12 = new Button();
+            roundedPanel24 = new RoundedPanel();
+            label55 = new Label();
+            label49 = new Label();
+            roundedPanel34 = new RoundedPanel();
+            panel63 = new Panel();
+            button13 = new Button();
+            roundedPanel25 = new RoundedPanel();
+            label57 = new Label();
+            label47 = new Label();
+            panel57 = new Panel();
+            btnViewGrades = new Button();
+            roundedPanel38 = new RoundedPanel();
+            comboBox10 = new ComboBox();
+            btnGenerate = new Button();
+            label52 = new Label();
+            roundedPanel36 = new RoundedPanel();
+            roundedPanel37 = new RoundedPanel();
+            button8 = new Button();
+            listBox1 = new ListBox();
+            label5 = new Label();
             pnlAccountsContentHolder = new Panel();
             pnlAccountsContent = new Panel();
             pnlSpaceProviderAccounts = new Panel();
@@ -120,6 +494,82 @@
             pictureBox50 = new PictureBox();
             lblEnrollStatusTitle = new Label();
             lblEnrollStatusDesc = new Label();
+            pnlDashboardContent = new Panel();
+            pnlDashboardCenter = new Panel();
+            pnlEnrolledUnitsCard = new Panel();
+            pictureBox47 = new PictureBox();
+            label181 = new Label();
+            label182 = new Label();
+            pnlEnrollmentStatusCard = new Panel();
+            pictureBox45 = new PictureBox();
+            label179 = new Label();
+            label180 = new Label();
+            pnlUpcomingEventsContainer = new Panel();
+            panel78 = new Panel();
+            label154 = new Label();
+            label155 = new Label();
+            panel79 = new Panel();
+            label156 = new Label();
+            label157 = new Label();
+            panel80 = new Panel();
+            label158 = new Label();
+            label159 = new Label();
+            panel81 = new Panel();
+            label160 = new Label();
+            label161 = new Label();
+            panel82 = new Panel();
+            label162 = new Label();
+            label163 = new Label();
+            panel83 = new Panel();
+            label164 = new Label();
+            label165 = new Label();
+            label166 = new Label();
+            pnlCurrentSemesterCard = new Panel();
+            pictureBox44 = new PictureBox();
+            label177 = new Label();
+            label178 = new Label();
+            pnlEnrolleft = new Panel();
+            pictureBox43 = new PictureBox();
+            label175 = new Label();
+            label176 = new Label();
+            pnlQuickActionsContainer = new Panel();
+            panel84 = new Panel();
+            btnDashboardCourses = new Button();
+            label167 = new Label();
+            lblCourses = new Label();
+            panel86 = new Panel();
+            btnDashboardPaymentStatus = new Button();
+            label170 = new Label();
+            label171 = new Label();
+            panel87 = new Panel();
+            btnDashboardViewEnrollment = new Button();
+            label172 = new Label();
+            label173 = new Label();
+            label174 = new Label();
+            pnlAnnouncementsContainer = new Panel();
+            panel74 = new Panel();
+            label147 = new Label();
+            label148 = new Label();
+            panel75 = new Panel();
+            label149 = new Label();
+            panel76 = new Panel();
+            label150 = new Label();
+            label151 = new Label();
+            panel77 = new Panel();
+            label152 = new Label();
+            label153 = new Label();
+            pnlDashboardSpaceProvider = new Panel();
+            pnlDashboardGreetingsContainer = new Panel();
+            lblDashboardGreetingDesc = new Label();
+            lblDashboardGreeting = new Label();
+            pnlViewDetails = new Panel();
+            txtDetailSchedule = new TextBox();
+            lblDetailTitle = new Label();
+            lblDetailUnits = new Label();
+            lblDetailStatus = new Label();
+            lblDetailCode = new Label();
+            btnEnrollCloseDetails = new Button();
+            lblSubjectDetails = new Label();
             pnlEnrollContent = new Panel();
             btnSaveAndAssess = new Button();
             pnlEnrollmentConfirmedDGV = new Panel();
@@ -159,321 +609,6 @@
             txtEnrollSearch = new TextBox();
             lblAcademicYear = new Label();
             label188 = new Label();
-            pnlGrades = new Panel();
-            roundedPanel36 = new RoundedPanel();
-            roundedPanel37 = new RoundedPanel();
-            button8 = new Button();
-            listBox1 = new ListBox();
-            label5 = new Label();
-            fpnlGradesList = new FlowLayoutPanel();
-            roundedPanel1 = new RoundedPanel();
-            panel58 = new Panel();
-            button11 = new Button();
-            roundedPanel2 = new RoundedPanel();
-            label53 = new Label();
-            label54 = new Label();
-            roundedPanel10 = new RoundedPanel();
-            panel59 = new Panel();
-            button7 = new Button();
-            roundedPanel8 = new RoundedPanel();
-            label9 = new Label();
-            label58 = new Label();
-            roundedPanel7 = new RoundedPanel();
-            panel60 = new Panel();
-            button9 = new Button();
-            roundedPanel11 = new RoundedPanel();
-            label48 = new Label();
-            label56 = new Label();
-            roundedPanel30 = new RoundedPanel();
-            panel61 = new Panel();
-            button10 = new Button();
-            roundedPanel12 = new RoundedPanel();
-            label50 = new Label();
-            label51 = new Label();
-            roundedPanel32 = new RoundedPanel();
-            panel62 = new Panel();
-            button12 = new Button();
-            roundedPanel24 = new RoundedPanel();
-            label55 = new Label();
-            label49 = new Label();
-            roundedPanel34 = new RoundedPanel();
-            panel63 = new Panel();
-            button13 = new Button();
-            roundedPanel25 = new RoundedPanel();
-            label57 = new Label();
-            label47 = new Label();
-            panel57 = new Panel();
-            btnViewGrades = new Button();
-            roundedPanel38 = new RoundedPanel();
-            comboBox10 = new ComboBox();
-            btnGenerate = new Button();
-            label52 = new Label();
-            pnlDashboardContent = new Panel();
-            pnlDashboardSpaceProvider = new Panel();
-            pnlAnnouncementsContainer = new Panel();
-            panel74 = new Panel();
-            label147 = new Label();
-            label148 = new Label();
-            panel75 = new Panel();
-            label149 = new Label();
-            panel76 = new Panel();
-            label150 = new Label();
-            label151 = new Label();
-            panel77 = new Panel();
-            label152 = new Label();
-            label153 = new Label();
-            pnlUpcomingEventsContainer = new Panel();
-            panel78 = new Panel();
-            label154 = new Label();
-            label155 = new Label();
-            panel79 = new Panel();
-            label156 = new Label();
-            label157 = new Label();
-            panel80 = new Panel();
-            label158 = new Label();
-            label159 = new Label();
-            panel81 = new Panel();
-            label160 = new Label();
-            label161 = new Label();
-            panel82 = new Panel();
-            label162 = new Label();
-            label163 = new Label();
-            panel83 = new Panel();
-            label164 = new Label();
-            label165 = new Label();
-            label166 = new Label();
-            pnlQuickActionsContainer = new Panel();
-            panel84 = new Panel();
-            btnDashboardCourses = new Button();
-            label167 = new Label();
-            lblCourses = new Label();
-            panel85 = new Panel();
-            button14 = new Button();
-            label168 = new Label();
-            label169 = new Label();
-            panel86 = new Panel();
-            btnDashboardPaymentStatus = new Button();
-            label170 = new Label();
-            label171 = new Label();
-            panel87 = new Panel();
-            btnDashboardViewEnrollment = new Button();
-            label172 = new Label();
-            label173 = new Label();
-            label174 = new Label();
-            pnlEnrolleft = new Panel();
-            pictureBox43 = new PictureBox();
-            label175 = new Label();
-            label176 = new Label();
-            pnlCurrentSemesterCard = new Panel();
-            pictureBox44 = new PictureBox();
-            label177 = new Label();
-            label178 = new Label();
-            pnlEnrollmentStatusCard = new Panel();
-            pictureBox45 = new PictureBox();
-            label179 = new Label();
-            label180 = new Label();
-            pnlEnrolledUnitsCard = new Panel();
-            pictureBox47 = new PictureBox();
-            label181 = new Label();
-            label182 = new Label();
-            pnlDashboardGreetingsContainer = new Panel();
-            lblDashboardGreetingDesc = new Label();
-            lblDashboardGreeting = new Label();
-            pnlViewDetails = new Panel();
-            txtDetailSchedule = new TextBox();
-            lblDetailTitle = new Label();
-            lblDetailUnits = new Label();
-            lblDetailStatus = new Label();
-            lblDetailCode = new Label();
-            btnEnrollCloseDetails = new Button();
-            lblSubjectDetails = new Label();
-            pnlActivities = new Panel();
-            pnlVA = new Panel();
-            panel66 = new Panel();
-            groupBox4 = new GroupBox();
-            roundedPanel55 = new RoundedPanel();
-            label110 = new Label();
-            roundedPanel56 = new RoundedPanel();
-            radioButton13 = new RadioButton();
-            radioButton14 = new RadioButton();
-            radioButton15 = new RadioButton();
-            radioButton16 = new RadioButton();
-            buttonRounded6 = new buttonRounded();
-            groupBox3 = new GroupBox();
-            roundedPanel57 = new RoundedPanel();
-            label111 = new Label();
-            roundedPanel58 = new RoundedPanel();
-            radioButton9 = new RadioButton();
-            radioButton10 = new RadioButton();
-            radioButton11 = new RadioButton();
-            radioButton12 = new RadioButton();
-            groupBox2 = new GroupBox();
-            roundedPanel59 = new RoundedPanel();
-            label112 = new Label();
-            roundedPanel60 = new RoundedPanel();
-            radioButton5 = new RadioButton();
-            radioButton6 = new RadioButton();
-            radioButton7 = new RadioButton();
-            radioButton8 = new RadioButton();
-            groupBox1 = new GroupBox();
-            roundedPanel61 = new RoundedPanel();
-            label113 = new Label();
-            roundedPanel62 = new RoundedPanel();
-            radioButton4 = new RadioButton();
-            radioButton3 = new RadioButton();
-            radioButton2 = new RadioButton();
-            radioButton1 = new RadioButton();
-            panel67 = new Panel();
-            buttonRounded7 = new buttonRounded();
-            roundedPanel63 = new RoundedPanel();
-            label114 = new Label();
-            label116 = new Label();
-            pnlAll = new Panel();
-            roundedPanel64 = new RoundedPanel();
-            pictureBox38 = new PictureBox();
-            label117 = new Label();
-            buttonRounded11 = new buttonRounded();
-            roundedPanel65 = new RoundedPanel();
-            label119 = new Label();
-            label120 = new Label();
-            roundedPanel66 = new RoundedPanel();
-            pictureBox39 = new PictureBox();
-            label122 = new Label();
-            buttonRounded12 = new buttonRounded();
-            roundedPanel67 = new RoundedPanel();
-            label123 = new Label();
-            label124 = new Label();
-            roundedPanel68 = new RoundedPanel();
-            pictureBox40 = new PictureBox();
-            label125 = new Label();
-            buttonRounded8 = new buttonRounded();
-            roundedPanel69 = new RoundedPanel();
-            label126 = new Label();
-            label127 = new Label();
-            roundedPanel70 = new RoundedPanel();
-            pictureBox41 = new PictureBox();
-            label128 = new Label();
-            buttonRounded9 = new buttonRounded();
-            roundedPanel71 = new RoundedPanel();
-            label129 = new Label();
-            label130 = new Label();
-            roundedPanel72 = new RoundedPanel();
-            pictureBox42 = new PictureBox();
-            label131 = new Label();
-            buttonRounded10 = new buttonRounded();
-            roundedPanel73 = new RoundedPanel();
-            label132 = new Label();
-            label133 = new Label();
-            pnlRA = new Panel();
-            panel64 = new Panel();
-            buttonRounded15 = new buttonRounded();
-            groupBox5 = new GroupBox();
-            roundedPanel46 = new RoundedPanel();
-            label102 = new Label();
-            roundedPanel47 = new RoundedPanel();
-            radioButton17 = new RadioButton();
-            radioButton18 = new RadioButton();
-            radioButton19 = new RadioButton();
-            radioButton20 = new RadioButton();
-            groupBox6 = new GroupBox();
-            roundedPanel48 = new RoundedPanel();
-            label103 = new Label();
-            roundedPanel49 = new RoundedPanel();
-            radioButton21 = new RadioButton();
-            radioButton22 = new RadioButton();
-            radioButton23 = new RadioButton();
-            radioButton24 = new RadioButton();
-            groupBox7 = new GroupBox();
-            roundedPanel50 = new RoundedPanel();
-            label104 = new Label();
-            roundedPanel51 = new RoundedPanel();
-            radioButton25 = new RadioButton();
-            radioButton26 = new RadioButton();
-            radioButton27 = new RadioButton();
-            radioButton28 = new RadioButton();
-            groupBox8 = new GroupBox();
-            roundedPanel52 = new RoundedPanel();
-            label105 = new Label();
-            roundedPanel53 = new RoundedPanel();
-            radioButton29 = new RadioButton();
-            radioButton30 = new RadioButton();
-            radioButton31 = new RadioButton();
-            radioButton32 = new RadioButton();
-            panel65 = new Panel();
-            roundedPanel54 = new RoundedPanel();
-            label107 = new Label();
-            label109 = new Label();
-            pnlToday = new Panel();
-            roundedPanel35 = new RoundedPanel();
-            pictureBox35 = new PictureBox();
-            label73 = new Label();
-            buttonRounded4 = new buttonRounded();
-            roundedPanel39 = new RoundedPanel();
-            label96 = new Label();
-            roundedPanel40 = new RoundedPanel();
-            pictureBox36 = new PictureBox();
-            label97 = new Label();
-            buttonRounded3 = new buttonRounded();
-            roundedPanel43 = new RoundedPanel();
-            label98 = new Label();
-            roundedPanel44 = new RoundedPanel();
-            pictureBox37 = new PictureBox();
-            label99 = new Label();
-            buttonRounded2 = new buttonRounded();
-            roundedPanel45 = new RoundedPanel();
-            label100 = new Label();
-            label101 = new Label();
-            pnlTW = new Panel();
-            roundedPanel26 = new RoundedPanel();
-            pictureBox13 = new PictureBox();
-            label61 = new Label();
-            buttonRounded5 = new buttonRounded();
-            roundedPanel27 = new RoundedPanel();
-            label62 = new Label();
-            label63 = new Label();
-            roundedPanel31 = new RoundedPanel();
-            pictureBox14 = new PictureBox();
-            label64 = new Label();
-            buttonRounded1 = new buttonRounded();
-            roundedPanel33 = new RoundedPanel();
-            label65 = new Label();
-            label72 = new Label();
-            pnlNW = new Panel();
-            roundedPanel41 = new RoundedPanel();
-            pictureBox12 = new PictureBox();
-            label7 = new Label();
-            buttonRounded13 = new buttonRounded();
-            roundedPanel42 = new RoundedPanel();
-            label59 = new Label();
-            label60 = new Label();
-            panel68 = new Panel();
-            label134 = new Label();
-            panel69 = new Panel();
-            roundedPanel74 = new RoundedPanel();
-            label135 = new Label();
-            label136 = new Label();
-            roundedPanel75 = new RoundedPanel();
-            label137 = new Label();
-            panel70 = new Panel();
-            label138 = new Label();
-            panel71 = new Panel();
-            roundedPanel76 = new RoundedPanel();
-            label139 = new Label();
-            label140 = new Label();
-            roundedPanel77 = new RoundedPanel();
-            label141 = new Label();
-            label142 = new Label();
-            roundedPanel78 = new RoundedPanel();
-            label143 = new Label();
-            label144 = new Label();
-            panel72 = new Panel();
-            btnNextWeek = new Button();
-            btnThisWeek = new Button();
-            btnToday = new Button();
-            btnAll = new Button();
-            panel73 = new Panel();
-            label145 = new Label();
-            label146 = new Label();
             pnlCalendar = new Panel();
             picPrev = new PictureBox();
             picNext = new PictureBox();
@@ -486,109 +621,6 @@
             pictureBox9 = new PictureBox();
             panel1 = new Panel();
             label10 = new Label();
-            pnlAttendance = new Panel();
-            panel19 = new Panel();
-            label11 = new Label();
-            panel28 = new Panel();
-            label85 = new Label();
-            label80 = new Label();
-            label82 = new Label();
-            label84 = new Label();
-            label83 = new Label();
-            label79 = new Label();
-            label81 = new Label();
-            label78 = new Label();
-            label77 = new Label();
-            label76 = new Label();
-            lblAttendancePercent = new Label();
-            label75 = new Label();
-            label30 = new Label();
-            panel24 = new Panel();
-            textBox11 = new TextBox();
-            pictureBox29 = new PictureBox();
-            label28 = new Label();
-            label29 = new Label();
-            label24 = new Label();
-            panel27 = new Panel();
-            dateTimePicker3 = new DateTimePicker();
-            label74 = new Label();
-            panel14 = new Panel();
-            cmbbxCourseSelection = new ComboBox();
-            label6 = new Label();
-            panel17 = new Panel();
-            tableLayoutPanel1 = new TableLayoutPanel();
-            panel30 = new Panel();
-            label88 = new Label();
-            label89 = new Label();
-            pictureBox31 = new PictureBox();
-            panel29 = new Panel();
-            label86 = new Label();
-            label87 = new Label();
-            pictureBox30 = new PictureBox();
-            panel22 = new Panel();
-            label70 = new Label();
-            label71 = new Label();
-            pictureBox28 = new PictureBox();
-            panel21 = new Panel();
-            label68 = new Label();
-            label69 = new Label();
-            pictureBox27 = new PictureBox();
-            panel20 = new Panel();
-            label67 = new Label();
-            label66 = new Label();
-            pictureBox26 = new PictureBox();
-            tableLayoutPanel20 = new TableLayoutPanel();
-            textBox19 = new TextBox();
-            tableLayoutPanel19 = new TableLayoutPanel();
-            textBox18 = new TextBox();
-            tableLayoutPanel18 = new TableLayoutPanel();
-            textBox17 = new TextBox();
-            tableLayoutPanel17 = new TableLayoutPanel();
-            textBox16 = new TextBox();
-            tableLayoutPanel16 = new TableLayoutPanel();
-            textBox15 = new TextBox();
-            tableLayoutPanel15 = new TableLayoutPanel();
-            textBox14 = new TextBox();
-            tableLayoutPanel12 = new TableLayoutPanel();
-            textBox13 = new TextBox();
-            tableLayoutPanel10 = new TableLayoutPanel();
-            comboBox9 = new ComboBox();
-            tableLayoutPanel9 = new TableLayoutPanel();
-            comboBox8 = new ComboBox();
-            tableLayoutPanel8 = new TableLayoutPanel();
-            comboBox7 = new ComboBox();
-            tableLayoutPanel7 = new TableLayoutPanel();
-            comboBox6 = new ComboBox();
-            tableLayoutPanel4 = new TableLayoutPanel();
-            comboBox3 = new ComboBox();
-            tableLayoutPanel14 = new TableLayoutPanel();
-            textBox12 = new TextBox();
-            tableLayoutPanel13 = new TableLayoutPanel();
-            textBox2 = new TextBox();
-            tableLayoutPanel3 = new TableLayoutPanel();
-            comboBox2 = new ComboBox();
-            tableLayoutPanel2 = new TableLayoutPanel();
-            comboBox1 = new ComboBox();
-            tableLayoutPanel5 = new TableLayoutPanel();
-            comboBox4 = new ComboBox();
-            tableLayoutPanel6 = new TableLayoutPanel();
-            comboBox5 = new ComboBox();
-            panel34 = new Panel();
-            label23 = new Label();
-            label46 = new Label();
-            pictureBox11 = new PictureBox();
-            panel31 = new Panel();
-            label90 = new Label();
-            label91 = new Label();
-            pictureBox32 = new PictureBox();
-            panel32 = new Panel();
-            label92 = new Label();
-            label93 = new Label();
-            pictureBox33 = new PictureBox();
-            panel33 = new Panel();
-            label94 = new Label();
-            label95 = new Label();
-            pictureBox34 = new PictureBox();
             pnlSubMenu = new Panel();
             pnlLMSActivities = new Panel();
             roundedPanel15 = new RoundedPanel();
@@ -739,85 +771,83 @@
             panel12.SuspendLayout();
             panel13.SuspendLayout();
             pnlContainerStudentPortal.SuspendLayout();
-            pnlAccountsContentHolder.SuspendLayout();
-            pnlAccountsContent.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvAccounts).BeginInit();
-            pnlAccountsSelectSem.SuspendLayout();
-            pnlBalance.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbBalance).BeginInit();
-            pnlTotalPaid.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbPaid).BeginInit();
-            pnlAccountsFreeEd.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbFreeEducProg).BeginInit();
-            pnlTotalAssessment.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbTotalAssessment).BeginInit();
-            pnlOnlinePayment.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox48).BeginInit();
-            pnlCashier.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox49).BeginInit();
-            pnlEnrollStatusCard.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox50).BeginInit();
-            pnlEnrollContent.SuspendLayout();
-            pnlEnrollmentConfirmedDGV.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvEnrollmentConfirmed).BeginInit();
-            pnlContainerEnrollmentDGV.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvEnrollment).BeginInit();
-            pnlEnrollRightCard.SuspendLayout();
-            pnlEnrollMiddleCard.SuspendLayout();
-            pnlEnrollLeftCard.SuspendLayout();
-            pnlTotalUnits.SuspendLayout();
-            pnlEnrollSearchbar.SuspendLayout();
-            pnlGrades.SuspendLayout();
-            roundedPanel36.SuspendLayout();
-            roundedPanel37.SuspendLayout();
-            fpnlGradesList.SuspendLayout();
-            roundedPanel1.SuspendLayout();
-            panel58.SuspendLayout();
-            roundedPanel2.SuspendLayout();
-            roundedPanel10.SuspendLayout();
-            panel59.SuspendLayout();
-            roundedPanel8.SuspendLayout();
-            roundedPanel7.SuspendLayout();
-            panel60.SuspendLayout();
-            roundedPanel11.SuspendLayout();
-            roundedPanel30.SuspendLayout();
-            panel61.SuspendLayout();
-            roundedPanel12.SuspendLayout();
-            roundedPanel32.SuspendLayout();
-            panel62.SuspendLayout();
-            roundedPanel24.SuspendLayout();
-            roundedPanel34.SuspendLayout();
-            panel63.SuspendLayout();
-            roundedPanel25.SuspendLayout();
-            panel57.SuspendLayout();
-            roundedPanel38.SuspendLayout();
-            pnlDashboardContent.SuspendLayout();
-            pnlAnnouncementsContainer.SuspendLayout();
-            panel74.SuspendLayout();
-            panel76.SuspendLayout();
-            pnlUpcomingEventsContainer.SuspendLayout();
-            panel78.SuspendLayout();
-            panel79.SuspendLayout();
-            panel80.SuspendLayout();
-            panel81.SuspendLayout();
-            panel82.SuspendLayout();
-            panel83.SuspendLayout();
-            pnlQuickActionsContainer.SuspendLayout();
-            panel84.SuspendLayout();
+            pnlAttendance.SuspendLayout();
+            panel17.SuspendLayout();
+            pnlAttIntro.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
+            panel33.SuspendLayout();
+            panel32.SuspendLayout();
+            tableLayoutPanel8.SuspendLayout();
+            tableLayoutPanel7.SuspendLayout();
+            tableLayoutPanel6.SuspendLayout();
+            tableLayoutPanel5.SuspendLayout();
+            tableLayoutPanel4.SuspendLayout();
+            tableLayoutPanel2.SuspendLayout();
+            panel31.SuspendLayout();
+            panel30.SuspendLayout();
+            panel29.SuspendLayout();
+            panel34.SuspendLayout();
             panel85.SuspendLayout();
-            panel86.SuspendLayout();
-            panel87.SuspendLayout();
-            pnlEnrolleft.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox43).BeginInit();
-            pnlCurrentSemesterCard.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox44).BeginInit();
-            pnlEnrollmentStatusCard.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox45).BeginInit();
-            pnlEnrolledUnitsCard.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox47).BeginInit();
-            pnlDashboardGreetingsContainer.SuspendLayout();
-            pnlViewDetails.SuspendLayout();
+            panel88.SuspendLayout();
+            panel89.SuspendLayout();
+            tableLayoutPanel20.SuspendLayout();
+            tableLayoutPanel19.SuspendLayout();
+            tableLayoutPanel18.SuspendLayout();
+            tableLayoutPanel17.SuspendLayout();
+            tableLayoutPanel16.SuspendLayout();
+            tableLayoutPanel15.SuspendLayout();
+            tableLayoutPanel12.SuspendLayout();
+            tableLayoutPanel14.SuspendLayout();
+            tableLayoutPanel13.SuspendLayout();
+            tableLayoutPanel3.SuspendLayout();
+            tableLayoutPanel9.SuspendLayout();
+            tableLayoutPanel10.SuspendLayout();
+            pnlAttAcc.SuspendLayout();
+            tableLayoutPanel21.SuspendLayout();
+            panel3.SuspendLayout();
+            panel14.SuspendLayout();
+            tableLayoutPanel22.SuspendLayout();
+            tableLayoutPanel23.SuspendLayout();
+            tableLayoutPanel24.SuspendLayout();
+            tableLayoutPanel26.SuspendLayout();
+            tableLayoutPanel27.SuspendLayout();
+            tableLayoutPanel28.SuspendLayout();
+            panel19.SuspendLayout();
+            panel20.SuspendLayout();
+            panel21.SuspendLayout();
+            panel22.SuspendLayout();
+            panel24.SuspendLayout();
+            panel27.SuspendLayout();
+            panel28.SuspendLayout();
+            tableLayoutPanel29.SuspendLayout();
+            tableLayoutPanel30.SuspendLayout();
+            tableLayoutPanel31.SuspendLayout();
+            tableLayoutPanel32.SuspendLayout();
+            tableLayoutPanel33.SuspendLayout();
+            tableLayoutPanel34.SuspendLayout();
+            tableLayoutPanel35.SuspendLayout();
+            tableLayoutPanel36.SuspendLayout();
+            tableLayoutPanel37.SuspendLayout();
+            tableLayoutPanel38.SuspendLayout();
+            tableLayoutPanel39.SuspendLayout();
+            tableLayoutPanel40.SuspendLayout();
+            panel90.SuspendLayout();
+            panel91.SuspendLayout();
+            panel92.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox29).BeginInit();
+            panel93.SuspendLayout();
             pnlActivities.SuspendLayout();
+            panel68.SuspendLayout();
+            panel69.SuspendLayout();
+            roundedPanel74.SuspendLayout();
+            roundedPanel75.SuspendLayout();
+            panel70.SuspendLayout();
+            panel71.SuspendLayout();
+            roundedPanel76.SuspendLayout();
+            roundedPanel77.SuspendLayout();
+            roundedPanel78.SuspendLayout();
+            panel72.SuspendLayout();
+            panel73.SuspendLayout();
             pnlVA.SuspendLayout();
             panel66.SuspendLayout();
             groupBox4.SuspendLayout();
@@ -834,22 +864,6 @@
             roundedPanel62.SuspendLayout();
             panel67.SuspendLayout();
             roundedPanel63.SuspendLayout();
-            pnlAll.SuspendLayout();
-            roundedPanel64.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox38).BeginInit();
-            roundedPanel65.SuspendLayout();
-            roundedPanel66.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox39).BeginInit();
-            roundedPanel67.SuspendLayout();
-            roundedPanel68.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox40).BeginInit();
-            roundedPanel69.SuspendLayout();
-            roundedPanel70.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox41).BeginInit();
-            roundedPanel71.SuspendLayout();
-            roundedPanel72.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox42).BeginInit();
-            roundedPanel73.SuspendLayout();
             pnlRA.SuspendLayout();
             panel64.SuspendLayout();
             groupBox5.SuspendLayout();
@@ -866,6 +880,22 @@
             roundedPanel53.SuspendLayout();
             panel65.SuspendLayout();
             roundedPanel54.SuspendLayout();
+            pnlAll.SuspendLayout();
+            roundedPanel64.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox38).BeginInit();
+            roundedPanel65.SuspendLayout();
+            roundedPanel66.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox39).BeginInit();
+            roundedPanel67.SuspendLayout();
+            roundedPanel68.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox40).BeginInit();
+            roundedPanel69.SuspendLayout();
+            roundedPanel70.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox41).BeginInit();
+            roundedPanel71.SuspendLayout();
+            roundedPanel72.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox42).BeginInit();
+            roundedPanel73.SuspendLayout();
             pnlToday.SuspendLayout();
             roundedPanel35.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox35).BeginInit();
@@ -887,17 +917,84 @@
             roundedPanel41.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox12).BeginInit();
             roundedPanel42.SuspendLayout();
-            panel68.SuspendLayout();
-            panel69.SuspendLayout();
-            roundedPanel74.SuspendLayout();
-            roundedPanel75.SuspendLayout();
-            panel70.SuspendLayout();
-            panel71.SuspendLayout();
-            roundedPanel76.SuspendLayout();
-            roundedPanel77.SuspendLayout();
-            roundedPanel78.SuspendLayout();
-            panel72.SuspendLayout();
-            panel73.SuspendLayout();
+            pnlGrades.SuspendLayout();
+            fpnlGradesList.SuspendLayout();
+            roundedPanel1.SuspendLayout();
+            panel58.SuspendLayout();
+            roundedPanel2.SuspendLayout();
+            roundedPanel10.SuspendLayout();
+            panel59.SuspendLayout();
+            roundedPanel8.SuspendLayout();
+            roundedPanel7.SuspendLayout();
+            panel60.SuspendLayout();
+            roundedPanel11.SuspendLayout();
+            roundedPanel30.SuspendLayout();
+            panel61.SuspendLayout();
+            roundedPanel12.SuspendLayout();
+            roundedPanel32.SuspendLayout();
+            panel62.SuspendLayout();
+            roundedPanel24.SuspendLayout();
+            roundedPanel34.SuspendLayout();
+            panel63.SuspendLayout();
+            roundedPanel25.SuspendLayout();
+            panel57.SuspendLayout();
+            roundedPanel38.SuspendLayout();
+            roundedPanel36.SuspendLayout();
+            roundedPanel37.SuspendLayout();
+            pnlAccountsContentHolder.SuspendLayout();
+            pnlAccountsContent.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvAccounts).BeginInit();
+            pnlAccountsSelectSem.SuspendLayout();
+            pnlBalance.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbBalance).BeginInit();
+            pnlTotalPaid.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbPaid).BeginInit();
+            pnlAccountsFreeEd.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbFreeEducProg).BeginInit();
+            pnlTotalAssessment.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbTotalAssessment).BeginInit();
+            pnlOnlinePayment.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox48).BeginInit();
+            pnlCashier.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox49).BeginInit();
+            pnlEnrollStatusCard.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox50).BeginInit();
+            pnlDashboardContent.SuspendLayout();
+            pnlDashboardCenter.SuspendLayout();
+            pnlEnrolledUnitsCard.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox47).BeginInit();
+            pnlEnrollmentStatusCard.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox45).BeginInit();
+            pnlUpcomingEventsContainer.SuspendLayout();
+            panel78.SuspendLayout();
+            panel79.SuspendLayout();
+            panel80.SuspendLayout();
+            panel81.SuspendLayout();
+            panel82.SuspendLayout();
+            panel83.SuspendLayout();
+            pnlCurrentSemesterCard.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox44).BeginInit();
+            pnlEnrolleft.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox43).BeginInit();
+            pnlQuickActionsContainer.SuspendLayout();
+            panel84.SuspendLayout();
+            panel86.SuspendLayout();
+            panel87.SuspendLayout();
+            pnlAnnouncementsContainer.SuspendLayout();
+            panel74.SuspendLayout();
+            panel76.SuspendLayout();
+            pnlDashboardGreetingsContainer.SuspendLayout();
+            pnlViewDetails.SuspendLayout();
+            pnlEnrollContent.SuspendLayout();
+            pnlEnrollmentConfirmedDGV.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvEnrollmentConfirmed).BeginInit();
+            pnlContainerEnrollmentDGV.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvEnrollment).BeginInit();
+            pnlEnrollRightCard.SuspendLayout();
+            pnlEnrollMiddleCard.SuspendLayout();
+            pnlEnrollLeftCard.SuspendLayout();
+            pnlTotalUnits.SuspendLayout();
+            pnlEnrollSearchbar.SuspendLayout();
             pnlCalendar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picPrev).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picNext).BeginInit();
@@ -906,51 +1003,6 @@
             roundedPanel9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
             panel1.SuspendLayout();
-            pnlAttendance.SuspendLayout();
-            panel19.SuspendLayout();
-            panel28.SuspendLayout();
-            panel24.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox29).BeginInit();
-            panel27.SuspendLayout();
-            panel14.SuspendLayout();
-            panel17.SuspendLayout();
-            tableLayoutPanel1.SuspendLayout();
-            panel30.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox31).BeginInit();
-            panel29.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox30).BeginInit();
-            panel22.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox28).BeginInit();
-            panel21.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox27).BeginInit();
-            panel20.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox26).BeginInit();
-            tableLayoutPanel20.SuspendLayout();
-            tableLayoutPanel19.SuspendLayout();
-            tableLayoutPanel18.SuspendLayout();
-            tableLayoutPanel17.SuspendLayout();
-            tableLayoutPanel16.SuspendLayout();
-            tableLayoutPanel15.SuspendLayout();
-            tableLayoutPanel12.SuspendLayout();
-            tableLayoutPanel10.SuspendLayout();
-            tableLayoutPanel9.SuspendLayout();
-            tableLayoutPanel8.SuspendLayout();
-            tableLayoutPanel7.SuspendLayout();
-            tableLayoutPanel4.SuspendLayout();
-            tableLayoutPanel14.SuspendLayout();
-            tableLayoutPanel13.SuspendLayout();
-            tableLayoutPanel3.SuspendLayout();
-            tableLayoutPanel2.SuspendLayout();
-            tableLayoutPanel5.SuspendLayout();
-            tableLayoutPanel6.SuspendLayout();
-            panel34.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox11).BeginInit();
-            panel31.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox32).BeginInit();
-            panel32.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox33).BeginInit();
-            panel33.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox34).BeginInit();
             pnlSubMenu.SuspendLayout();
             pnlLMSActivities.SuspendLayout();
             roundedPanel15.SuspendLayout();
@@ -1479,14 +1531,14 @@
             // 
             // pnlContainerStudentPortal
             // 
-            pnlContainerStudentPortal.Controls.Add(pnlAccountsContentHolder);
-            pnlContainerStudentPortal.Controls.Add(pnlEnrollContent);
-            pnlContainerStudentPortal.Controls.Add(pnlGrades);
-            pnlContainerStudentPortal.Controls.Add(pnlDashboardContent);
+            pnlContainerStudentPortal.Controls.Add(pnlAttendance);
             pnlContainerStudentPortal.Controls.Add(pnlActivities);
+            pnlContainerStudentPortal.Controls.Add(pnlGrades);
+            pnlContainerStudentPortal.Controls.Add(pnlAccountsContentHolder);
+            pnlContainerStudentPortal.Controls.Add(pnlDashboardContent);
+            pnlContainerStudentPortal.Controls.Add(pnlEnrollContent);
             pnlContainerStudentPortal.Controls.Add(pnlCalendar);
             pnlContainerStudentPortal.Controls.Add(pnlAnnounce);
-            pnlContainerStudentPortal.Controls.Add(pnlAttendance);
             pnlContainerStudentPortal.Controls.Add(pnlSubMenu);
             pnlContainerStudentPortal.Controls.Add(pnlSubject);
             pnlContainerStudentPortal.Controls.Add(pnlCoursesContent);
@@ -1498,2607 +1550,1851 @@
             pnlContainerStudentPortal.Size = new Size(1528, 791);
             pnlContainerStudentPortal.TabIndex = 0;
             // 
-            // pnlAccountsContentHolder
-            // 
-            pnlAccountsContentHolder.AutoScroll = true;
-            pnlAccountsContentHolder.BackColor = SystemColors.ActiveCaption;
-            pnlAccountsContentHolder.Controls.Add(pnlAccountsContent);
-            pnlAccountsContentHolder.Dock = DockStyle.Fill;
-            pnlAccountsContentHolder.Location = new Point(256, 72);
-            pnlAccountsContentHolder.Name = "pnlAccountsContentHolder";
-            pnlAccountsContentHolder.Size = new Size(1272, 719);
-            pnlAccountsContentHolder.TabIndex = 37;
-            pnlAccountsContentHolder.Visible = false;
-            // 
-            // pnlAccountsContent
-            // 
-            pnlAccountsContent.AutoScroll = true;
-            pnlAccountsContent.BackColor = Color.WhiteSmoke;
-            pnlAccountsContent.Controls.Add(pnlSpaceProviderAccounts);
-            pnlAccountsContent.Controls.Add(dgvAccounts);
-            pnlAccountsContent.Controls.Add(btnAccountsDownloadStatement);
-            pnlAccountsContent.Controls.Add(lblPaymentHistory);
-            pnlAccountsContent.Controls.Add(pnlAccountsSelectSem);
-            pnlAccountsContent.Controls.Add(pnlBalance);
-            pnlAccountsContent.Controls.Add(pnlTotalPaid);
-            pnlAccountsContent.Controls.Add(pnlAccountsFreeEd);
-            pnlAccountsContent.Controls.Add(lblDescriptionAccsPay);
-            pnlAccountsContent.Controls.Add(pnlTotalAssessment);
-            pnlAccountsContent.Controls.Add(lblAccountsandPayments);
-            pnlAccountsContent.Controls.Add(lblPaymentMethods);
-            pnlAccountsContent.Controls.Add(pnlOnlinePayment);
-            pnlAccountsContent.Controls.Add(pnlCashier);
-            pnlAccountsContent.Controls.Add(lblEnrollStatus);
-            pnlAccountsContent.Controls.Add(pnlEnrollStatusCard);
-            pnlAccountsContent.Dock = DockStyle.Fill;
-            pnlAccountsContent.Location = new Point(0, 0);
-            pnlAccountsContent.Margin = new Padding(0);
-            pnlAccountsContent.Name = "pnlAccountsContent";
-            pnlAccountsContent.Size = new Size(1272, 719);
-            pnlAccountsContent.TabIndex = 5;
-            pnlAccountsContent.Visible = false;
-            // 
-            // pnlSpaceProviderAccounts
-            // 
-            pnlSpaceProviderAccounts.BackColor = Color.Transparent;
-            pnlSpaceProviderAccounts.Location = new Point(16, 1326);
-            pnlSpaceProviderAccounts.Name = "pnlSpaceProviderAccounts";
-            pnlSpaceProviderAccounts.Size = new Size(1200, 130);
-            pnlSpaceProviderAccounts.TabIndex = 18;
-            // 
-            // dgvAccounts
-            // 
-            dgvAccounts.AllowUserToAddRows = false;
-            dgvAccounts.AllowUserToDeleteRows = false;
-            dgvAccounts.AllowUserToResizeColumns = false;
-            dgvAccounts.AllowUserToResizeRows = false;
-            dgvAccounts.BackgroundColor = Color.White;
-            dgvAccounts.BorderStyle = BorderStyle.None;
-            dgvAccounts.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb((int)(byte)245, (int)(byte)247, (int)(byte)250);
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            dataGridViewCellStyle1.ForeColor = Color.FromArgb((int)(byte)60, (int)(byte)60, (int)(byte)60);
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dgvAccounts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            dgvAccounts.ColumnHeadersHeight = 45;
-            dgvAccounts.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dgvAccounts.Columns.AddRange(new DataGridViewColumn[] { colAccountsRefID, colAccountsDescription, colAccountsAmount, colAccountsDueDate, colAccountsStatus, colAccountsPaidDate });
-            dgvAccounts.EnableHeadersVisualStyles = false;
-            dgvAccounts.GridColor = Color.Gainsboro;
-            dgvAccounts.Location = new Point(19, 575);
-            dgvAccounts.Name = "dgvAccounts";
-            dgvAccounts.RowHeadersVisible = false;
-            dgvAccounts.RowHeadersWidth = 51;
-            dgvAccounts.Size = new Size(1210, 400);
-            dgvAccounts.TabIndex = 11;
-            // 
-            // colAccountsRefID
-            // 
-            colAccountsRefID.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            colAccountsRefID.HeaderText = "Reference ID";
-            colAccountsRefID.MinimumWidth = 6;
-            colAccountsRefID.Name = "colAccountsRefID";
-            colAccountsRefID.ReadOnly = true;
-            // 
-            // colAccountsDescription
-            // 
-            colAccountsDescription.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            colAccountsDescription.HeaderText = "Description";
-            colAccountsDescription.MinimumWidth = 6;
-            colAccountsDescription.Name = "colAccountsDescription";
-            colAccountsDescription.ReadOnly = true;
-            // 
-            // colAccountsAmount
-            // 
-            colAccountsAmount.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            colAccountsAmount.HeaderText = "Amount";
-            colAccountsAmount.MinimumWidth = 6;
-            colAccountsAmount.Name = "colAccountsAmount";
-            colAccountsAmount.ReadOnly = true;
-            // 
-            // colAccountsDueDate
-            // 
-            colAccountsDueDate.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            colAccountsDueDate.HeaderText = "Due Date";
-            colAccountsDueDate.MinimumWidth = 6;
-            colAccountsDueDate.Name = "colAccountsDueDate";
-            colAccountsDueDate.ReadOnly = true;
-            // 
-            // colAccountsStatus
-            // 
-            colAccountsStatus.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            colAccountsStatus.HeaderText = "Status";
-            colAccountsStatus.MinimumWidth = 6;
-            colAccountsStatus.Name = "colAccountsStatus";
-            colAccountsStatus.ReadOnly = true;
-            // 
-            // colAccountsPaidDate
-            // 
-            colAccountsPaidDate.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            colAccountsPaidDate.HeaderText = "Paid Date";
-            colAccountsPaidDate.MinimumWidth = 6;
-            colAccountsPaidDate.Name = "colAccountsPaidDate";
-            colAccountsPaidDate.ReadOnly = true;
-            // 
-            // btnAccountsDownloadStatement
-            // 
-            btnAccountsDownloadStatement.BackColor = Color.DarkRed;
-            btnAccountsDownloadStatement.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            btnAccountsDownloadStatement.ForeColor = SystemColors.ControlLightLight;
-            btnAccountsDownloadStatement.Image = PUPAcadPortal.Properties.Resources.download_2_16;
-            btnAccountsDownloadStatement.Location = new Point(983, 515);
-            btnAccountsDownloadStatement.Name = "btnAccountsDownloadStatement";
-            btnAccountsDownloadStatement.Size = new Size(246, 41);
-            btnAccountsDownloadStatement.TabIndex = 10;
-            btnAccountsDownloadStatement.Text = " Download Statement";
-            btnAccountsDownloadStatement.TextAlign = ContentAlignment.MiddleRight;
-            btnAccountsDownloadStatement.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnAccountsDownloadStatement.UseVisualStyleBackColor = false;
-            btnAccountsDownloadStatement.Click += (this.btnAccountsDownloadStatement_Click);
-            // 
-            // lblPaymentHistory
-            // 
-            lblPaymentHistory.AutoSize = true;
-            lblPaymentHistory.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            lblPaymentHistory.ForeColor = Color.Maroon;
-            lblPaymentHistory.Location = new Point(14, 522);
-            lblPaymentHistory.Name = "lblPaymentHistory";
-            lblPaymentHistory.Size = new Size(204, 32);
-            lblPaymentHistory.TabIndex = 9;
-            lblPaymentHistory.Text = "Payment History";
-            // 
-            // pnlAccountsSelectSem
-            // 
-            pnlAccountsSelectSem.BackColor = Color.White;
-            pnlAccountsSelectSem.BorderStyle = BorderStyle.FixedSingle;
-            pnlAccountsSelectSem.Controls.Add(cmbSelectSem);
-            pnlAccountsSelectSem.Controls.Add(lblSelSem);
-            pnlAccountsSelectSem.Location = new Point(19, 404);
-            pnlAccountsSelectSem.Name = "pnlAccountsSelectSem";
-            pnlAccountsSelectSem.Size = new Size(1210, 77);
-            pnlAccountsSelectSem.TabIndex = 8;
-            // 
-            // cmbSelectSem
-            // 
-            cmbSelectSem.FormattingEnabled = true;
-            cmbSelectSem.Items.AddRange(new object[] { "1st Semester", "2nd Semester", "3rd Semester", "4th Semester" });
-            cmbSelectSem.Location = new Point(13, 35);
-            cmbSelectSem.Name = "cmbSelectSem";
-            cmbSelectSem.Size = new Size(254, 23);
-            cmbSelectSem.TabIndex = 5;
-            cmbSelectSem.Text = "Select...";
-            cmbSelectSem.SelectedIndexChanged += (this.cmbSelectSem_SelectedIndexChanged);
-            // 
-            // lblSelSem
-            // 
-            lblSelSem.AutoSize = true;
-            lblSelSem.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            lblSelSem.ForeColor = SystemColors.WindowFrame;
-            lblSelSem.Location = new Point(13, 11);
-            lblSelSem.Name = "lblSelSem";
-            lblSelSem.Size = new Size(128, 21);
-            lblSelSem.TabIndex = 4;
-            lblSelSem.Text = "Select Semester";
-            // 
-            // pnlBalance
-            // 
-            pnlBalance.BackColor = SystemColors.ControlLightLight;
-            pnlBalance.BorderStyle = BorderStyle.FixedSingle;
-            pnlBalance.Controls.Add(lblBalancePeso);
-            pnlBalance.Controls.Add(lblBalance);
-            pnlBalance.Controls.Add(pbBalance);
-            pnlBalance.Location = new Point(842, 111);
-            pnlBalance.Name = "pnlBalance";
-            pnlBalance.Size = new Size(387, 133);
-            pnlBalance.TabIndex = 5;
-            // 
-            // lblBalancePeso
-            // 
-            lblBalancePeso.AutoSize = true;
-            lblBalancePeso.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            lblBalancePeso.ForeColor = Color.Black;
-            lblBalancePeso.Location = new Point(55, 52);
-            lblBalancePeso.Name = "lblBalancePeso";
-            lblBalancePeso.Size = new Size(102, 47);
-            lblBalancePeso.TabIndex = 6;
-            lblBalancePeso.Text = "₱750";
-            // 
-            // lblBalance
-            // 
-            lblBalance.AutoSize = true;
-            lblBalance.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            lblBalance.ForeColor = Color.DimGray;
-            lblBalance.Location = new Point(22, 21);
-            lblBalance.Name = "lblBalance";
-            lblBalance.Size = new Size(99, 32);
-            lblBalance.TabIndex = 5;
-            lblBalance.Text = "Balance";
-            // 
-            // pbBalance
-            // 
-            pbBalance.BackColor = Color.Maroon;
-            pbBalance.BorderStyle = BorderStyle.Fixed3D;
-            pbBalance.Image = PUPAcadPortal.Properties.Resources.warning_4_1281;
-            pbBalance.Location = new Point(281, 24);
-            pbBalance.Name = "pbBalance";
-            pbBalance.Size = new Size(95, 81);
-            pbBalance.SizeMode = PictureBoxSizeMode.Zoom;
-            pbBalance.TabIndex = 3;
-            pbBalance.TabStop = false;
-            // 
-            // pnlTotalPaid
-            // 
-            pnlTotalPaid.BackColor = SystemColors.ControlLightLight;
-            pnlTotalPaid.BorderStyle = BorderStyle.FixedSingle;
-            pnlTotalPaid.Controls.Add(lblTPPeso);
-            pnlTotalPaid.Controls.Add(lblTotalPaid);
-            pnlTotalPaid.Controls.Add(pbPaid);
-            pnlTotalPaid.Location = new Point(428, 111);
-            pnlTotalPaid.Name = "pnlTotalPaid";
-            pnlTotalPaid.Size = new Size(387, 133);
-            pnlTotalPaid.TabIndex = 5;
-            // 
-            // lblTPPeso
-            // 
-            lblTPPeso.AutoSize = true;
-            lblTPPeso.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            lblTPPeso.ForeColor = Color.Black;
-            lblTPPeso.Location = new Point(50, 52);
-            lblTPPeso.Name = "lblTPPeso";
-            lblTPPeso.Size = new Size(102, 47);
-            lblTPPeso.TabIndex = 6;
-            lblTPPeso.Text = "₱750";
-            // 
-            // lblTotalPaid
-            // 
-            lblTotalPaid.AutoSize = true;
-            lblTotalPaid.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            lblTotalPaid.ForeColor = Color.DimGray;
-            lblTotalPaid.Location = new Point(27, 21);
-            lblTotalPaid.Name = "lblTotalPaid";
-            lblTotalPaid.Size = new Size(120, 32);
-            lblTotalPaid.TabIndex = 5;
-            lblTotalPaid.Text = "Total Paid";
-            // 
-            // pbPaid
-            // 
-            pbPaid.BackColor = Color.Maroon;
-            pbPaid.BorderStyle = BorderStyle.Fixed3D;
-            pbPaid.Image = PUPAcadPortal.Properties.Resources.check_mark_6_48;
-            pbPaid.Location = new Point(279, 22);
-            pbPaid.Name = "pbPaid";
-            pbPaid.Size = new Size(88, 83);
-            pbPaid.SizeMode = PictureBoxSizeMode.CenterImage;
-            pbPaid.TabIndex = 3;
-            pbPaid.TabStop = false;
-            // 
-            // pnlAccountsFreeEd
-            // 
-            pnlAccountsFreeEd.BackColor = Color.DarkRed;
-            pnlAccountsFreeEd.BorderStyle = BorderStyle.Fixed3D;
-            pnlAccountsFreeEd.Controls.Add(pbFreeEducProg);
-            pnlAccountsFreeEd.Controls.Add(lblNoteFreeEducProg);
-            pnlAccountsFreeEd.Controls.Add(lblDescriptionFreeEducProg);
-            pnlAccountsFreeEd.Controls.Add(lblFreeEducProg);
-            pnlAccountsFreeEd.Location = new Point(19, 260);
-            pnlAccountsFreeEd.Name = "pnlAccountsFreeEd";
-            pnlAccountsFreeEd.Size = new Size(1210, 135);
-            pnlAccountsFreeEd.TabIndex = 7;
-            // 
-            // pbFreeEducProg
-            // 
-            pbFreeEducProg.BackColor = Color.IndianRed;
-            pbFreeEducProg.BorderStyle = BorderStyle.FixedSingle;
-            pbFreeEducProg.Image = PUPAcadPortal.Properties.Resources.document_icon;
-            pbFreeEducProg.Location = new Point(12, 17);
-            pbFreeEducProg.Name = "pbFreeEducProg";
-            pbFreeEducProg.Size = new Size(78, 96);
-            pbFreeEducProg.SizeMode = PictureBoxSizeMode.Zoom;
-            pbFreeEducProg.TabIndex = 10;
-            pbFreeEducProg.TabStop = false;
-            // 
-            // lblNoteFreeEducProg
-            // 
-            lblNoteFreeEducProg.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
-            lblNoteFreeEducProg.ForeColor = Color.WhiteSmoke;
-            lblNoteFreeEducProg.Location = new Point(96, 91);
-            lblNoteFreeEducProg.Name = "lblNoteFreeEducProg";
-            lblNoteFreeEducProg.Size = new Size(1073, 35);
-            lblNoteFreeEducProg.TabIndex = 9;
-            lblNoteFreeEducProg.Text = "Note: Some laboratory fees, ID replacement, and other special fees may still apply.";
-            // 
-            // lblDescriptionFreeEducProg
-            // 
-            lblDescriptionFreeEducProg.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
-            lblDescriptionFreeEducProg.ForeColor = Color.White;
-            lblDescriptionFreeEducProg.Location = new Point(96, 44);
-            lblDescriptionFreeEducProg.Name = "lblDescriptionFreeEducProg";
-            lblDescriptionFreeEducProg.Size = new Size(1092, 47);
-            lblDescriptionFreeEducProg.TabIndex = 8;
-            lblDescriptionFreeEducProg.Text = "As a student of Polytechnic University of the Philippines, you are covered under the Free Higher Education Act (RA 10391). Tuition and miscellaneous fees are subsidized by the government";
-            // 
-            // lblFreeEducProg
-            // 
-            lblFreeEducProg.AutoSize = true;
-            lblFreeEducProg.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            lblFreeEducProg.ForeColor = Color.White;
-            lblFreeEducProg.Location = new Point(96, 19);
-            lblFreeEducProg.Name = "lblFreeEducProg";
-            lblFreeEducProg.Size = new Size(228, 25);
-            lblFreeEducProg.TabIndex = 8;
-            lblFreeEducProg.Text = "Free Education Program";
-            // 
-            // lblDescriptionAccsPay
-            // 
-            lblDescriptionAccsPay.AutoSize = true;
-            lblDescriptionAccsPay.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
-            lblDescriptionAccsPay.ForeColor = Color.DimGray;
-            lblDescriptionAccsPay.Location = new Point(19, 59);
-            lblDescriptionAccsPay.Name = "lblDescriptionAccsPay";
-            lblDescriptionAccsPay.Size = new Size(311, 19);
-            lblDescriptionAccsPay.TabIndex = 2;
-            lblDescriptionAccsPay.Text = "View your payment history and account balance";
-            // 
-            // pnlTotalAssessment
-            // 
-            pnlTotalAssessment.BackColor = SystemColors.ControlLightLight;
-            pnlTotalAssessment.BorderStyle = BorderStyle.FixedSingle;
-            pnlTotalAssessment.Controls.Add(pbTotalAssessment);
-            pnlTotalAssessment.Controls.Add(lblTAPeso);
-            pnlTotalAssessment.Controls.Add(lblTotalAssessment);
-            pnlTotalAssessment.Location = new Point(19, 111);
-            pnlTotalAssessment.Name = "pnlTotalAssessment";
-            pnlTotalAssessment.Size = new Size(387, 133);
-            pnlTotalAssessment.TabIndex = 1;
-            // 
-            // pbTotalAssessment
-            // 
-            pbTotalAssessment.BackColor = Color.Maroon;
-            pbTotalAssessment.BorderStyle = BorderStyle.Fixed3D;
-            pbTotalAssessment.Image = PUPAcadPortal.Properties.Resources.peso_icon;
-            pbTotalAssessment.Location = new Point(269, 22);
-            pbTotalAssessment.Name = "pbTotalAssessment";
-            pbTotalAssessment.Size = new Size(95, 85);
-            pbTotalAssessment.SizeMode = PictureBoxSizeMode.Zoom;
-            pbTotalAssessment.TabIndex = 3;
-            pbTotalAssessment.TabStop = false;
-            // 
-            // lblTAPeso
-            // 
-            lblTAPeso.AutoSize = true;
-            lblTAPeso.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            lblTAPeso.ForeColor = Color.Black;
-            lblTAPeso.Location = new Point(48, 52);
-            lblTAPeso.Name = "lblTAPeso";
-            lblTAPeso.Size = new Size(102, 47);
-            lblTAPeso.TabIndex = 4;
-            lblTAPeso.Text = "₱750";
-            // 
-            // lblTotalAssessment
-            // 
-            lblTotalAssessment.AutoSize = true;
-            lblTotalAssessment.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            lblTotalAssessment.ForeColor = Color.DimGray;
-            lblTotalAssessment.Location = new Point(23, 21);
-            lblTotalAssessment.Name = "lblTotalAssessment";
-            lblTotalAssessment.Size = new Size(200, 32);
-            lblTotalAssessment.TabIndex = 3;
-            lblTotalAssessment.Text = "Total Assessment";
-            // 
-            // lblAccountsandPayments
-            // 
-            lblAccountsandPayments.AutoSize = true;
-            lblAccountsandPayments.Font = new Font("Segoe UI", 22.2F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            lblAccountsandPayments.ForeColor = Color.Maroon;
-            lblAccountsandPayments.Location = new Point(16, 24);
-            lblAccountsandPayments.Name = "lblAccountsandPayments";
-            lblAccountsandPayments.Size = new Size(350, 41);
-            lblAccountsandPayments.TabIndex = 0;
-            lblAccountsandPayments.Text = "Accounts and Payments";
-            // 
-            // lblPaymentMethods
-            // 
-            lblPaymentMethods.AutoSize = true;
-            lblPaymentMethods.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            lblPaymentMethods.ForeColor = Color.Maroon;
-            lblPaymentMethods.Location = new Point(16, 1000);
-            lblPaymentMethods.Name = "lblPaymentMethods";
-            lblPaymentMethods.Size = new Size(173, 25);
-            lblPaymentMethods.TabIndex = 13;
-            lblPaymentMethods.Text = "Payment Methods";
-            // 
-            // pnlOnlinePayment
-            // 
-            pnlOnlinePayment.BackColor = Color.White;
-            pnlOnlinePayment.BorderStyle = BorderStyle.FixedSingle;
-            pnlOnlinePayment.Controls.Add(pictureBox48);
-            pnlOnlinePayment.Controls.Add(lblOnlinePayTitle);
-            pnlOnlinePayment.Controls.Add(lblOnlinePayDesc);
-            pnlOnlinePayment.Controls.Add(btnPayOnline);
-            pnlOnlinePayment.Location = new Point(23, 1040);
-            pnlOnlinePayment.Name = "pnlOnlinePayment";
-            pnlOnlinePayment.Size = new Size(590, 130);
-            pnlOnlinePayment.TabIndex = 14;
-            // 
-            // pictureBox48
-            // 
-            pictureBox48.BackColor = Color.Maroon;
-            pictureBox48.Image = PUPAcadPortal.Properties.Resources.card_in_use_32;
-            pictureBox48.Location = new Point(10, 10);
-            pictureBox48.Name = "pictureBox48";
-            pictureBox48.Size = new Size(54, 52);
-            pictureBox48.SizeMode = PictureBoxSizeMode.CenterImage;
-            pictureBox48.TabIndex = 3;
-            pictureBox48.TabStop = false;
-            // 
-            // lblOnlinePayTitle
-            // 
-            lblOnlinePayTitle.AutoSize = true;
-            lblOnlinePayTitle.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            lblOnlinePayTitle.Location = new Point(70, 15);
-            lblOnlinePayTitle.Name = "lblOnlinePayTitle";
-            lblOnlinePayTitle.Size = new Size(120, 20);
-            lblOnlinePayTitle.TabIndex = 0;
-            lblOnlinePayTitle.Text = "Online Payment";
-            // 
-            // lblOnlinePayDesc
-            // 
-            lblOnlinePayDesc.AutoSize = true;
-            lblOnlinePayDesc.Font = new Font("Segoe UI", 9F);
-            lblOnlinePayDesc.ForeColor = Color.Gray;
-            lblOnlinePayDesc.Location = new Point(70, 38);
-            lblOnlinePayDesc.Name = "lblOnlinePayDesc";
-            lblOnlinePayDesc.Size = new Size(231, 15);
-            lblOnlinePayDesc.TabIndex = 1;
-            lblOnlinePayDesc.Text = "Pay via credit/debit card or online banking";
-            // 
-            // btnPayOnline
-            // 
-            btnPayOnline.BackColor = Color.Maroon;
-            btnPayOnline.FlatAppearance.BorderColor = Color.FromArgb((int)(byte)200, (int)(byte)200, (int)(byte)200);
-            btnPayOnline.FlatStyle = FlatStyle.Flat;
-            btnPayOnline.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            btnPayOnline.ForeColor = SystemColors.ControlLightLight;
-            btnPayOnline.Location = new Point(10, 80);
-            btnPayOnline.Name = "btnPayOnline";
-            btnPayOnline.Size = new Size(565, 35);
-            btnPayOnline.TabIndex = 2;
-            btnPayOnline.Text = "Pay Online";
-            btnPayOnline.UseVisualStyleBackColor = false;
-            btnPayOnline.Click += (this.btnPayOnline_Click);
-            // 
-            // pnlCashier
-            // 
-            pnlCashier.BackColor = Color.White;
-            pnlCashier.BorderStyle = BorderStyle.FixedSingle;
-            pnlCashier.Controls.Add(pictureBox49);
-            pnlCashier.Controls.Add(lblCashierTitle);
-            pnlCashier.Controls.Add(lblCashierDesc);
-            pnlCashier.Controls.Add(btnPaymentSlip);
-            pnlCashier.Location = new Point(639, 1040);
-            pnlCashier.Name = "pnlCashier";
-            pnlCashier.Size = new Size(590, 130);
-            pnlCashier.TabIndex = 15;
-            // 
-            // pictureBox49
-            // 
-            pictureBox49.BackColor = Color.Maroon;
-            pictureBox49.Image = PUPAcadPortal.Properties.Resources.cash_receiving_32;
-            pictureBox49.Location = new Point(10, 10);
-            pictureBox49.Name = "pictureBox49";
-            pictureBox49.Size = new Size(54, 52);
-            pictureBox49.SizeMode = PictureBoxSizeMode.CenterImage;
-            pictureBox49.TabIndex = 4;
-            pictureBox49.TabStop = false;
-            // 
-            // lblCashierTitle
-            // 
-            lblCashierTitle.AutoSize = true;
-            lblCashierTitle.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            lblCashierTitle.Location = new Point(70, 15);
-            lblCashierTitle.Name = "lblCashierTitle";
-            lblCashierTitle.Size = new Size(116, 20);
-            lblCashierTitle.TabIndex = 0;
-            lblCashierTitle.Text = "Cashier's Office";
-            // 
-            // lblCashierDesc
-            // 
-            lblCashierDesc.AutoSize = true;
-            lblCashierDesc.Font = new Font("Segoe UI", 9F);
-            lblCashierDesc.ForeColor = Color.Gray;
-            lblCashierDesc.Location = new Point(70, 38);
-            lblCashierDesc.Name = "lblCashierDesc";
-            lblCashierDesc.Size = new Size(196, 15);
-            lblCashierDesc.TabIndex = 1;
-            lblCashierDesc.Text = "Pay in person at the Cashier's Office";
-            // 
-            // btnPaymentSlip
-            // 
-            btnPaymentSlip.BackColor = Color.Maroon;
-            btnPaymentSlip.FlatAppearance.BorderColor = Color.FromArgb((int)(byte)200, (int)(byte)200, (int)(byte)200);
-            btnPaymentSlip.FlatStyle = FlatStyle.Flat;
-            btnPaymentSlip.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            btnPaymentSlip.ForeColor = Color.White;
-            btnPaymentSlip.Location = new Point(10, 80);
-            btnPaymentSlip.Name = "btnPaymentSlip";
-            btnPaymentSlip.Size = new Size(565, 35);
-            btnPaymentSlip.TabIndex = 2;
-            btnPaymentSlip.Text = "Get Payment Slip";
-            btnPaymentSlip.UseVisualStyleBackColor = false;
-            btnPaymentSlip.Click += (this.btnPaymentSlip_Click);
-            // 
-            // lblEnrollStatus
-            // 
-            lblEnrollStatus.AutoSize = true;
-            lblEnrollStatus.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            lblEnrollStatus.ForeColor = Color.Maroon;
-            lblEnrollStatus.Location = new Point(16, 1200);
-            lblEnrollStatus.Name = "lblEnrollStatus";
-            lblEnrollStatus.Size = new Size(170, 25);
-            lblEnrollStatus.TabIndex = 16;
-            lblEnrollStatus.Text = "Enrollment Status";
-            // 
-            // pnlEnrollStatusCard
-            // 
-            pnlEnrollStatusCard.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            pnlEnrollStatusCard.BackColor = Color.FromArgb((int)(byte)240, (int)(byte)255, (int)(byte)245);
-            pnlEnrollStatusCard.BorderStyle = BorderStyle.FixedSingle;
-            pnlEnrollStatusCard.Controls.Add(pictureBox50);
-            pnlEnrollStatusCard.Controls.Add(lblEnrollStatusTitle);
-            pnlEnrollStatusCard.Controls.Add(lblEnrollStatusDesc);
-            pnlEnrollStatusCard.Location = new Point(19, 1240);
-            pnlEnrollStatusCard.Name = "pnlEnrollStatusCard";
-            pnlEnrollStatusCard.Size = new Size(1236, 80);
-            pnlEnrollStatusCard.TabIndex = 17;
-            // 
-            // pictureBox50
-            // 
-            pictureBox50.BackColor = Color.Green;
-            pictureBox50.BorderStyle = BorderStyle.Fixed3D;
-            pictureBox50.Image = PUPAcadPortal.Properties.Resources.Enrollment2;
-            pictureBox50.Location = new Point(13, 13);
-            pictureBox50.Name = "pictureBox50";
-            pictureBox50.Size = new Size(54, 52);
-            pictureBox50.SizeMode = PictureBoxSizeMode.CenterImage;
-            pictureBox50.TabIndex = 4;
-            pictureBox50.TabStop = false;
-            // 
-            // lblEnrollStatusTitle
-            // 
-            lblEnrollStatusTitle.AutoSize = true;
-            lblEnrollStatusTitle.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            lblEnrollStatusTitle.ForeColor = Color.Green;
-            lblEnrollStatusTitle.Location = new Point(73, 18);
-            lblEnrollStatusTitle.Name = "lblEnrollStatusTitle";
-            lblEnrollStatusTitle.Size = new Size(132, 20);
-            lblEnrollStatusTitle.TabIndex = 0;
-            lblEnrollStatusTitle.Text = "Officially Enrolled";
-            // 
-            // lblEnrollStatusDesc
-            // 
-            lblEnrollStatusDesc.AutoSize = true;
-            lblEnrollStatusDesc.Font = new Font("Segoe UI", 9F);
-            lblEnrollStatusDesc.ForeColor = Color.Green;
-            lblEnrollStatusDesc.Location = new Point(73, 41);
-            lblEnrollStatusDesc.Name = "lblEnrollStatusDesc";
-            lblEnrollStatusDesc.Size = new Size(380, 15);
-            lblEnrollStatusDesc.TabIndex = 1;
-            lblEnrollStatusDesc.Text = "Your enrollment is confirmed. You may now proceed with your classes.";
-            // 
-            // pnlEnrollContent
-            // 
-            pnlEnrollContent.BackColor = SystemColors.Control;
-            pnlEnrollContent.Controls.Add(btnSaveAndAssess);
-            pnlEnrollContent.Controls.Add(pnlEnrollmentConfirmedDGV);
-            pnlEnrollContent.Controls.Add(btnDownloadCOR);
-            pnlEnrollContent.Controls.Add(btnEnrollSelectAll);
-            pnlEnrollContent.Controls.Add(pnlContainerEnrollmentDGV);
-            pnlEnrollContent.Controls.Add(pnlEnrollRightCard);
-            pnlEnrollContent.Controls.Add(pnlEnrollMiddleCard);
-            pnlEnrollContent.Controls.Add(pnlEnrollLeftCard);
-            pnlEnrollContent.Controls.Add(pnlTotalUnits);
-            pnlEnrollContent.Controls.Add(pnlEnrollSearchbar);
-            pnlEnrollContent.Controls.Add(lblAcademicYear);
-            pnlEnrollContent.Controls.Add(label188);
-            pnlEnrollContent.Dock = DockStyle.Fill;
-            pnlEnrollContent.Location = new Point(256, 72);
-            pnlEnrollContent.Margin = new Padding(0);
-            pnlEnrollContent.Name = "pnlEnrollContent";
-            pnlEnrollContent.Size = new Size(1272, 719);
-            pnlEnrollContent.TabIndex = 38;
-            pnlEnrollContent.Visible = false;
-            // 
-            // btnSaveAndAssess
-            // 
-            btnSaveAndAssess.BackColor = SystemColors.ControlLight;
-            btnSaveAndAssess.FlatStyle = FlatStyle.Flat;
-            btnSaveAndAssess.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            btnSaveAndAssess.ForeColor = Color.Black;
-            btnSaveAndAssess.Location = new Point(1117, 502);
-            btnSaveAndAssess.Name = "btnSaveAndAssess";
-            btnSaveAndAssess.Size = new Size(104, 23);
-            btnSaveAndAssess.TabIndex = 22;
-            btnSaveAndAssess.Text = "Save and Assess";
-            btnSaveAndAssess.UseVisualStyleBackColor = false;
-            // 
-            // pnlEnrollmentConfirmedDGV
-            // 
-            pnlEnrollmentConfirmedDGV.AutoScroll = true;
-            pnlEnrollmentConfirmedDGV.Controls.Add(dgvEnrollmentConfirmed);
-            pnlEnrollmentConfirmedDGV.Location = new Point(18, 675);
-            pnlEnrollmentConfirmedDGV.Name = "pnlEnrollmentConfirmedDGV";
-            pnlEnrollmentConfirmedDGV.Size = new Size(1205, 300);
-            pnlEnrollmentConfirmedDGV.TabIndex = 21;
-            // 
-            // dgvEnrollmentConfirmed
-            // 
-            dgvEnrollmentConfirmed.AllowUserToAddRows = false;
-            dgvEnrollmentConfirmed.AllowUserToDeleteRows = false;
-            dgvEnrollmentConfirmed.AllowUserToResizeColumns = false;
-            dgvEnrollmentConfirmed.AllowUserToResizeRows = false;
-            dgvEnrollmentConfirmed.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvEnrollmentConfirmed.BackgroundColor = Color.White;
-            dgvEnrollmentConfirmed.CellBorderStyle = DataGridViewCellBorderStyle.None;
-            dgvEnrollmentConfirmed.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.Maroon;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dataGridViewCellStyle2.ForeColor = Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            dgvEnrollmentConfirmed.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            dgvEnrollmentConfirmed.ColumnHeadersHeight = 29;
-            dgvEnrollmentConfirmed.Columns.AddRange(new DataGridViewColumn[] { colCode2, colourseTitle2, colUnits2, colSchedule2, colStatus2, colAction2 });
-            dgvEnrollmentConfirmed.Dock = DockStyle.Fill;
-            dgvEnrollmentConfirmed.EnableHeadersVisualStyles = false;
-            dgvEnrollmentConfirmed.GridColor = Color.White;
-            dgvEnrollmentConfirmed.Location = new Point(0, 0);
-            dgvEnrollmentConfirmed.Name = "dgvEnrollmentConfirmed";
-            dgvEnrollmentConfirmed.RowHeadersVisible = false;
-            dgvEnrollmentConfirmed.RowHeadersWidth = 51;
-            dgvEnrollmentConfirmed.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvEnrollmentConfirmed.Size = new Size(1205, 300);
-            dgvEnrollmentConfirmed.TabIndex = 13;
-            dgvEnrollmentConfirmed.Visible = false;
-            // 
-            // colCode2
-            // 
-            colCode2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            colCode2.FillWeight = 92.978F;
-            colCode2.HeaderText = "Code";
-            colCode2.MinimumWidth = 6;
-            colCode2.Name = "colCode2";
-            colCode2.ReadOnly = true;
-            colCode2.Resizable = DataGridViewTriState.False;
-            colCode2.Width = 120;
-            // 
-            // colourseTitle2
-            // 
-            colourseTitle2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            colourseTitle2.FillWeight = 92.978F;
-            colourseTitle2.HeaderText = "Course Title";
-            colourseTitle2.MinimumWidth = 6;
-            colourseTitle2.Name = "colourseTitle2";
-            colourseTitle2.ReadOnly = true;
-            colourseTitle2.Resizable = DataGridViewTriState.False;
-            colourseTitle2.Width = 300;
-            // 
-            // colUnits2
-            // 
-            colUnits2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            colUnits2.DefaultCellStyle = dataGridViewCellStyle3;
-            colUnits2.FillWeight = 92.978F;
-            colUnits2.HeaderText = "Units";
-            colUnits2.MinimumWidth = 6;
-            colUnits2.Name = "colUnits2";
-            colUnits2.ReadOnly = true;
-            colUnits2.Resizable = DataGridViewTriState.False;
-            colUnits2.Width = 90;
-            // 
-            // colSchedule2
-            // 
-            colSchedule2.FillWeight = 92.978F;
-            colSchedule2.HeaderText = "Schedule";
-            colSchedule2.MinimumWidth = 6;
-            colSchedule2.Name = "colSchedule2";
-            colSchedule2.ReadOnly = true;
-            colSchedule2.Resizable = DataGridViewTriState.False;
-            // 
-            // colStatus2
-            // 
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            colStatus2.DefaultCellStyle = dataGridViewCellStyle4;
-            colStatus2.FillWeight = 92.978F;
-            colStatus2.HeaderText = "Status";
-            colStatus2.MinimumWidth = 6;
-            colStatus2.Name = "colStatus2";
-            colStatus2.ReadOnly = true;
-            colStatus2.Resizable = DataGridViewTriState.False;
-            // 
-            // colAction2
-            // 
-            colAction2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.Font = new Font("Segoe UI", 9F, FontStyle.Underline);
-            dataGridViewCellStyle5.ForeColor = Color.Maroon;
-            colAction2.DefaultCellStyle = dataGridViewCellStyle5;
-            colAction2.HeaderText = "Action";
-            colAction2.MinimumWidth = 6;
-            colAction2.Name = "colAction2";
-            colAction2.ReadOnly = true;
-            colAction2.Width = 125;
-            // 
-            // btnDownloadCOR
-            // 
-            btnDownloadCOR.BackColor = Color.DarkRed;
-            btnDownloadCOR.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            btnDownloadCOR.ForeColor = SystemColors.ControlLightLight;
-            btnDownloadCOR.Image = PUPAcadPortal.Properties.Resources.download_2_16;
-            btnDownloadCOR.Location = new Point(795, 28);
-            btnDownloadCOR.Name = "btnDownloadCOR";
-            btnDownloadCOR.Size = new Size(325, 41);
-            btnDownloadCOR.TabIndex = 19;
-            btnDownloadCOR.Text = " Certificate of Registration";
-            btnDownloadCOR.TextAlign = ContentAlignment.MiddleRight;
-            btnDownloadCOR.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnDownloadCOR.UseVisualStyleBackColor = false;
-            btnDownloadCOR.Click += (this.btnDownloadCOR_Click);
-            // 
-            // btnEnrollSelectAll
-            // 
-            btnEnrollSelectAll.Anchor = (AnchorStyles)(AnchorStyles.Bottom) | (AnchorStyles.Left);
-            btnEnrollSelectAll.BackColor = SystemColors.ControlLight;
-            btnEnrollSelectAll.FlatStyle = FlatStyle.Flat;
-            btnEnrollSelectAll.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            btnEnrollSelectAll.ForeColor = Color.Black;
-            btnEnrollSelectAll.Location = new Point(18, 158);
-            btnEnrollSelectAll.Name = "btnEnrollSelectAll";
-            btnEnrollSelectAll.Size = new Size(75, 23);
-            btnEnrollSelectAll.TabIndex = 18;
-            btnEnrollSelectAll.Text = "Select All";
-            btnEnrollSelectAll.UseVisualStyleBackColor = false;
-            btnEnrollSelectAll.Click += (this.btnEnrollSelectAll_Click);
-            // 
-            // pnlContainerEnrollmentDGV
-            // 
-            pnlContainerEnrollmentDGV.AutoScroll = true;
-            pnlContainerEnrollmentDGV.Controls.Add(dgvEnrollment);
-            pnlContainerEnrollmentDGV.Location = new Point(18, 190);
-            pnlContainerEnrollmentDGV.Name = "pnlContainerEnrollmentDGV";
-            pnlContainerEnrollmentDGV.Size = new Size(1205, 300);
-            pnlContainerEnrollmentDGV.TabIndex = 20;
-            // 
-            // dgvEnrollment
-            // 
-            dgvEnrollment.AllowUserToAddRows = false;
-            dgvEnrollment.AllowUserToDeleteRows = false;
-            dgvEnrollment.AllowUserToResizeColumns = false;
-            dgvEnrollment.AllowUserToResizeRows = false;
-            dgvEnrollment.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvEnrollment.BackgroundColor = Color.White;
-            dgvEnrollment.CellBorderStyle = DataGridViewCellBorderStyle.None;
-            dgvEnrollment.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = Color.Maroon;
-            dataGridViewCellStyle6.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dataGridViewCellStyle6.ForeColor = Color.White;
-            dataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
-            dgvEnrollment.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
-            dgvEnrollment.ColumnHeadersHeight = 29;
-            dgvEnrollment.Columns.AddRange(new DataGridViewColumn[] { colSelect, colCode, colTitle, colUnits, colSchedule, colStatus, colAction });
-            dgvEnrollment.Dock = DockStyle.Fill;
-            dgvEnrollment.EnableHeadersVisualStyles = false;
-            dgvEnrollment.GridColor = Color.White;
-            dgvEnrollment.Location = new Point(0, 0);
-            dgvEnrollment.Name = "dgvEnrollment";
-            dgvEnrollment.RowHeadersVisible = false;
-            dgvEnrollment.RowHeadersWidth = 51;
-            dgvEnrollment.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvEnrollment.Size = new Size(1205, 300);
-            dgvEnrollment.TabIndex = 13;
-            dgvEnrollment.CellClick += (this.dgvEnrollment_CellClick);
-            dgvEnrollment.CellPainting += (this.dgvEnrollment_CellPainting);
-            dgvEnrollment.SelectionChanged += (this.dgvEnrollment_SelectionChanged);
-            // 
-            // colSelect
-            // 
-            colSelect.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            colSelect.FillWeight = 142.131973F;
-            colSelect.HeaderText = "";
-            colSelect.MinimumWidth = 6;
-            colSelect.Name = "colSelect";
-            colSelect.Resizable = DataGridViewTriState.False;
-            colSelect.Width = 40;
-            // 
-            // colCode
-            // 
-            colCode.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            colCode.FillWeight = 92.978F;
-            colCode.HeaderText = "Code";
-            colCode.MinimumWidth = 6;
-            colCode.Name = "colCode";
-            colCode.ReadOnly = true;
-            colCode.Resizable = DataGridViewTriState.False;
-            colCode.Width = 120;
-            // 
-            // colTitle
-            // 
-            colTitle.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            colTitle.FillWeight = 92.978F;
-            colTitle.HeaderText = "Course Title";
-            colTitle.MinimumWidth = 6;
-            colTitle.Name = "colTitle";
-            colTitle.ReadOnly = true;
-            colTitle.Resizable = DataGridViewTriState.False;
-            colTitle.Width = 300;
-            // 
-            // colUnits
-            // 
-            colUnits.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            colUnits.DefaultCellStyle = dataGridViewCellStyle7;
-            colUnits.FillWeight = 92.978F;
-            colUnits.HeaderText = "Units";
-            colUnits.MinimumWidth = 6;
-            colUnits.Name = "colUnits";
-            colUnits.ReadOnly = true;
-            colUnits.Resizable = DataGridViewTriState.False;
-            colUnits.Width = 90;
-            // 
-            // colSchedule
-            // 
-            colSchedule.FillWeight = 92.978F;
-            colSchedule.HeaderText = "Schedule";
-            colSchedule.MinimumWidth = 6;
-            colSchedule.Name = "colSchedule";
-            colSchedule.ReadOnly = true;
-            colSchedule.Resizable = DataGridViewTriState.False;
-            // 
-            // colStatus
-            // 
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            colStatus.DefaultCellStyle = dataGridViewCellStyle8;
-            colStatus.FillWeight = 92.978F;
-            colStatus.HeaderText = "Status";
-            colStatus.MinimumWidth = 6;
-            colStatus.Name = "colStatus";
-            colStatus.ReadOnly = true;
-            colStatus.Resizable = DataGridViewTriState.False;
-            // 
-            // colAction
-            // 
-            colAction.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.Font = new Font("Segoe UI", 9F, FontStyle.Underline);
-            dataGridViewCellStyle9.ForeColor = Color.Maroon;
-            colAction.DefaultCellStyle = dataGridViewCellStyle9;
-            colAction.HeaderText = "Action";
-            colAction.MinimumWidth = 6;
-            colAction.Name = "colAction";
-            colAction.ReadOnly = true;
-            colAction.Width = 125;
-            // 
-            // pnlEnrollRightCard
-            // 
-            pnlEnrollRightCard.BackColor = SystemColors.ControlLightLight;
-            pnlEnrollRightCard.BorderStyle = BorderStyle.Fixed3D;
-            pnlEnrollRightCard.Controls.Add(lblCurrentSectionIndicator);
-            pnlEnrollRightCard.Controls.Add(label183);
-            pnlEnrollRightCard.Location = new Point(18, 557);
-            pnlEnrollRightCard.Name = "pnlEnrollRightCard";
-            pnlEnrollRightCard.Size = new Size(384, 70);
-            pnlEnrollRightCard.TabIndex = 17;
-            // 
-            // lblCurrentSectionIndicator
-            // 
-            lblCurrentSectionIndicator.AutoSize = true;
-            lblCurrentSectionIndicator.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            lblCurrentSectionIndicator.ForeColor = Color.Black;
-            lblCurrentSectionIndicator.Location = new Point(37, 23);
-            lblCurrentSectionIndicator.Name = "lblCurrentSectionIndicator";
-            lblCurrentSectionIndicator.Size = new Size(109, 32);
-            lblCurrentSectionIndicator.TabIndex = 1;
-            lblCurrentSectionIndicator.Text = "BSIT 2-2";
-            // 
-            // label183
-            // 
-            label183.AutoSize = true;
-            label183.BackColor = Color.Transparent;
-            label183.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label183.ForeColor = Color.Maroon;
-            label183.Location = new Point(14, 7);
-            label183.Name = "label183";
-            label183.Size = new Size(102, 17);
-            label183.TabIndex = 0;
-            label183.Text = "Current Section";
-            // 
-            // pnlEnrollMiddleCard
-            // 
-            pnlEnrollMiddleCard.BackColor = SystemColors.ControlLightLight;
-            pnlEnrollMiddleCard.BorderStyle = BorderStyle.Fixed3D;
-            pnlEnrollMiddleCard.Controls.Add(label184);
-            pnlEnrollMiddleCard.Controls.Add(lblMaximumUnitsValue);
-            pnlEnrollMiddleCard.Location = new Point(426, 557);
-            pnlEnrollMiddleCard.Name = "pnlEnrollMiddleCard";
-            pnlEnrollMiddleCard.Size = new Size(384, 70);
-            pnlEnrollMiddleCard.TabIndex = 16;
-            // 
-            // label184
-            // 
-            label184.AutoSize = true;
-            label184.BackColor = Color.Transparent;
-            label184.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label184.ForeColor = Color.Maroon;
-            label184.Location = new Point(12, 7);
-            label184.Name = "label184";
-            label184.Size = new Size(104, 17);
-            label184.TabIndex = 0;
-            label184.Text = "Maximum Units";
-            // 
-            // lblMaximumUnitsValue
-            // 
-            lblMaximumUnitsValue.AutoSize = true;
-            lblMaximumUnitsValue.BackColor = Color.Transparent;
-            lblMaximumUnitsValue.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            lblMaximumUnitsValue.ForeColor = Color.Black;
-            lblMaximumUnitsValue.Location = new Point(32, 22);
-            lblMaximumUnitsValue.Name = "lblMaximumUnitsValue";
-            lblMaximumUnitsValue.Size = new Size(108, 32);
-            lblMaximumUnitsValue.TabIndex = 1;
-            lblMaximumUnitsValue.Text = "23 Units";
-            // 
-            // pnlEnrollLeftCard
-            // 
-            pnlEnrollLeftCard.BackColor = Color.White;
-            pnlEnrollLeftCard.Controls.Add(label185);
-            pnlEnrollLeftCard.Controls.Add(label186);
-            pnlEnrollLeftCard.Location = new Point(839, 557);
-            pnlEnrollLeftCard.Name = "pnlEnrollLeftCard";
-            pnlEnrollLeftCard.Size = new Size(386, 70);
-            pnlEnrollLeftCard.TabIndex = 15;
-            // 
-            // label185
-            // 
-            label185.AutoSize = true;
-            label185.BackColor = Color.Transparent;
-            label185.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
-            label185.ForeColor = Color.Maroon;
-            label185.Location = new Point(15, 7);
-            label185.Name = "label185";
-            label185.Size = new Size(117, 17);
-            label185.TabIndex = 0;
-            label185.Text = "Enrollment Period";
-            // 
-            // label186
-            // 
-            label186.AutoSize = true;
-            label186.BackColor = Color.Transparent;
-            label186.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
-            label186.ForeColor = Color.Black;
-            label186.Location = new Point(32, 22);
-            label186.Name = "label186";
-            label186.Size = new Size(266, 32);
-            label186.TabIndex = 1;
-            label186.Text = "February 1 - 11,  2026";
-            // 
-            // pnlTotalUnits
-            // 
-            pnlTotalUnits.BackColor = Color.FromArgb((int)(byte)255, (int)(byte)193, (int)(byte)7);
-            pnlTotalUnits.BorderStyle = BorderStyle.Fixed3D;
-            pnlTotalUnits.Controls.Add(lblEnrollTotalUnitsValue);
-            pnlTotalUnits.Controls.Add(label187);
-            pnlTotalUnits.Location = new Point(1145, 13);
-            pnlTotalUnits.Name = "pnlTotalUnits";
-            pnlTotalUnits.Size = new Size(77, 70);
-            pnlTotalUnits.TabIndex = 14;
-            // 
-            // lblEnrollTotalUnitsValue
-            // 
-            lblEnrollTotalUnitsValue.AutoSize = true;
-            lblEnrollTotalUnitsValue.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold);
-            lblEnrollTotalUnitsValue.Location = new Point(32, 22);
-            lblEnrollTotalUnitsValue.Name = "lblEnrollTotalUnitsValue";
-            lblEnrollTotalUnitsValue.Size = new Size(34, 32);
-            lblEnrollTotalUnitsValue.TabIndex = 1;
-            lblEnrollTotalUnitsValue.Text = "11";
-            // 
-            // label187
-            // 
-            label187.AutoSize = true;
-            label187.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            label187.Location = new Point(3, 7);
-            label187.Name = "label187";
-            label187.Size = new Size(63, 15);
-            label187.TabIndex = 0;
-            label187.Text = "Total Units";
-            // 
-            // pnlEnrollSearchbar
-            // 
-            pnlEnrollSearchbar.BackColor = SystemColors.ControlLight;
-            pnlEnrollSearchbar.BorderStyle = BorderStyle.FixedSingle;
-            pnlEnrollSearchbar.Controls.Add(cmbEnrollFilter);
-            pnlEnrollSearchbar.Controls.Add(btnEnrollSearch);
-            pnlEnrollSearchbar.Controls.Add(txtEnrollSearch);
-            pnlEnrollSearchbar.Location = new Point(16, 101);
-            pnlEnrollSearchbar.Margin = new Padding(3, 2, 3, 2);
-            pnlEnrollSearchbar.Name = "pnlEnrollSearchbar";
-            pnlEnrollSearchbar.Size = new Size(1205, 50);
-            pnlEnrollSearchbar.TabIndex = 12;
-            // 
-            // cmbEnrollFilter
-            // 
-            cmbEnrollFilter.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
-            cmbEnrollFilter.FormattingEnabled = true;
-            cmbEnrollFilter.Items.AddRange(new object[] { "All", "Course Code ", "Course Title" });
-            cmbEnrollFilter.Location = new Point(10, 10);
-            cmbEnrollFilter.Margin = new Padding(3, 2, 3, 2);
-            cmbEnrollFilter.Name = "cmbEnrollFilter";
-            cmbEnrollFilter.Size = new Size(133, 29);
-            cmbEnrollFilter.TabIndex = 10;
-            // 
-            // btnEnrollSearch
-            // 
-            btnEnrollSearch.BackColor = Color.Black;
-            btnEnrollSearch.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            btnEnrollSearch.ForeColor = SystemColors.ControlLightLight;
-            btnEnrollSearch.Location = new Point(1106, 6);
-            btnEnrollSearch.Margin = new Padding(3, 2, 3, 2);
-            btnEnrollSearch.Name = "btnEnrollSearch";
-            btnEnrollSearch.Size = new Size(86, 36);
-            btnEnrollSearch.TabIndex = 11;
-            btnEnrollSearch.Text = "Search";
-            btnEnrollSearch.UseVisualStyleBackColor = false;
-            btnEnrollSearch.Click += (this.btnEnrollSearch_Click);
-            // 
-            // txtEnrollSearch
-            // 
-            txtEnrollSearch.AccessibleDescription = "";
-            txtEnrollSearch.BorderStyle = BorderStyle.FixedSingle;
-            txtEnrollSearch.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
-            txtEnrollSearch.Location = new Point(149, 10);
-            txtEnrollSearch.Margin = new Padding(3, 2, 3, 2);
-            txtEnrollSearch.Name = "txtEnrollSearch";
-            txtEnrollSearch.PlaceholderText = "Search course here by code or title...";
-            txtEnrollSearch.Size = new Size(950, 29);
-            txtEnrollSearch.TabIndex = 9;
-            txtEnrollSearch.KeyDown += (this.txtEnrollSearch_KeyDown);
-            // 
-            // lblAcademicYear
-            // 
-            lblAcademicYear.AutoSize = true;
-            lblAcademicYear.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
-            lblAcademicYear.ForeColor = SystemColors.ControlDarkDark;
-            lblAcademicYear.Location = new Point(17, 55);
-            lblAcademicYear.Name = "lblAcademicYear";
-            lblAcademicYear.Size = new Size(221, 15);
-            lblAcademicYear.TabIndex = 7;
-            lblAcademicYear.Text = "Academic Year 2025-2026 | 2nd Semester";
-            // 
-            // label188
-            // 
-            label188.AutoSize = true;
-            label188.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label188.ForeColor = Color.Maroon;
-            label188.Location = new Point(16, 20);
-            label188.Name = "label188";
-            label188.Size = new Size(206, 37);
-            label188.TabIndex = 6;
-            label188.Text = "My Enrollment";
-            // 
-            // pnlGrades
-            // 
-            pnlGrades.AutoScroll = true;
-            pnlGrades.BackColor = SystemColors.Control;
-            pnlGrades.CausesValidation = false;
-            pnlGrades.Controls.Add(roundedPanel36);
-            pnlGrades.Controls.Add(fpnlGradesList);
-            pnlGrades.Controls.Add(panel57);
-            pnlGrades.Dock = DockStyle.Fill;
-            pnlGrades.Location = new Point(256, 72);
-            pnlGrades.Margin = new Padding(0);
-            pnlGrades.Name = "pnlGrades";
-            pnlGrades.Size = new Size(1272, 719);
-            pnlGrades.TabIndex = 34;
-            pnlGrades.Visible = false;
-            // 
-            // roundedPanel36
-            // 
-            roundedPanel36.Anchor = AnchorStyles.None;
-            roundedPanel36.BackColor = Color.Maroon;
-            roundedPanel36.BorderRadius = 10;
-            roundedPanel36.Controls.Add(roundedPanel37);
-            roundedPanel36.Location = new Point(112, 208);
-            roundedPanel36.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel36.Name = "roundedPanel36";
-            roundedPanel36.Size = new Size(1030, 250);
-            roundedPanel36.TabIndex = 1;
-            roundedPanel36.Visible = false;
-            // 
-            // roundedPanel37
-            // 
-            roundedPanel37.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            roundedPanel37.BackColor = Color.White;
-            roundedPanel37.BorderRadius = 10;
-            roundedPanel37.Controls.Add(button8);
-            roundedPanel37.Controls.Add(listBox1);
-            roundedPanel37.Controls.Add(label5);
-            roundedPanel37.Location = new Point(18, 16);
-            roundedPanel37.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel37.Name = "roundedPanel37";
-            roundedPanel37.Size = new Size(990, 215);
-            roundedPanel37.TabIndex = 0;
-            // 
-            // button8
-            // 
-            button8.Anchor = (AnchorStyles)(AnchorStyles.Bottom) | (AnchorStyles.Right);
-            button8.BackColor = Color.Maroon;
-            button8.ForeColor = Color.White;
-            button8.Location = new Point(823, 166);
-            button8.Margin = new Padding(3, 2, 3, 2);
-            button8.Name = "button8";
-            button8.Size = new Size(119, 41);
-            button8.TabIndex = 7;
-            button8.Text = "Back";
-            button8.UseVisualStyleBackColor = false;
-            button8.Click += (this.button8_Click);
-            // 
-            // listBox1
-            // 
-            listBox1.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            listBox1.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
-            listBox1.FormattingEnabled = true;
-            listBox1.Items.AddRange(new object[] { "Attendance (10%)\t\t\t- 10%\tAssignment / Project (15%)\t\t- \t15%", "Recitation / Class Participation (15%)\t- 15%\tLong Quiz (25%)\t\t\t- \t25%", "Seatwork / Short Quiz (15%)\t- 15%\tMajor Examination (30%)\t\t- \t30%", "", "Grade Computation\t\t\t- \t100%", "PUP Grade Conversion\t\t\t- \t1.00" });
-            listBox1.Location = new Point(46, 47);
-            listBox1.Margin = new Padding(3, 2, 3, 2);
-            listBox1.Name = "listBox1";
-            listBox1.Size = new Size(710, 137);
-            listBox1.TabIndex = 6;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label5.Location = new Point(21, 16);
-            label5.Name = "label5";
-            label5.Size = new Size(186, 25);
-            label5.TabIndex = 5;
-            label5.Text = "Grade Computation:";
-            // 
-            // fpnlGradesList
-            // 
-            fpnlGradesList.Anchor = (AnchorStyles)(AnchorStyles.Top) | (AnchorStyles.Bottom);
-            fpnlGradesList.AutoScroll = true;
-            fpnlGradesList.Controls.Add(roundedPanel1);
-            fpnlGradesList.Controls.Add(roundedPanel10);
-            fpnlGradesList.Controls.Add(roundedPanel7);
-            fpnlGradesList.Controls.Add(roundedPanel30);
-            fpnlGradesList.Controls.Add(roundedPanel32);
-            fpnlGradesList.Controls.Add(roundedPanel34);
-            fpnlGradesList.FlowDirection = FlowDirection.TopDown;
-            fpnlGradesList.Location = new Point(237, 88);
-            fpnlGradesList.Name = "fpnlGradesList";
-            fpnlGradesList.Size = new Size(781, 600);
-            fpnlGradesList.TabIndex = 7;
-            fpnlGradesList.Visible = false;
-            fpnlGradesList.WrapContents = false;
-            // 
-            // roundedPanel1
-            // 
-            roundedPanel1.BackColor = Color.Maroon;
-            roundedPanel1.BorderRadius = 10;
-            roundedPanel1.Controls.Add(panel58);
-            roundedPanel1.Location = new Point(3, 2);
-            roundedPanel1.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel1.Name = "roundedPanel1";
-            roundedPanel1.Size = new Size(775, 96);
-            roundedPanel1.TabIndex = 1;
-            // 
-            // panel58
-            // 
-            panel58.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            panel58.BackColor = Color.White;
-            panel58.Controls.Add(button11);
-            panel58.Controls.Add(roundedPanel2);
-            panel58.Controls.Add(label54);
-            panel58.Location = new Point(24, 16);
-            panel58.Margin = new Padding(3, 2, 3, 2);
-            panel58.Name = "panel58";
-            panel58.Size = new Size(733, 63);
-            panel58.TabIndex = 0;
-            // 
-            // button11
-            // 
-            button11.Anchor = (AnchorStyles)(AnchorStyles.Bottom) | (AnchorStyles.Right);
-            button11.BackColor = Color.Maroon;
-            button11.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            button11.ForeColor = Color.White;
-            button11.Location = new Point(564, 12);
-            button11.Margin = new Padding(3, 2, 3, 2);
-            button11.Name = "button11";
-            button11.Size = new Size(137, 40);
-            button11.TabIndex = 3;
-            button11.Text = "View Grade Breakdown";
-            button11.UseVisualStyleBackColor = false;
-            button11.Click += (this.button11_Click);
-            // 
-            // roundedPanel2
-            // 
-            roundedPanel2.Anchor = (AnchorStyles)(AnchorStyles.Bottom) | (AnchorStyles.Right);
-            roundedPanel2.BackColor = Color.Maroon;
-            roundedPanel2.BorderRadius = 10;
-            roundedPanel2.Controls.Add(label53);
-            roundedPanel2.Location = new Point(392, 14);
-            roundedPanel2.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel2.Name = "roundedPanel2";
-            roundedPanel2.Size = new Size(150, 36);
-            roundedPanel2.TabIndex = 2;
-            // 
-            // label53
-            // 
-            label53.AutoSize = true;
-            label53.BackColor = Color.White;
-            label53.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label53.Location = new Point(48, 5);
-            label53.Name = "label53";
-            label53.Size = new Size(47, 25);
-            label53.TabIndex = 1;
-            label53.Text = "1.00";
-            // 
-            // label54
-            // 
-            label54.AutoSize = true;
-            label54.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label54.Location = new Point(21, 18);
-            label54.Name = "label54";
-            label54.Size = new Size(278, 25);
-            label54.TabIndex = 1;
-            label54.Text = "Introduction to Programming 1";
-            // 
-            // roundedPanel10
-            // 
-            roundedPanel10.BackColor = Color.Maroon;
-            roundedPanel10.BorderRadius = 10;
-            roundedPanel10.Controls.Add(panel59);
-            roundedPanel10.Location = new Point(3, 102);
-            roundedPanel10.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel10.Name = "roundedPanel10";
-            roundedPanel10.Size = new Size(775, 96);
-            roundedPanel10.TabIndex = 2;
-            // 
-            // panel59
-            // 
-            panel59.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            panel59.BackColor = Color.White;
-            panel59.Controls.Add(button7);
-            panel59.Controls.Add(roundedPanel8);
-            panel59.Controls.Add(label58);
-            panel59.Location = new Point(24, 16);
-            panel59.Margin = new Padding(3, 2, 3, 2);
-            panel59.Name = "panel59";
-            panel59.Size = new Size(733, 63);
-            panel59.TabIndex = 0;
-            // 
-            // button7
-            // 
-            button7.Anchor = (AnchorStyles)(AnchorStyles.Bottom) | (AnchorStyles.Right);
-            button7.BackColor = Color.Maroon;
-            button7.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            button7.ForeColor = Color.White;
-            button7.Location = new Point(564, 12);
-            button7.Margin = new Padding(3, 2, 3, 2);
-            button7.Name = "button7";
-            button7.Size = new Size(137, 40);
-            button7.TabIndex = 4;
-            button7.Text = "View Grade Breakdown";
-            button7.UseVisualStyleBackColor = false;
-            // 
-            // roundedPanel8
-            // 
-            roundedPanel8.Anchor = (AnchorStyles)(AnchorStyles.Bottom) | (AnchorStyles.Right);
-            roundedPanel8.BackColor = Color.Maroon;
-            roundedPanel8.BorderRadius = 10;
-            roundedPanel8.Controls.Add(label9);
-            roundedPanel8.Location = new Point(392, 14);
-            roundedPanel8.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel8.Name = "roundedPanel8";
-            roundedPanel8.Size = new Size(150, 36);
-            roundedPanel8.TabIndex = 3;
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.BackColor = Color.White;
-            label9.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label9.Location = new Point(48, 5);
-            label9.Name = "label9";
-            label9.Size = new Size(47, 25);
-            label9.TabIndex = 1;
-            label9.Text = "1.00";
-            // 
-            // label58
-            // 
-            label58.AutoSize = true;
-            label58.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label58.Location = new Point(21, 18);
-            label58.Name = "label58";
-            label58.Size = new Size(100, 25);
-            label58.TabIndex = 1;
-            label58.Text = "PATHFIT 4";
-            // 
-            // roundedPanel7
-            // 
-            roundedPanel7.BackColor = Color.Maroon;
-            roundedPanel7.BorderRadius = 10;
-            roundedPanel7.Controls.Add(panel60);
-            roundedPanel7.Location = new Point(3, 202);
-            roundedPanel7.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel7.Name = "roundedPanel7";
-            roundedPanel7.Size = new Size(775, 96);
-            roundedPanel7.TabIndex = 3;
-            // 
-            // panel60
-            // 
-            panel60.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            panel60.BackColor = Color.White;
-            panel60.Controls.Add(button9);
-            panel60.Controls.Add(roundedPanel11);
-            panel60.Controls.Add(label56);
-            panel60.Location = new Point(24, 16);
-            panel60.Margin = new Padding(3, 2, 3, 2);
-            panel60.Name = "panel60";
-            panel60.Size = new Size(733, 63);
-            panel60.TabIndex = 0;
-            // 
-            // button9
-            // 
-            button9.Anchor = (AnchorStyles)(AnchorStyles.Bottom) | (AnchorStyles.Right);
-            button9.BackColor = Color.Maroon;
-            button9.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            button9.ForeColor = Color.White;
-            button9.Location = new Point(564, 12);
-            button9.Margin = new Padding(3, 2, 3, 2);
-            button9.Name = "button9";
-            button9.Size = new Size(137, 40);
-            button9.TabIndex = 4;
-            button9.Text = "View Grade Breakdown";
-            button9.UseVisualStyleBackColor = false;
-            // 
-            // roundedPanel11
-            // 
-            roundedPanel11.Anchor = (AnchorStyles)(AnchorStyles.Bottom) | (AnchorStyles.Right);
-            roundedPanel11.BackColor = Color.Maroon;
-            roundedPanel11.BorderRadius = 10;
-            roundedPanel11.Controls.Add(label48);
-            roundedPanel11.Location = new Point(392, 14);
-            roundedPanel11.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel11.Name = "roundedPanel11";
-            roundedPanel11.Size = new Size(150, 36);
-            roundedPanel11.TabIndex = 3;
-            // 
-            // label48
-            // 
-            label48.AutoSize = true;
-            label48.BackColor = Color.White;
-            label48.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label48.Location = new Point(48, 5);
-            label48.Name = "label48";
-            label48.Size = new Size(47, 25);
-            label48.TabIndex = 1;
-            label48.Text = "1.00";
-            // 
-            // label56
-            // 
-            label56.AutoSize = true;
-            label56.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label56.Location = new Point(21, 18);
-            label56.Name = "label56";
-            label56.Size = new Size(220, 25);
-            label56.TabIndex = 1;
-            label56.Text = "Principles of Accounting";
-            // 
-            // roundedPanel30
-            // 
-            roundedPanel30.BackColor = Color.Maroon;
-            roundedPanel30.BorderRadius = 10;
-            roundedPanel30.Controls.Add(panel61);
-            roundedPanel30.Location = new Point(3, 302);
-            roundedPanel30.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel30.Name = "roundedPanel30";
-            roundedPanel30.Size = new Size(775, 96);
-            roundedPanel30.TabIndex = 3;
-            // 
-            // panel61
-            // 
-            panel61.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            panel61.BackColor = Color.White;
-            panel61.Controls.Add(button10);
-            panel61.Controls.Add(roundedPanel12);
-            panel61.Controls.Add(label51);
-            panel61.Location = new Point(24, 16);
-            panel61.Margin = new Padding(3, 2, 3, 2);
-            panel61.Name = "panel61";
-            panel61.Size = new Size(733, 63);
-            panel61.TabIndex = 0;
-            // 
-            // button10
-            // 
-            button10.Anchor = (AnchorStyles)(AnchorStyles.Bottom) | (AnchorStyles.Right);
-            button10.BackColor = Color.Maroon;
-            button10.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            button10.ForeColor = Color.White;
-            button10.Location = new Point(564, 12);
-            button10.Margin = new Padding(3, 2, 3, 2);
-            button10.Name = "button10";
-            button10.Size = new Size(137, 40);
-            button10.TabIndex = 4;
-            button10.Text = "View Grade Breakdown";
-            button10.UseVisualStyleBackColor = false;
-            // 
-            // roundedPanel12
-            // 
-            roundedPanel12.Anchor = (AnchorStyles)(AnchorStyles.Bottom) | (AnchorStyles.Right);
-            roundedPanel12.BackColor = Color.Maroon;
-            roundedPanel12.BorderRadius = 10;
-            roundedPanel12.Controls.Add(label50);
-            roundedPanel12.Location = new Point(392, 14);
-            roundedPanel12.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel12.Name = "roundedPanel12";
-            roundedPanel12.Size = new Size(150, 36);
-            roundedPanel12.TabIndex = 3;
-            // 
-            // label50
-            // 
-            label50.AutoSize = true;
-            label50.BackColor = Color.White;
-            label50.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label50.Location = new Point(48, 5);
-            label50.Name = "label50";
-            label50.Size = new Size(47, 25);
-            label50.TabIndex = 1;
-            label50.Text = "1.00";
-            // 
-            // label51
-            // 
-            label51.AutoSize = true;
-            label51.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label51.Location = new Point(21, 18);
-            label51.Name = "label51";
-            label51.Size = new Size(265, 25);
-            label51.TabIndex = 1;
-            label51.Text = "Human Computer Interaction";
-            // 
-            // roundedPanel32
-            // 
-            roundedPanel32.BackColor = Color.Maroon;
-            roundedPanel32.BorderRadius = 10;
-            roundedPanel32.Controls.Add(panel62);
-            roundedPanel32.Location = new Point(3, 402);
-            roundedPanel32.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel32.Name = "roundedPanel32";
-            roundedPanel32.Size = new Size(775, 96);
-            roundedPanel32.TabIndex = 4;
-            // 
-            // panel62
-            // 
-            panel62.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            panel62.BackColor = Color.White;
-            panel62.Controls.Add(button12);
-            panel62.Controls.Add(roundedPanel24);
-            panel62.Controls.Add(label49);
-            panel62.Location = new Point(24, 16);
-            panel62.Margin = new Padding(3, 2, 3, 2);
-            panel62.Name = "panel62";
-            panel62.Size = new Size(733, 63);
-            panel62.TabIndex = 0;
-            // 
-            // button12
-            // 
-            button12.Anchor = (AnchorStyles)(AnchorStyles.Bottom) | (AnchorStyles.Right);
-            button12.BackColor = Color.Maroon;
-            button12.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            button12.ForeColor = Color.White;
-            button12.Location = new Point(564, 12);
-            button12.Margin = new Padding(3, 2, 3, 2);
-            button12.Name = "button12";
-            button12.Size = new Size(137, 40);
-            button12.TabIndex = 4;
-            button12.Text = "View Grade Breakdown";
-            button12.UseVisualStyleBackColor = false;
-            // 
-            // roundedPanel24
-            // 
-            roundedPanel24.Anchor = (AnchorStyles)(AnchorStyles.Bottom) | (AnchorStyles.Right);
-            roundedPanel24.BackColor = Color.Maroon;
-            roundedPanel24.BorderRadius = 10;
-            roundedPanel24.Controls.Add(label55);
-            roundedPanel24.Location = new Point(392, 14);
-            roundedPanel24.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel24.Name = "roundedPanel24";
-            roundedPanel24.Size = new Size(150, 36);
-            roundedPanel24.TabIndex = 3;
-            // 
-            // label55
-            // 
-            label55.AutoSize = true;
-            label55.BackColor = Color.White;
-            label55.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label55.Location = new Point(48, 5);
-            label55.Name = "label55";
-            label55.Size = new Size(47, 25);
-            label55.TabIndex = 1;
-            label55.Text = "1.00";
-            // 
-            // label49
-            // 
-            label49.AutoSize = true;
-            label49.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label49.Location = new Point(21, 18);
-            label49.Name = "label49";
-            label49.Size = new Size(235, 25);
-            label49.TabIndex = 1;
-            label49.Text = "Information Management";
-            // 
-            // roundedPanel34
-            // 
-            roundedPanel34.BackColor = Color.Maroon;
-            roundedPanel34.BorderRadius = 10;
-            roundedPanel34.Controls.Add(panel63);
-            roundedPanel34.Location = new Point(3, 502);
-            roundedPanel34.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel34.Name = "roundedPanel34";
-            roundedPanel34.Size = new Size(775, 96);
-            roundedPanel34.TabIndex = 5;
-            // 
-            // panel63
-            // 
-            panel63.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            panel63.BackColor = Color.White;
-            panel63.Controls.Add(button13);
-            panel63.Controls.Add(roundedPanel25);
-            panel63.Controls.Add(label47);
-            panel63.Location = new Point(24, 16);
-            panel63.Margin = new Padding(3, 2, 3, 2);
-            panel63.Name = "panel63";
-            panel63.Size = new Size(733, 63);
-            panel63.TabIndex = 0;
-            // 
-            // button13
-            // 
-            button13.Anchor = (AnchorStyles)(AnchorStyles.Bottom) | (AnchorStyles.Right);
-            button13.BackColor = Color.Maroon;
-            button13.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            button13.ForeColor = Color.White;
-            button13.Location = new Point(564, 12);
-            button13.Margin = new Padding(3, 2, 3, 2);
-            button13.Name = "button13";
-            button13.Size = new Size(137, 40);
-            button13.TabIndex = 4;
-            button13.Text = "View Grade Breakdown";
-            button13.UseVisualStyleBackColor = false;
-            // 
-            // roundedPanel25
-            // 
-            roundedPanel25.Anchor = (AnchorStyles)(AnchorStyles.Bottom) | (AnchorStyles.Right);
-            roundedPanel25.BackColor = Color.Maroon;
-            roundedPanel25.BorderRadius = 10;
-            roundedPanel25.Controls.Add(label57);
-            roundedPanel25.Location = new Point(392, 14);
-            roundedPanel25.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel25.Name = "roundedPanel25";
-            roundedPanel25.Size = new Size(150, 36);
-            roundedPanel25.TabIndex = 3;
-            // 
-            // label57
-            // 
-            label57.AutoSize = true;
-            label57.BackColor = Color.White;
-            label57.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label57.Location = new Point(48, 5);
-            label57.Name = "label57";
-            label57.Size = new Size(47, 25);
-            label57.TabIndex = 1;
-            label57.Text = "1.00";
-            // 
-            // label47
-            // 
-            label47.AutoSize = true;
-            label47.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label47.Location = new Point(21, 18);
-            label47.Name = "label47";
-            label47.Size = new Size(251, 21);
-            label47.TabIndex = 1;
-            label47.Text = "Programming and Technologies 1";
-            // 
-            // panel57
-            // 
-            panel57.BackColor = Color.White;
-            panel57.Controls.Add(btnViewGrades);
-            panel57.Controls.Add(roundedPanel38);
-            panel57.Controls.Add(btnGenerate);
-            panel57.Controls.Add(label52);
-            panel57.Dock = DockStyle.Top;
-            panel57.Location = new Point(0, 0);
-            panel57.Margin = new Padding(3, 2, 3, 2);
-            panel57.Name = "panel57";
-            panel57.Size = new Size(1272, 64);
-            panel57.TabIndex = 2;
-            // 
-            // btnViewGrades
-            // 
-            btnViewGrades.BackColor = Color.Maroon;
-            btnViewGrades.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            btnViewGrades.ForeColor = Color.White;
-            btnViewGrades.Location = new Point(466, 10);
-            btnViewGrades.Margin = new Padding(3, 2, 3, 2);
-            btnViewGrades.Name = "btnViewGrades";
-            btnViewGrades.Size = new Size(236, 40);
-            btnViewGrades.TabIndex = 6;
-            btnViewGrades.Text = "View Grades";
-            btnViewGrades.UseVisualStyleBackColor = false;
-            btnViewGrades.Click += (this.btnViewGrades_Click);
-            // 
-            // roundedPanel38
-            // 
-            roundedPanel38.BackColor = Color.Maroon;
-            roundedPanel38.BorderRadius = 10;
-            roundedPanel38.Controls.Add(comboBox10);
-            roundedPanel38.Location = new Point(196, 9);
-            roundedPanel38.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel38.Name = "roundedPanel38";
-            roundedPanel38.Size = new Size(264, 48);
-            roundedPanel38.TabIndex = 5;
-            // 
-            // comboBox10
-            // 
-            comboBox10.FormattingEnabled = true;
-            comboBox10.Items.AddRange(new object[] { "Midterm Period", "Finalterm Period" });
-            comboBox10.Location = new Point(10, 12);
-            comboBox10.Margin = new Padding(3, 2, 3, 2);
-            comboBox10.Name = "comboBox10";
-            comboBox10.Size = new Size(246, 23);
-            comboBox10.TabIndex = 5;
-            // 
-            // btnGenerate
-            // 
-            btnGenerate.Anchor = (AnchorStyles)(AnchorStyles.Bottom) | (AnchorStyles.Right);
-            btnGenerate.BackColor = Color.Maroon;
-            btnGenerate.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            btnGenerate.ForeColor = Color.White;
-            btnGenerate.Location = new Point(1016, 10);
-            btnGenerate.Margin = new Padding(3, 2, 3, 2);
-            btnGenerate.Name = "btnGenerate";
-            btnGenerate.Size = new Size(236, 40);
-            btnGenerate.TabIndex = 4;
-            btnGenerate.Text = "Generate COG";
-            btnGenerate.UseVisualStyleBackColor = false;
-            btnGenerate.Click += (this.btnGenerate_Click);
-            // 
-            // label52
-            // 
-            label52.AutoSize = true;
-            label52.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label52.Location = new Point(27, 21);
-            label52.Name = "label52";
-            label52.Size = new Size(139, 25);
-            label52.TabIndex = 0;
-            label52.Text = "Grading Period";
-            // 
-            // pnlDashboardContent
-            // 
-            pnlDashboardContent.AutoScroll = true;
-            pnlDashboardContent.BackColor = SystemColors.Control;
-            pnlDashboardContent.Controls.Add(pnlDashboardSpaceProvider);
-            pnlDashboardContent.Controls.Add(pnlAnnouncementsContainer);
-            pnlDashboardContent.Controls.Add(pnlUpcomingEventsContainer);
-            pnlDashboardContent.Controls.Add(pnlQuickActionsContainer);
-            pnlDashboardContent.Controls.Add(pnlEnrolleft);
-            pnlDashboardContent.Controls.Add(pnlCurrentSemesterCard);
-            pnlDashboardContent.Controls.Add(pnlEnrollmentStatusCard);
-            pnlDashboardContent.Controls.Add(pnlEnrolledUnitsCard);
-            pnlDashboardContent.Controls.Add(pnlDashboardGreetingsContainer);
-            pnlDashboardContent.Controls.Add(pnlViewDetails);
-            pnlDashboardContent.Dock = DockStyle.Fill;
-            pnlDashboardContent.Location = new Point(256, 72);
-            pnlDashboardContent.Margin = new Padding(0);
-            pnlDashboardContent.Name = "pnlDashboardContent";
-            pnlDashboardContent.Size = new Size(1272, 719);
-            pnlDashboardContent.TabIndex = 36;
-            pnlDashboardContent.Visible = false;
-            // 
-            // pnlDashboardSpaceProvider
-            // 
-            pnlDashboardSpaceProvider.BackColor = SystemColors.Control;
-            pnlDashboardSpaceProvider.Location = new Point(23, 983);
-            pnlDashboardSpaceProvider.Name = "pnlDashboardSpaceProvider";
-            pnlDashboardSpaceProvider.Size = new Size(1195, 331);
-            pnlDashboardSpaceProvider.TabIndex = 28;
-            // 
-            // pnlAnnouncementsContainer
-            // 
-            pnlAnnouncementsContainer.BackColor = SystemColors.ControlLightLight;
-            pnlAnnouncementsContainer.BorderStyle = BorderStyle.FixedSingle;
-            pnlAnnouncementsContainer.Controls.Add(panel74);
-            pnlAnnouncementsContainer.Controls.Add(panel76);
-            pnlAnnouncementsContainer.Controls.Add(label153);
-            pnlAnnouncementsContainer.Location = new Point(23, 639);
-            pnlAnnouncementsContainer.Name = "pnlAnnouncementsContainer";
-            pnlAnnouncementsContainer.Size = new Size(1178, 331);
-            pnlAnnouncementsContainer.TabIndex = 27;
-            // 
-            // panel74
-            // 
-            panel74.Controls.Add(label147);
-            panel74.Controls.Add(label148);
-            panel74.Controls.Add(panel75);
-            panel74.Controls.Add(label149);
-            panel74.Location = new Point(20, 177);
-            panel74.Name = "panel74";
-            panel74.Size = new Size(1146, 100);
-            panel74.TabIndex = 19;
-            // 
-            // label147
-            // 
-            label147.AutoSize = true;
-            label147.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label147.ForeColor = Color.DimGray;
-            label147.Location = new Point(44, 67);
-            label147.Name = "label147";
-            label147.Size = new Size(446, 17);
-            label147.TabIndex = 19;
-            label147.Text = "Some class schedules have been updated. Please check your dashboard.";
-            // 
-            // label148
-            // 
-            label148.AutoSize = true;
-            label148.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
-            label148.ForeColor = Color.DimGray;
-            label148.Location = new Point(44, 36);
-            label148.Name = "label148";
-            label148.Size = new Size(98, 17);
-            label148.TabIndex = 18;
-            label148.Text = "March 92, 2026";
-            // 
-            // panel75
-            // 
-            panel75.BackColor = Color.FromArgb((int)(byte)255, (int)(byte)193, (int)(byte)7);
-            panel75.Location = new Point(24, 8);
-            panel75.Name = "panel75";
-            panel75.Size = new Size(5, 80);
-            panel75.TabIndex = 17;
-            // 
-            // label149
-            // 
-            label149.AutoSize = true;
-            label149.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label149.ForeColor = Color.DimGray;
-            label149.Location = new Point(42, 15);
-            label149.Name = "label149";
-            label149.Size = new Size(222, 21);
-            label149.TabIndex = 16;
-            label149.Text = "Class Schedule Adjustments";
-            // 
-            // panel76
-            // 
-            panel76.Controls.Add(label150);
-            panel76.Controls.Add(label151);
-            panel76.Controls.Add(panel77);
-            panel76.Controls.Add(label152);
-            panel76.Location = new Point(20, 62);
-            panel76.Name = "panel76";
-            panel76.Size = new Size(1146, 100);
-            panel76.TabIndex = 18;
-            // 
-            // label150
-            // 
-            label150.AutoSize = true;
-            label150.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label150.ForeColor = Color.DimGray;
-            label150.Location = new Point(44, 67);
-            label150.Name = "label150";
-            label150.Size = new Size(512, 17);
-            label150.TabIndex = 19;
-            label150.Text = "Please review the updated enrollment procedures for the upcoming academic year.";
-            // 
-            // label151
-            // 
-            label151.AutoSize = true;
-            label151.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
-            label151.ForeColor = Color.DimGray;
-            label151.Location = new Point(44, 36);
-            label151.Name = "label151";
-            label151.Size = new Size(98, 17);
-            label151.TabIndex = 18;
-            label151.Text = "March 62, 2026";
-            // 
-            // panel77
-            // 
-            panel77.BackColor = Color.FromArgb((int)(byte)255, (int)(byte)193, (int)(byte)7);
-            panel77.Location = new Point(24, 8);
-            panel77.Name = "panel77";
-            panel77.Size = new Size(5, 80);
-            panel77.TabIndex = 17;
-            // 
-            // label152
-            // 
-            label152.AutoSize = true;
-            label152.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label152.ForeColor = Color.DimGray;
-            label152.Location = new Point(42, 15);
-            label152.Name = "label152";
-            label152.Size = new Size(312, 21);
-            label152.TabIndex = 16;
-            label152.Text = "Enrollment Guidelines for AY 2025-2026";
-            // 
-            // label153
-            // 
-            label153.AutoSize = true;
-            label153.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label153.ForeColor = Color.Maroon;
-            label153.Location = new Point(19, 22);
-            label153.Name = "label153";
-            label153.Size = new Size(201, 32);
-            label153.TabIndex = 17;
-            label153.Text = "Announcements";
-            // 
-            // pnlUpcomingEventsContainer
-            // 
-            pnlUpcomingEventsContainer.BackColor = SystemColors.ControlLightLight;
-            pnlUpcomingEventsContainer.BorderStyle = BorderStyle.FixedSingle;
-            pnlUpcomingEventsContainer.Controls.Add(panel78);
-            pnlUpcomingEventsContainer.Controls.Add(panel80);
-            pnlUpcomingEventsContainer.Controls.Add(panel82);
-            pnlUpcomingEventsContainer.Controls.Add(label166);
-            pnlUpcomingEventsContainer.Location = new Point(833, 275);
-            pnlUpcomingEventsContainer.Name = "pnlUpcomingEventsContainer";
-            pnlUpcomingEventsContainer.Size = new Size(368, 331);
-            pnlUpcomingEventsContainer.TabIndex = 26;
-            // 
-            // panel78
-            // 
-            panel78.Controls.Add(label154);
-            panel78.Controls.Add(label155);
-            panel78.Controls.Add(panel79);
-            panel78.Location = new Point(11, 226);
-            panel78.Name = "panel78";
-            panel78.Size = new Size(344, 80);
-            panel78.TabIndex = 21;
-            // 
-            // label154
-            // 
-            label154.AutoSize = true;
-            label154.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
-            label154.ForeColor = Color.DimGray;
-            label154.Location = new Point(93, 38);
-            label154.Name = "label154";
-            label154.Size = new Size(62, 17);
-            label154.TabIndex = 19;
-            label154.Text = "11:59 PM";
-            // 
-            // label155
-            // 
-            label155.AutoSize = true;
-            label155.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label155.ForeColor = Color.DimGray;
-            label155.Location = new Point(86, 13);
-            label155.Name = "label155";
-            label155.Size = new Size(180, 21);
-            label155.TabIndex = 17;
-            label155.Text = "Add/Drop Period Ends";
-            // 
-            // panel79
-            // 
-            panel79.BackColor = Color.Maroon;
-            panel79.Controls.Add(label156);
-            panel79.Controls.Add(label157);
-            panel79.Location = new Point(3, 3);
-            panel79.Name = "panel79";
-            panel79.Size = new Size(70, 74);
-            panel79.TabIndex = 0;
-            // 
-            // label156
-            // 
-            label156.AutoSize = true;
-            label156.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label156.ForeColor = Color.White;
-            label156.Location = new Point(13, 14);
-            label156.Name = "label156";
-            label156.Size = new Size(46, 17);
-            label156.TabIndex = 19;
-            label156.Text = "March";
-            // 
-            // label157
-            // 
-            label157.AutoSize = true;
-            label157.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label157.ForeColor = Color.White;
-            label157.Location = new Point(16, 31);
-            label157.Name = "label157";
-            label157.Size = new Size(37, 30);
-            label157.TabIndex = 20;
-            label157.Text = "20";
-            // 
-            // panel80
-            // 
-            panel80.Controls.Add(label158);
-            panel80.Controls.Add(label159);
-            panel80.Controls.Add(panel81);
-            panel80.Location = new Point(11, 140);
-            panel80.Name = "panel80";
-            panel80.Size = new Size(344, 80);
-            panel80.TabIndex = 20;
-            // 
-            // label158
-            // 
-            label158.AutoSize = true;
-            label158.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
-            label158.ForeColor = Color.DimGray;
-            label158.Location = new Point(93, 38);
-            label158.Name = "label158";
-            label158.Size = new Size(62, 17);
-            label158.TabIndex = 19;
-            label158.Text = "11:59 PM";
-            // 
-            // label159
-            // 
-            label159.AutoSize = true;
-            label159.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label159.ForeColor = Color.DimGray;
-            label159.Location = new Point(86, 13);
-            label159.Name = "label159";
-            label159.Size = new Size(112, 21);
-            label159.TabIndex = 17;
-            label159.Text = "Classes Begin";
-            // 
-            // panel81
-            // 
-            panel81.BackColor = Color.Maroon;
-            panel81.Controls.Add(label160);
-            panel81.Controls.Add(label161);
-            panel81.Location = new Point(3, 3);
-            panel81.Name = "panel81";
-            panel81.Size = new Size(70, 74);
-            panel81.TabIndex = 0;
-            // 
-            // label160
-            // 
-            label160.AutoSize = true;
-            label160.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label160.ForeColor = Color.White;
-            label160.Location = new Point(13, 14);
-            label160.Name = "label160";
-            label160.Size = new Size(46, 17);
-            label160.TabIndex = 19;
-            label160.Text = "March";
-            // 
-            // label161
-            // 
-            label161.AutoSize = true;
-            label161.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label161.ForeColor = Color.White;
-            label161.Location = new Point(16, 31);
-            label161.Name = "label161";
-            label161.Size = new Size(37, 30);
-            label161.TabIndex = 20;
-            label161.Text = "15";
-            // 
-            // panel82
-            // 
-            panel82.Controls.Add(label162);
-            panel82.Controls.Add(label163);
-            panel82.Controls.Add(panel83);
-            panel82.Location = new Point(11, 53);
-            panel82.Name = "panel82";
-            panel82.Size = new Size(344, 80);
-            panel82.TabIndex = 19;
-            // 
-            // label162
-            // 
-            label162.AutoSize = true;
-            label162.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
-            label162.ForeColor = Color.DimGray;
-            label162.Location = new Point(93, 38);
-            label162.Name = "label162";
-            label162.Size = new Size(62, 17);
-            label162.TabIndex = 19;
-            label162.Text = "11:59 PM";
-            // 
-            // label163
-            // 
-            label163.AutoSize = true;
-            label163.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label163.ForeColor = Color.DimGray;
-            label163.Location = new Point(86, 13);
-            label163.Name = "label163";
-            label163.Size = new Size(189, 21);
-            label163.TabIndex = 17;
-            label163.Text = "Enrollment Period Ends";
-            // 
-            // panel83
-            // 
-            panel83.BackColor = Color.Maroon;
-            panel83.Controls.Add(label164);
-            panel83.Controls.Add(label165);
-            panel83.Location = new Point(3, 3);
-            panel83.Name = "panel83";
-            panel83.Size = new Size(70, 74);
-            panel83.TabIndex = 0;
-            // 
-            // label164
-            // 
-            label164.AutoSize = true;
-            label164.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label164.ForeColor = Color.White;
-            label164.Location = new Point(13, 14);
-            label164.Name = "label164";
-            label164.Size = new Size(46, 17);
-            label164.TabIndex = 19;
-            label164.Text = "March";
-            // 
-            // label165
-            // 
-            label165.AutoSize = true;
-            label165.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label165.ForeColor = Color.White;
-            label165.Location = new Point(16, 31);
-            label165.Name = "label165";
-            label165.Size = new Size(37, 30);
-            label165.TabIndex = 20;
-            label165.Text = "10";
-            // 
-            // label166
-            // 
-            label166.AutoSize = true;
-            label166.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label166.ForeColor = Color.Maroon;
-            label166.Location = new Point(8, 14);
-            label166.Name = "label166";
-            label166.Size = new Size(213, 32);
-            label166.TabIndex = 18;
-            label166.Text = "Upcoming Events";
-            // 
-            // pnlQuickActionsContainer
-            // 
-            pnlQuickActionsContainer.BackColor = SystemColors.ControlLightLight;
-            pnlQuickActionsContainer.BorderStyle = BorderStyle.FixedSingle;
-            pnlQuickActionsContainer.Controls.Add(panel84);
-            pnlQuickActionsContainer.Controls.Add(panel85);
-            pnlQuickActionsContainer.Controls.Add(panel86);
-            pnlQuickActionsContainer.Controls.Add(panel87);
-            pnlQuickActionsContainer.Controls.Add(label174);
-            pnlQuickActionsContainer.Location = new Point(23, 275);
-            pnlQuickActionsContainer.Name = "pnlQuickActionsContainer";
-            pnlQuickActionsContainer.Size = new Size(789, 331);
-            pnlQuickActionsContainer.TabIndex = 25;
-            // 
-            // panel84
-            // 
-            panel84.BackColor = SystemColors.ControlLightLight;
-            panel84.BorderStyle = BorderStyle.FixedSingle;
-            panel84.Controls.Add(btnDashboardCourses);
-            panel84.Controls.Add(label167);
-            panel84.Controls.Add(lblCourses);
-            panel84.Location = new Point(403, 156);
-            panel84.Name = "panel84";
-            panel84.Size = new Size(363, 80);
-            panel84.TabIndex = 28;
-            // 
-            // btnDashboardCourses
-            // 
-            btnDashboardCourses.BackColor = Color.Maroon;
-            btnDashboardCourses.FlatStyle = FlatStyle.Popup;
-            btnDashboardCourses.Image = PUPAcadPortal.Properties.Resources.graduation_cap_24;
-            btnDashboardCourses.Location = new Point(12, 11);
-            btnDashboardCourses.Name = "btnDashboardCourses";
-            btnDashboardCourses.Size = new Size(56, 54);
-            btnDashboardCourses.TabIndex = 20;
-            btnDashboardCourses.UseVisualStyleBackColor = false;
-            btnDashboardCourses.Click += (this.btnSubject_Click);
-            // 
-            // label167
-            // 
-            label167.AutoSize = true;
-            label167.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
-            label167.ForeColor = Color.DimGray;
-            label167.Location = new Point(74, 40);
-            label167.Name = "label167";
-            label167.Size = new Size(154, 17);
-            label167.TabIndex = 19;
-            label167.Text = "Browse available courses";
-            // 
-            // lblCourses
-            // 
-            lblCourses.AutoSize = true;
-            lblCourses.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            lblCourses.ForeColor = Color.DimGray;
-            lblCourses.Location = new Point(74, 19);
-            lblCourses.Name = "lblCourses";
-            lblCourses.Size = new Size(69, 21);
-            lblCourses.TabIndex = 17;
-            lblCourses.Text = "Courses";
+            // pnlAttendance
+            // 
+            pnlAttendance.BackColor = SystemColors.Control;
+            pnlAttendance.CausesValidation = false;
+            pnlAttendance.Controls.Add(panel17);
+            pnlAttendance.Controls.Add(panel90);
+            pnlAttendance.Dock = DockStyle.Fill;
+            pnlAttendance.Location = new Point(256, 72);
+            pnlAttendance.Margin = new Padding(0);
+            pnlAttendance.Name = "pnlAttendance";
+            pnlAttendance.Size = new Size(1272, 719);
+            pnlAttendance.TabIndex = 39;
+            pnlAttendance.Visible = false;
+            // 
+            // panel17
+            // 
+            panel17.BackColor = SystemColors.Control;
+            panel17.Controls.Add(pnlAttAcc);
+            panel17.Controls.Add(pnlAttIntro);
+            panel17.Dock = DockStyle.Top;
+            panel17.Location = new Point(0, 176);
+            panel17.Margin = new Padding(3, 2, 3, 2);
+            panel17.Name = "panel17";
+            panel17.Size = new Size(1272, 534);
+            panel17.TabIndex = 32;
+            // 
+            // pnlAttIntro
+            // 
+            pnlAttIntro.Anchor = AnchorStyles.Top;
+            pnlAttIntro.AutoScroll = true;
+            pnlAttIntro.Controls.Add(tableLayoutPanel1);
+            pnlAttIntro.Location = new Point(11, 12);
+            pnlAttIntro.Margin = new Padding(3, 2, 3, 2);
+            pnlAttIntro.Name = "pnlAttIntro";
+            pnlAttIntro.Size = new Size(1251, 527);
+            pnlAttIntro.TabIndex = 23;
+            pnlAttIntro.Visible = false;
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            tableLayoutPanel1.BackColor = Color.White;
+            tableLayoutPanel1.ColumnCount = 3;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 525F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 288F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 400F));
+            tableLayoutPanel1.Controls.Add(panel33, 0, 8);
+            tableLayoutPanel1.Controls.Add(panel32, 0, 7);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel8, 1, 6);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel7, 1, 5);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel6, 1, 4);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel5, 1, 3);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel4, 1, 2);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 1, 1);
+            tableLayoutPanel1.Controls.Add(panel31, 0, 6);
+            tableLayoutPanel1.Controls.Add(panel30, 0, 5);
+            tableLayoutPanel1.Controls.Add(panel29, 0, 4);
+            tableLayoutPanel1.Controls.Add(panel34, 0, 3);
+            tableLayoutPanel1.Controls.Add(panel85, 0, 2);
+            tableLayoutPanel1.Controls.Add(panel88, 0, 1);
+            tableLayoutPanel1.Controls.Add(panel89, 0, 0);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel20, 2, 8);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel19, 2, 7);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel18, 2, 6);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel17, 2, 5);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel16, 2, 4);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel15, 2, 3);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel12, 2, 2);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel14, 2, 0);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel13, 2, 1);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel3, 1, 0);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel9, 1, 7);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel10, 1, 8);
+            tableLayoutPanel1.Location = new Point(7, 6);
+            tableLayoutPanel1.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 11;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.Size = new Size(2248, 1031);
+            tableLayoutPanel1.TabIndex = 22;
+            // 
+            // panel33
+            // 
+            panel33.Controls.Add(label93);
+            panel33.Location = new Point(3, 658);
+            panel33.Margin = new Padding(3, 2, 3, 2);
+            panel33.Name = "panel33";
+            panel33.Size = new Size(519, 69);
+            panel33.TabIndex = 54;
+            // 
+            // label93
+            // 
+            label93.AutoSize = true;
+            label93.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label93.Location = new Point(159, 24);
+            label93.Name = "label93";
+            label93.Size = new Size(119, 25);
+            label93.TabIndex = 30;
+            label93.Text = "June 1, 2026";
+            // 
+            // panel32
+            // 
+            panel32.Controls.Add(label92);
+            panel32.Location = new Point(3, 576);
+            panel32.Margin = new Padding(3, 2, 3, 2);
+            panel32.Name = "panel32";
+            panel32.Size = new Size(519, 69);
+            panel32.TabIndex = 54;
+            // 
+            // label92
+            // 
+            label92.AutoSize = true;
+            label92.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label92.Location = new Point(159, 24);
+            label92.Name = "label92";
+            label92.Size = new Size(131, 25);
+            label92.TabIndex = 30;
+            label92.Text = "May 25, 2026";
+            // 
+            // tableLayoutPanel8
+            // 
+            tableLayoutPanel8.ColumnCount = 3;
+            tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
+            tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
+            tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
+            tableLayoutPanel8.Controls.Add(label89, 1, 1);
+            tableLayoutPanel8.Location = new Point(528, 494);
+            tableLayoutPanel8.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel8.Name = "tableLayoutPanel8";
+            tableLayoutPanel8.RowCount = 3;
+            tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Percent, 32.1330757F));
+            tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Percent, 38.7394867F));
+            tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Percent, 29.1274338F));
+            tableLayoutPanel8.Size = new Size(282, 78);
+            tableLayoutPanel8.TabIndex = 59;
+            // 
+            // label89
+            // 
+            label89.AutoSize = true;
+            label89.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            label89.Location = new Point(77, 25);
+            label89.Name = "label89";
+            label89.Padding = new Padding(18, 0, 0, 0);
+            label89.Size = new Size(94, 25);
+            label89.TabIndex = 0;
+            label89.Text = "Present";
+            // 
+            // tableLayoutPanel7
+            // 
+            tableLayoutPanel7.ColumnCount = 3;
+            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
+            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
+            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
+            tableLayoutPanel7.Controls.Add(label88, 1, 1);
+            tableLayoutPanel7.Location = new Point(528, 412);
+            tableLayoutPanel7.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel7.Name = "tableLayoutPanel7";
+            tableLayoutPanel7.RowCount = 3;
+            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 32.1330757F));
+            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 38.7394867F));
+            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 29.1274338F));
+            tableLayoutPanel7.Size = new Size(282, 78);
+            tableLayoutPanel7.TabIndex = 58;
+            // 
+            // label88
+            // 
+            label88.AutoSize = true;
+            label88.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            label88.Location = new Point(77, 25);
+            label88.Name = "label88";
+            label88.Padding = new Padding(18, 0, 0, 0);
+            label88.Size = new Size(99, 25);
+            label88.TabIndex = 0;
+            label88.Text = "Excused";
+            // 
+            // tableLayoutPanel6
+            // 
+            tableLayoutPanel6.ColumnCount = 3;
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
+            tableLayoutPanel6.Controls.Add(label87, 1, 1);
+            tableLayoutPanel6.Location = new Point(528, 330);
+            tableLayoutPanel6.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel6.Name = "tableLayoutPanel6";
+            tableLayoutPanel6.RowCount = 3;
+            tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 32.1330757F));
+            tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 38.7394867F));
+            tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 29.1274338F));
+            tableLayoutPanel6.Size = new Size(282, 78);
+            tableLayoutPanel6.TabIndex = 57;
+            // 
+            // label87
+            // 
+            label87.AutoSize = true;
+            label87.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            label87.Location = new Point(77, 25);
+            label87.Name = "label87";
+            label87.Padding = new Padding(18, 0, 0, 0);
+            label87.Size = new Size(94, 25);
+            label87.TabIndex = 0;
+            label87.Text = "Present";
+            // 
+            // tableLayoutPanel5
+            // 
+            tableLayoutPanel5.ColumnCount = 3;
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
+            tableLayoutPanel5.Controls.Add(label86, 1, 1);
+            tableLayoutPanel5.Location = new Point(528, 248);
+            tableLayoutPanel5.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel5.Name = "tableLayoutPanel5";
+            tableLayoutPanel5.RowCount = 3;
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 32.1330757F));
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 38.7394867F));
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 29.1274338F));
+            tableLayoutPanel5.Size = new Size(282, 78);
+            tableLayoutPanel5.TabIndex = 56;
+            // 
+            // label86
+            // 
+            label86.AutoSize = true;
+            label86.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            label86.Location = new Point(77, 25);
+            label86.Name = "label86";
+            label86.Padding = new Padding(18, 0, 0, 0);
+            label86.Size = new Size(94, 25);
+            label86.TabIndex = 0;
+            label86.Text = "Present";
+            // 
+            // tableLayoutPanel4
+            // 
+            tableLayoutPanel4.ColumnCount = 3;
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
+            tableLayoutPanel4.Controls.Add(label76, 1, 1);
+            tableLayoutPanel4.Location = new Point(528, 166);
+            tableLayoutPanel4.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel4.Name = "tableLayoutPanel4";
+            tableLayoutPanel4.RowCount = 3;
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 32.1330757F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 38.7394867F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 29.1274338F));
+            tableLayoutPanel4.Size = new Size(282, 78);
+            tableLayoutPanel4.TabIndex = 55;
+            // 
+            // label76
+            // 
+            label76.AutoSize = true;
+            label76.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            label76.Location = new Point(77, 25);
+            label76.Name = "label76";
+            label76.Padding = new Padding(18, 0, 0, 0);
+            label76.Size = new Size(90, 25);
+            label76.TabIndex = 0;
+            label76.Text = "Absent";
+            // 
+            // tableLayoutPanel2
+            // 
+            tableLayoutPanel2.ColumnCount = 3;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
+            tableLayoutPanel2.Controls.Add(label77, 1, 1);
+            tableLayoutPanel2.Location = new Point(528, 84);
+            tableLayoutPanel2.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 3;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 32.1330757F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 38.7394867F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 29.1274338F));
+            tableLayoutPanel2.Size = new Size(282, 78);
+            tableLayoutPanel2.TabIndex = 54;
+            // 
+            // label77
+            // 
+            label77.AutoSize = true;
+            label77.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            label77.Location = new Point(77, 25);
+            label77.Name = "label77";
+            label77.Padding = new Padding(18, 0, 0, 0);
+            label77.Size = new Size(94, 25);
+            label77.TabIndex = 0;
+            label77.Text = "Present";
+            // 
+            // panel31
+            // 
+            panel31.Controls.Add(label78);
+            panel31.Location = new Point(3, 494);
+            panel31.Margin = new Padding(3, 2, 3, 2);
+            panel31.Name = "panel31";
+            panel31.Size = new Size(519, 69);
+            panel31.TabIndex = 53;
+            // 
+            // label78
+            // 
+            label78.AutoSize = true;
+            label78.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label78.Location = new Point(159, 24);
+            label78.Name = "label78";
+            label78.Size = new Size(128, 25);
+            label78.TabIndex = 30;
+            label78.Text = "May 18, 2026";
+            // 
+            // panel30
+            // 
+            panel30.Controls.Add(label79);
+            panel30.Location = new Point(3, 412);
+            panel30.Margin = new Padding(3, 2, 3, 2);
+            panel30.Name = "panel30";
+            panel30.Size = new Size(519, 69);
+            panel30.TabIndex = 52;
+            // 
+            // label79
+            // 
+            label79.AutoSize = true;
+            label79.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label79.Location = new Point(159, 24);
+            label79.Name = "label79";
+            label79.Size = new Size(125, 25);
+            label79.TabIndex = 30;
+            label79.Text = "May 11, 2026";
+            // 
+            // panel29
+            // 
+            panel29.Controls.Add(label80);
+            panel29.Location = new Point(3, 330);
+            panel29.Margin = new Padding(3, 2, 3, 2);
+            panel29.Name = "panel29";
+            panel29.Size = new Size(519, 69);
+            panel29.TabIndex = 51;
+            // 
+            // label80
+            // 
+            label80.AutoSize = true;
+            label80.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label80.Location = new Point(159, 24);
+            label80.Name = "label80";
+            label80.Size = new Size(120, 25);
+            label80.TabIndex = 30;
+            label80.Text = "May 4, 2026";
+            // 
+            // panel34
+            // 
+            panel34.Controls.Add(label81);
+            panel34.Location = new Point(3, 248);
+            panel34.Margin = new Padding(3, 2, 3, 2);
+            panel34.Name = "panel34";
+            panel34.Size = new Size(519, 69);
+            panel34.TabIndex = 50;
+            // 
+            // label81
+            // 
+            label81.AutoSize = true;
+            label81.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label81.Location = new Point(159, 24);
+            label81.Name = "label81";
+            label81.Size = new Size(133, 25);
+            label81.TabIndex = 30;
+            label81.Text = "April 27, 2026";
             // 
             // panel85
             // 
-            panel85.BackColor = SystemColors.ControlLightLight;
-            panel85.BorderStyle = BorderStyle.FixedSingle;
-            panel85.Controls.Add(button14);
-            panel85.Controls.Add(label168);
-            panel85.Controls.Add(label169);
-            panel85.Location = new Point(403, 56);
+            panel85.Controls.Add(label82);
+            panel85.Location = new Point(3, 166);
+            panel85.Margin = new Padding(3, 2, 3, 2);
             panel85.Name = "panel85";
-            panel85.Size = new Size(363, 80);
-            panel85.TabIndex = 27;
+            panel85.Size = new Size(519, 69);
+            panel85.TabIndex = 50;
             // 
-            // button14
+            // label82
             // 
-            button14.BackColor = Color.Maroon;
-            button14.FlatStyle = FlatStyle.Popup;
-            button14.Image = PUPAcadPortal.Properties.Resources.calendar_10_24;
-            button14.Location = new Point(12, 11);
-            button14.Name = "button14";
-            button14.Size = new Size(56, 54);
-            button14.TabIndex = 20;
-            button14.UseVisualStyleBackColor = false;
+            label82.AutoSize = true;
+            label82.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label82.Location = new Point(159, 24);
+            label82.Name = "label82";
+            label82.Size = new Size(134, 25);
+            label82.TabIndex = 30;
+            label82.Text = "April 20, 2026";
+            // 
+            // panel88
+            // 
+            panel88.Controls.Add(label83);
+            panel88.Location = new Point(3, 84);
+            panel88.Margin = new Padding(3, 2, 3, 2);
+            panel88.Name = "panel88";
+            panel88.Size = new Size(519, 69);
+            panel88.TabIndex = 49;
+            // 
+            // label83
+            // 
+            label83.AutoSize = true;
+            label83.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label83.Location = new Point(159, 24);
+            label83.Name = "label83";
+            label83.Size = new Size(131, 25);
+            label83.TabIndex = 30;
+            label83.Text = "April 13, 2026";
+            // 
+            // panel89
+            // 
+            panel89.Controls.Add(label84);
+            panel89.Location = new Point(3, 2);
+            panel89.Margin = new Padding(3, 2, 3, 2);
+            panel89.Name = "panel89";
+            panel89.Size = new Size(519, 69);
+            panel89.TabIndex = 48;
+            // 
+            // label84
+            // 
+            label84.AutoSize = true;
+            label84.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label84.Location = new Point(159, 24);
+            label84.Name = "label84";
+            label84.Size = new Size(123, 25);
+            label84.TabIndex = 30;
+            label84.Text = "April 6, 2026";
+            // 
+            // tableLayoutPanel20
+            // 
+            tableLayoutPanel20.ColumnCount = 3;
+            tableLayoutPanel20.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel20.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
+            tableLayoutPanel20.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel20.Controls.Add(textBox19, 1, 1);
+            tableLayoutPanel20.Location = new Point(816, 658);
+            tableLayoutPanel20.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel20.Name = "tableLayoutPanel20";
+            tableLayoutPanel20.RowCount = 3;
+            tableLayoutPanel20.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
+            tableLayoutPanel20.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
+            tableLayoutPanel20.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
+            tableLayoutPanel20.Size = new Size(395, 78);
+            tableLayoutPanel20.TabIndex = 47;
+            // 
+            // textBox19
+            // 
+            textBox19.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            textBox19.BackColor = Color.White;
+            textBox19.BorderStyle = BorderStyle.FixedSingle;
+            textBox19.Location = new Point(35, 17);
+            textBox19.Margin = new Padding(3, 2, 3, 2);
+            textBox19.Multiline = true;
+            textBox19.Name = "textBox19";
+            textBox19.ReadOnly = true;
+            textBox19.Size = new Size(324, 36);
+            textBox19.TabIndex = 33;
+            // 
+            // tableLayoutPanel19
+            // 
+            tableLayoutPanel19.ColumnCount = 3;
+            tableLayoutPanel19.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel19.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
+            tableLayoutPanel19.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel19.Controls.Add(textBox18, 1, 1);
+            tableLayoutPanel19.Location = new Point(816, 576);
+            tableLayoutPanel19.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel19.Name = "tableLayoutPanel19";
+            tableLayoutPanel19.RowCount = 3;
+            tableLayoutPanel19.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
+            tableLayoutPanel19.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
+            tableLayoutPanel19.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
+            tableLayoutPanel19.Size = new Size(395, 78);
+            tableLayoutPanel19.TabIndex = 46;
+            // 
+            // textBox18
+            // 
+            textBox18.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            textBox18.BackColor = Color.White;
+            textBox18.BorderStyle = BorderStyle.FixedSingle;
+            textBox18.Location = new Point(35, 17);
+            textBox18.Margin = new Padding(3, 2, 3, 2);
+            textBox18.Multiline = true;
+            textBox18.Name = "textBox18";
+            textBox18.ReadOnly = true;
+            textBox18.Size = new Size(324, 36);
+            textBox18.TabIndex = 33;
+            // 
+            // tableLayoutPanel18
+            // 
+            tableLayoutPanel18.ColumnCount = 3;
+            tableLayoutPanel18.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel18.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
+            tableLayoutPanel18.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel18.Controls.Add(textBox17, 1, 1);
+            tableLayoutPanel18.Location = new Point(816, 494);
+            tableLayoutPanel18.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel18.Name = "tableLayoutPanel18";
+            tableLayoutPanel18.RowCount = 3;
+            tableLayoutPanel18.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
+            tableLayoutPanel18.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
+            tableLayoutPanel18.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
+            tableLayoutPanel18.Size = new Size(395, 78);
+            tableLayoutPanel18.TabIndex = 45;
+            // 
+            // textBox17
+            // 
+            textBox17.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            textBox17.BackColor = Color.White;
+            textBox17.BorderStyle = BorderStyle.FixedSingle;
+            textBox17.Location = new Point(35, 17);
+            textBox17.Margin = new Padding(3, 2, 3, 2);
+            textBox17.Multiline = true;
+            textBox17.Name = "textBox17";
+            textBox17.ReadOnly = true;
+            textBox17.Size = new Size(324, 36);
+            textBox17.TabIndex = 33;
+            // 
+            // tableLayoutPanel17
+            // 
+            tableLayoutPanel17.ColumnCount = 3;
+            tableLayoutPanel17.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel17.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
+            tableLayoutPanel17.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel17.Controls.Add(textBox16, 1, 1);
+            tableLayoutPanel17.Location = new Point(816, 412);
+            tableLayoutPanel17.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel17.Name = "tableLayoutPanel17";
+            tableLayoutPanel17.RowCount = 3;
+            tableLayoutPanel17.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
+            tableLayoutPanel17.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
+            tableLayoutPanel17.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
+            tableLayoutPanel17.Size = new Size(395, 78);
+            tableLayoutPanel17.TabIndex = 40;
+            // 
+            // textBox16
+            // 
+            textBox16.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            textBox16.BackColor = Color.White;
+            textBox16.BorderStyle = BorderStyle.FixedSingle;
+            textBox16.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            textBox16.Location = new Point(35, 17);
+            textBox16.Margin = new Padding(3, 2, 3, 2);
+            textBox16.Multiline = true;
+            textBox16.Name = "textBox16";
+            textBox16.ReadOnly = true;
+            textBox16.Size = new Size(324, 36);
+            textBox16.TabIndex = 33;
+            textBox16.Text = "Due to medical reason";
+            // 
+            // tableLayoutPanel16
+            // 
+            tableLayoutPanel16.ColumnCount = 3;
+            tableLayoutPanel16.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel16.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
+            tableLayoutPanel16.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel16.Controls.Add(textBox15, 1, 1);
+            tableLayoutPanel16.Location = new Point(816, 330);
+            tableLayoutPanel16.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel16.Name = "tableLayoutPanel16";
+            tableLayoutPanel16.RowCount = 3;
+            tableLayoutPanel16.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
+            tableLayoutPanel16.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
+            tableLayoutPanel16.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
+            tableLayoutPanel16.Size = new Size(395, 78);
+            tableLayoutPanel16.TabIndex = 40;
+            // 
+            // textBox15
+            // 
+            textBox15.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            textBox15.BackColor = Color.White;
+            textBox15.BorderStyle = BorderStyle.FixedSingle;
+            textBox15.Location = new Point(35, 17);
+            textBox15.Margin = new Padding(3, 2, 3, 2);
+            textBox15.Multiline = true;
+            textBox15.Name = "textBox15";
+            textBox15.ReadOnly = true;
+            textBox15.Size = new Size(324, 36);
+            textBox15.TabIndex = 33;
+            // 
+            // tableLayoutPanel15
+            // 
+            tableLayoutPanel15.ColumnCount = 3;
+            tableLayoutPanel15.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel15.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
+            tableLayoutPanel15.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel15.Controls.Add(textBox14, 1, 1);
+            tableLayoutPanel15.Location = new Point(816, 248);
+            tableLayoutPanel15.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel15.Name = "tableLayoutPanel15";
+            tableLayoutPanel15.RowCount = 3;
+            tableLayoutPanel15.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
+            tableLayoutPanel15.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
+            tableLayoutPanel15.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
+            tableLayoutPanel15.Size = new Size(395, 78);
+            tableLayoutPanel15.TabIndex = 40;
+            // 
+            // textBox14
+            // 
+            textBox14.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            textBox14.BackColor = Color.White;
+            textBox14.BorderStyle = BorderStyle.FixedSingle;
+            textBox14.Location = new Point(35, 17);
+            textBox14.Margin = new Padding(3, 2, 3, 2);
+            textBox14.Multiline = true;
+            textBox14.Name = "textBox14";
+            textBox14.ReadOnly = true;
+            textBox14.Size = new Size(324, 36);
+            textBox14.TabIndex = 33;
+            // 
+            // tableLayoutPanel12
+            // 
+            tableLayoutPanel12.ColumnCount = 3;
+            tableLayoutPanel12.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel12.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
+            tableLayoutPanel12.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel12.Controls.Add(textBox13, 1, 1);
+            tableLayoutPanel12.Location = new Point(816, 166);
+            tableLayoutPanel12.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel12.Name = "tableLayoutPanel12";
+            tableLayoutPanel12.RowCount = 3;
+            tableLayoutPanel12.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
+            tableLayoutPanel12.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
+            tableLayoutPanel12.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
+            tableLayoutPanel12.Size = new Size(395, 78);
+            tableLayoutPanel12.TabIndex = 40;
+            // 
+            // textBox13
+            // 
+            textBox13.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            textBox13.BackColor = Color.White;
+            textBox13.BorderStyle = BorderStyle.FixedSingle;
+            textBox13.Location = new Point(35, 17);
+            textBox13.Margin = new Padding(3, 2, 3, 2);
+            textBox13.Multiline = true;
+            textBox13.Name = "textBox13";
+            textBox13.ReadOnly = true;
+            textBox13.Size = new Size(324, 36);
+            textBox13.TabIndex = 33;
+            // 
+            // tableLayoutPanel14
+            // 
+            tableLayoutPanel14.ColumnCount = 3;
+            tableLayoutPanel14.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel14.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
+            tableLayoutPanel14.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel14.Controls.Add(textBox12, 1, 1);
+            tableLayoutPanel14.Location = new Point(816, 2);
+            tableLayoutPanel14.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel14.Name = "tableLayoutPanel14";
+            tableLayoutPanel14.RowCount = 3;
+            tableLayoutPanel14.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
+            tableLayoutPanel14.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
+            tableLayoutPanel14.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
+            tableLayoutPanel14.Size = new Size(395, 78);
+            tableLayoutPanel14.TabIndex = 41;
+            // 
+            // textBox12
+            // 
+            textBox12.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            textBox12.BackColor = Color.White;
+            textBox12.BorderStyle = BorderStyle.FixedSingle;
+            textBox12.Location = new Point(35, 17);
+            textBox12.Margin = new Padding(3, 2, 3, 2);
+            textBox12.Multiline = true;
+            textBox12.Name = "textBox12";
+            textBox12.ReadOnly = true;
+            textBox12.Size = new Size(324, 36);
+            textBox12.TabIndex = 33;
+            // 
+            // tableLayoutPanel13
+            // 
+            tableLayoutPanel13.ColumnCount = 3;
+            tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
+            tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel13.Controls.Add(textBox2, 1, 1);
+            tableLayoutPanel13.Location = new Point(816, 84);
+            tableLayoutPanel13.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel13.Name = "tableLayoutPanel13";
+            tableLayoutPanel13.RowCount = 3;
+            tableLayoutPanel13.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
+            tableLayoutPanel13.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
+            tableLayoutPanel13.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
+            tableLayoutPanel13.Size = new Size(395, 78);
+            tableLayoutPanel13.TabIndex = 39;
+            // 
+            // textBox2
+            // 
+            textBox2.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            textBox2.BackColor = Color.White;
+            textBox2.BorderStyle = BorderStyle.FixedSingle;
+            textBox2.Location = new Point(35, 17);
+            textBox2.Margin = new Padding(3, 2, 3, 2);
+            textBox2.Multiline = true;
+            textBox2.Name = "textBox2";
+            textBox2.ReadOnly = true;
+            textBox2.Size = new Size(324, 36);
+            textBox2.TabIndex = 33;
+            // 
+            // tableLayoutPanel3
+            // 
+            tableLayoutPanel3.ColumnCount = 3;
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
+            tableLayoutPanel3.Controls.Add(label85, 1, 1);
+            tableLayoutPanel3.Location = new Point(528, 2);
+            tableLayoutPanel3.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel3.Name = "tableLayoutPanel3";
+            tableLayoutPanel3.RowCount = 3;
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 32.1330757F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 38.7394867F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 29.1274338F));
+            tableLayoutPanel3.Size = new Size(282, 78);
+            tableLayoutPanel3.TabIndex = 38;
+            // 
+            // label85
+            // 
+            label85.AutoSize = true;
+            label85.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            label85.Location = new Point(77, 25);
+            label85.Name = "label85";
+            label85.Padding = new Padding(18, 0, 0, 0);
+            label85.Size = new Size(94, 25);
+            label85.TabIndex = 0;
+            label85.Text = "Present";
+            // 
+            // tableLayoutPanel9
+            // 
+            tableLayoutPanel9.ColumnCount = 3;
+            tableLayoutPanel9.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
+            tableLayoutPanel9.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
+            tableLayoutPanel9.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
+            tableLayoutPanel9.Controls.Add(label90, 1, 1);
+            tableLayoutPanel9.Location = new Point(528, 576);
+            tableLayoutPanel9.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel9.Name = "tableLayoutPanel9";
+            tableLayoutPanel9.RowCount = 3;
+            tableLayoutPanel9.RowStyles.Add(new RowStyle(SizeType.Percent, 32.1330757F));
+            tableLayoutPanel9.RowStyles.Add(new RowStyle(SizeType.Percent, 38.7394867F));
+            tableLayoutPanel9.RowStyles.Add(new RowStyle(SizeType.Percent, 29.1274338F));
+            tableLayoutPanel9.Size = new Size(282, 78);
+            tableLayoutPanel9.TabIndex = 60;
+            // 
+            // label90
+            // 
+            label90.AutoSize = true;
+            label90.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            label90.Location = new Point(77, 25);
+            label90.Name = "label90";
+            label90.Padding = new Padding(18, 0, 0, 0);
+            label90.Size = new Size(94, 25);
+            label90.TabIndex = 0;
+            label90.Text = "Present";
+            // 
+            // tableLayoutPanel10
+            // 
+            tableLayoutPanel10.ColumnCount = 3;
+            tableLayoutPanel10.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
+            tableLayoutPanel10.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
+            tableLayoutPanel10.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
+            tableLayoutPanel10.Controls.Add(label91, 1, 1);
+            tableLayoutPanel10.Location = new Point(528, 658);
+            tableLayoutPanel10.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel10.Name = "tableLayoutPanel10";
+            tableLayoutPanel10.RowCount = 3;
+            tableLayoutPanel10.RowStyles.Add(new RowStyle(SizeType.Percent, 32.1330757F));
+            tableLayoutPanel10.RowStyles.Add(new RowStyle(SizeType.Percent, 38.7394867F));
+            tableLayoutPanel10.RowStyles.Add(new RowStyle(SizeType.Percent, 29.1274338F));
+            tableLayoutPanel10.Size = new Size(282, 78);
+            tableLayoutPanel10.TabIndex = 61;
+            // 
+            // label91
+            // 
+            label91.AutoSize = true;
+            label91.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            label91.Location = new Point(77, 25);
+            label91.Name = "label91";
+            label91.Padding = new Padding(18, 0, 0, 0);
+            label91.Size = new Size(94, 25);
+            label91.TabIndex = 0;
+            label91.Text = "Present";
+            // 
+            // pnlAttAcc
+            // 
+            pnlAttAcc.Anchor = AnchorStyles.Top;
+            pnlAttAcc.AutoScroll = true;
+            pnlAttAcc.BackgroundImageLayout = ImageLayout.None;
+            pnlAttAcc.Controls.Add(tableLayoutPanel21);
+            pnlAttAcc.Location = new Point(11, 12);
+            pnlAttAcc.Margin = new Padding(3, 2, 3, 2);
+            pnlAttAcc.Name = "pnlAttAcc";
+            pnlAttAcc.Size = new Size(1250, 527);
+            pnlAttAcc.TabIndex = 24;
+            pnlAttAcc.Visible = false;
+            // 
+            // tableLayoutPanel21
+            // 
+            tableLayoutPanel21.AutoScroll = true;
+            tableLayoutPanel21.BackColor = Color.White;
+            tableLayoutPanel21.ColumnCount = 3;
+            tableLayoutPanel21.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 525F));
+            tableLayoutPanel21.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 288F));
+            tableLayoutPanel21.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 400F));
+            tableLayoutPanel21.Controls.Add(panel3, 0, 8);
+            tableLayoutPanel21.Controls.Add(panel14, 0, 7);
+            tableLayoutPanel21.Controls.Add(tableLayoutPanel22, 1, 6);
+            tableLayoutPanel21.Controls.Add(tableLayoutPanel23, 1, 5);
+            tableLayoutPanel21.Controls.Add(tableLayoutPanel24, 1, 4);
+            tableLayoutPanel21.Controls.Add(tableLayoutPanel26, 1, 3);
+            tableLayoutPanel21.Controls.Add(tableLayoutPanel27, 1, 2);
+            tableLayoutPanel21.Controls.Add(tableLayoutPanel28, 1, 1);
+            tableLayoutPanel21.Controls.Add(panel19, 0, 6);
+            tableLayoutPanel21.Controls.Add(panel20, 0, 5);
+            tableLayoutPanel21.Controls.Add(panel21, 0, 4);
+            tableLayoutPanel21.Controls.Add(panel22, 0, 3);
+            tableLayoutPanel21.Controls.Add(panel24, 0, 2);
+            tableLayoutPanel21.Controls.Add(panel27, 0, 1);
+            tableLayoutPanel21.Controls.Add(panel28, 0, 0);
+            tableLayoutPanel21.Controls.Add(tableLayoutPanel29, 2, 8);
+            tableLayoutPanel21.Controls.Add(tableLayoutPanel30, 2, 7);
+            tableLayoutPanel21.Controls.Add(tableLayoutPanel31, 2, 6);
+            tableLayoutPanel21.Controls.Add(tableLayoutPanel32, 2, 5);
+            tableLayoutPanel21.Controls.Add(tableLayoutPanel33, 2, 4);
+            tableLayoutPanel21.Controls.Add(tableLayoutPanel34, 2, 3);
+            tableLayoutPanel21.Controls.Add(tableLayoutPanel35, 2, 2);
+            tableLayoutPanel21.Controls.Add(tableLayoutPanel36, 2, 0);
+            tableLayoutPanel21.Controls.Add(tableLayoutPanel37, 2, 1);
+            tableLayoutPanel21.Controls.Add(tableLayoutPanel38, 1, 0);
+            tableLayoutPanel21.Controls.Add(tableLayoutPanel39, 1, 7);
+            tableLayoutPanel21.Controls.Add(tableLayoutPanel40, 1, 8);
+            tableLayoutPanel21.Location = new Point(7, 6);
+            tableLayoutPanel21.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel21.Name = "tableLayoutPanel21";
+            tableLayoutPanel21.RowCount = 11;
+            tableLayoutPanel21.RowStyles.Add(new RowStyle());
+            tableLayoutPanel21.RowStyles.Add(new RowStyle());
+            tableLayoutPanel21.RowStyles.Add(new RowStyle());
+            tableLayoutPanel21.RowStyles.Add(new RowStyle());
+            tableLayoutPanel21.RowStyles.Add(new RowStyle());
+            tableLayoutPanel21.RowStyles.Add(new RowStyle());
+            tableLayoutPanel21.RowStyles.Add(new RowStyle());
+            tableLayoutPanel21.RowStyles.Add(new RowStyle());
+            tableLayoutPanel21.RowStyles.Add(new RowStyle());
+            tableLayoutPanel21.RowStyles.Add(new RowStyle());
+            tableLayoutPanel21.RowStyles.Add(new RowStyle());
+            tableLayoutPanel21.Size = new Size(1213, 1031);
+            tableLayoutPanel21.TabIndex = 22;
+            // 
+            // panel3
+            // 
+            panel3.Controls.Add(label94);
+            panel3.Location = new Point(3, 658);
+            panel3.Margin = new Padding(3, 2, 3, 2);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(519, 69);
+            panel3.TabIndex = 54;
+            // 
+            // label94
+            // 
+            label94.AutoSize = true;
+            label94.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label94.Location = new Point(159, 24);
+            label94.Name = "label94";
+            label94.Size = new Size(122, 25);
+            label94.TabIndex = 30;
+            label94.Text = "June 3, 2026";
+            // 
+            // panel14
+            // 
+            panel14.Controls.Add(label95);
+            panel14.Location = new Point(3, 576);
+            panel14.Margin = new Padding(3, 2, 3, 2);
+            panel14.Name = "panel14";
+            panel14.Size = new Size(519, 69);
+            panel14.TabIndex = 54;
+            // 
+            // label95
+            // 
+            label95.AutoSize = true;
+            label95.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label95.Location = new Point(159, 24);
+            label95.Name = "label95";
+            label95.Size = new Size(130, 25);
+            label95.TabIndex = 30;
+            label95.Text = "May 27, 2026";
+            // 
+            // tableLayoutPanel22
+            // 
+            tableLayoutPanel22.ColumnCount = 3;
+            tableLayoutPanel22.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
+            tableLayoutPanel22.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
+            tableLayoutPanel22.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
+            tableLayoutPanel22.Controls.Add(label6, 1, 1);
+            tableLayoutPanel22.Location = new Point(528, 494);
+            tableLayoutPanel22.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel22.Name = "tableLayoutPanel22";
+            tableLayoutPanel22.RowCount = 3;
+            tableLayoutPanel22.RowStyles.Add(new RowStyle(SizeType.Percent, 32.1330757F));
+            tableLayoutPanel22.RowStyles.Add(new RowStyle(SizeType.Percent, 38.7394867F));
+            tableLayoutPanel22.RowStyles.Add(new RowStyle(SizeType.Percent, 29.1274338F));
+            tableLayoutPanel22.Size = new Size(282, 78);
+            tableLayoutPanel22.TabIndex = 59;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            label6.Location = new Point(77, 25);
+            label6.Name = "label6";
+            label6.Padding = new Padding(18, 0, 0, 0);
+            label6.Size = new Size(94, 25);
+            label6.TabIndex = 0;
+            label6.Text = "Present";
+            // 
+            // tableLayoutPanel23
+            // 
+            tableLayoutPanel23.ColumnCount = 3;
+            tableLayoutPanel23.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
+            tableLayoutPanel23.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
+            tableLayoutPanel23.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
+            tableLayoutPanel23.Controls.Add(label11, 1, 1);
+            tableLayoutPanel23.Location = new Point(528, 412);
+            tableLayoutPanel23.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel23.Name = "tableLayoutPanel23";
+            tableLayoutPanel23.RowCount = 3;
+            tableLayoutPanel23.RowStyles.Add(new RowStyle(SizeType.Percent, 32.1330757F));
+            tableLayoutPanel23.RowStyles.Add(new RowStyle(SizeType.Percent, 38.7394867F));
+            tableLayoutPanel23.RowStyles.Add(new RowStyle(SizeType.Percent, 29.1274338F));
+            tableLayoutPanel23.Size = new Size(282, 78);
+            tableLayoutPanel23.TabIndex = 58;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            label11.Location = new Point(77, 25);
+            label11.Name = "label11";
+            label11.Padding = new Padding(18, 0, 0, 0);
+            label11.Size = new Size(94, 25);
+            label11.TabIndex = 0;
+            label11.Text = "Present";
+            // 
+            // tableLayoutPanel24
+            // 
+            tableLayoutPanel24.ColumnCount = 3;
+            tableLayoutPanel24.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
+            tableLayoutPanel24.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
+            tableLayoutPanel24.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
+            tableLayoutPanel24.Controls.Add(label23, 1, 1);
+            tableLayoutPanel24.Location = new Point(528, 330);
+            tableLayoutPanel24.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel24.Name = "tableLayoutPanel24";
+            tableLayoutPanel24.RowCount = 3;
+            tableLayoutPanel24.RowStyles.Add(new RowStyle(SizeType.Percent, 32.1330757F));
+            tableLayoutPanel24.RowStyles.Add(new RowStyle(SizeType.Percent, 38.7394867F));
+            tableLayoutPanel24.RowStyles.Add(new RowStyle(SizeType.Percent, 29.1274338F));
+            tableLayoutPanel24.Size = new Size(282, 78);
+            tableLayoutPanel24.TabIndex = 57;
+            // 
+            // label23
+            // 
+            label23.AutoSize = true;
+            label23.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            label23.Location = new Point(77, 25);
+            label23.Name = "label23";
+            label23.Padding = new Padding(18, 0, 0, 0);
+            label23.Size = new Size(94, 25);
+            label23.TabIndex = 0;
+            label23.Text = "Present";
+            // 
+            // tableLayoutPanel26
+            // 
+            tableLayoutPanel26.ColumnCount = 3;
+            tableLayoutPanel26.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
+            tableLayoutPanel26.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
+            tableLayoutPanel26.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
+            tableLayoutPanel26.Controls.Add(label24, 1, 1);
+            tableLayoutPanel26.Location = new Point(528, 248);
+            tableLayoutPanel26.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel26.Name = "tableLayoutPanel26";
+            tableLayoutPanel26.RowCount = 3;
+            tableLayoutPanel26.RowStyles.Add(new RowStyle(SizeType.Percent, 32.1330757F));
+            tableLayoutPanel26.RowStyles.Add(new RowStyle(SizeType.Percent, 38.7394867F));
+            tableLayoutPanel26.RowStyles.Add(new RowStyle(SizeType.Percent, 29.1274338F));
+            tableLayoutPanel26.Size = new Size(282, 78);
+            tableLayoutPanel26.TabIndex = 56;
+            // 
+            // label24
+            // 
+            label24.AutoSize = true;
+            label24.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            label24.Location = new Point(77, 25);
+            label24.Name = "label24";
+            label24.Padding = new Padding(18, 0, 0, 0);
+            label24.Size = new Size(99, 25);
+            label24.TabIndex = 0;
+            label24.Text = "Excused";
+            // 
+            // tableLayoutPanel27
+            // 
+            tableLayoutPanel27.ColumnCount = 3;
+            tableLayoutPanel27.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
+            tableLayoutPanel27.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
+            tableLayoutPanel27.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
+            tableLayoutPanel27.Controls.Add(label28, 1, 1);
+            tableLayoutPanel27.Location = new Point(528, 166);
+            tableLayoutPanel27.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel27.Name = "tableLayoutPanel27";
+            tableLayoutPanel27.RowCount = 3;
+            tableLayoutPanel27.RowStyles.Add(new RowStyle(SizeType.Percent, 32.1330757F));
+            tableLayoutPanel27.RowStyles.Add(new RowStyle(SizeType.Percent, 38.7394867F));
+            tableLayoutPanel27.RowStyles.Add(new RowStyle(SizeType.Percent, 29.1274338F));
+            tableLayoutPanel27.Size = new Size(282, 78);
+            tableLayoutPanel27.TabIndex = 55;
+            // 
+            // label28
+            // 
+            label28.AutoSize = true;
+            label28.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            label28.Location = new Point(77, 25);
+            label28.Name = "label28";
+            label28.Padding = new Padding(18, 0, 0, 0);
+            label28.Size = new Size(94, 25);
+            label28.TabIndex = 0;
+            label28.Text = "Present";
+            // 
+            // tableLayoutPanel28
+            // 
+            tableLayoutPanel28.ColumnCount = 3;
+            tableLayoutPanel28.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
+            tableLayoutPanel28.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
+            tableLayoutPanel28.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
+            tableLayoutPanel28.Controls.Add(label29, 1, 1);
+            tableLayoutPanel28.Location = new Point(528, 84);
+            tableLayoutPanel28.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel28.Name = "tableLayoutPanel28";
+            tableLayoutPanel28.RowCount = 3;
+            tableLayoutPanel28.RowStyles.Add(new RowStyle(SizeType.Percent, 32.1330757F));
+            tableLayoutPanel28.RowStyles.Add(new RowStyle(SizeType.Percent, 38.7394867F));
+            tableLayoutPanel28.RowStyles.Add(new RowStyle(SizeType.Percent, 29.1274338F));
+            tableLayoutPanel28.Size = new Size(282, 78);
+            tableLayoutPanel28.TabIndex = 54;
+            // 
+            // label29
+            // 
+            label29.AutoSize = true;
+            label29.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            label29.Location = new Point(77, 25);
+            label29.Name = "label29";
+            label29.Padding = new Padding(18, 0, 0, 0);
+            label29.Size = new Size(90, 25);
+            label29.TabIndex = 0;
+            label29.Text = "Absent";
+            // 
+            // panel19
+            // 
+            panel19.Controls.Add(label30);
+            panel19.Location = new Point(3, 494);
+            panel19.Margin = new Padding(3, 2, 3, 2);
+            panel19.Name = "panel19";
+            panel19.Size = new Size(519, 69);
+            panel19.TabIndex = 53;
+            // 
+            // label30
+            // 
+            label30.AutoSize = true;
+            label30.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label30.Location = new Point(159, 24);
+            label30.Name = "label30";
+            label30.Size = new Size(131, 25);
+            label30.TabIndex = 30;
+            label30.Text = "May 20, 2026";
+            // 
+            // panel20
+            // 
+            panel20.Controls.Add(label46);
+            panel20.Location = new Point(3, 412);
+            panel20.Margin = new Padding(3, 2, 3, 2);
+            panel20.Name = "panel20";
+            panel20.Size = new Size(519, 69);
+            panel20.TabIndex = 52;
+            // 
+            // label46
+            // 
+            label46.AutoSize = true;
+            label46.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label46.Location = new Point(159, 24);
+            label46.Name = "label46";
+            label46.Size = new Size(128, 25);
+            label46.TabIndex = 30;
+            label46.Text = "May 13, 2026";
+            // 
+            // panel21
+            // 
+            panel21.Controls.Add(label66);
+            panel21.Location = new Point(3, 330);
+            panel21.Margin = new Padding(3, 2, 3, 2);
+            panel21.Name = "panel21";
+            panel21.Size = new Size(519, 69);
+            panel21.TabIndex = 51;
+            // 
+            // label66
+            // 
+            label66.AutoSize = true;
+            label66.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label66.Location = new Point(159, 24);
+            label66.Name = "label66";
+            label66.Size = new Size(120, 25);
+            label66.TabIndex = 30;
+            label66.Text = "May 6, 2026";
+            // 
+            // panel22
+            // 
+            panel22.Controls.Add(label67);
+            panel22.Location = new Point(3, 248);
+            panel22.Margin = new Padding(3, 2, 3, 2);
+            panel22.Name = "panel22";
+            panel22.Size = new Size(519, 69);
+            panel22.TabIndex = 50;
+            // 
+            // label67
+            // 
+            label67.AutoSize = true;
+            label67.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label67.Location = new Point(159, 24);
+            label67.Name = "label67";
+            label67.Size = new Size(134, 25);
+            label67.TabIndex = 30;
+            label67.Text = "April 29, 2026";
+            // 
+            // panel24
+            // 
+            panel24.Controls.Add(label68);
+            panel24.Location = new Point(3, 166);
+            panel24.Margin = new Padding(3, 2, 3, 2);
+            panel24.Name = "panel24";
+            panel24.Size = new Size(519, 69);
+            panel24.TabIndex = 50;
+            // 
+            // label68
+            // 
+            label68.AutoSize = true;
+            label68.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label68.Location = new Point(159, 24);
+            label68.Name = "label68";
+            label68.Size = new Size(134, 25);
+            label68.TabIndex = 30;
+            label68.Text = "April 22, 2026";
+            // 
+            // panel27
+            // 
+            panel27.Controls.Add(label69);
+            panel27.Location = new Point(3, 84);
+            panel27.Margin = new Padding(3, 2, 3, 2);
+            panel27.Name = "panel27";
+            panel27.Size = new Size(519, 69);
+            panel27.TabIndex = 49;
+            // 
+            // label69
+            // 
+            label69.AutoSize = true;
+            label69.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label69.Location = new Point(159, 24);
+            label69.Name = "label69";
+            label69.Size = new Size(131, 25);
+            label69.TabIndex = 30;
+            label69.Text = "April 15, 2026";
+            // 
+            // panel28
+            // 
+            panel28.Controls.Add(label70);
+            panel28.Location = new Point(3, 2);
+            panel28.Margin = new Padding(3, 2, 3, 2);
+            panel28.Name = "panel28";
+            panel28.Size = new Size(519, 69);
+            panel28.TabIndex = 48;
+            // 
+            // label70
+            // 
+            label70.AutoSize = true;
+            label70.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label70.Location = new Point(159, 24);
+            label70.Name = "label70";
+            label70.Size = new Size(123, 25);
+            label70.TabIndex = 30;
+            label70.Text = "April 8, 2026";
+            // 
+            // tableLayoutPanel29
+            // 
+            tableLayoutPanel29.ColumnCount = 3;
+            tableLayoutPanel29.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel29.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
+            tableLayoutPanel29.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel29.Controls.Add(textBox3, 1, 1);
+            tableLayoutPanel29.Location = new Point(816, 658);
+            tableLayoutPanel29.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel29.Name = "tableLayoutPanel29";
+            tableLayoutPanel29.RowCount = 3;
+            tableLayoutPanel29.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
+            tableLayoutPanel29.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
+            tableLayoutPanel29.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
+            tableLayoutPanel29.Size = new Size(394, 78);
+            tableLayoutPanel29.TabIndex = 47;
+            // 
+            // textBox3
+            // 
+            textBox3.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            textBox3.BackColor = Color.White;
+            textBox3.BorderStyle = BorderStyle.FixedSingle;
+            textBox3.Location = new Point(35, 17);
+            textBox3.Margin = new Padding(3, 2, 3, 2);
+            textBox3.Multiline = true;
+            textBox3.Name = "textBox3";
+            textBox3.ReadOnly = true;
+            textBox3.Size = new Size(323, 36);
+            textBox3.TabIndex = 33;
+            // 
+            // tableLayoutPanel30
+            // 
+            tableLayoutPanel30.ColumnCount = 3;
+            tableLayoutPanel30.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel30.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
+            tableLayoutPanel30.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel30.Controls.Add(textBox4, 1, 1);
+            tableLayoutPanel30.Location = new Point(816, 576);
+            tableLayoutPanel30.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel30.Name = "tableLayoutPanel30";
+            tableLayoutPanel30.RowCount = 3;
+            tableLayoutPanel30.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
+            tableLayoutPanel30.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
+            tableLayoutPanel30.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
+            tableLayoutPanel30.Size = new Size(394, 78);
+            tableLayoutPanel30.TabIndex = 46;
+            // 
+            // textBox4
+            // 
+            textBox4.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            textBox4.BackColor = Color.White;
+            textBox4.BorderStyle = BorderStyle.FixedSingle;
+            textBox4.Location = new Point(35, 17);
+            textBox4.Margin = new Padding(3, 2, 3, 2);
+            textBox4.Multiline = true;
+            textBox4.Name = "textBox4";
+            textBox4.ReadOnly = true;
+            textBox4.Size = new Size(323, 36);
+            textBox4.TabIndex = 33;
+            // 
+            // tableLayoutPanel31
+            // 
+            tableLayoutPanel31.ColumnCount = 3;
+            tableLayoutPanel31.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel31.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
+            tableLayoutPanel31.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel31.Controls.Add(textBox5, 1, 1);
+            tableLayoutPanel31.Location = new Point(816, 494);
+            tableLayoutPanel31.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel31.Name = "tableLayoutPanel31";
+            tableLayoutPanel31.RowCount = 3;
+            tableLayoutPanel31.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
+            tableLayoutPanel31.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
+            tableLayoutPanel31.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
+            tableLayoutPanel31.Size = new Size(394, 78);
+            tableLayoutPanel31.TabIndex = 45;
+            // 
+            // textBox5
+            // 
+            textBox5.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            textBox5.BackColor = Color.White;
+            textBox5.BorderStyle = BorderStyle.FixedSingle;
+            textBox5.Location = new Point(35, 17);
+            textBox5.Margin = new Padding(3, 2, 3, 2);
+            textBox5.Multiline = true;
+            textBox5.Name = "textBox5";
+            textBox5.ReadOnly = true;
+            textBox5.Size = new Size(323, 36);
+            textBox5.TabIndex = 33;
+            // 
+            // tableLayoutPanel32
+            // 
+            tableLayoutPanel32.ColumnCount = 3;
+            tableLayoutPanel32.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel32.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
+            tableLayoutPanel32.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel32.Controls.Add(textBox6, 1, 1);
+            tableLayoutPanel32.Location = new Point(816, 412);
+            tableLayoutPanel32.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel32.Name = "tableLayoutPanel32";
+            tableLayoutPanel32.RowCount = 3;
+            tableLayoutPanel32.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
+            tableLayoutPanel32.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
+            tableLayoutPanel32.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
+            tableLayoutPanel32.Size = new Size(394, 78);
+            tableLayoutPanel32.TabIndex = 40;
+            // 
+            // textBox6
+            // 
+            textBox6.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            textBox6.BackColor = Color.White;
+            textBox6.BorderStyle = BorderStyle.FixedSingle;
+            textBox6.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            textBox6.Location = new Point(35, 17);
+            textBox6.Margin = new Padding(3, 2, 3, 2);
+            textBox6.Multiline = true;
+            textBox6.Name = "textBox6";
+            textBox6.ReadOnly = true;
+            textBox6.Size = new Size(323, 36);
+            textBox6.TabIndex = 33;
+            // 
+            // tableLayoutPanel33
+            // 
+            tableLayoutPanel33.ColumnCount = 3;
+            tableLayoutPanel33.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel33.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
+            tableLayoutPanel33.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel33.Controls.Add(textBox7, 1, 1);
+            tableLayoutPanel33.Location = new Point(816, 330);
+            tableLayoutPanel33.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel33.Name = "tableLayoutPanel33";
+            tableLayoutPanel33.RowCount = 3;
+            tableLayoutPanel33.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
+            tableLayoutPanel33.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
+            tableLayoutPanel33.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
+            tableLayoutPanel33.Size = new Size(394, 78);
+            tableLayoutPanel33.TabIndex = 40;
+            // 
+            // textBox7
+            // 
+            textBox7.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            textBox7.BackColor = Color.White;
+            textBox7.BorderStyle = BorderStyle.FixedSingle;
+            textBox7.Location = new Point(35, 17);
+            textBox7.Margin = new Padding(3, 2, 3, 2);
+            textBox7.Multiline = true;
+            textBox7.Name = "textBox7";
+            textBox7.ReadOnly = true;
+            textBox7.Size = new Size(323, 36);
+            textBox7.TabIndex = 33;
+            // 
+            // tableLayoutPanel34
+            // 
+            tableLayoutPanel34.ColumnCount = 3;
+            tableLayoutPanel34.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel34.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
+            tableLayoutPanel34.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel34.Controls.Add(textBox8, 1, 1);
+            tableLayoutPanel34.Location = new Point(816, 248);
+            tableLayoutPanel34.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel34.Name = "tableLayoutPanel34";
+            tableLayoutPanel34.RowCount = 3;
+            tableLayoutPanel34.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
+            tableLayoutPanel34.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
+            tableLayoutPanel34.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
+            tableLayoutPanel34.Size = new Size(394, 78);
+            tableLayoutPanel34.TabIndex = 40;
+            // 
+            // textBox8
+            // 
+            textBox8.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            textBox8.BackColor = Color.White;
+            textBox8.BorderStyle = BorderStyle.FixedSingle;
+            textBox8.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            textBox8.Location = new Point(35, 17);
+            textBox8.Margin = new Padding(3, 2, 3, 2);
+            textBox8.Multiline = true;
+            textBox8.Name = "textBox8";
+            textBox8.ReadOnly = true;
+            textBox8.Size = new Size(323, 36);
+            textBox8.TabIndex = 33;
+            textBox8.Text = "Due to a sport event";
+            // 
+            // tableLayoutPanel35
+            // 
+            tableLayoutPanel35.ColumnCount = 3;
+            tableLayoutPanel35.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel35.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
+            tableLayoutPanel35.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel35.Controls.Add(textBox9, 1, 1);
+            tableLayoutPanel35.Location = new Point(816, 166);
+            tableLayoutPanel35.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel35.Name = "tableLayoutPanel35";
+            tableLayoutPanel35.RowCount = 3;
+            tableLayoutPanel35.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
+            tableLayoutPanel35.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
+            tableLayoutPanel35.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
+            tableLayoutPanel35.Size = new Size(394, 78);
+            tableLayoutPanel35.TabIndex = 40;
+            // 
+            // textBox9
+            // 
+            textBox9.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            textBox9.BackColor = Color.White;
+            textBox9.BorderStyle = BorderStyle.FixedSingle;
+            textBox9.Location = new Point(35, 17);
+            textBox9.Margin = new Padding(3, 2, 3, 2);
+            textBox9.Multiline = true;
+            textBox9.Name = "textBox9";
+            textBox9.ReadOnly = true;
+            textBox9.Size = new Size(323, 36);
+            textBox9.TabIndex = 33;
+            // 
+            // tableLayoutPanel36
+            // 
+            tableLayoutPanel36.ColumnCount = 3;
+            tableLayoutPanel36.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel36.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
+            tableLayoutPanel36.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel36.Controls.Add(textBox10, 1, 1);
+            tableLayoutPanel36.Location = new Point(816, 2);
+            tableLayoutPanel36.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel36.Name = "tableLayoutPanel36";
+            tableLayoutPanel36.RowCount = 3;
+            tableLayoutPanel36.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
+            tableLayoutPanel36.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
+            tableLayoutPanel36.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
+            tableLayoutPanel36.Size = new Size(394, 78);
+            tableLayoutPanel36.TabIndex = 41;
+            // 
+            // textBox10
+            // 
+            textBox10.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            textBox10.BackColor = Color.White;
+            textBox10.BorderStyle = BorderStyle.FixedSingle;
+            textBox10.Location = new Point(35, 17);
+            textBox10.Margin = new Padding(3, 2, 3, 2);
+            textBox10.Multiline = true;
+            textBox10.Name = "textBox10";
+            textBox10.ReadOnly = true;
+            textBox10.Size = new Size(323, 36);
+            textBox10.TabIndex = 33;
+            // 
+            // tableLayoutPanel37
+            // 
+            tableLayoutPanel37.ColumnCount = 3;
+            tableLayoutPanel37.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel37.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
+            tableLayoutPanel37.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
+            tableLayoutPanel37.Controls.Add(textBox20, 1, 1);
+            tableLayoutPanel37.Location = new Point(816, 84);
+            tableLayoutPanel37.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel37.Name = "tableLayoutPanel37";
+            tableLayoutPanel37.RowCount = 3;
+            tableLayoutPanel37.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
+            tableLayoutPanel37.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
+            tableLayoutPanel37.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
+            tableLayoutPanel37.Size = new Size(394, 78);
+            tableLayoutPanel37.TabIndex = 39;
+            // 
+            // textBox20
+            // 
+            textBox20.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            textBox20.BackColor = Color.White;
+            textBox20.BorderStyle = BorderStyle.FixedSingle;
+            textBox20.Location = new Point(35, 17);
+            textBox20.Margin = new Padding(3, 2, 3, 2);
+            textBox20.Multiline = true;
+            textBox20.Name = "textBox20";
+            textBox20.ReadOnly = true;
+            textBox20.Size = new Size(323, 36);
+            textBox20.TabIndex = 33;
+            // 
+            // tableLayoutPanel38
+            // 
+            tableLayoutPanel38.ColumnCount = 3;
+            tableLayoutPanel38.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
+            tableLayoutPanel38.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
+            tableLayoutPanel38.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
+            tableLayoutPanel38.Controls.Add(label71, 1, 1);
+            tableLayoutPanel38.Location = new Point(528, 2);
+            tableLayoutPanel38.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel38.Name = "tableLayoutPanel38";
+            tableLayoutPanel38.RowCount = 3;
+            tableLayoutPanel38.RowStyles.Add(new RowStyle(SizeType.Percent, 32.1330757F));
+            tableLayoutPanel38.RowStyles.Add(new RowStyle(SizeType.Percent, 38.7394867F));
+            tableLayoutPanel38.RowStyles.Add(new RowStyle(SizeType.Percent, 29.1274338F));
+            tableLayoutPanel38.Size = new Size(282, 78);
+            tableLayoutPanel38.TabIndex = 38;
+            // 
+            // label71
+            // 
+            label71.AutoSize = true;
+            label71.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            label71.Location = new Point(77, 25);
+            label71.Name = "label71";
+            label71.Padding = new Padding(18, 0, 0, 0);
+            label71.Size = new Size(94, 25);
+            label71.TabIndex = 0;
+            label71.Text = "Present";
+            // 
+            // tableLayoutPanel39
+            // 
+            tableLayoutPanel39.ColumnCount = 3;
+            tableLayoutPanel39.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
+            tableLayoutPanel39.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
+            tableLayoutPanel39.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
+            tableLayoutPanel39.Controls.Add(label74, 1, 1);
+            tableLayoutPanel39.Location = new Point(528, 576);
+            tableLayoutPanel39.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel39.Name = "tableLayoutPanel39";
+            tableLayoutPanel39.RowCount = 3;
+            tableLayoutPanel39.RowStyles.Add(new RowStyle(SizeType.Percent, 32.1330757F));
+            tableLayoutPanel39.RowStyles.Add(new RowStyle(SizeType.Percent, 38.7394867F));
+            tableLayoutPanel39.RowStyles.Add(new RowStyle(SizeType.Percent, 29.1274338F));
+            tableLayoutPanel39.Size = new Size(282, 78);
+            tableLayoutPanel39.TabIndex = 60;
+            // 
+            // label74
+            // 
+            label74.AutoSize = true;
+            label74.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            label74.Location = new Point(77, 25);
+            label74.Name = "label74";
+            label74.Padding = new Padding(18, 0, 0, 0);
+            label74.Size = new Size(94, 25);
+            label74.TabIndex = 0;
+            label74.Text = "Present";
+            // 
+            // tableLayoutPanel40
+            // 
+            tableLayoutPanel40.ColumnCount = 3;
+            tableLayoutPanel40.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
+            tableLayoutPanel40.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
+            tableLayoutPanel40.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
+            tableLayoutPanel40.Controls.Add(label75, 1, 1);
+            tableLayoutPanel40.Location = new Point(528, 658);
+            tableLayoutPanel40.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel40.Name = "tableLayoutPanel40";
+            tableLayoutPanel40.RowCount = 3;
+            tableLayoutPanel40.RowStyles.Add(new RowStyle(SizeType.Percent, 32.1330757F));
+            tableLayoutPanel40.RowStyles.Add(new RowStyle(SizeType.Percent, 38.7394867F));
+            tableLayoutPanel40.RowStyles.Add(new RowStyle(SizeType.Percent, 29.1274338F));
+            tableLayoutPanel40.Size = new Size(282, 78);
+            tableLayoutPanel40.TabIndex = 61;
+            // 
+            // label75
+            // 
+            label75.AutoSize = true;
+            label75.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            label75.Location = new Point(77, 25);
+            label75.Name = "label75";
+            label75.Padding = new Padding(18, 0, 0, 0);
+            label75.Size = new Size(94, 25);
+            label75.TabIndex = 0;
+            label75.Text = "Present";
+            // 
+            // panel90
+            // 
+            panel90.Controls.Add(label168);
+            panel90.Controls.Add(panel91);
+            panel90.Controls.Add(label199);
+            panel90.Controls.Add(panel92);
+            panel90.Controls.Add(label200);
+            panel90.Controls.Add(label201);
+            panel90.Controls.Add(panel93);
+            panel90.Dock = DockStyle.Top;
+            panel90.Location = new Point(0, 0);
+            panel90.Margin = new Padding(3, 2, 3, 2);
+            panel90.Name = "panel90";
+            panel90.Size = new Size(1272, 176);
+            panel90.TabIndex = 31;
             // 
             // label168
             // 
+            label168.Anchor = AnchorStyles.None;
             label168.AutoSize = true;
-            label168.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
-            label168.ForeColor = Color.DimGray;
-            label168.Location = new Point(74, 40);
+            label168.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label168.Location = new Point(983, 146);
             label168.Name = "label168";
-            label168.Size = new Size(152, 17);
-            label168.TabIndex = 19;
-            label168.Text = "View your class schedule";
+            label168.Size = new Size(85, 25);
+            label168.TabIndex = 29;
+            label168.Text = "Remarks";
+            // 
+            // panel91
+            // 
+            panel91.Anchor = AnchorStyles.None;
+            panel91.BackColor = SystemColors.ButtonHighlight;
+            panel91.Controls.Add(label169);
+            panel91.Controls.Add(label189);
+            panel91.Controls.Add(label190);
+            panel91.Controls.Add(label191);
+            panel91.Controls.Add(label192);
+            panel91.Controls.Add(label193);
+            panel91.Controls.Add(label194);
+            panel91.Controls.Add(label195);
+            panel91.Controls.Add(label196);
+            panel91.Controls.Add(label197);
+            panel91.Controls.Add(lblAttendancePercent);
+            panel91.Controls.Add(label198);
+            panel91.Location = new Point(11, 44);
+            panel91.Margin = new Padding(3, 2, 3, 2);
+            panel91.Name = "panel91";
+            panel91.Size = new Size(1229, 92);
+            panel91.TabIndex = 20;
             // 
             // label169
             // 
             label169.AutoSize = true;
-            label169.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label169.ForeColor = Color.DimGray;
-            label169.Location = new Point(74, 19);
+            label169.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label169.Location = new Point(1156, 43);
             label169.Name = "label169";
-            label169.Size = new Size(136, 21);
-            label169.TabIndex = 17;
-            label169.Text = "Course Schedule";
-            // 
-            // panel86
-            // 
-            panel86.BackColor = SystemColors.ControlLightLight;
-            panel86.BorderStyle = BorderStyle.FixedSingle;
-            panel86.Controls.Add(btnDashboardPaymentStatus);
-            panel86.Controls.Add(label170);
-            panel86.Controls.Add(label171);
-            panel86.Location = new Point(18, 156);
-            panel86.Name = "panel86";
-            panel86.Size = new Size(363, 80);
-            panel86.TabIndex = 26;
-            // 
-            // btnDashboardPaymentStatus
-            // 
-            btnDashboardPaymentStatus.BackColor = Color.Maroon;
-            btnDashboardPaymentStatus.FlatStyle = FlatStyle.Popup;
-            btnDashboardPaymentStatus.Image = PUPAcadPortal.Properties.Resources.banknotes_24;
-            btnDashboardPaymentStatus.Location = new Point(12, 11);
-            btnDashboardPaymentStatus.Name = "btnDashboardPaymentStatus";
-            btnDashboardPaymentStatus.Size = new Size(56, 54);
-            btnDashboardPaymentStatus.TabIndex = 20;
-            btnDashboardPaymentStatus.UseVisualStyleBackColor = false;
-            btnDashboardPaymentStatus.Click += (this.btnAccounts_Click);
-            // 
-            // label170
-            // 
-            label170.AutoSize = true;
-            label170.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            label170.ForeColor = Color.DimGray;
-            label170.Location = new Point(74, 19);
-            label170.Name = "label170";
-            label170.Size = new Size(129, 21);
-            label170.TabIndex = 0;
-            label170.Text = "Payment Status";
-            // 
-            // label171
-            // 
-            label171.AutoSize = true;
-            label171.Font = new Font("Segoe UI", 9.75F);
-            label171.ForeColor = Color.DimGray;
-            label171.Location = new Point(74, 40);
-            label171.Name = "label171";
-            label171.Size = new Size(140, 17);
-            label171.TabIndex = 1;
-            label171.Text = "Check account balance";
-            // 
-            // panel87
-            // 
-            panel87.BackColor = SystemColors.ControlLightLight;
-            panel87.BorderStyle = BorderStyle.FixedSingle;
-            panel87.Controls.Add(btnDashboardViewEnrollment);
-            panel87.Controls.Add(label172);
-            panel87.Controls.Add(label173);
-            panel87.Location = new Point(18, 56);
-            panel87.Name = "panel87";
-            panel87.Size = new Size(363, 80);
-            panel87.TabIndex = 22;
-            // 
-            // btnDashboardViewEnrollment
-            // 
-            btnDashboardViewEnrollment.BackColor = Color.Maroon;
-            btnDashboardViewEnrollment.FlatStyle = FlatStyle.Popup;
-            btnDashboardViewEnrollment.Image = PUPAcadPortal.Properties.Resources.literature_24;
-            btnDashboardViewEnrollment.Location = new Point(12, 11);
-            btnDashboardViewEnrollment.Name = "btnDashboardViewEnrollment";
-            btnDashboardViewEnrollment.Size = new Size(56, 54);
-            btnDashboardViewEnrollment.TabIndex = 20;
-            btnDashboardViewEnrollment.UseVisualStyleBackColor = false;
-            btnDashboardViewEnrollment.Click += (this.btnEnrollment_Click);
-            // 
-            // label172
-            // 
-            label172.AutoSize = true;
-            label172.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
-            label172.ForeColor = Color.DimGray;
-            label172.Location = new Point(74, 40);
-            label172.Name = "label172";
-            label172.Size = new Size(175, 17);
-            label172.TabIndex = 19;
-            label172.Text = "Check your enrolled subjects";
-            // 
-            // label173
-            // 
-            label173.AutoSize = true;
-            label173.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label173.ForeColor = Color.DimGray;
-            label173.Location = new Point(74, 19);
-            label173.Name = "label173";
-            label173.Size = new Size(137, 21);
-            label173.TabIndex = 17;
-            label173.Text = "View Enrollment";
-            // 
-            // label174
-            // 
-            label174.AutoSize = true;
-            label174.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label174.ForeColor = Color.Maroon;
-            label174.Location = new Point(9, 14);
-            label174.Name = "label174";
-            label174.Size = new Size(172, 32);
-            label174.TabIndex = 16;
-            label174.Text = "Quick Actions";
-            // 
-            // pnlEnrolleft
-            // 
-            pnlEnrolleft.BackColor = Color.White;
-            pnlEnrolleft.BorderStyle = BorderStyle.Fixed3D;
-            pnlEnrolleft.Controls.Add(pictureBox43);
-            pnlEnrolleft.Controls.Add(label175);
-            pnlEnrolleft.Controls.Add(label176);
-            pnlEnrolleft.Location = new Point(938, 149);
-            pnlEnrolleft.Margin = new Padding(3, 2, 3, 2);
-            pnlEnrolleft.Name = "pnlEnrolleft";
-            pnlEnrolleft.Size = new Size(263, 95);
-            pnlEnrolleft.TabIndex = 24;
-            // 
-            // pictureBox43
-            // 
-            pictureBox43.BackColor = Color.Maroon;
-            pictureBox43.Image = PUPAcadPortal.Properties.Resources.exclamation_32;
-            pictureBox43.Location = new Point(183, 11);
-            pictureBox43.Name = "pictureBox43";
-            pictureBox43.Size = new Size(66, 68);
-            pictureBox43.SizeMode = PictureBoxSizeMode.CenterImage;
-            pictureBox43.TabIndex = 24;
-            pictureBox43.TabStop = false;
-            // 
-            // label175
-            // 
-            label175.AutoSize = true;
-            label175.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label175.ForeColor = Color.DimGray;
-            label175.Location = new Point(14, 21);
-            label175.Name = "label175";
-            label175.Size = new Size(120, 21);
-            label175.TabIndex = 18;
-            label175.Text = "Pending Items";
-            // 
-            // label176
-            // 
-            label176.AutoSize = true;
-            label176.BackColor = Color.Transparent;
-            label176.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label176.ForeColor = Color.Black;
-            label176.Location = new Point(13, 34);
-            label176.Name = "label176";
-            label176.Size = new Size(34, 40);
-            label176.TabIndex = 19;
-            label176.Text = "2";
-            // 
-            // pnlCurrentSemesterCard
-            // 
-            pnlCurrentSemesterCard.BackColor = Color.White;
-            pnlCurrentSemesterCard.BorderStyle = BorderStyle.Fixed3D;
-            pnlCurrentSemesterCard.Controls.Add(pictureBox44);
-            pnlCurrentSemesterCard.Controls.Add(label177);
-            pnlCurrentSemesterCard.Controls.Add(label178);
-            pnlCurrentSemesterCard.Location = new Point(627, 149);
-            pnlCurrentSemesterCard.Margin = new Padding(3, 2, 3, 2);
-            pnlCurrentSemesterCard.Name = "pnlCurrentSemesterCard";
-            pnlCurrentSemesterCard.Size = new Size(280, 95);
-            pnlCurrentSemesterCard.TabIndex = 23;
-            // 
-            // pictureBox44
-            // 
-            pictureBox44.BackColor = Color.Maroon;
-            pictureBox44.Image = PUPAcadPortal.Properties.Resources.graduation_cap_32;
-            pictureBox44.Location = new Point(196, 11);
-            pictureBox44.Name = "pictureBox44";
-            pictureBox44.Size = new Size(66, 68);
-            pictureBox44.SizeMode = PictureBoxSizeMode.CenterImage;
-            pictureBox44.TabIndex = 23;
-            pictureBox44.TabStop = false;
-            // 
-            // label177
-            // 
-            label177.AutoSize = true;
-            label177.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label177.ForeColor = Color.DimGray;
-            label177.Location = new Point(10, 21);
-            label177.Name = "label177";
-            label177.Size = new Size(141, 21);
-            label177.TabIndex = 18;
-            label177.Text = "Current Semester";
-            // 
-            // label178
-            // 
-            label178.AutoSize = true;
-            label178.BackColor = Color.Transparent;
-            label178.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label178.ForeColor = Color.Black;
-            label178.Location = new Point(6, 35);
-            label178.Name = "label178";
-            label178.Size = new Size(128, 37);
-            label178.TabIndex = 19;
-            label178.Text = "2nd Sem";
-            // 
-            // pnlEnrollmentStatusCard
-            // 
-            pnlEnrollmentStatusCard.BackColor = Color.White;
-            pnlEnrollmentStatusCard.BorderStyle = BorderStyle.Fixed3D;
-            pnlEnrollmentStatusCard.Controls.Add(pictureBox45);
-            pnlEnrollmentStatusCard.Controls.Add(label179);
-            pnlEnrollmentStatusCard.Controls.Add(label180);
-            pnlEnrollmentStatusCard.Location = new Point(323, 149);
-            pnlEnrollmentStatusCard.Margin = new Padding(3, 2, 3, 2);
-            pnlEnrollmentStatusCard.Name = "pnlEnrollmentStatusCard";
-            pnlEnrollmentStatusCard.Size = new Size(280, 95);
-            pnlEnrollmentStatusCard.TabIndex = 22;
-            // 
-            // pictureBox45
-            // 
-            pictureBox45.BackColor = Color.Maroon;
-            pictureBox45.Image = PUPAcadPortal.Properties.Resources.approval_32;
-            pictureBox45.Location = new Point(196, 11);
-            pictureBox45.Name = "pictureBox45";
-            pictureBox45.Size = new Size(66, 68);
-            pictureBox45.SizeMode = PictureBoxSizeMode.CenterImage;
-            pictureBox45.TabIndex = 22;
-            pictureBox45.TabStop = false;
-            // 
-            // label179
-            // 
-            label179.AutoSize = true;
-            label179.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label179.ForeColor = Color.DimGray;
-            label179.Location = new Point(9, 22);
-            label179.Name = "label179";
-            label179.Size = new Size(146, 21);
-            label179.TabIndex = 16;
-            label179.Text = "Enrollment Status";
-            // 
-            // label180
-            // 
-            label180.AutoSize = true;
-            label180.BackColor = Color.Transparent;
-            label180.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label180.ForeColor = Color.Black;
-            label180.Location = new Point(5, 36);
-            label180.Name = "label180";
-            label180.Size = new Size(153, 37);
-            label180.TabIndex = 17;
-            label180.Text = "Confirmed";
-            // 
-            // pnlEnrolledUnitsCard
-            // 
-            pnlEnrolledUnitsCard.BackColor = Color.White;
-            pnlEnrolledUnitsCard.BorderStyle = BorderStyle.Fixed3D;
-            pnlEnrolledUnitsCard.Controls.Add(pictureBox47);
-            pnlEnrolledUnitsCard.Controls.Add(label181);
-            pnlEnrolledUnitsCard.Controls.Add(label182);
-            pnlEnrolledUnitsCard.Location = new Point(22, 149);
-            pnlEnrolledUnitsCard.Margin = new Padding(3, 2, 3, 2);
-            pnlEnrolledUnitsCard.Name = "pnlEnrolledUnitsCard";
-            pnlEnrolledUnitsCard.Size = new Size(280, 95);
-            pnlEnrolledUnitsCard.TabIndex = 21;
-            // 
-            // pictureBox47
-            // 
-            pictureBox47.BackColor = Color.Maroon;
-            pictureBox47.Image = PUPAcadPortal.Properties.Resources.book_stack_32;
-            pictureBox47.Location = new Point(196, 11);
-            pictureBox47.Name = "pictureBox47";
-            pictureBox47.Size = new Size(66, 68);
-            pictureBox47.SizeMode = PictureBoxSizeMode.CenterImage;
-            pictureBox47.TabIndex = 21;
-            pictureBox47.TabStop = false;
-            // 
-            // label181
-            // 
-            label181.AutoSize = true;
-            label181.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label181.ForeColor = Color.DimGray;
-            label181.Location = new Point(9, 22);
-            label181.Name = "label181";
-            label181.Size = new Size(118, 21);
-            label181.TabIndex = 15;
-            label181.Text = "Enrolled Units";
-            // 
-            // label182
-            // 
-            label182.AutoSize = true;
-            label182.BackColor = Color.Transparent;
-            label182.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label182.ForeColor = Color.Black;
-            label182.Location = new Point(8, 35);
-            label182.Name = "label182";
-            label182.Size = new Size(51, 40);
-            label182.TabIndex = 15;
-            label182.Text = "21";
-            // 
-            // pnlDashboardGreetingsContainer
-            // 
-            pnlDashboardGreetingsContainer.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            pnlDashboardGreetingsContainer.BackColor = Color.Maroon;
-            pnlDashboardGreetingsContainer.Controls.Add(lblDashboardGreetingDesc);
-            pnlDashboardGreetingsContainer.Controls.Add(lblDashboardGreeting);
-            pnlDashboardGreetingsContainer.ForeColor = Color.White;
-            pnlDashboardGreetingsContainer.Location = new Point(23, 21);
-            pnlDashboardGreetingsContainer.Margin = new Padding(3, 2, 3, 2);
-            pnlDashboardGreetingsContainer.Name = "pnlDashboardGreetingsContainer";
-            pnlDashboardGreetingsContainer.Size = new Size(1215, 102);
-            pnlDashboardGreetingsContainer.TabIndex = 0;
-            // 
-            // lblDashboardGreetingDesc
-            // 
-            lblDashboardGreetingDesc.AutoSize = true;
-            lblDashboardGreetingDesc.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
-            lblDashboardGreetingDesc.Location = new Point(20, 57);
-            lblDashboardGreetingDesc.Name = "lblDashboardGreetingDesc";
-            lblDashboardGreetingDesc.Size = new Size(326, 21);
-            lblDashboardGreetingDesc.TabIndex = 1;
-            lblDashboardGreetingDesc.Text = "Track your enrollment and academic progress";
-            // 
-            // lblDashboardGreeting
-            // 
-            lblDashboardGreeting.AutoSize = true;
-            lblDashboardGreeting.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            lblDashboardGreeting.Location = new Point(10, 14);
-            lblDashboardGreeting.Name = "lblDashboardGreeting";
-            lblDashboardGreeting.Size = new Size(398, 37);
-            lblDashboardGreeting.TabIndex = 0;
-            lblDashboardGreeting.Text = "Welcome back, John DoReMi!";
-            // 
-            // pnlViewDetails
-            // 
-            pnlViewDetails.BackColor = Color.White;
-            pnlViewDetails.BorderStyle = BorderStyle.FixedSingle;
-            pnlViewDetails.Controls.Add(txtDetailSchedule);
-            pnlViewDetails.Controls.Add(lblDetailTitle);
-            pnlViewDetails.Controls.Add(lblDetailUnits);
-            pnlViewDetails.Controls.Add(lblDetailStatus);
-            pnlViewDetails.Controls.Add(lblDetailCode);
-            pnlViewDetails.Controls.Add(btnEnrollCloseDetails);
-            pnlViewDetails.Controls.Add(lblSubjectDetails);
-            pnlViewDetails.Location = new Point(8, 8);
-            pnlViewDetails.Name = "pnlViewDetails";
-            pnlViewDetails.Size = new Size(498, 410);
-            pnlViewDetails.TabIndex = 0;
-            pnlViewDetails.Visible = false;
-            // 
-            // txtDetailSchedule
-            // 
-            txtDetailSchedule.BackColor = SystemColors.ControlLightLight;
-            txtDetailSchedule.BorderStyle = BorderStyle.None;
-            txtDetailSchedule.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
-            txtDetailSchedule.Location = new Point(15, 214);
-            txtDetailSchedule.Multiline = true;
-            txtDetailSchedule.Name = "txtDetailSchedule";
-            txtDetailSchedule.ReadOnly = true;
-            txtDetailSchedule.Size = new Size(445, 49);
-            txtDetailSchedule.TabIndex = 7;
-            txtDetailSchedule.Text = "Schedule: ";
-            // 
-            // lblDetailTitle
-            // 
-            lblDetailTitle.AutoSize = true;
-            lblDetailTitle.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
-            lblDetailTitle.Location = new Point(14, 99);
-            lblDetailTitle.Name = "lblDetailTitle";
-            lblDetailTitle.Size = new Size(99, 21);
-            lblDetailTitle.TabIndex = 6;
-            lblDetailTitle.Text = "Course Title: ";
-            // 
-            // lblDetailUnits
-            // 
-            lblDetailUnits.AutoSize = true;
-            lblDetailUnits.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
-            lblDetailUnits.Location = new Point(14, 134);
-            lblDetailUnits.Name = "lblDetailUnits";
-            lblDetailUnits.Size = new Size(53, 21);
-            lblDetailUnits.TabIndex = 5;
-            lblDetailUnits.Text = "Units: ";
-            // 
-            // lblDetailStatus
-            // 
-            lblDetailStatus.AutoSize = true;
-            lblDetailStatus.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
-            lblDetailStatus.Location = new Point(15, 172);
-            lblDetailStatus.Name = "lblDetailStatus";
-            lblDetailStatus.Size = new Size(59, 21);
-            lblDetailStatus.TabIndex = 3;
-            lblDetailStatus.Text = "Status: ";
-            // 
-            // lblDetailCode
-            // 
-            lblDetailCode.AutoSize = true;
-            lblDetailCode.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
-            lblDetailCode.Location = new Point(14, 65);
-            lblDetailCode.Name = "lblDetailCode";
-            lblDetailCode.Size = new Size(53, 21);
-            lblDetailCode.TabIndex = 2;
-            lblDetailCode.Text = "Code: ";
-            // 
-            // btnEnrollCloseDetails
-            // 
-            btnEnrollCloseDetails.Location = new Point(411, 365);
-            btnEnrollCloseDetails.Name = "btnEnrollCloseDetails";
-            btnEnrollCloseDetails.Size = new Size(75, 23);
-            btnEnrollCloseDetails.TabIndex = 1;
-            btnEnrollCloseDetails.Text = "Close";
-            btnEnrollCloseDetails.UseVisualStyleBackColor = true;
-            btnEnrollCloseDetails.Click += (this.btnEnrollCloseDetails_Click);
-            // 
-            // lblSubjectDetails
-            // 
-            lblSubjectDetails.AutoSize = true;
-            lblSubjectDetails.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
-            lblSubjectDetails.Location = new Point(14, 21);
-            lblSubjectDetails.Name = "lblSubjectDetails";
-            lblSubjectDetails.Size = new Size(167, 30);
-            lblSubjectDetails.TabIndex = 0;
-            lblSubjectDetails.Text = "Subject Details";
+            label169.Size = new Size(20, 25);
+            label169.TabIndex = 18;
+            label169.Text = "1";
+            // 
+            // label189
+            // 
+            label189.AutoSize = true;
+            label189.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label189.Location = new Point(1124, 17);
+            label189.Name = "label189";
+            label189.Size = new Size(81, 25);
+            label189.TabIndex = 14;
+            label189.Text = "Excused";
+            // 
+            // label190
+            // 
+            label190.Anchor = (AnchorStyles)(AnchorStyles.Top) | (AnchorStyles.Right);
+            label190.AutoSize = true;
+            label190.Font = new Font("Segoe UI", 42F);
+            label190.ForeColor = SystemColors.ControlLight;
+            label190.Location = new Point(1973, 5);
+            label190.Name = "label190";
+            label190.Size = new Size(45, 74);
+            label190.TabIndex = 15;
+            label190.Text = "|";
+            // 
+            // label191
+            // 
+            label191.AutoSize = true;
+            label191.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label191.Location = new Point(1023, 44);
+            label191.Name = "label191";
+            label191.Size = new Size(20, 25);
+            label191.TabIndex = 17;
+            label191.Text = "1";
+            // 
+            // label192
+            // 
+            label192.Anchor = (AnchorStyles)(AnchorStyles.Top) | (AnchorStyles.Right);
+            label192.AutoSize = true;
+            label192.Font = new Font("Segoe UI", 42F);
+            label192.ForeColor = SystemColors.ControlLight;
+            label192.Location = new Point(2117, 5);
+            label192.Name = "label192";
+            label192.Size = new Size(45, 74);
+            label192.TabIndex = 16;
+            label192.Text = "|";
+            // 
+            // label193
+            // 
+            label193.AutoSize = true;
+            label193.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label193.Location = new Point(999, 16);
+            label193.Name = "label193";
+            label193.Size = new Size(72, 25);
+            label193.TabIndex = 13;
+            label193.Text = "Absent";
+            // 
+            // label194
+            // 
+            label194.Anchor = (AnchorStyles)(AnchorStyles.Top) | (AnchorStyles.Right);
+            label194.AutoSize = true;
+            label194.Font = new Font("Segoe UI", 42F);
+            label194.ForeColor = SystemColors.ControlLight;
+            label194.Location = new Point(1827, 4);
+            label194.Name = "label194";
+            label194.Size = new Size(45, 74);
+            label194.TabIndex = 11;
+            label194.Text = "|";
+            // 
+            // label195
+            // 
+            label195.AutoSize = true;
+            label195.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label195.Location = new Point(878, 42);
+            label195.Name = "label195";
+            label195.Size = new Size(22, 25);
+            label195.TabIndex = 12;
+            label195.Text = "7";
+            // 
+            // label196
+            // 
+            label196.AutoSize = true;
+            label196.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label196.Location = new Point(853, 16);
+            label196.Name = "label196";
+            label196.Size = new Size(76, 25);
+            label196.TabIndex = 10;
+            label196.Text = "Present";
+            // 
+            // label197
+            // 
+            label197.AutoSize = true;
+            label197.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label197.Location = new Point(604, 16);
+            label197.Name = "label197";
+            label197.Size = new Size(182, 25);
+            label197.TabIndex = 5;
+            label197.Text = "Number of Sessions";
+            // 
+            // lblAttendancePercent
+            // 
+            lblAttendancePercent.AutoSize = true;
+            lblAttendancePercent.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            lblAttendancePercent.Location = new Point(687, 42);
+            lblAttendancePercent.Name = "lblAttendancePercent";
+            lblAttendancePercent.Size = new Size(23, 25);
+            lblAttendancePercent.TabIndex = 6;
+            lblAttendancePercent.Text = "9";
+            // 
+            // label198
+            // 
+            label198.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            label198.AutoSize = true;
+            label198.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label198.Location = new Point(6, 5);
+            label198.Name = "label198";
+            label198.Size = new Size(93, 25);
+            label198.TabIndex = 1;
+            label198.Text = "Overview";
+            // 
+            // label199
+            // 
+            label199.Anchor = AnchorStyles.Top;
+            label199.AutoSize = true;
+            label199.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label199.Location = new Point(2152, 184);
+            label199.Name = "label199";
+            label199.Size = new Size(85, 25);
+            label199.TabIndex = 28;
+            label199.Text = "Remarks";
+            // 
+            // panel92
+            // 
+            panel92.Anchor = AnchorStyles.None;
+            panel92.BackColor = SystemColors.ButtonHighlight;
+            panel92.Controls.Add(textBox11);
+            panel92.Controls.Add(pictureBox29);
+            panel92.Location = new Point(823, 2);
+            panel92.Margin = new Padding(3, 2, 3, 2);
+            panel92.Name = "panel92";
+            panel92.Size = new Size(417, 35);
+            panel92.TabIndex = 19;
+            // 
+            // textBox11
+            // 
+            textBox11.BorderStyle = BorderStyle.None;
+            textBox11.Font = new Font("Segoe UI", 12F);
+            textBox11.Location = new Point(45, 5);
+            textBox11.Margin = new Padding(3, 2, 3, 2);
+            textBox11.Name = "textBox11";
+            textBox11.PlaceholderText = "Search Here";
+            textBox11.Size = new Size(351, 22);
+            textBox11.TabIndex = 1;
+            // 
+            // pictureBox29
+            // 
+            pictureBox29.Image = PUPAcadPortal.Properties.Resources.magnifier1;
+            pictureBox29.Location = new Point(10, 2);
+            pictureBox29.Margin = new Padding(3, 2, 3, 2);
+            pictureBox29.Name = "pictureBox29";
+            pictureBox29.Size = new Size(29, 30);
+            pictureBox29.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox29.TabIndex = 0;
+            pictureBox29.TabStop = false;
+            // 
+            // label200
+            // 
+            label200.Anchor = AnchorStyles.None;
+            label200.AutoSize = true;
+            label200.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label200.Location = new Point(645, 146);
+            label200.Name = "label200";
+            label200.Size = new Size(64, 25);
+            label200.TabIndex = 27;
+            label200.Text = "Status";
+            // 
+            // label201
+            // 
+            label201.Anchor = AnchorStyles.None;
+            label201.AutoSize = true;
+            label201.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label201.Location = new Point(175, 146);
+            label201.Name = "label201";
+            label201.Size = new Size(144, 25);
+            label201.TabIndex = 3;
+            label201.Text = "Date of Session";
+            // 
+            // panel93
+            // 
+            panel93.Anchor = AnchorStyles.None;
+            panel93.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            panel93.BackColor = SystemColors.ButtonHighlight;
+            panel93.Controls.Add(cmbbxCourseSelection);
+            panel93.Controls.Add(label202);
+            panel93.Location = new Point(11, 3);
+            panel93.Margin = new Padding(3, 2, 3, 2);
+            panel93.Name = "panel93";
+            panel93.Size = new Size(797, 34);
+            panel93.TabIndex = 18;
+            // 
+            // cmbbxCourseSelection
+            // 
+            cmbbxCourseSelection.BackColor = SystemColors.ScrollBar;
+            cmbbxCourseSelection.FlatStyle = FlatStyle.Flat;
+            cmbbxCourseSelection.Font = new Font("Segoe UI", 13F);
+            cmbbxCourseSelection.FormattingEnabled = true;
+            cmbbxCourseSelection.Items.AddRange(new object[] { "Introduction to Programming", "Principles of Accounting", "PATHFIT 4", "Information Management", "Programming and Technologies", "Human Computer Interaction" });
+            cmbbxCourseSelection.Location = new Point(146, 2);
+            cmbbxCourseSelection.Margin = new Padding(3, 2, 3, 2);
+            cmbbxCourseSelection.Name = "cmbbxCourseSelection";
+            cmbbxCourseSelection.Size = new Size(373, 31);
+            cmbbxCourseSelection.TabIndex = 1;
+            cmbbxCourseSelection.SelectedIndexChanged += (this.cmbbxCourseSelection_SelectedIndexChanged);
+            // 
+            // label202
+            // 
+            label202.AutoSize = true;
+            label202.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label202.Location = new Point(6, 4);
+            label202.Name = "label202";
+            label202.Size = new Size(126, 25);
+            label202.TabIndex = 0;
+            label202.Text = "Attendance | ";
             // 
             // pnlActivities
             // 
             pnlActivities.AutoScroll = true;
             pnlActivities.BackColor = SystemColors.Control;
             pnlActivities.CausesValidation = false;
-            pnlActivities.Controls.Add(pnlVA);
-            pnlActivities.Controls.Add(pnlAll);
-            pnlActivities.Controls.Add(pnlRA);
-            pnlActivities.Controls.Add(pnlToday);
-            pnlActivities.Controls.Add(pnlTW);
-            pnlActivities.Controls.Add(pnlNW);
             pnlActivities.Controls.Add(panel68);
             pnlActivities.Controls.Add(panel69);
             pnlActivities.Controls.Add(panel70);
             pnlActivities.Controls.Add(panel71);
             pnlActivities.Controls.Add(panel72);
             pnlActivities.Controls.Add(panel73);
+            pnlActivities.Controls.Add(pnlVA);
+            pnlActivities.Controls.Add(pnlRA);
+            pnlActivities.Controls.Add(pnlAll);
+            pnlActivities.Controls.Add(pnlToday);
+            pnlActivities.Controls.Add(pnlTW);
+            pnlActivities.Controls.Add(pnlNW);
             pnlActivities.Dock = DockStyle.Fill;
             pnlActivities.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
             pnlActivities.Location = new Point(256, 72);
@@ -4108,15 +3404,328 @@
             pnlActivities.TabIndex = 35;
             pnlActivities.Visible = false;
             // 
+            // panel68
+            // 
+            panel68.Anchor = AnchorStyles.Top;
+            panel68.BackColor = Color.MintCream;
+            panel68.Controls.Add(label134);
+            panel68.Location = new Point(939, 332);
+            panel68.Name = "panel68";
+            panel68.Size = new Size(307, 46);
+            panel68.TabIndex = 11;
+            // 
+            // label134
+            // 
+            label134.AutoSize = true;
+            label134.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label134.Location = new Point(62, 11);
+            label134.Name = "label134";
+            label134.Size = new Size(185, 25);
+            label134.TabIndex = 2;
+            label134.Text = "Submitted Activities";
+            // 
+            // panel69
+            // 
+            panel69.Anchor = AnchorStyles.Top;
+            panel69.AutoScroll = true;
+            panel69.BackColor = Color.Maroon;
+            panel69.Controls.Add(roundedPanel74);
+            panel69.Controls.Add(roundedPanel75);
+            panel69.Location = new Point(939, 378);
+            panel69.Name = "panel69";
+            panel69.Size = new Size(307, 192);
+            panel69.TabIndex = 10;
+            // 
+            // roundedPanel74
+            // 
+            roundedPanel74.BackColor = Color.White;
+            roundedPanel74.BorderRadius = 10;
+            roundedPanel74.Controls.Add(label135);
+            roundedPanel74.Controls.Add(label136);
+            roundedPanel74.Location = new Point(18, 7);
+            roundedPanel74.Name = "roundedPanel74";
+            roundedPanel74.Size = new Size(264, 76);
+            roundedPanel74.TabIndex = 5;
+            // 
+            // label135
+            // 
+            label135.AutoSize = true;
+            label135.Font = new Font("Segoe UI", 9F);
+            label135.ForeColor = Color.Black;
+            label135.Location = new Point(12, 27);
+            label135.Name = "label135";
+            label135.Size = new Size(160, 15);
+            label135.TabIndex = 4;
+            label135.Text = "Due: April 06, 2026(11:59 PM)";
+            // 
+            // label136
+            // 
+            label136.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
+            label136.ForeColor = Color.Black;
+            label136.Location = new Point(12, 3);
+            label136.Name = "label136";
+            label136.Size = new Size(231, 43);
+            label136.TabIndex = 3;
+            label136.Text = "Integrating Methodologies";
+            // 
+            // roundedPanel75
+            // 
+            roundedPanel75.BackColor = Color.White;
+            roundedPanel75.BorderRadius = 10;
+            roundedPanel75.Controls.Add(label137);
+            roundedPanel75.Location = new Point(18, 96);
+            roundedPanel75.Name = "roundedPanel75";
+            roundedPanel75.Size = new Size(264, 76);
+            roundedPanel75.TabIndex = 4;
+            // 
+            // label137
+            // 
+            label137.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
+            label137.ForeColor = Color.Black;
+            label137.Location = new Point(12, 3);
+            label137.Name = "label137";
+            label137.Size = new Size(83, 19);
+            label137.TabIndex = 3;
+            label137.Text = "Title: Title";
+            // 
+            // panel70
+            // 
+            panel70.Anchor = AnchorStyles.Top;
+            panel70.BackColor = Color.MistyRose;
+            panel70.Controls.Add(label138);
+            panel70.Location = new Point(939, 68);
+            panel70.Name = "panel70";
+            panel70.Size = new Size(307, 46);
+            panel70.TabIndex = 9;
+            // 
+            // label138
+            // 
+            label138.AutoSize = true;
+            label138.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label138.Location = new Point(49, 11);
+            label138.Name = "label138";
+            label138.Size = new Size(207, 25);
+            label138.TabIndex = 2;
+            label138.Text = "Unsubmitted Activities";
+            // 
+            // panel71
+            // 
+            panel71.Anchor = AnchorStyles.Top;
+            panel71.AutoScroll = true;
+            panel71.BackColor = Color.Maroon;
+            panel71.Controls.Add(roundedPanel76);
+            panel71.Controls.Add(roundedPanel77);
+            panel71.Controls.Add(roundedPanel78);
+            panel71.Location = new Point(939, 114);
+            panel71.Name = "panel71";
+            panel71.Size = new Size(307, 192);
+            panel71.TabIndex = 8;
+            // 
+            // roundedPanel76
+            // 
+            roundedPanel76.BackColor = Color.White;
+            roundedPanel76.BorderRadius = 10;
+            roundedPanel76.Controls.Add(label139);
+            roundedPanel76.Controls.Add(label140);
+            roundedPanel76.Location = new Point(18, 188);
+            roundedPanel76.Name = "roundedPanel76";
+            roundedPanel76.Size = new Size(264, 76);
+            roundedPanel76.TabIndex = 5;
+            // 
+            // label139
+            // 
+            label139.AutoSize = true;
+            label139.Font = new Font("Segoe UI", 9F);
+            label139.ForeColor = Color.Black;
+            label139.Location = new Point(12, 27);
+            label139.Name = "label139";
+            label139.Size = new Size(160, 15);
+            label139.TabIndex = 6;
+            label139.Text = "Due: April 14, 2026(11:59 PM)";
+            // 
+            // label140
+            // 
+            label140.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label140.ForeColor = Color.Black;
+            label140.Location = new Point(12, 3);
+            label140.Name = "label140";
+            label140.Size = new Size(249, 19);
+            label140.TabIndex = 3;
+            label140.Text = "Programming and Technologies 1";
+            // 
+            // roundedPanel77
+            // 
+            roundedPanel77.BackColor = Color.White;
+            roundedPanel77.BorderRadius = 10;
+            roundedPanel77.Controls.Add(label141);
+            roundedPanel77.Controls.Add(label142);
+            roundedPanel77.Location = new Point(18, 7);
+            roundedPanel77.Name = "roundedPanel77";
+            roundedPanel77.Size = new Size(264, 76);
+            roundedPanel77.TabIndex = 5;
+            // 
+            // label141
+            // 
+            label141.AutoSize = true;
+            label141.Font = new Font("Segoe UI", 9F);
+            label141.ForeColor = Color.Black;
+            label141.Location = new Point(12, 27);
+            label141.Name = "label141";
+            label141.Size = new Size(160, 15);
+            label141.TabIndex = 4;
+            label141.Text = "Due: April 13, 2026(11:59 PM)";
+            // 
+            // label142
+            // 
+            label142.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
+            label142.ForeColor = Color.Black;
+            label142.Location = new Point(12, 3);
+            label142.Name = "label142";
+            label142.Size = new Size(231, 19);
+            label142.TabIndex = 3;
+            label142.Text = "System Simulations";
+            // 
+            // roundedPanel78
+            // 
+            roundedPanel78.BackColor = Color.White;
+            roundedPanel78.BorderRadius = 10;
+            roundedPanel78.Controls.Add(label143);
+            roundedPanel78.Controls.Add(label144);
+            roundedPanel78.Location = new Point(18, 96);
+            roundedPanel78.Name = "roundedPanel78";
+            roundedPanel78.Size = new Size(264, 76);
+            roundedPanel78.TabIndex = 4;
+            // 
+            // label143
+            // 
+            label143.AutoSize = true;
+            label143.Font = new Font("Segoe UI", 9F);
+            label143.ForeColor = Color.Black;
+            label143.Location = new Point(12, 27);
+            label143.Name = "label143";
+            label143.Size = new Size(160, 15);
+            label143.TabIndex = 5;
+            label143.Text = "Due: April 21, 2026(11:59 PM)";
+            // 
+            // label144
+            // 
+            label144.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
+            label144.ForeColor = Color.Black;
+            label144.Location = new Point(12, 3);
+            label144.Name = "label144";
+            label144.Size = new Size(249, 19);
+            label144.TabIndex = 3;
+            label144.Text = "Human Computer Interactions";
+            // 
+            // panel72
+            // 
+            panel72.Anchor = AnchorStyles.Top;
+            panel72.BackColor = SystemColors.ActiveBorder;
+            panel72.Controls.Add(btnNextWeek);
+            panel72.Controls.Add(btnThisWeek);
+            panel72.Controls.Add(btnToday);
+            panel72.Controls.Add(btnAll);
+            panel72.Location = new Point(36, 68);
+            panel72.Name = "panel72";
+            panel72.Size = new Size(782, 46);
+            panel72.TabIndex = 5;
+            // 
+            // btnNextWeek
+            // 
+            btnNextWeek.BackColor = Color.White;
+            btnNextWeek.Dock = DockStyle.Left;
+            btnNextWeek.FlatStyle = FlatStyle.Popup;
+            btnNextWeek.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
+            btnNextWeek.Location = new Point(524, 0);
+            btnNextWeek.Name = "btnNextWeek";
+            btnNextWeek.Size = new Size(263, 46);
+            btnNextWeek.TabIndex = 9;
+            btnNextWeek.Text = "Next Week";
+            btnNextWeek.UseVisualStyleBackColor = false;
+            btnNextWeek.Click += (this.btnNextWeek_Click);
+            // 
+            // btnThisWeek
+            // 
+            btnThisWeek.BackColor = Color.White;
+            btnThisWeek.Dock = DockStyle.Left;
+            btnThisWeek.FlatStyle = FlatStyle.Popup;
+            btnThisWeek.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
+            btnThisWeek.Location = new Point(310, 0);
+            btnThisWeek.Name = "btnThisWeek";
+            btnThisWeek.Size = new Size(214, 46);
+            btnThisWeek.TabIndex = 8;
+            btnThisWeek.Text = "This Week";
+            btnThisWeek.UseVisualStyleBackColor = false;
+            btnThisWeek.Click += (this.btnThisWeek_Click);
+            // 
+            // btnToday
+            // 
+            btnToday.BackColor = Color.White;
+            btnToday.Dock = DockStyle.Left;
+            btnToday.FlatStyle = FlatStyle.Popup;
+            btnToday.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
+            btnToday.Location = new Point(49, 0);
+            btnToday.Name = "btnToday";
+            btnToday.Size = new Size(261, 46);
+            btnToday.TabIndex = 7;
+            btnToday.Text = "Today";
+            btnToday.UseVisualStyleBackColor = false;
+            btnToday.Click += (this.btnToday_Click);
+            // 
+            // btnAll
+            // 
+            btnAll.BackColor = Color.White;
+            btnAll.Dock = DockStyle.Left;
+            btnAll.FlatStyle = FlatStyle.Popup;
+            btnAll.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
+            btnAll.Location = new Point(0, 0);
+            btnAll.Name = "btnAll";
+            btnAll.Size = new Size(49, 46);
+            btnAll.TabIndex = 10;
+            btnAll.Text = "All";
+            btnAll.UseVisualStyleBackColor = false;
+            btnAll.Click += (this.btnAll_Click);
+            // 
+            // panel73
+            // 
+            panel73.BackColor = Color.Maroon;
+            panel73.Controls.Add(label145);
+            panel73.Controls.Add(label146);
+            panel73.Dock = DockStyle.Top;
+            panel73.Location = new Point(0, 0);
+            panel73.Name = "panel73";
+            panel73.Size = new Size(1272, 37);
+            panel73.TabIndex = 0;
+            // 
+            // label145
+            // 
+            label145.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label145.ForeColor = Color.White;
+            label145.Location = new Point(577, 6);
+            label145.Name = "label145";
+            label145.Size = new Size(178, 25);
+            label145.TabIndex = 2;
+            label145.Text = "2nd Semester 2026";
+            // 
+            // label146
+            // 
+            label146.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label146.ForeColor = Color.White;
+            label146.Location = new Point(8, 6);
+            label146.Name = "label146";
+            label146.Size = new Size(91, 25);
+            label146.TabIndex = 1;
+            label146.Text = "Activities";
+            // 
             // pnlVA
             // 
             pnlVA.BackColor = Color.FromArgb((int)(byte)42, (int)(byte)42, (int)(byte)42);
             pnlVA.Controls.Add(panel66);
             pnlVA.Controls.Add(panel67);
             pnlVA.Dock = DockStyle.Fill;
-            pnlVA.Location = new Point(0, 37);
+            pnlVA.Location = new Point(0, 0);
             pnlVA.Name = "pnlVA";
-            pnlVA.Size = new Size(1272, 682);
+            pnlVA.Size = new Size(1272, 719);
             pnlVA.TabIndex = 12;
             pnlVA.Visible = false;
             // 
@@ -4132,7 +3741,7 @@
             panel66.Dock = DockStyle.Fill;
             panel66.Location = new Point(0, 99);
             panel66.Name = "panel66";
-            panel66.Size = new Size(1272, 583);
+            panel66.Size = new Size(1272, 620);
             panel66.TabIndex = 2;
             // 
             // groupBox4
@@ -4557,426 +4166,15 @@
             label116.TabIndex = 2;
             label116.Text = "System Simulations";
             // 
-            // pnlAll
-            // 
-            pnlAll.AutoScroll = true;
-            pnlAll.Controls.Add(roundedPanel64);
-            pnlAll.Controls.Add(roundedPanel66);
-            pnlAll.Controls.Add(roundedPanel68);
-            pnlAll.Controls.Add(roundedPanel70);
-            pnlAll.Controls.Add(roundedPanel72);
-            pnlAll.ForeColor = Color.Maroon;
-            pnlAll.Location = new Point(35, 114);
-            pnlAll.Name = "pnlAll";
-            pnlAll.Size = new Size(783, 394);
-            pnlAll.TabIndex = 7;
-            // 
-            // roundedPanel64
-            // 
-            roundedPanel64.BackColor = Color.Maroon;
-            roundedPanel64.BorderRadius = 10;
-            roundedPanel64.Controls.Add(pictureBox38);
-            roundedPanel64.Controls.Add(label117);
-            roundedPanel64.Controls.Add(buttonRounded11);
-            roundedPanel64.Controls.Add(roundedPanel65);
-            roundedPanel64.Location = new Point(11, 332);
-            roundedPanel64.Name = "roundedPanel64";
-            roundedPanel64.Size = new Size(750, 100);
-            roundedPanel64.TabIndex = 11;
-            // 
-            // pictureBox38
-            // 
-            pictureBox38.Image = (Image)resources.GetObject("pictureBox38.Image");
-            pictureBox38.Location = new Point(29, 3);
-            pictureBox38.Name = "pictureBox38";
-            pictureBox38.Size = new Size(114, 90);
-            pictureBox38.TabIndex = 10;
-            pictureBox38.TabStop = false;
-            // 
-            // label117
-            // 
-            label117.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
-            label117.ForeColor = SystemColors.ButtonHighlight;
-            label117.Location = new Point(610, 15);
-            label117.Name = "label117";
-            label117.Size = new Size(128, 39);
-            label117.TabIndex = 6;
-            label117.Text = "Not Started";
-            // 
-            // buttonRounded11
-            // 
-            buttonRounded11.BackColor = Color.Maroon;
-            buttonRounded11.BorderRadius = 20;
-            buttonRounded11.FlatAppearance.BorderSize = 0;
-            buttonRounded11.FlatStyle = FlatStyle.Flat;
-            buttonRounded11.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
-            buttonRounded11.ForeColor = Color.White;
-            buttonRounded11.Location = new Point(597, 57);
-            buttonRounded11.Name = "buttonRounded11";
-            buttonRounded11.Size = new Size(150, 40);
-            buttonRounded11.TabIndex = 2;
-            buttonRounded11.Text = "View";
-            buttonRounded11.UseVisualStyleBackColor = false;
-            // 
-            // roundedPanel65
-            // 
-            roundedPanel65.BackColor = Color.White;
-            roundedPanel65.BorderRadius = 10;
-            roundedPanel65.Controls.Add(label119);
-            roundedPanel65.Controls.Add(label120);
-            roundedPanel65.Location = new Point(181, 8);
-            roundedPanel65.Name = "roundedPanel65";
-            roundedPanel65.Size = new Size(413, 89);
-            roundedPanel65.TabIndex = 2;
-            // 
-            // label119
-            // 
-            label119.AutoSize = true;
-            label119.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
-            label119.ForeColor = Color.Black;
-            label119.Location = new Point(13, 27);
-            label119.Name = "label119";
-            label119.Size = new Size(204, 20);
-            label119.TabIndex = 8;
-            label119.Text = "Due: April 21, 2026(11:59 PM)";
-            // 
-            // label120
-            // 
-            label120.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            label120.ForeColor = Color.Black;
-            label120.Location = new Point(12, 3);
-            label120.Name = "label120";
-            label120.Size = new Size(398, 24);
-            label120.TabIndex = 3;
-            label120.Text = "Human Computer Interactions";
-            // 
-            // roundedPanel66
-            // 
-            roundedPanel66.BackColor = Color.Maroon;
-            roundedPanel66.BorderRadius = 10;
-            roundedPanel66.Controls.Add(pictureBox39);
-            roundedPanel66.Controls.Add(label122);
-            roundedPanel66.Controls.Add(buttonRounded12);
-            roundedPanel66.Controls.Add(roundedPanel67);
-            roundedPanel66.Location = new Point(11, 438);
-            roundedPanel66.Name = "roundedPanel66";
-            roundedPanel66.Size = new Size(750, 100);
-            roundedPanel66.TabIndex = 11;
-            // 
-            // pictureBox39
-            // 
-            pictureBox39.Image = (Image)resources.GetObject("pictureBox39.Image");
-            pictureBox39.Location = new Point(29, 3);
-            pictureBox39.Name = "pictureBox39";
-            pictureBox39.Size = new Size(114, 90);
-            pictureBox39.TabIndex = 10;
-            pictureBox39.TabStop = false;
-            // 
-            // label122
-            // 
-            label122.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
-            label122.ForeColor = SystemColors.ButtonHighlight;
-            label122.Location = new Point(610, 15);
-            label122.Name = "label122";
-            label122.Size = new Size(128, 39);
-            label122.TabIndex = 6;
-            label122.Text = "Not Started";
-            // 
-            // buttonRounded12
-            // 
-            buttonRounded12.BackColor = Color.Maroon;
-            buttonRounded12.BorderRadius = 20;
-            buttonRounded12.FlatAppearance.BorderSize = 0;
-            buttonRounded12.FlatStyle = FlatStyle.Flat;
-            buttonRounded12.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
-            buttonRounded12.ForeColor = Color.White;
-            buttonRounded12.Location = new Point(597, 57);
-            buttonRounded12.Name = "buttonRounded12";
-            buttonRounded12.Size = new Size(150, 40);
-            buttonRounded12.TabIndex = 2;
-            buttonRounded12.Text = "View";
-            buttonRounded12.UseVisualStyleBackColor = false;
-            // 
-            // roundedPanel67
-            // 
-            roundedPanel67.BackColor = Color.White;
-            roundedPanel67.BorderRadius = 10;
-            roundedPanel67.Controls.Add(label123);
-            roundedPanel67.Controls.Add(label124);
-            roundedPanel67.Location = new Point(181, 8);
-            roundedPanel67.Name = "roundedPanel67";
-            roundedPanel67.Size = new Size(413, 89);
-            roundedPanel67.TabIndex = 2;
-            // 
-            // label123
-            // 
-            label123.AutoSize = true;
-            label123.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
-            label123.ForeColor = Color.Black;
-            label123.Location = new Point(13, 27);
-            label123.Name = "label123";
-            label123.Size = new Size(120, 20);
-            label123.TabIndex = 9;
-            label123.Text = "Submission Date";
-            // 
-            // label124
-            // 
-            label124.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            label124.ForeColor = Color.Black;
-            label124.Location = new Point(12, 3);
-            label124.Name = "label124";
-            label124.Size = new Size(398, 24);
-            label124.TabIndex = 3;
-            label124.Text = "Course Name";
-            // 
-            // roundedPanel68
-            // 
-            roundedPanel68.BackColor = Color.Maroon;
-            roundedPanel68.BorderRadius = 10;
-            roundedPanel68.Controls.Add(pictureBox40);
-            roundedPanel68.Controls.Add(label125);
-            roundedPanel68.Controls.Add(buttonRounded8);
-            roundedPanel68.Controls.Add(roundedPanel69);
-            roundedPanel68.Location = new Point(11, 226);
-            roundedPanel68.Name = "roundedPanel68";
-            roundedPanel68.Size = new Size(750, 100);
-            roundedPanel68.TabIndex = 5;
-            // 
-            // pictureBox40
-            // 
-            pictureBox40.Image = (Image)resources.GetObject("pictureBox40.Image");
-            pictureBox40.Location = new Point(29, 3);
-            pictureBox40.Name = "pictureBox40";
-            pictureBox40.Size = new Size(114, 90);
-            pictureBox40.TabIndex = 10;
-            pictureBox40.TabStop = false;
-            // 
-            // label125
-            // 
-            label125.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
-            label125.ForeColor = SystemColors.ButtonHighlight;
-            label125.Location = new Point(610, 15);
-            label125.Name = "label125";
-            label125.Size = new Size(128, 39);
-            label125.TabIndex = 6;
-            label125.Text = "Not Started";
-            // 
-            // buttonRounded8
-            // 
-            buttonRounded8.BackColor = Color.Maroon;
-            buttonRounded8.BorderRadius = 20;
-            buttonRounded8.FlatAppearance.BorderSize = 0;
-            buttonRounded8.FlatStyle = FlatStyle.Flat;
-            buttonRounded8.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
-            buttonRounded8.ForeColor = Color.White;
-            buttonRounded8.Location = new Point(597, 57);
-            buttonRounded8.Name = "buttonRounded8";
-            buttonRounded8.Size = new Size(150, 40);
-            buttonRounded8.TabIndex = 2;
-            buttonRounded8.Text = "View";
-            buttonRounded8.UseVisualStyleBackColor = false;
-            // 
-            // roundedPanel69
-            // 
-            roundedPanel69.BackColor = Color.White;
-            roundedPanel69.BorderRadius = 10;
-            roundedPanel69.Controls.Add(label126);
-            roundedPanel69.Controls.Add(label127);
-            roundedPanel69.Location = new Point(181, 8);
-            roundedPanel69.Name = "roundedPanel69";
-            roundedPanel69.Size = new Size(413, 89);
-            roundedPanel69.TabIndex = 2;
-            // 
-            // label126
-            // 
-            label126.AutoSize = true;
-            label126.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
-            label126.ForeColor = Color.Black;
-            label126.Location = new Point(13, 27);
-            label126.Name = "label126";
-            label126.Size = new Size(204, 20);
-            label126.TabIndex = 7;
-            label126.Text = "Due: April 14, 2026(11:59 PM)";
-            // 
-            // label127
-            // 
-            label127.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            label127.ForeColor = Color.Black;
-            label127.Location = new Point(12, 3);
-            label127.Name = "label127";
-            label127.Size = new Size(398, 24);
-            label127.TabIndex = 3;
-            label127.Text = "Programming and Technologies 1";
-            // 
-            // roundedPanel70
-            // 
-            roundedPanel70.BackColor = Color.Maroon;
-            roundedPanel70.BorderRadius = 10;
-            roundedPanel70.Controls.Add(pictureBox41);
-            roundedPanel70.Controls.Add(label128);
-            roundedPanel70.Controls.Add(buttonRounded9);
-            roundedPanel70.Controls.Add(roundedPanel71);
-            roundedPanel70.Location = new Point(11, 120);
-            roundedPanel70.Name = "roundedPanel70";
-            roundedPanel70.Size = new Size(750, 100);
-            roundedPanel70.TabIndex = 4;
-            // 
-            // pictureBox41
-            // 
-            pictureBox41.Image = (Image)resources.GetObject("pictureBox41.Image");
-            pictureBox41.Location = new Point(29, 3);
-            pictureBox41.Name = "pictureBox41";
-            pictureBox41.Size = new Size(114, 90);
-            pictureBox41.TabIndex = 9;
-            pictureBox41.TabStop = false;
-            // 
-            // label128
-            // 
-            label128.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
-            label128.ForeColor = SystemColors.ButtonHighlight;
-            label128.Location = new Point(610, 15);
-            label128.Name = "label128";
-            label128.Size = new Size(128, 37);
-            label128.TabIndex = 5;
-            label128.Text = "Not Started";
-            // 
-            // buttonRounded9
-            // 
-            buttonRounded9.BackColor = Color.Maroon;
-            buttonRounded9.BorderRadius = 20;
-            buttonRounded9.FlatAppearance.BorderSize = 0;
-            buttonRounded9.FlatStyle = FlatStyle.Flat;
-            buttonRounded9.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
-            buttonRounded9.ForeColor = Color.White;
-            buttonRounded9.Location = new Point(597, 57);
-            buttonRounded9.Name = "buttonRounded9";
-            buttonRounded9.Size = new Size(150, 40);
-            buttonRounded9.TabIndex = 2;
-            buttonRounded9.Text = "View";
-            buttonRounded9.UseVisualStyleBackColor = false;
-            buttonRounded9.Click += (this.buttonRounded9_Click);
-            // 
-            // roundedPanel71
-            // 
-            roundedPanel71.BackColor = Color.White;
-            roundedPanel71.BorderRadius = 10;
-            roundedPanel71.Controls.Add(label129);
-            roundedPanel71.Controls.Add(label130);
-            roundedPanel71.Location = new Point(181, 8);
-            roundedPanel71.Name = "roundedPanel71";
-            roundedPanel71.Size = new Size(413, 89);
-            roundedPanel71.TabIndex = 2;
-            // 
-            // label129
-            // 
-            label129.AutoSize = true;
-            label129.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
-            label129.ForeColor = Color.Black;
-            label129.Location = new Point(13, 27);
-            label129.Name = "label129";
-            label129.Size = new Size(204, 20);
-            label129.TabIndex = 6;
-            label129.Text = "Due: April 13, 2026(11:59 PM)";
-            // 
-            // label130
-            // 
-            label130.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            label130.ForeColor = Color.Black;
-            label130.Location = new Point(12, 3);
-            label130.Name = "label130";
-            label130.Size = new Size(398, 24);
-            label130.TabIndex = 3;
-            label130.Text = "System Simulations";
-            // 
-            // roundedPanel72
-            // 
-            roundedPanel72.BackColor = Color.Maroon;
-            roundedPanel72.BorderRadius = 10;
-            roundedPanel72.Controls.Add(pictureBox42);
-            roundedPanel72.Controls.Add(label131);
-            roundedPanel72.Controls.Add(buttonRounded10);
-            roundedPanel72.Controls.Add(roundedPanel73);
-            roundedPanel72.Location = new Point(11, 14);
-            roundedPanel72.Name = "roundedPanel72";
-            roundedPanel72.Size = new Size(750, 100);
-            roundedPanel72.TabIndex = 3;
-            // 
-            // pictureBox42
-            // 
-            pictureBox42.Image = (Image)resources.GetObject("pictureBox42.Image");
-            pictureBox42.Location = new Point(30, 3);
-            pictureBox42.Name = "pictureBox42";
-            pictureBox42.Size = new Size(114, 90);
-            pictureBox42.TabIndex = 8;
-            pictureBox42.TabStop = false;
-            // 
-            // label131
-            // 
-            label131.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
-            label131.ForeColor = SystemColors.ButtonHighlight;
-            label131.Location = new Point(625, 17);
-            label131.Name = "label131";
-            label131.Size = new Size(96, 24);
-            label131.TabIndex = 4;
-            label131.Text = "Finished";
-            // 
-            // buttonRounded10
-            // 
-            buttonRounded10.BackColor = Color.Maroon;
-            buttonRounded10.BorderRadius = 20;
-            buttonRounded10.FlatAppearance.BorderSize = 0;
-            buttonRounded10.FlatStyle = FlatStyle.Flat;
-            buttonRounded10.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
-            buttonRounded10.ForeColor = Color.White;
-            buttonRounded10.Location = new Point(597, 57);
-            buttonRounded10.Name = "buttonRounded10";
-            buttonRounded10.Size = new Size(150, 40);
-            buttonRounded10.TabIndex = 2;
-            buttonRounded10.Text = "Review";
-            buttonRounded10.UseVisualStyleBackColor = false;
-            buttonRounded10.Click += (this.buttonRounded10_Click);
-            // 
-            // roundedPanel73
-            // 
-            roundedPanel73.BackColor = Color.White;
-            roundedPanel73.BorderRadius = 10;
-            roundedPanel73.Controls.Add(label132);
-            roundedPanel73.Controls.Add(label133);
-            roundedPanel73.Location = new Point(181, 8);
-            roundedPanel73.Name = "roundedPanel73";
-            roundedPanel73.Size = new Size(413, 89);
-            roundedPanel73.TabIndex = 2;
-            // 
-            // label132
-            // 
-            label132.AutoSize = true;
-            label132.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
-            label132.ForeColor = Color.Black;
-            label132.Location = new Point(13, 27);
-            label132.Name = "label132";
-            label132.Size = new Size(204, 20);
-            label132.TabIndex = 5;
-            label132.Text = "Due: April 06, 2026(11:59 PM)";
-            // 
-            // label133
-            // 
-            label133.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            label133.ForeColor = Color.Black;
-            label133.Location = new Point(12, 3);
-            label133.Name = "label133";
-            label133.Size = new Size(398, 24);
-            label133.TabIndex = 3;
-            label133.Text = "Integrating Methodologies";
-            // 
             // pnlRA
             // 
             pnlRA.BackColor = Color.FromArgb((int)(byte)42, (int)(byte)42, (int)(byte)42);
             pnlRA.Controls.Add(panel64);
             pnlRA.Controls.Add(panel65);
             pnlRA.Dock = DockStyle.Fill;
-            pnlRA.Location = new Point(0, 37);
+            pnlRA.Location = new Point(0, 0);
             pnlRA.Name = "pnlRA";
-            pnlRA.Size = new Size(1272, 682);
+            pnlRA.Size = new Size(1272, 719);
             pnlRA.TabIndex = 13;
             pnlRA.Visible = false;
             // 
@@ -4992,7 +4190,7 @@
             panel64.Dock = DockStyle.Fill;
             panel64.Location = new Point(0, 99);
             panel64.Name = "panel64";
-            panel64.Size = new Size(1272, 583);
+            panel64.Size = new Size(1272, 620);
             panel64.TabIndex = 2;
             // 
             // buttonRounded15
@@ -5415,8 +4613,421 @@
             label109.TabIndex = 2;
             label109.Text = "Integrating Methodologies";
             // 
+            // pnlAll
+            // 
+            pnlAll.Anchor = AnchorStyles.Top;
+            pnlAll.AutoScroll = true;
+            pnlAll.Controls.Add(roundedPanel64);
+            pnlAll.Controls.Add(roundedPanel66);
+            pnlAll.Controls.Add(roundedPanel68);
+            pnlAll.Controls.Add(roundedPanel70);
+            pnlAll.Controls.Add(roundedPanel72);
+            pnlAll.ForeColor = Color.Maroon;
+            pnlAll.Location = new Point(35, 114);
+            pnlAll.Name = "pnlAll";
+            pnlAll.Size = new Size(783, 394);
+            pnlAll.TabIndex = 7;
+            // 
+            // roundedPanel64
+            // 
+            roundedPanel64.BackColor = Color.Maroon;
+            roundedPanel64.BorderRadius = 10;
+            roundedPanel64.Controls.Add(pictureBox38);
+            roundedPanel64.Controls.Add(label117);
+            roundedPanel64.Controls.Add(buttonRounded11);
+            roundedPanel64.Controls.Add(roundedPanel65);
+            roundedPanel64.Location = new Point(11, 332);
+            roundedPanel64.Name = "roundedPanel64";
+            roundedPanel64.Size = new Size(750, 100);
+            roundedPanel64.TabIndex = 11;
+            // 
+            // pictureBox38
+            // 
+            pictureBox38.Image = (Image)resources.GetObject("pictureBox38.Image");
+            pictureBox38.Location = new Point(29, 3);
+            pictureBox38.Name = "pictureBox38";
+            pictureBox38.Size = new Size(114, 90);
+            pictureBox38.TabIndex = 10;
+            pictureBox38.TabStop = false;
+            // 
+            // label117
+            // 
+            label117.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
+            label117.ForeColor = SystemColors.ButtonHighlight;
+            label117.Location = new Point(610, 15);
+            label117.Name = "label117";
+            label117.Size = new Size(128, 39);
+            label117.TabIndex = 6;
+            label117.Text = "Not Started";
+            // 
+            // buttonRounded11
+            // 
+            buttonRounded11.BackColor = Color.Maroon;
+            buttonRounded11.BorderRadius = 20;
+            buttonRounded11.FlatAppearance.BorderSize = 0;
+            buttonRounded11.FlatStyle = FlatStyle.Flat;
+            buttonRounded11.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
+            buttonRounded11.ForeColor = Color.White;
+            buttonRounded11.Location = new Point(597, 57);
+            buttonRounded11.Name = "buttonRounded11";
+            buttonRounded11.Size = new Size(150, 40);
+            buttonRounded11.TabIndex = 2;
+            buttonRounded11.Text = "View";
+            buttonRounded11.UseVisualStyleBackColor = false;
+            // 
+            // roundedPanel65
+            // 
+            roundedPanel65.BackColor = Color.White;
+            roundedPanel65.BorderRadius = 10;
+            roundedPanel65.Controls.Add(label119);
+            roundedPanel65.Controls.Add(label120);
+            roundedPanel65.Location = new Point(181, 8);
+            roundedPanel65.Name = "roundedPanel65";
+            roundedPanel65.Size = new Size(413, 89);
+            roundedPanel65.TabIndex = 2;
+            // 
+            // label119
+            // 
+            label119.AutoSize = true;
+            label119.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
+            label119.ForeColor = Color.Black;
+            label119.Location = new Point(13, 27);
+            label119.Name = "label119";
+            label119.Size = new Size(204, 20);
+            label119.TabIndex = 8;
+            label119.Text = "Due: April 21, 2026(11:59 PM)";
+            // 
+            // label120
+            // 
+            label120.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label120.ForeColor = Color.Black;
+            label120.Location = new Point(12, 3);
+            label120.Name = "label120";
+            label120.Size = new Size(398, 24);
+            label120.TabIndex = 3;
+            label120.Text = "Human Computer Interactions";
+            // 
+            // roundedPanel66
+            // 
+            roundedPanel66.BackColor = Color.Maroon;
+            roundedPanel66.BorderRadius = 10;
+            roundedPanel66.Controls.Add(pictureBox39);
+            roundedPanel66.Controls.Add(label122);
+            roundedPanel66.Controls.Add(buttonRounded12);
+            roundedPanel66.Controls.Add(roundedPanel67);
+            roundedPanel66.Location = new Point(11, 438);
+            roundedPanel66.Name = "roundedPanel66";
+            roundedPanel66.Size = new Size(750, 100);
+            roundedPanel66.TabIndex = 11;
+            // 
+            // pictureBox39
+            // 
+            pictureBox39.Image = (Image)resources.GetObject("pictureBox39.Image");
+            pictureBox39.Location = new Point(29, 3);
+            pictureBox39.Name = "pictureBox39";
+            pictureBox39.Size = new Size(114, 90);
+            pictureBox39.TabIndex = 10;
+            pictureBox39.TabStop = false;
+            // 
+            // label122
+            // 
+            label122.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
+            label122.ForeColor = SystemColors.ButtonHighlight;
+            label122.Location = new Point(610, 15);
+            label122.Name = "label122";
+            label122.Size = new Size(128, 39);
+            label122.TabIndex = 6;
+            label122.Text = "Not Started";
+            // 
+            // buttonRounded12
+            // 
+            buttonRounded12.BackColor = Color.Maroon;
+            buttonRounded12.BorderRadius = 20;
+            buttonRounded12.FlatAppearance.BorderSize = 0;
+            buttonRounded12.FlatStyle = FlatStyle.Flat;
+            buttonRounded12.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
+            buttonRounded12.ForeColor = Color.White;
+            buttonRounded12.Location = new Point(597, 57);
+            buttonRounded12.Name = "buttonRounded12";
+            buttonRounded12.Size = new Size(150, 40);
+            buttonRounded12.TabIndex = 2;
+            buttonRounded12.Text = "View";
+            buttonRounded12.UseVisualStyleBackColor = false;
+            // 
+            // roundedPanel67
+            // 
+            roundedPanel67.BackColor = Color.White;
+            roundedPanel67.BorderRadius = 10;
+            roundedPanel67.Controls.Add(label123);
+            roundedPanel67.Controls.Add(label124);
+            roundedPanel67.Location = new Point(181, 8);
+            roundedPanel67.Name = "roundedPanel67";
+            roundedPanel67.Size = new Size(413, 89);
+            roundedPanel67.TabIndex = 2;
+            // 
+            // label123
+            // 
+            label123.AutoSize = true;
+            label123.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
+            label123.ForeColor = Color.Black;
+            label123.Location = new Point(13, 27);
+            label123.Name = "label123";
+            label123.Size = new Size(120, 20);
+            label123.TabIndex = 9;
+            label123.Text = "Submission Date";
+            // 
+            // label124
+            // 
+            label124.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label124.ForeColor = Color.Black;
+            label124.Location = new Point(12, 3);
+            label124.Name = "label124";
+            label124.Size = new Size(398, 24);
+            label124.TabIndex = 3;
+            label124.Text = "Course Name";
+            // 
+            // roundedPanel68
+            // 
+            roundedPanel68.BackColor = Color.Maroon;
+            roundedPanel68.BorderRadius = 10;
+            roundedPanel68.Controls.Add(pictureBox40);
+            roundedPanel68.Controls.Add(label125);
+            roundedPanel68.Controls.Add(buttonRounded8);
+            roundedPanel68.Controls.Add(roundedPanel69);
+            roundedPanel68.Location = new Point(11, 226);
+            roundedPanel68.Name = "roundedPanel68";
+            roundedPanel68.Size = new Size(750, 100);
+            roundedPanel68.TabIndex = 5;
+            // 
+            // pictureBox40
+            // 
+            pictureBox40.Image = (Image)resources.GetObject("pictureBox40.Image");
+            pictureBox40.Location = new Point(29, 3);
+            pictureBox40.Name = "pictureBox40";
+            pictureBox40.Size = new Size(114, 90);
+            pictureBox40.TabIndex = 10;
+            pictureBox40.TabStop = false;
+            // 
+            // label125
+            // 
+            label125.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
+            label125.ForeColor = SystemColors.ButtonHighlight;
+            label125.Location = new Point(610, 15);
+            label125.Name = "label125";
+            label125.Size = new Size(128, 39);
+            label125.TabIndex = 6;
+            label125.Text = "Not Started";
+            // 
+            // buttonRounded8
+            // 
+            buttonRounded8.BackColor = Color.Maroon;
+            buttonRounded8.BorderRadius = 20;
+            buttonRounded8.FlatAppearance.BorderSize = 0;
+            buttonRounded8.FlatStyle = FlatStyle.Flat;
+            buttonRounded8.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
+            buttonRounded8.ForeColor = Color.White;
+            buttonRounded8.Location = new Point(597, 57);
+            buttonRounded8.Name = "buttonRounded8";
+            buttonRounded8.Size = new Size(150, 40);
+            buttonRounded8.TabIndex = 2;
+            buttonRounded8.Text = "View";
+            buttonRounded8.UseVisualStyleBackColor = false;
+            // 
+            // roundedPanel69
+            // 
+            roundedPanel69.BackColor = Color.White;
+            roundedPanel69.BorderRadius = 10;
+            roundedPanel69.Controls.Add(label126);
+            roundedPanel69.Controls.Add(label127);
+            roundedPanel69.Location = new Point(181, 8);
+            roundedPanel69.Name = "roundedPanel69";
+            roundedPanel69.Size = new Size(413, 89);
+            roundedPanel69.TabIndex = 2;
+            // 
+            // label126
+            // 
+            label126.AutoSize = true;
+            label126.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
+            label126.ForeColor = Color.Black;
+            label126.Location = new Point(13, 27);
+            label126.Name = "label126";
+            label126.Size = new Size(204, 20);
+            label126.TabIndex = 7;
+            label126.Text = "Due: April 14, 2026(11:59 PM)";
+            // 
+            // label127
+            // 
+            label127.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label127.ForeColor = Color.Black;
+            label127.Location = new Point(12, 3);
+            label127.Name = "label127";
+            label127.Size = new Size(398, 24);
+            label127.TabIndex = 3;
+            label127.Text = "Programming and Technologies 1";
+            // 
+            // roundedPanel70
+            // 
+            roundedPanel70.BackColor = Color.Maroon;
+            roundedPanel70.BorderRadius = 10;
+            roundedPanel70.Controls.Add(pictureBox41);
+            roundedPanel70.Controls.Add(label128);
+            roundedPanel70.Controls.Add(buttonRounded9);
+            roundedPanel70.Controls.Add(roundedPanel71);
+            roundedPanel70.Location = new Point(11, 120);
+            roundedPanel70.Name = "roundedPanel70";
+            roundedPanel70.Size = new Size(750, 100);
+            roundedPanel70.TabIndex = 4;
+            // 
+            // pictureBox41
+            // 
+            pictureBox41.Image = (Image)resources.GetObject("pictureBox41.Image");
+            pictureBox41.Location = new Point(29, 3);
+            pictureBox41.Name = "pictureBox41";
+            pictureBox41.Size = new Size(114, 90);
+            pictureBox41.TabIndex = 9;
+            pictureBox41.TabStop = false;
+            // 
+            // label128
+            // 
+            label128.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
+            label128.ForeColor = SystemColors.ButtonHighlight;
+            label128.Location = new Point(610, 15);
+            label128.Name = "label128";
+            label128.Size = new Size(128, 37);
+            label128.TabIndex = 5;
+            label128.Text = "Not Started";
+            // 
+            // buttonRounded9
+            // 
+            buttonRounded9.BackColor = Color.Maroon;
+            buttonRounded9.BorderRadius = 20;
+            buttonRounded9.FlatAppearance.BorderSize = 0;
+            buttonRounded9.FlatStyle = FlatStyle.Flat;
+            buttonRounded9.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
+            buttonRounded9.ForeColor = Color.White;
+            buttonRounded9.Location = new Point(597, 57);
+            buttonRounded9.Name = "buttonRounded9";
+            buttonRounded9.Size = new Size(150, 40);
+            buttonRounded9.TabIndex = 2;
+            buttonRounded9.Text = "View";
+            buttonRounded9.UseVisualStyleBackColor = false;
+            buttonRounded9.Click += (this.buttonRounded9_Click);
+            // 
+            // roundedPanel71
+            // 
+            roundedPanel71.BackColor = Color.White;
+            roundedPanel71.BorderRadius = 10;
+            roundedPanel71.Controls.Add(label129);
+            roundedPanel71.Controls.Add(label130);
+            roundedPanel71.Location = new Point(181, 8);
+            roundedPanel71.Name = "roundedPanel71";
+            roundedPanel71.Size = new Size(413, 89);
+            roundedPanel71.TabIndex = 2;
+            // 
+            // label129
+            // 
+            label129.AutoSize = true;
+            label129.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
+            label129.ForeColor = Color.Black;
+            label129.Location = new Point(13, 27);
+            label129.Name = "label129";
+            label129.Size = new Size(204, 20);
+            label129.TabIndex = 6;
+            label129.Text = "Due: April 13, 2026(11:59 PM)";
+            // 
+            // label130
+            // 
+            label130.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label130.ForeColor = Color.Black;
+            label130.Location = new Point(12, 3);
+            label130.Name = "label130";
+            label130.Size = new Size(398, 24);
+            label130.TabIndex = 3;
+            label130.Text = "System Simulations";
+            // 
+            // roundedPanel72
+            // 
+            roundedPanel72.BackColor = Color.Maroon;
+            roundedPanel72.BorderRadius = 10;
+            roundedPanel72.Controls.Add(pictureBox42);
+            roundedPanel72.Controls.Add(label131);
+            roundedPanel72.Controls.Add(buttonRounded10);
+            roundedPanel72.Controls.Add(roundedPanel73);
+            roundedPanel72.Location = new Point(11, 14);
+            roundedPanel72.Name = "roundedPanel72";
+            roundedPanel72.Size = new Size(750, 100);
+            roundedPanel72.TabIndex = 3;
+            // 
+            // pictureBox42
+            // 
+            pictureBox42.Image = (Image)resources.GetObject("pictureBox42.Image");
+            pictureBox42.Location = new Point(30, 3);
+            pictureBox42.Name = "pictureBox42";
+            pictureBox42.Size = new Size(114, 90);
+            pictureBox42.TabIndex = 8;
+            pictureBox42.TabStop = false;
+            // 
+            // label131
+            // 
+            label131.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
+            label131.ForeColor = SystemColors.ButtonHighlight;
+            label131.Location = new Point(625, 17);
+            label131.Name = "label131";
+            label131.Size = new Size(96, 24);
+            label131.TabIndex = 4;
+            label131.Text = "Finished";
+            // 
+            // buttonRounded10
+            // 
+            buttonRounded10.BackColor = Color.Maroon;
+            buttonRounded10.BorderRadius = 20;
+            buttonRounded10.FlatAppearance.BorderSize = 0;
+            buttonRounded10.FlatStyle = FlatStyle.Flat;
+            buttonRounded10.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
+            buttonRounded10.ForeColor = Color.White;
+            buttonRounded10.Location = new Point(597, 57);
+            buttonRounded10.Name = "buttonRounded10";
+            buttonRounded10.Size = new Size(150, 40);
+            buttonRounded10.TabIndex = 2;
+            buttonRounded10.Text = "Review";
+            buttonRounded10.UseVisualStyleBackColor = false;
+            buttonRounded10.Click += (this.buttonRounded10_Click);
+            // 
+            // roundedPanel73
+            // 
+            roundedPanel73.BackColor = Color.White;
+            roundedPanel73.BorderRadius = 10;
+            roundedPanel73.Controls.Add(label132);
+            roundedPanel73.Controls.Add(label133);
+            roundedPanel73.Location = new Point(181, 8);
+            roundedPanel73.Name = "roundedPanel73";
+            roundedPanel73.Size = new Size(413, 89);
+            roundedPanel73.TabIndex = 2;
+            // 
+            // label132
+            // 
+            label132.AutoSize = true;
+            label132.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
+            label132.ForeColor = Color.Black;
+            label132.Location = new Point(13, 27);
+            label132.Name = "label132";
+            label132.Size = new Size(204, 20);
+            label132.TabIndex = 5;
+            label132.Text = "Due: April 06, 2026(11:59 PM)";
+            // 
+            // label133
+            // 
+            label133.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label133.ForeColor = Color.Black;
+            label133.Location = new Point(12, 3);
+            label133.Name = "label133";
+            label133.Size = new Size(398, 24);
+            label133.TabIndex = 3;
+            label133.Text = "Integrating Methodologies";
+            // 
             // pnlToday
             // 
+            pnlToday.Anchor = AnchorStyles.Top;
             pnlToday.AutoScroll = true;
             pnlToday.Controls.Add(roundedPanel35);
             pnlToday.Controls.Add(roundedPanel40);
@@ -5643,6 +5254,7 @@
             // 
             // pnlTW
             // 
+            pnlTW.Anchor = AnchorStyles.Top;
             pnlTW.AutoScroll = true;
             pnlTW.Controls.Add(roundedPanel26);
             pnlTW.Controls.Add(roundedPanel31);
@@ -5814,6 +5426,7 @@
             // 
             // pnlNW
             // 
+            pnlNW.Anchor = AnchorStyles.Top;
             pnlNW.Controls.Add(roundedPanel41);
             pnlNW.Location = new Point(35, 114);
             pnlNW.Name = "pnlNW";
@@ -5901,313 +5514,2580 @@
             label60.TabIndex = 3;
             label60.Text = "Human Computer Interactions";
             // 
-            // panel68
+            // pnlGrades
             // 
-            panel68.BackColor = Color.MintCream;
-            panel68.Controls.Add(label134);
-            panel68.Location = new Point(939, 332);
-            panel68.Name = "panel68";
-            panel68.Size = new Size(307, 46);
-            panel68.TabIndex = 11;
+            pnlGrades.AutoScroll = true;
+            pnlGrades.BackColor = SystemColors.Control;
+            pnlGrades.CausesValidation = false;
+            pnlGrades.Controls.Add(fpnlGradesList);
+            pnlGrades.Controls.Add(panel57);
+            pnlGrades.Controls.Add(roundedPanel36);
+            pnlGrades.Dock = DockStyle.Fill;
+            pnlGrades.Location = new Point(256, 72);
+            pnlGrades.Margin = new Padding(0);
+            pnlGrades.Name = "pnlGrades";
+            pnlGrades.Size = new Size(1272, 719);
+            pnlGrades.TabIndex = 34;
+            pnlGrades.Visible = false;
             // 
-            // label134
+            // fpnlGradesList
             // 
-            label134.AutoSize = true;
-            label134.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label134.Location = new Point(62, 11);
-            label134.Name = "label134";
-            label134.Size = new Size(185, 25);
-            label134.TabIndex = 2;
-            label134.Text = "Submitted Activities";
+            fpnlGradesList.Anchor = (AnchorStyles)(AnchorStyles.Top) | (AnchorStyles.Bottom);
+            fpnlGradesList.AutoScroll = true;
+            fpnlGradesList.Controls.Add(roundedPanel1);
+            fpnlGradesList.Controls.Add(roundedPanel10);
+            fpnlGradesList.Controls.Add(roundedPanel7);
+            fpnlGradesList.Controls.Add(roundedPanel30);
+            fpnlGradesList.Controls.Add(roundedPanel32);
+            fpnlGradesList.Controls.Add(roundedPanel34);
+            fpnlGradesList.FlowDirection = FlowDirection.TopDown;
+            fpnlGradesList.Location = new Point(237, 88);
+            fpnlGradesList.Name = "fpnlGradesList";
+            fpnlGradesList.Size = new Size(781, 600);
+            fpnlGradesList.TabIndex = 7;
+            fpnlGradesList.Visible = false;
+            fpnlGradesList.WrapContents = false;
             // 
-            // panel69
+            // roundedPanel1
             // 
-            panel69.AutoScroll = true;
-            panel69.BackColor = Color.Maroon;
-            panel69.Controls.Add(roundedPanel74);
-            panel69.Controls.Add(roundedPanel75);
-            panel69.Location = new Point(939, 378);
-            panel69.Name = "panel69";
-            panel69.Size = new Size(307, 192);
-            panel69.TabIndex = 10;
+            roundedPanel1.BackColor = Color.Maroon;
+            roundedPanel1.BorderRadius = 10;
+            roundedPanel1.Controls.Add(panel58);
+            roundedPanel1.Location = new Point(3, 2);
+            roundedPanel1.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel1.Name = "roundedPanel1";
+            roundedPanel1.Size = new Size(775, 96);
+            roundedPanel1.TabIndex = 1;
             // 
-            // roundedPanel74
+            // panel58
             // 
-            roundedPanel74.BackColor = Color.White;
-            roundedPanel74.BorderRadius = 10;
-            roundedPanel74.Controls.Add(label135);
-            roundedPanel74.Controls.Add(label136);
-            roundedPanel74.Location = new Point(18, 7);
-            roundedPanel74.Name = "roundedPanel74";
-            roundedPanel74.Size = new Size(264, 76);
-            roundedPanel74.TabIndex = 5;
+            panel58.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            panel58.BackColor = Color.White;
+            panel58.Controls.Add(button11);
+            panel58.Controls.Add(roundedPanel2);
+            panel58.Controls.Add(label54);
+            panel58.Location = new Point(24, 16);
+            panel58.Margin = new Padding(3, 2, 3, 2);
+            panel58.Name = "panel58";
+            panel58.Size = new Size(733, 63);
+            panel58.TabIndex = 0;
             // 
-            // label135
+            // button11
             // 
-            label135.AutoSize = true;
-            label135.Font = new Font("Segoe UI", 9F);
-            label135.ForeColor = Color.Black;
-            label135.Location = new Point(12, 27);
-            label135.Name = "label135";
-            label135.Size = new Size(160, 15);
-            label135.TabIndex = 4;
-            label135.Text = "Due: April 06, 2026(11:59 PM)";
+            button11.Anchor = (AnchorStyles)(AnchorStyles.Bottom) | (AnchorStyles.Right);
+            button11.BackColor = Color.Maroon;
+            button11.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Pixel);
+            button11.ForeColor = Color.White;
+            button11.Location = new Point(564, 12);
+            button11.Margin = new Padding(3, 2, 3, 2);
+            button11.Name = "button11";
+            button11.Size = new Size(137, 40);
+            button11.TabIndex = 3;
+            button11.Text = "View Grade Breakdown";
+            button11.UseVisualStyleBackColor = false;
+            button11.Click += (this.button11_Click);
             // 
-            // label136
+            // roundedPanel2
             // 
-            label136.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
-            label136.ForeColor = Color.Black;
-            label136.Location = new Point(12, 3);
-            label136.Name = "label136";
-            label136.Size = new Size(231, 43);
-            label136.TabIndex = 3;
-            label136.Text = "Integrating Methodologies";
+            roundedPanel2.Anchor = (AnchorStyles)(AnchorStyles.Bottom) | (AnchorStyles.Right);
+            roundedPanel2.BackColor = Color.Maroon;
+            roundedPanel2.BorderRadius = 10;
+            roundedPanel2.Controls.Add(label53);
+            roundedPanel2.Location = new Point(392, 14);
+            roundedPanel2.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel2.Name = "roundedPanel2";
+            roundedPanel2.Size = new Size(150, 36);
+            roundedPanel2.TabIndex = 2;
             // 
-            // roundedPanel75
+            // label53
             // 
-            roundedPanel75.BackColor = Color.White;
-            roundedPanel75.BorderRadius = 10;
-            roundedPanel75.Controls.Add(label137);
-            roundedPanel75.Location = new Point(18, 96);
-            roundedPanel75.Name = "roundedPanel75";
-            roundedPanel75.Size = new Size(264, 76);
-            roundedPanel75.TabIndex = 4;
+            label53.AutoSize = true;
+            label53.BackColor = Color.White;
+            label53.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label53.Location = new Point(48, 5);
+            label53.Name = "label53";
+            label53.Size = new Size(47, 25);
+            label53.TabIndex = 1;
+            label53.Text = "1.00";
             // 
-            // label137
+            // label54
             // 
-            label137.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
-            label137.ForeColor = Color.Black;
-            label137.Location = new Point(12, 3);
-            label137.Name = "label137";
-            label137.Size = new Size(83, 19);
-            label137.TabIndex = 3;
-            label137.Text = "Title: Title";
+            label54.AutoSize = true;
+            label54.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label54.Location = new Point(21, 18);
+            label54.Name = "label54";
+            label54.Size = new Size(278, 25);
+            label54.TabIndex = 1;
+            label54.Text = "Introduction to Programming 1";
             // 
-            // panel70
+            // roundedPanel10
             // 
-            panel70.BackColor = Color.MistyRose;
-            panel70.Controls.Add(label138);
-            panel70.Location = new Point(939, 68);
-            panel70.Name = "panel70";
-            panel70.Size = new Size(307, 46);
-            panel70.TabIndex = 9;
+            roundedPanel10.BackColor = Color.Maroon;
+            roundedPanel10.BorderRadius = 10;
+            roundedPanel10.Controls.Add(panel59);
+            roundedPanel10.Location = new Point(3, 102);
+            roundedPanel10.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel10.Name = "roundedPanel10";
+            roundedPanel10.Size = new Size(775, 96);
+            roundedPanel10.TabIndex = 2;
             // 
-            // label138
+            // panel59
             // 
-            label138.AutoSize = true;
-            label138.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label138.Location = new Point(49, 11);
-            label138.Name = "label138";
-            label138.Size = new Size(207, 25);
-            label138.TabIndex = 2;
-            label138.Text = "Unsubmitted Activities";
+            panel59.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            panel59.BackColor = Color.White;
+            panel59.Controls.Add(button7);
+            panel59.Controls.Add(roundedPanel8);
+            panel59.Controls.Add(label58);
+            panel59.Location = new Point(24, 16);
+            panel59.Margin = new Padding(3, 2, 3, 2);
+            panel59.Name = "panel59";
+            panel59.Size = new Size(733, 63);
+            panel59.TabIndex = 0;
             // 
-            // panel71
+            // button7
             // 
-            panel71.AutoScroll = true;
-            panel71.BackColor = Color.Maroon;
-            panel71.Controls.Add(roundedPanel76);
-            panel71.Controls.Add(roundedPanel77);
-            panel71.Controls.Add(roundedPanel78);
-            panel71.Location = new Point(939, 114);
-            panel71.Name = "panel71";
-            panel71.Size = new Size(307, 192);
-            panel71.TabIndex = 8;
+            button7.Anchor = (AnchorStyles)(AnchorStyles.Bottom) | (AnchorStyles.Right);
+            button7.BackColor = Color.Maroon;
+            button7.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Pixel);
+            button7.ForeColor = Color.White;
+            button7.Location = new Point(564, 12);
+            button7.Margin = new Padding(3, 2, 3, 2);
+            button7.Name = "button7";
+            button7.Size = new Size(137, 40);
+            button7.TabIndex = 4;
+            button7.Text = "View Grade Breakdown";
+            button7.UseVisualStyleBackColor = false;
             // 
-            // roundedPanel76
+            // roundedPanel8
             // 
-            roundedPanel76.BackColor = Color.White;
-            roundedPanel76.BorderRadius = 10;
-            roundedPanel76.Controls.Add(label139);
-            roundedPanel76.Controls.Add(label140);
-            roundedPanel76.Location = new Point(18, 188);
-            roundedPanel76.Name = "roundedPanel76";
-            roundedPanel76.Size = new Size(264, 76);
-            roundedPanel76.TabIndex = 5;
+            roundedPanel8.Anchor = (AnchorStyles)(AnchorStyles.Bottom) | (AnchorStyles.Right);
+            roundedPanel8.BackColor = Color.Maroon;
+            roundedPanel8.BorderRadius = 10;
+            roundedPanel8.Controls.Add(label9);
+            roundedPanel8.Location = new Point(392, 14);
+            roundedPanel8.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel8.Name = "roundedPanel8";
+            roundedPanel8.Size = new Size(150, 36);
+            roundedPanel8.TabIndex = 3;
             // 
-            // label139
+            // label9
             // 
-            label139.AutoSize = true;
-            label139.Font = new Font("Segoe UI", 9F);
-            label139.ForeColor = Color.Black;
-            label139.Location = new Point(12, 27);
-            label139.Name = "label139";
-            label139.Size = new Size(160, 15);
-            label139.TabIndex = 6;
-            label139.Text = "Due: April 14, 2026(11:59 PM)";
+            label9.AutoSize = true;
+            label9.BackColor = Color.White;
+            label9.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label9.Location = new Point(48, 5);
+            label9.Name = "label9";
+            label9.Size = new Size(47, 25);
+            label9.TabIndex = 1;
+            label9.Text = "1.00";
             // 
-            // label140
+            // label58
             // 
-            label140.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label140.ForeColor = Color.Black;
-            label140.Location = new Point(12, 3);
-            label140.Name = "label140";
-            label140.Size = new Size(249, 19);
-            label140.TabIndex = 3;
-            label140.Text = "Programming and Technologies 1";
+            label58.AutoSize = true;
+            label58.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label58.Location = new Point(21, 18);
+            label58.Name = "label58";
+            label58.Size = new Size(100, 25);
+            label58.TabIndex = 1;
+            label58.Text = "PATHFIT 4";
             // 
-            // roundedPanel77
+            // roundedPanel7
             // 
-            roundedPanel77.BackColor = Color.White;
-            roundedPanel77.BorderRadius = 10;
-            roundedPanel77.Controls.Add(label141);
-            roundedPanel77.Controls.Add(label142);
-            roundedPanel77.Location = new Point(18, 7);
-            roundedPanel77.Name = "roundedPanel77";
-            roundedPanel77.Size = new Size(264, 76);
-            roundedPanel77.TabIndex = 5;
+            roundedPanel7.BackColor = Color.Maroon;
+            roundedPanel7.BorderRadius = 10;
+            roundedPanel7.Controls.Add(panel60);
+            roundedPanel7.Location = new Point(3, 202);
+            roundedPanel7.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel7.Name = "roundedPanel7";
+            roundedPanel7.Size = new Size(775, 96);
+            roundedPanel7.TabIndex = 3;
             // 
-            // label141
+            // panel60
             // 
-            label141.AutoSize = true;
-            label141.Font = new Font("Segoe UI", 9F);
-            label141.ForeColor = Color.Black;
-            label141.Location = new Point(12, 27);
-            label141.Name = "label141";
-            label141.Size = new Size(160, 15);
-            label141.TabIndex = 4;
-            label141.Text = "Due: April 13, 2026(11:59 PM)";
+            panel60.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            panel60.BackColor = Color.White;
+            panel60.Controls.Add(button9);
+            panel60.Controls.Add(roundedPanel11);
+            panel60.Controls.Add(label56);
+            panel60.Location = new Point(24, 16);
+            panel60.Margin = new Padding(3, 2, 3, 2);
+            panel60.Name = "panel60";
+            panel60.Size = new Size(733, 63);
+            panel60.TabIndex = 0;
             // 
-            // label142
+            // button9
             // 
-            label142.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
-            label142.ForeColor = Color.Black;
-            label142.Location = new Point(12, 3);
-            label142.Name = "label142";
-            label142.Size = new Size(231, 19);
-            label142.TabIndex = 3;
-            label142.Text = "System Simulations";
+            button9.Anchor = (AnchorStyles)(AnchorStyles.Bottom) | (AnchorStyles.Right);
+            button9.BackColor = Color.Maroon;
+            button9.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Pixel);
+            button9.ForeColor = Color.White;
+            button9.Location = new Point(564, 12);
+            button9.Margin = new Padding(3, 2, 3, 2);
+            button9.Name = "button9";
+            button9.Size = new Size(137, 40);
+            button9.TabIndex = 4;
+            button9.Text = "View Grade Breakdown";
+            button9.UseVisualStyleBackColor = false;
             // 
-            // roundedPanel78
+            // roundedPanel11
             // 
-            roundedPanel78.BackColor = Color.White;
-            roundedPanel78.BorderRadius = 10;
-            roundedPanel78.Controls.Add(label143);
-            roundedPanel78.Controls.Add(label144);
-            roundedPanel78.Location = new Point(18, 96);
-            roundedPanel78.Name = "roundedPanel78";
-            roundedPanel78.Size = new Size(264, 76);
-            roundedPanel78.TabIndex = 4;
+            roundedPanel11.Anchor = (AnchorStyles)(AnchorStyles.Bottom) | (AnchorStyles.Right);
+            roundedPanel11.BackColor = Color.Maroon;
+            roundedPanel11.BorderRadius = 10;
+            roundedPanel11.Controls.Add(label48);
+            roundedPanel11.Location = new Point(392, 14);
+            roundedPanel11.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel11.Name = "roundedPanel11";
+            roundedPanel11.Size = new Size(150, 36);
+            roundedPanel11.TabIndex = 3;
             // 
-            // label143
+            // label48
             // 
-            label143.AutoSize = true;
-            label143.Font = new Font("Segoe UI", 9F);
-            label143.ForeColor = Color.Black;
-            label143.Location = new Point(12, 27);
-            label143.Name = "label143";
-            label143.Size = new Size(160, 15);
-            label143.TabIndex = 5;
-            label143.Text = "Due: April 21, 2026(11:59 PM)";
+            label48.AutoSize = true;
+            label48.BackColor = Color.White;
+            label48.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label48.Location = new Point(48, 5);
+            label48.Name = "label48";
+            label48.Size = new Size(47, 25);
+            label48.TabIndex = 1;
+            label48.Text = "1.00";
             // 
-            // label144
+            // label56
             // 
-            label144.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
-            label144.ForeColor = Color.Black;
-            label144.Location = new Point(12, 3);
-            label144.Name = "label144";
-            label144.Size = new Size(249, 19);
-            label144.TabIndex = 3;
-            label144.Text = "Human Computer Interactions";
+            label56.AutoSize = true;
+            label56.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label56.Location = new Point(21, 18);
+            label56.Name = "label56";
+            label56.Size = new Size(220, 25);
+            label56.TabIndex = 1;
+            label56.Text = "Principles of Accounting";
             // 
-            // panel72
+            // roundedPanel30
             // 
-            panel72.BackColor = SystemColors.ActiveBorder;
-            panel72.Controls.Add(btnNextWeek);
-            panel72.Controls.Add(btnThisWeek);
-            panel72.Controls.Add(btnToday);
-            panel72.Controls.Add(btnAll);
-            panel72.Location = new Point(36, 68);
-            panel72.Name = "panel72";
-            panel72.Size = new Size(782, 46);
-            panel72.TabIndex = 5;
+            roundedPanel30.BackColor = Color.Maroon;
+            roundedPanel30.BorderRadius = 10;
+            roundedPanel30.Controls.Add(panel61);
+            roundedPanel30.Location = new Point(3, 302);
+            roundedPanel30.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel30.Name = "roundedPanel30";
+            roundedPanel30.Size = new Size(775, 96);
+            roundedPanel30.TabIndex = 3;
             // 
-            // btnNextWeek
+            // panel61
             // 
-            btnNextWeek.BackColor = Color.White;
-            btnNextWeek.Dock = DockStyle.Left;
-            btnNextWeek.FlatStyle = FlatStyle.Popup;
-            btnNextWeek.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
-            btnNextWeek.Location = new Point(524, 0);
-            btnNextWeek.Name = "btnNextWeek";
-            btnNextWeek.Size = new Size(263, 46);
-            btnNextWeek.TabIndex = 9;
-            btnNextWeek.Text = "Next Week";
-            btnNextWeek.UseVisualStyleBackColor = false;
-            btnNextWeek.Click += (this.btnNextWeek_Click);
+            panel61.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            panel61.BackColor = Color.White;
+            panel61.Controls.Add(button10);
+            panel61.Controls.Add(roundedPanel12);
+            panel61.Controls.Add(label51);
+            panel61.Location = new Point(24, 16);
+            panel61.Margin = new Padding(3, 2, 3, 2);
+            panel61.Name = "panel61";
+            panel61.Size = new Size(733, 63);
+            panel61.TabIndex = 0;
             // 
-            // btnThisWeek
+            // button10
             // 
-            btnThisWeek.BackColor = Color.White;
-            btnThisWeek.Dock = DockStyle.Left;
-            btnThisWeek.FlatStyle = FlatStyle.Popup;
-            btnThisWeek.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
-            btnThisWeek.Location = new Point(310, 0);
-            btnThisWeek.Name = "btnThisWeek";
-            btnThisWeek.Size = new Size(214, 46);
-            btnThisWeek.TabIndex = 8;
-            btnThisWeek.Text = "This Week";
-            btnThisWeek.UseVisualStyleBackColor = false;
-            btnThisWeek.Click += (this.btnThisWeek_Click);
+            button10.Anchor = (AnchorStyles)(AnchorStyles.Bottom) | (AnchorStyles.Right);
+            button10.BackColor = Color.Maroon;
+            button10.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Pixel);
+            button10.ForeColor = Color.White;
+            button10.Location = new Point(564, 12);
+            button10.Margin = new Padding(3, 2, 3, 2);
+            button10.Name = "button10";
+            button10.Size = new Size(137, 40);
+            button10.TabIndex = 4;
+            button10.Text = "View Grade Breakdown";
+            button10.UseVisualStyleBackColor = false;
             // 
-            // btnToday
+            // roundedPanel12
             // 
-            btnToday.BackColor = Color.White;
-            btnToday.Dock = DockStyle.Left;
-            btnToday.FlatStyle = FlatStyle.Popup;
-            btnToday.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
-            btnToday.Location = new Point(49, 0);
-            btnToday.Name = "btnToday";
-            btnToday.Size = new Size(261, 46);
-            btnToday.TabIndex = 7;
-            btnToday.Text = "Today";
-            btnToday.UseVisualStyleBackColor = false;
-            btnToday.Click += (this.btnToday_Click);
+            roundedPanel12.Anchor = (AnchorStyles)(AnchorStyles.Bottom) | (AnchorStyles.Right);
+            roundedPanel12.BackColor = Color.Maroon;
+            roundedPanel12.BorderRadius = 10;
+            roundedPanel12.Controls.Add(label50);
+            roundedPanel12.Location = new Point(392, 14);
+            roundedPanel12.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel12.Name = "roundedPanel12";
+            roundedPanel12.Size = new Size(150, 36);
+            roundedPanel12.TabIndex = 3;
             // 
-            // btnAll
+            // label50
             // 
-            btnAll.BackColor = Color.White;
-            btnAll.Dock = DockStyle.Left;
-            btnAll.FlatStyle = FlatStyle.Popup;
-            btnAll.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
-            btnAll.Location = new Point(0, 0);
-            btnAll.Name = "btnAll";
-            btnAll.Size = new Size(49, 46);
-            btnAll.TabIndex = 10;
-            btnAll.Text = "All";
-            btnAll.UseVisualStyleBackColor = false;
-            btnAll.Click += (this.btnAll_Click);
+            label50.AutoSize = true;
+            label50.BackColor = Color.White;
+            label50.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label50.Location = new Point(48, 5);
+            label50.Name = "label50";
+            label50.Size = new Size(47, 25);
+            label50.TabIndex = 1;
+            label50.Text = "1.00";
             // 
-            // panel73
+            // label51
             // 
-            panel73.BackColor = Color.Maroon;
-            panel73.Controls.Add(label145);
-            panel73.Controls.Add(label146);
-            panel73.Dock = DockStyle.Top;
-            panel73.Location = new Point(0, 0);
-            panel73.Name = "panel73";
-            panel73.Size = new Size(1272, 37);
-            panel73.TabIndex = 0;
+            label51.AutoSize = true;
+            label51.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label51.Location = new Point(21, 18);
+            label51.Name = "label51";
+            label51.Size = new Size(265, 25);
+            label51.TabIndex = 1;
+            label51.Text = "Human Computer Interaction";
             // 
-            // label145
+            // roundedPanel32
             // 
-            label145.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            label145.ForeColor = Color.White;
-            label145.Location = new Point(577, 6);
-            label145.Name = "label145";
-            label145.Size = new Size(178, 25);
-            label145.TabIndex = 2;
-            label145.Text = "2nd Semester 2026";
+            roundedPanel32.BackColor = Color.Maroon;
+            roundedPanel32.BorderRadius = 10;
+            roundedPanel32.Controls.Add(panel62);
+            roundedPanel32.Location = new Point(3, 402);
+            roundedPanel32.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel32.Name = "roundedPanel32";
+            roundedPanel32.Size = new Size(775, 96);
+            roundedPanel32.TabIndex = 4;
             // 
-            // label146
+            // panel62
             // 
-            label146.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            label146.ForeColor = Color.White;
-            label146.Location = new Point(8, 6);
-            label146.Name = "label146";
-            label146.Size = new Size(91, 25);
-            label146.TabIndex = 1;
-            label146.Text = "Activities";
+            panel62.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            panel62.BackColor = Color.White;
+            panel62.Controls.Add(button12);
+            panel62.Controls.Add(roundedPanel24);
+            panel62.Controls.Add(label49);
+            panel62.Location = new Point(24, 16);
+            panel62.Margin = new Padding(3, 2, 3, 2);
+            panel62.Name = "panel62";
+            panel62.Size = new Size(733, 63);
+            panel62.TabIndex = 0;
+            // 
+            // button12
+            // 
+            button12.Anchor = (AnchorStyles)(AnchorStyles.Bottom) | (AnchorStyles.Right);
+            button12.BackColor = Color.Maroon;
+            button12.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Pixel);
+            button12.ForeColor = Color.White;
+            button12.Location = new Point(564, 12);
+            button12.Margin = new Padding(3, 2, 3, 2);
+            button12.Name = "button12";
+            button12.Size = new Size(137, 40);
+            button12.TabIndex = 4;
+            button12.Text = "View Grade Breakdown";
+            button12.UseVisualStyleBackColor = false;
+            // 
+            // roundedPanel24
+            // 
+            roundedPanel24.Anchor = (AnchorStyles)(AnchorStyles.Bottom) | (AnchorStyles.Right);
+            roundedPanel24.BackColor = Color.Maroon;
+            roundedPanel24.BorderRadius = 10;
+            roundedPanel24.Controls.Add(label55);
+            roundedPanel24.Location = new Point(392, 14);
+            roundedPanel24.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel24.Name = "roundedPanel24";
+            roundedPanel24.Size = new Size(150, 36);
+            roundedPanel24.TabIndex = 3;
+            // 
+            // label55
+            // 
+            label55.AutoSize = true;
+            label55.BackColor = Color.White;
+            label55.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label55.Location = new Point(48, 5);
+            label55.Name = "label55";
+            label55.Size = new Size(47, 25);
+            label55.TabIndex = 1;
+            label55.Text = "1.00";
+            // 
+            // label49
+            // 
+            label49.AutoSize = true;
+            label49.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label49.Location = new Point(21, 18);
+            label49.Name = "label49";
+            label49.Size = new Size(235, 25);
+            label49.TabIndex = 1;
+            label49.Text = "Information Management";
+            // 
+            // roundedPanel34
+            // 
+            roundedPanel34.BackColor = Color.Maroon;
+            roundedPanel34.BorderRadius = 10;
+            roundedPanel34.Controls.Add(panel63);
+            roundedPanel34.Location = new Point(3, 502);
+            roundedPanel34.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel34.Name = "roundedPanel34";
+            roundedPanel34.Size = new Size(775, 96);
+            roundedPanel34.TabIndex = 5;
+            // 
+            // panel63
+            // 
+            panel63.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            panel63.BackColor = Color.White;
+            panel63.Controls.Add(button13);
+            panel63.Controls.Add(roundedPanel25);
+            panel63.Controls.Add(label47);
+            panel63.Location = new Point(24, 16);
+            panel63.Margin = new Padding(3, 2, 3, 2);
+            panel63.Name = "panel63";
+            panel63.Size = new Size(733, 63);
+            panel63.TabIndex = 0;
+            // 
+            // button13
+            // 
+            button13.Anchor = (AnchorStyles)(AnchorStyles.Bottom) | (AnchorStyles.Right);
+            button13.BackColor = Color.Maroon;
+            button13.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Pixel);
+            button13.ForeColor = Color.White;
+            button13.Location = new Point(564, 12);
+            button13.Margin = new Padding(3, 2, 3, 2);
+            button13.Name = "button13";
+            button13.Size = new Size(137, 40);
+            button13.TabIndex = 4;
+            button13.Text = "View Grade Breakdown";
+            button13.UseVisualStyleBackColor = false;
+            // 
+            // roundedPanel25
+            // 
+            roundedPanel25.Anchor = (AnchorStyles)(AnchorStyles.Bottom) | (AnchorStyles.Right);
+            roundedPanel25.BackColor = Color.Maroon;
+            roundedPanel25.BorderRadius = 10;
+            roundedPanel25.Controls.Add(label57);
+            roundedPanel25.Location = new Point(392, 14);
+            roundedPanel25.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel25.Name = "roundedPanel25";
+            roundedPanel25.Size = new Size(150, 36);
+            roundedPanel25.TabIndex = 3;
+            // 
+            // label57
+            // 
+            label57.AutoSize = true;
+            label57.BackColor = Color.White;
+            label57.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label57.Location = new Point(48, 5);
+            label57.Name = "label57";
+            label57.Size = new Size(47, 25);
+            label57.TabIndex = 1;
+            label57.Text = "1.00";
+            // 
+            // label47
+            // 
+            label47.AutoSize = true;
+            label47.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label47.Location = new Point(21, 18);
+            label47.Name = "label47";
+            label47.Size = new Size(251, 21);
+            label47.TabIndex = 1;
+            label47.Text = "Programming and Technologies 1";
+            // 
+            // panel57
+            // 
+            panel57.BackColor = Color.White;
+            panel57.Controls.Add(btnViewGrades);
+            panel57.Controls.Add(roundedPanel38);
+            panel57.Controls.Add(btnGenerate);
+            panel57.Controls.Add(label52);
+            panel57.Dock = DockStyle.Top;
+            panel57.Location = new Point(0, 0);
+            panel57.Margin = new Padding(3, 2, 3, 2);
+            panel57.Name = "panel57";
+            panel57.Size = new Size(1272, 64);
+            panel57.TabIndex = 2;
+            // 
+            // btnViewGrades
+            // 
+            btnViewGrades.BackColor = Color.Maroon;
+            btnViewGrades.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            btnViewGrades.ForeColor = Color.White;
+            btnViewGrades.Location = new Point(466, 10);
+            btnViewGrades.Margin = new Padding(3, 2, 3, 2);
+            btnViewGrades.Name = "btnViewGrades";
+            btnViewGrades.Size = new Size(236, 40);
+            btnViewGrades.TabIndex = 6;
+            btnViewGrades.Text = "View Grades";
+            btnViewGrades.UseVisualStyleBackColor = false;
+            btnViewGrades.Click += (this.btnViewGrades_Click);
+            // 
+            // roundedPanel38
+            // 
+            roundedPanel38.BackColor = Color.Maroon;
+            roundedPanel38.BorderRadius = 10;
+            roundedPanel38.Controls.Add(comboBox10);
+            roundedPanel38.Location = new Point(196, 9);
+            roundedPanel38.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel38.Name = "roundedPanel38";
+            roundedPanel38.Size = new Size(264, 48);
+            roundedPanel38.TabIndex = 5;
+            // 
+            // comboBox10
+            // 
+            comboBox10.FormattingEnabled = true;
+            comboBox10.Items.AddRange(new object[] { "Midterm Period", "Finalterm Period" });
+            comboBox10.Location = new Point(10, 12);
+            comboBox10.Margin = new Padding(3, 2, 3, 2);
+            comboBox10.Name = "comboBox10";
+            comboBox10.Size = new Size(246, 23);
+            comboBox10.TabIndex = 5;
+            // 
+            // btnGenerate
+            // 
+            btnGenerate.Anchor = (AnchorStyles)(AnchorStyles.Bottom) | (AnchorStyles.Right);
+            btnGenerate.BackColor = Color.Maroon;
+            btnGenerate.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            btnGenerate.ForeColor = Color.White;
+            btnGenerate.Location = new Point(1016, 10);
+            btnGenerate.Margin = new Padding(3, 2, 3, 2);
+            btnGenerate.Name = "btnGenerate";
+            btnGenerate.Size = new Size(236, 40);
+            btnGenerate.TabIndex = 4;
+            btnGenerate.Text = "Generate COG";
+            btnGenerate.UseVisualStyleBackColor = false;
+            btnGenerate.Click += (this.btnGenerate_Click);
+            // 
+            // label52
+            // 
+            label52.AutoSize = true;
+            label52.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label52.Location = new Point(27, 21);
+            label52.Name = "label52";
+            label52.Size = new Size(139, 25);
+            label52.TabIndex = 0;
+            label52.Text = "Grading Period";
+            // 
+            // roundedPanel36
+            // 
+            roundedPanel36.Anchor = AnchorStyles.None;
+            roundedPanel36.BackColor = Color.Maroon;
+            roundedPanel36.BorderRadius = 10;
+            roundedPanel36.Controls.Add(roundedPanel37);
+            roundedPanel36.Location = new Point(112, 208);
+            roundedPanel36.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel36.Name = "roundedPanel36";
+            roundedPanel36.Size = new Size(1030, 250);
+            roundedPanel36.TabIndex = 1;
+            roundedPanel36.Visible = false;
+            // 
+            // roundedPanel37
+            // 
+            roundedPanel37.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            roundedPanel37.BackColor = Color.White;
+            roundedPanel37.BorderRadius = 10;
+            roundedPanel37.Controls.Add(button8);
+            roundedPanel37.Controls.Add(listBox1);
+            roundedPanel37.Controls.Add(label5);
+            roundedPanel37.Location = new Point(18, 16);
+            roundedPanel37.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel37.Name = "roundedPanel37";
+            roundedPanel37.Size = new Size(990, 215);
+            roundedPanel37.TabIndex = 0;
+            // 
+            // button8
+            // 
+            button8.Anchor = (AnchorStyles)(AnchorStyles.Bottom) | (AnchorStyles.Right);
+            button8.BackColor = Color.Maroon;
+            button8.ForeColor = Color.White;
+            button8.Location = new Point(823, 166);
+            button8.Margin = new Padding(3, 2, 3, 2);
+            button8.Name = "button8";
+            button8.Size = new Size(119, 41);
+            button8.TabIndex = 7;
+            button8.Text = "Back";
+            button8.UseVisualStyleBackColor = false;
+            button8.Click += (this.button8_Click);
+            // 
+            // listBox1
+            // 
+            listBox1.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            listBox1.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
+            listBox1.FormattingEnabled = true;
+            listBox1.Items.AddRange(new object[] { "Attendance (10%)\t\t\t- 10%\tAssignment / Project (15%)\t\t- \t15%", "Recitation / Class Participation (15%)\t- 15%\tLong Quiz (25%)\t\t\t- \t25%", "Seatwork / Short Quiz (15%)\t- 15%\tMajor Examination (30%)\t\t- \t30%", "", "Grade Computation\t\t\t- \t100%", "PUP Grade Conversion\t\t\t- \t1.00" });
+            listBox1.Location = new Point(46, 47);
+            listBox1.Margin = new Padding(3, 2, 3, 2);
+            listBox1.Name = "listBox1";
+            listBox1.Size = new Size(710, 137);
+            listBox1.TabIndex = 6;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label5.Location = new Point(21, 16);
+            label5.Name = "label5";
+            label5.Size = new Size(186, 25);
+            label5.TabIndex = 5;
+            label5.Text = "Grade Computation:";
+            // 
+            // pnlAccountsContentHolder
+            // 
+            pnlAccountsContentHolder.AutoScroll = true;
+            pnlAccountsContentHolder.BackColor = SystemColors.ActiveCaption;
+            pnlAccountsContentHolder.Controls.Add(pnlAccountsContent);
+            pnlAccountsContentHolder.Dock = DockStyle.Fill;
+            pnlAccountsContentHolder.Location = new Point(256, 72);
+            pnlAccountsContentHolder.Name = "pnlAccountsContentHolder";
+            pnlAccountsContentHolder.Size = new Size(1272, 719);
+            pnlAccountsContentHolder.TabIndex = 37;
+            pnlAccountsContentHolder.Visible = false;
+            // 
+            // pnlAccountsContent
+            // 
+            pnlAccountsContent.AutoScroll = true;
+            pnlAccountsContent.BackColor = Color.WhiteSmoke;
+            pnlAccountsContent.Controls.Add(pnlSpaceProviderAccounts);
+            pnlAccountsContent.Controls.Add(dgvAccounts);
+            pnlAccountsContent.Controls.Add(btnAccountsDownloadStatement);
+            pnlAccountsContent.Controls.Add(lblPaymentHistory);
+            pnlAccountsContent.Controls.Add(pnlAccountsSelectSem);
+            pnlAccountsContent.Controls.Add(pnlBalance);
+            pnlAccountsContent.Controls.Add(pnlTotalPaid);
+            pnlAccountsContent.Controls.Add(pnlAccountsFreeEd);
+            pnlAccountsContent.Controls.Add(lblDescriptionAccsPay);
+            pnlAccountsContent.Controls.Add(pnlTotalAssessment);
+            pnlAccountsContent.Controls.Add(lblAccountsandPayments);
+            pnlAccountsContent.Controls.Add(lblPaymentMethods);
+            pnlAccountsContent.Controls.Add(pnlOnlinePayment);
+            pnlAccountsContent.Controls.Add(pnlCashier);
+            pnlAccountsContent.Controls.Add(lblEnrollStatus);
+            pnlAccountsContent.Controls.Add(pnlEnrollStatusCard);
+            pnlAccountsContent.Dock = DockStyle.Fill;
+            pnlAccountsContent.Location = new Point(0, 0);
+            pnlAccountsContent.Margin = new Padding(0);
+            pnlAccountsContent.Name = "pnlAccountsContent";
+            pnlAccountsContent.Size = new Size(1272, 719);
+            pnlAccountsContent.TabIndex = 5;
+            pnlAccountsContent.Visible = false;
+            // 
+            // pnlSpaceProviderAccounts
+            // 
+            pnlSpaceProviderAccounts.BackColor = Color.Transparent;
+            pnlSpaceProviderAccounts.Location = new Point(16, 1326);
+            pnlSpaceProviderAccounts.Name = "pnlSpaceProviderAccounts";
+            pnlSpaceProviderAccounts.Size = new Size(1200, 130);
+            pnlSpaceProviderAccounts.TabIndex = 18;
+            // 
+            // dgvAccounts
+            // 
+            dgvAccounts.AllowUserToAddRows = false;
+            dgvAccounts.AllowUserToDeleteRows = false;
+            dgvAccounts.AllowUserToResizeColumns = false;
+            dgvAccounts.AllowUserToResizeRows = false;
+            dgvAccounts.BackgroundColor = Color.White;
+            dgvAccounts.BorderStyle = BorderStyle.None;
+            dgvAccounts.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = Color.FromArgb((int)(byte)245, (int)(byte)247, (int)(byte)250);
+            dataGridViewCellStyle10.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            dataGridViewCellStyle10.ForeColor = Color.FromArgb((int)(byte)60, (int)(byte)60, (int)(byte)60);
+            dataGridViewCellStyle10.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.True;
+            dgvAccounts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dgvAccounts.ColumnHeadersHeight = 45;
+            dgvAccounts.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dgvAccounts.Columns.AddRange(new DataGridViewColumn[] { colAccountsRefID, colAccountsDescription, colAccountsAmount, colAccountsDueDate, colAccountsStatus, colAccountsPaidDate });
+            dgvAccounts.EnableHeadersVisualStyles = false;
+            dgvAccounts.GridColor = Color.Gainsboro;
+            dgvAccounts.Location = new Point(19, 575);
+            dgvAccounts.Name = "dgvAccounts";
+            dgvAccounts.RowHeadersVisible = false;
+            dgvAccounts.RowHeadersWidth = 51;
+            dgvAccounts.Size = new Size(1210, 400);
+            dgvAccounts.TabIndex = 11;
+            // 
+            // colAccountsRefID
+            // 
+            colAccountsRefID.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colAccountsRefID.HeaderText = "Reference ID";
+            colAccountsRefID.MinimumWidth = 6;
+            colAccountsRefID.Name = "colAccountsRefID";
+            colAccountsRefID.ReadOnly = true;
+            // 
+            // colAccountsDescription
+            // 
+            colAccountsDescription.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colAccountsDescription.HeaderText = "Description";
+            colAccountsDescription.MinimumWidth = 6;
+            colAccountsDescription.Name = "colAccountsDescription";
+            colAccountsDescription.ReadOnly = true;
+            // 
+            // colAccountsAmount
+            // 
+            colAccountsAmount.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colAccountsAmount.HeaderText = "Amount";
+            colAccountsAmount.MinimumWidth = 6;
+            colAccountsAmount.Name = "colAccountsAmount";
+            colAccountsAmount.ReadOnly = true;
+            // 
+            // colAccountsDueDate
+            // 
+            colAccountsDueDate.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colAccountsDueDate.HeaderText = "Due Date";
+            colAccountsDueDate.MinimumWidth = 6;
+            colAccountsDueDate.Name = "colAccountsDueDate";
+            colAccountsDueDate.ReadOnly = true;
+            // 
+            // colAccountsStatus
+            // 
+            colAccountsStatus.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colAccountsStatus.HeaderText = "Status";
+            colAccountsStatus.MinimumWidth = 6;
+            colAccountsStatus.Name = "colAccountsStatus";
+            colAccountsStatus.ReadOnly = true;
+            // 
+            // colAccountsPaidDate
+            // 
+            colAccountsPaidDate.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colAccountsPaidDate.HeaderText = "Paid Date";
+            colAccountsPaidDate.MinimumWidth = 6;
+            colAccountsPaidDate.Name = "colAccountsPaidDate";
+            colAccountsPaidDate.ReadOnly = true;
+            // 
+            // btnAccountsDownloadStatement
+            // 
+            btnAccountsDownloadStatement.BackColor = Color.DarkRed;
+            btnAccountsDownloadStatement.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            btnAccountsDownloadStatement.ForeColor = SystemColors.ControlLightLight;
+            btnAccountsDownloadStatement.Image = PUPAcadPortal.Properties.Resources.download_2_16;
+            btnAccountsDownloadStatement.Location = new Point(983, 515);
+            btnAccountsDownloadStatement.Name = "btnAccountsDownloadStatement";
+            btnAccountsDownloadStatement.Size = new Size(246, 41);
+            btnAccountsDownloadStatement.TabIndex = 10;
+            btnAccountsDownloadStatement.Text = " Download Statement";
+            btnAccountsDownloadStatement.TextAlign = ContentAlignment.MiddleRight;
+            btnAccountsDownloadStatement.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnAccountsDownloadStatement.UseVisualStyleBackColor = false;
+            btnAccountsDownloadStatement.Click += (this.btnAccountsDownloadStatement_Click);
+            // 
+            // lblPaymentHistory
+            // 
+            lblPaymentHistory.AutoSize = true;
+            lblPaymentHistory.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            lblPaymentHistory.ForeColor = Color.Maroon;
+            lblPaymentHistory.Location = new Point(14, 522);
+            lblPaymentHistory.Name = "lblPaymentHistory";
+            lblPaymentHistory.Size = new Size(204, 32);
+            lblPaymentHistory.TabIndex = 9;
+            lblPaymentHistory.Text = "Payment History";
+            // 
+            // pnlAccountsSelectSem
+            // 
+            pnlAccountsSelectSem.BackColor = Color.White;
+            pnlAccountsSelectSem.BorderStyle = BorderStyle.FixedSingle;
+            pnlAccountsSelectSem.Controls.Add(cmbSelectSem);
+            pnlAccountsSelectSem.Controls.Add(lblSelSem);
+            pnlAccountsSelectSem.Location = new Point(19, 404);
+            pnlAccountsSelectSem.Name = "pnlAccountsSelectSem";
+            pnlAccountsSelectSem.Size = new Size(1210, 77);
+            pnlAccountsSelectSem.TabIndex = 8;
+            // 
+            // cmbSelectSem
+            // 
+            cmbSelectSem.FormattingEnabled = true;
+            cmbSelectSem.Items.AddRange(new object[] { "1st Semester", "2nd Semester", "3rd Semester", "4th Semester" });
+            cmbSelectSem.Location = new Point(13, 35);
+            cmbSelectSem.Name = "cmbSelectSem";
+            cmbSelectSem.Size = new Size(254, 23);
+            cmbSelectSem.TabIndex = 5;
+            cmbSelectSem.Text = "Select...";
+            cmbSelectSem.SelectedIndexChanged += (this.cmbSelectSem_SelectedIndexChanged);
+            // 
+            // lblSelSem
+            // 
+            lblSelSem.AutoSize = true;
+            lblSelSem.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            lblSelSem.ForeColor = SystemColors.WindowFrame;
+            lblSelSem.Location = new Point(13, 11);
+            lblSelSem.Name = "lblSelSem";
+            lblSelSem.Size = new Size(128, 21);
+            lblSelSem.TabIndex = 4;
+            lblSelSem.Text = "Select Semester";
+            // 
+            // pnlBalance
+            // 
+            pnlBalance.BackColor = SystemColors.ControlLightLight;
+            pnlBalance.BorderStyle = BorderStyle.FixedSingle;
+            pnlBalance.Controls.Add(lblBalancePeso);
+            pnlBalance.Controls.Add(lblBalance);
+            pnlBalance.Controls.Add(pbBalance);
+            pnlBalance.Location = new Point(842, 111);
+            pnlBalance.Name = "pnlBalance";
+            pnlBalance.Size = new Size(387, 133);
+            pnlBalance.TabIndex = 5;
+            // 
+            // lblBalancePeso
+            // 
+            lblBalancePeso.AutoSize = true;
+            lblBalancePeso.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            lblBalancePeso.ForeColor = Color.Black;
+            lblBalancePeso.Location = new Point(55, 52);
+            lblBalancePeso.Name = "lblBalancePeso";
+            lblBalancePeso.Size = new Size(102, 47);
+            lblBalancePeso.TabIndex = 6;
+            lblBalancePeso.Text = "₱750";
+            // 
+            // lblBalance
+            // 
+            lblBalance.AutoSize = true;
+            lblBalance.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            lblBalance.ForeColor = Color.DimGray;
+            lblBalance.Location = new Point(22, 21);
+            lblBalance.Name = "lblBalance";
+            lblBalance.Size = new Size(99, 32);
+            lblBalance.TabIndex = 5;
+            lblBalance.Text = "Balance";
+            // 
+            // pbBalance
+            // 
+            pbBalance.Anchor = AnchorStyles.None;
+            pbBalance.BackColor = Color.Maroon;
+            pbBalance.BorderStyle = BorderStyle.Fixed3D;
+            pbBalance.Image = PUPAcadPortal.Properties.Resources.warning_4_1281;
+            pbBalance.Location = new Point(281, 24);
+            pbBalance.Name = "pbBalance";
+            pbBalance.Size = new Size(95, 81);
+            pbBalance.SizeMode = PictureBoxSizeMode.Zoom;
+            pbBalance.TabIndex = 3;
+            pbBalance.TabStop = false;
+            // 
+            // pnlTotalPaid
+            // 
+            pnlTotalPaid.BackColor = SystemColors.ControlLightLight;
+            pnlTotalPaid.BorderStyle = BorderStyle.FixedSingle;
+            pnlTotalPaid.Controls.Add(lblTPPeso);
+            pnlTotalPaid.Controls.Add(lblTotalPaid);
+            pnlTotalPaid.Controls.Add(pbPaid);
+            pnlTotalPaid.Location = new Point(428, 111);
+            pnlTotalPaid.Name = "pnlTotalPaid";
+            pnlTotalPaid.Size = new Size(387, 133);
+            pnlTotalPaid.TabIndex = 5;
+            // 
+            // lblTPPeso
+            // 
+            lblTPPeso.AutoSize = true;
+            lblTPPeso.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            lblTPPeso.ForeColor = Color.Black;
+            lblTPPeso.Location = new Point(50, 52);
+            lblTPPeso.Name = "lblTPPeso";
+            lblTPPeso.Size = new Size(102, 47);
+            lblTPPeso.TabIndex = 6;
+            lblTPPeso.Text = "₱750";
+            // 
+            // lblTotalPaid
+            // 
+            lblTotalPaid.AutoSize = true;
+            lblTotalPaid.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            lblTotalPaid.ForeColor = Color.DimGray;
+            lblTotalPaid.Location = new Point(27, 21);
+            lblTotalPaid.Name = "lblTotalPaid";
+            lblTotalPaid.Size = new Size(120, 32);
+            lblTotalPaid.TabIndex = 5;
+            lblTotalPaid.Text = "Total Paid";
+            // 
+            // pbPaid
+            // 
+            pbPaid.Anchor = AnchorStyles.None;
+            pbPaid.BackColor = Color.Maroon;
+            pbPaid.BorderStyle = BorderStyle.Fixed3D;
+            pbPaid.Image = PUPAcadPortal.Properties.Resources.check_mark_6_48;
+            pbPaid.Location = new Point(279, 22);
+            pbPaid.Name = "pbPaid";
+            pbPaid.Size = new Size(88, 83);
+            pbPaid.SizeMode = PictureBoxSizeMode.CenterImage;
+            pbPaid.TabIndex = 3;
+            pbPaid.TabStop = false;
+            // 
+            // pnlAccountsFreeEd
+            // 
+            pnlAccountsFreeEd.BackColor = Color.DarkRed;
+            pnlAccountsFreeEd.BorderStyle = BorderStyle.Fixed3D;
+            pnlAccountsFreeEd.Controls.Add(pbFreeEducProg);
+            pnlAccountsFreeEd.Controls.Add(lblNoteFreeEducProg);
+            pnlAccountsFreeEd.Controls.Add(lblDescriptionFreeEducProg);
+            pnlAccountsFreeEd.Controls.Add(lblFreeEducProg);
+            pnlAccountsFreeEd.Location = new Point(19, 260);
+            pnlAccountsFreeEd.Name = "pnlAccountsFreeEd";
+            pnlAccountsFreeEd.Size = new Size(1210, 135);
+            pnlAccountsFreeEd.TabIndex = 7;
+            // 
+            // pbFreeEducProg
+            // 
+            pbFreeEducProg.BackColor = Color.IndianRed;
+            pbFreeEducProg.BorderStyle = BorderStyle.FixedSingle;
+            pbFreeEducProg.Image = PUPAcadPortal.Properties.Resources.document_icon;
+            pbFreeEducProg.Location = new Point(12, 17);
+            pbFreeEducProg.Name = "pbFreeEducProg";
+            pbFreeEducProg.Size = new Size(78, 96);
+            pbFreeEducProg.SizeMode = PictureBoxSizeMode.Zoom;
+            pbFreeEducProg.TabIndex = 10;
+            pbFreeEducProg.TabStop = false;
+            // 
+            // lblNoteFreeEducProg
+            // 
+            lblNoteFreeEducProg.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            lblNoteFreeEducProg.ForeColor = Color.WhiteSmoke;
+            lblNoteFreeEducProg.Location = new Point(96, 91);
+            lblNoteFreeEducProg.Name = "lblNoteFreeEducProg";
+            lblNoteFreeEducProg.Size = new Size(1073, 35);
+            lblNoteFreeEducProg.TabIndex = 9;
+            lblNoteFreeEducProg.Text = "Note: Some laboratory fees, ID replacement, and other special fees may still apply.";
+            // 
+            // lblDescriptionFreeEducProg
+            // 
+            lblDescriptionFreeEducProg.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            lblDescriptionFreeEducProg.ForeColor = Color.White;
+            lblDescriptionFreeEducProg.Location = new Point(96, 44);
+            lblDescriptionFreeEducProg.Name = "lblDescriptionFreeEducProg";
+            lblDescriptionFreeEducProg.Size = new Size(1092, 47);
+            lblDescriptionFreeEducProg.TabIndex = 8;
+            lblDescriptionFreeEducProg.Text = "As a student of Polytechnic University of the Philippines, you are covered under the Free Higher Education Act (RA 10391). Tuition and miscellaneous fees are subsidized by the government";
+            // 
+            // lblFreeEducProg
+            // 
+            lblFreeEducProg.AutoSize = true;
+            lblFreeEducProg.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            lblFreeEducProg.ForeColor = Color.White;
+            lblFreeEducProg.Location = new Point(96, 19);
+            lblFreeEducProg.Name = "lblFreeEducProg";
+            lblFreeEducProg.Size = new Size(228, 25);
+            lblFreeEducProg.TabIndex = 8;
+            lblFreeEducProg.Text = "Free Education Program";
+            // 
+            // lblDescriptionAccsPay
+            // 
+            lblDescriptionAccsPay.AutoSize = true;
+            lblDescriptionAccsPay.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            lblDescriptionAccsPay.ForeColor = Color.DimGray;
+            lblDescriptionAccsPay.Location = new Point(19, 59);
+            lblDescriptionAccsPay.Name = "lblDescriptionAccsPay";
+            lblDescriptionAccsPay.Size = new Size(311, 19);
+            lblDescriptionAccsPay.TabIndex = 2;
+            lblDescriptionAccsPay.Text = "View your payment history and account balance";
+            // 
+            // pnlTotalAssessment
+            // 
+            pnlTotalAssessment.BackColor = SystemColors.ControlLightLight;
+            pnlTotalAssessment.BorderStyle = BorderStyle.FixedSingle;
+            pnlTotalAssessment.Controls.Add(pbTotalAssessment);
+            pnlTotalAssessment.Controls.Add(lblTAPeso);
+            pnlTotalAssessment.Controls.Add(lblTotalAssessment);
+            pnlTotalAssessment.Location = new Point(19, 111);
+            pnlTotalAssessment.Name = "pnlTotalAssessment";
+            pnlTotalAssessment.Size = new Size(387, 133);
+            pnlTotalAssessment.TabIndex = 1;
+            // 
+            // pbTotalAssessment
+            // 
+            pbTotalAssessment.Anchor = AnchorStyles.None;
+            pbTotalAssessment.BackColor = Color.Maroon;
+            pbTotalAssessment.BorderStyle = BorderStyle.Fixed3D;
+            pbTotalAssessment.Image = PUPAcadPortal.Properties.Resources.peso_icon;
+            pbTotalAssessment.Location = new Point(269, 22);
+            pbTotalAssessment.Name = "pbTotalAssessment";
+            pbTotalAssessment.Size = new Size(95, 85);
+            pbTotalAssessment.SizeMode = PictureBoxSizeMode.Zoom;
+            pbTotalAssessment.TabIndex = 3;
+            pbTotalAssessment.TabStop = false;
+            // 
+            // lblTAPeso
+            // 
+            lblTAPeso.AutoSize = true;
+            lblTAPeso.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            lblTAPeso.ForeColor = Color.Black;
+            lblTAPeso.Location = new Point(48, 52);
+            lblTAPeso.Name = "lblTAPeso";
+            lblTAPeso.Size = new Size(102, 47);
+            lblTAPeso.TabIndex = 4;
+            lblTAPeso.Text = "₱750";
+            // 
+            // lblTotalAssessment
+            // 
+            lblTotalAssessment.AutoSize = true;
+            lblTotalAssessment.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            lblTotalAssessment.ForeColor = Color.DimGray;
+            lblTotalAssessment.Location = new Point(23, 21);
+            lblTotalAssessment.Name = "lblTotalAssessment";
+            lblTotalAssessment.Size = new Size(200, 32);
+            lblTotalAssessment.TabIndex = 3;
+            lblTotalAssessment.Text = "Total Assessment";
+            // 
+            // lblAccountsandPayments
+            // 
+            lblAccountsandPayments.AutoSize = true;
+            lblAccountsandPayments.Font = new Font("Segoe UI", 22.2F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            lblAccountsandPayments.ForeColor = Color.Maroon;
+            lblAccountsandPayments.Location = new Point(16, 24);
+            lblAccountsandPayments.Name = "lblAccountsandPayments";
+            lblAccountsandPayments.Size = new Size(350, 41);
+            lblAccountsandPayments.TabIndex = 0;
+            lblAccountsandPayments.Text = "Accounts and Payments";
+            // 
+            // lblPaymentMethods
+            // 
+            lblPaymentMethods.AutoSize = true;
+            lblPaymentMethods.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            lblPaymentMethods.ForeColor = Color.Maroon;
+            lblPaymentMethods.Location = new Point(16, 1000);
+            lblPaymentMethods.Name = "lblPaymentMethods";
+            lblPaymentMethods.Size = new Size(173, 25);
+            lblPaymentMethods.TabIndex = 13;
+            lblPaymentMethods.Text = "Payment Methods";
+            // 
+            // pnlOnlinePayment
+            // 
+            pnlOnlinePayment.BackColor = Color.White;
+            pnlOnlinePayment.BorderStyle = BorderStyle.FixedSingle;
+            pnlOnlinePayment.Controls.Add(pictureBox48);
+            pnlOnlinePayment.Controls.Add(lblOnlinePayTitle);
+            pnlOnlinePayment.Controls.Add(lblOnlinePayDesc);
+            pnlOnlinePayment.Controls.Add(btnPayOnline);
+            pnlOnlinePayment.Location = new Point(23, 1040);
+            pnlOnlinePayment.Name = "pnlOnlinePayment";
+            pnlOnlinePayment.Size = new Size(590, 130);
+            pnlOnlinePayment.TabIndex = 14;
+            // 
+            // pictureBox48
+            // 
+            pictureBox48.BackColor = Color.Maroon;
+            pictureBox48.Image = PUPAcadPortal.Properties.Resources.card_in_use_32;
+            pictureBox48.Location = new Point(10, 10);
+            pictureBox48.Name = "pictureBox48";
+            pictureBox48.Size = new Size(54, 52);
+            pictureBox48.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox48.TabIndex = 3;
+            pictureBox48.TabStop = false;
+            // 
+            // lblOnlinePayTitle
+            // 
+            lblOnlinePayTitle.AutoSize = true;
+            lblOnlinePayTitle.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            lblOnlinePayTitle.Location = new Point(70, 15);
+            lblOnlinePayTitle.Name = "lblOnlinePayTitle";
+            lblOnlinePayTitle.Size = new Size(120, 20);
+            lblOnlinePayTitle.TabIndex = 0;
+            lblOnlinePayTitle.Text = "Online Payment";
+            // 
+            // lblOnlinePayDesc
+            // 
+            lblOnlinePayDesc.AutoSize = true;
+            lblOnlinePayDesc.Font = new Font("Segoe UI", 9F);
+            lblOnlinePayDesc.ForeColor = Color.Gray;
+            lblOnlinePayDesc.Location = new Point(70, 38);
+            lblOnlinePayDesc.Name = "lblOnlinePayDesc";
+            lblOnlinePayDesc.Size = new Size(231, 15);
+            lblOnlinePayDesc.TabIndex = 1;
+            lblOnlinePayDesc.Text = "Pay via credit/debit card or online banking";
+            // 
+            // btnPayOnline
+            // 
+            btnPayOnline.BackColor = Color.Maroon;
+            btnPayOnline.FlatAppearance.BorderColor = Color.FromArgb((int)(byte)200, (int)(byte)200, (int)(byte)200);
+            btnPayOnline.FlatStyle = FlatStyle.Flat;
+            btnPayOnline.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            btnPayOnline.ForeColor = SystemColors.ControlLightLight;
+            btnPayOnline.Location = new Point(10, 80);
+            btnPayOnline.Name = "btnPayOnline";
+            btnPayOnline.Size = new Size(565, 35);
+            btnPayOnline.TabIndex = 2;
+            btnPayOnline.Text = "Pay Online";
+            btnPayOnline.UseVisualStyleBackColor = false;
+            btnPayOnline.Click += (this.btnPayOnline_Click);
+            // 
+            // pnlCashier
+            // 
+            pnlCashier.BackColor = Color.White;
+            pnlCashier.BorderStyle = BorderStyle.FixedSingle;
+            pnlCashier.Controls.Add(pictureBox49);
+            pnlCashier.Controls.Add(lblCashierTitle);
+            pnlCashier.Controls.Add(lblCashierDesc);
+            pnlCashier.Controls.Add(btnPaymentSlip);
+            pnlCashier.Location = new Point(639, 1040);
+            pnlCashier.Name = "pnlCashier";
+            pnlCashier.Size = new Size(590, 130);
+            pnlCashier.TabIndex = 15;
+            // 
+            // pictureBox49
+            // 
+            pictureBox49.BackColor = Color.Maroon;
+            pictureBox49.Image = PUPAcadPortal.Properties.Resources.cash_receiving_32;
+            pictureBox49.Location = new Point(10, 10);
+            pictureBox49.Name = "pictureBox49";
+            pictureBox49.Size = new Size(54, 52);
+            pictureBox49.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox49.TabIndex = 4;
+            pictureBox49.TabStop = false;
+            // 
+            // lblCashierTitle
+            // 
+            lblCashierTitle.AutoSize = true;
+            lblCashierTitle.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            lblCashierTitle.Location = new Point(70, 15);
+            lblCashierTitle.Name = "lblCashierTitle";
+            lblCashierTitle.Size = new Size(116, 20);
+            lblCashierTitle.TabIndex = 0;
+            lblCashierTitle.Text = "Cashier's Office";
+            // 
+            // lblCashierDesc
+            // 
+            lblCashierDesc.AutoSize = true;
+            lblCashierDesc.Font = new Font("Segoe UI", 9F);
+            lblCashierDesc.ForeColor = Color.Gray;
+            lblCashierDesc.Location = new Point(70, 38);
+            lblCashierDesc.Name = "lblCashierDesc";
+            lblCashierDesc.Size = new Size(196, 15);
+            lblCashierDesc.TabIndex = 1;
+            lblCashierDesc.Text = "Pay in person at the Cashier's Office";
+            // 
+            // btnPaymentSlip
+            // 
+            btnPaymentSlip.BackColor = Color.Maroon;
+            btnPaymentSlip.FlatAppearance.BorderColor = Color.FromArgb((int)(byte)200, (int)(byte)200, (int)(byte)200);
+            btnPaymentSlip.FlatStyle = FlatStyle.Flat;
+            btnPaymentSlip.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            btnPaymentSlip.ForeColor = Color.White;
+            btnPaymentSlip.Location = new Point(10, 80);
+            btnPaymentSlip.Name = "btnPaymentSlip";
+            btnPaymentSlip.Size = new Size(565, 35);
+            btnPaymentSlip.TabIndex = 2;
+            btnPaymentSlip.Text = "Get Payment Slip";
+            btnPaymentSlip.UseVisualStyleBackColor = false;
+            btnPaymentSlip.Click += (this.btnPaymentSlip_Click);
+            // 
+            // lblEnrollStatus
+            // 
+            lblEnrollStatus.AutoSize = true;
+            lblEnrollStatus.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            lblEnrollStatus.ForeColor = Color.Maroon;
+            lblEnrollStatus.Location = new Point(16, 1200);
+            lblEnrollStatus.Name = "lblEnrollStatus";
+            lblEnrollStatus.Size = new Size(170, 25);
+            lblEnrollStatus.TabIndex = 16;
+            lblEnrollStatus.Text = "Enrollment Status";
+            // 
+            // pnlEnrollStatusCard
+            // 
+            pnlEnrollStatusCard.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            pnlEnrollStatusCard.BackColor = Color.FromArgb((int)(byte)240, (int)(byte)255, (int)(byte)245);
+            pnlEnrollStatusCard.BorderStyle = BorderStyle.FixedSingle;
+            pnlEnrollStatusCard.Controls.Add(pictureBox50);
+            pnlEnrollStatusCard.Controls.Add(lblEnrollStatusTitle);
+            pnlEnrollStatusCard.Controls.Add(lblEnrollStatusDesc);
+            pnlEnrollStatusCard.Location = new Point(19, 1240);
+            pnlEnrollStatusCard.Name = "pnlEnrollStatusCard";
+            pnlEnrollStatusCard.Size = new Size(1236, 80);
+            pnlEnrollStatusCard.TabIndex = 17;
+            // 
+            // pictureBox50
+            // 
+            pictureBox50.BackColor = Color.Green;
+            pictureBox50.BorderStyle = BorderStyle.Fixed3D;
+            pictureBox50.Image = PUPAcadPortal.Properties.Resources.Enrollment2;
+            pictureBox50.Location = new Point(13, 13);
+            pictureBox50.Name = "pictureBox50";
+            pictureBox50.Size = new Size(54, 52);
+            pictureBox50.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox50.TabIndex = 4;
+            pictureBox50.TabStop = false;
+            // 
+            // lblEnrollStatusTitle
+            // 
+            lblEnrollStatusTitle.AutoSize = true;
+            lblEnrollStatusTitle.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            lblEnrollStatusTitle.ForeColor = Color.Green;
+            lblEnrollStatusTitle.Location = new Point(73, 18);
+            lblEnrollStatusTitle.Name = "lblEnrollStatusTitle";
+            lblEnrollStatusTitle.Size = new Size(132, 20);
+            lblEnrollStatusTitle.TabIndex = 0;
+            lblEnrollStatusTitle.Text = "Officially Enrolled";
+            // 
+            // lblEnrollStatusDesc
+            // 
+            lblEnrollStatusDesc.AutoSize = true;
+            lblEnrollStatusDesc.Font = new Font("Segoe UI", 9F);
+            lblEnrollStatusDesc.ForeColor = Color.Green;
+            lblEnrollStatusDesc.Location = new Point(73, 41);
+            lblEnrollStatusDesc.Name = "lblEnrollStatusDesc";
+            lblEnrollStatusDesc.Size = new Size(380, 15);
+            lblEnrollStatusDesc.TabIndex = 1;
+            lblEnrollStatusDesc.Text = "Your enrollment is confirmed. You may now proceed with your classes.";
+            // 
+            // pnlDashboardContent
+            // 
+            pnlDashboardContent.AutoScroll = true;
+            pnlDashboardContent.BackColor = SystemColors.Control;
+            pnlDashboardContent.Controls.Add(pnlDashboardCenter);
+            pnlDashboardContent.Controls.Add(pnlDashboardSpaceProvider);
+            pnlDashboardContent.Controls.Add(pnlDashboardGreetingsContainer);
+            pnlDashboardContent.Controls.Add(pnlViewDetails);
+            pnlDashboardContent.Dock = DockStyle.Fill;
+            pnlDashboardContent.Location = new Point(256, 72);
+            pnlDashboardContent.Margin = new Padding(0);
+            pnlDashboardContent.Name = "pnlDashboardContent";
+            pnlDashboardContent.Size = new Size(1272, 719);
+            pnlDashboardContent.TabIndex = 36;
+            pnlDashboardContent.Visible = false;
+            // 
+            // pnlDashboardCenter
+            // 
+            pnlDashboardCenter.CausesValidation = false;
+            pnlDashboardCenter.Controls.Add(pnlEnrolledUnitsCard);
+            pnlDashboardCenter.Controls.Add(pnlEnrollmentStatusCard);
+            pnlDashboardCenter.Controls.Add(pnlUpcomingEventsContainer);
+            pnlDashboardCenter.Controls.Add(pnlCurrentSemesterCard);
+            pnlDashboardCenter.Controls.Add(pnlEnrolleft);
+            pnlDashboardCenter.Controls.Add(pnlQuickActionsContainer);
+            pnlDashboardCenter.Controls.Add(pnlAnnouncementsContainer);
+            pnlDashboardCenter.Dock = DockStyle.Fill;
+            pnlDashboardCenter.Location = new Point(0, 102);
+            pnlDashboardCenter.Name = "pnlDashboardCenter";
+            pnlDashboardCenter.Size = new Size(1255, 1212);
+            pnlDashboardCenter.TabIndex = 29;
+            // 
+            // pnlEnrolledUnitsCard
+            // 
+            pnlEnrolledUnitsCard.Anchor = AnchorStyles.None;
+            pnlEnrolledUnitsCard.BackColor = Color.White;
+            pnlEnrolledUnitsCard.BorderStyle = BorderStyle.Fixed3D;
+            pnlEnrolledUnitsCard.Controls.Add(pictureBox47);
+            pnlEnrolledUnitsCard.Controls.Add(label181);
+            pnlEnrolledUnitsCard.Controls.Add(label182);
+            pnlEnrolledUnitsCard.Location = new Point(36, 44);
+            pnlEnrolledUnitsCard.Margin = new Padding(3, 2, 3, 2);
+            pnlEnrolledUnitsCard.Name = "pnlEnrolledUnitsCard";
+            pnlEnrolledUnitsCard.Size = new Size(280, 95);
+            pnlEnrolledUnitsCard.TabIndex = 21;
+            // 
+            // pictureBox47
+            // 
+            pictureBox47.BackColor = Color.Maroon;
+            pictureBox47.Image = PUPAcadPortal.Properties.Resources.book_stack_32;
+            pictureBox47.Location = new Point(196, 11);
+            pictureBox47.Name = "pictureBox47";
+            pictureBox47.Size = new Size(66, 68);
+            pictureBox47.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox47.TabIndex = 21;
+            pictureBox47.TabStop = false;
+            // 
+            // label181
+            // 
+            label181.AutoSize = true;
+            label181.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label181.ForeColor = Color.DimGray;
+            label181.Location = new Point(9, 22);
+            label181.Name = "label181";
+            label181.Size = new Size(118, 21);
+            label181.TabIndex = 15;
+            label181.Text = "Enrolled Units";
+            // 
+            // label182
+            // 
+            label182.AutoSize = true;
+            label182.BackColor = Color.Transparent;
+            label182.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label182.ForeColor = Color.Black;
+            label182.Location = new Point(8, 35);
+            label182.Name = "label182";
+            label182.Size = new Size(51, 40);
+            label182.TabIndex = 15;
+            label182.Text = "21";
+            // 
+            // pnlEnrollmentStatusCard
+            // 
+            pnlEnrollmentStatusCard.Anchor = AnchorStyles.None;
+            pnlEnrollmentStatusCard.BackColor = Color.White;
+            pnlEnrollmentStatusCard.BorderStyle = BorderStyle.Fixed3D;
+            pnlEnrollmentStatusCard.Controls.Add(pictureBox45);
+            pnlEnrollmentStatusCard.Controls.Add(label179);
+            pnlEnrollmentStatusCard.Controls.Add(label180);
+            pnlEnrollmentStatusCard.Location = new Point(337, 44);
+            pnlEnrollmentStatusCard.Margin = new Padding(3, 2, 3, 2);
+            pnlEnrollmentStatusCard.Name = "pnlEnrollmentStatusCard";
+            pnlEnrollmentStatusCard.Size = new Size(280, 95);
+            pnlEnrollmentStatusCard.TabIndex = 22;
+            // 
+            // pictureBox45
+            // 
+            pictureBox45.BackColor = Color.Maroon;
+            pictureBox45.Image = PUPAcadPortal.Properties.Resources.approval_32;
+            pictureBox45.Location = new Point(196, 11);
+            pictureBox45.Name = "pictureBox45";
+            pictureBox45.Size = new Size(66, 68);
+            pictureBox45.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox45.TabIndex = 22;
+            pictureBox45.TabStop = false;
+            // 
+            // label179
+            // 
+            label179.AutoSize = true;
+            label179.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label179.ForeColor = Color.DimGray;
+            label179.Location = new Point(9, 22);
+            label179.Name = "label179";
+            label179.Size = new Size(146, 21);
+            label179.TabIndex = 16;
+            label179.Text = "Enrollment Status";
+            // 
+            // label180
+            // 
+            label180.AutoSize = true;
+            label180.BackColor = Color.Transparent;
+            label180.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label180.ForeColor = Color.Black;
+            label180.Location = new Point(5, 36);
+            label180.Name = "label180";
+            label180.Size = new Size(153, 37);
+            label180.TabIndex = 17;
+            label180.Text = "Confirmed";
+            // 
+            // pnlUpcomingEventsContainer
+            // 
+            pnlUpcomingEventsContainer.Anchor = AnchorStyles.None;
+            pnlUpcomingEventsContainer.BackColor = SystemColors.ControlLightLight;
+            pnlUpcomingEventsContainer.BorderStyle = BorderStyle.FixedSingle;
+            pnlUpcomingEventsContainer.Controls.Add(panel78);
+            pnlUpcomingEventsContainer.Controls.Add(panel80);
+            pnlUpcomingEventsContainer.Controls.Add(panel82);
+            pnlUpcomingEventsContainer.Controls.Add(label166);
+            pnlUpcomingEventsContainer.Location = new Point(847, 170);
+            pnlUpcomingEventsContainer.Name = "pnlUpcomingEventsContainer";
+            pnlUpcomingEventsContainer.Size = new Size(368, 331);
+            pnlUpcomingEventsContainer.TabIndex = 26;
+            // 
+            // panel78
+            // 
+            panel78.Controls.Add(label154);
+            panel78.Controls.Add(label155);
+            panel78.Controls.Add(panel79);
+            panel78.Location = new Point(11, 226);
+            panel78.Name = "panel78";
+            panel78.Size = new Size(344, 80);
+            panel78.TabIndex = 21;
+            // 
+            // label154
+            // 
+            label154.AutoSize = true;
+            label154.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
+            label154.ForeColor = Color.DimGray;
+            label154.Location = new Point(93, 38);
+            label154.Name = "label154";
+            label154.Size = new Size(62, 17);
+            label154.TabIndex = 19;
+            label154.Text = "11:59 PM";
+            // 
+            // label155
+            // 
+            label155.AutoSize = true;
+            label155.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label155.ForeColor = Color.DimGray;
+            label155.Location = new Point(86, 13);
+            label155.Name = "label155";
+            label155.Size = new Size(180, 21);
+            label155.TabIndex = 17;
+            label155.Text = "Add/Drop Period Ends";
+            // 
+            // panel79
+            // 
+            panel79.BackColor = Color.Maroon;
+            panel79.Controls.Add(label156);
+            panel79.Controls.Add(label157);
+            panel79.Location = new Point(3, 3);
+            panel79.Name = "panel79";
+            panel79.Size = new Size(70, 74);
+            panel79.TabIndex = 0;
+            // 
+            // label156
+            // 
+            label156.AutoSize = true;
+            label156.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label156.ForeColor = Color.White;
+            label156.Location = new Point(13, 14);
+            label156.Name = "label156";
+            label156.Size = new Size(46, 17);
+            label156.TabIndex = 19;
+            label156.Text = "March";
+            // 
+            // label157
+            // 
+            label157.AutoSize = true;
+            label157.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label157.ForeColor = Color.White;
+            label157.Location = new Point(16, 31);
+            label157.Name = "label157";
+            label157.Size = new Size(37, 30);
+            label157.TabIndex = 20;
+            label157.Text = "20";
+            // 
+            // panel80
+            // 
+            panel80.Controls.Add(label158);
+            panel80.Controls.Add(label159);
+            panel80.Controls.Add(panel81);
+            panel80.Location = new Point(11, 140);
+            panel80.Name = "panel80";
+            panel80.Size = new Size(344, 80);
+            panel80.TabIndex = 20;
+            // 
+            // label158
+            // 
+            label158.AutoSize = true;
+            label158.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
+            label158.ForeColor = Color.DimGray;
+            label158.Location = new Point(93, 38);
+            label158.Name = "label158";
+            label158.Size = new Size(62, 17);
+            label158.TabIndex = 19;
+            label158.Text = "11:59 PM";
+            // 
+            // label159
+            // 
+            label159.AutoSize = true;
+            label159.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label159.ForeColor = Color.DimGray;
+            label159.Location = new Point(86, 13);
+            label159.Name = "label159";
+            label159.Size = new Size(112, 21);
+            label159.TabIndex = 17;
+            label159.Text = "Classes Begin";
+            // 
+            // panel81
+            // 
+            panel81.BackColor = Color.Maroon;
+            panel81.Controls.Add(label160);
+            panel81.Controls.Add(label161);
+            panel81.Location = new Point(3, 3);
+            panel81.Name = "panel81";
+            panel81.Size = new Size(70, 74);
+            panel81.TabIndex = 0;
+            // 
+            // label160
+            // 
+            label160.AutoSize = true;
+            label160.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label160.ForeColor = Color.White;
+            label160.Location = new Point(13, 14);
+            label160.Name = "label160";
+            label160.Size = new Size(46, 17);
+            label160.TabIndex = 19;
+            label160.Text = "March";
+            // 
+            // label161
+            // 
+            label161.AutoSize = true;
+            label161.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label161.ForeColor = Color.White;
+            label161.Location = new Point(16, 31);
+            label161.Name = "label161";
+            label161.Size = new Size(37, 30);
+            label161.TabIndex = 20;
+            label161.Text = "15";
+            // 
+            // panel82
+            // 
+            panel82.Controls.Add(label162);
+            panel82.Controls.Add(label163);
+            panel82.Controls.Add(panel83);
+            panel82.Location = new Point(11, 53);
+            panel82.Name = "panel82";
+            panel82.Size = new Size(344, 80);
+            panel82.TabIndex = 19;
+            // 
+            // label162
+            // 
+            label162.AutoSize = true;
+            label162.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
+            label162.ForeColor = Color.DimGray;
+            label162.Location = new Point(93, 38);
+            label162.Name = "label162";
+            label162.Size = new Size(62, 17);
+            label162.TabIndex = 19;
+            label162.Text = "11:59 PM";
+            // 
+            // label163
+            // 
+            label163.AutoSize = true;
+            label163.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label163.ForeColor = Color.DimGray;
+            label163.Location = new Point(86, 13);
+            label163.Name = "label163";
+            label163.Size = new Size(189, 21);
+            label163.TabIndex = 17;
+            label163.Text = "Enrollment Period Ends";
+            // 
+            // panel83
+            // 
+            panel83.BackColor = Color.Maroon;
+            panel83.Controls.Add(label164);
+            panel83.Controls.Add(label165);
+            panel83.Location = new Point(3, 3);
+            panel83.Name = "panel83";
+            panel83.Size = new Size(70, 74);
+            panel83.TabIndex = 0;
+            // 
+            // label164
+            // 
+            label164.AutoSize = true;
+            label164.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label164.ForeColor = Color.White;
+            label164.Location = new Point(13, 14);
+            label164.Name = "label164";
+            label164.Size = new Size(46, 17);
+            label164.TabIndex = 19;
+            label164.Text = "March";
+            // 
+            // label165
+            // 
+            label165.AutoSize = true;
+            label165.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label165.ForeColor = Color.White;
+            label165.Location = new Point(16, 31);
+            label165.Name = "label165";
+            label165.Size = new Size(37, 30);
+            label165.TabIndex = 20;
+            label165.Text = "10";
+            // 
+            // label166
+            // 
+            label166.AutoSize = true;
+            label166.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label166.ForeColor = Color.Maroon;
+            label166.Location = new Point(8, 14);
+            label166.Name = "label166";
+            label166.Size = new Size(213, 32);
+            label166.TabIndex = 18;
+            label166.Text = "Upcoming Events";
+            // 
+            // pnlCurrentSemesterCard
+            // 
+            pnlCurrentSemesterCard.Anchor = AnchorStyles.None;
+            pnlCurrentSemesterCard.BackColor = Color.White;
+            pnlCurrentSemesterCard.BorderStyle = BorderStyle.Fixed3D;
+            pnlCurrentSemesterCard.Controls.Add(pictureBox44);
+            pnlCurrentSemesterCard.Controls.Add(label177);
+            pnlCurrentSemesterCard.Controls.Add(label178);
+            pnlCurrentSemesterCard.Location = new Point(641, 44);
+            pnlCurrentSemesterCard.Margin = new Padding(3, 2, 3, 2);
+            pnlCurrentSemesterCard.Name = "pnlCurrentSemesterCard";
+            pnlCurrentSemesterCard.Size = new Size(280, 95);
+            pnlCurrentSemesterCard.TabIndex = 23;
+            // 
+            // pictureBox44
+            // 
+            pictureBox44.BackColor = Color.Maroon;
+            pictureBox44.Image = PUPAcadPortal.Properties.Resources.graduation_cap_32;
+            pictureBox44.Location = new Point(196, 11);
+            pictureBox44.Name = "pictureBox44";
+            pictureBox44.Size = new Size(66, 68);
+            pictureBox44.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox44.TabIndex = 23;
+            pictureBox44.TabStop = false;
+            // 
+            // label177
+            // 
+            label177.AutoSize = true;
+            label177.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label177.ForeColor = Color.DimGray;
+            label177.Location = new Point(10, 21);
+            label177.Name = "label177";
+            label177.Size = new Size(141, 21);
+            label177.TabIndex = 18;
+            label177.Text = "Current Semester";
+            // 
+            // label178
+            // 
+            label178.AutoSize = true;
+            label178.BackColor = Color.Transparent;
+            label178.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label178.ForeColor = Color.Black;
+            label178.Location = new Point(6, 35);
+            label178.Name = "label178";
+            label178.Size = new Size(128, 37);
+            label178.TabIndex = 19;
+            label178.Text = "2nd Sem";
+            // 
+            // pnlEnrolleft
+            // 
+            pnlEnrolleft.Anchor = AnchorStyles.None;
+            pnlEnrolleft.BackColor = Color.White;
+            pnlEnrolleft.BorderStyle = BorderStyle.Fixed3D;
+            pnlEnrolleft.Controls.Add(pictureBox43);
+            pnlEnrolleft.Controls.Add(label175);
+            pnlEnrolleft.Controls.Add(label176);
+            pnlEnrolleft.Location = new Point(952, 44);
+            pnlEnrolleft.Margin = new Padding(3, 2, 3, 2);
+            pnlEnrolleft.Name = "pnlEnrolleft";
+            pnlEnrolleft.Size = new Size(263, 95);
+            pnlEnrolleft.TabIndex = 24;
+            // 
+            // pictureBox43
+            // 
+            pictureBox43.BackColor = Color.Maroon;
+            pictureBox43.Image = PUPAcadPortal.Properties.Resources.exclamation_32;
+            pictureBox43.Location = new Point(183, 11);
+            pictureBox43.Name = "pictureBox43";
+            pictureBox43.Size = new Size(66, 68);
+            pictureBox43.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox43.TabIndex = 24;
+            pictureBox43.TabStop = false;
+            // 
+            // label175
+            // 
+            label175.AutoSize = true;
+            label175.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label175.ForeColor = Color.DimGray;
+            label175.Location = new Point(14, 21);
+            label175.Name = "label175";
+            label175.Size = new Size(120, 21);
+            label175.TabIndex = 18;
+            label175.Text = "Pending Items";
+            // 
+            // label176
+            // 
+            label176.AutoSize = true;
+            label176.BackColor = Color.Transparent;
+            label176.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label176.ForeColor = Color.Black;
+            label176.Location = new Point(13, 34);
+            label176.Name = "label176";
+            label176.Size = new Size(34, 40);
+            label176.TabIndex = 19;
+            label176.Text = "2";
+            // 
+            // pnlQuickActionsContainer
+            // 
+            pnlQuickActionsContainer.Anchor = AnchorStyles.None;
+            pnlQuickActionsContainer.BackColor = SystemColors.ControlLightLight;
+            pnlQuickActionsContainer.BorderStyle = BorderStyle.FixedSingle;
+            pnlQuickActionsContainer.Controls.Add(panel84);
+            pnlQuickActionsContainer.Controls.Add(panel86);
+            pnlQuickActionsContainer.Controls.Add(panel87);
+            pnlQuickActionsContainer.Controls.Add(label174);
+            pnlQuickActionsContainer.Location = new Point(37, 170);
+            pnlQuickActionsContainer.Name = "pnlQuickActionsContainer";
+            pnlQuickActionsContainer.Size = new Size(789, 331);
+            pnlQuickActionsContainer.TabIndex = 25;
+            // 
+            // panel84
+            // 
+            panel84.BackColor = SystemColors.ControlLightLight;
+            panel84.BorderStyle = BorderStyle.FixedSingle;
+            panel84.Controls.Add(btnDashboardCourses);
+            panel84.Controls.Add(label167);
+            panel84.Controls.Add(lblCourses);
+            panel84.Location = new Point(402, 82);
+            panel84.Name = "panel84";
+            panel84.Size = new Size(363, 80);
+            panel84.TabIndex = 28;
+            // 
+            // btnDashboardCourses
+            // 
+            btnDashboardCourses.BackColor = Color.Maroon;
+            btnDashboardCourses.FlatStyle = FlatStyle.Popup;
+            btnDashboardCourses.Image = PUPAcadPortal.Properties.Resources.graduation_cap_24;
+            btnDashboardCourses.Location = new Point(12, 11);
+            btnDashboardCourses.Name = "btnDashboardCourses";
+            btnDashboardCourses.Size = new Size(56, 54);
+            btnDashboardCourses.TabIndex = 20;
+            btnDashboardCourses.UseVisualStyleBackColor = false;
+            btnDashboardCourses.Click += (this.btnDashboardCourses_Click);
+            // 
+            // label167
+            // 
+            label167.AutoSize = true;
+            label167.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
+            label167.ForeColor = Color.DimGray;
+            label167.Location = new Point(74, 40);
+            label167.Name = "label167";
+            label167.Size = new Size(154, 17);
+            label167.TabIndex = 19;
+            label167.Text = "Browse available courses";
+            // 
+            // lblCourses
+            // 
+            lblCourses.AutoSize = true;
+            lblCourses.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            lblCourses.ForeColor = Color.DimGray;
+            lblCourses.Location = new Point(74, 19);
+            lblCourses.Name = "lblCourses";
+            lblCourses.Size = new Size(69, 21);
+            lblCourses.TabIndex = 17;
+            lblCourses.Text = "Courses";
+            // 
+            // panel86
+            // 
+            panel86.BackColor = SystemColors.ControlLightLight;
+            panel86.BorderStyle = BorderStyle.FixedSingle;
+            panel86.Controls.Add(btnDashboardPaymentStatus);
+            panel86.Controls.Add(label170);
+            panel86.Controls.Add(label171);
+            panel86.Location = new Point(206, 196);
+            panel86.Name = "panel86";
+            panel86.Size = new Size(363, 80);
+            panel86.TabIndex = 26;
+            // 
+            // btnDashboardPaymentStatus
+            // 
+            btnDashboardPaymentStatus.BackColor = Color.Maroon;
+            btnDashboardPaymentStatus.FlatStyle = FlatStyle.Popup;
+            btnDashboardPaymentStatus.Image = PUPAcadPortal.Properties.Resources.banknotes_24;
+            btnDashboardPaymentStatus.Location = new Point(12, 11);
+            btnDashboardPaymentStatus.Name = "btnDashboardPaymentStatus";
+            btnDashboardPaymentStatus.Size = new Size(56, 54);
+            btnDashboardPaymentStatus.TabIndex = 20;
+            btnDashboardPaymentStatus.UseVisualStyleBackColor = false;
+            btnDashboardPaymentStatus.Click += (this.btnDashboardPaymentStatus_Click);
+            // 
+            // label170
+            // 
+            label170.AutoSize = true;
+            label170.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label170.ForeColor = Color.DimGray;
+            label170.Location = new Point(74, 19);
+            label170.Name = "label170";
+            label170.Size = new Size(129, 21);
+            label170.TabIndex = 0;
+            label170.Text = "Payment Status";
+            // 
+            // label171
+            // 
+            label171.AutoSize = true;
+            label171.Font = new Font("Segoe UI", 9.75F);
+            label171.ForeColor = Color.DimGray;
+            label171.Location = new Point(74, 40);
+            label171.Name = "label171";
+            label171.Size = new Size(140, 17);
+            label171.TabIndex = 1;
+            label171.Text = "Check account balance";
+            // 
+            // panel87
+            // 
+            panel87.BackColor = SystemColors.ControlLightLight;
+            panel87.BorderStyle = BorderStyle.FixedSingle;
+            panel87.Controls.Add(btnDashboardViewEnrollment);
+            panel87.Controls.Add(label172);
+            panel87.Controls.Add(label173);
+            panel87.Location = new Point(20, 82);
+            panel87.Name = "panel87";
+            panel87.Size = new Size(363, 80);
+            panel87.TabIndex = 22;
+            // 
+            // btnDashboardViewEnrollment
+            // 
+            btnDashboardViewEnrollment.BackColor = Color.Maroon;
+            btnDashboardViewEnrollment.FlatStyle = FlatStyle.Popup;
+            btnDashboardViewEnrollment.Image = PUPAcadPortal.Properties.Resources.literature_24;
+            btnDashboardViewEnrollment.Location = new Point(12, 11);
+            btnDashboardViewEnrollment.Name = "btnDashboardViewEnrollment";
+            btnDashboardViewEnrollment.Size = new Size(56, 54);
+            btnDashboardViewEnrollment.TabIndex = 20;
+            btnDashboardViewEnrollment.UseVisualStyleBackColor = false;
+            btnDashboardViewEnrollment.Click += (this.btnDashboardViewEnrollment_Click);
+            // 
+            // label172
+            // 
+            label172.AutoSize = true;
+            label172.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
+            label172.ForeColor = Color.DimGray;
+            label172.Location = new Point(74, 40);
+            label172.Name = "label172";
+            label172.Size = new Size(175, 17);
+            label172.TabIndex = 19;
+            label172.Text = "Check your enrolled subjects";
+            // 
+            // label173
+            // 
+            label173.AutoSize = true;
+            label173.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label173.ForeColor = Color.DimGray;
+            label173.Location = new Point(74, 19);
+            label173.Name = "label173";
+            label173.Size = new Size(137, 21);
+            label173.TabIndex = 17;
+            label173.Text = "View Enrollment";
+            // 
+            // label174
+            // 
+            label174.AutoSize = true;
+            label174.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label174.ForeColor = Color.Maroon;
+            label174.Location = new Point(9, 14);
+            label174.Name = "label174";
+            label174.Size = new Size(172, 32);
+            label174.TabIndex = 16;
+            label174.Text = "Quick Actions";
+            // 
+            // pnlAnnouncementsContainer
+            // 
+            pnlAnnouncementsContainer.Anchor = AnchorStyles.None;
+            pnlAnnouncementsContainer.BackColor = SystemColors.ControlLightLight;
+            pnlAnnouncementsContainer.BorderStyle = BorderStyle.FixedSingle;
+            pnlAnnouncementsContainer.Controls.Add(panel74);
+            pnlAnnouncementsContainer.Controls.Add(panel76);
+            pnlAnnouncementsContainer.Controls.Add(label153);
+            pnlAnnouncementsContainer.Location = new Point(36, 530);
+            pnlAnnouncementsContainer.Name = "pnlAnnouncementsContainer";
+            pnlAnnouncementsContainer.Size = new Size(1178, 331);
+            pnlAnnouncementsContainer.TabIndex = 27;
+            // 
+            // panel74
+            // 
+            panel74.Controls.Add(label147);
+            panel74.Controls.Add(label148);
+            panel74.Controls.Add(panel75);
+            panel74.Controls.Add(label149);
+            panel74.Location = new Point(20, 177);
+            panel74.Name = "panel74";
+            panel74.Size = new Size(1146, 100);
+            panel74.TabIndex = 19;
+            // 
+            // label147
+            // 
+            label147.AutoSize = true;
+            label147.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label147.ForeColor = Color.DimGray;
+            label147.Location = new Point(44, 67);
+            label147.Name = "label147";
+            label147.Size = new Size(446, 17);
+            label147.TabIndex = 19;
+            label147.Text = "Some class schedules have been updated. Please check your dashboard.";
+            // 
+            // label148
+            // 
+            label148.AutoSize = true;
+            label148.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
+            label148.ForeColor = Color.DimGray;
+            label148.Location = new Point(44, 36);
+            label148.Name = "label148";
+            label148.Size = new Size(98, 17);
+            label148.TabIndex = 18;
+            label148.Text = "March 92, 2026";
+            // 
+            // panel75
+            // 
+            panel75.BackColor = Color.FromArgb((int)(byte)255, (int)(byte)193, (int)(byte)7);
+            panel75.Location = new Point(24, 8);
+            panel75.Name = "panel75";
+            panel75.Size = new Size(5, 80);
+            panel75.TabIndex = 17;
+            // 
+            // label149
+            // 
+            label149.AutoSize = true;
+            label149.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label149.ForeColor = Color.DimGray;
+            label149.Location = new Point(42, 15);
+            label149.Name = "label149";
+            label149.Size = new Size(222, 21);
+            label149.TabIndex = 16;
+            label149.Text = "Class Schedule Adjustments";
+            // 
+            // panel76
+            // 
+            panel76.Controls.Add(label150);
+            panel76.Controls.Add(label151);
+            panel76.Controls.Add(panel77);
+            panel76.Controls.Add(label152);
+            panel76.Location = new Point(20, 62);
+            panel76.Name = "panel76";
+            panel76.Size = new Size(1146, 100);
+            panel76.TabIndex = 18;
+            // 
+            // label150
+            // 
+            label150.AutoSize = true;
+            label150.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label150.ForeColor = Color.DimGray;
+            label150.Location = new Point(44, 67);
+            label150.Name = "label150";
+            label150.Size = new Size(512, 17);
+            label150.TabIndex = 19;
+            label150.Text = "Please review the updated enrollment procedures for the upcoming academic year.";
+            // 
+            // label151
+            // 
+            label151.AutoSize = true;
+            label151.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
+            label151.ForeColor = Color.DimGray;
+            label151.Location = new Point(44, 36);
+            label151.Name = "label151";
+            label151.Size = new Size(98, 17);
+            label151.TabIndex = 18;
+            label151.Text = "March 62, 2026";
+            // 
+            // panel77
+            // 
+            panel77.BackColor = Color.FromArgb((int)(byte)255, (int)(byte)193, (int)(byte)7);
+            panel77.Location = new Point(24, 8);
+            panel77.Name = "panel77";
+            panel77.Size = new Size(5, 80);
+            panel77.TabIndex = 17;
+            // 
+            // label152
+            // 
+            label152.AutoSize = true;
+            label152.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label152.ForeColor = Color.DimGray;
+            label152.Location = new Point(42, 15);
+            label152.Name = "label152";
+            label152.Size = new Size(312, 21);
+            label152.TabIndex = 16;
+            label152.Text = "Enrollment Guidelines for AY 2025-2026";
+            // 
+            // label153
+            // 
+            label153.AutoSize = true;
+            label153.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label153.ForeColor = Color.Maroon;
+            label153.Location = new Point(19, 22);
+            label153.Name = "label153";
+            label153.Size = new Size(201, 32);
+            label153.TabIndex = 17;
+            label153.Text = "Announcements";
+            // 
+            // pnlDashboardSpaceProvider
+            // 
+            pnlDashboardSpaceProvider.BackColor = SystemColors.Control;
+            pnlDashboardSpaceProvider.Location = new Point(23, 983);
+            pnlDashboardSpaceProvider.Name = "pnlDashboardSpaceProvider";
+            pnlDashboardSpaceProvider.Size = new Size(1195, 331);
+            pnlDashboardSpaceProvider.TabIndex = 28;
+            // 
+            // pnlDashboardGreetingsContainer
+            // 
+            pnlDashboardGreetingsContainer.BackColor = Color.Maroon;
+            pnlDashboardGreetingsContainer.Controls.Add(lblDashboardGreetingDesc);
+            pnlDashboardGreetingsContainer.Controls.Add(lblDashboardGreeting);
+            pnlDashboardGreetingsContainer.Dock = DockStyle.Top;
+            pnlDashboardGreetingsContainer.ForeColor = Color.White;
+            pnlDashboardGreetingsContainer.Location = new Point(0, 0);
+            pnlDashboardGreetingsContainer.Margin = new Padding(3, 2, 3, 2);
+            pnlDashboardGreetingsContainer.Name = "pnlDashboardGreetingsContainer";
+            pnlDashboardGreetingsContainer.Size = new Size(1255, 102);
+            pnlDashboardGreetingsContainer.TabIndex = 0;
+            // 
+            // lblDashboardGreetingDesc
+            // 
+            lblDashboardGreetingDesc.AutoSize = true;
+            lblDashboardGreetingDesc.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
+            lblDashboardGreetingDesc.Location = new Point(20, 57);
+            lblDashboardGreetingDesc.Name = "lblDashboardGreetingDesc";
+            lblDashboardGreetingDesc.Size = new Size(326, 21);
+            lblDashboardGreetingDesc.TabIndex = 1;
+            lblDashboardGreetingDesc.Text = "Track your enrollment and academic progress";
+            // 
+            // lblDashboardGreeting
+            // 
+            lblDashboardGreeting.AutoSize = true;
+            lblDashboardGreeting.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            lblDashboardGreeting.Location = new Point(10, 14);
+            lblDashboardGreeting.Name = "lblDashboardGreeting";
+            lblDashboardGreeting.Size = new Size(398, 37);
+            lblDashboardGreeting.TabIndex = 0;
+            lblDashboardGreeting.Text = "Welcome back, John DoReMi!";
+            // 
+            // pnlViewDetails
+            // 
+            pnlViewDetails.BackColor = Color.White;
+            pnlViewDetails.BorderStyle = BorderStyle.FixedSingle;
+            pnlViewDetails.Controls.Add(txtDetailSchedule);
+            pnlViewDetails.Controls.Add(lblDetailTitle);
+            pnlViewDetails.Controls.Add(lblDetailUnits);
+            pnlViewDetails.Controls.Add(lblDetailStatus);
+            pnlViewDetails.Controls.Add(lblDetailCode);
+            pnlViewDetails.Controls.Add(btnEnrollCloseDetails);
+            pnlViewDetails.Controls.Add(lblSubjectDetails);
+            pnlViewDetails.Location = new Point(8, 8);
+            pnlViewDetails.Name = "pnlViewDetails";
+            pnlViewDetails.Size = new Size(498, 410);
+            pnlViewDetails.TabIndex = 0;
+            pnlViewDetails.Visible = false;
+            // 
+            // txtDetailSchedule
+            // 
+            txtDetailSchedule.BackColor = SystemColors.ControlLightLight;
+            txtDetailSchedule.BorderStyle = BorderStyle.None;
+            txtDetailSchedule.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
+            txtDetailSchedule.Location = new Point(15, 214);
+            txtDetailSchedule.Multiline = true;
+            txtDetailSchedule.Name = "txtDetailSchedule";
+            txtDetailSchedule.ReadOnly = true;
+            txtDetailSchedule.Size = new Size(445, 49);
+            txtDetailSchedule.TabIndex = 7;
+            txtDetailSchedule.Text = "Schedule: ";
+            // 
+            // lblDetailTitle
+            // 
+            lblDetailTitle.AutoSize = true;
+            lblDetailTitle.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
+            lblDetailTitle.Location = new Point(14, 99);
+            lblDetailTitle.Name = "lblDetailTitle";
+            lblDetailTitle.Size = new Size(99, 21);
+            lblDetailTitle.TabIndex = 6;
+            lblDetailTitle.Text = "Course Title: ";
+            // 
+            // lblDetailUnits
+            // 
+            lblDetailUnits.AutoSize = true;
+            lblDetailUnits.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
+            lblDetailUnits.Location = new Point(14, 134);
+            lblDetailUnits.Name = "lblDetailUnits";
+            lblDetailUnits.Size = new Size(53, 21);
+            lblDetailUnits.TabIndex = 5;
+            lblDetailUnits.Text = "Units: ";
+            // 
+            // lblDetailStatus
+            // 
+            lblDetailStatus.AutoSize = true;
+            lblDetailStatus.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
+            lblDetailStatus.Location = new Point(15, 172);
+            lblDetailStatus.Name = "lblDetailStatus";
+            lblDetailStatus.Size = new Size(59, 21);
+            lblDetailStatus.TabIndex = 3;
+            lblDetailStatus.Text = "Status: ";
+            // 
+            // lblDetailCode
+            // 
+            lblDetailCode.AutoSize = true;
+            lblDetailCode.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
+            lblDetailCode.Location = new Point(14, 65);
+            lblDetailCode.Name = "lblDetailCode";
+            lblDetailCode.Size = new Size(53, 21);
+            lblDetailCode.TabIndex = 2;
+            lblDetailCode.Text = "Code: ";
+            // 
+            // btnEnrollCloseDetails
+            // 
+            btnEnrollCloseDetails.Location = new Point(411, 365);
+            btnEnrollCloseDetails.Name = "btnEnrollCloseDetails";
+            btnEnrollCloseDetails.Size = new Size(75, 23);
+            btnEnrollCloseDetails.TabIndex = 1;
+            btnEnrollCloseDetails.Text = "Close";
+            btnEnrollCloseDetails.UseVisualStyleBackColor = true;
+            btnEnrollCloseDetails.Click += (this.btnEnrollCloseDetails_Click);
+            // 
+            // lblSubjectDetails
+            // 
+            lblSubjectDetails.AutoSize = true;
+            lblSubjectDetails.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            lblSubjectDetails.Location = new Point(14, 21);
+            lblSubjectDetails.Name = "lblSubjectDetails";
+            lblSubjectDetails.Size = new Size(167, 30);
+            lblSubjectDetails.TabIndex = 0;
+            lblSubjectDetails.Text = "Subject Details";
+            // 
+            // pnlEnrollContent
+            // 
+            pnlEnrollContent.BackColor = SystemColors.Control;
+            pnlEnrollContent.Controls.Add(btnSaveAndAssess);
+            pnlEnrollContent.Controls.Add(pnlEnrollmentConfirmedDGV);
+            pnlEnrollContent.Controls.Add(btnDownloadCOR);
+            pnlEnrollContent.Controls.Add(btnEnrollSelectAll);
+            pnlEnrollContent.Controls.Add(pnlContainerEnrollmentDGV);
+            pnlEnrollContent.Controls.Add(pnlEnrollRightCard);
+            pnlEnrollContent.Controls.Add(pnlEnrollMiddleCard);
+            pnlEnrollContent.Controls.Add(pnlEnrollLeftCard);
+            pnlEnrollContent.Controls.Add(pnlTotalUnits);
+            pnlEnrollContent.Controls.Add(pnlEnrollSearchbar);
+            pnlEnrollContent.Controls.Add(lblAcademicYear);
+            pnlEnrollContent.Controls.Add(label188);
+            pnlEnrollContent.Dock = DockStyle.Fill;
+            pnlEnrollContent.Location = new Point(256, 72);
+            pnlEnrollContent.Margin = new Padding(0);
+            pnlEnrollContent.Name = "pnlEnrollContent";
+            pnlEnrollContent.Size = new Size(1272, 719);
+            pnlEnrollContent.TabIndex = 38;
+            pnlEnrollContent.Visible = false;
+            // 
+            // btnSaveAndAssess
+            // 
+            btnSaveAndAssess.Anchor = AnchorStyles.Top;
+            btnSaveAndAssess.BackColor = SystemColors.ControlLight;
+            btnSaveAndAssess.FlatStyle = FlatStyle.Flat;
+            btnSaveAndAssess.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            btnSaveAndAssess.ForeColor = Color.Black;
+            btnSaveAndAssess.Location = new Point(1117, 502);
+            btnSaveAndAssess.Name = "btnSaveAndAssess";
+            btnSaveAndAssess.Size = new Size(104, 23);
+            btnSaveAndAssess.TabIndex = 22;
+            btnSaveAndAssess.Text = "Save and Assess";
+            btnSaveAndAssess.UseVisualStyleBackColor = false;
+            // 
+            // pnlEnrollmentConfirmedDGV
+            // 
+            pnlEnrollmentConfirmedDGV.AutoScroll = true;
+            pnlEnrollmentConfirmedDGV.Controls.Add(dgvEnrollmentConfirmed);
+            pnlEnrollmentConfirmedDGV.Location = new Point(18, 675);
+            pnlEnrollmentConfirmedDGV.Name = "pnlEnrollmentConfirmedDGV";
+            pnlEnrollmentConfirmedDGV.Size = new Size(1205, 300);
+            pnlEnrollmentConfirmedDGV.TabIndex = 21;
+            // 
+            // dgvEnrollmentConfirmed
+            // 
+            dgvEnrollmentConfirmed.AllowUserToAddRows = false;
+            dgvEnrollmentConfirmed.AllowUserToDeleteRows = false;
+            dgvEnrollmentConfirmed.AllowUserToResizeColumns = false;
+            dgvEnrollmentConfirmed.AllowUserToResizeRows = false;
+            dgvEnrollmentConfirmed.Anchor = AnchorStyles.None;
+            dgvEnrollmentConfirmed.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvEnrollmentConfirmed.BackgroundColor = Color.White;
+            dgvEnrollmentConfirmed.CellBorderStyle = DataGridViewCellBorderStyle.None;
+            dgvEnrollmentConfirmed.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = Color.Maroon;
+            dataGridViewCellStyle11.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle11.ForeColor = Color.White;
+            dataGridViewCellStyle11.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = DataGridViewTriState.True;
+            dgvEnrollmentConfirmed.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            dgvEnrollmentConfirmed.ColumnHeadersHeight = 29;
+            dgvEnrollmentConfirmed.Columns.AddRange(new DataGridViewColumn[] { colCode2, colourseTitle2, colUnits2, colSchedule2, colStatus2, colAction2 });
+            dgvEnrollmentConfirmed.EnableHeadersVisualStyles = false;
+            dgvEnrollmentConfirmed.GridColor = Color.White;
+            dgvEnrollmentConfirmed.Location = new Point(0, 0);
+            dgvEnrollmentConfirmed.Name = "dgvEnrollmentConfirmed";
+            dgvEnrollmentConfirmed.RowHeadersVisible = false;
+            dgvEnrollmentConfirmed.RowHeadersWidth = 51;
+            dgvEnrollmentConfirmed.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvEnrollmentConfirmed.Size = new Size(1205, 300);
+            dgvEnrollmentConfirmed.TabIndex = 13;
+            dgvEnrollmentConfirmed.Visible = false;
+            // 
+            // colCode2
+            // 
+            colCode2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            colCode2.FillWeight = 92.978F;
+            colCode2.HeaderText = "Code";
+            colCode2.MinimumWidth = 6;
+            colCode2.Name = "colCode2";
+            colCode2.ReadOnly = true;
+            colCode2.Resizable = DataGridViewTriState.False;
+            colCode2.Width = 120;
+            // 
+            // colourseTitle2
+            // 
+            colourseTitle2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            colourseTitle2.FillWeight = 92.978F;
+            colourseTitle2.HeaderText = "Course Title";
+            colourseTitle2.MinimumWidth = 6;
+            colourseTitle2.Name = "colourseTitle2";
+            colourseTitle2.ReadOnly = true;
+            colourseTitle2.Resizable = DataGridViewTriState.False;
+            colourseTitle2.Width = 300;
+            // 
+            // colUnits2
+            // 
+            colUnits2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            colUnits2.DefaultCellStyle = dataGridViewCellStyle12;
+            colUnits2.FillWeight = 92.978F;
+            colUnits2.HeaderText = "Units";
+            colUnits2.MinimumWidth = 6;
+            colUnits2.Name = "colUnits2";
+            colUnits2.ReadOnly = true;
+            colUnits2.Resizable = DataGridViewTriState.False;
+            colUnits2.Width = 90;
+            // 
+            // colSchedule2
+            // 
+            colSchedule2.FillWeight = 92.978F;
+            colSchedule2.HeaderText = "Schedule";
+            colSchedule2.MinimumWidth = 6;
+            colSchedule2.Name = "colSchedule2";
+            colSchedule2.ReadOnly = true;
+            colSchedule2.Resizable = DataGridViewTriState.False;
+            // 
+            // colStatus2
+            // 
+            dataGridViewCellStyle13.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            colStatus2.DefaultCellStyle = dataGridViewCellStyle13;
+            colStatus2.FillWeight = 92.978F;
+            colStatus2.HeaderText = "Status";
+            colStatus2.MinimumWidth = 6;
+            colStatus2.Name = "colStatus2";
+            colStatus2.ReadOnly = true;
+            colStatus2.Resizable = DataGridViewTriState.False;
+            // 
+            // colAction2
+            // 
+            colAction2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle14.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle14.Font = new Font("Segoe UI", 9F, FontStyle.Underline);
+            dataGridViewCellStyle14.ForeColor = Color.Maroon;
+            colAction2.DefaultCellStyle = dataGridViewCellStyle14;
+            colAction2.HeaderText = "Action";
+            colAction2.MinimumWidth = 6;
+            colAction2.Name = "colAction2";
+            colAction2.ReadOnly = true;
+            colAction2.Width = 125;
+            // 
+            // btnDownloadCOR
+            // 
+            btnDownloadCOR.Anchor = AnchorStyles.Top;
+            btnDownloadCOR.BackColor = Color.DarkRed;
+            btnDownloadCOR.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            btnDownloadCOR.ForeColor = SystemColors.ControlLightLight;
+            btnDownloadCOR.Image = PUPAcadPortal.Properties.Resources.download_2_16;
+            btnDownloadCOR.Location = new Point(795, 28);
+            btnDownloadCOR.Name = "btnDownloadCOR";
+            btnDownloadCOR.Size = new Size(325, 41);
+            btnDownloadCOR.TabIndex = 19;
+            btnDownloadCOR.Text = " Certificate of Registration";
+            btnDownloadCOR.TextAlign = ContentAlignment.MiddleRight;
+            btnDownloadCOR.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnDownloadCOR.UseVisualStyleBackColor = false;
+            btnDownloadCOR.Click += (this.btnDownloadCOR_Click);
+            // 
+            // btnEnrollSelectAll
+            // 
+            btnEnrollSelectAll.Anchor = AnchorStyles.Top;
+            btnEnrollSelectAll.BackColor = SystemColors.ControlLight;
+            btnEnrollSelectAll.FlatStyle = FlatStyle.Flat;
+            btnEnrollSelectAll.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            btnEnrollSelectAll.ForeColor = Color.Black;
+            btnEnrollSelectAll.Location = new Point(18, 158);
+            btnEnrollSelectAll.Name = "btnEnrollSelectAll";
+            btnEnrollSelectAll.Size = new Size(75, 23);
+            btnEnrollSelectAll.TabIndex = 18;
+            btnEnrollSelectAll.Text = "Select All";
+            btnEnrollSelectAll.UseVisualStyleBackColor = false;
+            btnEnrollSelectAll.Click += (this.btnEnrollSelectAll_Click);
+            // 
+            // pnlContainerEnrollmentDGV
+            // 
+            pnlContainerEnrollmentDGV.Anchor = AnchorStyles.Top;
+            pnlContainerEnrollmentDGV.AutoScroll = true;
+            pnlContainerEnrollmentDGV.Controls.Add(dgvEnrollment);
+            pnlContainerEnrollmentDGV.Location = new Point(18, 190);
+            pnlContainerEnrollmentDGV.Name = "pnlContainerEnrollmentDGV";
+            pnlContainerEnrollmentDGV.Size = new Size(1205, 300);
+            pnlContainerEnrollmentDGV.TabIndex = 20;
+            // 
+            // dgvEnrollment
+            // 
+            dgvEnrollment.AllowUserToAddRows = false;
+            dgvEnrollment.AllowUserToDeleteRows = false;
+            dgvEnrollment.AllowUserToResizeColumns = false;
+            dgvEnrollment.AllowUserToResizeRows = false;
+            dgvEnrollment.Anchor = AnchorStyles.None;
+            dgvEnrollment.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvEnrollment.BackgroundColor = Color.White;
+            dgvEnrollment.CellBorderStyle = DataGridViewCellBorderStyle.None;
+            dgvEnrollment.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle15.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle15.BackColor = Color.Maroon;
+            dataGridViewCellStyle15.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle15.ForeColor = Color.White;
+            dataGridViewCellStyle15.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle15.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle15.WrapMode = DataGridViewTriState.True;
+            dgvEnrollment.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle15;
+            dgvEnrollment.ColumnHeadersHeight = 29;
+            dgvEnrollment.Columns.AddRange(new DataGridViewColumn[] { colSelect, colCode, colTitle, colUnits, colSchedule, colStatus, colAction });
+            dgvEnrollment.EnableHeadersVisualStyles = false;
+            dgvEnrollment.GridColor = Color.White;
+            dgvEnrollment.Location = new Point(0, 0);
+            dgvEnrollment.Name = "dgvEnrollment";
+            dgvEnrollment.RowHeadersVisible = false;
+            dgvEnrollment.RowHeadersWidth = 51;
+            dgvEnrollment.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvEnrollment.Size = new Size(1205, 300);
+            dgvEnrollment.TabIndex = 13;
+            dgvEnrollment.CellClick += (this.dgvEnrollment_CellClick);
+            dgvEnrollment.CellPainting += (this.dgvEnrollment_CellPainting);
+            dgvEnrollment.SelectionChanged += (this.dgvEnrollment_SelectionChanged);
+            // 
+            // colSelect
+            // 
+            colSelect.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            colSelect.FillWeight = 142.131973F;
+            colSelect.HeaderText = "";
+            colSelect.MinimumWidth = 6;
+            colSelect.Name = "colSelect";
+            colSelect.Resizable = DataGridViewTriState.False;
+            colSelect.Width = 40;
+            // 
+            // colCode
+            // 
+            colCode.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            colCode.FillWeight = 92.978F;
+            colCode.HeaderText = "Code";
+            colCode.MinimumWidth = 6;
+            colCode.Name = "colCode";
+            colCode.ReadOnly = true;
+            colCode.Resizable = DataGridViewTriState.False;
+            colCode.Width = 120;
+            // 
+            // colTitle
+            // 
+            colTitle.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            colTitle.FillWeight = 92.978F;
+            colTitle.HeaderText = "Course Title";
+            colTitle.MinimumWidth = 6;
+            colTitle.Name = "colTitle";
+            colTitle.ReadOnly = true;
+            colTitle.Resizable = DataGridViewTriState.False;
+            colTitle.Width = 300;
+            // 
+            // colUnits
+            // 
+            colUnits.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle16.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            colUnits.DefaultCellStyle = dataGridViewCellStyle16;
+            colUnits.FillWeight = 92.978F;
+            colUnits.HeaderText = "Units";
+            colUnits.MinimumWidth = 6;
+            colUnits.Name = "colUnits";
+            colUnits.ReadOnly = true;
+            colUnits.Resizable = DataGridViewTriState.False;
+            colUnits.Width = 90;
+            // 
+            // colSchedule
+            // 
+            colSchedule.FillWeight = 92.978F;
+            colSchedule.HeaderText = "Schedule";
+            colSchedule.MinimumWidth = 6;
+            colSchedule.Name = "colSchedule";
+            colSchedule.ReadOnly = true;
+            colSchedule.Resizable = DataGridViewTriState.False;
+            // 
+            // colStatus
+            // 
+            dataGridViewCellStyle17.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            colStatus.DefaultCellStyle = dataGridViewCellStyle17;
+            colStatus.FillWeight = 92.978F;
+            colStatus.HeaderText = "Status";
+            colStatus.MinimumWidth = 6;
+            colStatus.Name = "colStatus";
+            colStatus.ReadOnly = true;
+            colStatus.Resizable = DataGridViewTriState.False;
+            // 
+            // colAction
+            // 
+            colAction.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle18.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle18.Font = new Font("Segoe UI", 9F, FontStyle.Underline);
+            dataGridViewCellStyle18.ForeColor = Color.Maroon;
+            colAction.DefaultCellStyle = dataGridViewCellStyle18;
+            colAction.HeaderText = "Action";
+            colAction.MinimumWidth = 6;
+            colAction.Name = "colAction";
+            colAction.ReadOnly = true;
+            colAction.Width = 125;
+            // 
+            // pnlEnrollRightCard
+            // 
+            pnlEnrollRightCard.Anchor = AnchorStyles.Top;
+            pnlEnrollRightCard.BackColor = SystemColors.ControlLightLight;
+            pnlEnrollRightCard.BorderStyle = BorderStyle.Fixed3D;
+            pnlEnrollRightCard.Controls.Add(lblCurrentSectionIndicator);
+            pnlEnrollRightCard.Controls.Add(label183);
+            pnlEnrollRightCard.Location = new Point(18, 557);
+            pnlEnrollRightCard.MaximumSize = new Size(384, 70);
+            pnlEnrollRightCard.MinimumSize = new Size(384, 70);
+            pnlEnrollRightCard.Name = "pnlEnrollRightCard";
+            pnlEnrollRightCard.Size = new Size(384, 70);
+            pnlEnrollRightCard.TabIndex = 17;
+            // 
+            // lblCurrentSectionIndicator
+            // 
+            lblCurrentSectionIndicator.AutoSize = true;
+            lblCurrentSectionIndicator.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            lblCurrentSectionIndicator.ForeColor = Color.Black;
+            lblCurrentSectionIndicator.Location = new Point(37, 23);
+            lblCurrentSectionIndicator.Name = "lblCurrentSectionIndicator";
+            lblCurrentSectionIndicator.Size = new Size(109, 32);
+            lblCurrentSectionIndicator.TabIndex = 1;
+            lblCurrentSectionIndicator.Text = "BSIT 2-2";
+            // 
+            // label183
+            // 
+            label183.AutoSize = true;
+            label183.BackColor = Color.Transparent;
+            label183.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label183.ForeColor = Color.Maroon;
+            label183.Location = new Point(14, 7);
+            label183.Name = "label183";
+            label183.Size = new Size(102, 17);
+            label183.TabIndex = 0;
+            label183.Text = "Current Section";
+            // 
+            // pnlEnrollMiddleCard
+            // 
+            pnlEnrollMiddleCard.Anchor = AnchorStyles.Top;
+            pnlEnrollMiddleCard.BackColor = SystemColors.ControlLightLight;
+            pnlEnrollMiddleCard.BorderStyle = BorderStyle.Fixed3D;
+            pnlEnrollMiddleCard.Controls.Add(label184);
+            pnlEnrollMiddleCard.Controls.Add(lblMaximumUnitsValue);
+            pnlEnrollMiddleCard.Location = new Point(426, 557);
+            pnlEnrollMiddleCard.MaximumSize = new Size(384, 70);
+            pnlEnrollMiddleCard.MinimumSize = new Size(384, 70);
+            pnlEnrollMiddleCard.Name = "pnlEnrollMiddleCard";
+            pnlEnrollMiddleCard.Size = new Size(384, 70);
+            pnlEnrollMiddleCard.TabIndex = 16;
+            // 
+            // label184
+            // 
+            label184.AutoSize = true;
+            label184.BackColor = Color.Transparent;
+            label184.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label184.ForeColor = Color.Maroon;
+            label184.Location = new Point(12, 7);
+            label184.Name = "label184";
+            label184.Size = new Size(104, 17);
+            label184.TabIndex = 0;
+            label184.Text = "Maximum Units";
+            // 
+            // lblMaximumUnitsValue
+            // 
+            lblMaximumUnitsValue.AutoSize = true;
+            lblMaximumUnitsValue.BackColor = Color.Transparent;
+            lblMaximumUnitsValue.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            lblMaximumUnitsValue.ForeColor = Color.Black;
+            lblMaximumUnitsValue.Location = new Point(32, 22);
+            lblMaximumUnitsValue.Name = "lblMaximumUnitsValue";
+            lblMaximumUnitsValue.Size = new Size(108, 32);
+            lblMaximumUnitsValue.TabIndex = 1;
+            lblMaximumUnitsValue.Text = "23 Units";
+            // 
+            // pnlEnrollLeftCard
+            // 
+            pnlEnrollLeftCard.Anchor = AnchorStyles.Top;
+            pnlEnrollLeftCard.BackColor = SystemColors.ControlLightLight;
+            pnlEnrollLeftCard.BorderStyle = BorderStyle.Fixed3D;
+            pnlEnrollLeftCard.Controls.Add(label185);
+            pnlEnrollLeftCard.Controls.Add(label186);
+            pnlEnrollLeftCard.Location = new Point(839, 557);
+            pnlEnrollLeftCard.MaximumSize = new Size(384, 70);
+            pnlEnrollLeftCard.MinimumSize = new Size(384, 70);
+            pnlEnrollLeftCard.Name = "pnlEnrollLeftCard";
+            pnlEnrollLeftCard.Size = new Size(384, 70);
+            pnlEnrollLeftCard.TabIndex = 15;
+            // 
+            // label185
+            // 
+            label185.AutoSize = true;
+            label185.BackColor = Color.Transparent;
+            label185.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
+            label185.ForeColor = Color.Maroon;
+            label185.Location = new Point(15, 7);
+            label185.Name = "label185";
+            label185.Size = new Size(117, 17);
+            label185.TabIndex = 0;
+            label185.Text = "Enrollment Period";
+            // 
+            // label186
+            // 
+            label186.AutoSize = true;
+            label186.BackColor = Color.Transparent;
+            label186.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+            label186.ForeColor = Color.Black;
+            label186.Location = new Point(32, 22);
+            label186.Name = "label186";
+            label186.Size = new Size(266, 32);
+            label186.TabIndex = 1;
+            label186.Text = "February 1 - 11,  2026";
+            // 
+            // pnlTotalUnits
+            // 
+            pnlTotalUnits.Anchor = AnchorStyles.Top;
+            pnlTotalUnits.BackColor = Color.FromArgb((int)(byte)255, (int)(byte)193, (int)(byte)7);
+            pnlTotalUnits.BorderStyle = BorderStyle.Fixed3D;
+            pnlTotalUnits.Controls.Add(lblEnrollTotalUnitsValue);
+            pnlTotalUnits.Controls.Add(label187);
+            pnlTotalUnits.Location = new Point(1145, 13);
+            pnlTotalUnits.Name = "pnlTotalUnits";
+            pnlTotalUnits.Size = new Size(77, 70);
+            pnlTotalUnits.TabIndex = 14;
+            // 
+            // lblEnrollTotalUnitsValue
+            // 
+            lblEnrollTotalUnitsValue.AutoSize = true;
+            lblEnrollTotalUnitsValue.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold);
+            lblEnrollTotalUnitsValue.Location = new Point(32, 22);
+            lblEnrollTotalUnitsValue.Name = "lblEnrollTotalUnitsValue";
+            lblEnrollTotalUnitsValue.Size = new Size(34, 32);
+            lblEnrollTotalUnitsValue.TabIndex = 1;
+            lblEnrollTotalUnitsValue.Text = "11";
+            // 
+            // label187
+            // 
+            label187.AutoSize = true;
+            label187.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            label187.Location = new Point(3, 7);
+            label187.Name = "label187";
+            label187.Size = new Size(63, 15);
+            label187.TabIndex = 0;
+            label187.Text = "Total Units";
+            // 
+            // pnlEnrollSearchbar
+            // 
+            pnlEnrollSearchbar.Anchor = AnchorStyles.Top;
+            pnlEnrollSearchbar.BackColor = SystemColors.ControlLight;
+            pnlEnrollSearchbar.BorderStyle = BorderStyle.FixedSingle;
+            pnlEnrollSearchbar.Controls.Add(cmbEnrollFilter);
+            pnlEnrollSearchbar.Controls.Add(btnEnrollSearch);
+            pnlEnrollSearchbar.Controls.Add(txtEnrollSearch);
+            pnlEnrollSearchbar.Location = new Point(16, 101);
+            pnlEnrollSearchbar.Margin = new Padding(3, 2, 3, 2);
+            pnlEnrollSearchbar.Name = "pnlEnrollSearchbar";
+            pnlEnrollSearchbar.Size = new Size(1205, 50);
+            pnlEnrollSearchbar.TabIndex = 12;
+            // 
+            // cmbEnrollFilter
+            // 
+            cmbEnrollFilter.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
+            cmbEnrollFilter.FormattingEnabled = true;
+            cmbEnrollFilter.Items.AddRange(new object[] { "All", "Course Code ", "Course Title" });
+            cmbEnrollFilter.Location = new Point(10, 10);
+            cmbEnrollFilter.Margin = new Padding(3, 2, 3, 2);
+            cmbEnrollFilter.Name = "cmbEnrollFilter";
+            cmbEnrollFilter.Size = new Size(133, 29);
+            cmbEnrollFilter.TabIndex = 10;
+            // 
+            // btnEnrollSearch
+            // 
+            btnEnrollSearch.BackColor = Color.Black;
+            btnEnrollSearch.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            btnEnrollSearch.ForeColor = SystemColors.ControlLightLight;
+            btnEnrollSearch.Location = new Point(1106, 6);
+            btnEnrollSearch.Margin = new Padding(3, 2, 3, 2);
+            btnEnrollSearch.Name = "btnEnrollSearch";
+            btnEnrollSearch.Size = new Size(86, 36);
+            btnEnrollSearch.TabIndex = 11;
+            btnEnrollSearch.Text = "Search";
+            btnEnrollSearch.UseVisualStyleBackColor = false;
+            btnEnrollSearch.Click += (this.btnEnrollSearch_Click);
+            // 
+            // txtEnrollSearch
+            // 
+            txtEnrollSearch.AccessibleDescription = "";
+            txtEnrollSearch.BorderStyle = BorderStyle.FixedSingle;
+            txtEnrollSearch.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
+            txtEnrollSearch.Location = new Point(149, 10);
+            txtEnrollSearch.Margin = new Padding(3, 2, 3, 2);
+            txtEnrollSearch.Name = "txtEnrollSearch";
+            txtEnrollSearch.PlaceholderText = "Search course here by code or title...";
+            txtEnrollSearch.Size = new Size(950, 29);
+            txtEnrollSearch.TabIndex = 9;
+            txtEnrollSearch.KeyDown += (this.txtEnrollSearch_KeyDown);
+            // 
+            // lblAcademicYear
+            // 
+            lblAcademicYear.Anchor = AnchorStyles.Top;
+            lblAcademicYear.AutoSize = true;
+            lblAcademicYear.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
+            lblAcademicYear.ForeColor = SystemColors.ControlDarkDark;
+            lblAcademicYear.Location = new Point(17, 55);
+            lblAcademicYear.Name = "lblAcademicYear";
+            lblAcademicYear.Size = new Size(221, 15);
+            lblAcademicYear.TabIndex = 7;
+            lblAcademicYear.Text = "Academic Year 2025-2026 | 2nd Semester";
+            // 
+            // label188
+            // 
+            label188.Anchor = AnchorStyles.Top;
+            label188.AutoSize = true;
+            label188.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label188.ForeColor = Color.Maroon;
+            label188.Location = new Point(16, 20);
+            label188.Name = "label188";
+            label188.Size = new Size(206, 37);
+            label188.TabIndex = 6;
+            label188.Text = "My Enrollment";
             // 
             // pnlCalendar
             // 
@@ -6348,1363 +8228,6 @@
             label10.Size = new Size(152, 25);
             label10.TabIndex = 0;
             label10.Text = "Announcements";
-            // 
-            // pnlAttendance
-            // 
-            pnlAttendance.AutoScroll = true;
-            pnlAttendance.AutoScrollMinSize = new Size(500, 500);
-            pnlAttendance.BackColor = SystemColors.Control;
-            pnlAttendance.CausesValidation = false;
-            pnlAttendance.Controls.Add(panel19);
-            pnlAttendance.Controls.Add(panel17);
-            pnlAttendance.Dock = DockStyle.Fill;
-            pnlAttendance.Location = new Point(256, 72);
-            pnlAttendance.Margin = new Padding(0);
-            pnlAttendance.Name = "pnlAttendance";
-            pnlAttendance.Size = new Size(1272, 719);
-            pnlAttendance.TabIndex = 31;
-            pnlAttendance.Visible = false;
-            // 
-            // panel19
-            // 
-            panel19.Controls.Add(label11);
-            panel19.Controls.Add(panel28);
-            panel19.Controls.Add(label30);
-            panel19.Controls.Add(panel24);
-            panel19.Controls.Add(label28);
-            panel19.Controls.Add(label29);
-            panel19.Controls.Add(label24);
-            panel19.Controls.Add(panel27);
-            panel19.Controls.Add(panel14);
-            panel19.Dock = DockStyle.Top;
-            panel19.Location = new Point(0, 0);
-            panel19.Margin = new Padding(3, 2, 3, 2);
-            panel19.Name = "panel19";
-            panel19.Size = new Size(1272, 213);
-            panel19.TabIndex = 31;
-            // 
-            // label11
-            // 
-            label11.Anchor = AnchorStyles.Top;
-            label11.AutoSize = true;
-            label11.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label11.Location = new Point(1073, 184);
-            label11.Name = "label11";
-            label11.Size = new Size(85, 25);
-            label11.TabIndex = 29;
-            label11.Text = "Remarks";
-            // 
-            // panel28
-            // 
-            panel28.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            panel28.BackColor = SystemColors.ButtonHighlight;
-            panel28.Controls.Add(label85);
-            panel28.Controls.Add(label80);
-            panel28.Controls.Add(label82);
-            panel28.Controls.Add(label84);
-            panel28.Controls.Add(label83);
-            panel28.Controls.Add(label79);
-            panel28.Controls.Add(label81);
-            panel28.Controls.Add(label78);
-            panel28.Controls.Add(label77);
-            panel28.Controls.Add(label76);
-            panel28.Controls.Add(lblAttendancePercent);
-            panel28.Controls.Add(label75);
-            panel28.Location = new Point(33, 94);
-            panel28.Margin = new Padding(3, 2, 3, 2);
-            panel28.Name = "panel28";
-            panel28.Size = new Size(1195, 77);
-            panel28.TabIndex = 20;
-            // 
-            // label85
-            // 
-            label85.Anchor = (AnchorStyles)(AnchorStyles.Top) | (AnchorStyles.Right);
-            label85.AutoSize = true;
-            label85.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label85.Location = new Point(1122, 43);
-            label85.Name = "label85";
-            label85.Size = new Size(20, 25);
-            label85.TabIndex = 18;
-            label85.Text = "1";
-            // 
-            // label80
-            // 
-            label80.Anchor = (AnchorStyles)(AnchorStyles.Top) | (AnchorStyles.Right);
-            label80.AutoSize = true;
-            label80.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label80.Location = new Point(1089, 17);
-            label80.Name = "label80";
-            label80.Size = new Size(81, 25);
-            label80.TabIndex = 14;
-            label80.Text = "Excused";
-            // 
-            // label82
-            // 
-            label82.Anchor = (AnchorStyles)(AnchorStyles.Top) | (AnchorStyles.Right);
-            label82.AutoSize = true;
-            label82.Font = new Font("Segoe UI", 42F);
-            label82.ForeColor = SystemColors.ControlLight;
-            label82.Location = new Point(910, 5);
-            label82.Name = "label82";
-            label82.Size = new Size(45, 74);
-            label82.TabIndex = 15;
-            label82.Text = "|";
-            // 
-            // label84
-            // 
-            label84.Anchor = (AnchorStyles)(AnchorStyles.Top) | (AnchorStyles.Right);
-            label84.AutoSize = true;
-            label84.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label84.Location = new Point(989, 44);
-            label84.Name = "label84";
-            label84.Size = new Size(23, 25);
-            label84.TabIndex = 17;
-            label84.Text = "2";
-            // 
-            // label83
-            // 
-            label83.Anchor = (AnchorStyles)(AnchorStyles.Top) | (AnchorStyles.Right);
-            label83.AutoSize = true;
-            label83.Font = new Font("Segoe UI", 42F);
-            label83.ForeColor = SystemColors.ControlLight;
-            label83.Location = new Point(1054, 5);
-            label83.Name = "label83";
-            label83.Size = new Size(45, 74);
-            label83.TabIndex = 16;
-            label83.Text = "|";
-            // 
-            // label79
-            // 
-            label79.Anchor = (AnchorStyles)(AnchorStyles.Top) | (AnchorStyles.Right);
-            label79.AutoSize = true;
-            label79.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label79.Location = new Point(965, 16);
-            label79.Name = "label79";
-            label79.Size = new Size(72, 25);
-            label79.TabIndex = 13;
-            label79.Text = "Absent";
-            // 
-            // label81
-            // 
-            label81.Anchor = (AnchorStyles)(AnchorStyles.Top) | (AnchorStyles.Right);
-            label81.AutoSize = true;
-            label81.Font = new Font("Segoe UI", 42F);
-            label81.ForeColor = SystemColors.ControlLight;
-            label81.Location = new Point(764, 4);
-            label81.Name = "label81";
-            label81.Size = new Size(45, 74);
-            label81.TabIndex = 11;
-            label81.Text = "|";
-            // 
-            // label78
-            // 
-            label78.Anchor = (AnchorStyles)(AnchorStyles.Top) | (AnchorStyles.Right);
-            label78.AutoSize = true;
-            label78.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label78.Location = new Point(844, 42);
-            label78.Name = "label78";
-            label78.Size = new Size(33, 25);
-            label78.TabIndex = 12;
-            label78.Text = "37";
-            // 
-            // label77
-            // 
-            label77.Anchor = (AnchorStyles)(AnchorStyles.Top) | (AnchorStyles.Right);
-            label77.AutoSize = true;
-            label77.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label77.Location = new Point(819, 16);
-            label77.Name = "label77";
-            label77.Size = new Size(76, 25);
-            label77.TabIndex = 10;
-            label77.Text = "Present";
-            // 
-            // label76
-            // 
-            label76.Anchor = (AnchorStyles)(AnchorStyles.Top) | (AnchorStyles.Right);
-            label76.AutoSize = true;
-            label76.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label76.Location = new Point(570, 16);
-            label76.Name = "label76";
-            label76.Size = new Size(179, 25);
-            label76.TabIndex = 5;
-            label76.Text = "Session Attendance";
-            // 
-            // lblAttendancePercent
-            // 
-            lblAttendancePercent.Anchor = (AnchorStyles)(AnchorStyles.Top) | (AnchorStyles.Right);
-            lblAttendancePercent.AutoSize = true;
-            lblAttendancePercent.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            lblAttendancePercent.Location = new Point(638, 42);
-            lblAttendancePercent.Name = "lblAttendancePercent";
-            lblAttendancePercent.Size = new Size(50, 25);
-            lblAttendancePercent.TabIndex = 6;
-            lblAttendancePercent.Text = "93%";
-            // 
-            // label75
-            // 
-            label75.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            label75.AutoSize = true;
-            label75.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label75.Location = new Point(6, 5);
-            label75.Name = "label75";
-            label75.Size = new Size(123, 25);
-            label75.TabIndex = 1;
-            label75.Text = "Class Session";
-            // 
-            // label30
-            // 
-            label30.Anchor = AnchorStyles.Top;
-            label30.AutoSize = true;
-            label30.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label30.Location = new Point(1616, 184);
-            label30.Name = "label30";
-            label30.Size = new Size(85, 25);
-            label30.TabIndex = 28;
-            label30.Text = "Remarks";
-            // 
-            // panel24
-            // 
-            panel24.Anchor = (AnchorStyles)(AnchorStyles.Top) | (AnchorStyles.Right);
-            panel24.BackColor = SystemColors.ButtonHighlight;
-            panel24.Controls.Add(textBox11);
-            panel24.Controls.Add(pictureBox29);
-            panel24.Location = new Point(824, 2);
-            panel24.Margin = new Padding(3, 2, 3, 2);
-            panel24.Name = "panel24";
-            panel24.Size = new Size(404, 35);
-            panel24.TabIndex = 19;
-            // 
-            // textBox11
-            // 
-            textBox11.BorderStyle = BorderStyle.None;
-            textBox11.Font = new Font("Segoe UI", 12F);
-            textBox11.Location = new Point(45, 5);
-            textBox11.Margin = new Padding(3, 2, 3, 2);
-            textBox11.Name = "textBox11";
-            textBox11.PlaceholderText = "Search Here";
-            textBox11.Size = new Size(351, 22);
-            textBox11.TabIndex = 1;
-            // 
-            // pictureBox29
-            // 
-            pictureBox29.Image = PUPAcadPortal.Properties.Resources.magnifier1;
-            pictureBox29.Location = new Point(10, 2);
-            pictureBox29.Margin = new Padding(3, 2, 3, 2);
-            pictureBox29.Name = "pictureBox29";
-            pictureBox29.Size = new Size(29, 30);
-            pictureBox29.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox29.TabIndex = 0;
-            pictureBox29.TabStop = false;
-            // 
-            // label28
-            // 
-            label28.AutoSize = true;
-            label28.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label28.Location = new Point(514, 184);
-            label28.Name = "label28";
-            label28.Size = new Size(108, 25);
-            label28.TabIndex = 26;
-            label28.Text = "ID Number";
-            // 
-            // label29
-            // 
-            label29.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            label29.AutoSize = true;
-            label29.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label29.Location = new Point(808, 184);
-            label29.Name = "label29";
-            label29.Size = new Size(64, 25);
-            label29.TabIndex = 27;
-            label29.Text = "Status";
-            // 
-            // label24
-            // 
-            label24.AutoSize = true;
-            label24.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label24.Location = new Point(197, 184);
-            label24.Name = "label24";
-            label24.Size = new Size(135, 25);
-            label24.TabIndex = 3;
-            label24.Text = "Student Name";
-            // 
-            // panel27
-            // 
-            panel27.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            panel27.BackColor = SystemColors.ButtonHighlight;
-            panel27.Controls.Add(dateTimePicker3);
-            panel27.Controls.Add(label74);
-            panel27.Location = new Point(33, 49);
-            panel27.Margin = new Padding(3, 2, 3, 2);
-            panel27.Name = "panel27";
-            panel27.Size = new Size(1195, 34);
-            panel27.TabIndex = 21;
-            // 
-            // dateTimePicker3
-            // 
-            dateTimePicker3.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            dateTimePicker3.Font = new Font("Segoe UI", 13F);
-            dateTimePicker3.Location = new Point(72, 4);
-            dateTimePicker3.Margin = new Padding(3, 2, 3, 2);
-            dateTimePicker3.Name = "dateTimePicker3";
-            dateTimePicker3.Size = new Size(417, 31);
-            dateTimePicker3.TabIndex = 2;
-            // 
-            // label74
-            // 
-            label74.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            label74.AutoSize = true;
-            label74.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label74.Location = new Point(6, 5);
-            label74.Name = "label74";
-            label74.Size = new Size(58, 25);
-            label74.TabIndex = 1;
-            label74.Text = "Date:";
-            // 
-            // panel14
-            // 
-            panel14.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            panel14.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            panel14.BackColor = SystemColors.ButtonHighlight;
-            panel14.Controls.Add(cmbbxCourseSelection);
-            panel14.Controls.Add(label6);
-            panel14.Location = new Point(33, 3);
-            panel14.Margin = new Padding(3, 2, 3, 2);
-            panel14.Name = "panel14";
-            panel14.Size = new Size(775, 34);
-            panel14.TabIndex = 18;
-            // 
-            // cmbbxCourseSelection
-            // 
-            cmbbxCourseSelection.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            cmbbxCourseSelection.FlatStyle = FlatStyle.Flat;
-            cmbbxCourseSelection.Font = new Font("Segoe UI", 13F);
-            cmbbxCourseSelection.FormattingEnabled = true;
-            cmbbxCourseSelection.Items.AddRange(new object[] { "Biology 101", "Introduction to Programming", "Accounting " });
-            cmbbxCourseSelection.Location = new Point(137, 4);
-            cmbbxCourseSelection.Margin = new Padding(3, 2, 3, 2);
-            cmbbxCourseSelection.Name = "cmbbxCourseSelection";
-            cmbbxCourseSelection.Size = new Size(351, 31);
-            cmbbxCourseSelection.TabIndex = 1;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label6.Location = new Point(7, 6);
-            label6.Name = "label6";
-            label6.Size = new Size(126, 25);
-            label6.TabIndex = 0;
-            label6.Text = "Attendance | ";
-            // 
-            // panel17
-            // 
-            panel17.AutoScroll = true;
-            panel17.BackColor = SystemColors.Control;
-            panel17.Controls.Add(tableLayoutPanel1);
-            panel17.Dock = DockStyle.Fill;
-            panel17.Location = new Point(0, 0);
-            panel17.Margin = new Padding(3, 2, 3, 2);
-            panel17.Name = "panel17";
-            panel17.Size = new Size(1272, 719);
-            panel17.TabIndex = 32;
-            // 
-            // tableLayoutPanel1
-            // 
-            tableLayoutPanel1.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            tableLayoutPanel1.BackColor = Color.White;
-            tableLayoutPanel1.ColumnCount = 3;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 674F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 288F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 237F));
-            tableLayoutPanel1.Controls.Add(panel30, 0, 1);
-            tableLayoutPanel1.Controls.Add(panel29, 0, 2);
-            tableLayoutPanel1.Controls.Add(panel22, 0, 3);
-            tableLayoutPanel1.Controls.Add(panel21, 0, 4);
-            tableLayoutPanel1.Controls.Add(panel20, 0, 0);
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel20, 2, 8);
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel19, 2, 7);
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel18, 2, 6);
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel17, 2, 5);
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel16, 2, 4);
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel15, 2, 3);
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel12, 2, 2);
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel10, 1, 8);
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel9, 1, 7);
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel8, 1, 6);
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel7, 1, 5);
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel4, 1, 2);
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel14, 2, 0);
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel13, 2, 1);
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel3, 1, 0);
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 1, 1);
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel5, 1, 3);
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel6, 1, 4);
-            tableLayoutPanel1.Controls.Add(panel34, 0, 5);
-            tableLayoutPanel1.Controls.Add(panel31, 0, 6);
-            tableLayoutPanel1.Controls.Add(panel32, 0, 7);
-            tableLayoutPanel1.Controls.Add(panel33, 0, 8);
-            tableLayoutPanel1.Location = new Point(33, 225);
-            tableLayoutPanel1.Margin = new Padding(3, 2, 3, 2);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 11;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.Size = new Size(1200, 1031);
-            tableLayoutPanel1.TabIndex = 22;
-            // 
-            // panel30
-            // 
-            panel30.Controls.Add(label88);
-            panel30.Controls.Add(label89);
-            panel30.Controls.Add(pictureBox31);
-            panel30.Location = new Point(3, 84);
-            panel30.Margin = new Padding(3, 2, 3, 2);
-            panel30.Name = "panel30";
-            panel30.Size = new Size(663, 69);
-            panel30.TabIndex = 49;
-            // 
-            // label88
-            // 
-            label88.AutoSize = true;
-            label88.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label88.Location = new Point(430, 26);
-            label88.Name = "label88";
-            label88.Size = new Size(203, 25);
-            label88.TabIndex = 29;
-            label88.Text = "2024 - 00274 - SM - 0";
-            // 
-            // label89
-            // 
-            label89.AutoSize = true;
-            label89.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label89.Location = new Point(159, 26);
-            label89.Name = "label89";
-            label89.Size = new Size(196, 25);
-            label89.TabIndex = 29;
-            label89.Text = "Amolata, Jhayphee V.";
-            // 
-            // pictureBox31
-            // 
-            pictureBox31.Image = PUPAcadPortal.Properties.Resources.profile1;
-            pictureBox31.Location = new Point(31, 8);
-            pictureBox31.Margin = new Padding(3, 2, 3, 2);
-            pictureBox31.Name = "pictureBox31";
-            pictureBox31.Size = new Size(69, 57);
-            pictureBox31.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox31.TabIndex = 0;
-            pictureBox31.TabStop = false;
-            // 
-            // panel29
-            // 
-            panel29.Controls.Add(label86);
-            panel29.Controls.Add(label87);
-            panel29.Controls.Add(pictureBox30);
-            panel29.Location = new Point(3, 166);
-            panel29.Margin = new Padding(3, 2, 3, 2);
-            panel29.Name = "panel29";
-            panel29.Size = new Size(663, 69);
-            panel29.TabIndex = 50;
-            // 
-            // label86
-            // 
-            label86.AutoSize = true;
-            label86.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label86.Location = new Point(430, 26);
-            label86.Name = "label86";
-            label86.Size = new Size(201, 25);
-            label86.TabIndex = 29;
-            label86.Text = "2024 - 00123 - SM - 0";
-            // 
-            // label87
-            // 
-            label87.AutoSize = true;
-            label87.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label87.Location = new Point(159, 26);
-            label87.Name = "label87";
-            label87.Size = new Size(144, 25);
-            label87.TabIndex = 29;
-            label87.Text = "Amen, Jessie C.";
-            // 
-            // pictureBox30
-            // 
-            pictureBox30.Image = PUPAcadPortal.Properties.Resources.profile1;
-            pictureBox30.Location = new Point(31, 8);
-            pictureBox30.Margin = new Padding(3, 2, 3, 2);
-            pictureBox30.Name = "pictureBox30";
-            pictureBox30.Size = new Size(69, 57);
-            pictureBox30.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox30.TabIndex = 0;
-            pictureBox30.TabStop = false;
-            // 
-            // panel22
-            // 
-            panel22.Controls.Add(label70);
-            panel22.Controls.Add(label71);
-            panel22.Controls.Add(pictureBox28);
-            panel22.Location = new Point(3, 248);
-            panel22.Margin = new Padding(3, 2, 3, 2);
-            panel22.Name = "panel22";
-            panel22.Size = new Size(663, 69);
-            panel22.TabIndex = 51;
-            // 
-            // label70
-            // 
-            label70.AutoSize = true;
-            label70.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label70.Location = new Point(430, 26);
-            label70.Name = "label70";
-            label70.Size = new Size(196, 25);
-            label70.TabIndex = 29;
-            label70.Text = "2024 - 00146- SM - 0";
-            // 
-            // label71
-            // 
-            label71.AutoSize = true;
-            label71.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label71.Location = new Point(159, 26);
-            label71.Name = "label71";
-            label71.Size = new Size(213, 25);
-            label71.TabIndex = 29;
-            label71.Text = "Amar, Charls Manuel C.";
-            // 
-            // pictureBox28
-            // 
-            pictureBox28.Image = PUPAcadPortal.Properties.Resources.profile1;
-            pictureBox28.Location = new Point(31, 8);
-            pictureBox28.Margin = new Padding(3, 2, 3, 2);
-            pictureBox28.Name = "pictureBox28";
-            pictureBox28.Size = new Size(69, 57);
-            pictureBox28.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox28.TabIndex = 0;
-            pictureBox28.TabStop = false;
-            // 
-            // panel21
-            // 
-            panel21.Controls.Add(label68);
-            panel21.Controls.Add(label69);
-            panel21.Controls.Add(pictureBox27);
-            panel21.Location = new Point(3, 330);
-            panel21.Margin = new Padding(3, 2, 3, 2);
-            panel21.Name = "panel21";
-            panel21.Size = new Size(663, 69);
-            panel21.TabIndex = 52;
-            // 
-            // label68
-            // 
-            label68.AutoSize = true;
-            label68.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label68.Location = new Point(430, 26);
-            label68.Name = "label68";
-            label68.Size = new Size(201, 25);
-            label68.TabIndex = 29;
-            label68.Text = "2024 - 00194 - SM - 0";
-            // 
-            // label69
-            // 
-            label69.AutoSize = true;
-            label69.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label69.Location = new Point(159, 26);
-            label69.Name = "label69";
-            label69.Size = new Size(140, 25);
-            label69.TabIndex = 29;
-            label69.Text = "Alcaiz, Jared B.";
-            // 
-            // pictureBox27
-            // 
-            pictureBox27.Image = PUPAcadPortal.Properties.Resources.profile1;
-            pictureBox27.Location = new Point(31, 8);
-            pictureBox27.Margin = new Padding(3, 2, 3, 2);
-            pictureBox27.Name = "pictureBox27";
-            pictureBox27.Size = new Size(69, 57);
-            pictureBox27.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox27.TabIndex = 0;
-            pictureBox27.TabStop = false;
-            // 
-            // panel20
-            // 
-            panel20.Controls.Add(label67);
-            panel20.Controls.Add(label66);
-            panel20.Controls.Add(pictureBox26);
-            panel20.Location = new Point(3, 2);
-            panel20.Margin = new Padding(3, 2, 3, 2);
-            panel20.Name = "panel20";
-            panel20.Size = new Size(663, 69);
-            panel20.TabIndex = 48;
-            // 
-            // label67
-            // 
-            label67.AutoSize = true;
-            label67.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label67.Location = new Point(430, 26);
-            label67.Name = "label67";
-            label67.Size = new Size(203, 25);
-            label67.TabIndex = 29;
-            label67.Text = "2024 - 00074 - SM - 0";
-            // 
-            // label66
-            // 
-            label66.AutoSize = true;
-            label66.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label66.Location = new Point(159, 26);
-            label66.Name = "label66";
-            label66.Size = new Size(159, 25);
-            label66.TabIndex = 29;
-            label66.Text = "Ablong, Adrian P.";
-            // 
-            // pictureBox26
-            // 
-            pictureBox26.Image = PUPAcadPortal.Properties.Resources.profile1;
-            pictureBox26.Location = new Point(31, 8);
-            pictureBox26.Margin = new Padding(3, 2, 3, 2);
-            pictureBox26.Name = "pictureBox26";
-            pictureBox26.Size = new Size(69, 57);
-            pictureBox26.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox26.TabIndex = 0;
-            pictureBox26.TabStop = false;
-            // 
-            // tableLayoutPanel20
-            // 
-            tableLayoutPanel20.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            tableLayoutPanel20.ColumnCount = 3;
-            tableLayoutPanel20.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
-            tableLayoutPanel20.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
-            tableLayoutPanel20.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
-            tableLayoutPanel20.Controls.Add(textBox19, 1, 1);
-            tableLayoutPanel20.Location = new Point(965, 658);
-            tableLayoutPanel20.Margin = new Padding(3, 2, 3, 2);
-            tableLayoutPanel20.Name = "tableLayoutPanel20";
-            tableLayoutPanel20.RowCount = 3;
-            tableLayoutPanel20.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
-            tableLayoutPanel20.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
-            tableLayoutPanel20.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
-            tableLayoutPanel20.Size = new Size(232, 78);
-            tableLayoutPanel20.TabIndex = 47;
-            // 
-            // textBox19
-            // 
-            textBox19.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            textBox19.BorderStyle = BorderStyle.FixedSingle;
-            textBox19.Location = new Point(22, 17);
-            textBox19.Margin = new Padding(3, 2, 3, 2);
-            textBox19.Multiline = true;
-            textBox19.Name = "textBox19";
-            textBox19.Size = new Size(187, 36);
-            textBox19.TabIndex = 33;
-            // 
-            // tableLayoutPanel19
-            // 
-            tableLayoutPanel19.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            tableLayoutPanel19.ColumnCount = 3;
-            tableLayoutPanel19.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
-            tableLayoutPanel19.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
-            tableLayoutPanel19.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
-            tableLayoutPanel19.Controls.Add(textBox18, 1, 1);
-            tableLayoutPanel19.Location = new Point(965, 576);
-            tableLayoutPanel19.Margin = new Padding(3, 2, 3, 2);
-            tableLayoutPanel19.Name = "tableLayoutPanel19";
-            tableLayoutPanel19.RowCount = 3;
-            tableLayoutPanel19.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
-            tableLayoutPanel19.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
-            tableLayoutPanel19.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
-            tableLayoutPanel19.Size = new Size(232, 78);
-            tableLayoutPanel19.TabIndex = 46;
-            // 
-            // textBox18
-            // 
-            textBox18.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            textBox18.BorderStyle = BorderStyle.FixedSingle;
-            textBox18.Location = new Point(22, 17);
-            textBox18.Margin = new Padding(3, 2, 3, 2);
-            textBox18.Multiline = true;
-            textBox18.Name = "textBox18";
-            textBox18.Size = new Size(187, 36);
-            textBox18.TabIndex = 33;
-            // 
-            // tableLayoutPanel18
-            // 
-            tableLayoutPanel18.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            tableLayoutPanel18.ColumnCount = 3;
-            tableLayoutPanel18.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
-            tableLayoutPanel18.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
-            tableLayoutPanel18.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
-            tableLayoutPanel18.Controls.Add(textBox17, 1, 1);
-            tableLayoutPanel18.Location = new Point(965, 494);
-            tableLayoutPanel18.Margin = new Padding(3, 2, 3, 2);
-            tableLayoutPanel18.Name = "tableLayoutPanel18";
-            tableLayoutPanel18.RowCount = 3;
-            tableLayoutPanel18.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
-            tableLayoutPanel18.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
-            tableLayoutPanel18.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
-            tableLayoutPanel18.Size = new Size(232, 78);
-            tableLayoutPanel18.TabIndex = 45;
-            // 
-            // textBox17
-            // 
-            textBox17.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            textBox17.BorderStyle = BorderStyle.FixedSingle;
-            textBox17.Location = new Point(22, 17);
-            textBox17.Margin = new Padding(3, 2, 3, 2);
-            textBox17.Multiline = true;
-            textBox17.Name = "textBox17";
-            textBox17.Size = new Size(187, 36);
-            textBox17.TabIndex = 33;
-            // 
-            // tableLayoutPanel17
-            // 
-            tableLayoutPanel17.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            tableLayoutPanel17.ColumnCount = 3;
-            tableLayoutPanel17.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
-            tableLayoutPanel17.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
-            tableLayoutPanel17.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
-            tableLayoutPanel17.Controls.Add(textBox16, 1, 1);
-            tableLayoutPanel17.Location = new Point(965, 412);
-            tableLayoutPanel17.Margin = new Padding(3, 2, 3, 2);
-            tableLayoutPanel17.Name = "tableLayoutPanel17";
-            tableLayoutPanel17.RowCount = 3;
-            tableLayoutPanel17.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
-            tableLayoutPanel17.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
-            tableLayoutPanel17.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
-            tableLayoutPanel17.Size = new Size(232, 78);
-            tableLayoutPanel17.TabIndex = 40;
-            // 
-            // textBox16
-            // 
-            textBox16.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            textBox16.BorderStyle = BorderStyle.FixedSingle;
-            textBox16.Location = new Point(22, 17);
-            textBox16.Margin = new Padding(3, 2, 3, 2);
-            textBox16.Multiline = true;
-            textBox16.Name = "textBox16";
-            textBox16.Size = new Size(187, 36);
-            textBox16.TabIndex = 33;
-            // 
-            // tableLayoutPanel16
-            // 
-            tableLayoutPanel16.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            tableLayoutPanel16.ColumnCount = 3;
-            tableLayoutPanel16.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
-            tableLayoutPanel16.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
-            tableLayoutPanel16.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
-            tableLayoutPanel16.Controls.Add(textBox15, 1, 1);
-            tableLayoutPanel16.Location = new Point(965, 330);
-            tableLayoutPanel16.Margin = new Padding(3, 2, 3, 2);
-            tableLayoutPanel16.Name = "tableLayoutPanel16";
-            tableLayoutPanel16.RowCount = 3;
-            tableLayoutPanel16.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
-            tableLayoutPanel16.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
-            tableLayoutPanel16.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
-            tableLayoutPanel16.Size = new Size(232, 78);
-            tableLayoutPanel16.TabIndex = 40;
-            // 
-            // textBox15
-            // 
-            textBox15.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            textBox15.BorderStyle = BorderStyle.FixedSingle;
-            textBox15.Location = new Point(22, 17);
-            textBox15.Margin = new Padding(3, 2, 3, 2);
-            textBox15.Multiline = true;
-            textBox15.Name = "textBox15";
-            textBox15.Size = new Size(187, 36);
-            textBox15.TabIndex = 33;
-            // 
-            // tableLayoutPanel15
-            // 
-            tableLayoutPanel15.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            tableLayoutPanel15.ColumnCount = 3;
-            tableLayoutPanel15.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
-            tableLayoutPanel15.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
-            tableLayoutPanel15.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
-            tableLayoutPanel15.Controls.Add(textBox14, 1, 1);
-            tableLayoutPanel15.Location = new Point(965, 248);
-            tableLayoutPanel15.Margin = new Padding(3, 2, 3, 2);
-            tableLayoutPanel15.Name = "tableLayoutPanel15";
-            tableLayoutPanel15.RowCount = 3;
-            tableLayoutPanel15.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
-            tableLayoutPanel15.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
-            tableLayoutPanel15.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
-            tableLayoutPanel15.Size = new Size(232, 78);
-            tableLayoutPanel15.TabIndex = 40;
-            // 
-            // textBox14
-            // 
-            textBox14.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            textBox14.BorderStyle = BorderStyle.FixedSingle;
-            textBox14.Location = new Point(22, 17);
-            textBox14.Margin = new Padding(3, 2, 3, 2);
-            textBox14.Multiline = true;
-            textBox14.Name = "textBox14";
-            textBox14.Size = new Size(187, 36);
-            textBox14.TabIndex = 33;
-            // 
-            // tableLayoutPanel12
-            // 
-            tableLayoutPanel12.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            tableLayoutPanel12.ColumnCount = 3;
-            tableLayoutPanel12.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
-            tableLayoutPanel12.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
-            tableLayoutPanel12.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
-            tableLayoutPanel12.Controls.Add(textBox13, 1, 1);
-            tableLayoutPanel12.Location = new Point(965, 166);
-            tableLayoutPanel12.Margin = new Padding(3, 2, 3, 2);
-            tableLayoutPanel12.Name = "tableLayoutPanel12";
-            tableLayoutPanel12.RowCount = 3;
-            tableLayoutPanel12.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
-            tableLayoutPanel12.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
-            tableLayoutPanel12.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
-            tableLayoutPanel12.Size = new Size(232, 78);
-            tableLayoutPanel12.TabIndex = 40;
-            // 
-            // textBox13
-            // 
-            textBox13.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            textBox13.BorderStyle = BorderStyle.FixedSingle;
-            textBox13.Location = new Point(22, 17);
-            textBox13.Margin = new Padding(3, 2, 3, 2);
-            textBox13.Multiline = true;
-            textBox13.Name = "textBox13";
-            textBox13.Size = new Size(187, 36);
-            textBox13.TabIndex = 33;
-            // 
-            // tableLayoutPanel10
-            // 
-            tableLayoutPanel10.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            tableLayoutPanel10.ColumnCount = 3;
-            tableLayoutPanel10.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
-            tableLayoutPanel10.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
-            tableLayoutPanel10.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
-            tableLayoutPanel10.Controls.Add(comboBox9, 1, 1);
-            tableLayoutPanel10.Location = new Point(677, 658);
-            tableLayoutPanel10.Margin = new Padding(3, 2, 3, 2);
-            tableLayoutPanel10.Name = "tableLayoutPanel10";
-            tableLayoutPanel10.RowCount = 3;
-            tableLayoutPanel10.RowStyles.Add(new RowStyle(SizeType.Percent, 23.4362545F));
-            tableLayoutPanel10.RowStyles.Add(new RowStyle(SizeType.Percent, 43.7037659F));
-            tableLayoutPanel10.RowStyles.Add(new RowStyle(SizeType.Percent, 32.85998F));
-            tableLayoutPanel10.Size = new Size(282, 78);
-            tableLayoutPanel10.TabIndex = 40;
-            // 
-            // comboBox9
-            // 
-            comboBox9.Enabled = false;
-            comboBox9.FlatStyle = FlatStyle.Popup;
-            comboBox9.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
-            comboBox9.FormattingEnabled = true;
-            comboBox9.ItemHeight = 25;
-            comboBox9.Items.AddRange(new object[] { "Present", "Absent", "Excused" });
-            comboBox9.Location = new Point(77, 20);
-            comboBox9.Margin = new Padding(3, 2, 3, 2);
-            comboBox9.Name = "comboBox9";
-            comboBox9.RightToLeft = RightToLeft.No;
-            comboBox9.Size = new Size(127, 33);
-            comboBox9.TabIndex = 37;
-            comboBox9.Text = "Status";
-            // 
-            // tableLayoutPanel9
-            // 
-            tableLayoutPanel9.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            tableLayoutPanel9.ColumnCount = 3;
-            tableLayoutPanel9.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
-            tableLayoutPanel9.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
-            tableLayoutPanel9.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
-            tableLayoutPanel9.Controls.Add(comboBox8, 1, 1);
-            tableLayoutPanel9.Location = new Point(677, 576);
-            tableLayoutPanel9.Margin = new Padding(3, 2, 3, 2);
-            tableLayoutPanel9.Name = "tableLayoutPanel9";
-            tableLayoutPanel9.RowCount = 3;
-            tableLayoutPanel9.RowStyles.Add(new RowStyle(SizeType.Percent, 23.4362545F));
-            tableLayoutPanel9.RowStyles.Add(new RowStyle(SizeType.Percent, 43.7037659F));
-            tableLayoutPanel9.RowStyles.Add(new RowStyle(SizeType.Percent, 32.85998F));
-            tableLayoutPanel9.Size = new Size(282, 78);
-            tableLayoutPanel9.TabIndex = 39;
-            // 
-            // comboBox8
-            // 
-            comboBox8.Enabled = false;
-            comboBox8.FlatStyle = FlatStyle.Popup;
-            comboBox8.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
-            comboBox8.FormattingEnabled = true;
-            comboBox8.ItemHeight = 25;
-            comboBox8.Items.AddRange(new object[] { "Present", "Absent", "Excused" });
-            comboBox8.Location = new Point(77, 20);
-            comboBox8.Margin = new Padding(3, 2, 3, 2);
-            comboBox8.Name = "comboBox8";
-            comboBox8.RightToLeft = RightToLeft.No;
-            comboBox8.Size = new Size(127, 33);
-            comboBox8.TabIndex = 37;
-            comboBox8.Text = "Status";
-            // 
-            // tableLayoutPanel8
-            // 
-            tableLayoutPanel8.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            tableLayoutPanel8.ColumnCount = 3;
-            tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
-            tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
-            tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
-            tableLayoutPanel8.Controls.Add(comboBox7, 1, 1);
-            tableLayoutPanel8.Location = new Point(677, 494);
-            tableLayoutPanel8.Margin = new Padding(3, 2, 3, 2);
-            tableLayoutPanel8.Name = "tableLayoutPanel8";
-            tableLayoutPanel8.RowCount = 3;
-            tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Percent, 24.7634487F));
-            tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Percent, 42.9461861F));
-            tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Percent, 32.29037F));
-            tableLayoutPanel8.Size = new Size(282, 78);
-            tableLayoutPanel8.TabIndex = 39;
-            // 
-            // comboBox7
-            // 
-            comboBox7.Enabled = false;
-            comboBox7.FlatStyle = FlatStyle.Popup;
-            comboBox7.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
-            comboBox7.FormattingEnabled = true;
-            comboBox7.ItemHeight = 25;
-            comboBox7.Items.AddRange(new object[] { "Present", "Absent", "Excused" });
-            comboBox7.Location = new Point(77, 21);
-            comboBox7.Margin = new Padding(3, 2, 3, 2);
-            comboBox7.Name = "comboBox7";
-            comboBox7.RightToLeft = RightToLeft.No;
-            comboBox7.Size = new Size(127, 33);
-            comboBox7.TabIndex = 37;
-            comboBox7.Text = "Status";
-            // 
-            // tableLayoutPanel7
-            // 
-            tableLayoutPanel7.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            tableLayoutPanel7.ColumnCount = 3;
-            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
-            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
-            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
-            tableLayoutPanel7.Controls.Add(comboBox6, 1, 1);
-            tableLayoutPanel7.Location = new Point(677, 412);
-            tableLayoutPanel7.Margin = new Padding(3, 2, 3, 2);
-            tableLayoutPanel7.Name = "tableLayoutPanel7";
-            tableLayoutPanel7.RowCount = 3;
-            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 24.7634487F));
-            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 42.9461861F));
-            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 32.29037F));
-            tableLayoutPanel7.Size = new Size(282, 78);
-            tableLayoutPanel7.TabIndex = 38;
-            // 
-            // comboBox6
-            // 
-            comboBox6.Enabled = false;
-            comboBox6.FlatStyle = FlatStyle.Popup;
-            comboBox6.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
-            comboBox6.FormattingEnabled = true;
-            comboBox6.ItemHeight = 25;
-            comboBox6.Items.AddRange(new object[] { "Present", "Absent", "Excused" });
-            comboBox6.Location = new Point(77, 21);
-            comboBox6.Margin = new Padding(3, 2, 3, 2);
-            comboBox6.Name = "comboBox6";
-            comboBox6.RightToLeft = RightToLeft.No;
-            comboBox6.Size = new Size(127, 33);
-            comboBox6.TabIndex = 37;
-            comboBox6.Text = "Status";
-            // 
-            // tableLayoutPanel4
-            // 
-            tableLayoutPanel4.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            tableLayoutPanel4.ColumnCount = 3;
-            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
-            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
-            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
-            tableLayoutPanel4.Controls.Add(comboBox3, 1, 1);
-            tableLayoutPanel4.Location = new Point(677, 166);
-            tableLayoutPanel4.Margin = new Padding(3, 2, 3, 2);
-            tableLayoutPanel4.Name = "tableLayoutPanel4";
-            tableLayoutPanel4.RowCount = 3;
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 24.7634487F));
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 42.9461861F));
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 32.29037F));
-            tableLayoutPanel4.Size = new Size(282, 78);
-            tableLayoutPanel4.TabIndex = 42;
-            // 
-            // comboBox3
-            // 
-            comboBox3.Enabled = false;
-            comboBox3.FlatStyle = FlatStyle.Popup;
-            comboBox3.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
-            comboBox3.FormattingEnabled = true;
-            comboBox3.ItemHeight = 25;
-            comboBox3.Items.AddRange(new object[] { "Present", "Absent", "Excused" });
-            comboBox3.Location = new Point(77, 21);
-            comboBox3.Margin = new Padding(3, 2, 3, 2);
-            comboBox3.Name = "comboBox3";
-            comboBox3.RightToLeft = RightToLeft.No;
-            comboBox3.Size = new Size(127, 33);
-            comboBox3.TabIndex = 37;
-            comboBox3.Text = "Status";
-            // 
-            // tableLayoutPanel14
-            // 
-            tableLayoutPanel14.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            tableLayoutPanel14.ColumnCount = 3;
-            tableLayoutPanel14.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
-            tableLayoutPanel14.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
-            tableLayoutPanel14.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
-            tableLayoutPanel14.Controls.Add(textBox12, 1, 1);
-            tableLayoutPanel14.Location = new Point(965, 2);
-            tableLayoutPanel14.Margin = new Padding(3, 2, 3, 2);
-            tableLayoutPanel14.Name = "tableLayoutPanel14";
-            tableLayoutPanel14.RowCount = 3;
-            tableLayoutPanel14.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
-            tableLayoutPanel14.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
-            tableLayoutPanel14.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
-            tableLayoutPanel14.Size = new Size(232, 78);
-            tableLayoutPanel14.TabIndex = 41;
-            // 
-            // textBox12
-            // 
-            textBox12.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            textBox12.BorderStyle = BorderStyle.FixedSingle;
-            textBox12.Location = new Point(22, 17);
-            textBox12.Margin = new Padding(3, 2, 3, 2);
-            textBox12.Multiline = true;
-            textBox12.Name = "textBox12";
-            textBox12.Size = new Size(187, 36);
-            textBox12.TabIndex = 33;
-            // 
-            // tableLayoutPanel13
-            // 
-            tableLayoutPanel13.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            tableLayoutPanel13.ColumnCount = 3;
-            tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
-            tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.59783F));
-            tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.201085F));
-            tableLayoutPanel13.Controls.Add(textBox2, 1, 1);
-            tableLayoutPanel13.Location = new Point(965, 84);
-            tableLayoutPanel13.Margin = new Padding(3, 2, 3, 2);
-            tableLayoutPanel13.Name = "tableLayoutPanel13";
-            tableLayoutPanel13.RowCount = 3;
-            tableLayoutPanel13.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
-            tableLayoutPanel13.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
-            tableLayoutPanel13.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
-            tableLayoutPanel13.Size = new Size(232, 78);
-            tableLayoutPanel13.TabIndex = 39;
-            // 
-            // textBox2
-            // 
-            textBox2.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            textBox2.BorderStyle = BorderStyle.FixedSingle;
-            textBox2.Location = new Point(22, 17);
-            textBox2.Margin = new Padding(3, 2, 3, 2);
-            textBox2.Multiline = true;
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(187, 36);
-            textBox2.TabIndex = 33;
-            // 
-            // tableLayoutPanel3
-            // 
-            tableLayoutPanel3.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            tableLayoutPanel3.ColumnCount = 3;
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
-            tableLayoutPanel3.Controls.Add(comboBox2, 1, 1);
-            tableLayoutPanel3.Location = new Point(677, 2);
-            tableLayoutPanel3.Margin = new Padding(3, 2, 3, 2);
-            tableLayoutPanel3.Name = "tableLayoutPanel3";
-            tableLayoutPanel3.RowCount = 3;
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 23.0253372F));
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 43.9383278F));
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 33.03634F));
-            tableLayoutPanel3.Size = new Size(282, 78);
-            tableLayoutPanel3.TabIndex = 38;
-            // 
-            // comboBox2
-            // 
-            comboBox2.Enabled = false;
-            comboBox2.FlatStyle = FlatStyle.Popup;
-            comboBox2.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
-            comboBox2.FormattingEnabled = true;
-            comboBox2.ItemHeight = 25;
-            comboBox2.Items.AddRange(new object[] { "Present", "Absent", "Excused" });
-            comboBox2.Location = new Point(77, 19);
-            comboBox2.Margin = new Padding(3, 2, 3, 2);
-            comboBox2.Name = "comboBox2";
-            comboBox2.RightToLeft = RightToLeft.No;
-            comboBox2.Size = new Size(127, 33);
-            comboBox2.TabIndex = 37;
-            comboBox2.Text = "Status";
-            // 
-            // tableLayoutPanel2
-            // 
-            tableLayoutPanel2.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            tableLayoutPanel2.ColumnCount = 3;
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
-            tableLayoutPanel2.Controls.Add(comboBox1, 1, 1);
-            tableLayoutPanel2.Location = new Point(677, 84);
-            tableLayoutPanel2.Margin = new Padding(3, 2, 3, 2);
-            tableLayoutPanel2.Name = "tableLayoutPanel2";
-            tableLayoutPanel2.RowCount = 3;
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 23.4362545F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 43.7037659F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 32.85998F));
-            tableLayoutPanel2.Size = new Size(282, 78);
-            tableLayoutPanel2.TabIndex = 37;
-            // 
-            // comboBox1
-            // 
-            comboBox1.Enabled = false;
-            comboBox1.FlatStyle = FlatStyle.Popup;
-            comboBox1.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
-            comboBox1.FormattingEnabled = true;
-            comboBox1.ItemHeight = 25;
-            comboBox1.Items.AddRange(new object[] { "Present", "Absent", "Excused" });
-            comboBox1.Location = new Point(77, 20);
-            comboBox1.Margin = new Padding(3, 2, 3, 2);
-            comboBox1.Name = "comboBox1";
-            comboBox1.RightToLeft = RightToLeft.No;
-            comboBox1.Size = new Size(127, 33);
-            comboBox1.TabIndex = 37;
-            comboBox1.Text = "Status";
-            // 
-            // tableLayoutPanel5
-            // 
-            tableLayoutPanel5.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            tableLayoutPanel5.ColumnCount = 3;
-            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
-            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
-            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
-            tableLayoutPanel5.Controls.Add(comboBox4, 1, 1);
-            tableLayoutPanel5.Location = new Point(677, 248);
-            tableLayoutPanel5.Margin = new Padding(3, 2, 3, 2);
-            tableLayoutPanel5.Name = "tableLayoutPanel5";
-            tableLayoutPanel5.RowCount = 3;
-            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 24.7634487F));
-            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 42.9461861F));
-            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 32.29037F));
-            tableLayoutPanel5.Size = new Size(282, 78);
-            tableLayoutPanel5.TabIndex = 43;
-            // 
-            // comboBox4
-            // 
-            comboBox4.Enabled = false;
-            comboBox4.FlatStyle = FlatStyle.Popup;
-            comboBox4.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
-            comboBox4.FormattingEnabled = true;
-            comboBox4.ItemHeight = 25;
-            comboBox4.Items.AddRange(new object[] { "Present", "Absent", "Excused" });
-            comboBox4.Location = new Point(77, 21);
-            comboBox4.Margin = new Padding(3, 2, 3, 2);
-            comboBox4.Name = "comboBox4";
-            comboBox4.RightToLeft = RightToLeft.No;
-            comboBox4.Size = new Size(127, 33);
-            comboBox4.TabIndex = 37;
-            comboBox4.Text = "Status";
-            // 
-            // tableLayoutPanel6
-            // 
-            tableLayoutPanel6.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            tableLayoutPanel6.ColumnCount = 3;
-            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.24672F));
-            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.5065651F));
-            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.2467213F));
-            tableLayoutPanel6.Controls.Add(comboBox5, 1, 1);
-            tableLayoutPanel6.Location = new Point(677, 330);
-            tableLayoutPanel6.Margin = new Padding(3, 2, 3, 2);
-            tableLayoutPanel6.Name = "tableLayoutPanel6";
-            tableLayoutPanel6.RowCount = 3;
-            tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 24.7634487F));
-            tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 42.9461861F));
-            tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 32.29037F));
-            tableLayoutPanel6.Size = new Size(282, 78);
-            tableLayoutPanel6.TabIndex = 44;
-            // 
-            // comboBox5
-            // 
-            comboBox5.Enabled = false;
-            comboBox5.FlatStyle = FlatStyle.Popup;
-            comboBox5.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
-            comboBox5.FormattingEnabled = true;
-            comboBox5.ItemHeight = 25;
-            comboBox5.Items.AddRange(new object[] { "Present", "Absent", "Excused" });
-            comboBox5.Location = new Point(77, 21);
-            comboBox5.Margin = new Padding(3, 2, 3, 2);
-            comboBox5.Name = "comboBox5";
-            comboBox5.RightToLeft = RightToLeft.No;
-            comboBox5.Size = new Size(127, 33);
-            comboBox5.TabIndex = 37;
-            comboBox5.Text = "Status";
-            // 
-            // panel34
-            // 
-            panel34.Controls.Add(label23);
-            panel34.Controls.Add(label46);
-            panel34.Controls.Add(pictureBox11);
-            panel34.Location = new Point(3, 412);
-            panel34.Margin = new Padding(3, 2, 3, 2);
-            panel34.Name = "panel34";
-            panel34.Size = new Size(663, 69);
-            panel34.TabIndex = 56;
-            // 
-            // label23
-            // 
-            label23.AutoSize = true;
-            label23.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label23.Location = new Point(430, 26);
-            label23.Name = "label23";
-            label23.Size = new Size(203, 25);
-            label23.TabIndex = 29;
-            label23.Text = "2024 - 00274 - SM - 0";
-            // 
-            // label46
-            // 
-            label46.AutoSize = true;
-            label46.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label46.Location = new Point(159, 26);
-            label46.Name = "label46";
-            label46.Size = new Size(196, 25);
-            label46.TabIndex = 29;
-            label46.Text = "Amolata, Jhayphee V.";
-            // 
-            // pictureBox11
-            // 
-            pictureBox11.Image = PUPAcadPortal.Properties.Resources.profile1;
-            pictureBox11.Location = new Point(31, 8);
-            pictureBox11.Margin = new Padding(3, 2, 3, 2);
-            pictureBox11.Name = "pictureBox11";
-            pictureBox11.Size = new Size(69, 57);
-            pictureBox11.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox11.TabIndex = 0;
-            pictureBox11.TabStop = false;
-            // 
-            // panel31
-            // 
-            panel31.Controls.Add(label90);
-            panel31.Controls.Add(label91);
-            panel31.Controls.Add(pictureBox32);
-            panel31.Location = new Point(3, 494);
-            panel31.Margin = new Padding(3, 2, 3, 2);
-            panel31.Name = "panel31";
-            panel31.Size = new Size(663, 69);
-            panel31.TabIndex = 55;
-            // 
-            // label90
-            // 
-            label90.AutoSize = true;
-            label90.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label90.Location = new Point(430, 26);
-            label90.Name = "label90";
-            label90.Size = new Size(204, 25);
-            label90.TabIndex = 29;
-            label90.Text = "2024 - 00094 - SM - 0";
-            // 
-            // label91
-            // 
-            label91.AutoSize = true;
-            label91.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label91.Location = new Point(159, 26);
-            label91.Name = "label91";
-            label91.Size = new Size(214, 25);
-            label91.TabIndex = 29;
-            label91.Text = "Antillon, Reijn Cyrille A.";
-            // 
-            // pictureBox32
-            // 
-            pictureBox32.Image = PUPAcadPortal.Properties.Resources.profile1;
-            pictureBox32.Location = new Point(31, 8);
-            pictureBox32.Margin = new Padding(3, 2, 3, 2);
-            pictureBox32.Name = "pictureBox32";
-            pictureBox32.Size = new Size(69, 57);
-            pictureBox32.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox32.TabIndex = 0;
-            pictureBox32.TabStop = false;
-            // 
-            // panel32
-            // 
-            panel32.Controls.Add(label92);
-            panel32.Controls.Add(label93);
-            panel32.Controls.Add(pictureBox33);
-            panel32.Location = new Point(3, 576);
-            panel32.Margin = new Padding(3, 2, 3, 2);
-            panel32.Name = "panel32";
-            panel32.Size = new Size(663, 69);
-            panel32.TabIndex = 54;
-            // 
-            // label92
-            // 
-            label92.AutoSize = true;
-            label92.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label92.Location = new Point(430, 26);
-            label92.Name = "label92";
-            label92.Size = new Size(203, 25);
-            label92.TabIndex = 29;
-            label92.Text = "2024 - 00074 - SM - 0";
-            // 
-            // label93
-            // 
-            label93.AutoSize = true;
-            label93.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label93.Location = new Point(159, 26);
-            label93.Name = "label93";
-            label93.Size = new Size(222, 25);
-            label93.TabIndex = 29;
-            label93.Text = "Armada, Trisha Mariel D.";
-            // 
-            // pictureBox33
-            // 
-            pictureBox33.Image = PUPAcadPortal.Properties.Resources.profile1;
-            pictureBox33.Location = new Point(31, 8);
-            pictureBox33.Margin = new Padding(3, 2, 3, 2);
-            pictureBox33.Name = "pictureBox33";
-            pictureBox33.Size = new Size(69, 57);
-            pictureBox33.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox33.TabIndex = 0;
-            pictureBox33.TabStop = false;
-            // 
-            // panel33
-            // 
-            panel33.Controls.Add(label94);
-            panel33.Controls.Add(label95);
-            panel33.Controls.Add(pictureBox34);
-            panel33.Location = new Point(3, 658);
-            panel33.Margin = new Padding(3, 2, 3, 2);
-            panel33.Name = "panel33";
-            panel33.Size = new Size(663, 69);
-            panel33.TabIndex = 53;
-            // 
-            // label94
-            // 
-            label94.AutoSize = true;
-            label94.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label94.Location = new Point(430, 26);
-            label94.Name = "label94";
-            label94.Size = new Size(201, 25);
-            label94.TabIndex = 29;
-            label94.Text = "2024 - 00164 - SM - 0";
-            // 
-            // label95
-            // 
-            label95.AutoSize = true;
-            label95.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label95.Location = new Point(159, 26);
-            label95.Name = "label95";
-            label95.Size = new Size(178, 25);
-            label95.TabIndex = 29;
-            label95.Text = "Asay, Claire Jade A.";
-            // 
-            // pictureBox34
-            // 
-            pictureBox34.Image = PUPAcadPortal.Properties.Resources.profile1;
-            pictureBox34.Location = new Point(31, 8);
-            pictureBox34.Margin = new Padding(3, 2, 3, 2);
-            pictureBox34.Name = "pictureBox34";
-            pictureBox34.Size = new Size(69, 57);
-            pictureBox34.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox34.TabIndex = 0;
-            pictureBox34.TabStop = false;
             // 
             // pnlSubMenu
             // 
@@ -9380,7 +9903,7 @@
             this.Controls.Add(pnlContainerStudentPortal);
             this.Icon = (Icon)resources.GetObject("$this.Icon");
             this.Name = "StudentPortal";
-            this.StartPosition = FormStartPosition.CenterParent;
+            this.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "StudentPortal";
             this.FormClosing += (this.StudentPortal_Closing);
             this.Load += (this.StudentPortal_Load);
@@ -9400,53 +9923,242 @@
             panel12.ResumeLayout(false);
             panel13.ResumeLayout(false);
             pnlContainerStudentPortal.ResumeLayout(false);
-            pnlAccountsContentHolder.ResumeLayout(false);
-            pnlAccountsContent.ResumeLayout(false);
-            pnlAccountsContent.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvAccounts).EndInit();
-            pnlAccountsSelectSem.ResumeLayout(false);
-            pnlAccountsSelectSem.PerformLayout();
-            pnlBalance.ResumeLayout(false);
-            pnlBalance.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pbBalance).EndInit();
-            pnlTotalPaid.ResumeLayout(false);
-            pnlTotalPaid.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pbPaid).EndInit();
-            pnlAccountsFreeEd.ResumeLayout(false);
-            pnlAccountsFreeEd.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pbFreeEducProg).EndInit();
-            pnlTotalAssessment.ResumeLayout(false);
-            pnlTotalAssessment.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pbTotalAssessment).EndInit();
-            pnlOnlinePayment.ResumeLayout(false);
-            pnlOnlinePayment.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox48).EndInit();
-            pnlCashier.ResumeLayout(false);
-            pnlCashier.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox49).EndInit();
-            pnlEnrollStatusCard.ResumeLayout(false);
-            pnlEnrollStatusCard.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox50).EndInit();
-            pnlEnrollContent.ResumeLayout(false);
-            pnlEnrollContent.PerformLayout();
-            pnlEnrollmentConfirmedDGV.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvEnrollmentConfirmed).EndInit();
-            pnlContainerEnrollmentDGV.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvEnrollment).EndInit();
-            pnlEnrollRightCard.ResumeLayout(false);
-            pnlEnrollRightCard.PerformLayout();
-            pnlEnrollMiddleCard.ResumeLayout(false);
-            pnlEnrollMiddleCard.PerformLayout();
-            pnlEnrollLeftCard.ResumeLayout(false);
-            pnlEnrollLeftCard.PerformLayout();
-            pnlTotalUnits.ResumeLayout(false);
-            pnlTotalUnits.PerformLayout();
-            pnlEnrollSearchbar.ResumeLayout(false);
-            pnlEnrollSearchbar.PerformLayout();
+            pnlAttendance.ResumeLayout(false);
+            panel17.ResumeLayout(false);
+            pnlAttIntro.ResumeLayout(false);
+            tableLayoutPanel1.ResumeLayout(false);
+            panel33.ResumeLayout(false);
+            panel33.PerformLayout();
+            panel32.ResumeLayout(false);
+            panel32.PerformLayout();
+            tableLayoutPanel8.ResumeLayout(false);
+            tableLayoutPanel8.PerformLayout();
+            tableLayoutPanel7.ResumeLayout(false);
+            tableLayoutPanel7.PerformLayout();
+            tableLayoutPanel6.ResumeLayout(false);
+            tableLayoutPanel6.PerformLayout();
+            tableLayoutPanel5.ResumeLayout(false);
+            tableLayoutPanel5.PerformLayout();
+            tableLayoutPanel4.ResumeLayout(false);
+            tableLayoutPanel4.PerformLayout();
+            tableLayoutPanel2.ResumeLayout(false);
+            tableLayoutPanel2.PerformLayout();
+            panel31.ResumeLayout(false);
+            panel31.PerformLayout();
+            panel30.ResumeLayout(false);
+            panel30.PerformLayout();
+            panel29.ResumeLayout(false);
+            panel29.PerformLayout();
+            panel34.ResumeLayout(false);
+            panel34.PerformLayout();
+            panel85.ResumeLayout(false);
+            panel85.PerformLayout();
+            panel88.ResumeLayout(false);
+            panel88.PerformLayout();
+            panel89.ResumeLayout(false);
+            panel89.PerformLayout();
+            tableLayoutPanel20.ResumeLayout(false);
+            tableLayoutPanel20.PerformLayout();
+            tableLayoutPanel19.ResumeLayout(false);
+            tableLayoutPanel19.PerformLayout();
+            tableLayoutPanel18.ResumeLayout(false);
+            tableLayoutPanel18.PerformLayout();
+            tableLayoutPanel17.ResumeLayout(false);
+            tableLayoutPanel17.PerformLayout();
+            tableLayoutPanel16.ResumeLayout(false);
+            tableLayoutPanel16.PerformLayout();
+            tableLayoutPanel15.ResumeLayout(false);
+            tableLayoutPanel15.PerformLayout();
+            tableLayoutPanel12.ResumeLayout(false);
+            tableLayoutPanel12.PerformLayout();
+            tableLayoutPanel14.ResumeLayout(false);
+            tableLayoutPanel14.PerformLayout();
+            tableLayoutPanel13.ResumeLayout(false);
+            tableLayoutPanel13.PerformLayout();
+            tableLayoutPanel3.ResumeLayout(false);
+            tableLayoutPanel3.PerformLayout();
+            tableLayoutPanel9.ResumeLayout(false);
+            tableLayoutPanel9.PerformLayout();
+            tableLayoutPanel10.ResumeLayout(false);
+            tableLayoutPanel10.PerformLayout();
+            pnlAttAcc.ResumeLayout(false);
+            tableLayoutPanel21.ResumeLayout(false);
+            panel3.ResumeLayout(false);
+            panel3.PerformLayout();
+            panel14.ResumeLayout(false);
+            panel14.PerformLayout();
+            tableLayoutPanel22.ResumeLayout(false);
+            tableLayoutPanel22.PerformLayout();
+            tableLayoutPanel23.ResumeLayout(false);
+            tableLayoutPanel23.PerformLayout();
+            tableLayoutPanel24.ResumeLayout(false);
+            tableLayoutPanel24.PerformLayout();
+            tableLayoutPanel26.ResumeLayout(false);
+            tableLayoutPanel26.PerformLayout();
+            tableLayoutPanel27.ResumeLayout(false);
+            tableLayoutPanel27.PerformLayout();
+            tableLayoutPanel28.ResumeLayout(false);
+            tableLayoutPanel28.PerformLayout();
+            panel19.ResumeLayout(false);
+            panel19.PerformLayout();
+            panel20.ResumeLayout(false);
+            panel20.PerformLayout();
+            panel21.ResumeLayout(false);
+            panel21.PerformLayout();
+            panel22.ResumeLayout(false);
+            panel22.PerformLayout();
+            panel24.ResumeLayout(false);
+            panel24.PerformLayout();
+            panel27.ResumeLayout(false);
+            panel27.PerformLayout();
+            panel28.ResumeLayout(false);
+            panel28.PerformLayout();
+            tableLayoutPanel29.ResumeLayout(false);
+            tableLayoutPanel29.PerformLayout();
+            tableLayoutPanel30.ResumeLayout(false);
+            tableLayoutPanel30.PerformLayout();
+            tableLayoutPanel31.ResumeLayout(false);
+            tableLayoutPanel31.PerformLayout();
+            tableLayoutPanel32.ResumeLayout(false);
+            tableLayoutPanel32.PerformLayout();
+            tableLayoutPanel33.ResumeLayout(false);
+            tableLayoutPanel33.PerformLayout();
+            tableLayoutPanel34.ResumeLayout(false);
+            tableLayoutPanel34.PerformLayout();
+            tableLayoutPanel35.ResumeLayout(false);
+            tableLayoutPanel35.PerformLayout();
+            tableLayoutPanel36.ResumeLayout(false);
+            tableLayoutPanel36.PerformLayout();
+            tableLayoutPanel37.ResumeLayout(false);
+            tableLayoutPanel37.PerformLayout();
+            tableLayoutPanel38.ResumeLayout(false);
+            tableLayoutPanel38.PerformLayout();
+            tableLayoutPanel39.ResumeLayout(false);
+            tableLayoutPanel39.PerformLayout();
+            tableLayoutPanel40.ResumeLayout(false);
+            tableLayoutPanel40.PerformLayout();
+            panel90.ResumeLayout(false);
+            panel90.PerformLayout();
+            panel91.ResumeLayout(false);
+            panel91.PerformLayout();
+            panel92.ResumeLayout(false);
+            panel92.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox29).EndInit();
+            panel93.ResumeLayout(false);
+            panel93.PerformLayout();
+            pnlActivities.ResumeLayout(false);
+            panel68.ResumeLayout(false);
+            panel68.PerformLayout();
+            panel69.ResumeLayout(false);
+            roundedPanel74.ResumeLayout(false);
+            roundedPanel74.PerformLayout();
+            roundedPanel75.ResumeLayout(false);
+            panel70.ResumeLayout(false);
+            panel70.PerformLayout();
+            panel71.ResumeLayout(false);
+            roundedPanel76.ResumeLayout(false);
+            roundedPanel76.PerformLayout();
+            roundedPanel77.ResumeLayout(false);
+            roundedPanel77.PerformLayout();
+            roundedPanel78.ResumeLayout(false);
+            roundedPanel78.PerformLayout();
+            panel72.ResumeLayout(false);
+            panel73.ResumeLayout(false);
+            pnlVA.ResumeLayout(false);
+            panel66.ResumeLayout(false);
+            groupBox4.ResumeLayout(false);
+            roundedPanel55.ResumeLayout(false);
+            roundedPanel55.PerformLayout();
+            roundedPanel56.ResumeLayout(false);
+            roundedPanel56.PerformLayout();
+            groupBox3.ResumeLayout(false);
+            roundedPanel57.ResumeLayout(false);
+            roundedPanel57.PerformLayout();
+            roundedPanel58.ResumeLayout(false);
+            roundedPanel58.PerformLayout();
+            groupBox2.ResumeLayout(false);
+            roundedPanel59.ResumeLayout(false);
+            roundedPanel59.PerformLayout();
+            roundedPanel60.ResumeLayout(false);
+            roundedPanel60.PerformLayout();
+            groupBox1.ResumeLayout(false);
+            roundedPanel61.ResumeLayout(false);
+            roundedPanel61.PerformLayout();
+            roundedPanel62.ResumeLayout(false);
+            roundedPanel62.PerformLayout();
+            panel67.ResumeLayout(false);
+            roundedPanel63.ResumeLayout(false);
+            pnlRA.ResumeLayout(false);
+            panel64.ResumeLayout(false);
+            groupBox5.ResumeLayout(false);
+            roundedPanel46.ResumeLayout(false);
+            roundedPanel46.PerformLayout();
+            roundedPanel47.ResumeLayout(false);
+            roundedPanel47.PerformLayout();
+            groupBox6.ResumeLayout(false);
+            roundedPanel48.ResumeLayout(false);
+            roundedPanel48.PerformLayout();
+            roundedPanel49.ResumeLayout(false);
+            roundedPanel49.PerformLayout();
+            groupBox7.ResumeLayout(false);
+            roundedPanel50.ResumeLayout(false);
+            roundedPanel50.PerformLayout();
+            roundedPanel51.ResumeLayout(false);
+            roundedPanel51.PerformLayout();
+            groupBox8.ResumeLayout(false);
+            roundedPanel52.ResumeLayout(false);
+            roundedPanel52.PerformLayout();
+            roundedPanel53.ResumeLayout(false);
+            roundedPanel53.PerformLayout();
+            panel65.ResumeLayout(false);
+            roundedPanel54.ResumeLayout(false);
+            pnlAll.ResumeLayout(false);
+            roundedPanel64.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox38).EndInit();
+            roundedPanel65.ResumeLayout(false);
+            roundedPanel65.PerformLayout();
+            roundedPanel66.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox39).EndInit();
+            roundedPanel67.ResumeLayout(false);
+            roundedPanel67.PerformLayout();
+            roundedPanel68.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox40).EndInit();
+            roundedPanel69.ResumeLayout(false);
+            roundedPanel69.PerformLayout();
+            roundedPanel70.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox41).EndInit();
+            roundedPanel71.ResumeLayout(false);
+            roundedPanel71.PerformLayout();
+            roundedPanel72.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox42).EndInit();
+            roundedPanel73.ResumeLayout(false);
+            roundedPanel73.PerformLayout();
+            pnlToday.ResumeLayout(false);
+            roundedPanel35.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox35).EndInit();
+            roundedPanel39.ResumeLayout(false);
+            roundedPanel40.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox36).EndInit();
+            roundedPanel43.ResumeLayout(false);
+            roundedPanel44.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox37).EndInit();
+            roundedPanel45.ResumeLayout(false);
+            roundedPanel45.PerformLayout();
+            pnlTW.ResumeLayout(false);
+            roundedPanel26.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox13).EndInit();
+            roundedPanel27.ResumeLayout(false);
+            roundedPanel27.PerformLayout();
+            roundedPanel31.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox14).EndInit();
+            roundedPanel33.ResumeLayout(false);
+            roundedPanel33.PerformLayout();
+            pnlNW.ResumeLayout(false);
+            roundedPanel41.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox12).EndInit();
+            roundedPanel42.ResumeLayout(false);
+            roundedPanel42.PerformLayout();
             pnlGrades.ResumeLayout(false);
-            roundedPanel36.ResumeLayout(false);
-            roundedPanel37.ResumeLayout(false);
-            roundedPanel37.PerformLayout();
             fpnlGradesList.ResumeLayout(false);
             roundedPanel1.ResumeLayout(false);
             panel58.ResumeLayout(false);
@@ -9481,13 +10193,44 @@
             panel57.ResumeLayout(false);
             panel57.PerformLayout();
             roundedPanel38.ResumeLayout(false);
+            roundedPanel36.ResumeLayout(false);
+            roundedPanel37.ResumeLayout(false);
+            roundedPanel37.PerformLayout();
+            pnlAccountsContentHolder.ResumeLayout(false);
+            pnlAccountsContent.ResumeLayout(false);
+            pnlAccountsContent.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvAccounts).EndInit();
+            pnlAccountsSelectSem.ResumeLayout(false);
+            pnlAccountsSelectSem.PerformLayout();
+            pnlBalance.ResumeLayout(false);
+            pnlBalance.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pbBalance).EndInit();
+            pnlTotalPaid.ResumeLayout(false);
+            pnlTotalPaid.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pbPaid).EndInit();
+            pnlAccountsFreeEd.ResumeLayout(false);
+            pnlAccountsFreeEd.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pbFreeEducProg).EndInit();
+            pnlTotalAssessment.ResumeLayout(false);
+            pnlTotalAssessment.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pbTotalAssessment).EndInit();
+            pnlOnlinePayment.ResumeLayout(false);
+            pnlOnlinePayment.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox48).EndInit();
+            pnlCashier.ResumeLayout(false);
+            pnlCashier.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox49).EndInit();
+            pnlEnrollStatusCard.ResumeLayout(false);
+            pnlEnrollStatusCard.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox50).EndInit();
             pnlDashboardContent.ResumeLayout(false);
-            pnlAnnouncementsContainer.ResumeLayout(false);
-            pnlAnnouncementsContainer.PerformLayout();
-            panel74.ResumeLayout(false);
-            panel74.PerformLayout();
-            panel76.ResumeLayout(false);
-            panel76.PerformLayout();
+            pnlDashboardCenter.ResumeLayout(false);
+            pnlEnrolledUnitsCard.ResumeLayout(false);
+            pnlEnrolledUnitsCard.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox47).EndInit();
+            pnlEnrollmentStatusCard.ResumeLayout(false);
+            pnlEnrollmentStatusCard.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox45).EndInit();
             pnlUpcomingEventsContainer.ResumeLayout(false);
             pnlUpcomingEventsContainer.PerformLayout();
             panel78.ResumeLayout(false);
@@ -9502,144 +10245,46 @@
             panel82.PerformLayout();
             panel83.ResumeLayout(false);
             panel83.PerformLayout();
+            pnlCurrentSemesterCard.ResumeLayout(false);
+            pnlCurrentSemesterCard.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox44).EndInit();
+            pnlEnrolleft.ResumeLayout(false);
+            pnlEnrolleft.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox43).EndInit();
             pnlQuickActionsContainer.ResumeLayout(false);
             pnlQuickActionsContainer.PerformLayout();
             panel84.ResumeLayout(false);
             panel84.PerformLayout();
-            panel85.ResumeLayout(false);
-            panel85.PerformLayout();
             panel86.ResumeLayout(false);
             panel86.PerformLayout();
             panel87.ResumeLayout(false);
             panel87.PerformLayout();
-            pnlEnrolleft.ResumeLayout(false);
-            pnlEnrolleft.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox43).EndInit();
-            pnlCurrentSemesterCard.ResumeLayout(false);
-            pnlCurrentSemesterCard.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox44).EndInit();
-            pnlEnrollmentStatusCard.ResumeLayout(false);
-            pnlEnrollmentStatusCard.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox45).EndInit();
-            pnlEnrolledUnitsCard.ResumeLayout(false);
-            pnlEnrolledUnitsCard.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox47).EndInit();
+            pnlAnnouncementsContainer.ResumeLayout(false);
+            pnlAnnouncementsContainer.PerformLayout();
+            panel74.ResumeLayout(false);
+            panel74.PerformLayout();
+            panel76.ResumeLayout(false);
+            panel76.PerformLayout();
             pnlDashboardGreetingsContainer.ResumeLayout(false);
             pnlDashboardGreetingsContainer.PerformLayout();
             pnlViewDetails.ResumeLayout(false);
             pnlViewDetails.PerformLayout();
-            pnlActivities.ResumeLayout(false);
-            pnlVA.ResumeLayout(false);
-            panel66.ResumeLayout(false);
-            groupBox4.ResumeLayout(false);
-            roundedPanel55.ResumeLayout(false);
-            roundedPanel55.PerformLayout();
-            roundedPanel56.ResumeLayout(false);
-            roundedPanel56.PerformLayout();
-            groupBox3.ResumeLayout(false);
-            roundedPanel57.ResumeLayout(false);
-            roundedPanel57.PerformLayout();
-            roundedPanel58.ResumeLayout(false);
-            roundedPanel58.PerformLayout();
-            groupBox2.ResumeLayout(false);
-            roundedPanel59.ResumeLayout(false);
-            roundedPanel59.PerformLayout();
-            roundedPanel60.ResumeLayout(false);
-            roundedPanel60.PerformLayout();
-            groupBox1.ResumeLayout(false);
-            roundedPanel61.ResumeLayout(false);
-            roundedPanel61.PerformLayout();
-            roundedPanel62.ResumeLayout(false);
-            roundedPanel62.PerformLayout();
-            panel67.ResumeLayout(false);
-            roundedPanel63.ResumeLayout(false);
-            pnlAll.ResumeLayout(false);
-            roundedPanel64.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox38).EndInit();
-            roundedPanel65.ResumeLayout(false);
-            roundedPanel65.PerformLayout();
-            roundedPanel66.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox39).EndInit();
-            roundedPanel67.ResumeLayout(false);
-            roundedPanel67.PerformLayout();
-            roundedPanel68.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox40).EndInit();
-            roundedPanel69.ResumeLayout(false);
-            roundedPanel69.PerformLayout();
-            roundedPanel70.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox41).EndInit();
-            roundedPanel71.ResumeLayout(false);
-            roundedPanel71.PerformLayout();
-            roundedPanel72.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox42).EndInit();
-            roundedPanel73.ResumeLayout(false);
-            roundedPanel73.PerformLayout();
-            pnlRA.ResumeLayout(false);
-            panel64.ResumeLayout(false);
-            groupBox5.ResumeLayout(false);
-            roundedPanel46.ResumeLayout(false);
-            roundedPanel46.PerformLayout();
-            roundedPanel47.ResumeLayout(false);
-            roundedPanel47.PerformLayout();
-            groupBox6.ResumeLayout(false);
-            roundedPanel48.ResumeLayout(false);
-            roundedPanel48.PerformLayout();
-            roundedPanel49.ResumeLayout(false);
-            roundedPanel49.PerformLayout();
-            groupBox7.ResumeLayout(false);
-            roundedPanel50.ResumeLayout(false);
-            roundedPanel50.PerformLayout();
-            roundedPanel51.ResumeLayout(false);
-            roundedPanel51.PerformLayout();
-            groupBox8.ResumeLayout(false);
-            roundedPanel52.ResumeLayout(false);
-            roundedPanel52.PerformLayout();
-            roundedPanel53.ResumeLayout(false);
-            roundedPanel53.PerformLayout();
-            panel65.ResumeLayout(false);
-            roundedPanel54.ResumeLayout(false);
-            pnlToday.ResumeLayout(false);
-            roundedPanel35.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox35).EndInit();
-            roundedPanel39.ResumeLayout(false);
-            roundedPanel40.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox36).EndInit();
-            roundedPanel43.ResumeLayout(false);
-            roundedPanel44.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox37).EndInit();
-            roundedPanel45.ResumeLayout(false);
-            roundedPanel45.PerformLayout();
-            pnlTW.ResumeLayout(false);
-            roundedPanel26.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox13).EndInit();
-            roundedPanel27.ResumeLayout(false);
-            roundedPanel27.PerformLayout();
-            roundedPanel31.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox14).EndInit();
-            roundedPanel33.ResumeLayout(false);
-            roundedPanel33.PerformLayout();
-            pnlNW.ResumeLayout(false);
-            roundedPanel41.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox12).EndInit();
-            roundedPanel42.ResumeLayout(false);
-            roundedPanel42.PerformLayout();
-            panel68.ResumeLayout(false);
-            panel68.PerformLayout();
-            panel69.ResumeLayout(false);
-            roundedPanel74.ResumeLayout(false);
-            roundedPanel74.PerformLayout();
-            roundedPanel75.ResumeLayout(false);
-            panel70.ResumeLayout(false);
-            panel70.PerformLayout();
-            panel71.ResumeLayout(false);
-            roundedPanel76.ResumeLayout(false);
-            roundedPanel76.PerformLayout();
-            roundedPanel77.ResumeLayout(false);
-            roundedPanel77.PerformLayout();
-            roundedPanel78.ResumeLayout(false);
-            roundedPanel78.PerformLayout();
-            panel72.ResumeLayout(false);
-            panel73.ResumeLayout(false);
+            pnlEnrollContent.ResumeLayout(false);
+            pnlEnrollContent.PerformLayout();
+            pnlEnrollmentConfirmedDGV.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvEnrollmentConfirmed).EndInit();
+            pnlContainerEnrollmentDGV.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvEnrollment).EndInit();
+            pnlEnrollRightCard.ResumeLayout(false);
+            pnlEnrollRightCard.PerformLayout();
+            pnlEnrollMiddleCard.ResumeLayout(false);
+            pnlEnrollMiddleCard.PerformLayout();
+            pnlEnrollLeftCard.ResumeLayout(false);
+            pnlEnrollLeftCard.PerformLayout();
+            pnlTotalUnits.ResumeLayout(false);
+            pnlTotalUnits.PerformLayout();
+            pnlEnrollSearchbar.ResumeLayout(false);
+            pnlEnrollSearchbar.PerformLayout();
             pnlCalendar.ResumeLayout(false);
             pnlCalendar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)picPrev).EndInit();
@@ -9651,74 +10296,6 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            pnlAttendance.ResumeLayout(false);
-            panel19.ResumeLayout(false);
-            panel19.PerformLayout();
-            panel28.ResumeLayout(false);
-            panel28.PerformLayout();
-            panel24.ResumeLayout(false);
-            panel24.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox29).EndInit();
-            panel27.ResumeLayout(false);
-            panel27.PerformLayout();
-            panel14.ResumeLayout(false);
-            panel14.PerformLayout();
-            panel17.ResumeLayout(false);
-            tableLayoutPanel1.ResumeLayout(false);
-            panel30.ResumeLayout(false);
-            panel30.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox31).EndInit();
-            panel29.ResumeLayout(false);
-            panel29.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox30).EndInit();
-            panel22.ResumeLayout(false);
-            panel22.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox28).EndInit();
-            panel21.ResumeLayout(false);
-            panel21.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox27).EndInit();
-            panel20.ResumeLayout(false);
-            panel20.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox26).EndInit();
-            tableLayoutPanel20.ResumeLayout(false);
-            tableLayoutPanel20.PerformLayout();
-            tableLayoutPanel19.ResumeLayout(false);
-            tableLayoutPanel19.PerformLayout();
-            tableLayoutPanel18.ResumeLayout(false);
-            tableLayoutPanel18.PerformLayout();
-            tableLayoutPanel17.ResumeLayout(false);
-            tableLayoutPanel17.PerformLayout();
-            tableLayoutPanel16.ResumeLayout(false);
-            tableLayoutPanel16.PerformLayout();
-            tableLayoutPanel15.ResumeLayout(false);
-            tableLayoutPanel15.PerformLayout();
-            tableLayoutPanel12.ResumeLayout(false);
-            tableLayoutPanel12.PerformLayout();
-            tableLayoutPanel10.ResumeLayout(false);
-            tableLayoutPanel9.ResumeLayout(false);
-            tableLayoutPanel8.ResumeLayout(false);
-            tableLayoutPanel7.ResumeLayout(false);
-            tableLayoutPanel4.ResumeLayout(false);
-            tableLayoutPanel14.ResumeLayout(false);
-            tableLayoutPanel14.PerformLayout();
-            tableLayoutPanel13.ResumeLayout(false);
-            tableLayoutPanel13.PerformLayout();
-            tableLayoutPanel3.ResumeLayout(false);
-            tableLayoutPanel2.ResumeLayout(false);
-            tableLayoutPanel5.ResumeLayout(false);
-            tableLayoutPanel6.ResumeLayout(false);
-            panel34.ResumeLayout(false);
-            panel34.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox11).EndInit();
-            panel31.ResumeLayout(false);
-            panel31.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox32).EndInit();
-            panel32.ResumeLayout(false);
-            panel32.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox33).EndInit();
-            panel33.ResumeLayout(false);
-            panel33.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox34).EndInit();
             pnlSubMenu.ResumeLayout(false);
             pnlLMSActivities.ResumeLayout(false);
             roundedPanel15.ResumeLayout(false);
@@ -9855,36 +10432,6 @@
         private TextBox textBox1;
         private Panel pnlSubject;
         private Label label106;
-        private Panel pnlAttendance;
-        private Panel panel19;
-        private Panel panel28;
-        private Label label75;
-        private Label label30;
-        private Panel panel24;
-        private TextBox textBox11;
-        private PictureBox pictureBox29;
-        private Label label28;
-        private Label label29;
-        private Label label24;
-        private Panel panel27;
-        private DateTimePicker dateTimePicker3;
-        private Label label74;
-        private Panel panel14;
-        private ComboBox cmbbxCourseSelection;
-        private Label label6;
-        private Label label76;
-        private Label lblAttendancePercent;
-        private Label label81;
-        private Label label78;
-        private Label label77;
-        private Label label85;
-        private Label label80;
-        private Label label82;
-        private Label label84;
-        private Label label83;
-        private Label label79;
-        private Label label11;
-        private Panel panel17;
         private Panel pnlSubMenu;
         private Panel pnlLMSActivities;
         private Panel panel42;
@@ -10009,79 +10556,6 @@
         private PictureBox pictureBox25;
         private Button btnGo1;
         private PictureBox pictureBox10;
-        private TableLayoutPanel tableLayoutPanel1;
-        private Panel panel30;
-        private Label label88;
-        private Label label89;
-        private PictureBox pictureBox31;
-        private Panel panel29;
-        private Label label86;
-        private Label label87;
-        private PictureBox pictureBox30;
-        private Panel panel22;
-        private Label label70;
-        private Label label71;
-        private PictureBox pictureBox28;
-        private Panel panel21;
-        private Label label68;
-        private Label label69;
-        private PictureBox pictureBox27;
-        private Panel panel20;
-        private Label label67;
-        private Label label66;
-        private PictureBox pictureBox26;
-        private TableLayoutPanel tableLayoutPanel20;
-        private TextBox textBox19;
-        private TableLayoutPanel tableLayoutPanel19;
-        private TextBox textBox18;
-        private TableLayoutPanel tableLayoutPanel18;
-        private TextBox textBox17;
-        private TableLayoutPanel tableLayoutPanel17;
-        private TextBox textBox16;
-        private TableLayoutPanel tableLayoutPanel16;
-        private TextBox textBox15;
-        private TableLayoutPanel tableLayoutPanel15;
-        private TextBox textBox14;
-        private TableLayoutPanel tableLayoutPanel12;
-        private TextBox textBox13;
-        private TableLayoutPanel tableLayoutPanel10;
-        private ComboBox comboBox9;
-        private TableLayoutPanel tableLayoutPanel9;
-        private ComboBox comboBox8;
-        private TableLayoutPanel tableLayoutPanel8;
-        private ComboBox comboBox7;
-        private TableLayoutPanel tableLayoutPanel7;
-        private ComboBox comboBox6;
-        private TableLayoutPanel tableLayoutPanel4;
-        private ComboBox comboBox3;
-        private TableLayoutPanel tableLayoutPanel14;
-        private TextBox textBox12;
-        private TableLayoutPanel tableLayoutPanel13;
-        private TextBox textBox2;
-        private TableLayoutPanel tableLayoutPanel3;
-        private ComboBox comboBox2;
-        private TableLayoutPanel tableLayoutPanel2;
-        private ComboBox comboBox1;
-        private TableLayoutPanel tableLayoutPanel5;
-        private ComboBox comboBox4;
-        private TableLayoutPanel tableLayoutPanel6;
-        private ComboBox comboBox5;
-        private Panel panel34;
-        private Label label23;
-        private Label label46;
-        private PictureBox pictureBox11;
-        private Panel panel31;
-        private Label label90;
-        private Label label91;
-        private PictureBox pictureBox32;
-        private Panel panel32;
-        private Label label92;
-        private Label label93;
-        private PictureBox pictureBox33;
-        private Panel panel33;
-        private Label label94;
-        private Label label95;
-        private PictureBox pictureBox34;
         private Panel pnlCalendar;
         private PictureBox picPrev;
         private PictureBox picNext;
@@ -10362,10 +10836,6 @@
         private Button btnDashboardCourses;
         private Label label167;
         private Label lblCourses;
-        private Panel panel85;
-        private Button button14;
-        private Label label168;
-        private Label label169;
         private Panel panel86;
         private Button btnDashboardPaymentStatus;
         private Label label170;
@@ -10494,5 +10964,144 @@
         private ContextMenuStrip cmsEnrollAction;
         private ToolStripMenuItem viewDetailsToolStripMenuItem;
         private ToolStripMenuItem dropSubjectToolStripMenuItem;
+        private Panel pnlDashboardCenter;
+        private Panel pnlAttendance;
+        private Panel panel17;
+        private Panel pnlAttAcc;
+        private TableLayoutPanel tableLayoutPanel21;
+        private Panel panel3;
+        private Label label94;
+        private Panel panel14;
+        private Label label95;
+        private TableLayoutPanel tableLayoutPanel22;
+        private Label label6;
+        private TableLayoutPanel tableLayoutPanel23;
+        private Label label11;
+        private TableLayoutPanel tableLayoutPanel24;
+        private Label label23;
+        private TableLayoutPanel tableLayoutPanel26;
+        private Label label24;
+        private TableLayoutPanel tableLayoutPanel27;
+        private Label label28;
+        private TableLayoutPanel tableLayoutPanel28;
+        private Label label29;
+        private Panel panel19;
+        private Label label30;
+        private Panel panel20;
+        private Label label46;
+        private Panel panel21;
+        private Label label66;
+        private Panel panel22;
+        private Label label67;
+        private Panel panel24;
+        private Label label68;
+        private Panel panel27;
+        private Label label69;
+        private Panel panel28;
+        private Label label70;
+        private TableLayoutPanel tableLayoutPanel29;
+        private TextBox textBox3;
+        private TableLayoutPanel tableLayoutPanel30;
+        private TextBox textBox4;
+        private TableLayoutPanel tableLayoutPanel31;
+        private TextBox textBox5;
+        private TableLayoutPanel tableLayoutPanel32;
+        private TextBox textBox6;
+        private TableLayoutPanel tableLayoutPanel33;
+        private TextBox textBox7;
+        private TableLayoutPanel tableLayoutPanel34;
+        private TextBox textBox8;
+        private TableLayoutPanel tableLayoutPanel35;
+        private TextBox textBox9;
+        private TableLayoutPanel tableLayoutPanel36;
+        private TextBox textBox10;
+        private TableLayoutPanel tableLayoutPanel37;
+        private TextBox textBox20;
+        private TableLayoutPanel tableLayoutPanel38;
+        private Label label71;
+        private TableLayoutPanel tableLayoutPanel39;
+        private Label label74;
+        private TableLayoutPanel tableLayoutPanel40;
+        private Label label75;
+        private Panel pnlAttIntro;
+        private TableLayoutPanel tableLayoutPanel1;
+        private Panel panel33;
+        private Label label93;
+        private Panel panel32;
+        private Label label92;
+        private TableLayoutPanel tableLayoutPanel8;
+        private Label label89;
+        private TableLayoutPanel tableLayoutPanel7;
+        private Label label88;
+        private TableLayoutPanel tableLayoutPanel6;
+        private Label label87;
+        private TableLayoutPanel tableLayoutPanel5;
+        private Label label86;
+        private TableLayoutPanel tableLayoutPanel4;
+        private Label label76;
+        private TableLayoutPanel tableLayoutPanel2;
+        private Label label77;
+        private Panel panel31;
+        private Label label78;
+        private Panel panel30;
+        private Label label79;
+        private Panel panel29;
+        private Label label80;
+        private Panel panel34;
+        private Label label81;
+        private Panel panel85;
+        private Label label82;
+        private Panel panel88;
+        private Label label83;
+        private Panel panel89;
+        private Label label84;
+        private TableLayoutPanel tableLayoutPanel20;
+        private TextBox textBox19;
+        private TableLayoutPanel tableLayoutPanel19;
+        private TextBox textBox18;
+        private TableLayoutPanel tableLayoutPanel18;
+        private TextBox textBox17;
+        private TableLayoutPanel tableLayoutPanel17;
+        private TextBox textBox16;
+        private TableLayoutPanel tableLayoutPanel16;
+        private TextBox textBox15;
+        private TableLayoutPanel tableLayoutPanel15;
+        private TextBox textBox14;
+        private TableLayoutPanel tableLayoutPanel12;
+        private TextBox textBox13;
+        private TableLayoutPanel tableLayoutPanel14;
+        private TextBox textBox12;
+        private TableLayoutPanel tableLayoutPanel13;
+        private TextBox textBox2;
+        private TableLayoutPanel tableLayoutPanel3;
+        private Label label85;
+        private TableLayoutPanel tableLayoutPanel9;
+        private Label label90;
+        private TableLayoutPanel tableLayoutPanel10;
+        private Label label91;
+        private Panel panel90;
+        private Label label168;
+        private Panel panel91;
+        private Label label169;
+        private Label label189;
+        private Label label190;
+        private Label label191;
+        private Label label192;
+        private Label label193;
+        private Label label194;
+        private Label label195;
+        private Label label196;
+        private Label label197;
+        private Label lblAttendancePercent;
+        private Label label198;
+        private Label label199;
+        private Panel panel92;
+        private TextBox textBox11;
+        private PictureBox pictureBox29;
+        private Label label200;
+        private Label label201;
+        private Panel panel93;
+        private ComboBox cmbbxCourseSelection;
+        private Label label202;
     }
 }

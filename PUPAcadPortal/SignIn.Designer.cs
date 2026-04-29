@@ -12,19 +12,29 @@ namespace PUPAcadPortal
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            base.OnPaint(e);
 
-            using (LinearGradientBrush brush = new LinearGradientBrush(
-                this.ClientRectangle, color1, color3, angle))
+            try
             {
-                // Define 3 colors at positions 0%, 50%, and 100%
-                ColorBlend cb = new ColorBlend();
-                cb.Colors = new Color[] { color1, color2, color3 };
-                cb.Positions = new float[] { 0f, 0.5f, 1f };
-                brush.InterpolationColors = cb;
+                base.OnPaint(e);
+                using (LinearGradientBrush brush = new LinearGradientBrush(
+                this.ClientRectangle, color1, color3, angle))
+                {
 
-                e.Graphics.FillRectangle(brush, this.ClientRectangle);
+
+                    // Define 3 colors at positions 0%, 50%, and 100%
+                    ColorBlend cb = new ColorBlend();
+                    cb.Colors = new Color[] { color1, color2, color3 };
+                    cb.Positions = new float[] { 0f, 0.5f, 1f };
+                    brush.InterpolationColors = cb;
+
+                    e.Graphics.FillRectangle(brush, this.ClientRectangle);
+                }
             }
+            catch (Exception)
+            {
+                return;
+            }
+            
         }
         /// <summary>
         ///  Required designer variable.
@@ -201,7 +211,7 @@ namespace PUPAcadPortal
             panel8.Location = new Point(0, 28);
             panel8.Name = "panel8";
             panel8.Size = new Size(384, 50);
-            panel8.TabIndex = 7;
+            panel8.TabIndex = 2;
             // 
             // btnShowPass
             // 
@@ -236,7 +246,7 @@ namespace PUPAcadPortal
             txtPassword.Name = "txtPassword";
             txtPassword.PlaceholderText = "Enter your password";
             txtPassword.Size = new Size(312, 19);
-            txtPassword.TabIndex = 1;
+            txtPassword.TabIndex = 0;
             txtPassword.UseSystemPasswordChar = true;
             // 
             // label5
@@ -269,7 +279,7 @@ namespace PUPAcadPortal
             panel7.Location = new Point(0, 28);
             panel7.Name = "panel7";
             panel7.Size = new Size(384, 50);
-            panel7.TabIndex = 6;
+            panel7.TabIndex = 1;
             // 
             // pictureBox2
             // 
@@ -291,7 +301,7 @@ namespace PUPAcadPortal
             txtUsername.Name = "txtUsername";
             txtUsername.PlaceholderText = "Student Number";
             txtUsername.Size = new Size(328, 19);
-            txtUsername.TabIndex = 1;
+            txtUsername.TabIndex = 0;
             // 
             // label4
             // 
@@ -372,6 +382,7 @@ namespace PUPAcadPortal
             Name = "SignIn";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Sign In";
+            Load += SignIn_Load;
             panel1.ResumeLayout(false);
             panel9.ResumeLayout(false);
             panel3.ResumeLayout(false);
