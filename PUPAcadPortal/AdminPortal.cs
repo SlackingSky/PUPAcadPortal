@@ -317,37 +317,11 @@ namespace PUPAcadPortal
 
             clickedButton = button;
             pnlYellow.Visible = true;
-            pnlYellow.Parent = clickedButton.Parent;
+            pnlYellow.Parent = clickedButton;
             pnlYellow.Height = clickedButton.Height;
-            pnlYellow.Location = clickedButton.Location;
             pnlYellow.BringToFront();
             clickedButton.BackColor = selectedColor;
         }
-
-        // Schedule panel
-        private void btnSO_Schedule_Click(object sender, EventArgs e)
-        {
-            changeButtonColor(sender as Button);
-            showContent(clickedButton);
-
-            dgvScheduleView.DefaultCellStyle.SelectionForeColor = Color.Black;
-        }
-
-
-        //-----------------------------------------------------(Edit Schedule)
-        private void btnSO_EditSchedule_Click(object sender, EventArgs e)
-        {
-            //ShowPanel(pnlEditSchedule);
-            //MessageBox.Show("Edit Schedule clicked.");
-            changeButtonColor(sender as Button);
-            showContent(clickedButton);
-
-            cmbYearLevel_EditSchedule_SelectedIndexChanged(null, EventArgs.Empty);
-        }
-
-
-
-        //-------------------------------------
 
 
         //Method na nagpapakita ng content ng bawat button, wala akong maisip na iba kaya eto
@@ -368,8 +342,8 @@ namespace PUPAcadPortal
                 if (content.Key == button)
                 {
                     //Automatic positioning, wag pakialaman maliban nalang kung binago ang position ng sidebar
-                    content.Value.Parent = panel3; //Nakalimutan ko ilagay kaya di mapakita - Brylle
-                    content.Value.Location = new Point(pnlSidebar.Size.Width, pnlHeader.Size.Height);
+                    content.Value.Parent = pnlContainerAdminPortal; //Nakalimutan ko ilagay kaya di mapakita - Brylle
+                    content.Value.Dock = DockStyle.Fill;
                     content.Value.Visible = true;
                     content.Value.BringToFront();
                 }
@@ -407,6 +381,27 @@ namespace PUPAcadPortal
                 else
                     Application.Exit();
             }
+        }
+
+        // Schedule panel
+        private void btnSO_Schedule_Click(object sender, EventArgs e)
+        {
+            changeButtonColor(sender as Button);
+            showContent(clickedButton);
+
+            dgvScheduleView.DefaultCellStyle.SelectionForeColor = Color.Black;
+        }
+
+
+        //-----------------------------------------------------(Edit Schedule)
+        private void btnSO_EditSchedule_Click(object sender, EventArgs e)
+        {
+            //ShowPanel(pnlEditSchedule);
+            //MessageBox.Show("Edit Schedule clicked.");
+            changeButtonColor(sender as Button);
+            showContent(clickedButton);
+
+            cmbYearLevel_EditSchedule_SelectedIndexChanged(null, EventArgs.Empty);
         }
 
         private void AdminPortal_Resize(object sender, EventArgs e)
