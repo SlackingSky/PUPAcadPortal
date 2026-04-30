@@ -17,31 +17,36 @@ namespace PUPAcadPortal
 
         private void btnSignIn_Click(object sender, EventArgs e)
         {
-            if (txtUsername.Text.ToLower() == "student")
+            if (txtUsername.Text.ToLower() == "demostudent" && txtPassword.Text.ToLower() == "student")
             {
                 this.Hide();
-                StudentPortal studentPortal = new StudentPortal();
+                StudentPortal studentPortal = new StudentPortal(this);
                 studentPortal.WindowState = this.WindowState;
-                studentPortal.Show();
+                studentPortal.ShowDialog();
+                this.Show();
             }
-            else if (txtUsername.Text.ToLower() == "admin")
+            else if (txtUsername.Text.ToLower() == "demoadmin" && txtPassword.Text.ToLower() == "admin")
             {
                 this.Hide();
                 AdminPortal adminPortal = new AdminPortal();
                 adminPortal.WindowState = this.WindowState;
-                adminPortal.Show();
+                adminPortal.ShowDialog();
+                this.Show(); ;
             }
-            else if (txtUsername.Text.ToLower() == "instructor")
+            else if (txtUsername.Text.ToLower() == "demoinstructor" && txtPassword.Text.ToLower() == "instructor")
             {
                 this.Hide();
                 InstructorPortal instructorPortal = new InstructorPortal();
                 instructorPortal.WindowState = this.WindowState;
-                instructorPortal.Show();
+                instructorPortal.ShowDialog();
+                this.Show(); ;
             }
             else
             {
-                MessageBox.Show("Invalid username. Please enter 'student', 'admin', or 'faculty'.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Invalid username or password", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            txtUsername.Clear();
+            txtPassword.Clear();
         }
 
         private void SignIn_Load(object sender, EventArgs e)

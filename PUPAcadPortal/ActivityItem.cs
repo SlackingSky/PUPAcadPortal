@@ -100,9 +100,13 @@ namespace PUPAcadPortal
             }
             else if (currentState == "view")
             {
-                mainForm.pnlViewActivity.Visible = true;
-                mainForm.pnlViewActivity.BringToFront();
-                mainForm.pnlViewActivity.Dock = DockStyle.Fill;
+                mainForm.pnlLMSAct.Parent = mainForm.panel3;
+                mainForm.pnlLMSAct.BringToFront();
+                mainForm.pnlStudents1.BringToFront();
+                mainForm.pnlStudents1.Dock = DockStyle.Fill;
+                mainForm.pnlLMSAct.Visible = true;
+                mainForm.pnlStudents1.Visible = true;
+
             }
         }
 

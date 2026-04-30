@@ -329,7 +329,7 @@ namespace PUPAcadPortal
         }
         private void btnLogout_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.Hide();
         }
 
         private void pnlCoursesContent_Paint(object sender, PaintEventArgs e)
@@ -1952,8 +1952,8 @@ namespace PUPAcadPortal
         private void button45_Click(object sender, EventArgs e)
         {
             dataGridView1.Visible = true;
-            button46.Visible = true;
-            button47.Visible = true;
+            btnRelease.Visible = true;
+            btnSave.Visible = true;
         }
 
         private void buttonRounded1_Click(object sender, EventArgs e)

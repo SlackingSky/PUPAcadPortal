@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminPortal));
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
             pnlGMAddNewGradeForm = new Panel();
             cmbGMStudent = new ComboBox();
             btnGMSearch = new Button();
@@ -508,9 +508,10 @@
             pnlGMAddNewGradeForm.Controls.Add(cmbGMYear);
             pnlGMAddNewGradeForm.Controls.Add(lblGMSelectStudent);
             pnlGMAddNewGradeForm.Controls.Add(label39);
-            pnlGMAddNewGradeForm.Location = new Point(32, 102);
+            pnlGMAddNewGradeForm.Location = new Point(37, 136);
+            pnlGMAddNewGradeForm.Margin = new Padding(3, 4, 3, 4);
             pnlGMAddNewGradeForm.Name = "pnlGMAddNewGradeForm";
-            pnlGMAddNewGradeForm.Size = new Size(1196, 681);
+            pnlGMAddNewGradeForm.Size = new Size(1367, 908);
             pnlGMAddNewGradeForm.TabIndex = 14;
             pnlGMAddNewGradeForm.Visible = false;
             // 
@@ -518,9 +519,10 @@
             // 
             cmbGMStudent.Font = new Font("Segoe UI", 12F);
             cmbGMStudent.FormattingEnabled = true;
-            cmbGMStudent.Location = new Point(99, 161);
+            cmbGMStudent.Location = new Point(113, 215);
+            cmbGMStudent.Margin = new Padding(3, 4, 3, 4);
             cmbGMStudent.Name = "cmbGMStudent";
-            cmbGMStudent.Size = new Size(994, 29);
+            cmbGMStudent.Size = new Size(1135, 36);
             cmbGMStudent.TabIndex = 58;
             // 
             // btnGMSearch
@@ -530,9 +532,10 @@
             btnGMSearch.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnGMSearch.ForeColor = Color.White;
             btnGMSearch.Image = Properties.Resources.search_3_16;
-            btnGMSearch.Location = new Point(1049, 99);
+            btnGMSearch.Location = new Point(1199, 132);
+            btnGMSearch.Margin = new Padding(3, 4, 3, 4);
             btnGMSearch.Name = "btnGMSearch";
-            btnGMSearch.Size = new Size(123, 33);
+            btnGMSearch.Size = new Size(141, 44);
             btnGMSearch.TabIndex = 57;
             btnGMSearch.Text = "Search";
             btnGMSearch.TextAlign = ContentAlignment.MiddleRight;
@@ -544,10 +547,11 @@
             // 
             txGMSearchBar.BorderStyle = BorderStyle.FixedSingle;
             txGMSearchBar.Font = new Font("Segoe UI", 12F);
-            txGMSearchBar.Location = new Point(238, 101);
+            txGMSearchBar.Location = new Point(272, 135);
+            txGMSearchBar.Margin = new Padding(3, 4, 3, 4);
             txGMSearchBar.Name = "txGMSearchBar";
             txGMSearchBar.PlaceholderText = "Search by student name, ID, or subject...";
-            txGMSearchBar.Size = new Size(802, 29);
+            txGMSearchBar.Size = new Size(916, 34);
             txGMSearchBar.TabIndex = 56;
             // 
             // btmGMClearForm
@@ -556,9 +560,10 @@
             btmGMClearForm.FlatStyle = FlatStyle.Popup;
             btmGMClearForm.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btmGMClearForm.ForeColor = Color.Black;
-            btmGMClearForm.Location = new Point(834, 597);
+            btmGMClearForm.Location = new Point(953, 796);
+            btmGMClearForm.Margin = new Padding(3, 4, 3, 4);
             btmGMClearForm.Name = "btmGMClearForm";
-            btmGMClearForm.Size = new Size(158, 53);
+            btmGMClearForm.Size = new Size(181, 71);
             btmGMClearForm.TabIndex = 55;
             btmGMClearForm.Text = "Clear Form";
             btmGMClearForm.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -572,9 +577,10 @@
             btnGMSaveGrades.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnGMSaveGrades.ForeColor = Color.White;
             btnGMSaveGrades.Image = Properties.Resources.save_16;
-            btnGMSaveGrades.Location = new Point(1008, 597);
+            btnGMSaveGrades.Location = new Point(1152, 796);
+            btnGMSaveGrades.Margin = new Padding(3, 4, 3, 4);
             btnGMSaveGrades.Name = "btnGMSaveGrades";
-            btnGMSaveGrades.Size = new Size(166, 53);
+            btnGMSaveGrades.Size = new Size(190, 71);
             btnGMSaveGrades.TabIndex = 54;
             btnGMSaveGrades.Text = " Save Grades";
             btnGMSaveGrades.TextAlign = ContentAlignment.MiddleRight;
@@ -587,9 +593,9 @@
             lblGMRemarks.AutoSize = true;
             lblGMRemarks.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblGMRemarks.ForeColor = Color.Black;
-            lblGMRemarks.Location = new Point(624, 451);
+            lblGMRemarks.Location = new Point(713, 601);
             lblGMRemarks.Name = "lblGMRemarks";
-            lblGMRemarks.Size = new Size(72, 21);
+            lblGMRemarks.Size = new Size(89, 28);
             lblGMRemarks.TabIndex = 53;
             lblGMRemarks.Text = "Remarks";
             // 
@@ -598,11 +604,12 @@
             txtGMRemarks.BorderStyle = BorderStyle.FixedSingle;
             txtGMRemarks.CharacterCasing = CharacterCasing.Upper;
             txtGMRemarks.Font = new Font("Segoe UI", 12F);
-            txtGMRemarks.Location = new Point(627, 477);
+            txtGMRemarks.Location = new Point(717, 636);
+            txtGMRemarks.Margin = new Padding(3, 4, 3, 4);
             txtGMRemarks.Name = "txtGMRemarks";
             txtGMRemarks.PlaceholderText = "eg., PASSING";
             txtGMRemarks.ReadOnly = true;
-            txtGMRemarks.Size = new Size(545, 29);
+            txtGMRemarks.Size = new Size(623, 34);
             txtGMRemarks.TabIndex = 52;
             // 
             // lblGMFinalRating
@@ -610,9 +617,9 @@
             lblGMFinalRating.AutoSize = true;
             lblGMFinalRating.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblGMFinalRating.ForeColor = Color.Black;
-            lblGMFinalRating.Location = new Point(27, 451);
+            lblGMFinalRating.Location = new Point(31, 601);
             lblGMFinalRating.Name = "lblGMFinalRating";
-            lblGMFinalRating.Size = new Size(226, 21);
+            lblGMFinalRating.Size = new Size(283, 28);
             lblGMFinalRating.TabIndex = 51;
             lblGMFinalRating.Text = "Final Rating (Auto-Calculated)";
             // 
@@ -621,11 +628,12 @@
             txtGMFinalRating.BorderStyle = BorderStyle.FixedSingle;
             txtGMFinalRating.CharacterCasing = CharacterCasing.Upper;
             txtGMFinalRating.Font = new Font("Segoe UI", 12F);
-            txtGMFinalRating.Location = new Point(30, 477);
+            txtGMFinalRating.Location = new Point(34, 636);
+            txtGMFinalRating.Margin = new Padding(3, 4, 3, 4);
             txtGMFinalRating.Name = "txtGMFinalRating";
             txtGMFinalRating.PlaceholderText = "1.33";
             txtGMFinalRating.ReadOnly = true;
-            txtGMFinalRating.Size = new Size(571, 29);
+            txtGMFinalRating.Size = new Size(652, 34);
             txtGMFinalRating.TabIndex = 50;
             // 
             // lblGMFinalGrade
@@ -633,9 +641,9 @@
             lblGMFinalGrade.AutoSize = true;
             lblGMFinalGrade.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblGMFinalGrade.ForeColor = Color.Black;
-            lblGMFinalGrade.Location = new Point(624, 369);
+            lblGMFinalGrade.Location = new Point(713, 492);
             lblGMFinalGrade.Name = "lblGMFinalGrade";
-            lblGMFinalGrade.Size = new Size(91, 21);
+            lblGMFinalGrade.Size = new Size(114, 28);
             lblGMFinalGrade.TabIndex = 49;
             lblGMFinalGrade.Text = "Final Grade";
             // 
@@ -644,10 +652,11 @@
             txtGMFinalGrade.BorderStyle = BorderStyle.FixedSingle;
             txtGMFinalGrade.CharacterCasing = CharacterCasing.Upper;
             txtGMFinalGrade.Font = new Font("Segoe UI", 12F);
-            txtGMFinalGrade.Location = new Point(627, 395);
+            txtGMFinalGrade.Location = new Point(717, 527);
+            txtGMFinalGrade.Margin = new Padding(3, 4, 3, 4);
             txtGMFinalGrade.Name = "txtGMFinalGrade";
             txtGMFinalGrade.PlaceholderText = " e.g., 1.50";
-            txtGMFinalGrade.Size = new Size(545, 29);
+            txtGMFinalGrade.Size = new Size(623, 34);
             txtGMFinalGrade.TabIndex = 48;
             // 
             // lblGMMidtermGrade
@@ -655,9 +664,9 @@
             lblGMMidtermGrade.AutoSize = true;
             lblGMMidtermGrade.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblGMMidtermGrade.ForeColor = Color.Black;
-            lblGMMidtermGrade.Location = new Point(27, 369);
+            lblGMMidtermGrade.Location = new Point(31, 492);
             lblGMMidtermGrade.Name = "lblGMMidtermGrade";
-            lblGMMidtermGrade.Size = new Size(122, 21);
+            lblGMMidtermGrade.Size = new Size(150, 28);
             lblGMMidtermGrade.TabIndex = 47;
             lblGMMidtermGrade.Text = "Midterm Grade";
             // 
@@ -666,10 +675,11 @@
             txtGMMidtermGrade.BorderStyle = BorderStyle.FixedSingle;
             txtGMMidtermGrade.CharacterCasing = CharacterCasing.Upper;
             txtGMMidtermGrade.Font = new Font("Segoe UI", 12F);
-            txtGMMidtermGrade.Location = new Point(30, 395);
+            txtGMMidtermGrade.Location = new Point(34, 527);
+            txtGMMidtermGrade.Margin = new Padding(3, 4, 3, 4);
             txtGMMidtermGrade.Name = "txtGMMidtermGrade";
             txtGMMidtermGrade.PlaceholderText = " e.g., 1.25";
-            txtGMMidtermGrade.Size = new Size(571, 29);
+            txtGMMidtermGrade.Size = new Size(652, 34);
             txtGMMidtermGrade.TabIndex = 46;
             // 
             // cmbGMSemester
@@ -677,9 +687,10 @@
             cmbGMSemester.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cmbGMSemester.FormattingEnabled = true;
             cmbGMSemester.Items.AddRange(new object[] { "1st Semester ", "2nd Semester", "Summer Term" });
-            cmbGMSemester.Location = new Point(27, 321);
+            cmbGMSemester.Location = new Point(31, 428);
+            cmbGMSemester.Margin = new Padding(3, 4, 3, 4);
             cmbGMSemester.Name = "cmbGMSemester";
-            cmbGMSemester.Size = new Size(571, 29);
+            cmbGMSemester.Size = new Size(652, 36);
             cmbGMSemester.TabIndex = 45;
             // 
             // lblGMAcademicYear
@@ -687,9 +698,9 @@
             lblGMAcademicYear.AutoSize = true;
             lblGMAcademicYear.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblGMAcademicYear.ForeColor = Color.Black;
-            lblGMAcademicYear.Location = new Point(622, 294);
+            lblGMAcademicYear.Location = new Point(711, 392);
             lblGMAcademicYear.Name = "lblGMAcademicYear";
-            lblGMAcademicYear.Size = new Size(117, 21);
+            lblGMAcademicYear.Size = new Size(143, 28);
             lblGMAcademicYear.TabIndex = 44;
             lblGMAcademicYear.Text = "Academic Year";
             // 
@@ -698,10 +709,11 @@
             txtGMAcadYear.BorderStyle = BorderStyle.FixedSingle;
             txtGMAcadYear.CharacterCasing = CharacterCasing.Upper;
             txtGMAcadYear.Font = new Font("Segoe UI", 12F);
-            txtGMAcadYear.Location = new Point(625, 320);
+            txtGMAcadYear.Location = new Point(714, 427);
+            txtGMAcadYear.Margin = new Padding(3, 4, 3, 4);
             txtGMAcadYear.Name = "txtGMAcadYear";
             txtGMAcadYear.PlaceholderText = " e.g., 2025 - 2026";
-            txtGMAcadYear.Size = new Size(547, 29);
+            txtGMAcadYear.Size = new Size(625, 34);
             txtGMAcadYear.TabIndex = 43;
             // 
             // lblGMSemester
@@ -709,9 +721,9 @@
             lblGMSemester.AutoSize = true;
             lblGMSemester.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblGMSemester.ForeColor = Color.Black;
-            lblGMSemester.Location = new Point(25, 294);
+            lblGMSemester.Location = new Point(29, 392);
             lblGMSemester.Name = "lblGMSemester";
-            lblGMSemester.Size = new Size(79, 21);
+            lblGMSemester.Size = new Size(97, 28);
             lblGMSemester.TabIndex = 42;
             lblGMSemester.Text = "Semester";
             // 
@@ -720,9 +732,9 @@
             lblGMSubjectName.AutoSize = true;
             lblGMSubjectName.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblGMSubjectName.ForeColor = Color.Black;
-            lblGMSubjectName.Location = new Point(621, 217);
+            lblGMSubjectName.Location = new Point(710, 289);
             lblGMSubjectName.Name = "lblGMSubjectName";
-            lblGMSubjectName.Size = new Size(112, 21);
+            lblGMSubjectName.Size = new Size(139, 28);
             lblGMSubjectName.TabIndex = 40;
             lblGMSubjectName.Text = "Subject Name";
             // 
@@ -731,10 +743,11 @@
             txtGMSubjectName.BorderStyle = BorderStyle.FixedSingle;
             txtGMSubjectName.CharacterCasing = CharacterCasing.Upper;
             txtGMSubjectName.Font = new Font("Segoe UI", 12F);
-            txtGMSubjectName.Location = new Point(624, 243);
+            txtGMSubjectName.Location = new Point(713, 324);
+            txtGMSubjectName.Margin = new Padding(3, 4, 3, 4);
             txtGMSubjectName.Name = "txtGMSubjectName";
             txtGMSubjectName.PlaceholderText = " e.g., Introduction to Programming";
-            txtGMSubjectName.Size = new Size(548, 29);
+            txtGMSubjectName.Size = new Size(626, 34);
             txtGMSubjectName.TabIndex = 39;
             // 
             // lblGMSubjectCode
@@ -742,9 +755,9 @@
             lblGMSubjectCode.AutoSize = true;
             lblGMSubjectCode.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblGMSubjectCode.ForeColor = Color.Black;
-            lblGMSubjectCode.Location = new Point(24, 217);
+            lblGMSubjectCode.Location = new Point(27, 289);
             lblGMSubjectCode.Name = "lblGMSubjectCode";
-            lblGMSubjectCode.Size = new Size(108, 21);
+            lblGMSubjectCode.Size = new Size(132, 28);
             lblGMSubjectCode.TabIndex = 33;
             lblGMSubjectCode.Text = "Subject Code";
             // 
@@ -753,10 +766,11 @@
             txtGMSubjectCode.BorderStyle = BorderStyle.FixedSingle;
             txtGMSubjectCode.CharacterCasing = CharacterCasing.Upper;
             txtGMSubjectCode.Font = new Font("Segoe UI", 12F);
-            txtGMSubjectCode.Location = new Point(27, 243);
+            txtGMSubjectCode.Location = new Point(31, 324);
+            txtGMSubjectCode.Margin = new Padding(3, 4, 3, 4);
             txtGMSubjectCode.Name = "txtGMSubjectCode";
             txtGMSubjectCode.PlaceholderText = " e.g., COMP 001";
-            txtGMSubjectCode.Size = new Size(571, 29);
+            txtGMSubjectCode.Size = new Size(652, 34);
             txtGMSubjectCode.TabIndex = 32;
             // 
             // cmbGMSection
@@ -764,9 +778,10 @@
             cmbGMSection.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cmbGMSection.FormattingEnabled = true;
             cmbGMSection.Items.AddRange(new object[] { "1", "2", "3", "4" });
-            cmbGMSection.Location = new Point(141, 100);
+            cmbGMSection.Location = new Point(161, 133);
+            cmbGMSection.Margin = new Padding(3, 4, 3, 4);
             cmbGMSection.Name = "cmbGMSection";
-            cmbGMSection.Size = new Size(91, 29);
+            cmbGMSection.Size = new Size(103, 36);
             cmbGMSection.TabIndex = 31;
             cmbGMSection.Text = "Section";
             // 
@@ -774,9 +789,10 @@
             // 
             cmbGMYear.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cmbGMYear.FormattingEnabled = true;
-            cmbGMYear.Location = new Point(24, 99);
+            cmbGMYear.Location = new Point(27, 132);
+            cmbGMYear.Margin = new Padding(3, 4, 3, 4);
             cmbGMYear.Name = "cmbGMYear";
-            cmbGMYear.Size = new Size(111, 29);
+            cmbGMYear.Size = new Size(126, 36);
             cmbGMYear.TabIndex = 30;
             cmbGMYear.Text = "Year";
             // 
@@ -785,9 +801,9 @@
             lblGMSelectStudent.AutoSize = true;
             lblGMSelectStudent.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblGMSelectStudent.ForeColor = Color.Black;
-            lblGMSelectStudent.Location = new Point(24, 71);
+            lblGMSelectStudent.Location = new Point(27, 95);
             lblGMSelectStudent.Name = "lblGMSelectStudent";
-            lblGMSelectStudent.Size = new Size(117, 21);
+            lblGMSelectStudent.Size = new Size(143, 28);
             lblGMSelectStudent.TabIndex = 25;
             lblGMSelectStudent.Text = "Select Student";
             // 
@@ -795,9 +811,9 @@
             // 
             label39.AutoSize = true;
             label39.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label39.Location = new Point(19, 17);
+            label39.Location = new Point(22, 23);
             label39.Name = "label39";
-            label39.Size = new Size(219, 37);
+            label39.Size = new Size(271, 46);
             label39.TabIndex = 0;
             label39.Text = "Add New Grade";
             // 
@@ -811,8 +827,8 @@
             pnlSidebar.Location = new Point(0, 0);
             pnlSidebar.Margin = new Padding(0);
             pnlSidebar.Name = "pnlSidebar";
-            pnlSidebar.Padding = new Padding(0, 72, 0, 0);
-            pnlSidebar.Size = new Size(256, 791);
+            pnlSidebar.Padding = new Padding(0, 96, 0, 0);
+            pnlSidebar.Size = new Size(293, 1055);
             pnlSidebar.TabIndex = 0;
             // 
             // flowLayoutPanel1
@@ -829,20 +845,20 @@
             flowLayoutPanel1.Controls.Add(pnlsubofferingSubmenu);
             flowLayoutPanel1.Dock = DockStyle.Fill;
             flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
-            flowLayoutPanel1.Location = new Point(0, 145);
+            flowLayoutPanel1.Location = new Point(0, 193);
             flowLayoutPanel1.Margin = new Padding(0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(256, 646);
+            flowLayoutPanel1.Size = new Size(293, 754);
             flowLayoutPanel1.TabIndex = 1;
             flowLayoutPanel1.WrapContents = false;
             // 
             // panel7
             // 
             panel7.Controls.Add(btnDashboard);
-            panel7.Location = new Point(0, 16);
-            panel7.Margin = new Padding(0, 16, 0, 0);
+            panel7.Location = new Point(0, 21);
+            panel7.Margin = new Padding(0, 21, 0, 0);
             panel7.Name = "panel7";
-            panel7.Size = new Size(256, 48);
+            panel7.Size = new Size(293, 64);
             panel7.TabIndex = 0;
             // 
             // btnDashboard
@@ -860,8 +876,8 @@
             btnDashboard.Location = new Point(0, 0);
             btnDashboard.Margin = new Padding(0);
             btnDashboard.Name = "btnDashboard";
-            btnDashboard.Padding = new Padding(16, 0, 0, 0);
-            btnDashboard.Size = new Size(256, 48);
+            btnDashboard.Padding = new Padding(18, 0, 0, 0);
+            btnDashboard.Size = new Size(293, 64);
             btnDashboard.TabIndex = 3;
             btnDashboard.Text = " Dashboard";
             btnDashboard.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -872,10 +888,10 @@
             // 
             pnlRegistrarFunctions.BackColor = Color.Transparent;
             pnlRegistrarFunctions.Controls.Add(btnRegistrarFunctions);
-            pnlRegistrarFunctions.Location = new Point(0, 64);
+            pnlRegistrarFunctions.Location = new Point(0, 85);
             pnlRegistrarFunctions.Margin = new Padding(0);
             pnlRegistrarFunctions.Name = "pnlRegistrarFunctions";
-            pnlRegistrarFunctions.Size = new Size(256, 48);
+            pnlRegistrarFunctions.Size = new Size(293, 64);
             pnlRegistrarFunctions.TabIndex = 6;
             // 
             // btnRegistrarFunctions
@@ -893,8 +909,8 @@
             btnRegistrarFunctions.Location = new Point(0, 0);
             btnRegistrarFunctions.Margin = new Padding(0);
             btnRegistrarFunctions.Name = "btnRegistrarFunctions";
-            btnRegistrarFunctions.Padding = new Padding(16, 0, 0, 0);
-            btnRegistrarFunctions.Size = new Size(256, 48);
+            btnRegistrarFunctions.Padding = new Padding(18, 0, 0, 0);
+            btnRegistrarFunctions.Size = new Size(293, 64);
             btnRegistrarFunctions.TabIndex = 4;
             btnRegistrarFunctions.Text = " Registrar Functions               ›";
             btnRegistrarFunctions.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -907,10 +923,10 @@
             pnlRegistrarSubmenu.Controls.Add(pnlGradesManagement);
             pnlRegistrarSubmenu.Controls.Add(pnlAccountingRecords);
             pnlRegistrarSubmenu.Controls.Add(pnlEnrolledStudents);
-            pnlRegistrarSubmenu.Location = new Point(0, 112);
+            pnlRegistrarSubmenu.Location = new Point(0, 149);
             pnlRegistrarSubmenu.Margin = new Padding(0);
             pnlRegistrarSubmenu.Name = "pnlRegistrarSubmenu";
-            pnlRegistrarSubmenu.Size = new Size(256, 144);
+            pnlRegistrarSubmenu.Size = new Size(293, 192);
             pnlRegistrarSubmenu.TabIndex = 7;
             pnlRegistrarSubmenu.Visible = false;
             // 
@@ -920,8 +936,9 @@
             pnlGradesManagement.Controls.Add(btnGradesManagement);
             pnlGradesManagement.Controls.Add(panel8);
             pnlGradesManagement.Location = new Point(0, 0);
+            pnlGradesManagement.Margin = new Padding(3, 4, 3, 4);
             pnlGradesManagement.Name = "pnlGradesManagement";
-            pnlGradesManagement.Size = new Size(256, 48);
+            pnlGradesManagement.Size = new Size(293, 64);
             pnlGradesManagement.TabIndex = 9;
             // 
             // btnGradesManagement
@@ -936,9 +953,10 @@
             btnGradesManagement.ForeColor = Color.FromArgb(179, 255, 255, 255);
             btnGradesManagement.Image = Properties.Resources.books_16;
             btnGradesManagement.Location = new Point(0, 0);
+            btnGradesManagement.Margin = new Padding(3, 4, 3, 4);
             btnGradesManagement.Name = "btnGradesManagement";
-            btnGradesManagement.Padding = new Padding(16, 0, 0, 0);
-            btnGradesManagement.Size = new Size(256, 48);
+            btnGradesManagement.Padding = new Padding(18, 0, 0, 0);
+            btnGradesManagement.Size = new Size(293, 64);
             btnGradesManagement.TabIndex = 5;
             btnGradesManagement.Text = " Grades Management";
             btnGradesManagement.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -948,18 +966,20 @@
             // panel8
             // 
             panel8.BackColor = Color.Transparent;
-            panel8.Location = new Point(8, 8);
+            panel8.Location = new Point(9, 11);
+            panel8.Margin = new Padding(3, 4, 3, 4);
             panel8.Name = "panel8";
-            panel8.Size = new Size(256, 48);
+            panel8.Size = new Size(293, 64);
             panel8.TabIndex = 10;
             // 
             // pnlAccountingRecords
             // 
             pnlAccountingRecords.BackColor = Color.Transparent;
             pnlAccountingRecords.Controls.Add(btnAccountingRecords);
-            pnlAccountingRecords.Location = new Point(-3, 48);
+            pnlAccountingRecords.Location = new Point(-3, 64);
+            pnlAccountingRecords.Margin = new Padding(3, 4, 3, 4);
             pnlAccountingRecords.Name = "pnlAccountingRecords";
-            pnlAccountingRecords.Size = new Size(256, 48);
+            pnlAccountingRecords.Size = new Size(293, 64);
             pnlAccountingRecords.TabIndex = 8;
             // 
             // btnAccountingRecords
@@ -974,9 +994,10 @@
             btnAccountingRecords.ForeColor = Color.FromArgb(179, 255, 255, 255);
             btnAccountingRecords.Image = Properties.Resources.Accounts1;
             btnAccountingRecords.Location = new Point(0, 0);
+            btnAccountingRecords.Margin = new Padding(3, 4, 3, 4);
             btnAccountingRecords.Name = "btnAccountingRecords";
-            btnAccountingRecords.Padding = new Padding(16, 0, 0, 0);
-            btnAccountingRecords.Size = new Size(256, 48);
+            btnAccountingRecords.Padding = new Padding(18, 0, 0, 0);
+            btnAccountingRecords.Size = new Size(293, 64);
             btnAccountingRecords.TabIndex = 6;
             btnAccountingRecords.Text = " Accounting Records";
             btnAccountingRecords.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -987,9 +1008,10 @@
             // 
             pnlEnrolledStudents.BackColor = Color.Transparent;
             pnlEnrolledStudents.Controls.Add(btnEnrolledStudents);
-            pnlEnrolledStudents.Location = new Point(-3, 96);
+            pnlEnrolledStudents.Location = new Point(-3, 128);
+            pnlEnrolledStudents.Margin = new Padding(3, 4, 3, 4);
             pnlEnrolledStudents.Name = "pnlEnrolledStudents";
-            pnlEnrolledStudents.Size = new Size(256, 48);
+            pnlEnrolledStudents.Size = new Size(293, 64);
             pnlEnrolledStudents.TabIndex = 9;
             // 
             // btnEnrolledStudents
@@ -1004,9 +1026,10 @@
             btnEnrolledStudents.ForeColor = Color.FromArgb(179, 255, 255, 255);
             btnEnrolledStudents.Image = Properties.Resources.user_3_16;
             btnEnrolledStudents.Location = new Point(0, 0);
+            btnEnrolledStudents.Margin = new Padding(3, 4, 3, 4);
             btnEnrolledStudents.Name = "btnEnrolledStudents";
-            btnEnrolledStudents.Padding = new Padding(16, 0, 0, 0);
-            btnEnrolledStudents.Size = new Size(256, 48);
+            btnEnrolledStudents.Padding = new Padding(18, 0, 0, 0);
+            btnEnrolledStudents.Size = new Size(293, 64);
             btnEnrolledStudents.TabIndex = 7;
             btnEnrolledStudents.Text = " Enrolled Students";
             btnEnrolledStudents.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -1016,10 +1039,10 @@
             // panel17
             // 
             panel17.Controls.Add(btnRegisterStudent);
-            panel17.Location = new Point(0, 256);
+            panel17.Location = new Point(0, 341);
             panel17.Margin = new Padding(0);
             panel17.Name = "panel17";
-            panel17.Size = new Size(256, 48);
+            panel17.Size = new Size(293, 64);
             panel17.TabIndex = 8;
             // 
             // btnRegisterStudent
@@ -1037,8 +1060,8 @@
             btnRegisterStudent.Location = new Point(0, 0);
             btnRegisterStudent.Margin = new Padding(0);
             btnRegisterStudent.Name = "btnRegisterStudent";
-            btnRegisterStudent.Padding = new Padding(16, 0, 0, 0);
-            btnRegisterStudent.Size = new Size(256, 48);
+            btnRegisterStudent.Padding = new Padding(18, 0, 0, 0);
+            btnRegisterStudent.Size = new Size(293, 64);
             btnRegisterStudent.TabIndex = 9;
             btnRegisterStudent.Text = " Register Student";
             btnRegisterStudent.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -1048,10 +1071,10 @@
             // panel18
             // 
             panel18.Controls.Add(btnRegisterProfessor);
-            panel18.Location = new Point(0, 304);
+            panel18.Location = new Point(0, 405);
             panel18.Margin = new Padding(0);
             panel18.Name = "panel18";
-            panel18.Size = new Size(256, 48);
+            panel18.Size = new Size(293, 64);
             panel18.TabIndex = 9;
             // 
             // btnRegisterProfessor
@@ -1069,8 +1092,8 @@
             btnRegisterProfessor.Location = new Point(0, 0);
             btnRegisterProfessor.Margin = new Padding(0);
             btnRegisterProfessor.Name = "btnRegisterProfessor";
-            btnRegisterProfessor.Padding = new Padding(16, 0, 0, 0);
-            btnRegisterProfessor.Size = new Size(256, 48);
+            btnRegisterProfessor.Padding = new Padding(18, 0, 0, 0);
+            btnRegisterProfessor.Size = new Size(293, 64);
             btnRegisterProfessor.TabIndex = 8;
             btnRegisterProfessor.Text = " Register Professor";
             btnRegisterProfessor.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -1080,10 +1103,10 @@
             // panel11
             // 
             panel11.Controls.Add(btnViewAllUsers);
-            panel11.Location = new Point(0, 352);
+            panel11.Location = new Point(0, 469);
             panel11.Margin = new Padding(0);
             panel11.Name = "panel11";
-            panel11.Size = new Size(256, 48);
+            panel11.Size = new Size(293, 64);
             panel11.TabIndex = 10;
             // 
             // btnViewAllUsers
@@ -1101,8 +1124,8 @@
             btnViewAllUsers.Location = new Point(0, 0);
             btnViewAllUsers.Margin = new Padding(0);
             btnViewAllUsers.Name = "btnViewAllUsers";
-            btnViewAllUsers.Padding = new Padding(16, 0, 0, 0);
-            btnViewAllUsers.Size = new Size(256, 48);
+            btnViewAllUsers.Padding = new Padding(18, 0, 0, 0);
+            btnViewAllUsers.Size = new Size(293, 64);
             btnViewAllUsers.TabIndex = 9;
             btnViewAllUsers.Text = " View All Users";
             btnViewAllUsers.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -1112,10 +1135,10 @@
             // panel9
             // 
             panel9.Controls.Add(btnSubjectOffering);
-            panel9.Location = new Point(0, 400);
+            panel9.Location = new Point(0, 533);
             panel9.Margin = new Padding(0);
             panel9.Name = "panel9";
-            panel9.Size = new Size(256, 48);
+            panel9.Size = new Size(293, 64);
             panel9.TabIndex = 2;
             // 
             // btnSubjectOffering
@@ -1133,8 +1156,8 @@
             btnSubjectOffering.Location = new Point(0, 0);
             btnSubjectOffering.Margin = new Padding(0);
             btnSubjectOffering.Name = "btnSubjectOffering";
-            btnSubjectOffering.Padding = new Padding(16, 0, 0, 0);
-            btnSubjectOffering.Size = new Size(256, 48);
+            btnSubjectOffering.Padding = new Padding(18, 0, 0, 0);
+            btnSubjectOffering.Size = new Size(293, 64);
             btnSubjectOffering.TabIndex = 3;
             btnSubjectOffering.Text = " Subject Offering                     ›";
             btnSubjectOffering.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -1149,11 +1172,12 @@
             pnlsubofferingSubmenu.Controls.Add(btnSO_Schedule);
             pnlsubofferingSubmenu.Controls.Add(btnSO_CurriculumArchive);
             pnlsubofferingSubmenu.FlowDirection = FlowDirection.TopDown;
-            pnlsubofferingSubmenu.Location = new Point(0, 448);
+            pnlsubofferingSubmenu.Location = new Point(0, 597);
             pnlsubofferingSubmenu.Margin = new Padding(0);
             pnlsubofferingSubmenu.Name = "pnlsubofferingSubmenu";
-            pnlsubofferingSubmenu.Size = new Size(256, 192);
+            pnlsubofferingSubmenu.Size = new Size(293, 256);
             pnlsubofferingSubmenu.TabIndex = 11;
+            pnlsubofferingSubmenu.Visible = false;
             pnlsubofferingSubmenu.WrapContents = false;
             // 
             // btnSO_CurrentSemester
@@ -1168,8 +1192,8 @@
             btnSO_CurrentSemester.Location = new Point(0, 0);
             btnSO_CurrentSemester.Margin = new Padding(0);
             btnSO_CurrentSemester.Name = "btnSO_CurrentSemester";
-            btnSO_CurrentSemester.Padding = new Padding(26, 0, 0, 0);
-            btnSO_CurrentSemester.Size = new Size(256, 48);
+            btnSO_CurrentSemester.Padding = new Padding(30, 0, 0, 0);
+            btnSO_CurrentSemester.Size = new Size(293, 64);
             btnSO_CurrentSemester.TabIndex = 0;
             btnSO_CurrentSemester.Text = " Current Semester";
             btnSO_CurrentSemester.TextAlign = ContentAlignment.MiddleLeft;
@@ -1185,11 +1209,11 @@
             btnSO_EditSchedule.FlatStyle = FlatStyle.Flat;
             btnSO_EditSchedule.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             btnSO_EditSchedule.ForeColor = Color.White;
-            btnSO_EditSchedule.Location = new Point(0, 48);
+            btnSO_EditSchedule.Location = new Point(0, 64);
             btnSO_EditSchedule.Margin = new Padding(0);
             btnSO_EditSchedule.Name = "btnSO_EditSchedule";
-            btnSO_EditSchedule.Padding = new Padding(26, 0, 0, 0);
-            btnSO_EditSchedule.Size = new Size(256, 48);
+            btnSO_EditSchedule.Padding = new Padding(30, 0, 0, 0);
+            btnSO_EditSchedule.Size = new Size(293, 64);
             btnSO_EditSchedule.TabIndex = 1;
             btnSO_EditSchedule.Text = " Edit Schedule";
             btnSO_EditSchedule.TextAlign = ContentAlignment.MiddleLeft;
@@ -1205,11 +1229,11 @@
             btnSO_Schedule.FlatStyle = FlatStyle.Flat;
             btnSO_Schedule.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             btnSO_Schedule.ForeColor = Color.White;
-            btnSO_Schedule.Location = new Point(0, 96);
+            btnSO_Schedule.Location = new Point(0, 128);
             btnSO_Schedule.Margin = new Padding(0);
             btnSO_Schedule.Name = "btnSO_Schedule";
-            btnSO_Schedule.Padding = new Padding(26, 0, 0, 0);
-            btnSO_Schedule.Size = new Size(256, 48);
+            btnSO_Schedule.Padding = new Padding(30, 0, 0, 0);
+            btnSO_Schedule.Size = new Size(293, 64);
             btnSO_Schedule.TabIndex = 2;
             btnSO_Schedule.Text = " Schedule";
             btnSO_Schedule.TextAlign = ContentAlignment.MiddleLeft;
@@ -1225,11 +1249,11 @@
             btnSO_CurriculumArchive.FlatStyle = FlatStyle.Flat;
             btnSO_CurriculumArchive.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             btnSO_CurriculumArchive.ForeColor = Color.White;
-            btnSO_CurriculumArchive.Location = new Point(0, 144);
+            btnSO_CurriculumArchive.Location = new Point(0, 192);
             btnSO_CurriculumArchive.Margin = new Padding(0);
             btnSO_CurriculumArchive.Name = "btnSO_CurriculumArchive";
-            btnSO_CurriculumArchive.Padding = new Padding(26, 0, 0, 0);
-            btnSO_CurriculumArchive.Size = new Size(256, 48);
+            btnSO_CurriculumArchive.Padding = new Padding(30, 0, 0, 0);
+            btnSO_CurriculumArchive.Size = new Size(293, 64);
             btnSO_CurriculumArchive.TabIndex = 3;
             btnSO_CurriculumArchive.Text = " Curriculum and Archive";
             btnSO_CurriculumArchive.TextAlign = ContentAlignment.MiddleLeft;
@@ -1241,36 +1265,39 @@
             panel4.BackColor = Color.FromArgb(30, 109, 0, 0);
             panel4.Controls.Add(panel5);
             panel4.Dock = DockStyle.Top;
-            panel4.Location = new Point(0, 72);
+            panel4.Location = new Point(0, 96);
+            panel4.Margin = new Padding(3, 4, 3, 4);
             panel4.Name = "panel4";
-            panel4.Size = new Size(256, 73);
+            panel4.Size = new Size(293, 97);
             panel4.TabIndex = 0;
             // 
             // panel5
             // 
             panel5.Controls.Add(panel6);
             panel5.Controls.Add(pictureBox1);
-            panel5.Location = new Point(16, 16);
+            panel5.Location = new Point(18, 21);
+            panel5.Margin = new Padding(3, 4, 3, 4);
             panel5.Name = "panel5";
-            panel5.Size = new Size(224, 40);
+            panel5.Size = new Size(256, 53);
             panel5.TabIndex = 1;
             // 
             // panel6
             // 
             panel6.Controls.Add(label2);
             panel6.Controls.Add(label1);
-            panel6.Location = new Point(52, 0);
+            panel6.Location = new Point(59, 0);
+            panel6.Margin = new Padding(3, 4, 3, 4);
             panel6.Name = "panel6";
-            panel6.Size = new Size(172, 40);
+            panel6.Size = new Size(197, 53);
             panel6.TabIndex = 2;
             // 
             // label2
             // 
             label2.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Pixel);
             label2.ForeColor = Color.Transparent;
-            label2.Location = new Point(0, 24);
+            label2.Location = new Point(0, 32);
             label2.Name = "label2";
-            label2.Size = new Size(172, 16);
+            label2.Size = new Size(197, 21);
             label2.TabIndex = 1;
             label2.Text = "Admin";
             label2.TextAlign = ContentAlignment.MiddleLeft;
@@ -1281,15 +1308,16 @@
             label1.ForeColor = Color.Transparent;
             label1.Location = new Point(0, 0);
             label1.Name = "label1";
-            label1.Size = new Size(172, 24);
+            label1.Size = new Size(197, 32);
             label1.TabIndex = 0;
-            label1.Text = "Name";
+            label1.Text = "DemoAdmin";
             label1.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // pictureBox1
             // 
             pictureBox1.Image = Properties.Resources.UserY;
             pictureBox1.Location = new Point(0, 0);
+            pictureBox1.Margin = new Padding(3, 4, 3, 4);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(40, 40);
             pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
@@ -1300,18 +1328,20 @@
             // 
             panel12.BackColor = Color.FromArgb(30, 109, 0, 0);
             panel12.Controls.Add(panel13);
-            panel12.Location = new Point(0, 904);
+            panel12.Dock = DockStyle.Bottom;
+            panel12.Location = new Point(0, 947);
+            panel12.Margin = new Padding(3, 4, 3, 4);
             panel12.Name = "panel12";
-            panel12.Size = new Size(256, 81);
+            panel12.Size = new Size(293, 108);
             panel12.TabIndex = 0;
             // 
             // panel13
             // 
             panel13.Controls.Add(btnLogout);
-            panel13.Location = new Point(16, 16);
+            panel13.Location = new Point(18, 21);
             panel13.Margin = new Padding(0);
             panel13.Name = "panel13";
-            panel13.Size = new Size(224, 48);
+            panel13.Size = new Size(256, 64);
             panel13.TabIndex = 4;
             // 
             // btnLogout
@@ -1327,9 +1357,10 @@
             btnLogout.Image = Properties.Resources.LogOut;
             btnLogout.ImageAlign = ContentAlignment.MiddleLeft;
             btnLogout.Location = new Point(0, 0);
+            btnLogout.Margin = new Padding(3, 4, 3, 4);
             btnLogout.Name = "btnLogout";
-            btnLogout.Padding = new Padding(16, 0, 0, 0);
-            btnLogout.Size = new Size(224, 48);
+            btnLogout.Padding = new Padding(18, 0, 0, 0);
+            btnLogout.Size = new Size(256, 64);
             btnLogout.TabIndex = 3;
             btnLogout.Text = " Logout";
             btnLogout.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -1346,9 +1377,8 @@
             pnlEditSchedule.Cursor = Cursors.Hand;
             pnlEditSchedule.Dock = DockStyle.Fill;
             pnlEditSchedule.Location = new Point(0, 0);
-            pnlEditSchedule.Margin = new Padding(3, 2, 3, 2);
             pnlEditSchedule.Name = "pnlEditSchedule";
-            pnlEditSchedule.Size = new Size(1258, 993);
+            pnlEditSchedule.Size = new Size(1438, 1324);
             pnlEditSchedule.TabIndex = 8;
             pnlEditSchedule.Paint += pnlEditSchedule_Paint;
             // 
@@ -1362,9 +1392,8 @@
             panel1.Controls.Add(lblESCurrentSem);
             panel1.Controls.Add(cmbESYearLevel);
             panel1.Location = new Point(0, 0);
-            panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1242, 72);
+            panel1.Size = new Size(1419, 96);
             panel1.TabIndex = 7;
             // 
             // btnClearSchedule
@@ -1375,10 +1404,9 @@
             btnClearSchedule.FlatAppearance.BorderSize = 0;
             btnClearSchedule.FlatStyle = FlatStyle.Flat;
             btnClearSchedule.ForeColor = Color.White;
-            btnClearSchedule.Location = new Point(974, 36);
-            btnClearSchedule.Margin = new Padding(3, 2, 3, 2);
+            btnClearSchedule.Location = new Point(1113, 48);
             btnClearSchedule.Name = "btnClearSchedule";
-            btnClearSchedule.Size = new Size(122, 27);
+            btnClearSchedule.Size = new Size(139, 36);
             btnClearSchedule.TabIndex = 4;
             btnClearSchedule.Text = "Clear Schedule";
             btnClearSchedule.UseVisualStyleBackColor = false;
@@ -1392,10 +1420,9 @@
             btnSaveSchedule.FlatAppearance.BorderSize = 0;
             btnSaveSchedule.FlatStyle = FlatStyle.Flat;
             btnSaveSchedule.ForeColor = Color.White;
-            btnSaveSchedule.Location = new Point(1108, 36);
-            btnSaveSchedule.Margin = new Padding(3, 2, 3, 2);
+            btnSaveSchedule.Location = new Point(1266, 48);
             btnSaveSchedule.Name = "btnSaveSchedule";
-            btnSaveSchedule.Size = new Size(118, 27);
+            btnSaveSchedule.Size = new Size(135, 36);
             btnSaveSchedule.TabIndex = 3;
             btnSaveSchedule.Text = "Save Schedule";
             btnSaveSchedule.UseVisualStyleBackColor = false;
@@ -1405,9 +1432,9 @@
             // 
             lblESYearLevel.AutoSize = true;
             lblESYearLevel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblESYearLevel.Location = new Point(16, 41);
+            lblESYearLevel.Location = new Point(18, 55);
             lblESYearLevel.Name = "lblESYearLevel";
-            lblESYearLevel.Size = new Size(88, 18);
+            lblESYearLevel.Size = new Size(115, 23);
             lblESYearLevel.TabIndex = 1;
             lblESYearLevel.Text = "Year Level: ";
             lblESYearLevel.Click += lblESYearLevel_Click;
@@ -1416,9 +1443,9 @@
             // 
             lblESCurrentSem.AutoSize = true;
             lblESCurrentSem.Font = new Font("Arial", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblESCurrentSem.Location = new Point(16, 9);
+            lblESCurrentSem.Location = new Point(18, 12);
             lblESCurrentSem.Name = "lblESCurrentSem";
-            lblESCurrentSem.Size = new Size(219, 29);
+            lblESCurrentSem.Size = new Size(278, 35);
             lblESCurrentSem.TabIndex = 0;
             lblESCurrentSem.Text = "Current Semester:";
             lblESCurrentSem.Click += lblESCurrentSem_Click;
@@ -1428,10 +1455,9 @@
             cmbESYearLevel.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbESYearLevel.FormattingEnabled = true;
             cmbESYearLevel.Items.AddRange(new object[] { "All", "1", "2", "3", "4" });
-            cmbESYearLevel.Location = new Point(123, 41);
-            cmbESYearLevel.Margin = new Padding(3, 2, 3, 2);
+            cmbESYearLevel.Location = new Point(141, 55);
             cmbESYearLevel.Name = "cmbESYearLevel";
-            cmbESYearLevel.Size = new Size(70, 23);
+            cmbESYearLevel.Size = new Size(79, 28);
             cmbESYearLevel.TabIndex = 2;
             // 
             // dgvEditSchedule
@@ -1445,13 +1471,12 @@
             dgvEditSchedule.BackgroundColor = Color.White;
             dgvEditSchedule.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvEditSchedule.Columns.AddRange(new DataGridViewColumn[] { ESCourseCode, ESCourseTitle, ESLab, ESLec, ESTotalUnits, ESSection, ESDay, ESStartTime, EsEndTime, ESRoom, ESInstructor });
-            dgvEditSchedule.Location = new Point(26, 89);
-            dgvEditSchedule.Margin = new Padding(3, 2, 3, 2);
+            dgvEditSchedule.Location = new Point(30, 119);
             dgvEditSchedule.Name = "dgvEditSchedule";
             dgvEditSchedule.RowHeadersVisible = false;
             dgvEditSchedule.RowHeadersWidth = 51;
             dgvEditSchedule.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvEditSchedule.Size = new Size(1216, 495);
+            dgvEditSchedule.Size = new Size(1390, 660);
             dgvEditSchedule.TabIndex = 6;
             dgvEditSchedule.CellContentClick += dgvEditSchedule_CellContentClick;
             // 
@@ -1542,15 +1567,14 @@
             dgvSchedule.ColumnHeadersHeight = 30;
             dgvSchedule.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dgvSchedule.Columns.AddRange(new DataGridViewColumn[] { CourseCode, CourseTitle, Lab, Lec, TotalUnits, Year });
-            dgvSchedule.Location = new Point(26, 137);
-            dgvSchedule.Margin = new Padding(3, 2, 3, 2);
+            dgvSchedule.Location = new Point(30, 183);
             dgvSchedule.MultiSelect = false;
             dgvSchedule.Name = "dgvSchedule";
             dgvSchedule.RowHeadersVisible = false;
             dgvSchedule.RowHeadersWidth = 51;
             dgvSchedule.ScrollBars = ScrollBars.Vertical;
             dgvSchedule.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvSchedule.Size = new Size(1216, 495);
+            dgvSchedule.Size = new Size(1390, 660);
             dgvSchedule.TabIndex = 7;
             // 
             // CourseCode
@@ -1559,6 +1583,7 @@
             CourseCode.HeaderText = "Course Code";
             CourseCode.MinimumWidth = 6;
             CourseCode.Name = "CourseCode";
+            CourseCode.Width = 122;
             // 
             // CourseTitle
             // 
@@ -1573,7 +1598,7 @@
             Lab.HeaderText = "Lab";
             Lab.MinimumWidth = 6;
             Lab.Name = "Lab";
-            Lab.Width = 51;
+            Lab.Width = 62;
             // 
             // Lec
             // 
@@ -1581,7 +1606,7 @@
             Lec.HeaderText = "Lec";
             Lec.MinimumWidth = 6;
             Lec.Name = "Lec";
-            Lec.Width = 50;
+            Lec.Width = 60;
             // 
             // TotalUnits
             // 
@@ -1589,7 +1614,7 @@
             TotalUnits.HeaderText = "Total Units";
             TotalUnits.MinimumWidth = 6;
             TotalUnits.Name = "TotalUnits";
-            TotalUnits.Width = 88;
+            TotalUnits.Width = 108;
             // 
             // Year
             // 
@@ -1597,7 +1622,7 @@
             Year.HeaderText = "Year";
             Year.MinimumWidth = 6;
             Year.Name = "Year";
-            Year.Width = 54;
+            Year.Width = 66;
             // 
             // pnlSubOfferingContent
             // 
@@ -1608,10 +1633,10 @@
             pnlSubOfferingContent.Controls.Add(pnlSchedule);
             pnlSubOfferingContent.Controls.Add(pnlCurrentSemester);
             pnlSubOfferingContent.Dock = DockStyle.Fill;
-            pnlSubOfferingContent.Location = new Point(256, 72);
+            pnlSubOfferingContent.Location = new Point(293, 96);
             pnlSubOfferingContent.Margin = new Padding(0);
             pnlSubOfferingContent.Name = "pnlSubOfferingContent";
-            pnlSubOfferingContent.Size = new Size(1272, 719);
+            pnlSubOfferingContent.Size = new Size(1453, 959);
             pnlSubOfferingContent.TabIndex = 6;
             pnlSubOfferingContent.Paint += pnlCoursesContent_Paint;
             // 
@@ -1623,9 +1648,8 @@
             pnlCurriculumArchive.Controls.Add(pnlArchive);
             pnlCurriculumArchive.Dock = DockStyle.Fill;
             pnlCurriculumArchive.Location = new Point(0, 0);
-            pnlCurriculumArchive.Margin = new Padding(3, 2, 3, 2);
             pnlCurriculumArchive.Name = "pnlCurriculumArchive";
-            pnlCurriculumArchive.Size = new Size(1258, 993);
+            pnlCurriculumArchive.Size = new Size(1438, 1324);
             pnlCurriculumArchive.TabIndex = 7;
             // 
             // pnlCurriculum
@@ -1635,10 +1659,9 @@
             pnlCurriculum.Controls.Add(btnUpdateCurriculum);
             pnlCurriculum.Controls.Add(dgvCurriculum);
             pnlCurriculum.Dock = DockStyle.Fill;
-            pnlCurriculum.Location = new Point(0, 36);
-            pnlCurriculum.Margin = new Padding(3, 2, 3, 2);
+            pnlCurriculum.Location = new Point(0, 48);
             pnlCurriculum.Name = "pnlCurriculum";
-            pnlCurriculum.Size = new Size(1258, 957);
+            pnlCurriculum.Size = new Size(1438, 1276);
             pnlCurriculum.TabIndex = 1;
             // 
             // lblCurriculumList
@@ -1647,9 +1670,9 @@
             lblCurriculumList.BackColor = Color.White;
             lblCurriculumList.Font = new Font("Arial", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblCurriculumList.ForeColor = SystemColors.ActiveCaptionText;
-            lblCurriculumList.Location = new Point(32, 24);
+            lblCurriculumList.Location = new Point(37, 32);
             lblCurriculumList.Name = "lblCurriculumList";
-            lblCurriculumList.Size = new Size(198, 29);
+            lblCurriculumList.Size = new Size(245, 35);
             lblCurriculumList.TabIndex = 11;
             lblCurriculumList.Text = "Curriculum List:";
             // 
@@ -1659,10 +1682,9 @@
             btnUpdateCurriculum.BackColor = Color.FromArgb(109, 0, 0);
             btnUpdateCurriculum.FlatStyle = FlatStyle.Flat;
             btnUpdateCurriculum.ForeColor = Color.White;
-            btnUpdateCurriculum.Location = new Point(1096, 584);
-            btnUpdateCurriculum.Margin = new Padding(3, 2, 3, 2);
+            btnUpdateCurriculum.Location = new Point(1253, 779);
             btnUpdateCurriculum.Name = "btnUpdateCurriculum";
-            btnUpdateCurriculum.Size = new Size(140, 27);
+            btnUpdateCurriculum.Size = new Size(160, 36);
             btnUpdateCurriculum.TabIndex = 11;
             btnUpdateCurriculum.Text = "Update Curriculum";
             btnUpdateCurriculum.UseVisualStyleBackColor = false;
@@ -1680,14 +1702,13 @@
             dgvCurriculum.BackgroundColor = Color.White;
             dgvCurriculum.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvCurriculum.Columns.AddRange(new DataGridViewColumn[] { CourseCode2, CourseTitle2, Lab2, Lec2, TotalUnits2, Year2 });
-            dgvCurriculum.Location = new Point(44, 76);
-            dgvCurriculum.Margin = new Padding(3, 2, 3, 2);
+            dgvCurriculum.Location = new Point(50, 101);
             dgvCurriculum.Name = "dgvCurriculum";
             dgvCurriculum.ReadOnly = true;
             dgvCurriculum.RowHeadersVisible = false;
             dgvCurriculum.RowHeadersWidth = 51;
             dgvCurriculum.ScrollBars = ScrollBars.Vertical;
-            dgvCurriculum.Size = new Size(1192, 495);
+            dgvCurriculum.Size = new Size(1362, 660);
             dgvCurriculum.TabIndex = 0;
             // 
             // CourseCode2
@@ -1739,19 +1760,17 @@
             panel14.Controls.Add(btnCurriculum);
             panel14.Dock = DockStyle.Top;
             panel14.Location = new Point(0, 0);
-            panel14.Margin = new Padding(3, 2, 3, 2);
             panel14.Name = "panel14";
-            panel14.Size = new Size(1258, 36);
+            panel14.Size = new Size(1438, 48);
             panel14.TabIndex = 0;
             // 
             // btnArchive
             // 
             btnArchive.BackColor = Color.Transparent;
             btnArchive.FlatStyle = FlatStyle.Flat;
-            btnArchive.Location = new Point(119, 3);
-            btnArchive.Margin = new Padding(3, 2, 3, 2);
+            btnArchive.Location = new Point(136, 4);
             btnArchive.Name = "btnArchive";
-            btnArchive.Size = new Size(105, 30);
+            btnArchive.Size = new Size(120, 40);
             btnArchive.TabIndex = 1;
             btnArchive.Text = "Archive";
             btnArchive.UseVisualStyleBackColor = false;
@@ -1761,10 +1780,9 @@
             // 
             btnCurriculum.BackColor = Color.Transparent;
             btnCurriculum.FlatStyle = FlatStyle.Flat;
-            btnCurriculum.Location = new Point(9, 3);
-            btnCurriculum.Margin = new Padding(3, 2, 3, 2);
+            btnCurriculum.Location = new Point(10, 4);
             btnCurriculum.Name = "btnCurriculum";
-            btnCurriculum.Size = new Size(105, 30);
+            btnCurriculum.Size = new Size(120, 40);
             btnCurriculum.TabIndex = 0;
             btnCurriculum.Text = "Curriculum";
             btnCurriculum.UseVisualStyleBackColor = false;
@@ -1776,9 +1794,8 @@
             pnlArchive.Controls.Add(dgvArchive);
             pnlArchive.Dock = DockStyle.Fill;
             pnlArchive.Location = new Point(0, 0);
-            pnlArchive.Margin = new Padding(3, 2, 3, 2);
             pnlArchive.Name = "pnlArchive";
-            pnlArchive.Size = new Size(1258, 993);
+            pnlArchive.Size = new Size(1438, 1324);
             pnlArchive.TabIndex = 12;
             // 
             // dgvArchive
@@ -1793,14 +1810,13 @@
             dgvArchive.BackgroundColor = Color.White;
             dgvArchive.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvArchive.Columns.AddRange(new DataGridViewColumn[] { Semester, SchoolYear, blank });
-            dgvArchive.Location = new Point(36, 68);
-            dgvArchive.Margin = new Padding(3, 2, 3, 2);
+            dgvArchive.Location = new Point(41, 91);
             dgvArchive.Name = "dgvArchive";
             dgvArchive.ReadOnly = true;
             dgvArchive.RowHeadersVisible = false;
             dgvArchive.RowHeadersWidth = 51;
             dgvArchive.ScrollBars = ScrollBars.Vertical;
-            dgvArchive.Size = new Size(1204, 495);
+            dgvArchive.Size = new Size(1376, 660);
             dgvArchive.TabIndex = 0;
             // 
             // Semester
@@ -1832,10 +1848,9 @@
             pnlSchedule.Controls.Add(panel10);
             pnlSchedule.ForeColor = SystemColors.ActiveCaption;
             pnlSchedule.Location = new Point(0, 0);
-            pnlSchedule.Margin = new Padding(3, 2, 3, 2);
             pnlSchedule.Name = "pnlSchedule";
-            pnlSchedule.Padding = new Padding(9, 0, 9, 0);
-            pnlSchedule.Size = new Size(1258, 993);
+            pnlSchedule.Padding = new Padding(10, 0, 10, 0);
+            pnlSchedule.Size = new Size(1438, 1324);
             pnlSchedule.TabIndex = 7;
             // 
             // dgvScheduleView
@@ -1848,29 +1863,28 @@
             dgvScheduleView.BackgroundColor = Color.White;
             dgvScheduleView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvScheduleView.Columns.AddRange(new DataGridViewColumn[] { CourseCode1, CourseTitle1, Lec1, Lab1, TotalUnits1, Section1, Day1, Start1, End1, Room1, Instructor1 });
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.Window;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle1.ForeColor = SystemColors.ActiveCaption;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
-            dgvScheduleView.DefaultCellStyle = dataGridViewCellStyle1;
-            dgvScheduleView.Location = new Point(26, 89);
-            dgvScheduleView.Margin = new Padding(3, 2, 3, 2);
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = SystemColors.Window;
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle5.ForeColor = SystemColors.ActiveCaption;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
+            dgvScheduleView.DefaultCellStyle = dataGridViewCellStyle5;
+            dgvScheduleView.Location = new Point(30, 119);
             dgvScheduleView.Name = "dgvScheduleView";
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle2.ForeColor = Color.Black;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            dgvScheduleView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = SystemColors.Control;
+            dataGridViewCellStyle6.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle6.ForeColor = Color.Black;
+            dataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
+            dgvScheduleView.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             dgvScheduleView.RowHeadersVisible = false;
             dgvScheduleView.RowHeadersWidth = 51;
             dgvScheduleView.ScrollBars = ScrollBars.Vertical;
-            dgvScheduleView.Size = new Size(1216, 495);
+            dgvScheduleView.Size = new Size(1390, 660);
             dgvScheduleView.TabIndex = 1;
             // 
             // CourseCode1
@@ -1949,10 +1963,9 @@
             panel10.Controls.Add(label6);
             panel10.Controls.Add(label5);
             panel10.Dock = DockStyle.Top;
-            panel10.Location = new Point(9, 0);
-            panel10.Margin = new Padding(3, 2, 3, 2);
+            panel10.Location = new Point(10, 0);
             panel10.Name = "panel10";
-            panel10.Size = new Size(1240, 72);
+            panel10.Size = new Size(1418, 96);
             panel10.TabIndex = 0;
             // 
             // btnPrint
@@ -1961,10 +1974,9 @@
             btnPrint.BackColor = Color.FromArgb(109, 0, 0);
             btnPrint.FlatStyle = FlatStyle.Flat;
             btnPrint.ForeColor = Color.White;
-            btnPrint.Location = new Point(1142, 34);
-            btnPrint.Margin = new Padding(3, 2, 3, 2);
+            btnPrint.Location = new Point(1306, 45);
             btnPrint.Name = "btnPrint";
-            btnPrint.Size = new Size(82, 28);
+            btnPrint.Size = new Size(94, 37);
             btnPrint.TabIndex = 10;
             btnPrint.Text = "Print";
             btnPrint.UseVisualStyleBackColor = false;
@@ -1976,10 +1988,9 @@
             btnExportExcel.BackColor = Color.FromArgb(109, 0, 0);
             btnExportExcel.FlatStyle = FlatStyle.Flat;
             btnExportExcel.ForeColor = Color.White;
-            btnExportExcel.Location = new Point(856, 34);
-            btnExportExcel.Margin = new Padding(3, 2, 3, 2);
+            btnExportExcel.Location = new Point(979, 45);
             btnExportExcel.Name = "btnExportExcel";
-            btnExportExcel.Size = new Size(119, 28);
+            btnExportExcel.Size = new Size(136, 37);
             btnExportExcel.TabIndex = 9;
             btnExportExcel.Text = "Export to Excel";
             btnExportExcel.UseVisualStyleBackColor = false;
@@ -1991,10 +2002,9 @@
             btnExportPDF.BackColor = Color.FromArgb(109, 0, 0);
             btnExportPDF.FlatStyle = FlatStyle.Flat;
             btnExportPDF.ForeColor = Color.White;
-            btnExportPDF.Location = new Point(1000, 34);
-            btnExportPDF.Margin = new Padding(3, 2, 3, 2);
+            btnExportPDF.Location = new Point(1144, 45);
             btnExportPDF.Name = "btnExportPDF";
-            btnExportPDF.Size = new Size(119, 28);
+            btnExportPDF.Size = new Size(136, 37);
             btnExportPDF.TabIndex = 8;
             btnExportPDF.Text = "Export to PDF";
             btnExportPDF.UseVisualStyleBackColor = false;
@@ -2005,10 +2015,9 @@
             cmbYearLevel.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbYearLevel.FormattingEnabled = true;
             cmbYearLevel.Items.AddRange(new object[] { "1", "2", "3", "4" });
-            cmbYearLevel.Location = new Point(122, 44);
-            cmbYearLevel.Margin = new Padding(3, 2, 3, 2);
+            cmbYearLevel.Location = new Point(139, 59);
             cmbYearLevel.Name = "cmbYearLevel";
-            cmbYearLevel.Size = new Size(70, 23);
+            cmbYearLevel.Size = new Size(79, 28);
             cmbYearLevel.TabIndex = 7;
             cmbYearLevel.SelectedIndexChanged += cmbYearLevel_SelectedIndexChanged;
             // 
@@ -2017,9 +2026,9 @@
             label6.AutoSize = true;
             label6.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label6.ForeColor = SystemColors.ActiveCaptionText;
-            label6.Location = new Point(16, 48);
+            label6.Location = new Point(18, 64);
             label6.Name = "label6";
-            label6.Size = new Size(84, 18);
+            label6.Size = new Size(109, 23);
             label6.TabIndex = 7;
             label6.Text = "Year Level:";
             // 
@@ -2029,9 +2038,9 @@
             label5.BackColor = Color.White;
             label5.Font = new Font("Arial", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label5.ForeColor = SystemColors.ActiveCaptionText;
-            label5.Location = new Point(16, 10);
+            label5.Location = new Point(18, 13);
             label5.Name = "label5";
-            label5.Size = new Size(219, 29);
+            label5.Size = new Size(278, 35);
             label5.TabIndex = 7;
             label5.Text = "Current Semester:";
             // 
@@ -2041,9 +2050,8 @@
             pnlCurrentSemester.Controls.Add(dgvSchedule);
             pnlCurrentSemester.Controls.Add(panel2);
             pnlCurrentSemester.Location = new Point(0, 0);
-            pnlCurrentSemester.Margin = new Padding(3, 2, 3, 2);
             pnlCurrentSemester.Name = "pnlCurrentSemester";
-            pnlCurrentSemester.Size = new Size(1258, 704);
+            pnlCurrentSemester.Size = new Size(1438, 939);
             pnlCurrentSemester.TabIndex = 0;
             // 
             // panel2
@@ -2058,10 +2066,9 @@
             panel2.Controls.Add(cmbSem);
             panel2.Dock = DockStyle.Top;
             panel2.Location = new Point(0, 0);
-            panel2.Margin = new Padding(3, 2, 3, 2);
             panel2.Name = "panel2";
-            panel2.Padding = new Padding(18, 0, 18, 0);
-            panel2.Size = new Size(1258, 137);
+            panel2.Padding = new Padding(21, 0, 21, 0);
+            panel2.Size = new Size(1438, 183);
             panel2.TabIndex = 8;
             // 
             // btnSetCurrent
@@ -2071,10 +2078,9 @@
             btnSetCurrent.FlatAppearance.BorderSize = 0;
             btnSetCurrent.FlatStyle = FlatStyle.Flat;
             btnSetCurrent.ForeColor = Color.White;
-            btnSetCurrent.Location = new Point(1064, 96);
-            btnSetCurrent.Margin = new Padding(3, 2, 3, 2);
+            btnSetCurrent.Location = new Point(1216, 128);
             btnSetCurrent.Name = "btnSetCurrent";
-            btnSetCurrent.Size = new Size(177, 27);
+            btnSetCurrent.Size = new Size(202, 36);
             btnSetCurrent.TabIndex = 6;
             btnSetCurrent.Text = "Set as Current Semester";
             btnSetCurrent.UseVisualStyleBackColor = false;
@@ -2085,9 +2091,9 @@
             lblSemesterSetup.AutoSize = true;
             lblSemesterSetup.BackColor = Color.White;
             lblSemesterSetup.Font = new Font("Arial", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblSemesterSetup.Location = new Point(18, 13);
+            lblSemesterSetup.Location = new Point(21, 17);
             lblSemesterSetup.Name = "lblSemesterSetup";
-            lblSemesterSetup.Size = new Size(193, 29);
+            lblSemesterSetup.Size = new Size(242, 35);
             lblSemesterSetup.TabIndex = 0;
             lblSemesterSetup.Text = "Semester Setup";
             lblSemesterSetup.Click += lblSemesterSetup_Click;
@@ -2097,19 +2103,18 @@
             cmbSY.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbSY.FormattingEnabled = true;
             cmbSY.Items.AddRange(new object[] { "2025-2026", "2026-2027" });
-            cmbSY.Location = new Point(122, 44);
-            cmbSY.Margin = new Padding(3, 2, 3, 2);
+            cmbSY.Location = new Point(139, 59);
             cmbSY.Name = "cmbSY";
-            cmbSY.Size = new Size(158, 23);
+            cmbSY.Size = new Size(180, 28);
             cmbSY.TabIndex = 4;
             // 
             // lblCourseList
             // 
             lblCourseList.AutoSize = true;
             lblCourseList.Font = new Font("Arial", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblCourseList.Location = new Point(18, 98);
+            lblCourseList.Location = new Point(21, 131);
             lblCourseList.Name = "lblCourseList";
-            lblCourseList.Size = new Size(315, 26);
+            lblCourseList.Size = new Size(413, 33);
             lblCourseList.TabIndex = 3;
             lblCourseList.Text = "Current Semester Course List";
             // 
@@ -2117,9 +2122,9 @@
             // 
             lblSY.AutoSize = true;
             lblSY.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblSY.Location = new Point(18, 46);
+            lblSY.Location = new Point(21, 61);
             lblSY.Name = "lblSY";
-            lblSY.Size = new Size(99, 18);
+            lblSY.Size = new Size(128, 23);
             lblSY.TabIndex = 1;
             lblSY.Text = "School Year: ";
             // 
@@ -2127,9 +2132,9 @@
             // 
             lblSem.AutoSize = true;
             lblSem.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblSem.Location = new Point(18, 70);
+            lblSem.Location = new Point(21, 93);
             lblSem.Name = "lblSem";
-            lblSem.Size = new Size(84, 18);
+            lblSem.Size = new Size(107, 23);
             lblSem.TabIndex = 2;
             lblSem.Text = "Semester: ";
             lblSem.Click += lblSem_Click;
@@ -2139,20 +2144,19 @@
             cmbSem.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbSem.FormattingEnabled = true;
             cmbSem.Items.AddRange(new object[] { "1", "2" });
-            cmbSem.Location = new Point(122, 70);
-            cmbSem.Margin = new Padding(3, 2, 3, 2);
+            cmbSem.Location = new Point(139, 93);
             cmbSem.Name = "cmbSem";
-            cmbSem.Size = new Size(70, 23);
+            cmbSem.Size = new Size(79, 28);
             cmbSem.TabIndex = 5;
             // 
             // pnlEnrollContent
             // 
             pnlEnrollContent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pnlEnrollContent.AutoScroll = true;
-            pnlEnrollContent.Location = new Point(328, 136);
+            pnlEnrollContent.Location = new Point(375, 181);
             pnlEnrollContent.Margin = new Padding(0);
             pnlEnrollContent.Name = "pnlEnrollContent";
-            pnlEnrollContent.Size = new Size(1272, 719);
+            pnlEnrollContent.Size = new Size(1454, 959);
             pnlEnrollContent.TabIndex = 5;
             pnlEnrollContent.Visible = false;
             // 
@@ -2172,8 +2176,9 @@
             pnlContainerAdminPortal.Controls.Add(pnlSidebar);
             pnlContainerAdminPortal.Dock = DockStyle.Fill;
             pnlContainerAdminPortal.Location = new Point(0, 0);
+            pnlContainerAdminPortal.Margin = new Padding(3, 4, 3, 4);
             pnlContainerAdminPortal.Name = "pnlContainerAdminPortal";
-            pnlContainerAdminPortal.Size = new Size(1528, 791);
+            pnlContainerAdminPortal.Size = new Size(1746, 1055);
             pnlContainerAdminPortal.TabIndex = 0;
             // 
             // pnlAccountingRecordsContent
@@ -2188,9 +2193,10 @@
             pnlAccountingRecordsContent.Controls.Add(label67);
             pnlAccountingRecordsContent.Controls.Add(pictureBox10);
             pnlAccountingRecordsContent.Dock = DockStyle.Fill;
-            pnlAccountingRecordsContent.Location = new Point(256, 72);
+            pnlAccountingRecordsContent.Location = new Point(293, 96);
+            pnlAccountingRecordsContent.Margin = new Padding(3, 4, 3, 4);
             pnlAccountingRecordsContent.Name = "pnlAccountingRecordsContent";
-            pnlAccountingRecordsContent.Size = new Size(1272, 719);
+            pnlAccountingRecordsContent.Size = new Size(1453, 959);
             pnlAccountingRecordsContent.TabIndex = 10;
             pnlAccountingRecordsContent.Visible = false;
             // 
@@ -2200,10 +2206,9 @@
             pnlARResultContainer.BackColor = Color.White;
             pnlARResultContainer.Controls.Add(btnARSearch);
             pnlARResultContainer.Controls.Add(txtARSearchBar);
-            pnlARResultContainer.Location = new Point(32, 250);
-            pnlARResultContainer.Margin = new Padding(3, 2, 3, 2);
+            pnlARResultContainer.Location = new Point(37, 333);
             pnlARResultContainer.Name = "pnlARResultContainer";
-            pnlARResultContainer.Size = new Size(1195, 292);
+            pnlARResultContainer.Size = new Size(1365, 389);
             pnlARResultContainer.TabIndex = 21;
             // 
             // btnARSearch
@@ -2213,10 +2218,9 @@
             btnARSearch.FlatStyle = FlatStyle.Flat;
             btnARSearch.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnARSearch.ForeColor = Color.White;
-            btnARSearch.Location = new Point(1032, 17);
-            btnARSearch.Margin = new Padding(3, 2, 3, 2);
+            btnARSearch.Location = new Point(1178, 23);
             btnARSearch.Name = "btnARSearch";
-            btnARSearch.Size = new Size(144, 32);
+            btnARSearch.Size = new Size(165, 43);
             btnARSearch.TabIndex = 1;
             btnARSearch.Text = "Search";
             btnARSearch.UseVisualStyleBackColor = false;
@@ -2224,11 +2228,10 @@
             // txtARSearchBar
             // 
             txtARSearchBar.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtARSearchBar.Location = new Point(20, 17);
-            txtARSearchBar.Margin = new Padding(3, 2, 3, 2);
+            txtARSearchBar.Location = new Point(23, 23);
             txtARSearchBar.Name = "txtARSearchBar";
             txtARSearchBar.PlaceholderText = "Search by student name, ID, or transaction type...";
-            txtARSearchBar.Size = new Size(998, 29);
+            txtARSearchBar.Size = new Size(1140, 34);
             txtARSearchBar.TabIndex = 0;
             // 
             // pnlARUnpaidAmount
@@ -2238,10 +2241,9 @@
             pnlARUnpaidAmount.Controls.Add(pictureBox13);
             pnlARUnpaidAmount.Controls.Add(label60);
             pnlARUnpaidAmount.Controls.Add(label61);
-            pnlARUnpaidAmount.Location = new Point(860, 119);
-            pnlARUnpaidAmount.Margin = new Padding(3, 2, 3, 2);
+            pnlARUnpaidAmount.Location = new Point(983, 159);
             pnlARUnpaidAmount.Name = "pnlARUnpaidAmount";
-            pnlARUnpaidAmount.Size = new Size(368, 95);
+            pnlARUnpaidAmount.Size = new Size(420, 125);
             pnlARUnpaidAmount.TabIndex = 20;
             // 
             // pictureBox13
@@ -2251,9 +2253,10 @@
             pictureBox13.BackgroundImageLayout = ImageLayout.Zoom;
             pictureBox13.BorderStyle = BorderStyle.FixedSingle;
             pictureBox13.Image = Properties.Resources.calendar_10_48;
-            pictureBox13.Location = new Point(264, 12);
+            pictureBox13.Location = new Point(302, 16);
+            pictureBox13.Margin = new Padding(3, 4, 3, 4);
             pictureBox13.Name = "pictureBox13";
-            pictureBox13.Size = new Size(80, 66);
+            pictureBox13.Size = new Size(91, 87);
             pictureBox13.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox13.TabIndex = 23;
             pictureBox13.TabStop = false;
@@ -2263,9 +2266,9 @@
             label60.AutoSize = true;
             label60.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label60.ForeColor = Color.DimGray;
-            label60.Location = new Point(3, 8);
+            label60.Location = new Point(3, 11);
             label60.Name = "label60";
-            label60.Size = new Size(132, 21);
+            label60.Size = new Size(161, 28);
             label60.TabIndex = 16;
             label60.Text = "Unpaid Amount";
             // 
@@ -2275,9 +2278,9 @@
             label61.BackColor = Color.Transparent;
             label61.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label61.ForeColor = Color.Red;
-            label61.Location = new Point(3, 22);
+            label61.Location = new Point(3, 29);
             label61.Name = "label61";
-            label61.Size = new Size(100, 65);
+            label61.Size = new Size(125, 81);
             label61.TabIndex = 17;
             label61.Text = " ₱0";
             // 
@@ -2288,10 +2291,9 @@
             pnlARPaidAmount.Controls.Add(pictureBox12);
             pnlARPaidAmount.Controls.Add(label62);
             pnlARPaidAmount.Controls.Add(label63);
-            pnlARPaidAmount.Location = new Point(443, 119);
-            pnlARPaidAmount.Margin = new Padding(3, 2, 3, 2);
+            pnlARPaidAmount.Location = new Point(506, 159);
             pnlARPaidAmount.Name = "pnlARPaidAmount";
-            pnlARPaidAmount.Size = new Size(368, 97);
+            pnlARPaidAmount.Size = new Size(420, 128);
             pnlARPaidAmount.TabIndex = 19;
             // 
             // pictureBox12
@@ -2301,9 +2303,10 @@
             pictureBox12.BackgroundImageLayout = ImageLayout.Zoom;
             pictureBox12.BorderStyle = BorderStyle.FixedSingle;
             pictureBox12.Image = Properties.Resources.card_in_use_48;
-            pictureBox12.Location = new Point(264, 12);
+            pictureBox12.Location = new Point(302, 16);
+            pictureBox12.Margin = new Padding(3, 4, 3, 4);
             pictureBox12.Name = "pictureBox12";
-            pictureBox12.Size = new Size(80, 66);
+            pictureBox12.Size = new Size(91, 87);
             pictureBox12.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox12.TabIndex = 22;
             pictureBox12.TabStop = false;
@@ -2313,9 +2316,9 @@
             label62.AutoSize = true;
             label62.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label62.ForeColor = Color.DimGray;
-            label62.Location = new Point(3, 8);
+            label62.Location = new Point(3, 11);
             label62.Name = "label62";
-            label62.Size = new Size(110, 21);
+            label62.Size = new Size(135, 28);
             label62.TabIndex = 16;
             label62.Text = "Paid Amount";
             // 
@@ -2325,9 +2328,9 @@
             label63.BackColor = Color.Transparent;
             label63.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label63.ForeColor = Color.LimeGreen;
-            label63.Location = new Point(3, 22);
+            label63.Location = new Point(3, 29);
             label63.Name = "label63";
-            label63.Size = new Size(100, 65);
+            label63.Size = new Size(125, 81);
             label63.TabIndex = 17;
             label63.Text = " ₱0";
             // 
@@ -2338,10 +2341,9 @@
             pnlARTotalAmount.Controls.Add(pictureBox11);
             pnlARTotalAmount.Controls.Add(label64);
             pnlARTotalAmount.Controls.Add(label65);
-            pnlARTotalAmount.Location = new Point(32, 122);
-            pnlARTotalAmount.Margin = new Padding(3, 2, 3, 2);
+            pnlARTotalAmount.Location = new Point(37, 163);
             pnlARTotalAmount.Name = "pnlARTotalAmount";
-            pnlARTotalAmount.Size = new Size(368, 95);
+            pnlARTotalAmount.Size = new Size(420, 125);
             pnlARTotalAmount.TabIndex = 18;
             // 
             // pictureBox11
@@ -2351,9 +2353,10 @@
             pictureBox11.BackgroundImageLayout = ImageLayout.Zoom;
             pictureBox11.BorderStyle = BorderStyle.FixedSingle;
             pictureBox11.Image = Properties.Resources.card_inserting_48__1_;
-            pictureBox11.Location = new Point(264, 12);
+            pictureBox11.Location = new Point(302, 16);
+            pictureBox11.Margin = new Padding(3, 4, 3, 4);
             pictureBox11.Name = "pictureBox11";
-            pictureBox11.Size = new Size(80, 66);
+            pictureBox11.Size = new Size(91, 87);
             pictureBox11.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox11.TabIndex = 21;
             pictureBox11.TabStop = false;
@@ -2363,9 +2366,9 @@
             label64.AutoSize = true;
             label64.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label64.ForeColor = Color.DimGray;
-            label64.Location = new Point(3, 8);
+            label64.Location = new Point(3, 11);
             label64.Name = "label64";
-            label64.Size = new Size(114, 21);
+            label64.Size = new Size(141, 28);
             label64.TabIndex = 15;
             label64.Text = "Total Amount";
             // 
@@ -2375,9 +2378,9 @@
             label65.BackColor = Color.Transparent;
             label65.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label65.ForeColor = Color.Black;
-            label65.Location = new Point(3, 22);
+            label65.Location = new Point(3, 29);
             label65.Name = "label65";
-            label65.Size = new Size(100, 65);
+            label65.Size = new Size(125, 81);
             label65.TabIndex = 15;
             label65.Text = " ₱0";
             // 
@@ -2386,9 +2389,9 @@
             label66.AutoSize = true;
             label66.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label66.ForeColor = Color.Black;
-            label66.Location = new Point(94, 32);
+            label66.Location = new Point(107, 43);
             label66.Name = "label66";
-            label66.Size = new Size(291, 40);
+            label66.Size = new Size(369, 50);
             label66.TabIndex = 17;
             label66.Text = "Accounting Records";
             // 
@@ -2397,9 +2400,9 @@
             label67.AutoSize = true;
             label67.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
             label67.ForeColor = Color.DimGray;
-            label67.Location = new Point(102, 73);
+            label67.Location = new Point(117, 97);
             label67.Name = "label67";
-            label67.Size = new Size(279, 19);
+            label67.Size = new Size(341, 23);
             label67.TabIndex = 16;
             label67.Text = "View and manage student financial records";
             // 
@@ -2409,9 +2412,10 @@
             pictureBox10.BackgroundImageLayout = ImageLayout.Zoom;
             pictureBox10.BorderStyle = BorderStyle.FixedSingle;
             pictureBox10.Image = (Image)resources.GetObject("pictureBox10.Image");
-            pictureBox10.Location = new Point(32, 31);
+            pictureBox10.Location = new Point(37, 41);
+            pictureBox10.Margin = new Padding(3, 4, 3, 4);
             pictureBox10.Name = "pictureBox10";
-            pictureBox10.Size = new Size(59, 66);
+            pictureBox10.Size = new Size(67, 87);
             pictureBox10.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox10.TabIndex = 15;
             pictureBox10.TabStop = false;
@@ -2426,18 +2430,18 @@
             pnlRegisterProfessorContent.Controls.Add(lblRegisterProfessor);
             pnlRegisterProfessorContent.Controls.Add(pictureBox4);
             pnlRegisterProfessorContent.Dock = DockStyle.Fill;
-            pnlRegisterProfessorContent.Location = new Point(256, 72);
+            pnlRegisterProfessorContent.Location = new Point(293, 96);
+            pnlRegisterProfessorContent.Margin = new Padding(3, 4, 3, 4);
             pnlRegisterProfessorContent.Name = "pnlRegisterProfessorContent";
-            pnlRegisterProfessorContent.Size = new Size(1272, 719);
+            pnlRegisterProfessorContent.Size = new Size(1453, 959);
             pnlRegisterProfessorContent.TabIndex = 13;
             pnlRegisterProfessorContent.Visible = false;
             // 
             // pnlProfBottomExtension
             // 
-            pnlProfBottomExtension.Location = new Point(34, 955);
-            pnlProfBottomExtension.Margin = new Padding(3, 2, 3, 2);
+            pnlProfBottomExtension.Location = new Point(39, 1273);
             pnlProfBottomExtension.Name = "pnlProfBottomExtension";
-            pnlProfBottomExtension.Size = new Size(904, 94);
+            pnlProfBottomExtension.Size = new Size(1033, 125);
             pnlProfBottomExtension.TabIndex = 11;
             // 
             // pnlProfRegistrationContainer
@@ -2477,9 +2481,10 @@
             pnlProfRegistrationContainer.Controls.Add(txtProfID);
             pnlProfRegistrationContainer.Controls.Add(pnlProfMaroonLine1);
             pnlProfRegistrationContainer.Controls.Add(lblProfPersonalInfo);
-            pnlProfRegistrationContainer.Location = new Point(32, 119);
+            pnlProfRegistrationContainer.Location = new Point(37, 159);
+            pnlProfRegistrationContainer.Margin = new Padding(3, 4, 3, 4);
             pnlProfRegistrationContainer.Name = "pnlProfRegistrationContainer";
-            pnlProfRegistrationContainer.Size = new Size(903, 823);
+            pnlProfRegistrationContainer.Size = new Size(1032, 1097);
             pnlProfRegistrationContainer.TabIndex = 5;
             // 
             // btnProfClearForm
@@ -2487,9 +2492,10 @@
             btnProfClearForm.FlatAppearance.BorderColor = Color.Gray;
             btnProfClearForm.FlatStyle = FlatStyle.Flat;
             btnProfClearForm.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnProfClearForm.Location = new Point(513, 756);
+            btnProfClearForm.Location = new Point(586, 1008);
+            btnProfClearForm.Margin = new Padding(3, 4, 3, 4);
             btnProfClearForm.Name = "btnProfClearForm";
-            btnProfClearForm.Size = new Size(147, 37);
+            btnProfClearForm.Size = new Size(168, 49);
             btnProfClearForm.TabIndex = 53;
             btnProfClearForm.Text = "Clear Form";
             btnProfClearForm.UseVisualStyleBackColor = true;
@@ -2502,9 +2508,10 @@
             btnProfRegister.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnProfRegister.ForeColor = Color.White;
             btnProfRegister.Image = Properties.Resources.professor_161;
-            btnProfRegister.Location = new Point(666, 755);
+            btnProfRegister.Location = new Point(761, 1007);
+            btnProfRegister.Margin = new Padding(3, 4, 3, 4);
             btnProfRegister.Name = "btnProfRegister";
-            btnProfRegister.Size = new Size(215, 37);
+            btnProfRegister.Size = new Size(246, 49);
             btnProfRegister.TabIndex = 52;
             btnProfRegister.Text = "Register Professor";
             btnProfRegister.TextAlign = ContentAlignment.MiddleRight;
@@ -2515,9 +2522,10 @@
             // 
             cmbProfEmploymentStatus.FormattingEnabled = true;
             cmbProfEmploymentStatus.Items.AddRange(new object[] { "Full-Time", "Part-Time", "Contractual", "Visiting Professor" });
-            cmbProfEmploymentStatus.Location = new Point(439, 707);
+            cmbProfEmploymentStatus.Location = new Point(502, 943);
+            cmbProfEmploymentStatus.Margin = new Padding(3, 4, 3, 4);
             cmbProfEmploymentStatus.Name = "cmbProfEmploymentStatus";
-            cmbProfEmploymentStatus.Size = new Size(442, 23);
+            cmbProfEmploymentStatus.Size = new Size(505, 28);
             cmbProfEmploymentStatus.TabIndex = 51;
             cmbProfEmploymentStatus.Text = "Select Employment Status";
             // 
@@ -2525,9 +2533,10 @@
             // 
             cmbProfDept.FormattingEnabled = true;
             cmbProfDept.Items.AddRange(new object[] { "Computer Science", "Information Technology", "Engineering", "Business Administration", "Accountancy", "Education", "Liberal Arts", "Natural Sciences" });
-            cmbProfDept.Location = new Point(26, 643);
+            cmbProfDept.Location = new Point(30, 857);
+            cmbProfDept.Margin = new Padding(3, 4, 3, 4);
             cmbProfDept.Name = "cmbProfDept";
-            cmbProfDept.Size = new Size(396, 23);
+            cmbProfDept.Size = new Size(452, 28);
             cmbProfDept.TabIndex = 50;
             cmbProfDept.Text = "Select Department";
             // 
@@ -2535,9 +2544,10 @@
             // 
             cmbProfEducLevel.FormattingEnabled = true;
             cmbProfEducLevel.Items.AddRange(new object[] { "Bachelor's Degree", "Master's Degree", "Doctorate (PhD)", "Post-Doctorate" });
-            cmbProfEducLevel.Location = new Point(26, 707);
+            cmbProfEducLevel.Location = new Point(30, 943);
+            cmbProfEducLevel.Margin = new Padding(3, 4, 3, 4);
             cmbProfEducLevel.Name = "cmbProfEducLevel";
-            cmbProfEducLevel.Size = new Size(396, 23);
+            cmbProfEducLevel.Size = new Size(452, 28);
             cmbProfEducLevel.TabIndex = 49;
             cmbProfEducLevel.Text = "Select Education Level";
             // 
@@ -2546,9 +2556,9 @@
             lblProfEmploymentStatus.AutoSize = true;
             lblProfEmploymentStatus.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblProfEmploymentStatus.ForeColor = Color.Black;
-            lblProfEmploymentStatus.Location = new Point(436, 681);
+            lblProfEmploymentStatus.Location = new Point(498, 908);
             lblProfEmploymentStatus.Name = "lblProfEmploymentStatus";
-            lblProfEmploymentStatus.Size = new Size(151, 21);
+            lblProfEmploymentStatus.Size = new Size(188, 28);
             lblProfEmploymentStatus.TabIndex = 48;
             lblProfEmploymentStatus.Text = "Employment Status";
             // 
@@ -2557,9 +2567,9 @@
             lblProfSpecialization.AutoSize = true;
             lblProfSpecialization.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblProfSpecialization.ForeColor = Color.Black;
-            lblProfSpecialization.Location = new Point(436, 617);
+            lblProfSpecialization.Location = new Point(498, 823);
             lblProfSpecialization.Name = "lblProfSpecialization";
-            lblProfSpecialization.Size = new Size(110, 21);
+            lblProfSpecialization.Size = new Size(135, 28);
             lblProfSpecialization.TabIndex = 46;
             lblProfSpecialization.Text = "Specialization";
             // 
@@ -2567,10 +2577,11 @@
             // 
             txtProfSpecialization.BorderStyle = BorderStyle.FixedSingle;
             txtProfSpecialization.CharacterCasing = CharacterCasing.Upper;
-            txtProfSpecialization.Location = new Point(439, 643);
+            txtProfSpecialization.Location = new Point(502, 857);
+            txtProfSpecialization.Margin = new Padding(3, 4, 3, 4);
             txtProfSpecialization.Name = "txtProfSpecialization";
             txtProfSpecialization.PlaceholderText = " e.g., Artificial Intelligence";
-            txtProfSpecialization.Size = new Size(442, 23);
+            txtProfSpecialization.Size = new Size(505, 27);
             txtProfSpecialization.TabIndex = 45;
             // 
             // lblProfHEL
@@ -2578,9 +2589,9 @@
             lblProfHEL.AutoSize = true;
             lblProfHEL.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblProfHEL.ForeColor = Color.Black;
-            lblProfHEL.Location = new Point(23, 681);
+            lblProfHEL.Location = new Point(26, 908);
             lblProfHEL.Name = "lblProfHEL";
-            lblProfHEL.Size = new Size(185, 21);
+            lblProfHEL.Size = new Size(231, 28);
             lblProfHEL.TabIndex = 43;
             lblProfHEL.Text = "Highest Education Level";
             // 
@@ -2589,19 +2600,19 @@
             lblProfDept.AutoSize = true;
             lblProfDept.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblProfDept.ForeColor = Color.Black;
-            lblProfDept.Location = new Point(23, 617);
+            lblProfDept.Location = new Point(26, 823);
             lblProfDept.Name = "lblProfDept";
-            lblProfDept.Size = new Size(98, 21);
+            lblProfDept.Size = new Size(122, 28);
             lblProfDept.TabIndex = 41;
             lblProfDept.Text = "Department";
             // 
             // lblProfMaroonLIne3
             // 
             lblProfMaroonLIne3.BackColor = Color.Maroon;
-            lblProfMaroonLIne3.Location = new Point(23, 595);
+            lblProfMaroonLIne3.Location = new Point(26, 793);
             lblProfMaroonLIne3.Margin = new Padding(0);
             lblProfMaroonLIne3.Name = "lblProfMaroonLIne3";
-            lblProfMaroonLIne3.Size = new Size(861, 3);
+            lblProfMaroonLIne3.Size = new Size(984, 4);
             lblProfMaroonLIne3.TabIndex = 39;
             // 
             // lblProfProfessionalInfo
@@ -2609,36 +2620,39 @@
             lblProfProfessionalInfo.AutoSize = true;
             lblProfProfessionalInfo.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblProfProfessionalInfo.ForeColor = Color.Black;
-            lblProfProfessionalInfo.Location = new Point(23, 560);
+            lblProfProfessionalInfo.Location = new Point(26, 747);
             lblProfProfessionalInfo.Name = "lblProfProfessionalInfo";
-            lblProfProfessionalInfo.Size = new Size(248, 30);
+            lblProfProfessionalInfo.Size = new Size(319, 37);
             lblProfProfessionalInfo.TabIndex = 38;
             lblProfProfessionalInfo.Text = "Professional Information";
             // 
             // dtpProfBirthDate
             // 
-            dtpProfBirthDate.Location = new Point(26, 231);
+            dtpProfBirthDate.Location = new Point(30, 308);
+            dtpProfBirthDate.Margin = new Padding(3, 4, 3, 4);
             dtpProfBirthDate.Name = "dtpProfBirthDate";
-            dtpProfBirthDate.Size = new Size(396, 23);
+            dtpProfBirthDate.Size = new Size(452, 27);
             dtpProfBirthDate.TabIndex = 37;
             dtpProfBirthDate.Value = new DateTime(2026, 4, 4, 22, 34, 4, 0);
             // 
             // txtProfAddress
             // 
             txtProfAddress.BorderStyle = BorderStyle.FixedSingle;
-            txtProfAddress.Location = new Point(26, 425);
+            txtProfAddress.Location = new Point(30, 567);
+            txtProfAddress.Margin = new Padding(3, 4, 3, 4);
             txtProfAddress.Multiline = true;
             txtProfAddress.Name = "txtProfAddress";
-            txtProfAddress.Size = new Size(855, 114);
+            txtProfAddress.Size = new Size(977, 151);
             txtProfAddress.TabIndex = 36;
             // 
             // mtxProfPhoneNum
             // 
             mtxProfPhoneNum.BorderStyle = BorderStyle.FixedSingle;
-            mtxProfPhoneNum.Location = new Point(439, 363);
+            mtxProfPhoneNum.Location = new Point(502, 484);
+            mtxProfPhoneNum.Margin = new Padding(3, 4, 3, 4);
             mtxProfPhoneNum.Mask = "(+63) 000-000-0000";
             mtxProfPhoneNum.Name = "mtxProfPhoneNum";
-            mtxProfPhoneNum.Size = new Size(442, 23);
+            mtxProfPhoneNum.Size = new Size(505, 27);
             mtxProfPhoneNum.TabIndex = 34;
             // 
             // lblProfPhoneNum
@@ -2646,9 +2660,9 @@
             lblProfPhoneNum.AutoSize = true;
             lblProfPhoneNum.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblProfPhoneNum.ForeColor = Color.Black;
-            lblProfPhoneNum.Location = new Point(436, 337);
+            lblProfPhoneNum.Location = new Point(498, 449);
             lblProfPhoneNum.Name = "lblProfPhoneNum";
-            lblProfPhoneNum.Size = new Size(120, 21);
+            lblProfPhoneNum.Size = new Size(152, 28);
             lblProfPhoneNum.TabIndex = 33;
             lblProfPhoneNum.Text = "Phone Number";
             // 
@@ -2657,9 +2671,9 @@
             lblProfAddress.AutoSize = true;
             lblProfAddress.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblProfAddress.ForeColor = Color.Black;
-            lblProfAddress.Location = new Point(23, 401);
+            lblProfAddress.Location = new Point(26, 535);
             lblProfAddress.Name = "lblProfAddress";
-            lblProfAddress.Size = new Size(70, 21);
+            lblProfAddress.Size = new Size(85, 28);
             lblProfAddress.TabIndex = 30;
             lblProfAddress.Text = "Address";
             // 
@@ -2668,9 +2682,9 @@
             lblProfEmailAdd.AutoSize = true;
             lblProfEmailAdd.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblProfEmailAdd.ForeColor = Color.Black;
-            lblProfEmailAdd.Location = new Point(23, 337);
+            lblProfEmailAdd.Location = new Point(26, 449);
             lblProfEmailAdd.Name = "lblProfEmailAdd";
-            lblProfEmailAdd.Size = new Size(112, 21);
+            lblProfEmailAdd.Size = new Size(139, 28);
             lblProfEmailAdd.TabIndex = 28;
             lblProfEmailAdd.Text = "Email Address";
             // 
@@ -2678,19 +2692,20 @@
             // 
             txtProfEmailAdd.BorderStyle = BorderStyle.FixedSingle;
             txtProfEmailAdd.CharacterCasing = CharacterCasing.Upper;
-            txtProfEmailAdd.Location = new Point(26, 361);
+            txtProfEmailAdd.Location = new Point(30, 481);
+            txtProfEmailAdd.Margin = new Padding(3, 4, 3, 4);
             txtProfEmailAdd.Name = "txtProfEmailAdd";
             txtProfEmailAdd.PlaceholderText = " professor@pup.edu.ph";
-            txtProfEmailAdd.Size = new Size(396, 23);
+            txtProfEmailAdd.Size = new Size(452, 27);
             txtProfEmailAdd.TabIndex = 27;
             // 
             // pnlProfMaroonLine2
             // 
             pnlProfMaroonLine2.BackColor = Color.Maroon;
-            pnlProfMaroonLine2.Location = new Point(23, 315);
+            pnlProfMaroonLine2.Location = new Point(26, 420);
             pnlProfMaroonLine2.Margin = new Padding(0);
             pnlProfMaroonLine2.Name = "pnlProfMaroonLine2";
-            pnlProfMaroonLine2.Size = new Size(861, 3);
+            pnlProfMaroonLine2.Size = new Size(984, 4);
             pnlProfMaroonLine2.TabIndex = 26;
             // 
             // lblProfContactInfo
@@ -2698,9 +2713,9 @@
             lblProfContactInfo.AutoSize = true;
             lblProfContactInfo.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblProfContactInfo.ForeColor = Color.Black;
-            lblProfContactInfo.Location = new Point(23, 280);
+            lblProfContactInfo.Location = new Point(26, 373);
             lblProfContactInfo.Name = "lblProfContactInfo";
-            lblProfContactInfo.Size = new Size(208, 30);
+            lblProfContactInfo.Size = new Size(266, 37);
             lblProfContactInfo.TabIndex = 25;
             lblProfContactInfo.Text = "Contact Information";
             // 
@@ -2709,9 +2724,9 @@
             lblProfLastName.AutoSize = true;
             lblProfLastName.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblProfLastName.ForeColor = Color.Black;
-            lblProfLastName.Location = new Point(436, 147);
+            lblProfLastName.Location = new Point(498, 196);
             lblProfLastName.Name = "lblProfLastName";
-            lblProfLastName.Size = new Size(86, 21);
+            lblProfLastName.Size = new Size(108, 28);
             lblProfLastName.TabIndex = 23;
             lblProfLastName.Text = "Last Name";
             // 
@@ -2719,10 +2734,11 @@
             // 
             txtProfLastName.BorderStyle = BorderStyle.FixedSingle;
             txtProfLastName.CharacterCasing = CharacterCasing.Upper;
-            txtProfLastName.Location = new Point(439, 173);
+            txtProfLastName.Location = new Point(502, 231);
+            txtProfLastName.Margin = new Padding(3, 4, 3, 4);
             txtProfLastName.Name = "txtProfLastName";
             txtProfLastName.PlaceholderText = " Enter last name";
-            txtProfLastName.Size = new Size(442, 23);
+            txtProfLastName.Size = new Size(505, 27);
             txtProfLastName.TabIndex = 22;
             // 
             // lbProfFirstName
@@ -2730,9 +2746,9 @@
             lbProfFirstName.AutoSize = true;
             lbProfFirstName.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lbProfFirstName.ForeColor = Color.Black;
-            lbProfFirstName.Location = new Point(436, 83);
+            lbProfFirstName.Location = new Point(498, 111);
             lbProfFirstName.Name = "lbProfFirstName";
-            lbProfFirstName.Size = new Size(88, 21);
+            lbProfFirstName.Size = new Size(110, 28);
             lbProfFirstName.TabIndex = 21;
             lbProfFirstName.Text = "First Name";
             // 
@@ -2740,10 +2756,11 @@
             // 
             txtProfFirstNane.BorderStyle = BorderStyle.FixedSingle;
             txtProfFirstNane.CharacterCasing = CharacterCasing.Upper;
-            txtProfFirstNane.Location = new Point(439, 109);
+            txtProfFirstNane.Location = new Point(502, 145);
+            txtProfFirstNane.Margin = new Padding(3, 4, 3, 4);
             txtProfFirstNane.Name = "txtProfFirstNane";
             txtProfFirstNane.PlaceholderText = " Enter first name";
-            txtProfFirstNane.Size = new Size(442, 23);
+            txtProfFirstNane.Size = new Size(505, 27);
             txtProfFirstNane.TabIndex = 20;
             // 
             // lblProfBirthDate
@@ -2751,9 +2768,9 @@
             lblProfBirthDate.AutoSize = true;
             lblProfBirthDate.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblProfBirthDate.ForeColor = Color.Black;
-            lblProfBirthDate.Location = new Point(23, 207);
+            lblProfBirthDate.Location = new Point(26, 276);
             lblProfBirthDate.Name = "lblProfBirthDate";
-            lblProfBirthDate.Size = new Size(103, 21);
+            lblProfBirthDate.Size = new Size(129, 28);
             lblProfBirthDate.TabIndex = 19;
             lblProfBirthDate.Text = "Date of Birth";
             // 
@@ -2762,9 +2779,9 @@
             lblProfMiddleName.AutoSize = true;
             lblProfMiddleName.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblProfMiddleName.ForeColor = Color.Black;
-            lblProfMiddleName.Location = new Point(23, 147);
+            lblProfMiddleName.Location = new Point(26, 196);
             lblProfMiddleName.Name = "lblProfMiddleName";
-            lblProfMiddleName.Size = new Size(109, 21);
+            lblProfMiddleName.Size = new Size(135, 28);
             lblProfMiddleName.TabIndex = 15;
             lblProfMiddleName.Text = "Middle Name";
             // 
@@ -2772,10 +2789,11 @@
             // 
             txtProfMiddleName.BorderStyle = BorderStyle.FixedSingle;
             txtProfMiddleName.CharacterCasing = CharacterCasing.Upper;
-            txtProfMiddleName.Location = new Point(26, 171);
+            txtProfMiddleName.Location = new Point(30, 228);
+            txtProfMiddleName.Margin = new Padding(3, 4, 3, 4);
             txtProfMiddleName.Name = "txtProfMiddleName";
             txtProfMiddleName.PlaceholderText = " Enter middle name";
-            txtProfMiddleName.Size = new Size(396, 23);
+            txtProfMiddleName.Size = new Size(452, 27);
             txtProfMiddleName.TabIndex = 14;
             // 
             // lblProfID
@@ -2783,9 +2801,9 @@
             lblProfID.AutoSize = true;
             lblProfID.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblProfID.ForeColor = Color.Black;
-            lblProfID.Location = new Point(23, 83);
+            lblProfID.Location = new Point(26, 111);
             lblProfID.Name = "lblProfID";
-            lblProfID.Size = new Size(100, 21);
+            lblProfID.Size = new Size(124, 28);
             lblProfID.TabIndex = 11;
             lblProfID.Text = "Professor ID";
             // 
@@ -2793,19 +2811,20 @@
             // 
             txtProfID.BorderStyle = BorderStyle.FixedSingle;
             txtProfID.CharacterCasing = CharacterCasing.Upper;
-            txtProfID.Location = new Point(26, 109);
+            txtProfID.Location = new Point(30, 145);
+            txtProfID.Margin = new Padding(3, 4, 3, 4);
             txtProfID.Name = "txtProfID";
             txtProfID.PlaceholderText = " e.g., PROF-001";
-            txtProfID.Size = new Size(396, 23);
+            txtProfID.Size = new Size(452, 27);
             txtProfID.TabIndex = 10;
             // 
             // pnlProfMaroonLine1
             // 
             pnlProfMaroonLine1.BackColor = Color.Maroon;
-            pnlProfMaroonLine1.Location = new Point(23, 61);
+            pnlProfMaroonLine1.Location = new Point(26, 81);
             pnlProfMaroonLine1.Margin = new Padding(0);
             pnlProfMaroonLine1.Name = "pnlProfMaroonLine1";
-            pnlProfMaroonLine1.Size = new Size(861, 3);
+            pnlProfMaroonLine1.Size = new Size(984, 4);
             pnlProfMaroonLine1.TabIndex = 9;
             // 
             // lblProfPersonalInfo
@@ -2813,9 +2832,9 @@
             lblProfPersonalInfo.AutoSize = true;
             lblProfPersonalInfo.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblProfPersonalInfo.ForeColor = Color.Black;
-            lblProfPersonalInfo.Location = new Point(23, 26);
+            lblProfPersonalInfo.Location = new Point(26, 35);
             lblProfPersonalInfo.Name = "lblProfPersonalInfo";
-            lblProfPersonalInfo.Size = new Size(213, 30);
+            lblProfPersonalInfo.Size = new Size(274, 37);
             lblProfPersonalInfo.TabIndex = 6;
             lblProfPersonalInfo.Text = "Personal Information";
             // 
@@ -2824,9 +2843,9 @@
             lblRPdesc.AutoSize = true;
             lblRPdesc.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
             lblRPdesc.ForeColor = Color.DimGray;
-            lblRPdesc.Location = new Point(106, 77);
+            lblRPdesc.Location = new Point(121, 103);
             lblRPdesc.Name = "lblRPdesc";
-            lblRPdesc.Size = new Size(225, 19);
+            lblRPdesc.Size = new Size(277, 23);
             lblRPdesc.TabIndex = 4;
             lblRPdesc.Text = "Add a new professor to the system";
             // 
@@ -2835,9 +2854,9 @@
             lblRegisterProfessor.AutoSize = true;
             lblRegisterProfessor.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblRegisterProfessor.ForeColor = Color.Black;
-            lblRegisterProfessor.Location = new Point(95, 37);
+            lblRegisterProfessor.Location = new Point(109, 49);
             lblRegisterProfessor.Name = "lblRegisterProfessor";
-            lblRegisterProfessor.Size = new Size(268, 40);
+            lblRegisterProfessor.Size = new Size(338, 50);
             lblRegisterProfessor.TabIndex = 2;
             lblRegisterProfessor.Text = "Register Professor";
             // 
@@ -2845,9 +2864,10 @@
             // 
             pictureBox4.BackColor = Color.Maroon;
             pictureBox4.Image = Properties.Resources.professor_32;
-            pictureBox4.Location = new Point(32, 37);
+            pictureBox4.Location = new Point(37, 49);
+            pictureBox4.Margin = new Padding(3, 4, 3, 4);
             pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(57, 59);
+            pictureBox4.Size = new Size(65, 79);
             pictureBox4.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox4.TabIndex = 0;
             pictureBox4.TabStop = false;
@@ -2865,10 +2885,10 @@
             pnlDashboardContent.Controls.Add(pnlDashboardTotalStudents);
             pnlDashboardContent.Controls.Add(lblAdminDashboard);
             pnlDashboardContent.Controls.Add(lblAdminDashboardDesc);
-            pnlDashboardContent.Location = new Point(256, 72);
+            pnlDashboardContent.Location = new Point(293, 96);
             pnlDashboardContent.Margin = new Padding(0);
             pnlDashboardContent.Name = "pnlDashboardContent";
-            pnlDashboardContent.Size = new Size(1272, 719);
+            pnlDashboardContent.Size = new Size(1454, 959);
             pnlDashboardContent.TabIndex = 7;
             pnlDashboardContent.Visible = false;
             // 
@@ -2880,10 +2900,9 @@
             pnlDashboardContainerRecentAct.Controls.Add(pnlDashboardRADummyDara2);
             pnlDashboardContainerRecentAct.Controls.Add(pnlDashboardRADummyDara1);
             pnlDashboardContainerRecentAct.Controls.Add(label89);
-            pnlDashboardContainerRecentAct.Location = new Point(31, 2961);
-            pnlDashboardContainerRecentAct.Margin = new Padding(3, 2, 3, 2);
+            pnlDashboardContainerRecentAct.Location = new Point(35, 4588);
             pnlDashboardContainerRecentAct.Name = "pnlDashboardContainerRecentAct";
-            pnlDashboardContainerRecentAct.Size = new Size(1194, 325);
+            pnlDashboardContainerRecentAct.Size = new Size(1365, 433);
             pnlDashboardContainerRecentAct.TabIndex = 22;
             // 
             // pnlDashboardRADummyDara3
@@ -2891,9 +2910,10 @@
             pnlDashboardRADummyDara3.Controls.Add(label87);
             pnlDashboardRADummyDara3.Controls.Add(panel48);
             pnlDashboardRADummyDara3.Controls.Add(label84);
-            pnlDashboardRADummyDara3.Location = new Point(28, 222);
+            pnlDashboardRADummyDara3.Location = new Point(32, 296);
+            pnlDashboardRADummyDara3.Margin = new Padding(3, 4, 3, 4);
             pnlDashboardRADummyDara3.Name = "pnlDashboardRADummyDara3";
-            pnlDashboardRADummyDara3.Size = new Size(1146, 61);
+            pnlDashboardRADummyDara3.Size = new Size(1310, 81);
             pnlDashboardRADummyDara3.TabIndex = 27;
             // 
             // label87
@@ -2901,18 +2921,19 @@
             label87.AutoSize = true;
             label87.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label87.ForeColor = Color.DimGray;
-            label87.Location = new Point(1057, 18);
+            label87.Location = new Point(1208, 24);
             label87.Name = "label87";
-            label87.Size = new Size(79, 17);
+            label87.Size = new Size(101, 23);
             label87.TabIndex = 22;
             label87.Text = "3 hours ago";
             // 
             // panel48
             // 
             panel48.BackColor = Color.FromArgb(255, 193, 7);
-            panel48.Location = new Point(24, 12);
+            panel48.Location = new Point(27, 16);
+            panel48.Margin = new Padding(3, 4, 3, 4);
             panel48.Name = "panel48";
-            panel48.Size = new Size(5, 30);
+            panel48.Size = new Size(6, 40);
             panel48.TabIndex = 17;
             // 
             // label84
@@ -2920,9 +2941,9 @@
             label84.AutoSize = true;
             label84.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label84.ForeColor = Color.DimGray;
-            label84.Location = new Point(42, 15);
+            label84.Location = new Point(48, 20);
             label84.Name = "label84";
-            label84.Size = new Size(300, 21);
+            label84.Size = new Size(376, 28);
             label84.TabIndex = 16;
             label84.Text = "Marie Sarmiento registered as student";
             // 
@@ -2931,9 +2952,10 @@
             pnlDashboardRADummyDara2.Controls.Add(label86);
             pnlDashboardRADummyDara2.Controls.Add(panel43);
             pnlDashboardRADummyDara2.Controls.Add(label83);
-            pnlDashboardRADummyDara2.Location = new Point(28, 145);
+            pnlDashboardRADummyDara2.Location = new Point(32, 193);
+            pnlDashboardRADummyDara2.Margin = new Padding(3, 4, 3, 4);
             pnlDashboardRADummyDara2.Name = "pnlDashboardRADummyDara2";
-            pnlDashboardRADummyDara2.Size = new Size(1146, 61);
+            pnlDashboardRADummyDara2.Size = new Size(1310, 81);
             pnlDashboardRADummyDara2.TabIndex = 26;
             // 
             // label86
@@ -2941,18 +2963,19 @@
             label86.AutoSize = true;
             label86.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label86.ForeColor = Color.DimGray;
-            label86.Location = new Point(1056, 19);
+            label86.Location = new Point(1207, 25);
             label86.Name = "label86";
-            label86.Size = new Size(79, 17);
+            label86.Size = new Size(101, 23);
             label86.TabIndex = 21;
             label86.Text = "3 hours ago";
             // 
             // panel43
             // 
             panel43.BackColor = Color.FromArgb(255, 193, 7);
-            panel43.Location = new Point(24, 12);
+            panel43.Location = new Point(27, 16);
+            panel43.Margin = new Padding(3, 4, 3, 4);
             panel43.Name = "panel43";
-            panel43.Size = new Size(5, 30);
+            panel43.Size = new Size(6, 40);
             panel43.TabIndex = 17;
             // 
             // label83
@@ -2960,9 +2983,9 @@
             label83.AutoSize = true;
             label83.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label83.ForeColor = Color.DimGray;
-            label83.Location = new Point(42, 15);
+            label83.Location = new Point(48, 20);
             label83.Name = "label83";
-            label83.Size = new Size(311, 21);
+            label83.Size = new Size(392, 28);
             label83.TabIndex = 16;
             label83.Text = "Dr. Mario Santos registered as professor\r\n";
             // 
@@ -2971,9 +2994,10 @@
             pnlDashboardRADummyDara1.Controls.Add(label85);
             pnlDashboardRADummyDara1.Controls.Add(panel46);
             pnlDashboardRADummyDara1.Controls.Add(label88);
-            pnlDashboardRADummyDara1.Location = new Point(28, 68);
+            pnlDashboardRADummyDara1.Location = new Point(32, 91);
+            pnlDashboardRADummyDara1.Margin = new Padding(3, 4, 3, 4);
             pnlDashboardRADummyDara1.Name = "pnlDashboardRADummyDara1";
-            pnlDashboardRADummyDara1.Size = new Size(1146, 61);
+            pnlDashboardRADummyDara1.Size = new Size(1310, 81);
             pnlDashboardRADummyDara1.TabIndex = 25;
             // 
             // label85
@@ -2981,18 +3005,19 @@
             label85.AutoSize = true;
             label85.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label85.ForeColor = Color.DimGray;
-            label85.Location = new Point(1057, 21);
+            label85.Location = new Point(1208, 28);
             label85.Name = "label85";
-            label85.Size = new Size(79, 17);
+            label85.Size = new Size(101, 23);
             label85.TabIndex = 20;
             label85.Text = "3 hours ago";
             // 
             // panel46
             // 
             panel46.BackColor = Color.FromArgb(255, 193, 7);
-            panel46.Location = new Point(24, 12);
+            panel46.Location = new Point(27, 16);
+            panel46.Margin = new Padding(3, 4, 3, 4);
             panel46.Name = "panel46";
-            panel46.Size = new Size(5, 30);
+            panel46.Size = new Size(6, 40);
             panel46.TabIndex = 17;
             // 
             // label88
@@ -3000,9 +3025,9 @@
             label88.AutoSize = true;
             label88.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label88.ForeColor = Color.DimGray;
-            label88.Location = new Point(42, 15);
+            label88.Location = new Point(48, 20);
             label88.Name = "label88";
-            label88.Size = new Size(272, 21);
+            label88.Size = new Size(342, 28);
             label88.TabIndex = 16;
             label88.Text = "Maria Santos registered as student";
             // 
@@ -3011,18 +3036,19 @@
             label89.AutoSize = true;
             label89.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label89.ForeColor = Color.Maroon;
-            label89.Location = new Point(22, 21);
+            label89.Location = new Point(25, 28);
             label89.Name = "label89";
-            label89.Size = new Size(185, 32);
+            label89.Size = new Size(230, 41);
             label89.TabIndex = 24;
             label89.Text = "Recent Activity";
             // 
             // panel45
             // 
             panel45.BackColor = SystemColors.Control;
-            panel45.Location = new Point(33, 895);
+            panel45.Location = new Point(38, 1193);
+            panel45.Margin = new Padding(3, 4, 3, 4);
             panel45.Name = "panel45";
-            panel45.Size = new Size(1195, 170);
+            panel45.Size = new Size(1366, 227);
             panel45.TabIndex = 29;
             // 
             // pnlDashboardContainerQuickActions
@@ -3033,10 +3059,9 @@
             pnlDashboardContainerQuickActions.Controls.Add(pnlDashboardViewAllUsers);
             pnlDashboardContainerQuickActions.Controls.Add(pnlDashboardRegisterStudent);
             pnlDashboardContainerQuickActions.Controls.Add(label81);
-            pnlDashboardContainerQuickActions.Location = new Point(34, 2651);
-            pnlDashboardContainerQuickActions.Margin = new Padding(3, 2, 3, 2);
+            pnlDashboardContainerQuickActions.Location = new Point(39, 4174);
             pnlDashboardContainerQuickActions.Name = "pnlDashboardContainerQuickActions";
-            pnlDashboardContainerQuickActions.Size = new Size(1194, 283);
+            pnlDashboardContainerQuickActions.Size = new Size(1365, 377);
             pnlDashboardContainerQuickActions.TabIndex = 21;
             // 
             // pnlDashboardRegisterProfessor
@@ -3046,9 +3071,10 @@
             pnlDashboardRegisterProfessor.Controls.Add(btnDashboardREgisterProfessor);
             pnlDashboardRegisterProfessor.Controls.Add(label76);
             pnlDashboardRegisterProfessor.Controls.Add(label82);
-            pnlDashboardRegisterProfessor.Location = new Point(608, 63);
+            pnlDashboardRegisterProfessor.Location = new Point(695, 84);
+            pnlDashboardRegisterProfessor.Margin = new Padding(3, 4, 3, 4);
             pnlDashboardRegisterProfessor.Name = "pnlDashboardRegisterProfessor";
-            pnlDashboardRegisterProfessor.Size = new Size(557, 80);
+            pnlDashboardRegisterProfessor.Size = new Size(636, 106);
             pnlDashboardRegisterProfessor.TabIndex = 27;
             // 
             // btnDashboardREgisterProfessor
@@ -3056,9 +3082,10 @@
             btnDashboardREgisterProfessor.BackColor = Color.Maroon;
             btnDashboardREgisterProfessor.FlatStyle = FlatStyle.Popup;
             btnDashboardREgisterProfessor.Image = Properties.Resources.administrator_32;
-            btnDashboardREgisterProfessor.Location = new Point(10, 13);
+            btnDashboardREgisterProfessor.Location = new Point(11, 17);
+            btnDashboardREgisterProfessor.Margin = new Padding(3, 4, 3, 4);
             btnDashboardREgisterProfessor.Name = "btnDashboardREgisterProfessor";
-            btnDashboardREgisterProfessor.Size = new Size(56, 54);
+            btnDashboardREgisterProfessor.Size = new Size(64, 72);
             btnDashboardREgisterProfessor.TabIndex = 23;
             btnDashboardREgisterProfessor.UseVisualStyleBackColor = false;
             // 
@@ -3067,9 +3094,9 @@
             label76.AutoSize = true;
             label76.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label76.ForeColor = Color.DimGray;
-            label76.Location = new Point(93, 38);
+            label76.Location = new Point(106, 51);
             label76.Name = "label76";
-            label76.Size = new Size(213, 17);
+            label76.Size = new Size(274, 23);
             label76.TabIndex = 19;
             label76.Text = "Add a new professor to the system";
             // 
@@ -3078,9 +3105,9 @@
             label82.AutoSize = true;
             label82.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label82.ForeColor = Color.DimGray;
-            label82.Location = new Point(86, 13);
+            label82.Location = new Point(98, 17);
             label82.Name = "label82";
-            label82.Size = new Size(147, 21);
+            label82.Size = new Size(185, 28);
             label82.TabIndex = 17;
             label82.Text = "Register Professor";
             // 
@@ -3090,9 +3117,10 @@
             pnlDashboardViewAllUsers.Controls.Add(btnDashboardViewAllUsers);
             pnlDashboardViewAllUsers.Controls.Add(label77);
             pnlDashboardViewAllUsers.Controls.Add(label78);
-            pnlDashboardViewAllUsers.Location = new Point(22, 171);
+            pnlDashboardViewAllUsers.Location = new Point(25, 228);
+            pnlDashboardViewAllUsers.Margin = new Padding(3, 4, 3, 4);
             pnlDashboardViewAllUsers.Name = "pnlDashboardViewAllUsers";
-            pnlDashboardViewAllUsers.Size = new Size(557, 80);
+            pnlDashboardViewAllUsers.Size = new Size(636, 106);
             pnlDashboardViewAllUsers.TabIndex = 26;
             // 
             // btnDashboardViewAllUsers
@@ -3100,9 +3128,10 @@
             btnDashboardViewAllUsers.BackColor = Color.Maroon;
             btnDashboardViewAllUsers.FlatStyle = FlatStyle.Popup;
             btnDashboardViewAllUsers.Image = Properties.Resources.visible_32__1_;
-            btnDashboardViewAllUsers.Location = new Point(16, 12);
+            btnDashboardViewAllUsers.Location = new Point(18, 16);
+            btnDashboardViewAllUsers.Margin = new Padding(3, 4, 3, 4);
             btnDashboardViewAllUsers.Name = "btnDashboardViewAllUsers";
-            btnDashboardViewAllUsers.Size = new Size(56, 54);
+            btnDashboardViewAllUsers.Size = new Size(64, 72);
             btnDashboardViewAllUsers.TabIndex = 22;
             btnDashboardViewAllUsers.UseVisualStyleBackColor = false;
             // 
@@ -3111,9 +3140,9 @@
             label77.AutoSize = true;
             label77.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label77.ForeColor = Color.DimGray;
-            label77.Location = new Point(93, 38);
+            label77.Location = new Point(106, 51);
             label77.Name = "label77";
-            label77.Size = new Size(202, 17);
+            label77.Size = new Size(258, 23);
             label77.TabIndex = 19;
             label77.Text = "Manage students and professors";
             // 
@@ -3122,9 +3151,9 @@
             label78.AutoSize = true;
             label78.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label78.ForeColor = Color.DimGray;
-            label78.Location = new Point(86, 13);
+            label78.Location = new Point(98, 17);
             label78.Name = "label78";
-            label78.Size = new Size(118, 21);
+            label78.Size = new Size(147, 28);
             label78.TabIndex = 17;
             label78.Text = "View All Users";
             // 
@@ -3135,9 +3164,10 @@
             pnlDashboardRegisterStudent.Controls.Add(btnDashboardRegisterStudent);
             pnlDashboardRegisterStudent.Controls.Add(label79);
             pnlDashboardRegisterStudent.Controls.Add(label80);
-            pnlDashboardRegisterStudent.Location = new Point(22, 65);
+            pnlDashboardRegisterStudent.Location = new Point(25, 87);
+            pnlDashboardRegisterStudent.Margin = new Padding(3, 4, 3, 4);
             pnlDashboardRegisterStudent.Name = "pnlDashboardRegisterStudent";
-            pnlDashboardRegisterStudent.Size = new Size(557, 80);
+            pnlDashboardRegisterStudent.Size = new Size(636, 106);
             pnlDashboardRegisterStudent.TabIndex = 25;
             // 
             // btnDashboardRegisterStudent
@@ -3145,9 +3175,10 @@
             btnDashboardRegisterStudent.BackColor = Color.Maroon;
             btnDashboardRegisterStudent.FlatStyle = FlatStyle.Popup;
             btnDashboardRegisterStudent.Image = Properties.Resources.manager_32;
-            btnDashboardRegisterStudent.Location = new Point(16, 12);
+            btnDashboardRegisterStudent.Location = new Point(18, 16);
+            btnDashboardRegisterStudent.Margin = new Padding(3, 4, 3, 4);
             btnDashboardRegisterStudent.Name = "btnDashboardRegisterStudent";
-            btnDashboardRegisterStudent.Size = new Size(56, 54);
+            btnDashboardRegisterStudent.Size = new Size(64, 72);
             btnDashboardRegisterStudent.TabIndex = 21;
             btnDashboardRegisterStudent.UseVisualStyleBackColor = false;
             // 
@@ -3156,9 +3187,9 @@
             label79.AutoSize = true;
             label79.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label79.ForeColor = Color.DimGray;
-            label79.Location = new Point(93, 38);
+            label79.Location = new Point(106, 51);
             label79.Name = "label79";
-            label79.Size = new Size(199, 17);
+            label79.Size = new Size(262, 23);
             label79.TabIndex = 19;
             label79.Text = "Add a new student to the system";
             // 
@@ -3167,9 +3198,9 @@
             label80.AutoSize = true;
             label80.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label80.ForeColor = Color.DimGray;
-            label80.Location = new Point(86, 13);
+            label80.Location = new Point(98, 17);
             label80.Name = "label80";
-            label80.Size = new Size(136, 21);
+            label80.Size = new Size(170, 28);
             label80.TabIndex = 17;
             label80.Text = "Register Student";
             // 
@@ -3178,9 +3209,9 @@
             label81.AutoSize = true;
             label81.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label81.ForeColor = Color.Maroon;
-            label81.Location = new Point(22, 21);
+            label81.Location = new Point(25, 28);
             label81.Name = "label81";
-            label81.Size = new Size(172, 32);
+            label81.Size = new Size(212, 41);
             label81.TabIndex = 24;
             label81.Text = "Quick Actions";
             // 
@@ -3192,19 +3223,19 @@
             pnlDashboardActiveUsers.Controls.Add(pictureBox17);
             pnlDashboardActiveUsers.Controls.Add(label58);
             pnlDashboardActiveUsers.Controls.Add(label59);
-            pnlDashboardActiveUsers.Location = new Point(948, 110);
-            pnlDashboardActiveUsers.Margin = new Padding(3, 2, 3, 2);
+            pnlDashboardActiveUsers.Location = new Point(1083, 147);
             pnlDashboardActiveUsers.Name = "pnlDashboardActiveUsers";
-            pnlDashboardActiveUsers.Size = new Size(280, 95);
+            pnlDashboardActiveUsers.Size = new Size(319, 125);
             pnlDashboardActiveUsers.TabIndex = 20;
             // 
             // pictureBox17
             // 
             pictureBox17.BackColor = Color.Maroon;
             pictureBox17.Image = Properties.Resources.graduation_cap_32;
-            pictureBox17.Location = new Point(196, 7);
+            pictureBox17.Location = new Point(224, 9);
+            pictureBox17.Margin = new Padding(3, 4, 3, 4);
             pictureBox17.Name = "pictureBox17";
-            pictureBox17.Size = new Size(66, 74);
+            pictureBox17.Size = new Size(75, 99);
             pictureBox17.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox17.TabIndex = 21;
             pictureBox17.TabStop = false;
@@ -3214,9 +3245,9 @@
             label58.AutoSize = true;
             label58.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label58.ForeColor = Color.DimGray;
-            label58.Location = new Point(3, 8);
+            label58.Location = new Point(3, 11);
             label58.Name = "label58";
-            label58.Size = new Size(103, 21);
+            label58.Size = new Size(129, 28);
             label58.TabIndex = 16;
             label58.Text = "Active Users";
             // 
@@ -3226,9 +3257,9 @@
             label59.BackColor = Color.Transparent;
             label59.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label59.ForeColor = Color.Black;
-            label59.Location = new Point(3, 22);
+            label59.Location = new Point(3, 29);
             label59.Name = "label59";
-            label59.Size = new Size(56, 65);
+            label59.Size = new Size(70, 81);
             label59.TabIndex = 17;
             label59.Text = "0";
             // 
@@ -3240,19 +3271,19 @@
             pnlDashboardTotalCoursess.Controls.Add(pictureBox16);
             pnlDashboardTotalCoursess.Controls.Add(label68);
             pnlDashboardTotalCoursess.Controls.Add(label69);
-            pnlDashboardTotalCoursess.Location = new Point(637, 110);
-            pnlDashboardTotalCoursess.Margin = new Padding(3, 2, 3, 2);
+            pnlDashboardTotalCoursess.Location = new Point(728, 147);
             pnlDashboardTotalCoursess.Name = "pnlDashboardTotalCoursess";
-            pnlDashboardTotalCoursess.Size = new Size(280, 95);
+            pnlDashboardTotalCoursess.Size = new Size(319, 125);
             pnlDashboardTotalCoursess.TabIndex = 19;
             // 
             // pictureBox16
             // 
             pictureBox16.BackColor = Color.Maroon;
             pictureBox16.Image = Properties.Resources.book_stack_32;
-            pictureBox16.Location = new Point(201, 8);
+            pictureBox16.Location = new Point(230, 11);
+            pictureBox16.Margin = new Padding(3, 4, 3, 4);
             pictureBox16.Name = "pictureBox16";
-            pictureBox16.Size = new Size(66, 74);
+            pictureBox16.Size = new Size(75, 99);
             pictureBox16.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox16.TabIndex = 20;
             pictureBox16.TabStop = false;
@@ -3262,9 +3293,9 @@
             label68.AutoSize = true;
             label68.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label68.ForeColor = Color.DimGray;
-            label68.Location = new Point(3, 8);
+            label68.Location = new Point(3, 11);
             label68.Name = "label68";
-            label68.Size = new Size(111, 21);
+            label68.Size = new Size(138, 28);
             label68.TabIndex = 16;
             label68.Text = "Total Courses";
             // 
@@ -3274,9 +3305,9 @@
             label69.BackColor = Color.Transparent;
             label69.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label69.ForeColor = Color.Black;
-            label69.Location = new Point(3, 22);
+            label69.Location = new Point(3, 29);
             label69.Name = "label69";
-            label69.Size = new Size(56, 65);
+            label69.Size = new Size(70, 81);
             label69.TabIndex = 17;
             label69.Text = "0";
             // 
@@ -3288,19 +3319,19 @@
             pnlDashboardTotalProfs.Controls.Add(pictureBox14);
             pnlDashboardTotalProfs.Controls.Add(label70);
             pnlDashboardTotalProfs.Controls.Add(label71);
-            pnlDashboardTotalProfs.Location = new Point(333, 110);
-            pnlDashboardTotalProfs.Margin = new Padding(3, 2, 3, 2);
+            pnlDashboardTotalProfs.Location = new Point(381, 147);
             pnlDashboardTotalProfs.Name = "pnlDashboardTotalProfs";
-            pnlDashboardTotalProfs.Size = new Size(280, 95);
+            pnlDashboardTotalProfs.Size = new Size(319, 125);
             pnlDashboardTotalProfs.TabIndex = 18;
             // 
             // pictureBox14
             // 
             pictureBox14.BackColor = Color.Maroon;
             pictureBox14.Image = Properties.Resources.administrator_321;
-            pictureBox14.Location = new Point(202, 8);
+            pictureBox14.Location = new Point(231, 11);
+            pictureBox14.Margin = new Padding(3, 4, 3, 4);
             pictureBox14.Name = "pictureBox14";
-            pictureBox14.Size = new Size(66, 74);
+            pictureBox14.Size = new Size(75, 99);
             pictureBox14.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox14.TabIndex = 20;
             pictureBox14.TabStop = false;
@@ -3310,9 +3341,9 @@
             label70.AutoSize = true;
             label70.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label70.ForeColor = Color.DimGray;
-            label70.Location = new Point(3, 8);
+            label70.Location = new Point(3, 11);
             label70.Name = "label70";
-            label70.Size = new Size(130, 21);
+            label70.Size = new Size(163, 28);
             label70.TabIndex = 16;
             label70.Text = "Total Professors";
             // 
@@ -3322,9 +3353,9 @@
             label71.BackColor = Color.Transparent;
             label71.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label71.ForeColor = Color.Black;
-            label71.Location = new Point(3, 22);
+            label71.Location = new Point(3, 29);
             label71.Name = "label71";
-            label71.Size = new Size(56, 65);
+            label71.Size = new Size(70, 81);
             label71.TabIndex = 17;
             label71.Text = "0";
             // 
@@ -3336,19 +3367,19 @@
             pnlDashboardTotalStudents.Controls.Add(pictureBox15);
             pnlDashboardTotalStudents.Controls.Add(label72);
             pnlDashboardTotalStudents.Controls.Add(label73);
-            pnlDashboardTotalStudents.Location = new Point(32, 110);
-            pnlDashboardTotalStudents.Margin = new Padding(3, 2, 3, 2);
+            pnlDashboardTotalStudents.Location = new Point(37, 147);
             pnlDashboardTotalStudents.Name = "pnlDashboardTotalStudents";
-            pnlDashboardTotalStudents.Size = new Size(280, 95);
+            pnlDashboardTotalStudents.Size = new Size(319, 125);
             pnlDashboardTotalStudents.TabIndex = 17;
             // 
             // pictureBox15
             // 
             pictureBox15.BackColor = Color.Maroon;
             pictureBox15.Image = Properties.Resources.manager_322;
-            pictureBox15.Location = new Point(195, 8);
+            pictureBox15.Location = new Point(223, 11);
+            pictureBox15.Margin = new Padding(3, 4, 3, 4);
             pictureBox15.Name = "pictureBox15";
-            pictureBox15.Size = new Size(66, 74);
+            pictureBox15.Size = new Size(75, 99);
             pictureBox15.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox15.TabIndex = 20;
             pictureBox15.TabStop = false;
@@ -3358,9 +3389,9 @@
             label72.AutoSize = true;
             label72.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label72.ForeColor = Color.DimGray;
-            label72.Location = new Point(3, 8);
+            label72.Location = new Point(3, 11);
             label72.Name = "label72";
-            label72.Size = new Size(119, 21);
+            label72.Size = new Size(148, 28);
             label72.TabIndex = 15;
             label72.Text = "Total Students";
             // 
@@ -3370,9 +3401,9 @@
             label73.BackColor = Color.Transparent;
             label73.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label73.ForeColor = Color.Black;
-            label73.Location = new Point(3, 22);
+            label73.Location = new Point(3, 29);
             label73.Name = "label73";
-            label73.Size = new Size(56, 65);
+            label73.Size = new Size(70, 81);
             label73.TabIndex = 15;
             label73.Text = "0";
             // 
@@ -3382,9 +3413,9 @@
             lblAdminDashboard.AutoSize = true;
             lblAdminDashboard.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblAdminDashboard.ForeColor = Color.DarkRed;
-            lblAdminDashboard.Location = new Point(22, 25);
+            lblAdminDashboard.Location = new Point(25, 33);
             lblAdminDashboard.Name = "lblAdminDashboard";
-            lblAdminDashboard.Size = new Size(265, 40);
+            lblAdminDashboard.Size = new Size(337, 50);
             lblAdminDashboard.TabIndex = 16;
             lblAdminDashboard.Text = "Admin Dashboard";
             // 
@@ -3394,9 +3425,9 @@
             lblAdminDashboardDesc.AutoSize = true;
             lblAdminDashboardDesc.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
             lblAdminDashboardDesc.ForeColor = Color.DimGray;
-            lblAdminDashboardDesc.Location = new Point(31, 67);
+            lblAdminDashboardDesc.Location = new Point(35, 89);
             lblAdminDashboardDesc.Name = "lblAdminDashboardDesc";
-            lblAdminDashboardDesc.Size = new Size(640, 19);
+            lblAdminDashboardDesc.Size = new Size(777, 23);
             lblAdminDashboardDesc.TabIndex = 15;
             lblAdminDashboardDesc.Text = "Welcome to the Polytechnic University of the Philippines - Sta. Maria, Bulacan Campus Admin Portal";
             // 
@@ -3408,9 +3439,10 @@
             pnlViewAllUsersContent.Controls.Add(lblViewDesc);
             pnlViewAllUsersContent.Controls.Add(lblViewAllUsers);
             pnlViewAllUsersContent.Dock = DockStyle.Fill;
-            pnlViewAllUsersContent.Location = new Point(256, 72);
+            pnlViewAllUsersContent.Location = new Point(293, 96);
+            pnlViewAllUsersContent.Margin = new Padding(3, 4, 3, 4);
             pnlViewAllUsersContent.Name = "pnlViewAllUsersContent";
-            pnlViewAllUsersContent.Size = new Size(1272, 719);
+            pnlViewAllUsersContent.Size = new Size(1453, 959);
             pnlViewAllUsersContent.TabIndex = 14;
             pnlViewAllUsersContent.Visible = false;
             // 
@@ -3425,9 +3457,10 @@
             pnlViewSPsContent.Controls.Add(btnViewProf);
             pnlViewSPsContent.Controls.Add(pnlUserTypeIndicator);
             pnlViewSPsContent.Controls.Add(btnViewStudents);
-            pnlViewSPsContent.Location = new Point(32, 119);
+            pnlViewSPsContent.Location = new Point(37, 159);
+            pnlViewSPsContent.Margin = new Padding(3, 4, 3, 4);
             pnlViewSPsContent.Name = "pnlViewSPsContent";
-            pnlViewSPsContent.Size = new Size(1215, 668);
+            pnlViewSPsContent.Size = new Size(1388, 890);
             pnlViewSPsContent.TabIndex = 5;
             // 
             // pnlContainerdgvUsers
@@ -3435,9 +3468,10 @@
             pnlContainerdgvUsers.AutoScroll = true;
             pnlContainerdgvUsers.AutoSize = true;
             pnlContainerdgvUsers.Controls.Add(dgvUsers);
-            pnlContainerdgvUsers.Location = new Point(37, 159);
+            pnlContainerdgvUsers.Location = new Point(42, 212);
+            pnlContainerdgvUsers.Margin = new Padding(3, 4, 3, 4);
             pnlContainerdgvUsers.Name = "pnlContainerdgvUsers";
-            pnlContainerdgvUsers.Size = new Size(1141, 459);
+            pnlContainerdgvUsers.Size = new Size(1304, 612);
             pnlContainerdgvUsers.TabIndex = 16;
             // 
             // dgvUsers
@@ -3451,34 +3485,35 @@
             dgvUsers.BorderStyle = BorderStyle.None;
             dgvUsers.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvUsers.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = Color.Maroon;
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            dataGridViewCellStyle3.ForeColor = Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            dgvUsers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = Color.Maroon;
+            dataGridViewCellStyle7.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            dataGridViewCellStyle7.ForeColor = Color.White;
+            dataGridViewCellStyle7.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
+            dgvUsers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             dgvUsers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvUsers.Columns.AddRange(new DataGridViewColumn[] { colUserID, colUserName, colUserEmail, colUserProgram, colUserYear, colUserStatus });
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = SystemColors.Window;
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(197, 202, 233);
-            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
-            dgvUsers.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = SystemColors.Window;
+            dataGridViewCellStyle8.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle8.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = Color.FromArgb(197, 202, 233);
+            dataGridViewCellStyle8.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
+            dgvUsers.DefaultCellStyle = dataGridViewCellStyle8;
             dgvUsers.Dock = DockStyle.Fill;
             dgvUsers.EnableHeadersVisualStyles = false;
             dgvUsers.GridColor = Color.FromArgb(220, 220, 220);
             dgvUsers.Location = new Point(0, 0);
+            dgvUsers.Margin = new Padding(3, 4, 3, 4);
             dgvUsers.Name = "dgvUsers";
             dgvUsers.RowHeadersVisible = false;
             dgvUsers.RowHeadersWidth = 51;
             dgvUsers.RowTemplate.Height = 40;
             dgvUsers.SelectionMode = DataGridViewSelectionMode.CellSelect;
-            dgvUsers.Size = new Size(1141, 459);
+            dgvUsers.Size = new Size(1304, 612);
             dgvUsers.TabIndex = 15;
             // 
             // colUserID
@@ -3530,18 +3565,20 @@
             pnlSearchBarVAUs.Controls.Add(btnSearch);
             pnlSearchBarVAUs.Controls.Add(cmbYear);
             pnlSearchBarVAUs.Controls.Add(txtSearchViewAUs);
-            pnlSearchBarVAUs.Location = new Point(35, 90);
+            pnlSearchBarVAUs.Location = new Point(40, 120);
+            pnlSearchBarVAUs.Margin = new Padding(3, 4, 3, 4);
             pnlSearchBarVAUs.Name = "pnlSearchBarVAUs";
-            pnlSearchBarVAUs.Size = new Size(1143, 47);
+            pnlSearchBarVAUs.Size = new Size(1306, 63);
             pnlSearchBarVAUs.TabIndex = 14;
             // 
             // cmbProgram
             // 
             cmbProgram.FormattingEnabled = true;
             cmbProgram.Items.AddRange(new object[] { "All", "BSIT", "BSHM", "BSED-M", "BSED-E", "BSCpE" });
-            cmbProgram.Location = new Point(77, 15);
+            cmbProgram.Location = new Point(88, 20);
+            cmbProgram.Margin = new Padding(3, 4, 3, 4);
             cmbProgram.Name = "cmbProgram";
-            cmbProgram.Size = new Size(73, 23);
+            cmbProgram.Size = new Size(83, 28);
             cmbProgram.TabIndex = 14;
             cmbProgram.Text = "Program";
             // 
@@ -3552,9 +3589,10 @@
             btnSearch.FlatStyle = FlatStyle.Flat;
             btnSearch.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSearch.ForeColor = SystemColors.ControlLightLight;
-            btnSearch.Location = new Point(1047, 8);
+            btnSearch.Location = new Point(1197, 11);
+            btnSearch.Margin = new Padding(3, 4, 3, 4);
             btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(82, 32);
+            btnSearch.Size = new Size(94, 43);
             btnSearch.TabIndex = 13;
             btnSearch.Text = "Search";
             btnSearch.UseVisualStyleBackColor = false;
@@ -3563,18 +3601,20 @@
             // 
             cmbYear.FormattingEnabled = true;
             cmbYear.Items.AddRange(new object[] { "All", "1st Year", "2nd Year", "3rd Year", "4th Year" });
-            cmbYear.Location = new Point(12, 15);
+            cmbYear.Location = new Point(14, 20);
+            cmbYear.Margin = new Padding(3, 4, 3, 4);
             cmbYear.Name = "cmbYear";
-            cmbYear.Size = new Size(59, 23);
+            cmbYear.Size = new Size(67, 28);
             cmbYear.TabIndex = 13;
             cmbYear.Text = "Year";
             // 
             // txtSearchViewAUs
             // 
             txtSearchViewAUs.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtSearchViewAUs.Location = new Point(156, 13);
+            txtSearchViewAUs.Location = new Point(178, 17);
+            txtSearchViewAUs.Margin = new Padding(3, 4, 3, 4);
             txtSearchViewAUs.Name = "txtSearchViewAUs";
-            txtSearchViewAUs.Size = new Size(885, 25);
+            txtSearchViewAUs.Size = new Size(1011, 29);
             txtSearchViewAUs.TabIndex = 12;
             txtSearchViewAUs.Text = "Search here...";
             // 
@@ -3587,9 +3627,10 @@
             btnViewProf.FlatStyle = FlatStyle.Flat;
             btnViewProf.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnViewProf.Image = Properties.Resources.professor_black_16;
-            btnViewProf.Location = new Point(288, 31);
+            btnViewProf.Location = new Point(329, 41);
+            btnViewProf.Margin = new Padding(3, 4, 3, 4);
             btnViewProf.Name = "btnViewProf";
-            btnViewProf.Size = new Size(247, 36);
+            btnViewProf.Size = new Size(282, 48);
             btnViewProf.TabIndex = 11;
             btnViewProf.Text = "Professors";
             btnViewProf.TextAlign = ContentAlignment.MiddleRight;
@@ -3599,10 +3640,10 @@
             // pnlUserTypeIndicator
             // 
             pnlUserTypeIndicator.BackColor = Color.Maroon;
-            pnlUserTypeIndicator.Location = new Point(35, 70);
+            pnlUserTypeIndicator.Location = new Point(40, 93);
             pnlUserTypeIndicator.Margin = new Padding(0);
             pnlUserTypeIndicator.Name = "pnlUserTypeIndicator";
-            pnlUserTypeIndicator.Size = new Size(247, 4);
+            pnlUserTypeIndicator.Size = new Size(282, 5);
             pnlUserTypeIndicator.TabIndex = 8;
             pnlUserTypeIndicator.Visible = false;
             // 
@@ -3615,9 +3656,10 @@
             btnViewStudents.FlatStyle = FlatStyle.Flat;
             btnViewStudents.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnViewStudents.Image = Properties.Resources.student_black_16;
-            btnViewStudents.Location = new Point(35, 31);
+            btnViewStudents.Location = new Point(40, 41);
+            btnViewStudents.Margin = new Padding(3, 4, 3, 4);
             btnViewStudents.Name = "btnViewStudents";
-            btnViewStudents.Size = new Size(247, 36);
+            btnViewStudents.Size = new Size(282, 48);
             btnViewStudents.TabIndex = 9;
             btnViewStudents.Text = "Students";
             btnViewStudents.TextAlign = ContentAlignment.MiddleRight;
@@ -3630,9 +3672,10 @@
             pictureBox3.BackgroundImageLayout = ImageLayout.Zoom;
             pictureBox3.BorderStyle = BorderStyle.FixedSingle;
             pictureBox3.Image = Properties.Resources.visible_32;
-            pictureBox3.Location = new Point(32, 37);
+            pictureBox3.Location = new Point(37, 49);
+            pictureBox3.Margin = new Padding(3, 4, 3, 4);
             pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(57, 60);
+            pictureBox3.Size = new Size(65, 79);
             pictureBox3.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox3.TabIndex = 4;
             pictureBox3.TabStop = false;
@@ -3642,9 +3685,9 @@
             lblViewDesc.AutoSize = true;
             lblViewDesc.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
             lblViewDesc.ForeColor = Color.DimGray;
-            lblViewDesc.Location = new Point(106, 77);
+            lblViewDesc.Location = new Point(121, 103);
             lblViewDesc.Name = "lblViewDesc";
-            lblViewDesc.Size = new Size(211, 19);
+            lblViewDesc.Size = new Size(260, 23);
             lblViewDesc.TabIndex = 3;
             lblViewDesc.Text = "Manage students and professors";
             // 
@@ -3653,9 +3696,9 @@
             lblViewAllUsers.AutoSize = true;
             lblViewAllUsers.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblViewAllUsers.ForeColor = Color.Black;
-            lblViewAllUsers.Location = new Point(95, 37);
+            lblViewAllUsers.Location = new Point(109, 49);
             lblViewAllUsers.Name = "lblViewAllUsers";
-            lblViewAllUsers.Size = new Size(210, 40);
+            lblViewAllUsers.Size = new Size(270, 50);
             lblViewAllUsers.TabIndex = 1;
             lblViewAllUsers.Text = "View All Users";
             // 
@@ -3672,9 +3715,10 @@
             pnlEnrolledStudentsContent.Controls.Add(lblEnrolledStudentDesc);
             pnlEnrolledStudentsContent.Controls.Add(pictureBox8);
             pnlEnrolledStudentsContent.Dock = DockStyle.Fill;
-            pnlEnrolledStudentsContent.Location = new Point(256, 72);
+            pnlEnrolledStudentsContent.Location = new Point(293, 96);
+            pnlEnrolledStudentsContent.Margin = new Padding(3, 4, 3, 4);
             pnlEnrolledStudentsContent.Name = "pnlEnrolledStudentsContent";
-            pnlEnrolledStudentsContent.Size = new Size(1272, 719);
+            pnlEnrolledStudentsContent.Size = new Size(1453, 959);
             pnlEnrolledStudentsContent.TabIndex = 11;
             pnlEnrolledStudentsContent.Visible = false;
             // 
@@ -3685,19 +3729,19 @@
             pnlESGraduatedCard.Controls.Add(pictureBox18);
             pnlESGraduatedCard.Controls.Add(label51);
             pnlESGraduatedCard.Controls.Add(lblESGraduatedValue);
-            pnlESGraduatedCard.Location = new Point(948, 128);
-            pnlESGraduatedCard.Margin = new Padding(3, 2, 3, 2);
+            pnlESGraduatedCard.Location = new Point(1083, 171);
             pnlESGraduatedCard.Name = "pnlESGraduatedCard";
-            pnlESGraduatedCard.Size = new Size(280, 95);
+            pnlESGraduatedCard.Size = new Size(319, 125);
             pnlESGraduatedCard.TabIndex = 14;
             // 
             // pictureBox18
             // 
             pictureBox18.BackColor = Color.Maroon;
             pictureBox18.Image = Properties.Resources.graduation_cap_32;
-            pictureBox18.Location = new Point(196, 8);
+            pictureBox18.Location = new Point(224, 11);
+            pictureBox18.Margin = new Padding(3, 4, 3, 4);
             pictureBox18.Name = "pictureBox18";
-            pictureBox18.Size = new Size(66, 74);
+            pictureBox18.Size = new Size(75, 99);
             pictureBox18.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox18.TabIndex = 22;
             pictureBox18.TabStop = false;
@@ -3707,9 +3751,9 @@
             label51.AutoSize = true;
             label51.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label51.ForeColor = Color.Maroon;
-            label51.Location = new Point(3, 8);
+            label51.Location = new Point(3, 11);
             label51.Name = "label51";
-            label51.Size = new Size(90, 21);
+            label51.Size = new Size(111, 28);
             label51.TabIndex = 16;
             label51.Text = "Graduated";
             // 
@@ -3719,9 +3763,9 @@
             lblESGraduatedValue.BackColor = Color.Transparent;
             lblESGraduatedValue.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblESGraduatedValue.ForeColor = Color.Black;
-            lblESGraduatedValue.Location = new Point(3, 22);
+            lblESGraduatedValue.Location = new Point(3, 29);
             lblESGraduatedValue.Name = "lblESGraduatedValue";
-            lblESGraduatedValue.Size = new Size(56, 65);
+            lblESGraduatedValue.Size = new Size(70, 81);
             lblESGraduatedValue.TabIndex = 17;
             lblESGraduatedValue.Text = "0";
             // 
@@ -3729,10 +3773,9 @@
             // 
             pnlERStudentListCOntainer.BackColor = Color.White;
             pnlERStudentListCOntainer.Controls.Add(label57);
-            pnlERStudentListCOntainer.Location = new Point(31, 415);
-            pnlERStudentListCOntainer.Margin = new Padding(3, 2, 3, 2);
+            pnlERStudentListCOntainer.Location = new Point(35, 553);
             pnlERStudentListCOntainer.Name = "pnlERStudentListCOntainer";
-            pnlERStudentListCOntainer.Size = new Size(1195, 333);
+            pnlERStudentListCOntainer.Size = new Size(1366, 444);
             pnlERStudentListCOntainer.TabIndex = 16;
             // 
             // label57
@@ -3740,9 +3783,9 @@
             label57.AutoSize = true;
             label57.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label57.ForeColor = Color.Black;
-            label57.Location = new Point(22, 20);
+            label57.Location = new Point(25, 27);
             label57.Name = "label57";
-            label57.Size = new Size(179, 32);
+            label57.Size = new Size(225, 41);
             label57.TabIndex = 17;
             label57.Text = "Student List (0)";
             // 
@@ -3757,19 +3800,17 @@
             pnlESFilterContainer.Controls.Add(label54);
             pnlESFilterContainer.Controls.Add(label53);
             pnlESFilterContainer.Controls.Add(pictureBox9);
-            pnlESFilterContainer.Location = new Point(32, 250);
-            pnlESFilterContainer.Margin = new Padding(3, 2, 3, 2);
+            pnlESFilterContainer.Location = new Point(37, 333);
             pnlESFilterContainer.Name = "pnlESFilterContainer";
-            pnlESFilterContainer.Size = new Size(1196, 139);
+            pnlESFilterContainer.Size = new Size(1367, 185);
             pnlESFilterContainer.TabIndex = 15;
             // 
             // cmbESYear
             // 
             cmbESYear.FormattingEnabled = true;
-            cmbESYear.Location = new Point(819, 87);
-            cmbESYear.Margin = new Padding(3, 2, 3, 2);
+            cmbESYear.Location = new Point(936, 116);
             cmbESYear.Name = "cmbESYear";
-            cmbESYear.Size = new Size(344, 23);
+            cmbESYear.Size = new Size(393, 28);
             cmbESYear.TabIndex = 22;
             // 
             // label56
@@ -3777,9 +3818,9 @@
             label56.AutoSize = true;
             label56.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label56.ForeColor = Color.DimGray;
-            label56.Location = new Point(819, 64);
+            label56.Location = new Point(936, 85);
             label56.Name = "label56";
-            label56.Size = new Size(43, 21);
+            label56.Size = new Size(52, 28);
             label56.TabIndex = 21;
             label56.Text = "Year";
             // 
@@ -3787,10 +3828,9 @@
             // 
             cmbESEnrollmentStatus.FormattingEnabled = true;
             cmbESEnrollmentStatus.Items.AddRange(new object[] { "All Stasuses", "Active", "Inactive", "Graduated ", "Withdrawn" });
-            cmbESEnrollmentStatus.Location = new Point(452, 87);
-            cmbESEnrollmentStatus.Margin = new Padding(3, 2, 3, 2);
+            cmbESEnrollmentStatus.Location = new Point(517, 116);
             cmbESEnrollmentStatus.Name = "cmbESEnrollmentStatus";
-            cmbESEnrollmentStatus.Size = new Size(355, 23);
+            cmbESEnrollmentStatus.Size = new Size(405, 28);
             cmbESEnrollmentStatus.TabIndex = 20;
             // 
             // label55
@@ -3798,20 +3838,19 @@
             label55.AutoSize = true;
             label55.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label55.ForeColor = Color.DimGray;
-            label55.Location = new Point(452, 64);
+            label55.Location = new Point(517, 85);
             label55.Name = "label55";
-            label55.Size = new Size(146, 21);
+            label55.Size = new Size(181, 28);
             label55.TabIndex = 19;
             label55.Text = "Enrollment Status";
             // 
             // txtESSearchStudents
             // 
             txtESSearchStudents.BorderStyle = BorderStyle.FixedSingle;
-            txtESSearchStudents.Location = new Point(33, 88);
-            txtESSearchStudents.Margin = new Padding(3, 2, 3, 2);
+            txtESSearchStudents.Location = new Point(38, 117);
             txtESSearchStudents.Name = "txtESSearchStudents";
             txtESSearchStudents.PlaceholderText = "Search by name, ID, or email...";
-            txtESSearchStudents.Size = new Size(404, 23);
+            txtESSearchStudents.Size = new Size(461, 27);
             txtESSearchStudents.TabIndex = 18;
             // 
             // label54
@@ -3819,9 +3858,9 @@
             label54.AutoSize = true;
             label54.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label54.ForeColor = Color.DimGray;
-            label54.Location = new Point(29, 64);
+            label54.Location = new Point(33, 85);
             label54.Name = "label54";
-            label54.Size = new Size(132, 21);
+            label54.Size = new Size(164, 28);
             label54.TabIndex = 17;
             label54.Text = "Search Students";
             // 
@@ -3830,19 +3869,18 @@
             label53.AutoSize = true;
             label53.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label53.ForeColor = Color.Black;
-            label53.Location = new Point(54, 17);
+            label53.Location = new Point(62, 23);
             label53.Name = "label53";
-            label53.Size = new Size(79, 32);
+            label53.Size = new Size(100, 41);
             label53.TabIndex = 16;
             label53.Text = "Filters";
             // 
             // pictureBox9
             // 
             pictureBox9.Image = Properties.Resources.empty_filter_24;
-            pictureBox9.Location = new Point(12, 10);
-            pictureBox9.Margin = new Padding(3, 2, 3, 2);
+            pictureBox9.Location = new Point(14, 13);
             pictureBox9.Name = "pictureBox9";
-            pictureBox9.Size = new Size(54, 46);
+            pictureBox9.Size = new Size(62, 61);
             pictureBox9.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox9.TabIndex = 0;
             pictureBox9.TabStop = false;
@@ -3854,19 +3892,19 @@
             pnlESInactiveCard.Controls.Add(pictureBox21);
             pnlESInactiveCard.Controls.Add(label48);
             pnlESInactiveCard.Controls.Add(lblESInactiveValue);
-            pnlESInactiveCard.Location = new Point(637, 128);
-            pnlESInactiveCard.Margin = new Padding(3, 2, 3, 2);
+            pnlESInactiveCard.Location = new Point(728, 171);
             pnlESInactiveCard.Name = "pnlESInactiveCard";
-            pnlESInactiveCard.Size = new Size(280, 95);
+            pnlESInactiveCard.Size = new Size(319, 125);
             pnlESInactiveCard.TabIndex = 13;
             // 
             // pictureBox21
             // 
             pictureBox21.BackColor = Color.Maroon;
             pictureBox21.Image = Properties.Resources.x_mark_3_32;
-            pictureBox21.Location = new Point(201, 8);
+            pictureBox21.Location = new Point(230, 11);
+            pictureBox21.Margin = new Padding(3, 4, 3, 4);
             pictureBox21.Name = "pictureBox21";
-            pictureBox21.Size = new Size(66, 74);
+            pictureBox21.Size = new Size(75, 99);
             pictureBox21.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox21.TabIndex = 24;
             pictureBox21.TabStop = false;
@@ -3876,9 +3914,9 @@
             label48.AutoSize = true;
             label48.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label48.ForeColor = Color.Maroon;
-            label48.Location = new Point(3, 8);
+            label48.Location = new Point(3, 11);
             label48.Name = "label48";
-            label48.Size = new Size(71, 21);
+            label48.Size = new Size(87, 28);
             label48.TabIndex = 16;
             label48.Text = "Inactive";
             // 
@@ -3888,9 +3926,9 @@
             lblESInactiveValue.BackColor = Color.Transparent;
             lblESInactiveValue.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblESInactiveValue.ForeColor = Color.Black;
-            lblESInactiveValue.Location = new Point(3, 22);
+            lblESInactiveValue.Location = new Point(3, 29);
             lblESInactiveValue.Name = "lblESInactiveValue";
-            lblESInactiveValue.Size = new Size(56, 65);
+            lblESInactiveValue.Size = new Size(70, 81);
             lblESInactiveValue.TabIndex = 17;
             lblESInactiveValue.Text = "0";
             // 
@@ -3901,19 +3939,19 @@
             pnlESActiveCard.Controls.Add(pictureBox20);
             pnlESActiveCard.Controls.Add(label46);
             pnlESActiveCard.Controls.Add(lblESActiveValue);
-            pnlESActiveCard.Location = new Point(333, 128);
-            pnlESActiveCard.Margin = new Padding(3, 2, 3, 2);
+            pnlESActiveCard.Location = new Point(381, 171);
             pnlESActiveCard.Name = "pnlESActiveCard";
-            pnlESActiveCard.Size = new Size(280, 95);
+            pnlESActiveCard.Size = new Size(319, 125);
             pnlESActiveCard.TabIndex = 12;
             // 
             // pictureBox20
             // 
             pictureBox20.BackColor = Color.Maroon;
             pictureBox20.Image = Properties.Resources.ok_32;
-            pictureBox20.Location = new Point(202, 7);
+            pictureBox20.Location = new Point(231, 9);
+            pictureBox20.Margin = new Padding(3, 4, 3, 4);
             pictureBox20.Name = "pictureBox20";
-            pictureBox20.Size = new Size(66, 74);
+            pictureBox20.Size = new Size(75, 99);
             pictureBox20.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox20.TabIndex = 24;
             pictureBox20.TabStop = false;
@@ -3923,9 +3961,9 @@
             label46.AutoSize = true;
             label46.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label46.ForeColor = Color.Maroon;
-            label46.Location = new Point(3, 8);
+            label46.Location = new Point(3, 11);
             label46.Name = "label46";
-            label46.Size = new Size(58, 21);
+            label46.Size = new Size(72, 28);
             label46.TabIndex = 16;
             label46.Text = "Active";
             // 
@@ -3935,9 +3973,9 @@
             lblESActiveValue.BackColor = Color.Transparent;
             lblESActiveValue.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblESActiveValue.ForeColor = Color.Black;
-            lblESActiveValue.Location = new Point(3, 22);
+            lblESActiveValue.Location = new Point(3, 29);
             lblESActiveValue.Name = "lblESActiveValue";
-            lblESActiveValue.Size = new Size(56, 65);
+            lblESActiveValue.Size = new Size(70, 81);
             lblESActiveValue.TabIndex = 17;
             lblESActiveValue.Text = "0";
             // 
@@ -3948,19 +3986,19 @@
             pnlESTotalStudentsCard.Controls.Add(pictureBox19);
             pnlESTotalStudentsCard.Controls.Add(label45);
             pnlESTotalStudentsCard.Controls.Add(lblESTotalStudentsValue);
-            pnlESTotalStudentsCard.Location = new Point(32, 128);
-            pnlESTotalStudentsCard.Margin = new Padding(3, 2, 3, 2);
+            pnlESTotalStudentsCard.Location = new Point(37, 171);
             pnlESTotalStudentsCard.Name = "pnlESTotalStudentsCard";
-            pnlESTotalStudentsCard.Size = new Size(280, 95);
+            pnlESTotalStudentsCard.Size = new Size(319, 125);
             pnlESTotalStudentsCard.TabIndex = 11;
             // 
             // pictureBox19
             // 
             pictureBox19.BackColor = Color.Maroon;
             pictureBox19.Image = Properties.Resources.students_32;
-            pictureBox19.Location = new Point(195, 8);
+            pictureBox19.Location = new Point(223, 11);
+            pictureBox19.Margin = new Padding(3, 4, 3, 4);
             pictureBox19.Name = "pictureBox19";
-            pictureBox19.Size = new Size(66, 74);
+            pictureBox19.Size = new Size(75, 99);
             pictureBox19.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox19.TabIndex = 23;
             pictureBox19.TabStop = false;
@@ -3970,9 +4008,9 @@
             label45.AutoSize = true;
             label45.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label45.ForeColor = Color.Maroon;
-            label45.Location = new Point(3, 8);
+            label45.Location = new Point(3, 11);
             label45.Name = "label45";
-            label45.Size = new Size(119, 21);
+            label45.Size = new Size(148, 28);
             label45.TabIndex = 15;
             label45.Text = "Total Students";
             // 
@@ -3982,9 +4020,9 @@
             lblESTotalStudentsValue.BackColor = Color.Transparent;
             lblESTotalStudentsValue.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblESTotalStudentsValue.ForeColor = Color.Black;
-            lblESTotalStudentsValue.Location = new Point(3, 22);
+            lblESTotalStudentsValue.Location = new Point(3, 29);
             lblESTotalStudentsValue.Name = "lblESTotalStudentsValue";
-            lblESTotalStudentsValue.Size = new Size(56, 65);
+            lblESTotalStudentsValue.Size = new Size(70, 81);
             lblESTotalStudentsValue.TabIndex = 15;
             lblESTotalStudentsValue.Text = "0";
             // 
@@ -3993,9 +4031,9 @@
             lblEnrolledStudents.AutoSize = true;
             lblEnrolledStudents.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblEnrolledStudents.ForeColor = Color.Black;
-            lblEnrolledStudents.Location = new Point(94, 37);
+            lblEnrolledStudents.Location = new Point(107, 49);
             lblEnrolledStudents.Name = "lblEnrolledStudents";
-            lblEnrolledStudents.Size = new Size(258, 40);
+            lblEnrolledStudents.Size = new Size(328, 50);
             lblEnrolledStudents.TabIndex = 10;
             lblEnrolledStudents.Text = "Enrolled Students";
             // 
@@ -4004,9 +4042,9 @@
             lblEnrolledStudentDesc.AutoSize = true;
             lblEnrolledStudentDesc.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
             lblEnrolledStudentDesc.ForeColor = Color.DimGray;
-            lblEnrolledStudentDesc.Location = new Point(102, 79);
+            lblEnrolledStudentDesc.Location = new Point(117, 105);
             lblEnrolledStudentDesc.Name = "lblEnrolledStudentDesc";
-            lblEnrolledStudentDesc.Size = new Size(221, 19);
+            lblEnrolledStudentDesc.Size = new Size(268, 23);
             lblEnrolledStudentDesc.TabIndex = 9;
             lblEnrolledStudentDesc.Text = "Complete list of enrolled students";
             // 
@@ -4016,9 +4054,10 @@
             pictureBox8.BackgroundImageLayout = ImageLayout.Zoom;
             pictureBox8.BorderStyle = BorderStyle.FixedSingle;
             pictureBox8.Image = Properties.Resources.enrolledstudents_32;
-            pictureBox8.Location = new Point(32, 37);
+            pictureBox8.Location = new Point(37, 49);
+            pictureBox8.Margin = new Padding(3, 4, 3, 4);
             pictureBox8.Name = "pictureBox8";
-            pictureBox8.Size = new Size(57, 60);
+            pictureBox8.Size = new Size(65, 79);
             pictureBox8.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox8.TabIndex = 5;
             pictureBox8.TabStop = false;
@@ -4034,9 +4073,10 @@
             pnlGradesManagementContent.Controls.Add(label37);
             pnlGradesManagementContent.Controls.Add(pictureBox6);
             pnlGradesManagementContent.Dock = DockStyle.Fill;
-            pnlGradesManagementContent.Location = new Point(256, 72);
+            pnlGradesManagementContent.Location = new Point(293, 96);
+            pnlGradesManagementContent.Margin = new Padding(3, 4, 3, 4);
             pnlGradesManagementContent.Name = "pnlGradesManagementContent";
-            pnlGradesManagementContent.Size = new Size(1272, 719);
+            pnlGradesManagementContent.Size = new Size(1453, 959);
             pnlGradesManagementContent.TabIndex = 9;
             pnlGradesManagementContent.Visible = false;
             // 
@@ -4048,9 +4088,10 @@
             pnlGradesManagementContainer.Controls.Add(dgvGrades);
             pnlGradesManagementContainer.Controls.Add(btnGMSearch2);
             pnlGradesManagementContainer.Controls.Add(txtGMSsearchBar2);
-            pnlGradesManagementContainer.Location = new Point(32, 792);
+            pnlGradesManagementContainer.Location = new Point(37, 1056);
+            pnlGradesManagementContainer.Margin = new Padding(3, 4, 3, 4);
             pnlGradesManagementContainer.Name = "pnlGradesManagementContainer";
-            pnlGradesManagementContainer.Size = new Size(1190, 461);
+            pnlGradesManagementContainer.Size = new Size(1360, 614);
             pnlGradesManagementContainer.TabIndex = 13;
             // 
             // dgvGrades
@@ -4063,11 +4104,13 @@
             dgvGrades.BackgroundColor = Color.White;
             dgvGrades.BorderStyle = BorderStyle.None;
             dgvGrades.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvGrades.Location = new Point(16, 54);
+            dgvGrades.Location = new Point(18, 72);
+            dgvGrades.Margin = new Padding(3, 4, 3, 4);
             dgvGrades.Name = "dgvGrades";
             dgvGrades.ReadOnly = true;
             dgvGrades.RowHeadersVisible = false;
-            dgvGrades.Size = new Size(1138, 400);
+            dgvGrades.RowHeadersWidth = 51;
+            dgvGrades.Size = new Size(1301, 533);
             dgvGrades.TabIndex = 2;
             // 
             // btnGMSearch2
@@ -4077,9 +4120,10 @@
             btnGMSearch2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnGMSearch2.ForeColor = Color.White;
             btnGMSearch2.Image = Properties.Resources.search_3_16;
-            btnGMSearch2.Location = new Point(1032, 15);
+            btnGMSearch2.Location = new Point(1179, 20);
+            btnGMSearch2.Margin = new Padding(3, 4, 3, 4);
             btnGMSearch2.Name = "btnGMSearch2";
-            btnGMSearch2.Size = new Size(121, 33);
+            btnGMSearch2.Size = new Size(138, 44);
             btnGMSearch2.TabIndex = 1;
             btnGMSearch2.Text = "Search";
             btnGMSearch2.TextAlign = ContentAlignment.MiddleRight;
@@ -4090,10 +4134,11 @@
             // 
             txtGMSsearchBar2.BorderStyle = BorderStyle.FixedSingle;
             txtGMSsearchBar2.Font = new Font("Segoe UI", 12F);
-            txtGMSsearchBar2.Location = new Point(19, 18);
+            txtGMSsearchBar2.Location = new Point(22, 24);
+            txtGMSsearchBar2.Margin = new Padding(3, 4, 3, 4);
             txtGMSsearchBar2.Name = "txtGMSsearchBar2";
             txtGMSsearchBar2.PlaceholderText = "Search by student name, ID, or subject...";
-            txtGMSsearchBar2.Size = new Size(1002, 29);
+            txtGMSsearchBar2.Size = new Size(1145, 34);
             txtGMSsearchBar2.TabIndex = 0;
             // 
             // btnGMAddGrades
@@ -4103,9 +4148,10 @@
             btnGMAddGrades.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnGMAddGrades.ForeColor = Color.White;
             btnGMAddGrades.Image = Properties.Resources.plus_8_16;
-            btnGMAddGrades.Location = new Point(1082, 31);
+            btnGMAddGrades.Location = new Point(1237, 41);
+            btnGMAddGrades.Margin = new Padding(3, 4, 3, 4);
             btnGMAddGrades.Name = "btnGMAddGrades";
-            btnGMAddGrades.Size = new Size(158, 53);
+            btnGMAddGrades.Size = new Size(181, 71);
             btnGMAddGrades.TabIndex = 12;
             btnGMAddGrades.Text = "Add Grades";
             btnGMAddGrades.TextAlign = ContentAlignment.MiddleRight;
@@ -4118,9 +4164,9 @@
             label21.AutoSize = true;
             label21.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
             label21.ForeColor = Color.DimGray;
-            label21.Location = new Point(106, 65);
+            label21.Location = new Point(121, 87);
             label21.Name = "label21";
-            label21.Size = new Size(216, 19);
+            label21.Size = new Size(267, 23);
             label21.TabIndex = 11;
             label21.Text = "View and manage student grades";
             // 
@@ -4129,9 +4175,9 @@
             label37.AutoSize = true;
             label37.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label37.ForeColor = Color.Black;
-            label37.Location = new Point(95, 25);
+            label37.Location = new Point(109, 33);
             label37.Name = "label37";
-            label37.Size = new Size(305, 40);
+            label37.Size = new Size(382, 50);
             label37.TabIndex = 10;
             label37.Text = "Grades Management";
             // 
@@ -4139,9 +4185,10 @@
             // 
             pictureBox6.BackColor = Color.Maroon;
             pictureBox6.Image = Properties.Resources.books_32;
-            pictureBox6.Location = new Point(32, 25);
+            pictureBox6.Location = new Point(37, 33);
+            pictureBox6.Margin = new Padding(3, 4, 3, 4);
             pictureBox6.Name = "pictureBox6";
-            pictureBox6.Size = new Size(57, 59);
+            pictureBox6.Size = new Size(65, 79);
             pictureBox6.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox6.TabIndex = 9;
             pictureBox6.TabStop = false;
@@ -4157,18 +4204,18 @@
             pnlRegisterStudentContent.Controls.Add(label36);
             pnlRegisterStudentContent.Controls.Add(pictureBox5);
             pnlRegisterStudentContent.Dock = DockStyle.Fill;
-            pnlRegisterStudentContent.Location = new Point(256, 72);
+            pnlRegisterStudentContent.Location = new Point(293, 96);
+            pnlRegisterStudentContent.Margin = new Padding(3, 4, 3, 4);
             pnlRegisterStudentContent.Name = "pnlRegisterStudentContent";
-            pnlRegisterStudentContent.Size = new Size(1272, 719);
+            pnlRegisterStudentContent.Size = new Size(1453, 959);
             pnlRegisterStudentContent.TabIndex = 12;
             pnlRegisterStudentContent.Visible = false;
             // 
             // pnlSpaceProviderRS
             // 
-            pnlSpaceProviderRS.Location = new Point(34, 926);
-            pnlSpaceProviderRS.Margin = new Padding(3, 2, 3, 2);
+            pnlSpaceProviderRS.Location = new Point(39, 1235);
             pnlSpaceProviderRS.Name = "pnlSpaceProviderRS";
-            pnlSpaceProviderRS.Size = new Size(904, 94);
+            pnlSpaceProviderRS.Size = new Size(1033, 125);
             pnlSpaceProviderRS.TabIndex = 10;
             // 
             // pnlStudentRegistrationContainer
@@ -4206,9 +4253,10 @@
             pnlStudentRegistrationContainer.Controls.Add(txtRSStudentID);
             pnlStudentRegistrationContainer.Controls.Add(pnlStudentMaroonLine1);
             pnlStudentRegistrationContainer.Controls.Add(lblStudentPersonalInfo);
-            pnlStudentRegistrationContainer.Location = new Point(32, 119);
+            pnlStudentRegistrationContainer.Location = new Point(37, 159);
+            pnlStudentRegistrationContainer.Margin = new Padding(3, 4, 3, 4);
             pnlStudentRegistrationContainer.Name = "pnlStudentRegistrationContainer";
-            pnlStudentRegistrationContainer.Size = new Size(903, 750);
+            pnlStudentRegistrationContainer.Size = new Size(1032, 999);
             pnlStudentRegistrationContainer.TabIndex = 9;
             // 
             // btnStudentClearForm
@@ -4216,9 +4264,10 @@
             btnStudentClearForm.FlatAppearance.BorderColor = Color.Gray;
             btnStudentClearForm.FlatStyle = FlatStyle.Flat;
             btnStudentClearForm.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnStudentClearForm.Location = new Point(509, 677);
+            btnStudentClearForm.Location = new Point(582, 903);
+            btnStudentClearForm.Margin = new Padding(3, 4, 3, 4);
             btnStudentClearForm.Name = "btnStudentClearForm";
-            btnStudentClearForm.Size = new Size(147, 37);
+            btnStudentClearForm.Size = new Size(168, 49);
             btnStudentClearForm.TabIndex = 57;
             btnStudentClearForm.Text = "Clear Form";
             btnStudentClearForm.UseVisualStyleBackColor = true;
@@ -4231,9 +4280,10 @@
             btnStudentRegistration.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnStudentRegistration.ForeColor = Color.White;
             btnStudentRegistration.Image = Properties.Resources.student_2_161;
-            btnStudentRegistration.Location = new Point(662, 677);
+            btnStudentRegistration.Location = new Point(757, 903);
+            btnStudentRegistration.Margin = new Padding(3, 4, 3, 4);
             btnStudentRegistration.Name = "btnStudentRegistration";
-            btnStudentRegistration.Size = new Size(215, 37);
+            btnStudentRegistration.Size = new Size(246, 49);
             btnStudentRegistration.TabIndex = 56;
             btnStudentRegistration.Text = "Register Student";
             btnStudentRegistration.TextAlign = ContentAlignment.MiddleRight;
@@ -4244,9 +4294,10 @@
             // 
             cmbRSEnrollmentStatus.FormattingEnabled = true;
             cmbRSEnrollmentStatus.Items.AddRange(new object[] { "Active/Continuing ", "Inactive", "Graduated", "Withdrawn" });
-            cmbRSEnrollmentStatus.Location = new Point(582, 641);
+            cmbRSEnrollmentStatus.Location = new Point(665, 855);
+            cmbRSEnrollmentStatus.Margin = new Padding(3, 4, 3, 4);
             cmbRSEnrollmentStatus.Name = "cmbRSEnrollmentStatus";
-            cmbRSEnrollmentStatus.Size = new Size(294, 23);
+            cmbRSEnrollmentStatus.Size = new Size(335, 28);
             cmbRSEnrollmentStatus.TabIndex = 55;
             cmbRSEnrollmentStatus.Text = "Select Enrollment Status";
             // 
@@ -4255,9 +4306,9 @@
             label17.AutoSize = true;
             label17.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label17.ForeColor = Color.Black;
-            label17.Location = new Point(582, 617);
+            label17.Location = new Point(665, 823);
             label17.Name = "label17";
-            label17.Size = new Size(138, 21);
+            label17.Size = new Size(172, 28);
             label17.TabIndex = 54;
             label17.Text = "Enrollment Status";
             // 
@@ -4265,9 +4316,10 @@
             // 
             cmbRSStudentCourse.FormattingEnabled = true;
             cmbRSStudentCourse.Items.AddRange(new object[] { "BS Computer Science", "BS Information Technology", "BS Engineering", "BS Business Administration", "BS Accountancy", "Bachelor of Elementary Education", "Bachelor of Secondary Education" });
-            cmbRSStudentCourse.Location = new Point(26, 641);
+            cmbRSStudentCourse.Location = new Point(30, 855);
+            cmbRSStudentCourse.Margin = new Padding(3, 4, 3, 4);
             cmbRSStudentCourse.Name = "cmbRSStudentCourse";
-            cmbRSStudentCourse.Size = new Size(289, 23);
+            cmbRSStudentCourse.Size = new Size(330, 28);
             cmbRSStudentCourse.TabIndex = 50;
             cmbRSStudentCourse.Text = "Select Course";
             // 
@@ -4275,9 +4327,10 @@
             // 
             cmbRSYearLevel.FormattingEnabled = true;
             cmbRSYearLevel.Items.AddRange(new object[] { "1st Year", "2nd Year", "3rd Year", "4th Year" });
-            cmbRSYearLevel.Location = new Point(324, 641);
+            cmbRSYearLevel.Location = new Point(370, 855);
+            cmbRSYearLevel.Margin = new Padding(3, 4, 3, 4);
             cmbRSYearLevel.Name = "cmbRSYearLevel";
-            cmbRSYearLevel.Size = new Size(246, 23);
+            cmbRSYearLevel.Size = new Size(281, 28);
             cmbRSYearLevel.TabIndex = 49;
             cmbRSYearLevel.Text = "Select Year Level";
             // 
@@ -4286,9 +4339,9 @@
             label22.AutoSize = true;
             label22.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label22.ForeColor = Color.Black;
-            label22.Location = new Point(323, 617);
+            label22.Location = new Point(369, 823);
             label22.Name = "label22";
-            label22.Size = new Size(83, 21);
+            label22.Size = new Size(103, 28);
             label22.TabIndex = 43;
             label22.Text = "Year Level";
             // 
@@ -4297,19 +4350,19 @@
             label23.AutoSize = true;
             label23.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label23.ForeColor = Color.Black;
-            label23.Location = new Point(23, 617);
+            label23.Location = new Point(26, 823);
             label23.Name = "label23";
-            label23.Size = new Size(61, 21);
+            label23.Size = new Size(75, 28);
             label23.TabIndex = 41;
             label23.Text = "Course";
             // 
             // pnlStudentMaroonLine3
             // 
             pnlStudentMaroonLine3.BackColor = Color.Maroon;
-            pnlStudentMaroonLine3.Location = new Point(23, 595);
+            pnlStudentMaroonLine3.Location = new Point(26, 793);
             pnlStudentMaroonLine3.Margin = new Padding(0);
             pnlStudentMaroonLine3.Name = "pnlStudentMaroonLine3";
-            pnlStudentMaroonLine3.Size = new Size(853, 3);
+            pnlStudentMaroonLine3.Size = new Size(975, 4);
             pnlStudentMaroonLine3.TabIndex = 39;
             // 
             // lblStudentAcademicInfo
@@ -4317,36 +4370,39 @@
             lblStudentAcademicInfo.AutoSize = true;
             lblStudentAcademicInfo.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblStudentAcademicInfo.ForeColor = Color.Black;
-            lblStudentAcademicInfo.Location = new Point(23, 560);
+            lblStudentAcademicInfo.Location = new Point(26, 747);
             lblStudentAcademicInfo.Name = "lblStudentAcademicInfo";
-            lblStudentAcademicInfo.Size = new Size(226, 30);
+            lblStudentAcademicInfo.Size = new Size(289, 37);
             lblStudentAcademicInfo.TabIndex = 38;
             lblStudentAcademicInfo.Text = "Academic Information";
             // 
             // dtpRSStudentBirthDate
             // 
-            dtpRSStudentBirthDate.Location = new Point(26, 231);
+            dtpRSStudentBirthDate.Location = new Point(30, 308);
+            dtpRSStudentBirthDate.Margin = new Padding(3, 4, 3, 4);
             dtpRSStudentBirthDate.Name = "dtpRSStudentBirthDate";
-            dtpRSStudentBirthDate.Size = new Size(396, 23);
+            dtpRSStudentBirthDate.Size = new Size(452, 27);
             dtpRSStudentBirthDate.TabIndex = 37;
             dtpRSStudentBirthDate.Value = new DateTime(2026, 4, 4, 22, 34, 4, 0);
             // 
             // txtRSStudentAddress
             // 
             txtRSStudentAddress.BorderStyle = BorderStyle.FixedSingle;
-            txtRSStudentAddress.Location = new Point(26, 425);
+            txtRSStudentAddress.Location = new Point(30, 567);
+            txtRSStudentAddress.Margin = new Padding(3, 4, 3, 4);
             txtRSStudentAddress.Multiline = true;
             txtRSStudentAddress.Name = "txtRSStudentAddress";
-            txtRSStudentAddress.Size = new Size(850, 114);
+            txtRSStudentAddress.Size = new Size(971, 151);
             txtRSStudentAddress.TabIndex = 36;
             // 
             // mtbRSStudentPhoneNum
             // 
             mtbRSStudentPhoneNum.BorderStyle = BorderStyle.FixedSingle;
-            mtbRSStudentPhoneNum.Location = new Point(439, 363);
+            mtbRSStudentPhoneNum.Location = new Point(502, 484);
+            mtbRSStudentPhoneNum.Margin = new Padding(3, 4, 3, 4);
             mtbRSStudentPhoneNum.Mask = "(+63) 000-000-0000";
             mtbRSStudentPhoneNum.Name = "mtbRSStudentPhoneNum";
-            mtbRSStudentPhoneNum.Size = new Size(437, 23);
+            mtbRSStudentPhoneNum.Size = new Size(499, 27);
             mtbRSStudentPhoneNum.TabIndex = 34;
             // 
             // label25
@@ -4354,9 +4410,9 @@
             label25.AutoSize = true;
             label25.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label25.ForeColor = Color.Black;
-            label25.Location = new Point(436, 337);
+            label25.Location = new Point(498, 449);
             label25.Name = "label25";
-            label25.Size = new Size(120, 21);
+            label25.Size = new Size(152, 28);
             label25.TabIndex = 33;
             label25.Text = "Phone Number";
             // 
@@ -4365,9 +4421,9 @@
             label26.AutoSize = true;
             label26.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label26.ForeColor = Color.Black;
-            label26.Location = new Point(23, 401);
+            label26.Location = new Point(26, 535);
             label26.Name = "label26";
-            label26.Size = new Size(70, 21);
+            label26.Size = new Size(85, 28);
             label26.TabIndex = 30;
             label26.Text = "Address";
             // 
@@ -4376,9 +4432,9 @@
             label27.AutoSize = true;
             label27.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label27.ForeColor = Color.Black;
-            label27.Location = new Point(23, 337);
+            label27.Location = new Point(26, 449);
             label27.Name = "label27";
-            label27.Size = new Size(112, 21);
+            label27.Size = new Size(139, 28);
             label27.TabIndex = 28;
             label27.Text = "Email Address";
             // 
@@ -4386,19 +4442,20 @@
             // 
             txtRSStudentEmailAdd.BorderStyle = BorderStyle.FixedSingle;
             txtRSStudentEmailAdd.CharacterCasing = CharacterCasing.Upper;
-            txtRSStudentEmailAdd.Location = new Point(26, 361);
+            txtRSStudentEmailAdd.Location = new Point(30, 481);
+            txtRSStudentEmailAdd.Margin = new Padding(3, 4, 3, 4);
             txtRSStudentEmailAdd.Name = "txtRSStudentEmailAdd";
             txtRSStudentEmailAdd.PlaceholderText = " student@iskolarngbayan.pup.edu.ph";
-            txtRSStudentEmailAdd.Size = new Size(396, 23);
+            txtRSStudentEmailAdd.Size = new Size(452, 27);
             txtRSStudentEmailAdd.TabIndex = 27;
             // 
             // pnlStudentMaroonLine2
             // 
             pnlStudentMaroonLine2.BackColor = Color.Maroon;
-            pnlStudentMaroonLine2.Location = new Point(23, 315);
+            pnlStudentMaroonLine2.Location = new Point(26, 420);
             pnlStudentMaroonLine2.Margin = new Padding(0);
             pnlStudentMaroonLine2.Name = "pnlStudentMaroonLine2";
-            pnlStudentMaroonLine2.Size = new Size(853, 3);
+            pnlStudentMaroonLine2.Size = new Size(975, 4);
             pnlStudentMaroonLine2.TabIndex = 26;
             // 
             // lblRSStudentContactInfo
@@ -4406,9 +4463,9 @@
             lblRSStudentContactInfo.AutoSize = true;
             lblRSStudentContactInfo.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblRSStudentContactInfo.ForeColor = Color.Black;
-            lblRSStudentContactInfo.Location = new Point(23, 280);
+            lblRSStudentContactInfo.Location = new Point(26, 373);
             lblRSStudentContactInfo.Name = "lblRSStudentContactInfo";
-            lblRSStudentContactInfo.Size = new Size(208, 30);
+            lblRSStudentContactInfo.Size = new Size(266, 37);
             lblRSStudentContactInfo.TabIndex = 25;
             lblRSStudentContactInfo.Text = "Contact Information";
             // 
@@ -4417,9 +4474,9 @@
             label29.AutoSize = true;
             label29.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label29.ForeColor = Color.Black;
-            label29.Location = new Point(436, 147);
+            label29.Location = new Point(498, 196);
             label29.Name = "label29";
-            label29.Size = new Size(86, 21);
+            label29.Size = new Size(108, 28);
             label29.TabIndex = 23;
             label29.Text = "Last Name";
             // 
@@ -4427,10 +4484,11 @@
             // 
             txtRSStudentLastName.BorderStyle = BorderStyle.FixedSingle;
             txtRSStudentLastName.CharacterCasing = CharacterCasing.Upper;
-            txtRSStudentLastName.Location = new Point(439, 173);
+            txtRSStudentLastName.Location = new Point(502, 231);
+            txtRSStudentLastName.Margin = new Padding(3, 4, 3, 4);
             txtRSStudentLastName.Name = "txtRSStudentLastName";
             txtRSStudentLastName.PlaceholderText = " Enter last name";
-            txtRSStudentLastName.Size = new Size(437, 23);
+            txtRSStudentLastName.Size = new Size(499, 27);
             txtRSStudentLastName.TabIndex = 22;
             // 
             // label30
@@ -4438,9 +4496,9 @@
             label30.AutoSize = true;
             label30.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label30.ForeColor = Color.Black;
-            label30.Location = new Point(436, 83);
+            label30.Location = new Point(498, 111);
             label30.Name = "label30";
-            label30.Size = new Size(88, 21);
+            label30.Size = new Size(110, 28);
             label30.TabIndex = 21;
             label30.Text = "First Name";
             // 
@@ -4448,10 +4506,11 @@
             // 
             txtRSStudentFirstName.BorderStyle = BorderStyle.FixedSingle;
             txtRSStudentFirstName.CharacterCasing = CharacterCasing.Upper;
-            txtRSStudentFirstName.Location = new Point(439, 109);
+            txtRSStudentFirstName.Location = new Point(502, 145);
+            txtRSStudentFirstName.Margin = new Padding(3, 4, 3, 4);
             txtRSStudentFirstName.Name = "txtRSStudentFirstName";
             txtRSStudentFirstName.PlaceholderText = " Enter first name";
-            txtRSStudentFirstName.Size = new Size(437, 23);
+            txtRSStudentFirstName.Size = new Size(499, 27);
             txtRSStudentFirstName.TabIndex = 20;
             // 
             // label31
@@ -4459,9 +4518,9 @@
             label31.AutoSize = true;
             label31.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label31.ForeColor = Color.Black;
-            label31.Location = new Point(23, 207);
+            label31.Location = new Point(26, 276);
             label31.Name = "label31";
-            label31.Size = new Size(103, 21);
+            label31.Size = new Size(129, 28);
             label31.TabIndex = 19;
             label31.Text = "Date of Birth";
             // 
@@ -4470,9 +4529,9 @@
             label32.AutoSize = true;
             label32.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label32.ForeColor = Color.Black;
-            label32.Location = new Point(23, 147);
+            label32.Location = new Point(26, 196);
             label32.Name = "label32";
-            label32.Size = new Size(109, 21);
+            label32.Size = new Size(135, 28);
             label32.TabIndex = 15;
             label32.Text = "Middle Name";
             // 
@@ -4480,10 +4539,11 @@
             // 
             txtRSStudentMiddleName.BorderStyle = BorderStyle.FixedSingle;
             txtRSStudentMiddleName.CharacterCasing = CharacterCasing.Upper;
-            txtRSStudentMiddleName.Location = new Point(26, 171);
+            txtRSStudentMiddleName.Location = new Point(30, 228);
+            txtRSStudentMiddleName.Margin = new Padding(3, 4, 3, 4);
             txtRSStudentMiddleName.Name = "txtRSStudentMiddleName";
             txtRSStudentMiddleName.PlaceholderText = " Enter middle name";
-            txtRSStudentMiddleName.Size = new Size(396, 23);
+            txtRSStudentMiddleName.Size = new Size(452, 27);
             txtRSStudentMiddleName.TabIndex = 14;
             // 
             // label33
@@ -4491,9 +4551,9 @@
             label33.AutoSize = true;
             label33.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label33.ForeColor = Color.Black;
-            label33.Location = new Point(23, 83);
+            label33.Location = new Point(26, 111);
             label33.Name = "label33";
-            label33.Size = new Size(88, 21);
+            label33.Size = new Size(109, 28);
             label33.TabIndex = 11;
             label33.Text = "Student ID";
             // 
@@ -4501,19 +4561,20 @@
             // 
             txtRSStudentID.BorderStyle = BorderStyle.FixedSingle;
             txtRSStudentID.CharacterCasing = CharacterCasing.Upper;
-            txtRSStudentID.Location = new Point(26, 109);
+            txtRSStudentID.Location = new Point(30, 145);
+            txtRSStudentID.Margin = new Padding(3, 4, 3, 4);
             txtRSStudentID.Name = "txtRSStudentID";
             txtRSStudentID.PlaceholderText = " e.g., 2025=00***-SM-0";
-            txtRSStudentID.Size = new Size(396, 23);
+            txtRSStudentID.Size = new Size(452, 27);
             txtRSStudentID.TabIndex = 10;
             // 
             // pnlStudentMaroonLine1
             // 
             pnlStudentMaroonLine1.BackColor = Color.Maroon;
-            pnlStudentMaroonLine1.Location = new Point(23, 61);
+            pnlStudentMaroonLine1.Location = new Point(26, 81);
             pnlStudentMaroonLine1.Margin = new Padding(0);
             pnlStudentMaroonLine1.Name = "pnlStudentMaroonLine1";
-            pnlStudentMaroonLine1.Size = new Size(853, 3);
+            pnlStudentMaroonLine1.Size = new Size(975, 4);
             pnlStudentMaroonLine1.TabIndex = 9;
             // 
             // lblStudentPersonalInfo
@@ -4521,9 +4582,9 @@
             lblStudentPersonalInfo.AutoSize = true;
             lblStudentPersonalInfo.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblStudentPersonalInfo.ForeColor = Color.Black;
-            lblStudentPersonalInfo.Location = new Point(23, 26);
+            lblStudentPersonalInfo.Location = new Point(26, 35);
             lblStudentPersonalInfo.Name = "lblStudentPersonalInfo";
-            lblStudentPersonalInfo.Size = new Size(213, 30);
+            lblStudentPersonalInfo.Size = new Size(274, 37);
             lblStudentPersonalInfo.TabIndex = 6;
             lblStudentPersonalInfo.Text = "Personal Information";
             // 
@@ -4532,9 +4593,9 @@
             label35.AutoSize = true;
             label35.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
             label35.ForeColor = Color.DimGray;
-            label35.Location = new Point(106, 77);
+            label35.Location = new Point(121, 103);
             label35.Name = "label35";
-            label35.Size = new Size(214, 19);
+            label35.Size = new Size(264, 23);
             label35.TabIndex = 8;
             label35.Text = "Add a new student to the system";
             // 
@@ -4543,9 +4604,9 @@
             label36.AutoSize = true;
             label36.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label36.ForeColor = Color.Black;
-            label36.Location = new Point(95, 37);
+            label36.Location = new Point(109, 49);
             label36.Name = "label36";
-            label36.Size = new Size(244, 40);
+            label36.Size = new Size(309, 50);
             label36.TabIndex = 7;
             label36.Text = "Register Student";
             // 
@@ -4553,9 +4614,10 @@
             // 
             pictureBox5.BackColor = Color.Maroon;
             pictureBox5.Image = Properties.Resources.professor_32;
-            pictureBox5.Location = new Point(32, 37);
+            pictureBox5.Location = new Point(37, 49);
+            pictureBox5.Margin = new Padding(3, 4, 3, 4);
             pictureBox5.Name = "pictureBox5";
-            pictureBox5.Size = new Size(57, 59);
+            pictureBox5.Size = new Size(65, 79);
             pictureBox5.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox5.TabIndex = 6;
             pictureBox5.TabStop = false;
@@ -4564,10 +4626,10 @@
             // 
             pnlAccountsContent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pnlAccountsContent.AutoScroll = true;
-            pnlAccountsContent.Location = new Point(288, 272);
+            pnlAccountsContent.Location = new Point(329, 363);
             pnlAccountsContent.Margin = new Padding(0);
             pnlAccountsContent.Name = "pnlAccountsContent";
-            pnlAccountsContent.Size = new Size(1272, 719);
+            pnlAccountsContent.Size = new Size(1454, 959);
             pnlAccountsContent.TabIndex = 5;
             pnlAccountsContent.Visible = false;
             // 
@@ -4577,10 +4639,10 @@
             pnlHeader.Controls.Add(pnlYellow);
             pnlHeader.Controls.Add(panel15);
             pnlHeader.Dock = DockStyle.Top;
-            pnlHeader.Location = new Point(256, 0);
+            pnlHeader.Location = new Point(293, 0);
             pnlHeader.Margin = new Padding(0);
             pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(1272, 72);
+            pnlHeader.Size = new Size(1453, 96);
             pnlHeader.TabIndex = 2;
             // 
             // pnlYellow
@@ -4589,7 +4651,7 @@
             pnlYellow.Location = new Point(0, 0);
             pnlYellow.Margin = new Padding(0);
             pnlYellow.Name = "pnlYellow";
-            pnlYellow.Size = new Size(4, 48);
+            pnlYellow.Size = new Size(5, 64);
             pnlYellow.TabIndex = 7;
             pnlYellow.Visible = false;
             // 
@@ -4597,18 +4659,20 @@
             // 
             panel15.Controls.Add(panel16);
             panel15.Controls.Add(pictureBox2);
-            panel15.Location = new Point(16, 8);
+            panel15.Location = new Point(18, 11);
+            panel15.Margin = new Padding(3, 4, 3, 4);
             panel15.Name = "panel15";
-            panel15.Size = new Size(384, 48);
+            panel15.Size = new Size(439, 64);
             panel15.TabIndex = 1;
             // 
             // panel16
             // 
             panel16.Controls.Add(label3);
             panel16.Controls.Add(label4);
-            panel16.Location = new Point(64, 6);
+            panel16.Location = new Point(73, 8);
+            panel16.Margin = new Padding(3, 4, 3, 4);
             panel16.Name = "panel16";
-            panel16.Size = new Size(320, 36);
+            panel16.Size = new Size(366, 48);
             panel16.TabIndex = 1;
             // 
             // label3
@@ -4617,7 +4681,7 @@
             label3.ForeColor = Color.White;
             label3.Location = new Point(0, 0);
             label3.Name = "label3";
-            label3.Size = new Size(320, 24);
+            label3.Size = new Size(366, 32);
             label3.TabIndex = 2;
             label3.Text = "Polytechnic University of the Philippines";
             label3.TextAlign = ContentAlignment.MiddleLeft;
@@ -4627,9 +4691,9 @@
             label4.BackColor = Color.Transparent;
             label4.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Pixel);
             label4.ForeColor = Color.FromArgb(255, 193, 7);
-            label4.Location = new Point(0, 20);
+            label4.Location = new Point(0, 27);
             label4.Name = "label4";
-            label4.Size = new Size(320, 16);
+            label4.Size = new Size(366, 21);
             label4.TabIndex = 2;
             label4.Text = "Academic Portal";
             label4.TextAlign = ContentAlignment.MiddleLeft;
@@ -4638,6 +4702,7 @@
             // 
             pictureBox2.Image = Properties.Resources.pup48x48;
             pictureBox2.Location = new Point(0, 0);
+            pictureBox2.Margin = new Padding(3, 4, 3, 4);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(48, 48);
             pictureBox2.SizeMode = PictureBoxSizeMode.AutoSize;
@@ -4646,11 +4711,12 @@
             // 
             // AdminPortal
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1528, 791);
+            ClientSize = new Size(1746, 1055);
             Controls.Add(pnlContainerAdminPortal);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(3, 4, 3, 4);
             Name = "AdminPortal";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "AdminPortal";

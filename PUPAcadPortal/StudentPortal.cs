@@ -29,12 +29,13 @@ namespace PUPAcadPortal
         private const int SidePadding = 16;
         private const int CardGap = 10;
         private List<string[]> enrollmentData = new List<string[]>();
+        private Form _parentForm;
 
         private EventType? _activeFilter = null;
 
         private UrDay _selectedCell;
 
-        public StudentPortal()
+        public StudentPortal(Form parent)
         {
             InitializeComponent();
             SharedCalendarData.LoadData();
@@ -47,6 +48,7 @@ namespace PUPAcadPortal
             pnlContainerStudentPortal.AutoScroll = true;
             dropSubjectToolStripMenuItem.Click += dropSubjectToolStripMenuItem_Click;
             btnSaveAndAssess.Click += btnSaveAndAssess_Click;
+            Form _parentForm = parent;
 
             FPLmonth.Resize += (s, ev) => { ResizeCalendarCells(); AlignDayHeaders(); };
             this.Resize += OnFormResized;
@@ -560,6 +562,15 @@ namespace PUPAcadPortal
                 else
                     Application.Exit();
             }
+            //else
+            //{
+            //    if (MessageBox.Show("Are you sure you want to Logout", "Log Out", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            //    {
+            //        e.Cancel = true;
+            //    }
+            //    else
+            //        _parentForm.Show();
+            //}
         }
         private void BuildDayHeaders()
         {
@@ -749,7 +760,7 @@ namespace PUPAcadPortal
         }
         private void btnLogout_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.Hide();
         }
 
         private void btnAnnounce_Click(object sender, EventArgs e)

@@ -572,7 +572,7 @@ namespace PUPAcadPortal
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.Hide();
         }
 
         //-------------------------------------------------------------- (events current sem page)
