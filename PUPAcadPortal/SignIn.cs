@@ -23,6 +23,8 @@ namespace PUPAcadPortal
                 StudentPortal studentPortal = new StudentPortal(this);
                 studentPortal.WindowState = this.WindowState;
                 studentPortal.ShowDialog();
+                txtUsername.Clear();
+                txtPassword.Clear();
                 this.Show();
             }
             else if (txtUsername.Text.ToLower() == "demoadmin" && txtPassword.Text.ToLower() == "admin")
@@ -31,6 +33,8 @@ namespace PUPAcadPortal
                 AdminPortal adminPortal = new AdminPortal();
                 adminPortal.WindowState = this.WindowState;
                 adminPortal.ShowDialog();
+                txtUsername.Clear();
+                txtPassword.Clear();
                 this.Show(); ;
             }
             else if (txtUsername.Text.ToLower() == "demoinstructor" && txtPassword.Text.ToLower() == "instructor")
@@ -39,14 +43,15 @@ namespace PUPAcadPortal
                 InstructorPortal instructorPortal = new InstructorPortal();
                 instructorPortal.WindowState = this.WindowState;
                 instructorPortal.ShowDialog();
+                txtUsername.Clear();
+                txtPassword.Clear();
                 this.Show(); ;
             }
             else
             {
                 MessageBox.Show("Invalid username or password", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            txtUsername.Clear();
-            txtPassword.Clear();
+            
         }
 
         private void SignIn_Load(object sender, EventArgs e)
