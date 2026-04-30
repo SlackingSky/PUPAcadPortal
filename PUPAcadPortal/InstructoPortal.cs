@@ -320,7 +320,10 @@ namespace PUPAcadPortal
             showContent(clickedButton);
             pnllmsSubmenu.Visible = !pnllmsSubmenu.Visible;
             if (pnllmsSubmenu.Visible)
+            {
                 btnLMS.Text = " LMS                                       ⌄";
+                btnAnnounceIns.PerformClick();
+            }
             else
                 btnLMS.Text = " LMS                                        ›";
         }
@@ -344,6 +347,7 @@ namespace PUPAcadPortal
         {
             changeButtonColor(sender as Button);
             showContent(clickedButton);
+            OnFormResized(this, EventArgs.Empty);
         }
 
         private void btnSubjectIns_Click(object sender, EventArgs e)
@@ -922,6 +926,7 @@ namespace PUPAcadPortal
             }
             BuildDayHeaders();
             BuildBottomPanel();
+
 
             FPLmonth.Resize += (s, ev) => { ResizeCalendarCells(); AlignDayHeaders(); };
             this.Resize += OnFormResized;
@@ -1993,8 +1998,8 @@ namespace PUPAcadPortal
 
         // --- QUICK ACTIONS REDIRECTS ---
         private void panel105_Click(object sender, EventArgs e) { if (btnGrades != null) btnGrades_Click(btnGrades, e); }
-        private void panel103_Click(object sender, EventArgs e) { if (btnGrades != null) btnGrades_Click(btnGrades, e); }
-        private void panel102_Click(object sender, EventArgs e) { if (btnGrades != null) btnGrades_Click(btnGrades, e); }
+        private void panel103_Click(object sender, EventArgs e) { if (pnllmsSubmenu.Visible == false) { btnLMS.PerformClick(); } btnSubjectIns.PerformClick(); }
+        private void panel102_Click(object sender, EventArgs e) { if (pnllmsSubmenu.Visible == false) { btnLMS.PerformClick(); } btnAttendanceIns.PerformClick(); }
         private void panel104_Click(object sender, EventArgs e) { if (btnCourses != null) btnCourses_Click(btnCourses, e); }
 
         private void button2_Click(object sender, EventArgs e) { if (btnGrades != null) btnGrades_Click(btnGrades, e); }

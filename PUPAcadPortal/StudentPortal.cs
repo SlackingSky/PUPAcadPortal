@@ -762,6 +762,7 @@ namespace PUPAcadPortal
         {
             changeButtonColor(sender as Button);
             showContent(clickedButton);
+            OnFormResized(this, EventArgs.Empty);
         }
 
         private void btnSubject_Click(object sender, EventArgs e)
@@ -1786,7 +1787,8 @@ namespace PUPAcadPortal
         }
         private void btnDashboardCourses_Click(object sender, EventArgs e)
         {
-            pnllmsSubmenu.Visible = true;
+            if (pnllmsSubmenu.Visible == false) 
+                btnLMS.PerformClick();
             btnSubject.PerformClick();
         }
         private void btnDashboardPaymentStatus_Click(object sender, EventArgs e)
