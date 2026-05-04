@@ -213,17 +213,16 @@
             label302 = new Label();
             panel167 = new Panel();
             panel169 = new Panel();
-            button48 = new Button();
+            btnEditRecords = new Button();
             label306 = new Label();
-            comboBox13 = new ComboBox();
+            cmbTerm = new ComboBox();
             label303 = new Label();
-            comboBox12 = new ComboBox();
+            cmbCourse = new ComboBox();
             panel174 = new Panel();
             panel68 = new Panel();
-            button46 = new Button();
-            button47 = new Button();
-            textBox26 = new TextBox();
-            panel62 = new Panel();
+            btnSaveRecord = new Button();
+            btnReleaseGrades = new Button();
+            txtSearch = new TextBox();
             pnlGradesContent = new Panel();
             panel69 = new Panel();
             button24 = new Button();
@@ -2398,7 +2397,6 @@
             panel61.Controls.Add(flowLayoutPanel31);
             panel61.Controls.Add(panel167);
             panel61.Controls.Add(panel174);
-            panel61.Controls.Add(panel62);
             panel61.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
             panel61.ForeColor = Color.Black;
             panel61.Location = new Point(0, 0);
@@ -2417,7 +2415,7 @@
             panel168.Font = new Font("Arial Narrow", 10.2F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
             panel168.Location = new Point(-1, 17);
             panel168.Name = "panel168";
-            panel168.Size = new Size(1453, 93);
+            panel168.Size = new Size(1440, 93);
             panel168.TabIndex = 0;
             // 
             // label304
@@ -3468,28 +3466,28 @@
             // 
             panel169.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
             panel169.BackColor = Color.White;
-            panel169.Controls.Add(button48);
+            panel169.Controls.Add(btnEditRecords);
             panel169.Controls.Add(label306);
-            panel169.Controls.Add(comboBox13);
+            panel169.Controls.Add(cmbTerm);
             panel169.Controls.Add(label303);
-            panel169.Controls.Add(comboBox12);
+            panel169.Controls.Add(cmbCourse);
             panel169.Location = new Point(8, 8);
             panel169.Name = "panel169";
             panel169.Size = new Size(1409, 66);
             panel169.TabIndex = 2;
             // 
-            // button48
+            // btnEditRecords
             // 
-            button48.Anchor = AnchorStyles.None;
-            button48.BackColor = Color.Maroon;
-            button48.FlatStyle = FlatStyle.Flat;
-            button48.ForeColor = Color.White;
-            button48.Location = new Point(1022, 16);
-            button48.Name = "button48";
-            button48.Size = new Size(367, 32);
-            button48.TabIndex = 5;
-            button48.Text = "Edit Records";
-            button48.UseVisualStyleBackColor = false;
+            btnEditRecords.Anchor = AnchorStyles.None;
+            btnEditRecords.BackColor = Color.Maroon;
+            btnEditRecords.FlatStyle = FlatStyle.Flat;
+            btnEditRecords.ForeColor = Color.White;
+            btnEditRecords.Location = new Point(1022, 16);
+            btnEditRecords.Name = "btnEditRecords";
+            btnEditRecords.Size = new Size(367, 32);
+            btnEditRecords.TabIndex = 5;
+            btnEditRecords.Text = "Edit Records";
+            btnEditRecords.UseVisualStyleBackColor = false;
             // 
             // label306
             // 
@@ -3501,13 +3499,13 @@
             label306.TabIndex = 3;
             label306.Text = "Select Term";
             // 
-            // comboBox13
+            // cmbTerm
             // 
-            comboBox13.FormattingEnabled = true;
-            comboBox13.Location = new Point(492, 31);
-            comboBox13.Name = "comboBox13";
-            comboBox13.Size = new Size(462, 28);
-            comboBox13.TabIndex = 4;
+            cmbTerm.FormattingEnabled = true;
+            cmbTerm.Location = new Point(492, 31);
+            cmbTerm.Name = "cmbTerm";
+            cmbTerm.Size = new Size(462, 28);
+            cmbTerm.TabIndex = 4;
             // 
             // label303
             // 
@@ -3520,13 +3518,13 @@
             label303.Text = "Select Course";
             label303.Click += (this.label303_Click);
             // 
-            // comboBox12
+            // cmbCourse
             // 
-            comboBox12.FormattingEnabled = true;
-            comboBox12.Location = new Point(14, 32);
-            comboBox12.Name = "comboBox12";
-            comboBox12.Size = new Size(462, 28);
-            comboBox12.TabIndex = 2;
+            cmbCourse.FormattingEnabled = true;
+            cmbCourse.Location = new Point(14, 32);
+            cmbCourse.Name = "cmbCourse";
+            cmbCourse.Size = new Size(462, 28);
+            cmbCourse.TabIndex = 2;
             // 
             // panel174
             // 
@@ -3541,9 +3539,9 @@
             // 
             panel68.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
             panel68.BackColor = Color.Transparent;
-            panel68.Controls.Add(button46);
-            panel68.Controls.Add(button47);
-            panel68.Controls.Add(textBox26);
+            panel68.Controls.Add(btnSaveRecord);
+            panel68.Controls.Add(btnReleaseGrades);
+            panel68.Controls.Add(txtSearch);
             panel68.Location = new Point(6, 16);
             panel68.Margin = new Padding(0, 12, 0, 12);
             panel68.Name = "panel68";
@@ -3551,47 +3549,39 @@
             panel68.Size = new Size(1420, 50);
             panel68.TabIndex = 7;
             // 
-            // button46
+            // btnSaveRecord
             // 
-            button46.Anchor = AnchorStyles.None;
-            button46.BackColor = Color.Maroon;
-            button46.FlatStyle = FlatStyle.Flat;
-            button46.ForeColor = Color.White;
-            button46.Location = new Point(1030, 11);
-            button46.Name = "button46";
-            button46.Size = new Size(367, 32);
-            button46.TabIndex = 2;
-            button46.Text = "Save";
-            button46.UseVisualStyleBackColor = false;
+            btnSaveRecord.Anchor = AnchorStyles.None;
+            btnSaveRecord.BackColor = Color.Maroon;
+            btnSaveRecord.FlatStyle = FlatStyle.Flat;
+            btnSaveRecord.ForeColor = Color.White;
+            btnSaveRecord.Location = new Point(1030, 11);
+            btnSaveRecord.Name = "btnSaveRecord";
+            btnSaveRecord.Size = new Size(367, 32);
+            btnSaveRecord.TabIndex = 2;
+            btnSaveRecord.Text = "Save";
+            btnSaveRecord.UseVisualStyleBackColor = false;
             // 
-            // button47
+            // btnReleaseGrades
             // 
-            button47.Anchor = AnchorStyles.None;
-            button47.BackColor = Color.Gold;
-            button47.FlatStyle = FlatStyle.Flat;
-            button47.Location = new Point(644, 11);
-            button47.Name = "button47";
-            button47.Size = new Size(367, 32);
-            button47.TabIndex = 1;
-            button47.Text = "Upload Grades";
-            button47.UseVisualStyleBackColor = false;
+            btnReleaseGrades.Anchor = AnchorStyles.None;
+            btnReleaseGrades.BackColor = Color.Gold;
+            btnReleaseGrades.FlatStyle = FlatStyle.Flat;
+            btnReleaseGrades.Location = new Point(644, 11);
+            btnReleaseGrades.Name = "btnReleaseGrades";
+            btnReleaseGrades.Size = new Size(367, 32);
+            btnReleaseGrades.TabIndex = 1;
+            btnReleaseGrades.Text = "Release Grades";
+            btnReleaseGrades.UseVisualStyleBackColor = false;
             // 
-            // textBox26
+            // txtSearch
             // 
-            textBox26.BorderStyle = BorderStyle.FixedSingle;
-            textBox26.Location = new Point(14, 11);
-            textBox26.Name = "textBox26";
-            textBox26.PlaceholderText = "Search by name or student number...";
-            textBox26.Size = new Size(356, 27);
-            textBox26.TabIndex = 0;
-            // 
-            // panel62
-            // 
-            panel62.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            panel62.Location = new Point(13, 204);
-            panel62.Name = "panel62";
-            panel62.Size = new Size(1425, 104);
-            panel62.TabIndex = 11;
+            txtSearch.BorderStyle = BorderStyle.FixedSingle;
+            txtSearch.Location = new Point(14, 11);
+            txtSearch.Name = "txtSearch";
+            txtSearch.PlaceholderText = "Search by name or student number...";
+            txtSearch.Size = new Size(356, 27);
+            txtSearch.TabIndex = 0;
             // 
             // pnlGradesContent
             // 
@@ -13697,11 +13687,11 @@
         public Panel pnlLMSAct;
         public Panel panel3;
         private Panel panel61;
-        private ComboBox comboBox12;
+        private ComboBox cmbCourse;
         private DataGridView dataGridView1;
         private Panel panel68;
-        private Button button47;
-        private TextBox textBox26;
+        private Button btnReleaseGrades;
+        private TextBox txtSearch;
         private FlowLayoutPanel flowLayoutPanel26;
         private Panel panel133;
         private Panel panel134;
@@ -13794,7 +13784,7 @@
         private Label label305;
         private Panel panel169;
         private Label label306;
-        private ComboBox comboBox13;
+        private ComboBox cmbTerm;
         private FlowLayoutPanel flowLayoutPanel43;
         private Panel panel170;
         private Panel panel171;
@@ -13806,7 +13796,7 @@
         private Label label309;
         private Label label310;
         private Panel panel174;
-        private Button button46;
+        private Button btnSaveRecord;
         private DataGridViewTextBoxColumn StudentNum;
         private DataGridViewTextBoxColumn StudentName;
         private DataGridViewTextBoxColumn Attendance;
@@ -13816,7 +13806,6 @@
         private DataGridViewButtonColumn LongQuiz;
         private DataGridViewTextBoxColumn MajorExam;
         private DataGridViewComboBoxColumn Remark;
-        private Button button48;
-        private Panel panel62;
+        private Button btnEditRecords;
     }
 }
