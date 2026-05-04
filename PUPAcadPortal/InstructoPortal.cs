@@ -117,7 +117,7 @@ namespace PUPAcadPortal
         private void SetupGradeLogic()
         {
             if (dataGridView2 != null)
-            {               
+            {
                 dataGridView2.AllowUserToAddRows = false;
                 dataGridView2.AllowUserToOrderColumns = false;
                 dataGridView2.AllowUserToResizeColumns = false;
@@ -251,7 +251,7 @@ namespace PUPAcadPortal
         {
             if (button == null) return;
 
-            var contents = new Dictionary<Button, Panel>() 
+            var contents = new Dictionary<Button, Panel>()
             {
                 { btnDashboard, pnlDashboardContent },
                 { btnGrades, pnlGradesContent },
@@ -1949,13 +1949,6 @@ namespace PUPAcadPortal
             ManageAct.Refresh();
         }
 
-        private void button45_Click(object sender, EventArgs e)
-        {
-            dataGridView1.Visible = true;
-            btnRelease.Visible = true;
-            btnSave.Visible = true;
-        }
-
         private void buttonRounded1_Click(object sender, EventArgs e)
         {
             pnlSub1.Visible = true;
@@ -2026,6 +2019,16 @@ namespace PUPAcadPortal
             public double? Finals { get; set; }
             public double? Average => (Midterm.HasValue && Finals.HasValue) ? (Midterm + Finals) / 2.0 : null;
             public string Remarks => Average.HasValue ? (Average >= 75.0 ? "Passed" : "Failed") : "Incomplete";
+        }
+
+        private void label303_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
