@@ -107,15 +107,6 @@
             label304 = new Label();
             label305 = new Label();
             dataGridView1 = new DataGridView();
-            StudentNum = new DataGridViewTextBoxColumn();
-            StudentName = new DataGridViewTextBoxColumn();
-            Attendance = new DataGridViewTextBoxColumn();
-            Recitation = new DataGridViewTextBoxColumn();
-            Seatwork = new DataGridViewTextBoxColumn();
-            Assignment = new DataGridViewTextBoxColumn();
-            LongQuiz = new DataGridViewButtonColumn();
-            MajorExam = new DataGridViewTextBoxColumn();
-            Remark = new DataGridViewComboBoxColumn();
             flowLayoutPanel43 = new FlowLayoutPanel();
             panel170 = new Panel();
             panel171 = new Panel();
@@ -976,6 +967,15 @@
             timer1 = new System.Windows.Forms.Timer(components);
             sideBarTimer = new System.Windows.Forms.Timer(components);
             roundedPanel20 = new RoundedPanel();
+            StudentNum = new DataGridViewTextBoxColumn();
+            StudentName = new DataGridViewTextBoxColumn();
+            Attendance = new DataGridViewTextBoxColumn();
+            Recitation = new DataGridViewTextBoxColumn();
+            Seatwork = new DataGridViewTextBoxColumn();
+            Assignment = new DataGridViewTextBoxColumn();
+            LongQuiz = new DataGridViewTextBoxColumn();
+            MajorExam = new DataGridViewTextBoxColumn();
+            Remark = new DataGridViewComboBoxColumn();
             button29 = new Button();
             pnlSidebar.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
@@ -2458,60 +2458,6 @@
             dataGridView1.Size = new Size(1374, 524);
             dataGridView1.TabIndex = 8;
             dataGridView1.CellContentClick += (this.dataGridView1_CellContentClick);
-            // 
-            // StudentNum
-            // 
-            StudentNum.HeaderText = "Student Number";
-            StudentNum.MinimumWidth = 6;
-            StudentNum.Name = "StudentNum";
-            // 
-            // StudentName
-            // 
-            StudentName.HeaderText = "Name";
-            StudentName.MinimumWidth = 6;
-            StudentName.Name = "StudentName";
-            // 
-            // Attendance
-            // 
-            Attendance.HeaderText = "Attendance";
-            Attendance.MinimumWidth = 6;
-            Attendance.Name = "Attendance";
-            // 
-            // Recitation
-            // 
-            Recitation.HeaderText = "Recitation/Class Participation";
-            Recitation.MinimumWidth = 6;
-            Recitation.Name = "Recitation";
-            // 
-            // Seatwork
-            // 
-            Seatwork.HeaderText = "Seatwork/Short Quiz";
-            Seatwork.MinimumWidth = 6;
-            Seatwork.Name = "Seatwork";
-            // 
-            // Assignment
-            // 
-            Assignment.HeaderText = "Assignment/Project";
-            Assignment.MinimumWidth = 6;
-            Assignment.Name = "Assignment";
-            // 
-            // LongQuiz
-            // 
-            LongQuiz.HeaderText = "Long Quiz";
-            LongQuiz.MinimumWidth = 6;
-            LongQuiz.Name = "LongQuiz";
-            // 
-            // MajorExam
-            // 
-            MajorExam.HeaderText = "Major Examination";
-            MajorExam.MinimumWidth = 6;
-            MajorExam.Name = "MajorExam";
-            // 
-            // Remark
-            // 
-            Remark.HeaderText = "Remarks";
-            Remark.MinimumWidth = 6;
-            Remark.Name = "Remark";
             // 
             // flowLayoutPanel43
             // 
@@ -12300,6 +12246,60 @@
             roundedPanel20.Size = new Size(588, 313);
             roundedPanel20.TabIndex = 19;
             // 
+            // StudentNum
+            // 
+            StudentNum.HeaderText = "Student Number";
+            StudentNum.MinimumWidth = 6;
+            StudentNum.Name = "StudentNum";
+            // 
+            // StudentName
+            // 
+            StudentName.HeaderText = "Name";
+            StudentName.MinimumWidth = 6;
+            StudentName.Name = "StudentName";
+            // 
+            // Attendance
+            // 
+            Attendance.HeaderText = "Attendance";
+            Attendance.MinimumWidth = 6;
+            Attendance.Name = "Attendance";
+            // 
+            // Recitation
+            // 
+            Recitation.HeaderText = "Recitation/Class Participation";
+            Recitation.MinimumWidth = 6;
+            Recitation.Name = "Recitation";
+            // 
+            // Seatwork
+            // 
+            Seatwork.HeaderText = "Seatwork/Short Quiz";
+            Seatwork.MinimumWidth = 6;
+            Seatwork.Name = "Seatwork";
+            // 
+            // Assignment
+            // 
+            Assignment.HeaderText = "Assignment/Project";
+            Assignment.MinimumWidth = 6;
+            Assignment.Name = "Assignment";
+            // 
+            // LongQuiz
+            // 
+            LongQuiz.HeaderText = "Long Quiz";
+            LongQuiz.MinimumWidth = 6;
+            LongQuiz.Name = "LongQuiz";
+            // 
+            // MajorExam
+            // 
+            MajorExam.HeaderText = "Major Examination";
+            MajorExam.MinimumWidth = 6;
+            MajorExam.Name = "MajorExam";
+            // 
+            // Remark
+            // 
+            Remark.HeaderText = "Remarks";
+            Remark.MinimumWidth = 6;
+            Remark.Name = "Remark";
+            // 
             // InstructorPortal
             // 
             this.AutoScaleDimensions = new SizeF(8F, 20F);
@@ -13797,15 +13797,15 @@
         private Label label310;
         private Panel panel174;
         private Button btnSaveRecord;
+        private Button btnEditRecords;
         private DataGridViewTextBoxColumn StudentNum;
         private DataGridViewTextBoxColumn StudentName;
         private DataGridViewTextBoxColumn Attendance;
         private DataGridViewTextBoxColumn Recitation;
         private DataGridViewTextBoxColumn Seatwork;
         private DataGridViewTextBoxColumn Assignment;
-        private DataGridViewButtonColumn LongQuiz;
+        private DataGridViewTextBoxColumn LongQuiz;
         private DataGridViewTextBoxColumn MajorExam;
         private DataGridViewComboBoxColumn Remark;
-        private Button btnEditRecords;
     }
 }
