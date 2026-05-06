@@ -40,7 +40,7 @@ namespace PUPAcadPortal
             InitializeComponent();
             SharedCalendarData.LoadData();
             BuildDayHeaders();
-            BuildBottomPanel(); 
+            BuildBottomPanel();
             txtEnrollSearch.KeyDown += txtEnrollSearch_KeyDown;
             //this.Resize += StudentPortal_EnrollmentResize; Breaks enrollment bottom cards, instead of being in the middle: Brylle
             this.Resize += StudentPortal_AccountsResize;
@@ -72,6 +72,13 @@ namespace PUPAcadPortal
                 Application.RemoveMessageFilter(wheelFilter);
                 this.Resize -= OnFormResized;
             };
+
+            string[] row1 = { "Integrated Programming and Technologies 1", "1.00", "P" };
+            string[] row2 = { "Principles of Accounting", "1.00", "P" };
+
+            dataGridView1.Rows.Add(row1);
+            dataGridView1.Rows.Add(row2);
+
         }
         private void BuildBottomPanel()
         {
@@ -519,7 +526,7 @@ namespace PUPAcadPortal
         //Method na nagpapakita ng content ng bawat button, wala akong maisip na iba kaya eto
         private void showContent(Button button)
         {
-            Dictionary<Button, Panel> contents = new Dictionary<Button, Panel> 
+            Dictionary<Button, Panel> contents = new Dictionary<Button, Panel>
             {
                 { btnDashboard, pnlDashboardContent },
                 { btnEnrollment, pnlEnrollContent },
@@ -989,18 +996,18 @@ namespace PUPAcadPortal
 
         private void button8_Click(object sender, EventArgs e)
         {
-            roundedPanel36.Visible = false;
+            rpnlGradeBreakdown.Visible = false;
         }
 
         private void button11_Click(object sender, EventArgs e)
         {
-            roundedPanel36.Visible = true;
-            roundedPanel36.BringToFront();
+            rpnlGradeBreakdown.Visible = true;
+            rpnlGradeBreakdown.BringToFront();
         }
 
         private void btnViewGrades_Click(object sender, EventArgs e)
         {
-            fpnlGradesList.Visible = !fpnlGradesList.Visible;
+
         }
 
 
@@ -1798,7 +1805,7 @@ namespace PUPAcadPortal
         }
         private void btnDashboardCourses_Click(object sender, EventArgs e)
         {
-            if (pnllmsSubmenu.Visible == false) 
+            if (pnllmsSubmenu.Visible == false)
                 btnLMS.PerformClick();
             btnSubject.PerformClick();
         }
@@ -1875,6 +1882,15 @@ namespace PUPAcadPortal
             {
                 pnlAttAcc.Visible = true;
 
+            }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && dataGridView1.Columns[e.ColumnIndex].Name == "GradeBreakdown")
+            {
+                rpnlGradeBreakdown.Visible = true;
+                rpnlGradeBreakdown.BringToFront();
             }
         }
     }
