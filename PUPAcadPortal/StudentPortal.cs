@@ -1921,5 +1921,14 @@ namespace PUPAcadPortal
         {
 
         }
+
+        private void dgvFinalGradeStudent_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && dgvFinalGradeStudent.Columns[e.ColumnIndex].Name == "FGradeBreakdown")
+            {
+                rpnlGradeBreakdown.Visible = true;
+                rpnlGradeBreakdown.BringToFront();
+            }
+        }
     }
 }
