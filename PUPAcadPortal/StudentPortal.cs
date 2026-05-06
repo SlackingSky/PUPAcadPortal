@@ -76,8 +76,8 @@ namespace PUPAcadPortal
             string[] row1 = { "Integrated Programming and Technologies 1", "1.00", "P" };
             string[] row2 = { "Principles of Accounting", "1.00", "P" };
 
-            dataGridView1.Rows.Add(row1);
-            dataGridView1.Rows.Add(row2);
+            dgvMidtermGradeStudent.Rows.Add(row1);
+            dgvMidtermGradeStudent.Rows.Add(row2);
 
         }
         private void BuildBottomPanel()
@@ -1887,10 +1887,23 @@ namespace PUPAcadPortal
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0 && dataGridView1.Columns[e.ColumnIndex].Name == "GradeBreakdown")
+            if (e.RowIndex >= 0 && dgvMidtermGradeStudent.Columns[e.ColumnIndex].Name == "GradeBreakdown")
             {
                 rpnlGradeBreakdown.Visible = true;
                 rpnlGradeBreakdown.BringToFront();
+            }
+        }
+
+        private void cmbGradingPeriod_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (cmbGradingPeriod.SelectedItem.ToString())
+            {
+                case "Midterm Period":
+                    pnlMidtermGradeStudent.Visible = true;
+                    break;
+                case "Finalterm Period":
+                    pnlFinalGradeStudent.Visible = true;
+                    break;
             }
         }
     }

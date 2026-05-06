@@ -29,19 +29,22 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            DataGridViewCellStyle dataGridViewCellStyle31 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle32 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle33 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StudentPortal));
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle37 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle38 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle39 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle40 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle41 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle42 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle43 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle44 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle45 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle34 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle35 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle36 = new DataGridViewCellStyle();
             pnlSidebar = new Panel();
             panel12 = new Panel();
             panel13 = new Panel();
@@ -74,10 +77,14 @@
             pnlCoursesContent = new Panel();
             pnlContainerStudentPortal = new Panel();
             pnlGrades = new Panel();
-            dataGridView1 = new DataGridView();
+            dgvMidtermGradeStudent = new DataGridView();
+            CourseName = new DataGridViewTextBoxColumn();
+            StudentGrade = new DataGridViewTextBoxColumn();
+            StudentRemark = new DataGridViewTextBoxColumn();
+            GradeBreakdown = new DataGridViewButtonColumn();
             panel57 = new Panel();
             roundedPanel38 = new RoundedPanel();
-            comboBox10 = new ComboBox();
+            cmbGradingPeriod = new ComboBox();
             btnGenerate = new Button();
             label52 = new Label();
             rpnlGradeBreakdown = new RoundedPanel();
@@ -722,10 +729,14 @@
             cmsEnrollAction = new ContextMenuStrip(components);
             viewDetailsToolStripMenuItem = new ToolStripMenuItem();
             dropSubjectToolStripMenuItem = new ToolStripMenuItem();
-            CourseName = new DataGridViewTextBoxColumn();
-            StudentGrade = new DataGridViewTextBoxColumn();
-            StudentRemark = new DataGridViewTextBoxColumn();
-            GradeBreakdown = new DataGridViewButtonColumn();
+            pnlMidtermGradeStudent = new Panel();
+            pnlFinalGradeStudent = new Panel();
+            dgvFinalGradeStudent = new DataGridView();
+            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
+            dataGridViewButtonColumn1 = new DataGridViewButtonColumn();
+            label9 = new Label();
             pnlSidebar.SuspendLayout();
             panel12.SuspendLayout();
             panel13.SuspendLayout();
@@ -742,7 +753,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             pnlContainerStudentPortal.SuspendLayout();
             pnlGrades.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvMidtermGradeStudent).BeginInit();
             panel57.SuspendLayout();
             roundedPanel38.SuspendLayout();
             rpnlGradeBreakdown.SuspendLayout();
@@ -1018,6 +1029,9 @@
             panel16.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             cmsEnrollAction.SuspendLayout();
+            pnlMidtermGradeStudent.SuspendLayout();
+            pnlFinalGradeStudent.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvFinalGradeStudent).BeginInit();
             this.SuspendLayout();
             // 
             // pnlSidebar
@@ -1532,8 +1546,10 @@
             pnlGrades.AutoScroll = true;
             pnlGrades.BackColor = SystemColors.Control;
             pnlGrades.CausesValidation = false;
-            pnlGrades.Controls.Add(dataGridView1);
+            pnlGrades.Controls.Add(label9);
             pnlGrades.Controls.Add(panel57);
+            pnlGrades.Controls.Add(pnlMidtermGradeStudent);
+            pnlGrades.Controls.Add(pnlFinalGradeStudent);
             pnlGrades.Controls.Add(rpnlGradeBreakdown);
             pnlGrades.Dock = DockStyle.Fill;
             pnlGrades.Location = new Point(293, 96);
@@ -1543,22 +1559,58 @@
             pnlGrades.TabIndex = 34;
             pnlGrades.Visible = false;
             // 
-            // dataGridView1
+            // dgvMidtermGradeStudent
             // 
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.AllowUserToOrderColumns = true;
-            dataGridView1.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { CourseName, StudentGrade, StudentRemark, GradeBreakdown });
-            dataGridView1.Location = new Point(85, 138);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersVisible = false;
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(1285, 619);
-            dataGridView1.TabIndex = 9;
-            dataGridView1.CellContentClick += (this.dataGridView1_CellContentClick);
+            dgvMidtermGradeStudent.AllowUserToAddRows = false;
+            dgvMidtermGradeStudent.AllowUserToOrderColumns = true;
+            dgvMidtermGradeStudent.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvMidtermGradeStudent.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvMidtermGradeStudent.Columns.AddRange(new DataGridViewColumn[] { CourseName, StudentGrade, StudentRemark, GradeBreakdown });
+            dgvMidtermGradeStudent.Dock = DockStyle.Fill;
+            dgvMidtermGradeStudent.Location = new Point(0, 0);
+            dgvMidtermGradeStudent.Name = "dgvMidtermGradeStudent";
+            dgvMidtermGradeStudent.RowHeadersVisible = false;
+            dgvMidtermGradeStudent.RowHeadersWidth = 51;
+            dgvMidtermGradeStudent.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvMidtermGradeStudent.Size = new Size(1356, 754);
+            dgvMidtermGradeStudent.TabIndex = 9;
+            dgvMidtermGradeStudent.CellContentClick += (this.dataGridView1_CellContentClick);
+            // 
+            // CourseName
+            // 
+            CourseName.FillWeight = 213.9037F;
+            CourseName.HeaderText = "Course Name";
+            CourseName.MinimumWidth = 6;
+            CourseName.Name = "CourseName";
+            // 
+            // StudentGrade
+            // 
+            dataGridViewCellStyle31.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            StudentGrade.DefaultCellStyle = dataGridViewCellStyle31;
+            StudentGrade.FillWeight = 43.64141F;
+            StudentGrade.HeaderText = "Grade";
+            StudentGrade.MinimumWidth = 6;
+            StudentGrade.Name = "StudentGrade";
+            // 
+            // StudentRemark
+            // 
+            dataGridViewCellStyle32.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            StudentRemark.DefaultCellStyle = dataGridViewCellStyle32;
+            StudentRemark.FillWeight = 62.7119637F;
+            StudentRemark.HeaderText = "Remarks";
+            StudentRemark.MinimumWidth = 6;
+            StudentRemark.Name = "StudentRemark";
+            // 
+            // GradeBreakdown
+            // 
+            dataGridViewCellStyle33.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle33.Font = new Font("Microsoft Sans Serif", 7.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            GradeBreakdown.DefaultCellStyle = dataGridViewCellStyle33;
+            GradeBreakdown.FillWeight = 79.74287F;
+            GradeBreakdown.HeaderText = "Grade Breakdown";
+            GradeBreakdown.MinimumWidth = 6;
+            GradeBreakdown.Name = "GradeBreakdown";
+            GradeBreakdown.Text = "View Grade Breakdown";
             // 
             // panel57
             // 
@@ -1576,20 +1628,21 @@
             // 
             roundedPanel38.BackColor = Color.Maroon;
             roundedPanel38.BorderRadius = 10;
-            roundedPanel38.Controls.Add(comboBox10);
+            roundedPanel38.Controls.Add(cmbGradingPeriod);
             roundedPanel38.Location = new Point(224, 12);
             roundedPanel38.Name = "roundedPanel38";
             roundedPanel38.Size = new Size(302, 64);
             roundedPanel38.TabIndex = 5;
             // 
-            // comboBox10
+            // cmbGradingPeriod
             // 
-            comboBox10.FormattingEnabled = true;
-            comboBox10.Items.AddRange(new object[] { "Midterm Period", "Finalterm Period" });
-            comboBox10.Location = new Point(11, 16);
-            comboBox10.Name = "comboBox10";
-            comboBox10.Size = new Size(281, 28);
-            comboBox10.TabIndex = 5;
+            cmbGradingPeriod.FormattingEnabled = true;
+            cmbGradingPeriod.Items.AddRange(new object[] { "Midterm Period", "Finalterm Period" });
+            cmbGradingPeriod.Location = new Point(11, 16);
+            cmbGradingPeriod.Name = "cmbGradingPeriod";
+            cmbGradingPeriod.Size = new Size(281, 28);
+            cmbGradingPeriod.TabIndex = 5;
+            cmbGradingPeriod.SelectedIndexChanged += (this.cmbGradingPeriod_SelectedIndexChanged);
             // 
             // btnGenerate
             // 
@@ -6839,14 +6892,14 @@
             dgvAccounts.BackgroundColor = Color.White;
             dgvAccounts.BorderStyle = BorderStyle.None;
             dgvAccounts.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = Color.FromArgb((int)(byte)245, (int)(byte)247, (int)(byte)250);
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            dataGridViewCellStyle4.ForeColor = Color.FromArgb((int)(byte)60, (int)(byte)60, (int)(byte)60);
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            dgvAccounts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle37.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle37.BackColor = Color.FromArgb((int)(byte)245, (int)(byte)247, (int)(byte)250);
+            dataGridViewCellStyle37.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            dataGridViewCellStyle37.ForeColor = Color.FromArgb((int)(byte)60, (int)(byte)60, (int)(byte)60);
+            dataGridViewCellStyle37.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle37.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle37.WrapMode = DataGridViewTriState.True;
+            dgvAccounts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle37;
             dgvAccounts.ColumnHeadersHeight = 45;
             dgvAccounts.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dgvAccounts.Columns.AddRange(new DataGridViewColumn[] { colAccountsRefID, colAccountsDescription, colAccountsAmount, colAccountsDueDate, colAccountsStatus, colAccountsPaidDate });
@@ -8340,14 +8393,14 @@
             dgvEnrollmentConfirmed.BackgroundColor = Color.White;
             dgvEnrollmentConfirmed.CellBorderStyle = DataGridViewCellBorderStyle.None;
             dgvEnrollmentConfirmed.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = Color.Maroon;
-            dataGridViewCellStyle5.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dataGridViewCellStyle5.ForeColor = Color.White;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            dgvEnrollmentConfirmed.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle38.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle38.BackColor = Color.Maroon;
+            dataGridViewCellStyle38.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle38.ForeColor = Color.White;
+            dataGridViewCellStyle38.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle38.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle38.WrapMode = DataGridViewTriState.True;
+            dgvEnrollmentConfirmed.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle38;
             dgvEnrollmentConfirmed.ColumnHeadersHeight = 29;
             dgvEnrollmentConfirmed.Columns.AddRange(new DataGridViewColumn[] { colCode2, colourseTitle2, colUnits2, colSchedule2, colStatus2, colAction2 });
             dgvEnrollmentConfirmed.EnableHeadersVisualStyles = false;
@@ -8387,8 +8440,8 @@
             // colUnits2
             // 
             colUnits2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            colUnits2.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle39.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            colUnits2.DefaultCellStyle = dataGridViewCellStyle39;
             colUnits2.FillWeight = 92.978F;
             colUnits2.HeaderText = "Units";
             colUnits2.MinimumWidth = 6;
@@ -8408,8 +8461,8 @@
             // 
             // colStatus2
             // 
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            colStatus2.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle40.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            colStatus2.DefaultCellStyle = dataGridViewCellStyle40;
             colStatus2.FillWeight = 92.978F;
             colStatus2.HeaderText = "Status";
             colStatus2.MinimumWidth = 6;
@@ -8420,10 +8473,10 @@
             // colAction2
             // 
             colAction2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.Font = new Font("Segoe UI", 9F, FontStyle.Underline);
-            dataGridViewCellStyle8.ForeColor = Color.Maroon;
-            colAction2.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle41.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle41.Font = new Font("Segoe UI", 9F, FontStyle.Underline);
+            dataGridViewCellStyle41.ForeColor = Color.Maroon;
+            colAction2.DefaultCellStyle = dataGridViewCellStyle41;
             colAction2.HeaderText = "Action";
             colAction2.MinimumWidth = 6;
             colAction2.Name = "colAction2";
@@ -8486,14 +8539,14 @@
             dgvEnrollment.BackgroundColor = Color.White;
             dgvEnrollment.CellBorderStyle = DataGridViewCellBorderStyle.None;
             dgvEnrollment.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = Color.Maroon;
-            dataGridViewCellStyle9.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dataGridViewCellStyle9.ForeColor = Color.White;
-            dataGridViewCellStyle9.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
-            dgvEnrollment.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle42.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle42.BackColor = Color.Maroon;
+            dataGridViewCellStyle42.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle42.ForeColor = Color.White;
+            dataGridViewCellStyle42.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle42.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle42.WrapMode = DataGridViewTriState.True;
+            dgvEnrollment.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle42;
             dgvEnrollment.ColumnHeadersHeight = 29;
             dgvEnrollment.Columns.AddRange(new DataGridViewColumn[] { colSelect, colCode, colTitle, colUnits, colSchedule, colStatus, colAction });
             dgvEnrollment.EnableHeadersVisualStyles = false;
@@ -8545,8 +8598,8 @@
             // colUnits
             // 
             colUnits.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            colUnits.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle43.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            colUnits.DefaultCellStyle = dataGridViewCellStyle43;
             colUnits.FillWeight = 92.978F;
             colUnits.HeaderText = "Units";
             colUnits.MinimumWidth = 6;
@@ -8566,8 +8619,8 @@
             // 
             // colStatus
             // 
-            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            colStatus.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle44.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            colStatus.DefaultCellStyle = dataGridViewCellStyle44;
             colStatus.FillWeight = 92.978F;
             colStatus.HeaderText = "Status";
             colStatus.MinimumWidth = 6;
@@ -8578,10 +8631,10 @@
             // colAction
             // 
             colAction.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.Font = new Font("Segoe UI", 9F, FontStyle.Underline);
-            dataGridViewCellStyle12.ForeColor = Color.Maroon;
-            colAction.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle45.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle45.Font = new Font("Segoe UI", 9F, FontStyle.Underline);
+            dataGridViewCellStyle45.ForeColor = Color.Maroon;
+            colAction.DefaultCellStyle = dataGridViewCellStyle45;
             colAction.HeaderText = "Action";
             colAction.MinimumWidth = 6;
             colAction.Name = "colAction";
@@ -9462,41 +9515,90 @@
             dropSubjectToolStripMenuItem.Size = new Size(165, 24);
             dropSubjectToolStripMenuItem.Text = "Drop Subject";
             // 
-            // CourseName
+            // pnlMidtermGradeStudent
             // 
-            CourseName.FillWeight = 213.9037F;
-            CourseName.HeaderText = "Course Name";
-            CourseName.MinimumWidth = 6;
-            CourseName.Name = "CourseName";
+            pnlMidtermGradeStudent.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            pnlMidtermGradeStudent.Controls.Add(dgvMidtermGradeStudent);
+            pnlMidtermGradeStudent.Location = new Point(56, 146);
+            pnlMidtermGradeStudent.Name = "pnlMidtermGradeStudent";
+            pnlMidtermGradeStudent.Size = new Size(1356, 754);
+            pnlMidtermGradeStudent.TabIndex = 10;
+            pnlMidtermGradeStudent.Visible = false;
             // 
-            // StudentGrade
+            // pnlFinalGradeStudent
             // 
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            StudentGrade.DefaultCellStyle = dataGridViewCellStyle1;
-            StudentGrade.FillWeight = 43.64141F;
-            StudentGrade.HeaderText = "Grade";
-            StudentGrade.MinimumWidth = 6;
-            StudentGrade.Name = "StudentGrade";
+            pnlFinalGradeStudent.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            pnlFinalGradeStudent.Controls.Add(dgvFinalGradeStudent);
+            pnlFinalGradeStudent.Location = new Point(55, 146);
+            pnlFinalGradeStudent.Name = "pnlFinalGradeStudent";
+            pnlFinalGradeStudent.Size = new Size(1356, 754);
+            pnlFinalGradeStudent.TabIndex = 11;
+            pnlFinalGradeStudent.Visible = false;
             // 
-            // StudentRemark
+            // dgvFinalGradeStudent
             // 
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            StudentRemark.DefaultCellStyle = dataGridViewCellStyle2;
-            StudentRemark.FillWeight = 62.7119637F;
-            StudentRemark.HeaderText = "Remarks";
-            StudentRemark.MinimumWidth = 6;
-            StudentRemark.Name = "StudentRemark";
+            dgvFinalGradeStudent.AllowUserToAddRows = false;
+            dgvFinalGradeStudent.AllowUserToOrderColumns = true;
+            dgvFinalGradeStudent.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvFinalGradeStudent.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvFinalGradeStudent.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, dataGridViewTextBoxColumn3, dataGridViewButtonColumn1 });
+            dgvFinalGradeStudent.Dock = DockStyle.Fill;
+            dgvFinalGradeStudent.Location = new Point(0, 0);
+            dgvFinalGradeStudent.Name = "dgvFinalGradeStudent";
+            dgvFinalGradeStudent.RowHeadersVisible = false;
+            dgvFinalGradeStudent.RowHeadersWidth = 51;
+            dgvFinalGradeStudent.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvFinalGradeStudent.Size = new Size(1356, 754);
+            dgvFinalGradeStudent.TabIndex = 9;
             // 
-            // GradeBreakdown
+            // dataGridViewTextBoxColumn1
             // 
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new Font("Microsoft Sans Serif", 7.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            GradeBreakdown.DefaultCellStyle = dataGridViewCellStyle3;
-            GradeBreakdown.FillWeight = 79.74287F;
-            GradeBreakdown.HeaderText = "Grade Breakdown";
-            GradeBreakdown.MinimumWidth = 6;
-            GradeBreakdown.Name = "GradeBreakdown";
-            GradeBreakdown.Text = "View Grade Breakdown";
+            dataGridViewTextBoxColumn1.FillWeight = 213.9037F;
+            dataGridViewTextBoxColumn1.HeaderText = "Course Name";
+            dataGridViewTextBoxColumn1.MinimumWidth = 6;
+            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewCellStyle34.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle34;
+            dataGridViewTextBoxColumn2.FillWeight = 43.64141F;
+            dataGridViewTextBoxColumn2.HeaderText = "Grade";
+            dataGridViewTextBoxColumn2.MinimumWidth = 6;
+            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            dataGridViewCellStyle35.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle35;
+            dataGridViewTextBoxColumn3.FillWeight = 62.7119637F;
+            dataGridViewTextBoxColumn3.HeaderText = "Remarks";
+            dataGridViewTextBoxColumn3.MinimumWidth = 6;
+            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            // 
+            // dataGridViewButtonColumn1
+            // 
+            dataGridViewCellStyle36.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle36.Font = new Font("Microsoft Sans Serif", 7.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            dataGridViewButtonColumn1.DefaultCellStyle = dataGridViewCellStyle36;
+            dataGridViewButtonColumn1.FillWeight = 79.74287F;
+            dataGridViewButtonColumn1.HeaderText = "Grade Breakdown";
+            dataGridViewButtonColumn1.MinimumWidth = 6;
+            dataGridViewButtonColumn1.Name = "dataGridViewButtonColumn1";
+            dataGridViewButtonColumn1.Text = "View Grade Breakdown";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.BackColor = Color.Maroon;
+            label9.BorderStyle = BorderStyle.Fixed3D;
+            label9.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+            label9.ForeColor = Color.White;
+            label9.Location = new Point(603, 94);
+            label9.Name = "label9";
+            label9.Size = new Size(203, 40);
+            label9.TabIndex = 12;
+            label9.Text = "Semester Year";
             // 
             // StudentPortal
             // 
@@ -9528,7 +9630,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             pnlContainerStudentPortal.ResumeLayout(false);
             pnlGrades.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            pnlGrades.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvMidtermGradeStudent).EndInit();
             panel57.ResumeLayout(false);
             panel57.PerformLayout();
             roundedPanel38.ResumeLayout(false);
@@ -9965,6 +10068,9 @@
             panel16.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             cmsEnrollAction.ResumeLayout(false);
+            pnlMidtermGradeStudent.ResumeLayout(false);
+            pnlFinalGradeStudent.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvFinalGradeStudent).EndInit();
             this.ResumeLayout(false);
         }
 
@@ -10149,7 +10255,7 @@
         private Panel pnlGrades;
         private Panel panel57;
         private RoundedPanel roundedPanel38;
-        private ComboBox comboBox10;
+        private ComboBox cmbGradingPeriod;
         private Button btnGenerate;
         private Label label52;
         private RoundedPanel rpnlGradeBreakdown;
@@ -10650,10 +10756,18 @@
         private Panel panel93;
         private ComboBox cmbbxCourseSelection;
         private Label label202;
-        private DataGridView dataGridView1;
+        private DataGridView dgvMidtermGradeStudent;
         private DataGridViewTextBoxColumn CourseName;
         private DataGridViewTextBoxColumn StudentGrade;
         private DataGridViewTextBoxColumn StudentRemark;
         private DataGridViewButtonColumn GradeBreakdown;
+        private Panel pnlMidtermGradeStudent;
+        private Panel pnlFinalGradeStudent;
+        private DataGridView dgvFinalGradeStudent;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private DataGridViewButtonColumn dataGridViewButtonColumn1;
+        private Label label9;
     }
 }
