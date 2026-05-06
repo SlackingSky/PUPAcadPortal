@@ -2030,5 +2030,17 @@ namespace PUPAcadPortal
         {
 
         }
+
+        private void cmbCourse_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            pnlGradeRecords.Visible = false;
+
+            switch (cmbCourse.SelectedIndex)
+            {
+                case 0:
+                    pnlGradeRecords.Visible = true;
+                    break;
+            }
+        }
     }
 }

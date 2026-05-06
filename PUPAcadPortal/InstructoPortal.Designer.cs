@@ -106,16 +106,6 @@
             panel168 = new Panel();
             label304 = new Label();
             label305 = new Label();
-            dataGridView1 = new DataGridView();
-            StudentNum = new DataGridViewTextBoxColumn();
-            StudentName = new DataGridViewTextBoxColumn();
-            Attendance = new DataGridViewTextBoxColumn();
-            Recitation = new DataGridViewTextBoxColumn();
-            Seatwork = new DataGridViewTextBoxColumn();
-            Assignment = new DataGridViewTextBoxColumn();
-            LongQuiz = new DataGridViewTextBoxColumn();
-            MajorExam = new DataGridViewTextBoxColumn();
-            Remark = new DataGridViewComboBoxColumn();
             flowLayoutPanel43 = new FlowLayoutPanel();
             panel170 = new Panel();
             panel171 = new Panel();
@@ -213,12 +203,32 @@
             label302 = new Label();
             panel167 = new Panel();
             panel169 = new Panel();
-            btnEditRecords = new Button();
-            label306 = new Label();
-            cmbTerm = new ComboBox();
             label303 = new Label();
             cmbCourse = new ComboBox();
-            panel174 = new Panel();
+            pnlGradeRecords = new Panel();
+            tabControl1 = new TabControl();
+            tabPage1 = new TabPage();
+            dataGridView1 = new DataGridView();
+            StudentNum = new DataGridViewTextBoxColumn();
+            StudentName = new DataGridViewTextBoxColumn();
+            Attendance = new DataGridViewTextBoxColumn();
+            Recitation = new DataGridViewTextBoxColumn();
+            Seatwork = new DataGridViewTextBoxColumn();
+            Assignment = new DataGridViewTextBoxColumn();
+            LongQuiz = new DataGridViewTextBoxColumn();
+            MajorExam = new DataGridViewTextBoxColumn();
+            Remark = new DataGridViewComboBoxColumn();
+            tabPage2 = new TabPage();
+            dataGridView3 = new DataGridView();
+            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn5 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn6 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn7 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn8 = new DataGridViewTextBoxColumn();
+            dataGridViewComboBoxColumn1 = new DataGridViewComboBoxColumn();
             panel68 = new Panel();
             btnSaveRecord = new Button();
             btnReleaseGrades = new Button();
@@ -1012,7 +1022,6 @@
             pnlGrades.SuspendLayout();
             panel61.SuspendLayout();
             panel168.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             flowLayoutPanel43.SuspendLayout();
             panel170.SuspendLayout();
             flowLayoutPanel44.SuspendLayout();
@@ -1053,7 +1062,12 @@
             panel165.SuspendLayout();
             panel167.SuspendLayout();
             panel169.SuspendLayout();
-            panel174.SuspendLayout();
+            pnlGradeRecords.SuspendLayout();
+            tabControl1.SuspendLayout();
+            tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView3).BeginInit();
             panel68.SuspendLayout();
             pnlGradesContent.SuspendLayout();
             panel69.SuspendLayout();
@@ -2389,14 +2403,13 @@
             panel61.BackColor = SystemColors.Control;
             panel61.BorderStyle = BorderStyle.FixedSingle;
             panel61.Controls.Add(panel168);
-            panel61.Controls.Add(dataGridView1);
             panel61.Controls.Add(flowLayoutPanel43);
             panel61.Controls.Add(flowLayoutPanel26);
             panel61.Controls.Add(flowLayoutPanel28);
             panel61.Controls.Add(flowLayoutPanel30);
             panel61.Controls.Add(flowLayoutPanel31);
             panel61.Controls.Add(panel167);
-            panel61.Controls.Add(panel174);
+            panel61.Controls.Add(pnlGradeRecords);
             panel61.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
             panel61.ForeColor = Color.Black;
             panel61.Location = new Point(0, 0);
@@ -2441,77 +2454,6 @@
             label305.Size = new Size(336, 46);
             label305.TabIndex = 0;
             label305.Text = "Grade Management";
-            // 
-            // dataGridView1
-            // 
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.AllowUserToOrderColumns = true;
-            dataGridView1.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { StudentNum, StudentName, Attendance, Recitation, Seatwork, Assignment, LongQuiz, MajorExam, Remark });
-            dataGridView1.Location = new Point(37, 394);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersVisible = false;
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(1374, 524);
-            dataGridView1.TabIndex = 8;
-            dataGridView1.CellContentClick += (this.dataGridView1_CellContentClick);
-            // 
-            // StudentNum
-            // 
-            StudentNum.HeaderText = "Student Number";
-            StudentNum.MinimumWidth = 6;
-            StudentNum.Name = "StudentNum";
-            // 
-            // StudentName
-            // 
-            StudentName.HeaderText = "Name";
-            StudentName.MinimumWidth = 6;
-            StudentName.Name = "StudentName";
-            // 
-            // Attendance
-            // 
-            Attendance.HeaderText = "Attendance";
-            Attendance.MinimumWidth = 6;
-            Attendance.Name = "Attendance";
-            // 
-            // Recitation
-            // 
-            Recitation.HeaderText = "Recitation/Class Participation";
-            Recitation.MinimumWidth = 6;
-            Recitation.Name = "Recitation";
-            // 
-            // Seatwork
-            // 
-            Seatwork.HeaderText = "Seatwork/Short Quiz";
-            Seatwork.MinimumWidth = 6;
-            Seatwork.Name = "Seatwork";
-            // 
-            // Assignment
-            // 
-            Assignment.HeaderText = "Assignment/Project";
-            Assignment.MinimumWidth = 6;
-            Assignment.Name = "Assignment";
-            // 
-            // LongQuiz
-            // 
-            LongQuiz.HeaderText = "Long Quiz";
-            LongQuiz.MinimumWidth = 6;
-            LongQuiz.Name = "LongQuiz";
-            // 
-            // MajorExam
-            // 
-            MajorExam.HeaderText = "Major Examination";
-            MajorExam.MinimumWidth = 6;
-            MajorExam.Name = "MajorExam";
-            // 
-            // Remark
-            // 
-            Remark.HeaderText = "Remarks";
-            Remark.MinimumWidth = 6;
-            Remark.Name = "Remark";
             // 
             // flowLayoutPanel43
             // 
@@ -3466,46 +3408,12 @@
             // 
             panel169.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
             panel169.BackColor = Color.White;
-            panel169.Controls.Add(btnEditRecords);
-            panel169.Controls.Add(label306);
-            panel169.Controls.Add(cmbTerm);
             panel169.Controls.Add(label303);
             panel169.Controls.Add(cmbCourse);
             panel169.Location = new Point(8, 8);
             panel169.Name = "panel169";
             panel169.Size = new Size(1409, 66);
             panel169.TabIndex = 2;
-            // 
-            // btnEditRecords
-            // 
-            btnEditRecords.Anchor = AnchorStyles.None;
-            btnEditRecords.BackColor = Color.Maroon;
-            btnEditRecords.FlatStyle = FlatStyle.Flat;
-            btnEditRecords.ForeColor = Color.White;
-            btnEditRecords.Location = new Point(1022, 16);
-            btnEditRecords.Name = "btnEditRecords";
-            btnEditRecords.Size = new Size(367, 32);
-            btnEditRecords.TabIndex = 5;
-            btnEditRecords.Text = "Edit Records";
-            btnEditRecords.UseVisualStyleBackColor = false;
-            // 
-            // label306
-            // 
-            label306.AutoSize = true;
-            label306.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)0);
-            label306.Location = new Point(491, 8);
-            label306.Name = "label306";
-            label306.Size = new Size(86, 20);
-            label306.TabIndex = 3;
-            label306.Text = "Select Term";
-            // 
-            // cmbTerm
-            // 
-            cmbTerm.FormattingEnabled = true;
-            cmbTerm.Location = new Point(492, 31);
-            cmbTerm.Name = "cmbTerm";
-            cmbTerm.Size = new Size(462, 28);
-            cmbTerm.TabIndex = 4;
             // 
             // label303
             // 
@@ -3521,19 +3429,197 @@
             // cmbCourse
             // 
             cmbCourse.FormattingEnabled = true;
+            cmbCourse.Items.AddRange(new object[] { "INT 201", "INT 202" });
             cmbCourse.Location = new Point(14, 32);
             cmbCourse.Name = "cmbCourse";
             cmbCourse.Size = new Size(462, 28);
             cmbCourse.TabIndex = 2;
+            cmbCourse.SelectedIndexChanged += (this.cmbCourse_SelectedIndexChanged);
             // 
-            // panel174
+            // pnlGradeRecords
             // 
-            panel174.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            panel174.Controls.Add(panel68);
-            panel174.Location = new Point(11, 316);
-            panel174.Name = "panel174";
-            panel174.Size = new Size(1430, 621);
-            panel174.TabIndex = 10;
+            pnlGradeRecords.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            pnlGradeRecords.Controls.Add(tabControl1);
+            pnlGradeRecords.Controls.Add(panel68);
+            pnlGradeRecords.Location = new Point(11, 316);
+            pnlGradeRecords.Name = "pnlGradeRecords";
+            pnlGradeRecords.Size = new Size(1430, 621);
+            pnlGradeRecords.TabIndex = 10;
+            pnlGradeRecords.Visible = false;
+            // 
+            // tabControl1
+            // 
+            tabControl1.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            tabControl1.Controls.Add(tabPage1);
+            tabControl1.Controls.Add(tabPage2);
+            tabControl1.Location = new Point(9, 88);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new Size(1396, 514);
+            tabControl1.TabIndex = 9;
+            // 
+            // tabPage1
+            // 
+            tabPage1.Controls.Add(dataGridView1);
+            tabPage1.Location = new Point(4, 29);
+            tabPage1.Name = "tabPage1";
+            tabPage1.Padding = new Padding(3);
+            tabPage1.Size = new Size(1388, 481);
+            tabPage1.TabIndex = 0;
+            tabPage1.Text = "Midterm";
+            tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView1
+            // 
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToOrderColumns = true;
+            dataGridView1.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { StudentNum, StudentName, Attendance, Recitation, Seatwork, Assignment, LongQuiz, MajorExam, Remark });
+            dataGridView1.Location = new Point(21, 22);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.RowHeadersWidth = 51;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.Size = new Size(1329, 437);
+            dataGridView1.TabIndex = 8;
+            dataGridView1.CellContentClick += (this.dataGridView1_CellContentClick);
+            // 
+            // StudentNum
+            // 
+            StudentNum.HeaderText = "Student Number";
+            StudentNum.MinimumWidth = 6;
+            StudentNum.Name = "StudentNum";
+            // 
+            // StudentName
+            // 
+            StudentName.HeaderText = "Name";
+            StudentName.MinimumWidth = 6;
+            StudentName.Name = "StudentName";
+            // 
+            // Attendance
+            // 
+            Attendance.HeaderText = "Attendance";
+            Attendance.MinimumWidth = 6;
+            Attendance.Name = "Attendance";
+            // 
+            // Recitation
+            // 
+            Recitation.HeaderText = "Recitation/Class Participation";
+            Recitation.MinimumWidth = 6;
+            Recitation.Name = "Recitation";
+            // 
+            // Seatwork
+            // 
+            Seatwork.HeaderText = "Seatwork/Short Quiz";
+            Seatwork.MinimumWidth = 6;
+            Seatwork.Name = "Seatwork";
+            // 
+            // Assignment
+            // 
+            Assignment.HeaderText = "Assignment/Project";
+            Assignment.MinimumWidth = 6;
+            Assignment.Name = "Assignment";
+            // 
+            // LongQuiz
+            // 
+            LongQuiz.HeaderText = "Long Quiz";
+            LongQuiz.MinimumWidth = 6;
+            LongQuiz.Name = "LongQuiz";
+            // 
+            // MajorExam
+            // 
+            MajorExam.HeaderText = "Major Examination";
+            MajorExam.MinimumWidth = 6;
+            MajorExam.Name = "MajorExam";
+            // 
+            // Remark
+            // 
+            Remark.HeaderText = "Remarks";
+            Remark.MinimumWidth = 6;
+            Remark.Name = "Remark";
+            // 
+            // tabPage2
+            // 
+            tabPage2.Controls.Add(dataGridView3);
+            tabPage2.Location = new Point(4, 29);
+            tabPage2.Name = "tabPage2";
+            tabPage2.Padding = new Padding(3);
+            tabPage2.Size = new Size(1388, 481);
+            tabPage2.TabIndex = 1;
+            tabPage2.Text = "Finalterm";
+            tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView3
+            // 
+            dataGridView3.AllowUserToAddRows = false;
+            dataGridView3.AllowUserToOrderColumns = true;
+            dataGridView3.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
+            dataGridView3.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView3.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView3.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, dataGridViewTextBoxColumn3, dataGridViewTextBoxColumn4, dataGridViewTextBoxColumn5, dataGridViewTextBoxColumn6, dataGridViewTextBoxColumn7, dataGridViewTextBoxColumn8, dataGridViewComboBoxColumn1 });
+            dataGridView3.Location = new Point(22, 22);
+            dataGridView3.Name = "dataGridView3";
+            dataGridView3.RowHeadersVisible = false;
+            dataGridView3.RowHeadersWidth = 51;
+            dataGridView3.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView3.Size = new Size(1340, 437);
+            dataGridView3.TabIndex = 11;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            dataGridViewTextBoxColumn1.HeaderText = "Student Number";
+            dataGridViewTextBoxColumn1.MinimumWidth = 6;
+            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewTextBoxColumn2.HeaderText = "Name";
+            dataGridViewTextBoxColumn2.MinimumWidth = 6;
+            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            dataGridViewTextBoxColumn3.HeaderText = "Attendance";
+            dataGridViewTextBoxColumn3.MinimumWidth = 6;
+            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            dataGridViewTextBoxColumn4.HeaderText = "Recitation/Class Participation";
+            dataGridViewTextBoxColumn4.MinimumWidth = 6;
+            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            dataGridViewTextBoxColumn5.HeaderText = "Seatwork/Short Quiz";
+            dataGridViewTextBoxColumn5.MinimumWidth = 6;
+            dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            dataGridViewTextBoxColumn6.HeaderText = "Assignment/Project";
+            dataGridViewTextBoxColumn6.MinimumWidth = 6;
+            dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            dataGridViewTextBoxColumn7.HeaderText = "Long Quiz";
+            dataGridViewTextBoxColumn7.MinimumWidth = 6;
+            dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            dataGridViewTextBoxColumn8.HeaderText = "Major Examination";
+            dataGridViewTextBoxColumn8.MinimumWidth = 6;
+            dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            // 
+            // dataGridViewComboBoxColumn1
+            // 
+            dataGridViewComboBoxColumn1.HeaderText = "Remarks";
+            dataGridViewComboBoxColumn1.MinimumWidth = 6;
+            dataGridViewComboBoxColumn1.Name = "dataGridViewComboBoxColumn1";
             // 
             // panel68
             // 
@@ -12358,7 +12444,6 @@
             panel61.ResumeLayout(false);
             panel168.ResumeLayout(false);
             panel168.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             flowLayoutPanel43.ResumeLayout(false);
             panel170.ResumeLayout(false);
             panel170.PerformLayout();
@@ -12419,7 +12504,12 @@
             panel167.ResumeLayout(false);
             panel169.ResumeLayout(false);
             panel169.PerformLayout();
-            panel174.ResumeLayout(false);
+            pnlGradeRecords.ResumeLayout(false);
+            tabControl1.ResumeLayout(false);
+            tabPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridView3).EndInit();
             panel68.ResumeLayout(false);
             panel68.PerformLayout();
             pnlGradesContent.ResumeLayout(false);
@@ -13783,8 +13873,6 @@
         private Label label304;
         private Label label305;
         private Panel panel169;
-        private Label label306;
-        private ComboBox cmbTerm;
         private FlowLayoutPanel flowLayoutPanel43;
         private Panel panel170;
         private Panel panel171;
@@ -13795,9 +13883,8 @@
         private Panel panel173;
         private Label label309;
         private Label label310;
-        private Panel panel174;
+        private Panel pnlGradeRecords;
         private Button btnSaveRecord;
-        private Button btnEditRecords;
         private DataGridViewTextBoxColumn StudentNum;
         private DataGridViewTextBoxColumn StudentName;
         private DataGridViewTextBoxColumn Attendance;
@@ -13807,5 +13894,18 @@
         private DataGridViewTextBoxColumn LongQuiz;
         private DataGridViewTextBoxColumn MajorExam;
         private DataGridViewComboBoxColumn Remark;
+        private TabControl tabControl1;
+        private TabPage tabPage1;
+        private TabPage tabPage2;
+        private DataGridView dataGridView3;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private DataGridViewComboBoxColumn dataGridViewComboBoxColumn1;
     }
 }
