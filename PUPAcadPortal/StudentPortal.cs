@@ -73,12 +73,17 @@ namespace PUPAcadPortal
                 this.Resize -= OnFormResized;
             };
 
-            string[] row1 = { "Integrated Programming and Technologies 1", "1.00", "P" };
-            string[] row2 = { "Principles of Accounting", "1.00", "P" };
+            string[] mrow1 = { "Integrated Programming and Technologies 1", "1.00", "P" };
+            string[] mrow2 = { "Principles of Accounting", "1.00", "P" };
 
-            dgvMidtermGradeStudent.Rows.Add(row1);
-            dgvMidtermGradeStudent.Rows.Add(row2);
+            dgvMidtermGradeStudent.Rows.Add(mrow1);
+            dgvMidtermGradeStudent.Rows.Add(mrow2);
 
+            string[] frow1 = { "Objected Oriented Programming", "1.00", "P" };
+            string[] frow2 = { "PATHFIT 4", "1.00", "P" };
+
+            dgvFinalGradeStudent.Rows.Add(frow1);
+            dgvFinalGradeStudent.Rows.Add(frow2);
         }
         private void BuildBottomPanel()
         {
@@ -1896,15 +1901,25 @@ namespace PUPAcadPortal
 
         private void cmbGradingPeriod_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (cmbGradingPeriod.SelectedItem.ToString())
+            pnlMidtermGradeStudent.Visible = false;
+            pnlFinalGradeStudent.Visible = false;
+
+            switch (cmbGradingPeriod.SelectedIndex)
             {
-                case "Midterm Period":
+                case 0:
                     pnlMidtermGradeStudent.Visible = true;
+                    label9.Visible = true;
                     break;
-                case "Finalterm Period":
+                case 1:
                     pnlFinalGradeStudent.Visible = true;
+                    label9.Visible = true;
                     break;
             }
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
