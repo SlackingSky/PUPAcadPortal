@@ -13,9 +13,25 @@ namespace PUPAcadPortal
         private Button clickedButton;
         private Color defaultColor = Color.Maroon;
         private Color selectedColor = Color.FromArgb(109, 0, 0);
+
+        // ── Student LMS host (Activities section) ────────────────────────────
+        private StudentLMSHost _studentLMSHost;
+
         public StudentPortal()
         {
             InitializeComponent();
+            BuildStudentLMSHost();
+        }
+
+        /// <summary>
+        /// Creates and embeds the StudentLMSHost inside pnlActivities so it fills
+        /// the existing panel and participates in the normal show/hide cycle.
+        /// </summary>
+        private void BuildStudentLMSHost()
+        {
+            _studentLMSHost = new StudentLMSHost { Dock = DockStyle.Fill };
+            pnlActivities.Controls.Clear();   // remove old static content
+            pnlActivities.Controls.Add(_studentLMSHost);
         }
 
         private void changeButtonColor(Button button)
@@ -130,6 +146,8 @@ namespace PUPAcadPortal
 
         private void btnActivities_Click(object sender, EventArgs e)
         {
+            // Reset to course dashboard so the student always lands on the course list
+            _studentLMSHost.ShowCourseDashboard();
             pnlActivities.BringToFront();
             pnlActivities.Visible = true;
         }

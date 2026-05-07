@@ -6,91 +6,97 @@ using System.ComponentModel;
 
 namespace PUPAcadPortal
 {
+    /// <summary>
+    /// A Button subclass with a configurable corner radius for rounded appearance.
+    /// Used throughout PUPAcadPortal for consistent UI styling.
+    /// </summary>
     public class buttonRounded : Button
     {
-        // Fields for customization
-        private int borderRadius = 20;
-        private Color hoverColor = Color.Maroon;
-        private Color normalColor = Color.FromArgb(128, 0, 0); // PUP Maroon
+        private int _borderRadius = 10;
 
-        [Category("Appearance")]
-        [Description("Sets the roundness of the button corners.")]
-        [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [Category("Appearance")]
+        [Description("Radius of the button corners. 0 = square, higher = rounder.")]
         public int BorderRadius
         {
-            get => borderRadius;
+            get => _borderRadius;
             set
             {
-                borderRadius = value;
-                this.Invalidate(); // Redraws the button in the designer
+                _borderRadius = value;
+                Invalidate();
             }
         }
 
         public buttonRounded()
         {
-            this.FlatStyle = FlatStyle.Flat;
-            this.FlatAppearance.BorderSize = 0;
-            this.BackColor = normalColor;
-            this.ForeColor = Color.White;
-            this.Size = new Size(150, 40);
-            this.Cursor = Cursors.Hand;
+            FlatStyle = FlatStyle.Flat;
+            FlatAppearance.BorderSize = 0;
+            BackColor = Color.Maroon;
+            ForeColor = Color.White;
+            Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            Cursor = Cursors.Hand;
+            DoubleBuffered = true;
         }
 
-        // Logic for smooth rounded edges
-        private GraphicsPath GetFigurePath(Rectangle rect, int radius)
+        protected override void OnPaint(PaintEventArgs e)
         {
-            GraphicsPath path = new GraphicsPath();
-            float curveSize = radius * 2F;
-
-            path.StartFigure();
-            path.AddArc(rect.X, rect.Y, curveSize, curveSize, 180, 90);
-            path.AddArc(rect.Right - curveSize, rect.Y, curveSize, curveSize, 270, 90);
-            path.AddArc(rect.Right - curveSize, rect.Bottom - curveSize, curveSize, curveSize, 0, 90);
-            path.AddArc(rect.X, rect.Bottom - curveSize, curveSize, curveSize, 90, 90);
-            path.CloseFigure();
-            return path;
-        }
-
-        protected override void OnPaint(PaintEventArgs pevent)
-        {
-            base.OnPaint(pevent);
-            pevent.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-
-            Rectangle rectSurface = this.ClientRectangle;
-            int smoothSize = 2;
-
-            if (borderRadius > 2)
+            // Clip region to rounded rectangle
+            using (GraphicsPath path = GetRoundedPath(ClientRectangle, _borderRadius))
             {
-                using (GraphicsPath pathSurface = GetFigurePath(rectSurface, borderRadius))
-                {
-                    // Set the button region to the rounded path
-                    this.Region = new Region(pathSurface);
-
-                    // Draw the surface border for high-quality anti-aliasing
-                    using (Pen penSurface = new Pen(this.Parent.BackColor, smoothSize))
-                    {
-                        pevent.Graphics.DrawPath(penSurface, pathSurface);
-                    }
-                }
+                Region = new Region(path);
             }
-            else
+
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+            // Fill background
+            using (SolidBrush brush = new SolidBrush(BackColor))
+            using (GraphicsPath path = GetRoundedPath(ClientRectangle, _borderRadius))
             {
-                this.Region = new Region(rectSurface);
+                e.Graphics.FillPath(brush, path);
+            }
+
+            // Draw text
+            TextRenderer.DrawText(e.Graphics, Text, Font, ClientRectangle, ForeColor,
+                TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter |
+                TextFormatFlags.SingleLine | TextFormatFlags.EndEllipsis);
+
+            // Draw image if set
+            if (Image != null)
+            {
+                int imgX = (ClientRectangle.Width - Image.Width) / 2;
+                int imgY = (ClientRectangle.Height - Image.Height) / 2;
+                e.Graphics.DrawImage(Image, imgX, imgY, Image.Width, Image.Height);
             }
         }
 
-        // Hover Effect Logic
         protected override void OnMouseEnter(EventArgs e)
         {
             base.OnMouseEnter(e);
-            this.BackColor = Color.FromArgb(160, 0, 0); // Lighter maroon on hover
+            // Slight hover darkening
+            BackColor = ControlPaint.Dark(BackColor, 0.05f);
+            Invalidate();
         }
 
         protected override void OnMouseLeave(EventArgs e)
         {
             base.OnMouseLeave(e);
-            this.BackColor = normalColor;
+            BackColor = ControlPaint.Light(BackColor, 0.05f);
+            Invalidate();
+        }
+
+        private GraphicsPath GetRoundedPath(Rectangle rect, int radius)
+        {
+            int r = Math.Max(0, Math.Min(radius, Math.Min(rect.Width, rect.Height) / 2));
+            float curve = r * 2F;
+            GraphicsPath path = new GraphicsPath();
+            path.StartFigure();
+            path.AddArc(rect.X, rect.Y, curve, curve, 180, 90);
+            path.AddArc(rect.Right - curve, rect.Y, curve, curve, 270, 90);
+            path.AddArc(rect.Right - curve, rect.Bottom - curve, curve, curve, 0, 90);
+            path.AddArc(rect.X, rect.Bottom - curve, curve, curve, 90, 90);
+            path.CloseFigure();
+            return path;
         }
     }
 }

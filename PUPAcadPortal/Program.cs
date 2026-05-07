@@ -1,17 +1,20 @@
+using System;
+using System.Windows.Forms;
+
 namespace PUPAcadPortal
 {
     internal static class Program
     {
         /// <summary>
-        ///  The main entry point for the application.
+        /// Main entry point. Swap the comment to switch between portals.
         /// </summary>
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new InstructorPortal());
+
+            //Application.Run(new InstructorPortal());
+            Application.Run(new StudentPortal());
         }
     }
 }

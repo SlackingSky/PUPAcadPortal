@@ -62,167 +62,53 @@
             panel3 = new Panel();
             pnlLMSAct = new Panel();
             pnlCourseAct = new Panel();
-            panel56 = new Panel();
-            label135 = new Label();
-            roundedPanel76 = new RoundedPanel();
-            roundedPanel77 = new RoundedPanel();
-            label192 = new Label();
-            pictureBox68 = new PictureBox();
-            buttonRounded14 = new buttonRounded();
-            roundedPanel74 = new RoundedPanel();
-            roundedPanel75 = new RoundedPanel();
-            label191 = new Label();
-            pictureBox67 = new PictureBox();
-            buttonRounded13 = new buttonRounded();
-            roundedPanel72 = new RoundedPanel();
-            roundedPanel73 = new RoundedPanel();
-            label190 = new Label();
-            pictureBox66 = new PictureBox();
-            buttonRounded12 = new buttonRounded();
-            roundedPanel70 = new RoundedPanel();
-            roundedPanel71 = new RoundedPanel();
-            label122 = new Label();
-            pictureBox65 = new PictureBox();
-            buttonRounded11 = new buttonRounded();
-            roundedPanel65 = new RoundedPanel();
-            roundedPanel66 = new RoundedPanel();
-            label188 = new Label();
-            pictureBox64 = new PictureBox();
-            buttonRounded9 = new buttonRounded();
-            roundedPanel24 = new RoundedPanel();
-            label113 = new Label();
-            roundedPanel26 = new RoundedPanel();
-            pictureBox47 = new PictureBox();
+            pnlContent = new Panel();
+            pnlFooter = new Panel();
+            btnNext = new Button();
+            lblPageNo = new Label();
+            btnPrev = new Button();
+            lblRecordInfo = new Label();
+            flpActivities = new FlowLayoutPanel();
+            pnlCard = new Panel();
+            lblCardTag = new Label();
             buttonRounded1 = new buttonRounded();
-            pnlStudents1 = new Panel();
-            panel52 = new Panel();
-            roundedPanel53 = new RoundedPanel();
-            roundedPanel54 = new RoundedPanel();
-            label165 = new Label();
-            label166 = new Label();
-            label167 = new Label();
-            pictureBox58 = new PictureBox();
-            roundedPanel51 = new RoundedPanel();
-            roundedPanel52 = new RoundedPanel();
-            label160 = new Label();
-            label161 = new Label();
-            label162 = new Label();
-            pictureBox57 = new PictureBox();
-            roundedPanel55 = new RoundedPanel();
-            roundedPanel56 = new RoundedPanel();
-            label169 = new Label();
-            label170 = new Label();
-            label171 = new Label();
-            pictureBox59 = new PictureBox();
-            roundedPanel43 = new RoundedPanel();
-            roundedPanel44 = new RoundedPanel();
-            label144 = new Label();
-            label145 = new Label();
-            label146 = new Label();
-            pictureBox53 = new PictureBox();
-            roundedPanel57 = new RoundedPanel();
-            roundedPanel58 = new RoundedPanel();
-            label173 = new Label();
-            label174 = new Label();
-            label175 = new Label();
-            pictureBox60 = new PictureBox();
-            roundedPanel33 = new RoundedPanel();
-            roundedPanel34 = new RoundedPanel();
-            lblScore = new Label();
-            button9 = new buttonRounded();
-            label125 = new Label();
-            label124 = new Label();
-            label123 = new Label();
-            pictureBox48 = new PictureBox();
-            roundedPanel59 = new RoundedPanel();
-            roundedPanel60 = new RoundedPanel();
-            label177 = new Label();
-            label178 = new Label();
-            label179 = new Label();
-            pictureBox61 = new PictureBox();
-            roundedPanel41 = new RoundedPanel();
-            roundedPanel42 = new RoundedPanel();
-            label140 = new Label();
-            label141 = new Label();
-            label142 = new Label();
-            pictureBox52 = new PictureBox();
-            roundedPanel61 = new RoundedPanel();
-            roundedPanel62 = new RoundedPanel();
-            label181 = new Label();
-            label182 = new Label();
-            label183 = new Label();
-            pictureBox62 = new PictureBox();
-            roundedPanel63 = new RoundedPanel();
-            roundedPanel64 = new RoundedPanel();
-            label185 = new Label();
-            label186 = new Label();
-            label187 = new Label();
-            pictureBox63 = new PictureBox();
-            roundedPanel35 = new RoundedPanel();
-            roundedPanel36 = new RoundedPanel();
-            label128 = new Label();
-            label129 = new Label();
-            label130 = new Label();
-            pictureBox49 = new PictureBox();
-            roundedPanel45 = new RoundedPanel();
-            roundedPanel46 = new RoundedPanel();
-            label148 = new Label();
-            label149 = new Label();
-            label150 = new Label();
-            pictureBox54 = new PictureBox();
-            roundedPanel49 = new RoundedPanel();
-            roundedPanel50 = new RoundedPanel();
-            label156 = new Label();
-            label157 = new Label();
-            label158 = new Label();
-            pictureBox56 = new PictureBox();
-            roundedPanel39 = new RoundedPanel();
-            roundedPanel40 = new RoundedPanel();
-            label136 = new Label();
-            label137 = new Label();
-            label138 = new Label();
-            pictureBox51 = new PictureBox();
-            roundedPanel37 = new RoundedPanel();
-            roundedPanel38 = new RoundedPanel();
-            label132 = new Label();
-            label133 = new Label();
-            label134 = new Label();
-            pictureBox50 = new PictureBox();
-            roundedPanel47 = new RoundedPanel();
-            roundedPanel48 = new RoundedPanel();
-            label152 = new Label();
-            label153 = new Label();
-            label154 = new Label();
-            pictureBox55 = new PictureBox();
-            panel53 = new Panel();
-            label163 = new Label();
-            buttonRounded3 = new buttonRounded();
+            lblCardDesc = new Label();
+            lblCardTitle = new Label();
+            picCardImage = new PictureBox();
+            btnListView = new Button();
+            btnGridView = new Button();
+            txtSearch = new TextBox();
+            lblPageSubtitle = new Label();
+            lblPageTitle = new Label();
             pnlSub1 = new Panel();
-            panel54 = new Panel();
-            label189 = new Label();
-            roundedPanel67 = new RoundedPanel();
-            buttonRounded10 = new buttonRounded();
-            roundedPanel68 = new RoundedPanel();
+            panel56 = new Panel();
             label114 = new Label();
-            roundedPanel69 = new RoundedPanel();
-            richTextBox3 = new RichTextBox();
-            roundedPanel28 = new RoundedPanel();
-            buttonRounded8 = new buttonRounded();
-            roundedPanel31 = new RoundedPanel();
-            label121 = new Label();
-            roundedPanel32 = new RoundedPanel();
-            richTextBox2 = new RichTextBox();
+            button27 = new Button();
             buttonRounded7 = new buttonRounded();
-            roundedPanel25 = new RoundedPanel();
+            label113 = new Label();
+            button40 = new Button();
+            button10 = new Button();
+            button11 = new Button();
+            lblPage = new Label();
+            btnPrevious = new Button();
+            lblFooterInfo = new Label();
+            pnlListContainer = new Panel();
+            pnlItem1 = new Panel();
+            pnlHeaderCard = new Panel();
             buttonRounded2 = new buttonRounded();
-            roundedPanel27 = new RoundedPanel();
-            label120 = new Label();
-            roundedPanel30 = new RoundedPanel();
-            richTextBox1 = new RichTextBox();
+            btnAddNew = new Button();
+            lblHeaderSub = new Label();
+            lblHeaderMain = new Label();
+            picHeaderIcon = new PictureBox();
+            panel54 = new Panel();
+            lblHeaderTitle = new Label();
             pnlGrade = new Panel();
-            roundedPanel80 = new RoundedPanel();
-            roundedPanel81 = new RoundedPanel();
-            label131 = new Label();
+            pnlEssayContainer = new Panel();
+            label120 = new Label();
+            lblStats = new Label();
+            buttonRounded15 = new buttonRounded();
+            txtEssayContent = new TextBox();
+            lblEssayHeader = new Label();
             panel55 = new Panel();
             roundedPanel79 = new RoundedPanel();
             buttonRounded16 = new buttonRounded();
@@ -231,8 +117,110 @@
             roundedPanel78 = new RoundedPanel();
             richTextBox4 = new RichTextBox();
             label126 = new Label();
-            buttonRounded15 = new buttonRounded();
+            pnlStudents1 = new Panel();
+            button41 = new Button();
+            label132 = new Label();
+            button42 = new Button();
+            flowLayoutPanel8 = new FlowLayoutPanel();
+            roundedPanel33 = new RoundedPanel();
+            roundedPanel34 = new RoundedPanel();
+            label121 = new Label();
+            lblScore = new Label();
+            button9 = new buttonRounded();
+            label125 = new Label();
+            label124 = new Label();
+            label123 = new Label();
+            pictureBox48 = new PictureBox();
+            roundedPanel24 = new RoundedPanel();
+            roundedPanel25 = new RoundedPanel();
+            label122 = new Label();
+            label128 = new Label();
+            buttonRounded8 = new buttonRounded();
+            label129 = new Label();
+            label130 = new Label();
+            label131 = new Label();
+            pictureBox47 = new PictureBox();
+            panel52 = new Panel();
+            lblTotalStudents = new Label();
+            lblTitle = new Label();
+            buttonRounded3 = new buttonRounded();
             label60 = new Label();
+            pnlSubMenu = new Panel();
+            pnlLMSActivities = new Panel();
+            panel42 = new Panel();
+            btnCreateAct = new Button();
+            label108 = new Label();
+            panel47 = new Panel();
+            roundedPanel10 = new RoundedPanel();
+            roundedPanel9 = new RoundedPanel();
+            button26 = new Button();
+            buttonRounded6 = new buttonRounded();
+            roundedPanel8 = new RoundedPanel();
+            roundedPanel7 = new RoundedPanel();
+            button25 = new Button();
+            buttonRounded5 = new buttonRounded();
+            roundedPanel6 = new RoundedPanel();
+            roundedPanel5 = new RoundedPanel();
+            button24 = new Button();
+            buttonRounded4 = new buttonRounded();
+            roundedPanel3 = new RoundedPanel();
+            roundedPanel4 = new RoundedPanel();
+            btnPostDelete = new Button();
+            btnPost = new buttonRounded();
+            pnlCreateAct = new Panel();
+            panel43 = new Panel();
+            pnlAssign = new Panel();
+            pnlAttachAss = new RoundedPanel();
+            btnDoneAttach = new Button();
+            btnAttachCancel = new Button();
+            roundedPanel29 = new RoundedPanel();
+            panel48 = new Panel();
+            label118 = new Label();
+            label115 = new Label();
+            pictureBox46 = new PictureBox();
+            btnCancelAssign = new buttonRounded();
+            btnAssignAttach = new buttonRounded();
+            btnSaveAss = new buttonRounded();
+            roundedPanel11 = new RoundedPanel();
+            roundedPanel12 = new RoundedPanel();
+            textBox22 = new TextBox();
+            label117 = new Label();
+            pnlQuiz1 = new Panel();
+            panel49 = new Panel();
+            label119 = new Label();
+            flowLayoutPanel3 = new FlowLayoutPanel();
+            pnlControlBar = new Panel();
+            tableLayoutPanel24 = new TableLayoutPanel();
+            btnRemove = new buttonRounded();
+            btnAddPanel = new buttonRounded();
+            btnSaveQuiz = new buttonRounded();
+            panel45 = new Panel();
+            roundedPanel23 = new RoundedPanel();
+            cmbBXActType = new ComboBox();
+            roundedPanel22 = new RoundedPanel();
+            dateTimePicker1 = new DateTimePicker();
+            roundedPanel21 = new RoundedPanel();
+            txtActTitle = new TextBox();
+            panel51 = new Panel();
+            panel50 = new Panel();
+            label116 = new Label();
+            label111 = new Label();
+            label110 = new Label();
+            panel44 = new Panel();
+            label109 = new Label();
+            panel46 = new Panel();
+            pnlGenChats = new Panel();
+            panel40 = new Panel();
+            panel41 = new Panel();
+            label107 = new Label();
+            pnlLMSFiles = new Panel();
+            panel38 = new Panel();
+            panel39 = new Panel();
+            btnLMSFiles = new Button();
+            btnLMSActSub = new Button();
+            btnGeneralAnnounce = new Button();
+            lblSub1Menu = new Label();
+            btnBack = new Button();
             pnlAttendance = new Panel();
             panel19 = new Panel();
             panel28 = new Panel();
@@ -371,82 +359,6 @@
             label106 = new Label();
             panel1 = new Panel();
             label8 = new Label();
-            pnlSubMenu = new Panel();
-            pnlLMSActivities = new Panel();
-            panel42 = new Panel();
-            btnCreateAct = new Button();
-            label108 = new Label();
-            panel47 = new Panel();
-            roundedPanel10 = new RoundedPanel();
-            roundedPanel9 = new RoundedPanel();
-            button26 = new Button();
-            buttonRounded6 = new buttonRounded();
-            roundedPanel8 = new RoundedPanel();
-            roundedPanel7 = new RoundedPanel();
-            button25 = new Button();
-            buttonRounded5 = new buttonRounded();
-            roundedPanel6 = new RoundedPanel();
-            roundedPanel5 = new RoundedPanel();
-            button24 = new Button();
-            buttonRounded4 = new buttonRounded();
-            roundedPanel3 = new RoundedPanel();
-            roundedPanel4 = new RoundedPanel();
-            btnPostDelete = new Button();
-            btnPost = new buttonRounded();
-            pnlCreateAct = new Panel();
-            panel43 = new Panel();
-            pnlAssign = new Panel();
-            pnlAttachAss = new RoundedPanel();
-            btnDoneAttach = new Button();
-            btnAttachCancel = new Button();
-            roundedPanel29 = new RoundedPanel();
-            panel48 = new Panel();
-            label118 = new Label();
-            label115 = new Label();
-            pictureBox46 = new PictureBox();
-            btnCancelAssign = new buttonRounded();
-            btnAssignAttach = new buttonRounded();
-            btnSaveAss = new buttonRounded();
-            roundedPanel11 = new RoundedPanel();
-            roundedPanel12 = new RoundedPanel();
-            textBox22 = new TextBox();
-            label117 = new Label();
-            pnlQuiz1 = new Panel();
-            panel49 = new Panel();
-            label119 = new Label();
-            flowLayoutPanel3 = new FlowLayoutPanel();
-            pnlControlBar = new Panel();
-            tableLayoutPanel24 = new TableLayoutPanel();
-            btnRemove = new buttonRounded();
-            btnAddPanel = new buttonRounded();
-            btnSaveQuiz = new buttonRounded();
-            panel45 = new Panel();
-            roundedPanel23 = new RoundedPanel();
-            cmbBXActType = new ComboBox();
-            roundedPanel22 = new RoundedPanel();
-            dateTimePicker1 = new DateTimePicker();
-            roundedPanel21 = new RoundedPanel();
-            txtActTitle = new TextBox();
-            panel51 = new Panel();
-            panel50 = new Panel();
-            label116 = new Label();
-            label111 = new Label();
-            label110 = new Label();
-            panel44 = new Panel();
-            label109 = new Label();
-            panel46 = new Panel();
-            pnlGenChats = new Panel();
-            panel40 = new Panel();
-            panel41 = new Panel();
-            label107 = new Label();
-            pnlLMSFiles = new Panel();
-            panel38 = new Panel();
-            panel39 = new Panel();
-            btnLMSFiles = new Button();
-            btnLMSActSub = new Button();
-            btnGeneralAnnounce = new Button();
-            lblSub1Menu = new Label();
-            btnBack = new Button();
             pnlAnnounce = new Panel();
             pnlCreateAnnounce = new RoundedPanel();
             label112 = new Label();
@@ -636,90 +548,66 @@
             panel3.SuspendLayout();
             pnlLMSAct.SuspendLayout();
             pnlCourseAct.SuspendLayout();
-            panel56.SuspendLayout();
-            roundedPanel76.SuspendLayout();
-            roundedPanel77.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox68).BeginInit();
-            roundedPanel74.SuspendLayout();
-            roundedPanel75.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox67).BeginInit();
-            roundedPanel72.SuspendLayout();
-            roundedPanel73.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox66).BeginInit();
-            roundedPanel70.SuspendLayout();
-            roundedPanel71.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox65).BeginInit();
-            roundedPanel65.SuspendLayout();
-            roundedPanel66.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox64).BeginInit();
-            roundedPanel24.SuspendLayout();
-            roundedPanel26.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox47).BeginInit();
-            pnlStudents1.SuspendLayout();
-            panel52.SuspendLayout();
-            roundedPanel53.SuspendLayout();
-            roundedPanel54.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox58).BeginInit();
-            roundedPanel51.SuspendLayout();
-            roundedPanel52.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox57).BeginInit();
-            roundedPanel55.SuspendLayout();
-            roundedPanel56.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox59).BeginInit();
-            roundedPanel43.SuspendLayout();
-            roundedPanel44.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox53).BeginInit();
-            roundedPanel57.SuspendLayout();
-            roundedPanel58.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox60).BeginInit();
-            roundedPanel33.SuspendLayout();
-            roundedPanel34.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox48).BeginInit();
-            roundedPanel59.SuspendLayout();
-            roundedPanel60.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox61).BeginInit();
-            roundedPanel41.SuspendLayout();
-            roundedPanel42.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox52).BeginInit();
-            roundedPanel61.SuspendLayout();
-            roundedPanel62.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox62).BeginInit();
-            roundedPanel63.SuspendLayout();
-            roundedPanel64.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox63).BeginInit();
-            roundedPanel35.SuspendLayout();
-            roundedPanel36.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox49).BeginInit();
-            roundedPanel45.SuspendLayout();
-            roundedPanel46.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox54).BeginInit();
-            roundedPanel49.SuspendLayout();
-            roundedPanel50.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox56).BeginInit();
-            roundedPanel39.SuspendLayout();
-            roundedPanel40.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox51).BeginInit();
-            roundedPanel37.SuspendLayout();
-            roundedPanel38.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox50).BeginInit();
-            roundedPanel47.SuspendLayout();
-            roundedPanel48.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox55).BeginInit();
-            panel53.SuspendLayout();
+            pnlContent.SuspendLayout();
+            pnlFooter.SuspendLayout();
+            flpActivities.SuspendLayout();
+            pnlCard.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picCardImage).BeginInit();
             pnlSub1.SuspendLayout();
+            panel56.SuspendLayout();
+            pnlListContainer.SuspendLayout();
+            pnlHeaderCard.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picHeaderIcon).BeginInit();
             panel54.SuspendLayout();
-            roundedPanel67.SuspendLayout();
-            roundedPanel69.SuspendLayout();
-            roundedPanel28.SuspendLayout();
-            roundedPanel32.SuspendLayout();
-            roundedPanel25.SuspendLayout();
-            roundedPanel30.SuspendLayout();
             pnlGrade.SuspendLayout();
-            roundedPanel80.SuspendLayout();
-            roundedPanel81.SuspendLayout();
+            pnlEssayContainer.SuspendLayout();
             panel55.SuspendLayout();
             roundedPanel79.SuspendLayout();
             roundedPanel78.SuspendLayout();
+            pnlStudents1.SuspendLayout();
+            flowLayoutPanel8.SuspendLayout();
+            roundedPanel33.SuspendLayout();
+            roundedPanel34.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox48).BeginInit();
+            roundedPanel24.SuspendLayout();
+            roundedPanel25.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox47).BeginInit();
+            panel52.SuspendLayout();
+            pnlSubMenu.SuspendLayout();
+            pnlLMSActivities.SuspendLayout();
+            panel42.SuspendLayout();
+            roundedPanel10.SuspendLayout();
+            roundedPanel9.SuspendLayout();
+            roundedPanel8.SuspendLayout();
+            roundedPanel7.SuspendLayout();
+            roundedPanel6.SuspendLayout();
+            roundedPanel5.SuspendLayout();
+            roundedPanel3.SuspendLayout();
+            roundedPanel4.SuspendLayout();
+            pnlCreateAct.SuspendLayout();
+            panel43.SuspendLayout();
+            pnlAssign.SuspendLayout();
+            pnlAttachAss.SuspendLayout();
+            roundedPanel29.SuspendLayout();
+            panel48.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox46).BeginInit();
+            roundedPanel11.SuspendLayout();
+            roundedPanel12.SuspendLayout();
+            pnlQuiz1.SuspendLayout();
+            panel49.SuspendLayout();
+            flowLayoutPanel3.SuspendLayout();
+            pnlControlBar.SuspendLayout();
+            tableLayoutPanel24.SuspendLayout();
+            panel45.SuspendLayout();
+            roundedPanel23.SuspendLayout();
+            roundedPanel22.SuspendLayout();
+            roundedPanel21.SuspendLayout();
+            panel44.SuspendLayout();
+            pnlGenChats.SuspendLayout();
+            panel40.SuspendLayout();
+            panel41.SuspendLayout();
+            panel38.SuspendLayout();
+            panel39.SuspendLayout();
             pnlAttendance.SuspendLayout();
             panel19.SuspendLayout();
             panel28.SuspendLayout();
@@ -782,41 +670,6 @@
             roundedPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox44).BeginInit();
             panel1.SuspendLayout();
-            pnlSubMenu.SuspendLayout();
-            pnlLMSActivities.SuspendLayout();
-            panel42.SuspendLayout();
-            roundedPanel10.SuspendLayout();
-            roundedPanel9.SuspendLayout();
-            roundedPanel8.SuspendLayout();
-            roundedPanel7.SuspendLayout();
-            roundedPanel6.SuspendLayout();
-            roundedPanel5.SuspendLayout();
-            roundedPanel3.SuspendLayout();
-            roundedPanel4.SuspendLayout();
-            pnlCreateAct.SuspendLayout();
-            panel43.SuspendLayout();
-            pnlAssign.SuspendLayout();
-            pnlAttachAss.SuspendLayout();
-            roundedPanel29.SuspendLayout();
-            panel48.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox46).BeginInit();
-            roundedPanel11.SuspendLayout();
-            roundedPanel12.SuspendLayout();
-            pnlQuiz1.SuspendLayout();
-            panel49.SuspendLayout();
-            flowLayoutPanel3.SuspendLayout();
-            pnlControlBar.SuspendLayout();
-            tableLayoutPanel24.SuspendLayout();
-            panel45.SuspendLayout();
-            roundedPanel23.SuspendLayout();
-            roundedPanel22.SuspendLayout();
-            roundedPanel21.SuspendLayout();
-            panel44.SuspendLayout();
-            pnlGenChats.SuspendLayout();
-            panel40.SuspendLayout();
-            panel41.SuspendLayout();
-            panel38.SuspendLayout();
-            panel39.SuspendLayout();
             pnlAnnounce.SuspendLayout();
             pnlCreateAnnounce.SuspendLayout();
             panel37.SuspendLayout();
@@ -1327,9 +1180,9 @@
             // 
             panel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel3.Controls.Add(pnlLMSAct);
+            panel3.Controls.Add(pnlSubMenu);
             panel3.Controls.Add(pnlAttendance);
             panel3.Controls.Add(pnlSubject);
-            panel3.Controls.Add(pnlSubMenu);
             panel3.Controls.Add(pnlAnnounce);
             panel3.Controls.Add(pnlClassFiles);
             panel3.Controls.Add(pnlGrades);
@@ -1348,9 +1201,9 @@
             // 
             pnlLMSAct.AutoScroll = true;
             pnlLMSAct.Controls.Add(pnlCourseAct);
-            pnlLMSAct.Controls.Add(pnlStudents1);
             pnlLMSAct.Controls.Add(pnlSub1);
             pnlLMSAct.Controls.Add(pnlGrade);
+            pnlLMSAct.Controls.Add(pnlStudents1);
             pnlLMSAct.Controls.Add(label60);
             pnlLMSAct.Dock = DockStyle.Fill;
             pnlLMSAct.Location = new Point(256, 72);
@@ -1362,374 +1215,125 @@
             // 
             // pnlCourseAct
             // 
-            pnlCourseAct.Controls.Add(panel56);
-            pnlCourseAct.Controls.Add(roundedPanel76);
-            pnlCourseAct.Controls.Add(roundedPanel74);
-            pnlCourseAct.Controls.Add(roundedPanel72);
-            pnlCourseAct.Controls.Add(roundedPanel70);
-            pnlCourseAct.Controls.Add(roundedPanel65);
-            pnlCourseAct.Controls.Add(roundedPanel24);
+            pnlCourseAct.Controls.Add(pnlContent);
             pnlCourseAct.Dock = DockStyle.Fill;
             pnlCourseAct.Location = new Point(0, 0);
             pnlCourseAct.Name = "pnlCourseAct";
             pnlCourseAct.Size = new Size(1272, 989);
             pnlCourseAct.TabIndex = 3;
             // 
-            // panel56
+            // pnlContent
             // 
-            panel56.BackColor = Color.Maroon;
-            panel56.Controls.Add(label135);
-            panel56.Dock = DockStyle.Top;
-            panel56.Location = new Point(0, 0);
-            panel56.Name = "panel56";
-            panel56.RightToLeft = RightToLeft.No;
-            panel56.Size = new Size(1272, 46);
-            panel56.TabIndex = 11;
+            pnlContent.BackColor = Color.FromArgb(245, 246, 247);
+            pnlContent.Controls.Add(pnlFooter);
+            pnlContent.Controls.Add(flpActivities);
+            pnlContent.Controls.Add(btnListView);
+            pnlContent.Controls.Add(btnGridView);
+            pnlContent.Controls.Add(txtSearch);
+            pnlContent.Controls.Add(lblPageSubtitle);
+            pnlContent.Controls.Add(lblPageTitle);
+            pnlContent.Dock = DockStyle.Fill;
+            pnlContent.Location = new Point(0, 0);
+            pnlContent.Name = "pnlContent";
+            pnlContent.Size = new Size(1272, 989);
+            pnlContent.TabIndex = 3;
             // 
-            // label135
+            // pnlFooter
             // 
-            label135.AutoSize = true;
-            label135.Font = new Font("Arial", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label135.ForeColor = Color.White;
-            label135.Location = new Point(7, 11);
-            label135.Name = "label135";
-            label135.Size = new Size(103, 24);
-            label135.TabIndex = 6;
-            label135.Text = "Activities";
+            pnlFooter.BackColor = Color.White;
+            pnlFooter.Controls.Add(btnNext);
+            pnlFooter.Controls.Add(lblPageNo);
+            pnlFooter.Controls.Add(btnPrev);
+            pnlFooter.Controls.Add(lblRecordInfo);
+            pnlFooter.Dock = DockStyle.Bottom;
+            pnlFooter.Location = new Point(0, 941);
+            pnlFooter.Name = "pnlFooter";
+            pnlFooter.Size = new Size(1272, 48);
+            pnlFooter.TabIndex = 6;
             // 
-            // roundedPanel76
+            // btnNext
             // 
-            roundedPanel76.BackColor = Color.Maroon;
-            roundedPanel76.BorderRadius = 10;
-            roundedPanel76.Controls.Add(roundedPanel77);
-            roundedPanel76.Location = new Point(443, 362);
-            roundedPanel76.Name = "roundedPanel76";
-            roundedPanel76.Size = new Size(352, 122);
-            roundedPanel76.TabIndex = 8;
+            btnNext.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnNext.FlatStyle = FlatStyle.Flat;
+            btnNext.Location = new Point(2092, -44);
+            btnNext.Name = "btnNext";
+            btnNext.Size = new Size(80, 32);
+            btnNext.TabIndex = 3;
+            btnNext.Text = "Next";
+            btnNext.UseVisualStyleBackColor = true;
             // 
-            // roundedPanel77
+            // lblPageNo
             // 
-            roundedPanel77.BackColor = Color.White;
-            roundedPanel77.BorderRadius = 10;
-            roundedPanel77.Controls.Add(label192);
-            roundedPanel77.Controls.Add(pictureBox68);
-            roundedPanel77.Controls.Add(buttonRounded14);
-            roundedPanel77.Location = new Point(8, 5);
-            roundedPanel77.Name = "roundedPanel77";
-            roundedPanel77.Size = new Size(332, 113);
-            roundedPanel77.TabIndex = 4;
+            lblPageNo.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            lblPageNo.BackColor = Color.FromArgb(139, 0, 0);
+            lblPageNo.ForeColor = Color.White;
+            lblPageNo.Location = new Point(2052, -44);
+            lblPageNo.Name = "lblPageNo";
+            lblPageNo.Size = new Size(32, 32);
+            lblPageNo.TabIndex = 2;
+            lblPageNo.Text = "1";
+            lblPageNo.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // label192
+            // btnPrev
             // 
-            label192.AutoSize = true;
-            label192.BackColor = Color.White;
-            label192.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label192.ForeColor = Color.Black;
-            label192.Location = new Point(129, 7);
-            label192.Name = "label192";
-            label192.Size = new Size(188, 20);
-            label192.TabIndex = 1;
-            label192.Text = "Human Computer Interaction";
+            btnPrev.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnPrev.FlatStyle = FlatStyle.Flat;
+            btnPrev.Location = new Point(1964, -44);
+            btnPrev.Name = "btnPrev";
+            btnPrev.Size = new Size(80, 32);
+            btnPrev.TabIndex = 1;
+            btnPrev.Text = "Previous";
+            btnPrev.UseVisualStyleBackColor = true;
             // 
-            // pictureBox68
+            // lblRecordInfo
             // 
-            pictureBox68.BackColor = Color.Maroon;
-            pictureBox68.BackgroundImage = (Image)resources.GetObject("pictureBox68.BackgroundImage");
-            pictureBox68.Location = new Point(7, 10);
-            pictureBox68.Name = "pictureBox68";
-            pictureBox68.Size = new Size(103, 95);
-            pictureBox68.TabIndex = 0;
-            pictureBox68.TabStop = false;
+            lblRecordInfo.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            lblRecordInfo.AutoSize = true;
+            lblRecordInfo.ForeColor = Color.FromArgb(102, 102, 102);
+            lblRecordInfo.Location = new Point(16, -36);
+            lblRecordInfo.Name = "lblRecordInfo";
+            lblRecordInfo.Size = new Size(157, 15);
+            lblRecordInfo.TabIndex = 0;
+            lblRecordInfo.Text = "Showing 1 to 6 of 6 activities";
             // 
-            // buttonRounded14
+            // flpActivities
             // 
-            buttonRounded14.BackColor = Color.FromArgb(128, 0, 0);
-            buttonRounded14.BorderRadius = 20;
-            buttonRounded14.FlatAppearance.BorderSize = 0;
-            buttonRounded14.FlatStyle = FlatStyle.Flat;
-            buttonRounded14.ForeColor = Color.White;
-            buttonRounded14.Location = new Point(146, 57);
-            buttonRounded14.Name = "buttonRounded14";
-            buttonRounded14.Size = new Size(150, 40);
-            buttonRounded14.TabIndex = 2;
-            buttonRounded14.Text = "View";
-            buttonRounded14.UseVisualStyleBackColor = false;
+            flpActivities.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            flpActivities.AutoScroll = true;
+            flpActivities.Controls.Add(pnlCard);
+            flpActivities.Location = new Point(16, 80);
+            flpActivities.Name = "flpActivities";
+            flpActivities.Padding = new Padding(16);
+            flpActivities.Size = new Size(1253, 632);
+            flpActivities.TabIndex = 5;
+            flpActivities.Paint += flpActivities_Paint;
             // 
-            // roundedPanel74
+            // pnlCard
             // 
-            roundedPanel74.BackColor = Color.Maroon;
-            roundedPanel74.BorderRadius = 10;
-            roundedPanel74.Controls.Add(roundedPanel75);
-            roundedPanel74.Location = new Point(48, 362);
-            roundedPanel74.Name = "roundedPanel74";
-            roundedPanel74.Size = new Size(352, 122);
-            roundedPanel74.TabIndex = 7;
+            pnlCard.BackColor = Color.White;
+            pnlCard.Controls.Add(lblCardTag);
+            pnlCard.Controls.Add(buttonRounded1);
+            pnlCard.Controls.Add(lblCardDesc);
+            pnlCard.Controls.Add(lblCardTitle);
+            pnlCard.Controls.Add(picCardImage);
+            pnlCard.Location = new Point(26, 26);
+            pnlCard.Margin = new Padding(10);
+            pnlCard.Name = "pnlCard";
+            pnlCard.Size = new Size(453, 135);
+            pnlCard.TabIndex = 0;
             // 
-            // roundedPanel75
+            // lblCardTag
             // 
-            roundedPanel75.BackColor = Color.White;
-            roundedPanel75.BorderRadius = 10;
-            roundedPanel75.Controls.Add(label191);
-            roundedPanel75.Controls.Add(pictureBox67);
-            roundedPanel75.Controls.Add(buttonRounded13);
-            roundedPanel75.Location = new Point(8, 5);
-            roundedPanel75.Name = "roundedPanel75";
-            roundedPanel75.Size = new Size(332, 113);
-            roundedPanel75.TabIndex = 4;
-            // 
-            // label191
-            // 
-            label191.AutoSize = true;
-            label191.BackColor = Color.White;
-            label191.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label191.ForeColor = Color.Black;
-            label191.Location = new Point(116, 8);
-            label191.Name = "label191";
-            label191.Size = new Size(210, 20);
-            label191.TabIndex = 1;
-            label191.Text = "Programming and Technologies";
-            // 
-            // pictureBox67
-            // 
-            pictureBox67.BackColor = Color.Maroon;
-            pictureBox67.BackgroundImage = (Image)resources.GetObject("pictureBox67.BackgroundImage");
-            pictureBox67.Location = new Point(7, 10);
-            pictureBox67.Name = "pictureBox67";
-            pictureBox67.Size = new Size(103, 95);
-            pictureBox67.TabIndex = 0;
-            pictureBox67.TabStop = false;
-            // 
-            // buttonRounded13
-            // 
-            buttonRounded13.BackColor = Color.FromArgb(128, 0, 0);
-            buttonRounded13.BorderRadius = 20;
-            buttonRounded13.FlatAppearance.BorderSize = 0;
-            buttonRounded13.FlatStyle = FlatStyle.Flat;
-            buttonRounded13.ForeColor = Color.White;
-            buttonRounded13.Location = new Point(146, 57);
-            buttonRounded13.Name = "buttonRounded13";
-            buttonRounded13.Size = new Size(150, 40);
-            buttonRounded13.TabIndex = 2;
-            buttonRounded13.Text = "View";
-            buttonRounded13.UseVisualStyleBackColor = false;
-            // 
-            // roundedPanel72
-            // 
-            roundedPanel72.BackColor = Color.Maroon;
-            roundedPanel72.BorderRadius = 10;
-            roundedPanel72.Controls.Add(roundedPanel73);
-            roundedPanel72.Location = new Point(443, 214);
-            roundedPanel72.Name = "roundedPanel72";
-            roundedPanel72.Size = new Size(352, 122);
-            roundedPanel72.TabIndex = 6;
-            // 
-            // roundedPanel73
-            // 
-            roundedPanel73.BackColor = Color.White;
-            roundedPanel73.BorderRadius = 10;
-            roundedPanel73.Controls.Add(label190);
-            roundedPanel73.Controls.Add(pictureBox66);
-            roundedPanel73.Controls.Add(buttonRounded12);
-            roundedPanel73.Location = new Point(8, 5);
-            roundedPanel73.Name = "roundedPanel73";
-            roundedPanel73.Size = new Size(332, 113);
-            roundedPanel73.TabIndex = 4;
-            // 
-            // label190
-            // 
-            label190.AutoSize = true;
-            label190.BackColor = Color.White;
-            label190.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label190.ForeColor = Color.Black;
-            label190.Location = new Point(138, 7);
-            label190.Name = "label190";
-            label190.Size = new Size(164, 20);
-            label190.TabIndex = 1;
-            label190.Text = "Information Management";
-            // 
-            // pictureBox66
-            // 
-            pictureBox66.BackColor = Color.Maroon;
-            pictureBox66.BackgroundImage = (Image)resources.GetObject("pictureBox66.BackgroundImage");
-            pictureBox66.Location = new Point(7, 10);
-            pictureBox66.Name = "pictureBox66";
-            pictureBox66.Size = new Size(103, 95);
-            pictureBox66.TabIndex = 0;
-            pictureBox66.TabStop = false;
-            // 
-            // buttonRounded12
-            // 
-            buttonRounded12.BackColor = Color.FromArgb(128, 0, 0);
-            buttonRounded12.BorderRadius = 20;
-            buttonRounded12.FlatAppearance.BorderSize = 0;
-            buttonRounded12.FlatStyle = FlatStyle.Flat;
-            buttonRounded12.ForeColor = Color.White;
-            buttonRounded12.Location = new Point(146, 57);
-            buttonRounded12.Name = "buttonRounded12";
-            buttonRounded12.Size = new Size(150, 40);
-            buttonRounded12.TabIndex = 2;
-            buttonRounded12.Text = "View";
-            buttonRounded12.UseVisualStyleBackColor = false;
-            // 
-            // roundedPanel70
-            // 
-            roundedPanel70.BackColor = Color.Maroon;
-            roundedPanel70.BorderRadius = 10;
-            roundedPanel70.Controls.Add(roundedPanel71);
-            roundedPanel70.Location = new Point(443, 66);
-            roundedPanel70.Name = "roundedPanel70";
-            roundedPanel70.Size = new Size(352, 122);
-            roundedPanel70.TabIndex = 6;
-            // 
-            // roundedPanel71
-            // 
-            roundedPanel71.BackColor = Color.White;
-            roundedPanel71.BorderRadius = 10;
-            roundedPanel71.Controls.Add(label122);
-            roundedPanel71.Controls.Add(pictureBox65);
-            roundedPanel71.Controls.Add(buttonRounded11);
-            roundedPanel71.Location = new Point(8, 5);
-            roundedPanel71.Name = "roundedPanel71";
-            roundedPanel71.Size = new Size(332, 113);
-            roundedPanel71.TabIndex = 4;
-            // 
-            // label122
-            // 
-            label122.AutoSize = true;
-            label122.BackColor = Color.White;
-            label122.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label122.ForeColor = Color.Black;
-            label122.Location = new Point(139, 6);
-            label122.Name = "label122";
-            label122.Size = new Size(163, 20);
-            label122.TabIndex = 1;
-            label122.Text = "Principles of Accounting";
-            // 
-            // pictureBox65
-            // 
-            pictureBox65.BackColor = Color.Maroon;
-            pictureBox65.BackgroundImage = (Image)resources.GetObject("pictureBox65.BackgroundImage");
-            pictureBox65.Location = new Point(7, 10);
-            pictureBox65.Name = "pictureBox65";
-            pictureBox65.Size = new Size(103, 95);
-            pictureBox65.TabIndex = 0;
-            pictureBox65.TabStop = false;
-            // 
-            // buttonRounded11
-            // 
-            buttonRounded11.BackColor = Color.FromArgb(128, 0, 0);
-            buttonRounded11.BorderRadius = 20;
-            buttonRounded11.FlatAppearance.BorderSize = 0;
-            buttonRounded11.FlatStyle = FlatStyle.Flat;
-            buttonRounded11.ForeColor = Color.White;
-            buttonRounded11.Location = new Point(146, 57);
-            buttonRounded11.Name = "buttonRounded11";
-            buttonRounded11.Size = new Size(150, 40);
-            buttonRounded11.TabIndex = 2;
-            buttonRounded11.Text = "View";
-            buttonRounded11.UseVisualStyleBackColor = false;
-            // 
-            // roundedPanel65
-            // 
-            roundedPanel65.BackColor = Color.Maroon;
-            roundedPanel65.BorderRadius = 10;
-            roundedPanel65.Controls.Add(roundedPanel66);
-            roundedPanel65.Location = new Point(48, 214);
-            roundedPanel65.Name = "roundedPanel65";
-            roundedPanel65.Size = new Size(352, 122);
-            roundedPanel65.TabIndex = 5;
-            // 
-            // roundedPanel66
-            // 
-            roundedPanel66.BackColor = Color.White;
-            roundedPanel66.BorderRadius = 10;
-            roundedPanel66.Controls.Add(label188);
-            roundedPanel66.Controls.Add(pictureBox64);
-            roundedPanel66.Controls.Add(buttonRounded9);
-            roundedPanel66.Location = new Point(8, 5);
-            roundedPanel66.Name = "roundedPanel66";
-            roundedPanel66.Size = new Size(332, 113);
-            roundedPanel66.TabIndex = 4;
-            // 
-            // label188
-            // 
-            label188.AutoSize = true;
-            label188.BackColor = Color.White;
-            label188.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label188.ForeColor = Color.Black;
-            label188.Location = new Point(181, 10);
-            label188.Name = "label188";
-            label188.Size = new Size(75, 20);
-            label188.TabIndex = 1;
-            label188.Text = "PATHFIT 4";
-            // 
-            // pictureBox64
-            // 
-            pictureBox64.BackColor = Color.Maroon;
-            pictureBox64.BackgroundImage = (Image)resources.GetObject("pictureBox64.BackgroundImage");
-            pictureBox64.Location = new Point(7, 10);
-            pictureBox64.Name = "pictureBox64";
-            pictureBox64.Size = new Size(103, 95);
-            pictureBox64.TabIndex = 0;
-            pictureBox64.TabStop = false;
-            // 
-            // buttonRounded9
-            // 
-            buttonRounded9.BackColor = Color.FromArgb(128, 0, 0);
-            buttonRounded9.BorderRadius = 20;
-            buttonRounded9.FlatAppearance.BorderSize = 0;
-            buttonRounded9.FlatStyle = FlatStyle.Flat;
-            buttonRounded9.ForeColor = Color.White;
-            buttonRounded9.Location = new Point(146, 57);
-            buttonRounded9.Name = "buttonRounded9";
-            buttonRounded9.Size = new Size(150, 40);
-            buttonRounded9.TabIndex = 2;
-            buttonRounded9.Text = "View";
-            buttonRounded9.UseVisualStyleBackColor = false;
-            // 
-            // roundedPanel24
-            // 
-            roundedPanel24.BackColor = Color.Maroon;
-            roundedPanel24.BorderRadius = 10;
-            roundedPanel24.Controls.Add(label113);
-            roundedPanel24.Controls.Add(roundedPanel26);
-            roundedPanel24.Location = new Point(48, 66);
-            roundedPanel24.Name = "roundedPanel24";
-            roundedPanel24.Size = new Size(352, 122);
-            roundedPanel24.TabIndex = 1;
-            // 
-            // label113
-            // 
-            label113.AutoSize = true;
-            label113.BackColor = Color.White;
-            label113.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label113.ForeColor = Color.Black;
-            label113.Location = new Point(131, 13);
-            label113.Name = "label113";
-            label113.Size = new Size(206, 20);
-            label113.TabIndex = 1;
-            label113.Text = "Introduction To Programming 1";
-            // 
-            // roundedPanel26
-            // 
-            roundedPanel26.BackColor = Color.White;
-            roundedPanel26.BorderRadius = 10;
-            roundedPanel26.Controls.Add(pictureBox47);
-            roundedPanel26.Controls.Add(buttonRounded1);
-            roundedPanel26.Location = new Point(8, 5);
-            roundedPanel26.Name = "roundedPanel26";
-            roundedPanel26.Size = new Size(332, 113);
-            roundedPanel26.TabIndex = 4;
-            // 
-            // pictureBox47
-            // 
-            pictureBox47.BackColor = Color.Maroon;
-            pictureBox47.BackgroundImage = (Image)resources.GetObject("pictureBox47.BackgroundImage");
-            pictureBox47.Location = new Point(7, 10);
-            pictureBox47.Name = "pictureBox47";
-            pictureBox47.Size = new Size(103, 95);
-            pictureBox47.TabIndex = 0;
-            pictureBox47.TabStop = false;
+            lblCardTag.AutoSize = true;
+            lblCardTag.BackColor = Color.FromArgb(241, 241, 241);
+            lblCardTag.Font = new Font("Segoe UI", 8F);
+            lblCardTag.Location = new Point(335, 15);
+            lblCardTag.Name = "lblCardTag";
+            lblCardTag.Padding = new Padding(4);
+            lblCardTag.Size = new Size(84, 21);
+            lblCardTag.TabIndex = 3;
+            lblCardTag.Text = "Programming";
+            lblCardTag.Click += lblCardTag_Click;
             // 
             // buttonRounded1
             // 
@@ -1737,19 +1341,566 @@
             buttonRounded1.BorderRadius = 20;
             buttonRounded1.FlatAppearance.BorderSize = 0;
             buttonRounded1.FlatStyle = FlatStyle.Flat;
+            buttonRounded1.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             buttonRounded1.ForeColor = Color.White;
-            buttonRounded1.Location = new Point(146, 57);
+            buttonRounded1.Location = new Point(339, 100);
             buttonRounded1.Name = "buttonRounded1";
-            buttonRounded1.Size = new Size(150, 40);
+            buttonRounded1.Size = new Size(80, 30);
             buttonRounded1.TabIndex = 2;
             buttonRounded1.Text = "View";
             buttonRounded1.UseVisualStyleBackColor = false;
             buttonRounded1.Click += buttonRounded1_Click;
             // 
+            // lblCardDesc
+            // 
+            lblCardDesc.ForeColor = Color.FromArgb(68, 68, 68);
+            lblCardDesc.Location = new Point(110, 45);
+            lblCardDesc.Name = "lblCardDesc";
+            lblCardDesc.Size = new Size(230, 50);
+            lblCardDesc.TabIndex = 2;
+            lblCardDesc.Text = "Learn the basics of programming concepts and problem solving.";
+            lblCardDesc.Click += lblCardDesc_Click;
+            // 
+            // lblCardTitle
+            // 
+            lblCardTitle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblCardTitle.Location = new Point(110, 15);
+            lblCardTitle.Name = "lblCardTitle";
+            lblCardTitle.Size = new Size(224, 20);
+            lblCardTitle.TabIndex = 1;
+            lblCardTitle.Text = "Introduction To Programming 1";
+            lblCardTitle.Click += lblCardTitle_Click;
+            // 
+            // picCardImage
+            // 
+            picCardImage.BackColor = Color.FromArgb(139, 0, 0);
+            picCardImage.Location = new Point(16, 16);
+            picCardImage.Name = "picCardImage";
+            picCardImage.Size = new Size(80, 80);
+            picCardImage.SizeMode = PictureBoxSizeMode.Zoom;
+            picCardImage.TabIndex = 0;
+            picCardImage.TabStop = false;
+            picCardImage.Click += picCardImage_Click;
+            // 
+            // btnListView
+            // 
+            btnListView.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnListView.FlatStyle = FlatStyle.Flat;
+            btnListView.Location = new Point(2150, 24);
+            btnListView.Name = "btnListView";
+            btnListView.Size = new Size(34, 30);
+            btnListView.TabIndex = 4;
+            btnListView.Text = "≡";
+            btnListView.UseVisualStyleBackColor = true;
+            // 
+            // btnGridView
+            // 
+            btnGridView.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnGridView.BackColor = Color.FromArgb(139, 0, 0);
+            btnGridView.FlatStyle = FlatStyle.Flat;
+            btnGridView.ForeColor = Color.White;
+            btnGridView.Location = new Point(2112, 24);
+            btnGridView.Name = "btnGridView";
+            btnGridView.Size = new Size(34, 30);
+            btnGridView.TabIndex = 3;
+            btnGridView.Text = "⊞";
+            btnGridView.UseVisualStyleBackColor = false;
+            // 
+            // txtSearch
+            // 
+            txtSearch.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            txtSearch.Location = new Point(1852, 24);
+            txtSearch.Name = "txtSearch";
+            txtSearch.PlaceholderText = "Search activities...";
+            txtSearch.Size = new Size(250, 23);
+            txtSearch.TabIndex = 2;
+            // 
+            // lblPageSubtitle
+            // 
+            lblPageSubtitle.AutoSize = true;
+            lblPageSubtitle.Font = new Font("Segoe UI", 9.5F);
+            lblPageSubtitle.ForeColor = Color.FromArgb(102, 102, 102);
+            lblPageSubtitle.Location = new Point(24, 44);
+            lblPageSubtitle.Name = "lblPageSubtitle";
+            lblPageSubtitle.Size = new Size(237, 17);
+            lblPageSubtitle.TabIndex = 1;
+            lblPageSubtitle.Text = "View and access your learning activities";
+            // 
+            // lblPageTitle
+            // 
+            lblPageTitle.AutoSize = true;
+            lblPageTitle.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            lblPageTitle.Location = new Point(24, 14);
+            lblPageTitle.Name = "lblPageTitle";
+            lblPageTitle.Size = new Size(109, 30);
+            lblPageTitle.TabIndex = 0;
+            lblPageTitle.Text = "Activities";
+            // 
+            // pnlSub1
+            // 
+            pnlSub1.Controls.Add(panel56);
+            pnlSub1.Controls.Add(pnlListContainer);
+            pnlSub1.Controls.Add(pnlHeaderCard);
+            pnlSub1.Controls.Add(panel54);
+            pnlSub1.Dock = DockStyle.Fill;
+            pnlSub1.Location = new Point(0, 0);
+            pnlSub1.Name = "pnlSub1";
+            pnlSub1.Size = new Size(1272, 989);
+            pnlSub1.TabIndex = 2;
+            pnlSub1.Visible = false;
+            // 
+            // panel56
+            // 
+            panel56.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panel56.Controls.Add(label114);
+            panel56.Controls.Add(button27);
+            panel56.Controls.Add(buttonRounded7);
+            panel56.Controls.Add(label113);
+            panel56.Controls.Add(button40);
+            panel56.Controls.Add(button10);
+            panel56.Controls.Add(button11);
+            panel56.Controls.Add(lblPage);
+            panel56.Controls.Add(btnPrevious);
+            panel56.Controls.Add(lblFooterInfo);
+            panel56.Location = new Point(55, 657);
+            panel56.Name = "panel56";
+            panel56.Size = new Size(1205, 44);
+            panel56.TabIndex = 6;
+            // 
+            // label114
+            // 
+            label114.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            label114.AutoSize = true;
+            label114.Font = new Font("Segoe UI", 9F);
+            label114.ForeColor = Color.FromArgb(102, 102, 102);
+            label114.Location = new Point(15, 18);
+            label114.Name = "label114";
+            label114.Size = new Size(140, 15);
+            label114.TabIndex = 8;
+            label114.Text = "Showing 1 to 3 of 3 items";
+            label114.Click += label114_Click;
+            // 
+            // button27
+            // 
+            button27.Anchor = AnchorStyles.Bottom;
+            button27.FlatStyle = FlatStyle.Flat;
+            button27.Location = new Point(626, 8);
+            button27.Name = "button27";
+            button27.Size = new Size(80, 32);
+            button27.TabIndex = 5;
+            button27.Text = "Next";
+            button27.Click += button27_Click;
+            // 
+            // buttonRounded7
+            // 
+            buttonRounded7.BackColor = Color.FromArgb(128, 0, 0);
+            buttonRounded7.BorderRadius = 20;
+            buttonRounded7.FlatAppearance.BorderSize = 0;
+            buttonRounded7.FlatStyle = FlatStyle.Flat;
+            buttonRounded7.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonRounded7.ForeColor = Color.White;
+            buttonRounded7.Location = new Point(1098, 1);
+            buttonRounded7.Name = "buttonRounded7";
+            buttonRounded7.Size = new Size(100, 40);
+            buttonRounded7.TabIndex = 2;
+            buttonRounded7.Text = "Back";
+            buttonRounded7.UseVisualStyleBackColor = false;
+            buttonRounded7.Click += buttonRounded7_Click;
+            // 
+            // label113
+            // 
+            label113.Anchor = AnchorStyles.Bottom;
+            label113.BackColor = Color.FromArgb(128, 0, 0);
+            label113.ForeColor = Color.White;
+            label113.Location = new Point(588, 8);
+            label113.Name = "label113";
+            label113.Size = new Size(28, 32);
+            label113.TabIndex = 6;
+            label113.Text = "1";
+            label113.TextAlign = ContentAlignment.MiddleCenter;
+            label113.Click += label113_Click;
+            // 
+            // button40
+            // 
+            button40.Anchor = AnchorStyles.Bottom;
+            button40.FlatStyle = FlatStyle.Flat;
+            button40.Location = new Point(498, 8);
+            button40.Name = "button40";
+            button40.Size = new Size(80, 32);
+            button40.TabIndex = 7;
+            button40.Text = "Previous";
+            button40.Click += button40_Click;
+            // 
+            // button10
+            // 
+            button10.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            button10.BackColor = Color.FromArgb(128, 0, 0);
+            button10.FlatStyle = FlatStyle.Flat;
+            button10.ForeColor = Color.White;
+            button10.Location = new Point(1865, -56);
+            button10.Name = "button10";
+            button10.Size = new Size(100, 40);
+            button10.TabIndex = 0;
+            button10.Text = "Back";
+            button10.UseVisualStyleBackColor = false;
+            // 
+            // button11
+            // 
+            button11.Anchor = AnchorStyles.Bottom;
+            button11.FlatStyle = FlatStyle.Flat;
+            button11.Location = new Point(1250, -52);
+            button11.Name = "button11";
+            button11.Size = new Size(80, 32);
+            button11.TabIndex = 1;
+            button11.Text = "Next";
+            // 
+            // lblPage
+            // 
+            lblPage.Anchor = AnchorStyles.Bottom;
+            lblPage.BackColor = Color.FromArgb(128, 0, 0);
+            lblPage.ForeColor = Color.White;
+            lblPage.Location = new Point(1212, -52);
+            lblPage.Name = "lblPage";
+            lblPage.Size = new Size(28, 32);
+            lblPage.TabIndex = 2;
+            lblPage.Text = "1";
+            lblPage.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // btnPrevious
+            // 
+            btnPrevious.Anchor = AnchorStyles.Bottom;
+            btnPrevious.FlatStyle = FlatStyle.Flat;
+            btnPrevious.Location = new Point(1122, -52);
+            btnPrevious.Name = "btnPrevious";
+            btnPrevious.Size = new Size(80, 32);
+            btnPrevious.TabIndex = 3;
+            btnPrevious.Text = "Previous";
+            // 
+            // lblFooterInfo
+            // 
+            lblFooterInfo.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            lblFooterInfo.AutoSize = true;
+            lblFooterInfo.Font = new Font("Segoe UI", 9F);
+            lblFooterInfo.ForeColor = Color.FromArgb(102, 102, 102);
+            lblFooterInfo.Location = new Point(10, -48);
+            lblFooterInfo.Name = "lblFooterInfo";
+            lblFooterInfo.Size = new Size(140, 15);
+            lblFooterInfo.TabIndex = 4;
+            lblFooterInfo.Text = "Showing 1 to 3 of 3 items";
+            // 
+            // pnlListContainer
+            // 
+            pnlListContainer.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pnlListContainer.BackColor = Color.Transparent;
+            pnlListContainer.Controls.Add(pnlItem1);
+            pnlListContainer.Location = new Point(55, 169);
+            pnlListContainer.Name = "pnlListContainer";
+            pnlListContainer.Size = new Size(1208, 482);
+            pnlListContainer.TabIndex = 5;
+            pnlListContainer.Paint += pnlListContainer_Paint;
+            // 
+            // pnlItem1
+            // 
+            pnlItem1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            pnlItem1.BackColor = Color.White;
+            pnlItem1.Location = new Point(0, 0);
+            pnlItem1.Name = "pnlItem1";
+            pnlItem1.Size = new Size(1203, 96);
+            pnlItem1.TabIndex = 0;
+            pnlItem1.Paint += pnlItem1_Paint;
+            // 
+            // pnlHeaderCard
+            // 
+            pnlHeaderCard.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            pnlHeaderCard.BackColor = Color.WhiteSmoke;
+            pnlHeaderCard.Controls.Add(buttonRounded2);
+            pnlHeaderCard.Controls.Add(btnAddNew);
+            pnlHeaderCard.Controls.Add(lblHeaderSub);
+            pnlHeaderCard.Controls.Add(lblHeaderMain);
+            pnlHeaderCard.Controls.Add(picHeaderIcon);
+            pnlHeaderCard.Location = new Point(55, 79);
+            pnlHeaderCard.Name = "pnlHeaderCard";
+            pnlHeaderCard.Size = new Size(1208, 80);
+            pnlHeaderCard.TabIndex = 4;
+            // 
+            // buttonRounded2
+            // 
+            buttonRounded2.BackColor = Color.FromArgb(128, 0, 0);
+            buttonRounded2.BorderRadius = 20;
+            buttonRounded2.FlatAppearance.BorderSize = 0;
+            buttonRounded2.FlatStyle = FlatStyle.Flat;
+            buttonRounded2.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonRounded2.ForeColor = Color.White;
+            buttonRounded2.Location = new Point(1043, 16);
+            buttonRounded2.Name = "buttonRounded2";
+            buttonRounded2.Size = new Size(150, 40);
+            buttonRounded2.TabIndex = 1;
+            buttonRounded2.Text = "View Students";
+            buttonRounded2.UseVisualStyleBackColor = false;
+            buttonRounded2.Click += buttonRounded2_Click;
+            // 
+            // btnAddNew
+            // 
+            btnAddNew.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnAddNew.BackColor = Color.FromArgb(128, 0, 0);
+            btnAddNew.FlatStyle = FlatStyle.Flat;
+            btnAddNew.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnAddNew.ForeColor = Color.White;
+            btnAddNew.Location = new Point(1868, 20);
+            btnAddNew.Name = "btnAddNew";
+            btnAddNew.Size = new Size(120, 40);
+            btnAddNew.TabIndex = 0;
+            btnAddNew.Text = "+ Add New";
+            btnAddNew.UseVisualStyleBackColor = false;
+            // 
+            // lblHeaderSub
+            // 
+            lblHeaderSub.AutoSize = true;
+            lblHeaderSub.Font = new Font("Segoe UI", 9F);
+            lblHeaderSub.ForeColor = Color.FromArgb(102, 102, 102);
+            lblHeaderSub.Location = new Point(75, 40);
+            lblHeaderSub.Name = "lblHeaderSub";
+            lblHeaderSub.Size = new Size(367, 15);
+            lblHeaderSub.TabIndex = 1;
+            lblHeaderSub.Text = "Create, update and manage assignments and quizzes for this course.";
+            // 
+            // lblHeaderMain
+            // 
+            lblHeaderMain.AutoSize = true;
+            lblHeaderMain.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            lblHeaderMain.ForeColor = Color.FromArgb(51, 51, 51);
+            lblHeaderMain.Location = new Point(75, 15);
+            lblHeaderMain.Name = "lblHeaderMain";
+            lblHeaderMain.Size = new Size(269, 21);
+            lblHeaderMain.TabIndex = 2;
+            lblHeaderMain.Text = "Manage Assignments and Quizzes";
+            // 
+            // picHeaderIcon
+            // 
+            picHeaderIcon.Location = new Point(15, 15);
+            picHeaderIcon.Name = "picHeaderIcon";
+            picHeaderIcon.Size = new Size(48, 48);
+            picHeaderIcon.TabIndex = 0;
+            picHeaderIcon.TabStop = false;
+            picHeaderIcon.Click += picHeaderIcon_Click;
+            // 
+            // panel54
+            // 
+            panel54.BackColor = Color.FromArgb(128, 0, 0);
+            panel54.Controls.Add(lblHeaderTitle);
+            panel54.Dock = DockStyle.Top;
+            panel54.Location = new Point(0, 0);
+            panel54.Name = "panel54";
+            panel54.Size = new Size(1272, 60);
+            panel54.TabIndex = 3;
+            // 
+            // lblHeaderTitle
+            // 
+            lblHeaderTitle.AutoSize = true;
+            lblHeaderTitle.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            lblHeaderTitle.ForeColor = Color.White;
+            lblHeaderTitle.Location = new Point(55, 11);
+            lblHeaderTitle.Name = "lblHeaderTitle";
+            lblHeaderTitle.Size = new Size(321, 30);
+            lblHeaderTitle.TabIndex = 1;
+            lblHeaderTitle.Text = "Introduction to Programming";
+            lblHeaderTitle.Click += lblHeaderTitle_Click;
+            // 
+            // pnlGrade
+            // 
+            pnlGrade.Controls.Add(pnlEssayContainer);
+            pnlGrade.Controls.Add(panel55);
+            pnlGrade.Dock = DockStyle.Fill;
+            pnlGrade.Location = new Point(0, 0);
+            pnlGrade.Name = "pnlGrade";
+            pnlGrade.Size = new Size(1272, 989);
+            pnlGrade.TabIndex = 11;
+            pnlGrade.Visible = false;
+            // 
+            // pnlEssayContainer
+            // 
+            pnlEssayContainer.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pnlEssayContainer.BackColor = Color.White;
+            pnlEssayContainer.BorderStyle = BorderStyle.FixedSingle;
+            pnlEssayContainer.Controls.Add(label120);
+            pnlEssayContainer.Controls.Add(lblStats);
+            pnlEssayContainer.Controls.Add(buttonRounded15);
+            pnlEssayContainer.Controls.Add(txtEssayContent);
+            pnlEssayContainer.Controls.Add(lblEssayHeader);
+            pnlEssayContainer.Location = new Point(17, 126);
+            pnlEssayContainer.Name = "pnlEssayContainer";
+            pnlEssayContainer.Size = new Size(1240, 583);
+            pnlEssayContainer.TabIndex = 4;
+            // 
+            // label120
+            // 
+            label120.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            label120.AutoSize = true;
+            label120.Font = new Font("Segoe UI", 9F);
+            label120.ForeColor = Color.FromArgb(64, 64, 64);
+            label120.Location = new Point(20, 562);
+            label120.Name = "label120";
+            label120.Size = new Size(197, 15);
+            label120.TabIndex = 3;
+            label120.Text = "Word Count: 103   |   Characters: 682";
+            label120.Click += label120_Click;
+            // 
+            // lblStats
+            // 
+            lblStats.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            lblStats.AutoSize = true;
+            lblStats.Font = new Font("Segoe UI", 9F);
+            lblStats.ForeColor = Color.FromArgb(64, 64, 64);
+            lblStats.Location = new Point(20, 876);
+            lblStats.Name = "lblStats";
+            lblStats.Size = new Size(197, 15);
+            lblStats.TabIndex = 2;
+            lblStats.Text = "Word Count: 103   |   Characters: 682";
+            // 
+            // buttonRounded15
+            // 
+            buttonRounded15.BackColor = Color.FromArgb(128, 0, 0);
+            buttonRounded15.BorderRadius = 20;
+            buttonRounded15.FlatAppearance.BorderSize = 0;
+            buttonRounded15.FlatStyle = FlatStyle.Flat;
+            buttonRounded15.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonRounded15.ForeColor = Color.White;
+            buttonRounded15.Location = new Point(1112, 540);
+            buttonRounded15.Name = "buttonRounded15";
+            buttonRounded15.Size = new Size(100, 40);
+            buttonRounded15.TabIndex = 1;
+            buttonRounded15.Text = "Back";
+            buttonRounded15.UseVisualStyleBackColor = false;
+            buttonRounded15.Click += buttonRounded15_Click;
+            // 
+            // txtEssayContent
+            // 
+            txtEssayContent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            txtEssayContent.BackColor = Color.White;
+            txtEssayContent.BorderStyle = BorderStyle.FixedSingle;
+            txtEssayContent.Font = new Font("Segoe UI", 10F);
+            txtEssayContent.Location = new Point(19, 19);
+            txtEssayContent.Multiline = true;
+            txtEssayContent.Name = "txtEssayContent";
+            txtEssayContent.ReadOnly = true;
+            txtEssayContent.ScrollBars = ScrollBars.Vertical;
+            txtEssayContent.Size = new Size(1194, 510);
+            txtEssayContent.TabIndex = 1;
+            txtEssayContent.Text = "Programming is the process of writing instructions that tell a computer what to do...\r\n\r\n(Essay content here)";
+            txtEssayContent.TextChanged += txtEssayContent_TextChanged;
+            // 
+            // lblEssayHeader
+            // 
+            lblEssayHeader.AutoSize = true;
+            lblEssayHeader.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            lblEssayHeader.Location = new Point(50, 20);
+            lblEssayHeader.Name = "lblEssayHeader";
+            lblEssayHeader.Size = new Size(116, 21);
+            lblEssayHeader.TabIndex = 0;
+            lblEssayHeader.Text = "Essay Content";
+            // 
+            // panel55
+            // 
+            panel55.BackColor = Color.Maroon;
+            panel55.Controls.Add(roundedPanel79);
+            panel55.Controls.Add(roundedPanel78);
+            panel55.Controls.Add(label126);
+            panel55.Dock = DockStyle.Top;
+            panel55.Location = new Point(0, 0);
+            panel55.Name = "panel55";
+            panel55.Size = new Size(1272, 106);
+            panel55.TabIndex = 2;
+            // 
+            // roundedPanel79
+            // 
+            roundedPanel79.BackColor = Color.White;
+            roundedPanel79.BorderRadius = 10;
+            roundedPanel79.Controls.Add(buttonRounded16);
+            roundedPanel79.Controls.Add(rtxtScore);
+            roundedPanel79.Controls.Add(label127);
+            roundedPanel79.Location = new Point(13, 49);
+            roundedPanel79.Name = "roundedPanel79";
+            roundedPanel79.Size = new Size(307, 53);
+            roundedPanel79.TabIndex = 3;
+            // 
+            // buttonRounded16
+            // 
+            buttonRounded16.BackColor = Color.FromArgb(128, 0, 0);
+            buttonRounded16.BorderRadius = 20;
+            buttonRounded16.FlatAppearance.BorderSize = 0;
+            buttonRounded16.FlatStyle = FlatStyle.Flat;
+            buttonRounded16.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonRounded16.ForeColor = Color.White;
+            buttonRounded16.Location = new Point(196, 7);
+            buttonRounded16.Name = "buttonRounded16";
+            buttonRounded16.Size = new Size(103, 40);
+            buttonRounded16.TabIndex = 3;
+            buttonRounded16.Text = "Save";
+            buttonRounded16.UseVisualStyleBackColor = false;
+            buttonRounded16.Click += buttonRounded16_Click;
+            // 
+            // rtxtScore
+            // 
+            rtxtScore.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            rtxtScore.Location = new Point(85, 15);
+            rtxtScore.Name = "rtxtScore";
+            rtxtScore.ScrollBars = RichTextBoxScrollBars.None;
+            rtxtScore.Size = new Size(105, 25);
+            rtxtScore.TabIndex = 4;
+            rtxtScore.Text = "";
+            rtxtScore.TextChanged += rtxtScore_TextChanged;
+            // 
+            // label127
+            // 
+            label127.AutoSize = true;
+            label127.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label127.ForeColor = Color.Black;
+            label127.Location = new Point(15, 15);
+            label127.Name = "label127";
+            label127.Size = new Size(67, 25);
+            label127.TabIndex = 4;
+            label127.Text = "Score:";
+            // 
+            // roundedPanel78
+            // 
+            roundedPanel78.BackColor = Color.White;
+            roundedPanel78.BorderRadius = 10;
+            roundedPanel78.Controls.Add(richTextBox4);
+            roundedPanel78.Location = new Point(358, 8);
+            roundedPanel78.Name = "roundedPanel78";
+            roundedPanel78.Size = new Size(882, 91);
+            roundedPanel78.TabIndex = 3;
+            // 
+            // richTextBox4
+            // 
+            richTextBox4.BorderStyle = BorderStyle.None;
+            richTextBox4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            richTextBox4.Location = new Point(3, 4);
+            richTextBox4.Name = "richTextBox4";
+            richTextBox4.Size = new Size(876, 84);
+            richTextBox4.TabIndex = 3;
+            richTextBox4.Text = "Create an Essay about Introduction to Programming.";
+            richTextBox4.TextChanged += richTextBox4_TextChanged;
+            // 
+            // label126
+            // 
+            label126.AutoSize = true;
+            label126.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label126.ForeColor = Color.White;
+            label126.Location = new Point(8, 5);
+            label126.Name = "label126";
+            label126.Size = new Size(317, 30);
+            label126.TabIndex = 3;
+            label126.Text = "Intoduction to Programming 1";
+            label126.Click += label126_Click;
+            // 
             // pnlStudents1
             // 
+            pnlStudents1.Controls.Add(button41);
+            pnlStudents1.Controls.Add(label132);
+            pnlStudents1.Controls.Add(button42);
+            pnlStudents1.Controls.Add(flowLayoutPanel8);
             pnlStudents1.Controls.Add(panel52);
-            pnlStudents1.Controls.Add(panel53);
             pnlStudents1.Controls.Add(buttonRounded3);
             pnlStudents1.Dock = DockStyle.Fill;
             pnlStudents1.Location = new Point(0, 0);
@@ -1758,377 +1909,94 @@
             pnlStudents1.TabIndex = 1;
             pnlStudents1.Visible = false;
             // 
-            // panel52
+            // button41
             // 
-            panel52.AutoScroll = true;
-            panel52.Controls.Add(roundedPanel53);
-            panel52.Controls.Add(roundedPanel51);
-            panel52.Controls.Add(roundedPanel55);
-            panel52.Controls.Add(roundedPanel43);
-            panel52.Controls.Add(roundedPanel57);
-            panel52.Controls.Add(roundedPanel33);
-            panel52.Controls.Add(roundedPanel59);
-            panel52.Controls.Add(roundedPanel41);
-            panel52.Controls.Add(roundedPanel61);
-            panel52.Controls.Add(roundedPanel63);
-            panel52.Controls.Add(roundedPanel35);
-            panel52.Controls.Add(roundedPanel45);
-            panel52.Controls.Add(roundedPanel49);
-            panel52.Controls.Add(roundedPanel39);
-            panel52.Controls.Add(roundedPanel37);
-            panel52.Controls.Add(roundedPanel47);
-            panel52.Location = new Point(0, 46);
-            panel52.Name = "panel52";
-            panel52.Size = new Size(1050, 533);
-            panel52.TabIndex = 9;
+            button41.Anchor = AnchorStyles.Bottom;
+            button41.FlatStyle = FlatStyle.Flat;
+            button41.Location = new Point(643, 671);
+            button41.Name = "button41";
+            button41.Size = new Size(80, 32);
+            button41.TabIndex = 8;
+            button41.Text = "Next";
             // 
-            // roundedPanel53
+            // label132
             // 
-            roundedPanel53.BackColor = Color.Maroon;
-            roundedPanel53.BorderRadius = 10;
-            roundedPanel53.Controls.Add(roundedPanel54);
-            roundedPanel53.Location = new Point(522, 585);
-            roundedPanel53.Name = "roundedPanel53";
-            roundedPanel53.Size = new Size(482, 75);
-            roundedPanel53.TabIndex = 11;
+            label132.Anchor = AnchorStyles.Bottom;
+            label132.BackColor = Color.FromArgb(128, 0, 0);
+            label132.ForeColor = Color.White;
+            label132.Location = new Point(605, 671);
+            label132.Name = "label132";
+            label132.Size = new Size(28, 32);
+            label132.TabIndex = 9;
+            label132.Text = "1";
+            label132.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // roundedPanel54
+            // button42
             // 
-            roundedPanel54.BackColor = Color.White;
-            roundedPanel54.BorderRadius = 10;
-            roundedPanel54.Controls.Add(label165);
-            roundedPanel54.Controls.Add(label166);
-            roundedPanel54.Controls.Add(label167);
-            roundedPanel54.Controls.Add(pictureBox58);
-            roundedPanel54.Location = new Point(8, 8);
-            roundedPanel54.Name = "roundedPanel54";
-            roundedPanel54.Size = new Size(471, 64);
-            roundedPanel54.TabIndex = 2;
+            button42.Anchor = AnchorStyles.Bottom;
+            button42.FlatStyle = FlatStyle.Flat;
+            button42.Location = new Point(515, 671);
+            button42.Name = "button42";
+            button42.Size = new Size(80, 32);
+            button42.TabIndex = 10;
+            button42.Text = "Previous";
             // 
-            // label165
+            // flowLayoutPanel8
             // 
-            label165.AutoSize = true;
-            label165.Font = new Font("Arial", 15.75F, FontStyle.Bold);
-            label165.Location = new Point(229, 34);
-            label165.Name = "label165";
-            label165.Size = new Size(76, 24);
-            label165.TabIndex = 4;
-            label165.Text = "Score:";
-            // 
-            // label166
-            // 
-            label166.AutoSize = true;
-            label166.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label166.Location = new Point(85, 39);
-            label166.Name = "label166";
-            label166.Size = new Size(138, 19);
-            label166.TabIndex = 3;
-            label166.Text = "2024-00170-SM-0";
-            // 
-            // label167
-            // 
-            label167.AutoSize = true;
-            label167.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label167.Location = new Point(85, 5);
-            label167.Name = "label167";
-            label167.Size = new Size(117, 19);
-            label167.TabIndex = 2;
-            label167.Text = "Student Name";
-            // 
-            // pictureBox58
-            // 
-            pictureBox58.Image = Properties.Resources.profile;
-            pictureBox58.Location = new Point(6, 3);
-            pictureBox58.Name = "pictureBox58";
-            pictureBox58.Size = new Size(63, 57);
-            pictureBox58.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox58.TabIndex = 2;
-            pictureBox58.TabStop = false;
-            // 
-            // roundedPanel51
-            // 
-            roundedPanel51.BackColor = Color.Maroon;
-            roundedPanel51.BorderRadius = 10;
-            roundedPanel51.Controls.Add(roundedPanel52);
-            roundedPanel51.Location = new Point(522, 14);
-            roundedPanel51.Name = "roundedPanel51";
-            roundedPanel51.Size = new Size(482, 75);
-            roundedPanel51.TabIndex = 4;
-            // 
-            // roundedPanel52
-            // 
-            roundedPanel52.BackColor = Color.White;
-            roundedPanel52.BorderRadius = 10;
-            roundedPanel52.Controls.Add(label160);
-            roundedPanel52.Controls.Add(label161);
-            roundedPanel52.Controls.Add(label162);
-            roundedPanel52.Controls.Add(pictureBox57);
-            roundedPanel52.Location = new Point(8, 8);
-            roundedPanel52.Name = "roundedPanel52";
-            roundedPanel52.Size = new Size(471, 64);
-            roundedPanel52.TabIndex = 2;
-            // 
-            // label160
-            // 
-            label160.AutoSize = true;
-            label160.Font = new Font("Arial", 15.75F, FontStyle.Bold);
-            label160.Location = new Point(229, 34);
-            label160.Name = "label160";
-            label160.Size = new Size(76, 24);
-            label160.TabIndex = 4;
-            label160.Text = "Score:";
-            // 
-            // label161
-            // 
-            label161.AutoSize = true;
-            label161.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label161.Location = new Point(85, 39);
-            label161.Name = "label161";
-            label161.Size = new Size(138, 19);
-            label161.TabIndex = 3;
-            label161.Text = "2024-00170-SM-0";
-            // 
-            // label162
-            // 
-            label162.AutoSize = true;
-            label162.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label162.Location = new Point(85, 5);
-            label162.Name = "label162";
-            label162.Size = new Size(117, 19);
-            label162.TabIndex = 2;
-            label162.Text = "Student Name";
-            // 
-            // pictureBox57
-            // 
-            pictureBox57.Image = Properties.Resources.profile;
-            pictureBox57.Location = new Point(6, 3);
-            pictureBox57.Name = "pictureBox57";
-            pictureBox57.Size = new Size(63, 57);
-            pictureBox57.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox57.TabIndex = 2;
-            pictureBox57.TabStop = false;
-            // 
-            // roundedPanel55
-            // 
-            roundedPanel55.BackColor = Color.Maroon;
-            roundedPanel55.BorderRadius = 10;
-            roundedPanel55.Controls.Add(roundedPanel56);
-            roundedPanel55.Location = new Point(13, 585);
-            roundedPanel55.Name = "roundedPanel55";
-            roundedPanel55.Size = new Size(482, 75);
-            roundedPanel55.TabIndex = 8;
-            // 
-            // roundedPanel56
-            // 
-            roundedPanel56.BackColor = Color.White;
-            roundedPanel56.BorderRadius = 10;
-            roundedPanel56.Controls.Add(label169);
-            roundedPanel56.Controls.Add(label170);
-            roundedPanel56.Controls.Add(label171);
-            roundedPanel56.Controls.Add(pictureBox59);
-            roundedPanel56.Location = new Point(8, 8);
-            roundedPanel56.Name = "roundedPanel56";
-            roundedPanel56.Size = new Size(471, 64);
-            roundedPanel56.TabIndex = 2;
-            // 
-            // label169
-            // 
-            label169.AutoSize = true;
-            label169.Font = new Font("Arial", 15.75F, FontStyle.Bold);
-            label169.Location = new Point(229, 34);
-            label169.Name = "label169";
-            label169.Size = new Size(76, 24);
-            label169.TabIndex = 4;
-            label169.Text = "Score:";
-            // 
-            // label170
-            // 
-            label170.AutoSize = true;
-            label170.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label170.Location = new Point(85, 39);
-            label170.Name = "label170";
-            label170.Size = new Size(138, 19);
-            label170.TabIndex = 3;
-            label170.Text = "2024-00170-SM-0";
-            // 
-            // label171
-            // 
-            label171.AutoSize = true;
-            label171.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label171.Location = new Point(85, 5);
-            label171.Name = "label171";
-            label171.Size = new Size(117, 19);
-            label171.TabIndex = 2;
-            label171.Text = "Student Name";
-            // 
-            // pictureBox59
-            // 
-            pictureBox59.Image = Properties.Resources.profile;
-            pictureBox59.Location = new Point(6, 3);
-            pictureBox59.Name = "pictureBox59";
-            pictureBox59.Size = new Size(63, 57);
-            pictureBox59.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox59.TabIndex = 2;
-            pictureBox59.TabStop = false;
-            // 
-            // roundedPanel43
-            // 
-            roundedPanel43.BackColor = Color.Maroon;
-            roundedPanel43.BorderRadius = 10;
-            roundedPanel43.Controls.Add(roundedPanel44);
-            roundedPanel43.Location = new Point(522, 342);
-            roundedPanel43.Name = "roundedPanel43";
-            roundedPanel43.Size = new Size(482, 75);
-            roundedPanel43.TabIndex = 5;
-            // 
-            // roundedPanel44
-            // 
-            roundedPanel44.BackColor = Color.White;
-            roundedPanel44.BorderRadius = 10;
-            roundedPanel44.Controls.Add(label144);
-            roundedPanel44.Controls.Add(label145);
-            roundedPanel44.Controls.Add(label146);
-            roundedPanel44.Controls.Add(pictureBox53);
-            roundedPanel44.Location = new Point(8, 8);
-            roundedPanel44.Name = "roundedPanel44";
-            roundedPanel44.Size = new Size(471, 64);
-            roundedPanel44.TabIndex = 2;
-            // 
-            // label144
-            // 
-            label144.AutoSize = true;
-            label144.Font = new Font("Arial", 15.75F, FontStyle.Bold);
-            label144.Location = new Point(229, 34);
-            label144.Name = "label144";
-            label144.Size = new Size(76, 24);
-            label144.TabIndex = 4;
-            label144.Text = "Score:";
-            // 
-            // label145
-            // 
-            label145.AutoSize = true;
-            label145.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label145.Location = new Point(85, 39);
-            label145.Name = "label145";
-            label145.Size = new Size(138, 19);
-            label145.TabIndex = 3;
-            label145.Text = "2024-00170-SM-0";
-            // 
-            // label146
-            // 
-            label146.AutoSize = true;
-            label146.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label146.Location = new Point(85, 5);
-            label146.Name = "label146";
-            label146.Size = new Size(117, 19);
-            label146.TabIndex = 2;
-            label146.Text = "Student Name";
-            // 
-            // pictureBox53
-            // 
-            pictureBox53.Image = Properties.Resources.profile;
-            pictureBox53.Location = new Point(6, 3);
-            pictureBox53.Name = "pictureBox53";
-            pictureBox53.Size = new Size(63, 57);
-            pictureBox53.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox53.TabIndex = 2;
-            pictureBox53.TabStop = false;
-            // 
-            // roundedPanel57
-            // 
-            roundedPanel57.BackColor = Color.Maroon;
-            roundedPanel57.BorderRadius = 10;
-            roundedPanel57.Controls.Add(roundedPanel58);
-            roundedPanel57.Location = new Point(522, 504);
-            roundedPanel57.Name = "roundedPanel57";
-            roundedPanel57.Size = new Size(482, 75);
-            roundedPanel57.TabIndex = 12;
-            // 
-            // roundedPanel58
-            // 
-            roundedPanel58.BackColor = Color.White;
-            roundedPanel58.BorderRadius = 10;
-            roundedPanel58.Controls.Add(label173);
-            roundedPanel58.Controls.Add(label174);
-            roundedPanel58.Controls.Add(label175);
-            roundedPanel58.Controls.Add(pictureBox60);
-            roundedPanel58.Location = new Point(8, 8);
-            roundedPanel58.Name = "roundedPanel58";
-            roundedPanel58.Size = new Size(471, 64);
-            roundedPanel58.TabIndex = 2;
-            // 
-            // label173
-            // 
-            label173.AutoSize = true;
-            label173.Font = new Font("Arial", 15.75F, FontStyle.Bold);
-            label173.Location = new Point(229, 34);
-            label173.Name = "label173";
-            label173.Size = new Size(76, 24);
-            label173.TabIndex = 4;
-            label173.Text = "Score:";
-            // 
-            // label174
-            // 
-            label174.AutoSize = true;
-            label174.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label174.Location = new Point(85, 39);
-            label174.Name = "label174";
-            label174.Size = new Size(138, 19);
-            label174.TabIndex = 3;
-            label174.Text = "2024-00170-SM-0";
-            // 
-            // label175
-            // 
-            label175.AutoSize = true;
-            label175.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label175.Location = new Point(85, 5);
-            label175.Name = "label175";
-            label175.Size = new Size(117, 19);
-            label175.TabIndex = 2;
-            label175.Text = "Student Name";
-            // 
-            // pictureBox60
-            // 
-            pictureBox60.Image = Properties.Resources.profile;
-            pictureBox60.Location = new Point(6, 3);
-            pictureBox60.Name = "pictureBox60";
-            pictureBox60.Size = new Size(63, 57);
-            pictureBox60.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox60.TabIndex = 2;
-            pictureBox60.TabStop = false;
+            flowLayoutPanel8.AutoScroll = true;
+            flowLayoutPanel8.Controls.Add(roundedPanel33);
+            flowLayoutPanel8.Controls.Add(roundedPanel24);
+            flowLayoutPanel8.Location = new Point(11, 67);
+            flowLayoutPanel8.Name = "flowLayoutPanel8";
+            flowLayoutPanel8.Size = new Size(1252, 590);
+            flowLayoutPanel8.TabIndex = 4;
+            flowLayoutPanel8.Paint += flowLayoutPanel8_Paint;
             // 
             // roundedPanel33
             // 
             roundedPanel33.BackColor = Color.Maroon;
             roundedPanel33.BorderRadius = 10;
             roundedPanel33.Controls.Add(roundedPanel34);
-            roundedPanel33.Location = new Point(13, 14);
+            roundedPanel33.Location = new Point(3, 3);
             roundedPanel33.Name = "roundedPanel33";
-            roundedPanel33.Size = new Size(482, 75);
+            roundedPanel33.Size = new Size(620, 75);
             roundedPanel33.TabIndex = 1;
+            roundedPanel33.Paint += roundedPanel33_Paint;
             // 
             // roundedPanel34
             // 
             roundedPanel34.BackColor = Color.White;
             roundedPanel34.BorderRadius = 10;
+            roundedPanel34.Controls.Add(label121);
             roundedPanel34.Controls.Add(lblScore);
             roundedPanel34.Controls.Add(button9);
             roundedPanel34.Controls.Add(label125);
             roundedPanel34.Controls.Add(label124);
             roundedPanel34.Controls.Add(label123);
             roundedPanel34.Controls.Add(pictureBox48);
-            roundedPanel34.Location = new Point(8, 8);
+            roundedPanel34.Location = new Point(8, 5);
             roundedPanel34.Name = "roundedPanel34";
-            roundedPanel34.Size = new Size(471, 64);
+            roundedPanel34.Size = new Size(601, 64);
             roundedPanel34.TabIndex = 2;
+            // 
+            // label121
+            // 
+            label121.Font = new Font("Arial", 15.75F, FontStyle.Bold);
+            label121.Location = new Point(355, 33);
+            label121.Name = "label121";
+            label121.Size = new Size(54, 24);
+            label121.TabIndex = 13;
+            label121.Click += label121_Click;
             // 
             // lblScore
             // 
+            lblScore.BorderStyle = BorderStyle.Fixed3D;
             lblScore.Font = new Font("Arial", 15.75F, FontStyle.Bold);
             lblScore.Location = new Point(300, 33);
             lblScore.Name = "lblScore";
-            lblScore.Size = new Size(95, 24);
+            lblScore.Size = new Size(54, 24);
             lblScore.TabIndex = 12;
+            lblScore.Click += lblScore_Click;
             // 
             // button9
             // 
@@ -2136,8 +2004,9 @@
             button9.BorderRadius = 20;
             button9.FlatAppearance.BorderSize = 0;
             button9.FlatStyle = FlatStyle.Flat;
+            button9.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             button9.ForeColor = Color.White;
-            button9.Location = new Point(394, 27);
+            button9.Location = new Point(524, 26);
             button9.Name = "button9";
             button9.Size = new Size(74, 35);
             button9.TabIndex = 11;
@@ -2174,800 +2043,60 @@
             label123.Size = new Size(220, 19);
             label123.TabIndex = 2;
             label123.Text = "ABLONG, ADRIAN PLATINO";
+            label123.Click += label123_Click;
             // 
             // pictureBox48
             // 
             pictureBox48.Image = Properties.Resources.profile;
-            pictureBox48.Location = new Point(6, 3);
+            pictureBox48.Location = new Point(7, 3);
             pictureBox48.Name = "pictureBox48";
             pictureBox48.Size = new Size(63, 57);
             pictureBox48.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox48.TabIndex = 2;
             pictureBox48.TabStop = false;
             // 
-            // roundedPanel59
+            // roundedPanel24
             // 
-            roundedPanel59.BackColor = Color.Maroon;
-            roundedPanel59.BorderRadius = 10;
-            roundedPanel59.Controls.Add(roundedPanel60);
-            roundedPanel59.Location = new Point(13, 504);
-            roundedPanel59.Name = "roundedPanel59";
-            roundedPanel59.Size = new Size(482, 75);
-            roundedPanel59.TabIndex = 9;
+            roundedPanel24.BackColor = Color.Maroon;
+            roundedPanel24.BorderRadius = 10;
+            roundedPanel24.Controls.Add(roundedPanel25);
+            roundedPanel24.Location = new Point(629, 3);
+            roundedPanel24.Name = "roundedPanel24";
+            roundedPanel24.Size = new Size(620, 75);
+            roundedPanel24.TabIndex = 3;
             // 
-            // roundedPanel60
+            // roundedPanel25
             // 
-            roundedPanel60.BackColor = Color.White;
-            roundedPanel60.BorderRadius = 10;
-            roundedPanel60.Controls.Add(label177);
-            roundedPanel60.Controls.Add(label178);
-            roundedPanel60.Controls.Add(label179);
-            roundedPanel60.Controls.Add(pictureBox61);
-            roundedPanel60.Location = new Point(8, 8);
-            roundedPanel60.Name = "roundedPanel60";
-            roundedPanel60.Size = new Size(471, 64);
-            roundedPanel60.TabIndex = 2;
+            roundedPanel25.BackColor = Color.White;
+            roundedPanel25.BorderRadius = 10;
+            roundedPanel25.Controls.Add(label122);
+            roundedPanel25.Controls.Add(label128);
+            roundedPanel25.Controls.Add(buttonRounded8);
+            roundedPanel25.Controls.Add(label129);
+            roundedPanel25.Controls.Add(label130);
+            roundedPanel25.Controls.Add(label131);
+            roundedPanel25.Controls.Add(pictureBox47);
+            roundedPanel25.Location = new Point(8, 5);
+            roundedPanel25.Name = "roundedPanel25";
+            roundedPanel25.Size = new Size(601, 64);
+            roundedPanel25.TabIndex = 2;
             // 
-            // label177
+            // label122
             // 
-            label177.AutoSize = true;
-            label177.Font = new Font("Arial", 15.75F, FontStyle.Bold);
-            label177.Location = new Point(229, 34);
-            label177.Name = "label177";
-            label177.Size = new Size(76, 24);
-            label177.TabIndex = 4;
-            label177.Text = "Score:";
-            // 
-            // label178
-            // 
-            label178.AutoSize = true;
-            label178.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label178.Location = new Point(85, 39);
-            label178.Name = "label178";
-            label178.Size = new Size(138, 19);
-            label178.TabIndex = 3;
-            label178.Text = "2024-00128-SM-0";
-            // 
-            // label179
-            // 
-            label179.AutoSize = true;
-            label179.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label179.Location = new Point(85, 5);
-            label179.Name = "label179";
-            label179.Size = new Size(286, 19);
-            label179.TabIndex = 2;
-            label179.Text = "DELA CRUZ, KARL ANGELO ROXAS";
-            // 
-            // pictureBox61
-            // 
-            pictureBox61.Image = Properties.Resources.profile;
-            pictureBox61.Location = new Point(6, 3);
-            pictureBox61.Name = "pictureBox61";
-            pictureBox61.Size = new Size(63, 57);
-            pictureBox61.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox61.TabIndex = 2;
-            pictureBox61.TabStop = false;
-            // 
-            // roundedPanel41
-            // 
-            roundedPanel41.BackColor = Color.Maroon;
-            roundedPanel41.BorderRadius = 10;
-            roundedPanel41.Controls.Add(roundedPanel42);
-            roundedPanel41.Location = new Point(13, 342);
-            roundedPanel41.Name = "roundedPanel41";
-            roundedPanel41.Size = new Size(482, 75);
-            roundedPanel41.TabIndex = 3;
-            // 
-            // roundedPanel42
-            // 
-            roundedPanel42.BackColor = Color.White;
-            roundedPanel42.BorderRadius = 10;
-            roundedPanel42.Controls.Add(label140);
-            roundedPanel42.Controls.Add(label141);
-            roundedPanel42.Controls.Add(label142);
-            roundedPanel42.Controls.Add(pictureBox52);
-            roundedPanel42.Location = new Point(8, 8);
-            roundedPanel42.Name = "roundedPanel42";
-            roundedPanel42.Size = new Size(471, 64);
-            roundedPanel42.TabIndex = 2;
-            // 
-            // label140
-            // 
-            label140.AutoSize = true;
-            label140.Font = new Font("Arial", 15.75F, FontStyle.Bold);
-            label140.Location = new Point(229, 34);
-            label140.Name = "label140";
-            label140.Size = new Size(76, 24);
-            label140.TabIndex = 4;
-            label140.Text = "Score:";
-            // 
-            // label141
-            // 
-            label141.AutoSize = true;
-            label141.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label141.Location = new Point(85, 39);
-            label141.Name = "label141";
-            label141.Size = new Size(138, 19);
-            label141.TabIndex = 3;
-            label141.Text = "2024-00130-SM-0";
-            // 
-            // label142
-            // 
-            label142.AutoSize = true;
-            label142.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label142.Location = new Point(85, 5);
-            label142.Name = "label142";
-            label142.Size = new Size(211, 19);
-            label142.TabIndex = 2;
-            label142.Text = "CRUZ, ALEXANDER LEOC";
-            // 
-            // pictureBox52
-            // 
-            pictureBox52.Image = Properties.Resources.profile;
-            pictureBox52.Location = new Point(6, 3);
-            pictureBox52.Name = "pictureBox52";
-            pictureBox52.Size = new Size(63, 57);
-            pictureBox52.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox52.TabIndex = 2;
-            pictureBox52.TabStop = false;
-            // 
-            // roundedPanel61
-            // 
-            roundedPanel61.BackColor = Color.Maroon;
-            roundedPanel61.BorderRadius = 10;
-            roundedPanel61.Controls.Add(roundedPanel62);
-            roundedPanel61.Location = new Point(13, 423);
-            roundedPanel61.Name = "roundedPanel61";
-            roundedPanel61.Size = new Size(482, 75);
-            roundedPanel61.TabIndex = 10;
-            // 
-            // roundedPanel62
-            // 
-            roundedPanel62.BackColor = Color.White;
-            roundedPanel62.BorderRadius = 10;
-            roundedPanel62.Controls.Add(label181);
-            roundedPanel62.Controls.Add(label182);
-            roundedPanel62.Controls.Add(label183);
-            roundedPanel62.Controls.Add(pictureBox62);
-            roundedPanel62.Location = new Point(8, 8);
-            roundedPanel62.Name = "roundedPanel62";
-            roundedPanel62.Size = new Size(471, 64);
-            roundedPanel62.TabIndex = 2;
-            // 
-            // label181
-            // 
-            label181.AutoSize = true;
-            label181.Font = new Font("Arial", 15.75F, FontStyle.Bold);
-            label181.Location = new Point(229, 34);
-            label181.Name = "label181";
-            label181.Size = new Size(76, 24);
-            label181.TabIndex = 4;
-            label181.Text = "Score:";
-            // 
-            // label182
-            // 
-            label182.AutoSize = true;
-            label182.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label182.Location = new Point(85, 39);
-            label182.Name = "label182";
-            label182.Size = new Size(138, 19);
-            label182.TabIndex = 3;
-            label182.Text = "2024-00210-SM-0";
-            // 
-            // label183
-            // 
-            label183.AutoSize = true;
-            label183.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label183.Location = new Point(85, 5);
-            label183.Name = "label183";
-            label183.Size = new Size(297, 19);
-            label183.TabIndex = 2;
-            label183.Text = "DE GUZMAN, LYZLIE ANNE GALLEGO";
-            // 
-            // pictureBox62
-            // 
-            pictureBox62.Image = Properties.Resources.profile;
-            pictureBox62.Location = new Point(6, 3);
-            pictureBox62.Name = "pictureBox62";
-            pictureBox62.Size = new Size(63, 57);
-            pictureBox62.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox62.TabIndex = 2;
-            pictureBox62.TabStop = false;
-            // 
-            // roundedPanel63
-            // 
-            roundedPanel63.BackColor = Color.Maroon;
-            roundedPanel63.BorderRadius = 10;
-            roundedPanel63.Controls.Add(roundedPanel64);
-            roundedPanel63.Location = new Point(522, 423);
-            roundedPanel63.Name = "roundedPanel63";
-            roundedPanel63.Size = new Size(482, 75);
-            roundedPanel63.TabIndex = 13;
-            // 
-            // roundedPanel64
-            // 
-            roundedPanel64.BackColor = Color.White;
-            roundedPanel64.BorderRadius = 10;
-            roundedPanel64.Controls.Add(label185);
-            roundedPanel64.Controls.Add(label186);
-            roundedPanel64.Controls.Add(label187);
-            roundedPanel64.Controls.Add(pictureBox63);
-            roundedPanel64.Location = new Point(8, 8);
-            roundedPanel64.Name = "roundedPanel64";
-            roundedPanel64.Size = new Size(471, 64);
-            roundedPanel64.TabIndex = 2;
-            // 
-            // label185
-            // 
-            label185.AutoSize = true;
-            label185.Font = new Font("Arial", 15.75F, FontStyle.Bold);
-            label185.Location = new Point(229, 34);
-            label185.Name = "label185";
-            label185.Size = new Size(76, 24);
-            label185.TabIndex = 4;
-            label185.Text = "Score:";
-            // 
-            // label186
-            // 
-            label186.AutoSize = true;
-            label186.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label186.Location = new Point(85, 39);
-            label186.Name = "label186";
-            label186.Size = new Size(138, 19);
-            label186.TabIndex = 3;
-            label186.Text = "2024-00170-SM-0";
-            // 
-            // label187
-            // 
-            label187.AutoSize = true;
-            label187.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label187.Location = new Point(85, 5);
-            label187.Name = "label187";
-            label187.Size = new Size(117, 19);
-            label187.TabIndex = 2;
-            label187.Text = "Student Name";
-            // 
-            // pictureBox63
-            // 
-            pictureBox63.Image = Properties.Resources.profile;
-            pictureBox63.Location = new Point(6, 3);
-            pictureBox63.Name = "pictureBox63";
-            pictureBox63.Size = new Size(63, 57);
-            pictureBox63.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox63.TabIndex = 2;
-            pictureBox63.TabStop = false;
-            // 
-            // roundedPanel35
-            // 
-            roundedPanel35.BackColor = Color.Maroon;
-            roundedPanel35.BorderRadius = 10;
-            roundedPanel35.Controls.Add(roundedPanel36);
-            roundedPanel35.Location = new Point(13, 98);
-            roundedPanel35.Name = "roundedPanel35";
-            roundedPanel35.Size = new Size(482, 75);
-            roundedPanel35.TabIndex = 3;
-            // 
-            // roundedPanel36
-            // 
-            roundedPanel36.BackColor = Color.White;
-            roundedPanel36.BorderRadius = 10;
-            roundedPanel36.Controls.Add(label128);
-            roundedPanel36.Controls.Add(label129);
-            roundedPanel36.Controls.Add(label130);
-            roundedPanel36.Controls.Add(pictureBox49);
-            roundedPanel36.Location = new Point(8, 8);
-            roundedPanel36.Name = "roundedPanel36";
-            roundedPanel36.Size = new Size(471, 64);
-            roundedPanel36.TabIndex = 2;
+            label122.Font = new Font("Arial", 15.75F, FontStyle.Bold);
+            label122.Location = new Point(355, 33);
+            label122.Name = "label122";
+            label122.Size = new Size(54, 24);
+            label122.TabIndex = 13;
             // 
             // label128
             // 
-            label128.AutoSize = true;
+            label128.BorderStyle = BorderStyle.Fixed3D;
             label128.Font = new Font("Arial", 15.75F, FontStyle.Bold);
-            label128.Location = new Point(229, 34);
+            label128.Location = new Point(300, 33);
             label128.Name = "label128";
-            label128.Size = new Size(76, 24);
-            label128.TabIndex = 4;
-            label128.Text = "Score:";
-            // 
-            // label129
-            // 
-            label129.AutoSize = true;
-            label129.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label129.Location = new Point(85, 39);
-            label129.Name = "label129";
-            label129.Size = new Size(138, 19);
-            label129.TabIndex = 3;
-            label129.Text = "2024-00190-SM-0";
-            // 
-            // label130
-            // 
-            label130.AutoSize = true;
-            label130.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label130.Location = new Point(85, 5);
-            label130.Name = "label130";
-            label130.Size = new Size(220, 19);
-            label130.TabIndex = 2;
-            label130.Text = "AMEN, JESSIE COMEDERO";
-            // 
-            // pictureBox49
-            // 
-            pictureBox49.Image = Properties.Resources.profile;
-            pictureBox49.Location = new Point(6, 3);
-            pictureBox49.Name = "pictureBox49";
-            pictureBox49.Size = new Size(63, 57);
-            pictureBox49.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox49.TabIndex = 2;
-            pictureBox49.TabStop = false;
-            // 
-            // roundedPanel45
-            // 
-            roundedPanel45.BackColor = Color.Maroon;
-            roundedPanel45.BorderRadius = 10;
-            roundedPanel45.Controls.Add(roundedPanel46);
-            roundedPanel45.Location = new Point(522, 261);
-            roundedPanel45.Name = "roundedPanel45";
-            roundedPanel45.Size = new Size(482, 75);
-            roundedPanel45.TabIndex = 6;
-            // 
-            // roundedPanel46
-            // 
-            roundedPanel46.BackColor = Color.White;
-            roundedPanel46.BorderRadius = 10;
-            roundedPanel46.Controls.Add(label148);
-            roundedPanel46.Controls.Add(label149);
-            roundedPanel46.Controls.Add(label150);
-            roundedPanel46.Controls.Add(pictureBox54);
-            roundedPanel46.Location = new Point(8, 8);
-            roundedPanel46.Name = "roundedPanel46";
-            roundedPanel46.Size = new Size(471, 64);
-            roundedPanel46.TabIndex = 2;
-            // 
-            // label148
-            // 
-            label148.AutoSize = true;
-            label148.Font = new Font("Arial", 15.75F, FontStyle.Bold);
-            label148.Location = new Point(229, 34);
-            label148.Name = "label148";
-            label148.Size = new Size(76, 24);
-            label148.TabIndex = 4;
-            label148.Text = "Score:";
-            // 
-            // label149
-            // 
-            label149.AutoSize = true;
-            label149.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label149.Location = new Point(85, 39);
-            label149.Name = "label149";
-            label149.Size = new Size(138, 19);
-            label149.TabIndex = 3;
-            label149.Text = "2024-00170-SM-0";
-            // 
-            // label150
-            // 
-            label150.AutoSize = true;
-            label150.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label150.Location = new Point(85, 5);
-            label150.Name = "label150";
-            label150.Size = new Size(117, 19);
-            label150.TabIndex = 2;
-            label150.Text = "Student Name";
-            // 
-            // pictureBox54
-            // 
-            pictureBox54.Image = Properties.Resources.profile;
-            pictureBox54.Location = new Point(6, 3);
-            pictureBox54.Name = "pictureBox54";
-            pictureBox54.Size = new Size(63, 57);
-            pictureBox54.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox54.TabIndex = 2;
-            pictureBox54.TabStop = false;
-            // 
-            // roundedPanel49
-            // 
-            roundedPanel49.BackColor = Color.Maroon;
-            roundedPanel49.BorderRadius = 10;
-            roundedPanel49.Controls.Add(roundedPanel50);
-            roundedPanel49.Location = new Point(522, 98);
-            roundedPanel49.Name = "roundedPanel49";
-            roundedPanel49.Size = new Size(482, 75);
-            roundedPanel49.TabIndex = 8;
-            // 
-            // roundedPanel50
-            // 
-            roundedPanel50.BackColor = Color.White;
-            roundedPanel50.BorderRadius = 10;
-            roundedPanel50.Controls.Add(label156);
-            roundedPanel50.Controls.Add(label157);
-            roundedPanel50.Controls.Add(label158);
-            roundedPanel50.Controls.Add(pictureBox56);
-            roundedPanel50.Location = new Point(8, 8);
-            roundedPanel50.Name = "roundedPanel50";
-            roundedPanel50.Size = new Size(471, 64);
-            roundedPanel50.TabIndex = 2;
-            // 
-            // label156
-            // 
-            label156.AutoSize = true;
-            label156.Font = new Font("Arial", 15.75F, FontStyle.Bold);
-            label156.Location = new Point(229, 34);
-            label156.Name = "label156";
-            label156.Size = new Size(76, 24);
-            label156.TabIndex = 4;
-            label156.Text = "Score:";
-            // 
-            // label157
-            // 
-            label157.AutoSize = true;
-            label157.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label157.Location = new Point(85, 39);
-            label157.Name = "label157";
-            label157.Size = new Size(138, 19);
-            label157.TabIndex = 3;
-            label157.Text = "2024-00170-SM-0";
-            // 
-            // label158
-            // 
-            label158.AutoSize = true;
-            label158.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label158.Location = new Point(85, 5);
-            label158.Name = "label158";
-            label158.Size = new Size(117, 19);
-            label158.TabIndex = 2;
-            label158.Text = "Student Name";
-            // 
-            // pictureBox56
-            // 
-            pictureBox56.Image = Properties.Resources.profile;
-            pictureBox56.Location = new Point(6, 3);
-            pictureBox56.Name = "pictureBox56";
-            pictureBox56.Size = new Size(63, 57);
-            pictureBox56.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox56.TabIndex = 2;
-            pictureBox56.TabStop = false;
-            // 
-            // roundedPanel39
-            // 
-            roundedPanel39.BackColor = Color.Maroon;
-            roundedPanel39.BorderRadius = 10;
-            roundedPanel39.Controls.Add(roundedPanel40);
-            roundedPanel39.Location = new Point(13, 261);
-            roundedPanel39.Name = "roundedPanel39";
-            roundedPanel39.Size = new Size(482, 75);
-            roundedPanel39.TabIndex = 3;
-            // 
-            // roundedPanel40
-            // 
-            roundedPanel40.BackColor = Color.White;
-            roundedPanel40.BorderRadius = 10;
-            roundedPanel40.Controls.Add(label136);
-            roundedPanel40.Controls.Add(label137);
-            roundedPanel40.Controls.Add(label138);
-            roundedPanel40.Controls.Add(pictureBox51);
-            roundedPanel40.Location = new Point(8, 8);
-            roundedPanel40.Name = "roundedPanel40";
-            roundedPanel40.Size = new Size(471, 64);
-            roundedPanel40.TabIndex = 2;
-            // 
-            // label136
-            // 
-            label136.AutoSize = true;
-            label136.Font = new Font("Arial", 15.75F, FontStyle.Bold);
-            label136.Location = new Point(229, 34);
-            label136.Name = "label136";
-            label136.Size = new Size(76, 24);
-            label136.TabIndex = 4;
-            label136.Text = "Score:";
-            // 
-            // label137
-            // 
-            label137.AutoSize = true;
-            label137.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label137.Location = new Point(85, 39);
-            label137.Name = "label137";
-            label137.Size = new Size(138, 19);
-            label137.TabIndex = 3;
-            label137.Text = "2024-00146-SM-0";
-            // 
-            // label138
-            // 
-            label138.AutoSize = true;
-            label138.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label138.Location = new Point(85, 5);
-            label138.Name = "label138";
-            label138.Size = new Size(297, 19);
-            label138.TabIndex = 2;
-            label138.Text = "CELESTINO, RANDEL ELBAMBUENA";
-            // 
-            // pictureBox51
-            // 
-            pictureBox51.Image = Properties.Resources.profile;
-            pictureBox51.Location = new Point(6, 3);
-            pictureBox51.Name = "pictureBox51";
-            pictureBox51.Size = new Size(63, 57);
-            pictureBox51.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox51.TabIndex = 2;
-            pictureBox51.TabStop = false;
-            // 
-            // roundedPanel37
-            // 
-            roundedPanel37.BackColor = Color.Maroon;
-            roundedPanel37.BorderRadius = 10;
-            roundedPanel37.Controls.Add(roundedPanel38);
-            roundedPanel37.Location = new Point(13, 180);
-            roundedPanel37.Name = "roundedPanel37";
-            roundedPanel37.Size = new Size(482, 75);
-            roundedPanel37.TabIndex = 3;
-            // 
-            // roundedPanel38
-            // 
-            roundedPanel38.BackColor = Color.White;
-            roundedPanel38.BorderRadius = 10;
-            roundedPanel38.Controls.Add(label132);
-            roundedPanel38.Controls.Add(label133);
-            roundedPanel38.Controls.Add(label134);
-            roundedPanel38.Controls.Add(pictureBox50);
-            roundedPanel38.Location = new Point(8, 8);
-            roundedPanel38.Name = "roundedPanel38";
-            roundedPanel38.Size = new Size(471, 64);
-            roundedPanel38.TabIndex = 2;
-            // 
-            // label132
-            // 
-            label132.AutoSize = true;
-            label132.Font = new Font("Arial", 15.75F, FontStyle.Bold);
-            label132.Location = new Point(229, 34);
-            label132.Name = "label132";
-            label132.Size = new Size(76, 24);
-            label132.TabIndex = 4;
-            label132.Text = "Score:";
-            // 
-            // label133
-            // 
-            label133.AutoSize = true;
-            label133.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label133.Location = new Point(85, 39);
-            label133.Name = "label133";
-            label133.Size = new Size(138, 19);
-            label133.TabIndex = 3;
-            label133.Text = "2024-00174-SM-0";
-            // 
-            // label134
-            // 
-            label134.AutoSize = true;
-            label134.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label134.Location = new Point(85, 5);
-            label134.Name = "label134";
-            label134.Size = new Size(283, 19);
-            label134.TabIndex = 2;
-            label134.Text = "BASILAN, HANS LOUIE LEONARDO";
-            // 
-            // pictureBox50
-            // 
-            pictureBox50.Image = Properties.Resources.profile;
-            pictureBox50.Location = new Point(6, 3);
-            pictureBox50.Name = "pictureBox50";
-            pictureBox50.Size = new Size(63, 57);
-            pictureBox50.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox50.TabIndex = 2;
-            pictureBox50.TabStop = false;
-            // 
-            // roundedPanel47
-            // 
-            roundedPanel47.BackColor = Color.Maroon;
-            roundedPanel47.BorderRadius = 10;
-            roundedPanel47.Controls.Add(roundedPanel48);
-            roundedPanel47.Location = new Point(522, 180);
-            roundedPanel47.Name = "roundedPanel47";
-            roundedPanel47.Size = new Size(482, 75);
-            roundedPanel47.TabIndex = 7;
-            // 
-            // roundedPanel48
-            // 
-            roundedPanel48.BackColor = Color.White;
-            roundedPanel48.BorderRadius = 10;
-            roundedPanel48.Controls.Add(label152);
-            roundedPanel48.Controls.Add(label153);
-            roundedPanel48.Controls.Add(label154);
-            roundedPanel48.Controls.Add(pictureBox55);
-            roundedPanel48.Location = new Point(8, 8);
-            roundedPanel48.Name = "roundedPanel48";
-            roundedPanel48.Size = new Size(471, 64);
-            roundedPanel48.TabIndex = 2;
-            // 
-            // label152
-            // 
-            label152.AutoSize = true;
-            label152.Font = new Font("Arial", 15.75F, FontStyle.Bold);
-            label152.Location = new Point(229, 34);
-            label152.Name = "label152";
-            label152.Size = new Size(76, 24);
-            label152.TabIndex = 4;
-            label152.Text = "Score:";
-            // 
-            // label153
-            // 
-            label153.AutoSize = true;
-            label153.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label153.Location = new Point(85, 39);
-            label153.Name = "label153";
-            label153.Size = new Size(138, 19);
-            label153.TabIndex = 3;
-            label153.Text = "2024-00170-SM-0";
-            // 
-            // label154
-            // 
-            label154.AutoSize = true;
-            label154.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label154.Location = new Point(85, 5);
-            label154.Name = "label154";
-            label154.Size = new Size(117, 19);
-            label154.TabIndex = 2;
-            label154.Text = "Student Name";
-            // 
-            // pictureBox55
-            // 
-            pictureBox55.Image = Properties.Resources.profile;
-            pictureBox55.Location = new Point(6, 3);
-            pictureBox55.Name = "pictureBox55";
-            pictureBox55.Size = new Size(63, 57);
-            pictureBox55.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox55.TabIndex = 2;
-            pictureBox55.TabStop = false;
-            // 
-            // panel53
-            // 
-            panel53.BackColor = Color.Maroon;
-            panel53.Controls.Add(label163);
-            panel53.Dock = DockStyle.Top;
-            panel53.Location = new Point(0, 0);
-            panel53.Name = "panel53";
-            panel53.RightToLeft = RightToLeft.No;
-            panel53.Size = new Size(1272, 46);
-            panel53.TabIndex = 10;
-            // 
-            // label163
-            // 
-            label163.AutoSize = true;
-            label163.Font = new Font("Arial", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label163.ForeColor = Color.White;
-            label163.Location = new Point(7, 11);
-            label163.Name = "label163";
-            label163.Size = new Size(237, 24);
-            label163.TabIndex = 6;
-            label163.Text = "Assignment No.1: Title";
-            // 
-            // buttonRounded3
-            // 
-            buttonRounded3.BackColor = Color.FromArgb(128, 0, 0);
-            buttonRounded3.BorderRadius = 20;
-            buttonRounded3.FlatAppearance.BorderSize = 0;
-            buttonRounded3.FlatStyle = FlatStyle.Flat;
-            buttonRounded3.ForeColor = Color.White;
-            buttonRounded3.Location = new Point(1116, 605);
-            buttonRounded3.Name = "buttonRounded3";
-            buttonRounded3.Size = new Size(136, 49);
-            buttonRounded3.TabIndex = 0;
-            buttonRounded3.Text = "Back";
-            buttonRounded3.UseVisualStyleBackColor = false;
-            buttonRounded3.Click += buttonRounded3_Click;
-            // 
-            // pnlSub1
-            // 
-            pnlSub1.Controls.Add(panel54);
-            pnlSub1.Controls.Add(roundedPanel67);
-            pnlSub1.Controls.Add(roundedPanel28);
-            pnlSub1.Controls.Add(buttonRounded7);
-            pnlSub1.Controls.Add(roundedPanel25);
-            pnlSub1.Dock = DockStyle.Fill;
-            pnlSub1.Location = new Point(0, 0);
-            pnlSub1.Name = "pnlSub1";
-            pnlSub1.Size = new Size(1272, 989);
-            pnlSub1.TabIndex = 2;
-            pnlSub1.Visible = false;
-            // 
-            // panel54
-            // 
-            panel54.BackColor = Color.Maroon;
-            panel54.Controls.Add(label189);
-            panel54.Dock = DockStyle.Top;
-            panel54.Location = new Point(0, 0);
-            panel54.Name = "panel54";
-            panel54.Size = new Size(1272, 46);
-            panel54.TabIndex = 3;
-            // 
-            // label189
-            // 
-            label189.AutoSize = true;
-            label189.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label189.ForeColor = Color.WhiteSmoke;
-            label189.Location = new Point(5, 7);
-            label189.Name = "label189";
-            label189.Size = new Size(307, 30);
-            label189.TabIndex = 4;
-            label189.Text = "Introduction to programming";
-            // 
-            // roundedPanel67
-            // 
-            roundedPanel67.BackColor = Color.Maroon;
-            roundedPanel67.BorderRadius = 10;
-            roundedPanel67.Controls.Add(buttonRounded10);
-            roundedPanel67.Controls.Add(roundedPanel68);
-            roundedPanel67.Controls.Add(label114);
-            roundedPanel67.Controls.Add(roundedPanel69);
-            roundedPanel67.Location = new Point(76, 330);
-            roundedPanel67.Name = "roundedPanel67";
-            roundedPanel67.Size = new Size(1038, 118);
-            roundedPanel67.TabIndex = 3;
-            // 
-            // buttonRounded10
-            // 
-            buttonRounded10.BackColor = Color.FromArgb(128, 0, 0);
-            buttonRounded10.BorderRadius = 20;
-            buttonRounded10.FlatAppearance.BorderSize = 0;
-            buttonRounded10.FlatStyle = FlatStyle.Flat;
-            buttonRounded10.ForeColor = Color.White;
-            buttonRounded10.Location = new Point(22, 59);
-            buttonRounded10.Name = "buttonRounded10";
-            buttonRounded10.Size = new Size(150, 40);
-            buttonRounded10.TabIndex = 1;
-            buttonRounded10.Text = "View Students";
-            buttonRounded10.UseVisualStyleBackColor = false;
-            // 
-            // roundedPanel68
-            // 
-            roundedPanel68.BackColor = Color.White;
-            roundedPanel68.BorderRadius = 10;
-            roundedPanel68.Location = new Point(18, 53);
-            roundedPanel68.Name = "roundedPanel68";
-            roundedPanel68.Size = new Size(159, 55);
-            roundedPanel68.TabIndex = 1;
-            // 
-            // label114
-            // 
-            label114.AutoSize = true;
-            label114.Font = new Font("Arial", 12F, FontStyle.Bold);
-            label114.ForeColor = Color.White;
-            label114.Location = new Point(24, 18);
-            label114.Name = "label114";
-            label114.Size = new Size(139, 19);
-            label114.TabIndex = 1;
-            label114.Text = "Assignment No.2";
-            // 
-            // roundedPanel69
-            // 
-            roundedPanel69.AutoScroll = true;
-            roundedPanel69.BackColor = Color.White;
-            roundedPanel69.BorderRadius = 10;
-            roundedPanel69.Controls.Add(richTextBox3);
-            roundedPanel69.Location = new Point(183, 8);
-            roundedPanel69.Name = "roundedPanel69";
-            roundedPanel69.Size = new Size(838, 100);
-            roundedPanel69.TabIndex = 1;
-            // 
-            // richTextBox3
-            // 
-            richTextBox3.BackColor = Color.White;
-            richTextBox3.BorderStyle = BorderStyle.None;
-            richTextBox3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            richTextBox3.Location = new Point(7, 4);
-            richTextBox3.Name = "richTextBox3";
-            richTextBox3.Size = new Size(828, 96);
-            richTextBox3.TabIndex = 5;
-            richTextBox3.Text = "Title: Description";
-            // 
-            // roundedPanel28
-            // 
-            roundedPanel28.BackColor = Color.Maroon;
-            roundedPanel28.BorderRadius = 10;
-            roundedPanel28.Controls.Add(buttonRounded8);
-            roundedPanel28.Controls.Add(roundedPanel31);
-            roundedPanel28.Controls.Add(label121);
-            roundedPanel28.Controls.Add(roundedPanel32);
-            roundedPanel28.Location = new Point(76, 200);
-            roundedPanel28.Name = "roundedPanel28";
-            roundedPanel28.Size = new Size(1038, 118);
-            roundedPanel28.TabIndex = 2;
+            label128.Size = new Size(54, 24);
+            label128.TabIndex = 12;
             // 
             // buttonRounded8
             // 
@@ -2975,288 +2104,103 @@
             buttonRounded8.BorderRadius = 20;
             buttonRounded8.FlatAppearance.BorderSize = 0;
             buttonRounded8.FlatStyle = FlatStyle.Flat;
+            buttonRounded8.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             buttonRounded8.ForeColor = Color.White;
-            buttonRounded8.Location = new Point(22, 59);
+            buttonRounded8.Location = new Point(524, 26);
             buttonRounded8.Name = "buttonRounded8";
-            buttonRounded8.Size = new Size(150, 40);
-            buttonRounded8.TabIndex = 1;
-            buttonRounded8.Text = "View Students";
+            buttonRounded8.Size = new Size(74, 35);
+            buttonRounded8.TabIndex = 11;
+            buttonRounded8.Text = "Check";
             buttonRounded8.UseVisualStyleBackColor = false;
             // 
-            // roundedPanel31
+            // label129
             // 
-            roundedPanel31.BackColor = Color.White;
-            roundedPanel31.BorderRadius = 10;
-            roundedPanel31.Location = new Point(18, 53);
-            roundedPanel31.Name = "roundedPanel31";
-            roundedPanel31.Size = new Size(159, 55);
-            roundedPanel31.TabIndex = 1;
+            label129.AutoSize = true;
+            label129.Font = new Font("Arial", 15.75F, FontStyle.Bold);
+            label129.Location = new Point(229, 34);
+            label129.Name = "label129";
+            label129.Size = new Size(76, 24);
+            label129.TabIndex = 4;
+            label129.Text = "Score:";
             // 
-            // label121
+            // label130
             // 
-            label121.AutoSize = true;
-            label121.Font = new Font("Arial", 12F, FontStyle.Bold);
-            label121.ForeColor = Color.White;
-            label121.Location = new Point(47, 17);
-            label121.Name = "label121";
-            label121.Size = new Size(83, 19);
-            label121.TabIndex = 1;
-            label121.Text = "Quiz No.1";
-            // 
-            // roundedPanel32
-            // 
-            roundedPanel32.AutoScroll = true;
-            roundedPanel32.BackColor = Color.White;
-            roundedPanel32.BorderRadius = 10;
-            roundedPanel32.Controls.Add(richTextBox2);
-            roundedPanel32.Location = new Point(183, 8);
-            roundedPanel32.Name = "roundedPanel32";
-            roundedPanel32.Size = new Size(838, 100);
-            roundedPanel32.TabIndex = 1;
-            // 
-            // richTextBox2
-            // 
-            richTextBox2.BackColor = Color.White;
-            richTextBox2.BorderStyle = BorderStyle.None;
-            richTextBox2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            richTextBox2.Location = new Point(7, 4);
-            richTextBox2.Name = "richTextBox2";
-            richTextBox2.Size = new Size(828, 96);
-            richTextBox2.TabIndex = 5;
-            richTextBox2.Text = "Title: Description";
-            // 
-            // buttonRounded7
-            // 
-            buttonRounded7.BackColor = Color.FromArgb(128, 0, 0);
-            buttonRounded7.BorderRadius = 20;
-            buttonRounded7.FlatAppearance.BorderSize = 0;
-            buttonRounded7.FlatStyle = FlatStyle.Flat;
-            buttonRounded7.ForeColor = Color.White;
-            buttonRounded7.Location = new Point(1116, 605);
-            buttonRounded7.Name = "buttonRounded7";
-            buttonRounded7.Size = new Size(136, 49);
-            buttonRounded7.TabIndex = 2;
-            buttonRounded7.Text = "Back";
-            buttonRounded7.UseVisualStyleBackColor = false;
-            buttonRounded7.Click += buttonRounded7_Click;
-            // 
-            // roundedPanel25
-            // 
-            roundedPanel25.BackColor = Color.Maroon;
-            roundedPanel25.BorderRadius = 10;
-            roundedPanel25.Controls.Add(buttonRounded2);
-            roundedPanel25.Controls.Add(roundedPanel27);
-            roundedPanel25.Controls.Add(label120);
-            roundedPanel25.Controls.Add(roundedPanel30);
-            roundedPanel25.Location = new Point(76, 70);
-            roundedPanel25.Name = "roundedPanel25";
-            roundedPanel25.Size = new Size(1038, 118);
-            roundedPanel25.TabIndex = 0;
-            // 
-            // buttonRounded2
-            // 
-            buttonRounded2.BackColor = Color.FromArgb(128, 0, 0);
-            buttonRounded2.BorderRadius = 20;
-            buttonRounded2.FlatAppearance.BorderSize = 0;
-            buttonRounded2.FlatStyle = FlatStyle.Flat;
-            buttonRounded2.ForeColor = Color.White;
-            buttonRounded2.Location = new Point(22, 59);
-            buttonRounded2.Name = "buttonRounded2";
-            buttonRounded2.Size = new Size(150, 40);
-            buttonRounded2.TabIndex = 1;
-            buttonRounded2.Text = "View Students";
-            buttonRounded2.UseVisualStyleBackColor = false;
-            buttonRounded2.Click += buttonRounded2_Click;
-            // 
-            // roundedPanel27
-            // 
-            roundedPanel27.BackColor = Color.White;
-            roundedPanel27.BorderRadius = 10;
-            roundedPanel27.Location = new Point(18, 53);
-            roundedPanel27.Name = "roundedPanel27";
-            roundedPanel27.Size = new Size(159, 55);
-            roundedPanel27.TabIndex = 1;
-            // 
-            // label120
-            // 
-            label120.AutoSize = true;
-            label120.Font = new Font("Arial", 12F, FontStyle.Bold);
-            label120.ForeColor = Color.White;
-            label120.Location = new Point(24, 17);
-            label120.Name = "label120";
-            label120.Size = new Size(139, 19);
-            label120.TabIndex = 1;
-            label120.Text = "Assignment No.1";
-            // 
-            // roundedPanel30
-            // 
-            roundedPanel30.AutoScroll = true;
-            roundedPanel30.BackColor = Color.White;
-            roundedPanel30.BorderRadius = 10;
-            roundedPanel30.Controls.Add(richTextBox1);
-            roundedPanel30.Location = new Point(183, 8);
-            roundedPanel30.Name = "roundedPanel30";
-            roundedPanel30.Size = new Size(838, 100);
-            roundedPanel30.TabIndex = 1;
-            // 
-            // richTextBox1
-            // 
-            richTextBox1.BackColor = Color.White;
-            richTextBox1.BorderStyle = BorderStyle.None;
-            richTextBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            richTextBox1.Location = new Point(7, 3);
-            richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(828, 96);
-            richTextBox1.TabIndex = 4;
-            richTextBox1.Text = "Create an Essay about Introduction to Programming";
-            // 
-            // pnlGrade
-            // 
-            pnlGrade.Controls.Add(roundedPanel80);
-            pnlGrade.Controls.Add(panel55);
-            pnlGrade.Controls.Add(buttonRounded15);
-            pnlGrade.Dock = DockStyle.Fill;
-            pnlGrade.Location = new Point(0, 0);
-            pnlGrade.Name = "pnlGrade";
-            pnlGrade.Size = new Size(1272, 989);
-            pnlGrade.TabIndex = 11;
-            pnlGrade.Visible = false;
-            // 
-            // roundedPanel80
-            // 
-            roundedPanel80.BackColor = Color.Maroon;
-            roundedPanel80.BorderRadius = 10;
-            roundedPanel80.Controls.Add(roundedPanel81);
-            roundedPanel80.Location = new Point(72, 164);
-            roundedPanel80.Name = "roundedPanel80";
-            roundedPanel80.Size = new Size(1084, 427);
-            roundedPanel80.TabIndex = 3;
-            // 
-            // roundedPanel81
-            // 
-            roundedPanel81.BackColor = Color.White;
-            roundedPanel81.BorderRadius = 10;
-            roundedPanel81.Controls.Add(label131);
-            roundedPanel81.Location = new Point(8, 8);
-            roundedPanel81.Name = "roundedPanel81";
-            roundedPanel81.Size = new Size(1066, 408);
-            roundedPanel81.TabIndex = 4;
+            label130.AutoSize = true;
+            label130.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label130.Location = new Point(85, 39);
+            label130.Name = "label130";
+            label130.Size = new Size(138, 19);
+            label130.TabIndex = 3;
+            label130.Text = "2024-00192-SM-0";
             // 
             // label131
             // 
-            label131.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label131.ForeColor = Color.Black;
-            label131.Location = new Point(11, 6);
+            label131.AutoSize = true;
+            label131.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label131.Location = new Point(85, 5);
             label131.Name = "label131";
-            label131.Size = new Size(1052, 373);
-            label131.TabIndex = 5;
-            label131.Text = resources.GetString("label131.Text");
+            label131.Size = new Size(220, 19);
+            label131.TabIndex = 2;
+            label131.Text = "ABLONG, ADRIAN PLATINO";
             // 
-            // panel55
+            // pictureBox47
             // 
-            panel55.BackColor = Color.Maroon;
-            panel55.Controls.Add(roundedPanel79);
-            panel55.Controls.Add(roundedPanel78);
-            panel55.Controls.Add(label126);
-            panel55.Dock = DockStyle.Top;
-            panel55.Location = new Point(0, 0);
-            panel55.Name = "panel55";
-            panel55.Size = new Size(1272, 106);
-            panel55.TabIndex = 2;
+            pictureBox47.Image = Properties.Resources.profile;
+            pictureBox47.Location = new Point(7, 3);
+            pictureBox47.Name = "pictureBox47";
+            pictureBox47.Size = new Size(63, 57);
+            pictureBox47.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox47.TabIndex = 2;
+            pictureBox47.TabStop = false;
             // 
-            // roundedPanel79
+            // panel52
             // 
-            roundedPanel79.BackColor = Color.White;
-            roundedPanel79.BorderRadius = 10;
-            roundedPanel79.Controls.Add(buttonRounded16);
-            roundedPanel79.Controls.Add(rtxtScore);
-            roundedPanel79.Controls.Add(label127);
-            roundedPanel79.Location = new Point(13, 49);
-            roundedPanel79.Name = "roundedPanel79";
-            roundedPanel79.Size = new Size(307, 53);
-            roundedPanel79.TabIndex = 3;
+            panel52.BackColor = Color.FromArgb(128, 0, 0);
+            panel52.Controls.Add(lblTotalStudents);
+            panel52.Controls.Add(lblTitle);
+            panel52.Dock = DockStyle.Top;
+            panel52.Location = new Point(0, 0);
+            panel52.Name = "panel52";
+            panel52.Size = new Size(1272, 50);
+            panel52.TabIndex = 3;
             // 
-            // buttonRounded16
+            // lblTotalStudents
             // 
-            buttonRounded16.BackColor = Color.FromArgb(128, 0, 0);
-            buttonRounded16.BorderRadius = 20;
-            buttonRounded16.FlatAppearance.BorderSize = 0;
-            buttonRounded16.FlatStyle = FlatStyle.Flat;
-            buttonRounded16.ForeColor = Color.White;
-            buttonRounded16.Location = new Point(196, 7);
-            buttonRounded16.Name = "buttonRounded16";
-            buttonRounded16.Size = new Size(103, 40);
-            buttonRounded16.TabIndex = 3;
-            buttonRounded16.Text = "Save";
-            buttonRounded16.UseVisualStyleBackColor = false;
-            buttonRounded16.Click += buttonRounded16_Click;
+            lblTotalStudents.Anchor = AnchorStyles.Right;
+            lblTotalStudents.ForeColor = Color.White;
+            lblTotalStudents.Location = new Point(1922, -10);
+            lblTotalStudents.Name = "lblTotalStudents";
+            lblTotalStudents.Size = new Size(130, 20);
+            lblTotalStudents.TabIndex = 0;
+            lblTotalStudents.Text = "Total Students: 12";
+            lblTotalStudents.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // rtxtScore
+            // lblTitle
             // 
-            rtxtScore.BorderStyle = BorderStyle.None;
-            rtxtScore.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            rtxtScore.Location = new Point(85, 15);
-            rtxtScore.Name = "rtxtScore";
-            rtxtScore.Size = new Size(105, 25);
-            rtxtScore.TabIndex = 4;
-            rtxtScore.Text = "";
+            lblTitle.AutoSize = true;
+            lblTitle.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            lblTitle.ForeColor = Color.White;
+            lblTitle.Location = new Point(45, 12);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(217, 25);
+            lblTitle.TabIndex = 1;
+            lblTitle.Text = "Assignment No. 1: Title";
             // 
-            // label127
+            // buttonRounded3
             // 
-            label127.AutoSize = true;
-            label127.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label127.ForeColor = Color.Black;
-            label127.Location = new Point(15, 15);
-            label127.Name = "label127";
-            label127.Size = new Size(67, 25);
-            label127.TabIndex = 4;
-            label127.Text = "Score:";
-            // 
-            // roundedPanel78
-            // 
-            roundedPanel78.BackColor = Color.White;
-            roundedPanel78.BorderRadius = 10;
-            roundedPanel78.Controls.Add(richTextBox4);
-            roundedPanel78.Location = new Point(358, 8);
-            roundedPanel78.Name = "roundedPanel78";
-            roundedPanel78.Size = new Size(882, 91);
-            roundedPanel78.TabIndex = 3;
-            // 
-            // richTextBox4
-            // 
-            richTextBox4.BorderStyle = BorderStyle.None;
-            richTextBox4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            richTextBox4.Location = new Point(3, 4);
-            richTextBox4.Name = "richTextBox4";
-            richTextBox4.Size = new Size(876, 84);
-            richTextBox4.TabIndex = 3;
-            richTextBox4.Text = "Create an Essay about Introduction to Programming.";
-            // 
-            // label126
-            // 
-            label126.AutoSize = true;
-            label126.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label126.ForeColor = Color.White;
-            label126.Location = new Point(8, 5);
-            label126.Name = "label126";
-            label126.Size = new Size(317, 30);
-            label126.TabIndex = 3;
-            label126.Text = "Intoduction to Programming 1";
-            // 
-            // buttonRounded15
-            // 
-            buttonRounded15.BackColor = Color.FromArgb(128, 0, 0);
-            buttonRounded15.BorderRadius = 20;
-            buttonRounded15.FlatAppearance.BorderSize = 0;
-            buttonRounded15.FlatStyle = FlatStyle.Flat;
-            buttonRounded15.ForeColor = Color.White;
-            buttonRounded15.Location = new Point(1116, 605);
-            buttonRounded15.Name = "buttonRounded15";
-            buttonRounded15.Size = new Size(136, 49);
-            buttonRounded15.TabIndex = 1;
-            buttonRounded15.Text = "Back";
-            buttonRounded15.UseVisualStyleBackColor = false;
-            buttonRounded15.Click += buttonRounded15_Click;
+            buttonRounded3.BackColor = Color.FromArgb(128, 0, 0);
+            buttonRounded3.BorderRadius = 20;
+            buttonRounded3.FlatAppearance.BorderSize = 0;
+            buttonRounded3.FlatStyle = FlatStyle.Flat;
+            buttonRounded3.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonRounded3.ForeColor = Color.White;
+            buttonRounded3.Location = new Point(1148, 661);
+            buttonRounded3.Name = "buttonRounded3";
+            buttonRounded3.Size = new Size(100, 40);
+            buttonRounded3.TabIndex = 0;
+            buttonRounded3.Text = "Back";
+            buttonRounded3.UseVisualStyleBackColor = false;
+            buttonRounded3.Click += buttonRounded3_Click;
             // 
             // label60
             // 
@@ -3266,6 +2210,1027 @@
             label60.Size = new Size(51, 15);
             label60.TabIndex = 0;
             label60.Text = "LMS Act";
+            // 
+            // pnlSubMenu
+            // 
+            pnlSubMenu.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            pnlSubMenu.Controls.Add(pnlLMSActivities);
+            pnlSubMenu.Controls.Add(pnlCreateAct);
+            pnlSubMenu.Controls.Add(pnlGenChats);
+            pnlSubMenu.Controls.Add(pnlLMSFiles);
+            pnlSubMenu.Controls.Add(panel38);
+            pnlSubMenu.Location = new Point(256, 72);
+            pnlSubMenu.Margin = new Padding(3, 2, 3, 2);
+            pnlSubMenu.Name = "pnlSubMenu";
+            pnlSubMenu.Size = new Size(1271, 989);
+            pnlSubMenu.TabIndex = 19;
+            pnlSubMenu.Visible = false;
+            // 
+            // pnlLMSActivities
+            // 
+            pnlLMSActivities.AutoScroll = true;
+            pnlLMSActivities.Controls.Add(panel42);
+            pnlLMSActivities.Controls.Add(panel47);
+            pnlLMSActivities.Controls.Add(roundedPanel10);
+            pnlLMSActivities.Controls.Add(roundedPanel8);
+            pnlLMSActivities.Controls.Add(roundedPanel6);
+            pnlLMSActivities.Controls.Add(roundedPanel3);
+            pnlLMSActivities.Dock = DockStyle.Fill;
+            pnlLMSActivities.Location = new Point(0, 49);
+            pnlLMSActivities.Margin = new Padding(3, 2, 3, 2);
+            pnlLMSActivities.Name = "pnlLMSActivities";
+            pnlLMSActivities.Size = new Size(1271, 940);
+            pnlLMSActivities.TabIndex = 0;
+            // 
+            // panel42
+            // 
+            panel42.BackColor = Color.White;
+            panel42.Controls.Add(btnCreateAct);
+            panel42.Controls.Add(label108);
+            panel42.Dock = DockStyle.Top;
+            panel42.Location = new Point(0, 13);
+            panel42.Margin = new Padding(3, 2, 3, 2);
+            panel42.Name = "panel42";
+            panel42.Size = new Size(1271, 40);
+            panel42.TabIndex = 0;
+            // 
+            // btnCreateAct
+            // 
+            btnCreateAct.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnCreateAct.BackColor = Color.Maroon;
+            btnCreateAct.FlatStyle = FlatStyle.Flat;
+            btnCreateAct.Font = new Font("Arial", 16.2F, FontStyle.Regular, GraphicsUnit.Pixel);
+            btnCreateAct.ForeColor = Color.White;
+            btnCreateAct.Location = new Point(1102, 7);
+            btnCreateAct.Margin = new Padding(3, 2, 3, 2);
+            btnCreateAct.Name = "btnCreateAct";
+            btnCreateAct.Size = new Size(145, 27);
+            btnCreateAct.TabIndex = 4;
+            btnCreateAct.Text = "Create New Activity";
+            btnCreateAct.UseVisualStyleBackColor = false;
+            btnCreateAct.Click += btnCreateAct_Click;
+            // 
+            // label108
+            // 
+            label108.AutoSize = true;
+            label108.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label108.Location = new Point(9, 8);
+            label108.Name = "label108";
+            label108.Size = new Size(166, 25);
+            label108.TabIndex = 3;
+            label108.Text = "Manage Activities";
+            // 
+            // panel47
+            // 
+            panel47.Dock = DockStyle.Top;
+            panel47.Location = new Point(0, 0);
+            panel47.Margin = new Padding(3, 2, 3, 2);
+            panel47.Name = "panel47";
+            panel47.Size = new Size(1271, 13);
+            panel47.TabIndex = 8;
+            // 
+            // roundedPanel10
+            // 
+            roundedPanel10.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            roundedPanel10.BackColor = Color.Maroon;
+            roundedPanel10.BackgroundImageLayout = ImageLayout.Center;
+            roundedPanel10.BorderRadius = 10;
+            roundedPanel10.BorderStyle = BorderStyle.FixedSingle;
+            roundedPanel10.Controls.Add(roundedPanel9);
+            roundedPanel10.Location = new Point(27, 501);
+            roundedPanel10.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel10.Name = "roundedPanel10";
+            roundedPanel10.Size = new Size(1212, 131);
+            roundedPanel10.TabIndex = 3;
+            // 
+            // roundedPanel9
+            // 
+            roundedPanel9.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            roundedPanel9.BackColor = Color.White;
+            roundedPanel9.BackgroundImageLayout = ImageLayout.Center;
+            roundedPanel9.BorderRadius = 10;
+            roundedPanel9.BorderStyle = BorderStyle.FixedSingle;
+            roundedPanel9.Controls.Add(button26);
+            roundedPanel9.Controls.Add(buttonRounded6);
+            roundedPanel9.Location = new Point(21, 3);
+            roundedPanel9.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel9.Name = "roundedPanel9";
+            roundedPanel9.Size = new Size(1184, 124);
+            roundedPanel9.TabIndex = 2;
+            // 
+            // button26
+            // 
+            button26.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            button26.BackColor = Color.Transparent;
+            button26.FlatStyle = FlatStyle.Flat;
+            button26.Font = new Font("Arial", 16.2F, FontStyle.Regular, GraphicsUnit.Pixel);
+            button26.ForeColor = Color.White;
+            button26.Image = (Image)resources.GetObject("button26.Image");
+            button26.Location = new Point(1006, 44);
+            button26.Margin = new Padding(3, 2, 3, 2);
+            button26.Name = "button26";
+            button26.Size = new Size(38, 32);
+            button26.TabIndex = 11;
+            button26.UseVisualStyleBackColor = false;
+            // 
+            // buttonRounded6
+            // 
+            buttonRounded6.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            buttonRounded6.BackColor = Color.FromArgb(128, 0, 0);
+            buttonRounded6.BorderRadius = 10;
+            buttonRounded6.FlatAppearance.BorderSize = 0;
+            buttonRounded6.FlatStyle = FlatStyle.Flat;
+            buttonRounded6.Font = new Font("Arial", 16.2F, FontStyle.Regular, GraphicsUnit.Pixel);
+            buttonRounded6.ForeColor = Color.White;
+            buttonRounded6.Location = new Point(1053, 44);
+            buttonRounded6.Margin = new Padding(3, 2, 3, 2);
+            buttonRounded6.Name = "buttonRounded6";
+            buttonRounded6.Size = new Size(114, 32);
+            buttonRounded6.TabIndex = 12;
+            buttonRounded6.Text = "Post";
+            buttonRounded6.UseVisualStyleBackColor = false;
+            // 
+            // roundedPanel8
+            // 
+            roundedPanel8.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            roundedPanel8.BackColor = Color.Maroon;
+            roundedPanel8.BackgroundImageLayout = ImageLayout.Center;
+            roundedPanel8.BorderRadius = 10;
+            roundedPanel8.BorderStyle = BorderStyle.FixedSingle;
+            roundedPanel8.Controls.Add(roundedPanel7);
+            roundedPanel8.Location = new Point(27, 357);
+            roundedPanel8.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel8.Name = "roundedPanel8";
+            roundedPanel8.Size = new Size(1212, 131);
+            roundedPanel8.TabIndex = 3;
+            // 
+            // roundedPanel7
+            // 
+            roundedPanel7.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            roundedPanel7.BackColor = Color.White;
+            roundedPanel7.BackgroundImageLayout = ImageLayout.Center;
+            roundedPanel7.BorderRadius = 10;
+            roundedPanel7.BorderStyle = BorderStyle.FixedSingle;
+            roundedPanel7.Controls.Add(button25);
+            roundedPanel7.Controls.Add(buttonRounded5);
+            roundedPanel7.Location = new Point(21, 3);
+            roundedPanel7.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel7.Name = "roundedPanel7";
+            roundedPanel7.Size = new Size(1184, 124);
+            roundedPanel7.TabIndex = 2;
+            // 
+            // button25
+            // 
+            button25.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            button25.BackColor = Color.Transparent;
+            button25.FlatStyle = FlatStyle.Flat;
+            button25.Font = new Font("Arial", 16.2F, FontStyle.Regular, GraphicsUnit.Pixel);
+            button25.ForeColor = Color.White;
+            button25.Image = (Image)resources.GetObject("button25.Image");
+            button25.Location = new Point(1006, 44);
+            button25.Margin = new Padding(3, 2, 3, 2);
+            button25.Name = "button25";
+            button25.Size = new Size(38, 32);
+            button25.TabIndex = 9;
+            button25.UseVisualStyleBackColor = false;
+            // 
+            // buttonRounded5
+            // 
+            buttonRounded5.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            buttonRounded5.BackColor = Color.FromArgb(128, 0, 0);
+            buttonRounded5.BorderRadius = 10;
+            buttonRounded5.FlatAppearance.BorderSize = 0;
+            buttonRounded5.FlatStyle = FlatStyle.Flat;
+            buttonRounded5.Font = new Font("Arial", 16.2F, FontStyle.Regular, GraphicsUnit.Pixel);
+            buttonRounded5.ForeColor = Color.White;
+            buttonRounded5.Location = new Point(1053, 44);
+            buttonRounded5.Margin = new Padding(3, 2, 3, 2);
+            buttonRounded5.Name = "buttonRounded5";
+            buttonRounded5.Size = new Size(114, 32);
+            buttonRounded5.TabIndex = 10;
+            buttonRounded5.Text = "Post";
+            buttonRounded5.UseVisualStyleBackColor = false;
+            // 
+            // roundedPanel6
+            // 
+            roundedPanel6.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            roundedPanel6.BackColor = Color.Maroon;
+            roundedPanel6.BackgroundImageLayout = ImageLayout.Center;
+            roundedPanel6.BorderRadius = 10;
+            roundedPanel6.BorderStyle = BorderStyle.FixedSingle;
+            roundedPanel6.Controls.Add(roundedPanel5);
+            roundedPanel6.Location = new Point(27, 213);
+            roundedPanel6.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel6.Name = "roundedPanel6";
+            roundedPanel6.Size = new Size(1212, 131);
+            roundedPanel6.TabIndex = 7;
+            // 
+            // roundedPanel5
+            // 
+            roundedPanel5.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            roundedPanel5.BackColor = Color.White;
+            roundedPanel5.BackgroundImageLayout = ImageLayout.Center;
+            roundedPanel5.BorderRadius = 10;
+            roundedPanel5.BorderStyle = BorderStyle.FixedSingle;
+            roundedPanel5.Controls.Add(button24);
+            roundedPanel5.Controls.Add(buttonRounded4);
+            roundedPanel5.Location = new Point(21, 3);
+            roundedPanel5.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel5.Name = "roundedPanel5";
+            roundedPanel5.Size = new Size(1184, 124);
+            roundedPanel5.TabIndex = 2;
+            // 
+            // button24
+            // 
+            button24.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            button24.BackColor = Color.Transparent;
+            button24.FlatStyle = FlatStyle.Flat;
+            button24.Font = new Font("Arial", 16.2F, FontStyle.Regular, GraphicsUnit.Pixel);
+            button24.ForeColor = Color.White;
+            button24.Image = (Image)resources.GetObject("button24.Image");
+            button24.Location = new Point(1006, 44);
+            button24.Margin = new Padding(3, 2, 3, 2);
+            button24.Name = "button24";
+            button24.Size = new Size(38, 32);
+            button24.TabIndex = 7;
+            button24.UseVisualStyleBackColor = false;
+            // 
+            // buttonRounded4
+            // 
+            buttonRounded4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            buttonRounded4.BackColor = Color.FromArgb(128, 0, 0);
+            buttonRounded4.BorderRadius = 10;
+            buttonRounded4.FlatAppearance.BorderSize = 0;
+            buttonRounded4.FlatStyle = FlatStyle.Flat;
+            buttonRounded4.Font = new Font("Arial", 16.2F, FontStyle.Regular, GraphicsUnit.Pixel);
+            buttonRounded4.ForeColor = Color.White;
+            buttonRounded4.Location = new Point(1053, 44);
+            buttonRounded4.Margin = new Padding(3, 2, 3, 2);
+            buttonRounded4.Name = "buttonRounded4";
+            buttonRounded4.Size = new Size(114, 32);
+            buttonRounded4.TabIndex = 8;
+            buttonRounded4.Text = "Post";
+            buttonRounded4.UseVisualStyleBackColor = false;
+            // 
+            // roundedPanel3
+            // 
+            roundedPanel3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            roundedPanel3.BackColor = Color.Maroon;
+            roundedPanel3.BackgroundImageLayout = ImageLayout.Center;
+            roundedPanel3.BorderRadius = 10;
+            roundedPanel3.BorderStyle = BorderStyle.FixedSingle;
+            roundedPanel3.Controls.Add(roundedPanel4);
+            roundedPanel3.Location = new Point(27, 69);
+            roundedPanel3.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel3.Name = "roundedPanel3";
+            roundedPanel3.Size = new Size(1212, 131);
+            roundedPanel3.TabIndex = 1;
+            // 
+            // roundedPanel4
+            // 
+            roundedPanel4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            roundedPanel4.BackColor = Color.White;
+            roundedPanel4.BackgroundImageLayout = ImageLayout.Center;
+            roundedPanel4.BorderRadius = 10;
+            roundedPanel4.BorderStyle = BorderStyle.FixedSingle;
+            roundedPanel4.Controls.Add(btnPostDelete);
+            roundedPanel4.Controls.Add(btnPost);
+            roundedPanel4.Location = new Point(21, 3);
+            roundedPanel4.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel4.Name = "roundedPanel4";
+            roundedPanel4.Size = new Size(1184, 124);
+            roundedPanel4.TabIndex = 2;
+            // 
+            // btnPostDelete
+            // 
+            btnPostDelete.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnPostDelete.BackColor = Color.Transparent;
+            btnPostDelete.FlatStyle = FlatStyle.Flat;
+            btnPostDelete.Font = new Font("Arial", 16.2F, FontStyle.Regular, GraphicsUnit.Pixel);
+            btnPostDelete.ForeColor = Color.White;
+            btnPostDelete.Image = (Image)resources.GetObject("btnPostDelete.Image");
+            btnPostDelete.Location = new Point(1006, 43);
+            btnPostDelete.Margin = new Padding(3, 2, 3, 2);
+            btnPostDelete.Name = "btnPostDelete";
+            btnPostDelete.Size = new Size(38, 32);
+            btnPostDelete.TabIndex = 5;
+            btnPostDelete.UseVisualStyleBackColor = false;
+            // 
+            // btnPost
+            // 
+            btnPost.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnPost.BackColor = Color.FromArgb(128, 0, 0);
+            btnPost.BorderRadius = 10;
+            btnPost.FlatAppearance.BorderSize = 0;
+            btnPost.FlatStyle = FlatStyle.Flat;
+            btnPost.Font = new Font("Arial", 16.2F, FontStyle.Regular, GraphicsUnit.Pixel);
+            btnPost.ForeColor = Color.White;
+            btnPost.Location = new Point(1053, 43);
+            btnPost.Margin = new Padding(3, 2, 3, 2);
+            btnPost.Name = "btnPost";
+            btnPost.Size = new Size(114, 32);
+            btnPost.TabIndex = 6;
+            btnPost.Text = "Post";
+            btnPost.UseVisualStyleBackColor = false;
+            // 
+            // pnlCreateAct
+            // 
+            pnlCreateAct.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            pnlCreateAct.Controls.Add(panel43);
+            pnlCreateAct.Location = new Point(0, 49);
+            pnlCreateAct.Margin = new Padding(3, 2, 3, 2);
+            pnlCreateAct.Name = "pnlCreateAct";
+            pnlCreateAct.Size = new Size(1271, 940);
+            pnlCreateAct.TabIndex = 5;
+            // 
+            // panel43
+            // 
+            panel43.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panel43.Controls.Add(pnlAssign);
+            panel43.Controls.Add(pnlQuiz1);
+            panel43.Controls.Add(panel45);
+            panel43.Controls.Add(panel44);
+            panel43.Controls.Add(panel46);
+            panel43.Location = new Point(0, 0);
+            panel43.Margin = new Padding(3, 2, 3, 2);
+            panel43.Name = "panel43";
+            panel43.Size = new Size(1271, 676);
+            panel43.TabIndex = 1;
+            // 
+            // pnlAssign
+            // 
+            pnlAssign.AutoScroll = true;
+            pnlAssign.BackColor = Color.White;
+            pnlAssign.Controls.Add(pnlAttachAss);
+            pnlAssign.Controls.Add(btnCancelAssign);
+            pnlAssign.Controls.Add(btnAssignAttach);
+            pnlAssign.Controls.Add(btnSaveAss);
+            pnlAssign.Controls.Add(roundedPanel11);
+            pnlAssign.Controls.Add(label117);
+            pnlAssign.Dock = DockStyle.Top;
+            pnlAssign.Location = new Point(0, 187);
+            pnlAssign.Margin = new Padding(3, 2, 3, 2);
+            pnlAssign.Name = "pnlAssign";
+            pnlAssign.Size = new Size(1271, 450);
+            pnlAssign.TabIndex = 10;
+            pnlAssign.Visible = false;
+            // 
+            // pnlAttachAss
+            // 
+            pnlAttachAss.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            pnlAttachAss.BackColor = Color.Maroon;
+            pnlAttachAss.BorderRadius = 10;
+            pnlAttachAss.Controls.Add(btnDoneAttach);
+            pnlAttachAss.Controls.Add(btnAttachCancel);
+            pnlAttachAss.Controls.Add(roundedPanel29);
+            pnlAttachAss.Location = new Point(318, 33);
+            pnlAttachAss.Margin = new Padding(3, 2, 3, 2);
+            pnlAttachAss.MaximumSize = new Size(654, 355);
+            pnlAttachAss.MinimumSize = new Size(598, 355);
+            pnlAttachAss.Name = "pnlAttachAss";
+            pnlAttachAss.Size = new Size(598, 355);
+            pnlAttachAss.TabIndex = 18;
+            pnlAttachAss.Visible = false;
+            // 
+            // btnDoneAttach
+            // 
+            btnDoneAttach.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnDoneAttach.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnDoneAttach.ForeColor = Color.Maroon;
+            btnDoneAttach.Location = new Point(496, 316);
+            btnDoneAttach.Margin = new Padding(3, 2, 3, 2);
+            btnDoneAttach.Name = "btnDoneAttach";
+            btnDoneAttach.Size = new Size(83, 28);
+            btnDoneAttach.TabIndex = 23;
+            btnDoneAttach.Text = "Done";
+            btnDoneAttach.UseVisualStyleBackColor = true;
+            btnDoneAttach.Click += btnDoneAttach_Click;
+            // 
+            // btnAttachCancel
+            // 
+            btnAttachCancel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnAttachCancel.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnAttachCancel.ForeColor = Color.Maroon;
+            btnAttachCancel.Location = new Point(399, 316);
+            btnAttachCancel.Margin = new Padding(3, 2, 3, 2);
+            btnAttachCancel.Name = "btnAttachCancel";
+            btnAttachCancel.Size = new Size(83, 28);
+            btnAttachCancel.TabIndex = 22;
+            btnAttachCancel.Text = "Cancel";
+            btnAttachCancel.UseVisualStyleBackColor = true;
+            btnAttachCancel.Click += btnAttachCancel_Click_1;
+            // 
+            // roundedPanel29
+            // 
+            roundedPanel29.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            roundedPanel29.BackColor = Color.FromArgb(101, 0, 0);
+            roundedPanel29.BackgroundImageLayout = ImageLayout.None;
+            roundedPanel29.BorderRadius = 10;
+            roundedPanel29.Controls.Add(panel48);
+            roundedPanel29.Location = new Point(25, 22);
+            roundedPanel29.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel29.Name = "roundedPanel29";
+            roundedPanel29.Size = new Size(554, 286);
+            roundedPanel29.TabIndex = 19;
+            // 
+            // panel48
+            // 
+            panel48.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panel48.Controls.Add(label118);
+            panel48.Controls.Add(label115);
+            panel48.Controls.Add(pictureBox46);
+            panel48.Location = new Point(52, 92);
+            panel48.Margin = new Padding(3, 2, 3, 2);
+            panel48.Name = "panel48";
+            panel48.Size = new Size(449, 104);
+            panel48.TabIndex = 24;
+            // 
+            // label118
+            // 
+            label118.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label118.AutoSize = true;
+            label118.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label118.ForeColor = Color.White;
+            label118.Location = new Point(134, 53);
+            label118.Name = "label118";
+            label118.Size = new Size(206, 32);
+            label118.TabIndex = 23;
+            label118.Text = "or click to browse";
+            // 
+            // label115
+            // 
+            label115.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label115.AutoSize = true;
+            label115.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label115.ForeColor = Color.White;
+            label115.Location = new Point(136, 20);
+            label115.Name = "label115";
+            label115.Size = new Size(264, 32);
+            label115.TabIndex = 21;
+            label115.Text = "Drag or Drop files here";
+            // 
+            // pictureBox46
+            // 
+            pictureBox46.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            pictureBox46.Image = (Image)resources.GetObject("pictureBox46.Image");
+            pictureBox46.Location = new Point(3, 2);
+            pictureBox46.Margin = new Padding(3, 2, 3, 2);
+            pictureBox46.Name = "pictureBox46";
+            pictureBox46.Size = new Size(116, 96);
+            pictureBox46.TabIndex = 22;
+            pictureBox46.TabStop = false;
+            // 
+            // btnCancelAssign
+            // 
+            btnCancelAssign.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnCancelAssign.BackColor = Color.FromArgb(128, 0, 0);
+            btnCancelAssign.BorderRadius = 10;
+            btnCancelAssign.FlatAppearance.BorderSize = 0;
+            btnCancelAssign.FlatStyle = FlatStyle.Flat;
+            btnCancelAssign.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnCancelAssign.ForeColor = Color.White;
+            btnCancelAssign.Location = new Point(990, 360);
+            btnCancelAssign.Margin = new Padding(3, 2, 3, 2);
+            btnCancelAssign.Name = "btnCancelAssign";
+            btnCancelAssign.Size = new Size(126, 36);
+            btnCancelAssign.TabIndex = 17;
+            btnCancelAssign.Text = "Cancel";
+            btnCancelAssign.UseVisualStyleBackColor = false;
+            // 
+            // btnAssignAttach
+            // 
+            btnAssignAttach.BackColor = Color.FromArgb(128, 0, 0);
+            btnAssignAttach.BorderRadius = 10;
+            btnAssignAttach.FlatAppearance.BorderSize = 0;
+            btnAssignAttach.FlatStyle = FlatStyle.Flat;
+            btnAssignAttach.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnAssignAttach.ForeColor = Color.White;
+            btnAssignAttach.Location = new Point(16, 360);
+            btnAssignAttach.Margin = new Padding(3, 2, 3, 2);
+            btnAssignAttach.Name = "btnAssignAttach";
+            btnAssignAttach.Size = new Size(126, 36);
+            btnAssignAttach.TabIndex = 16;
+            btnAssignAttach.Text = "Attach File";
+            btnAssignAttach.UseVisualStyleBackColor = false;
+            btnAssignAttach.Click += btnAssignAttach_Click;
+            // 
+            // btnSaveAss
+            // 
+            btnSaveAss.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnSaveAss.BackColor = Color.FromArgb(128, 0, 0);
+            btnSaveAss.BorderRadius = 10;
+            btnSaveAss.FlatAppearance.BorderSize = 0;
+            btnSaveAss.FlatStyle = FlatStyle.Flat;
+            btnSaveAss.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnSaveAss.ForeColor = Color.White;
+            btnSaveAss.Location = new Point(1127, 360);
+            btnSaveAss.Margin = new Padding(3, 2, 3, 2);
+            btnSaveAss.Name = "btnSaveAss";
+            btnSaveAss.Size = new Size(126, 36);
+            btnSaveAss.TabIndex = 15;
+            btnSaveAss.Text = "Done";
+            btnSaveAss.UseVisualStyleBackColor = false;
+            // 
+            // roundedPanel11
+            // 
+            roundedPanel11.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            roundedPanel11.BackColor = Color.Maroon;
+            roundedPanel11.BorderRadius = 10;
+            roundedPanel11.Controls.Add(roundedPanel12);
+            roundedPanel11.Location = new Point(16, 52);
+            roundedPanel11.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel11.Name = "roundedPanel11";
+            roundedPanel11.Size = new Size(1237, 301);
+            roundedPanel11.TabIndex = 14;
+            // 
+            // roundedPanel12
+            // 
+            roundedPanel12.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            roundedPanel12.BackColor = Color.White;
+            roundedPanel12.BorderRadius = 10;
+            roundedPanel12.Controls.Add(textBox22);
+            roundedPanel12.Location = new Point(7, 8);
+            roundedPanel12.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel12.Name = "roundedPanel12";
+            roundedPanel12.Size = new Size(1224, 284);
+            roundedPanel12.TabIndex = 15;
+            // 
+            // textBox22
+            // 
+            textBox22.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBox22.BorderStyle = BorderStyle.None;
+            textBox22.Location = new Point(13, 7);
+            textBox22.Margin = new Padding(3, 2, 3, 2);
+            textBox22.Multiline = true;
+            textBox22.Name = "textBox22";
+            textBox22.Size = new Size(1199, 270);
+            textBox22.TabIndex = 0;
+            textBox22.Text = "Insert Instructions Here";
+            // 
+            // label117
+            // 
+            label117.AutoSize = true;
+            label117.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label117.Location = new Point(16, 15);
+            label117.Name = "label117";
+            label117.Size = new Size(113, 25);
+            label117.TabIndex = 13;
+            label117.Text = "Instructions";
+            // 
+            // pnlQuiz1
+            // 
+            pnlQuiz1.AllowDrop = true;
+            pnlQuiz1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            pnlQuiz1.BackColor = SystemColors.Control;
+            pnlQuiz1.Controls.Add(panel49);
+            pnlQuiz1.Controls.Add(flowLayoutPanel3);
+            pnlQuiz1.Location = new Point(0, 186);
+            pnlQuiz1.Margin = new Padding(3, 2, 3, 2);
+            pnlQuiz1.Name = "pnlQuiz1";
+            pnlQuiz1.Size = new Size(1271, 490);
+            pnlQuiz1.TabIndex = 7;
+            pnlQuiz1.Visible = false;
+            // 
+            // panel49
+            // 
+            panel49.BackColor = Color.White;
+            panel49.Controls.Add(label119);
+            panel49.Dock = DockStyle.Top;
+            panel49.Location = new Point(0, 0);
+            panel49.Margin = new Padding(3, 2, 3, 2);
+            panel49.Name = "panel49";
+            panel49.Size = new Size(1271, 37);
+            panel49.TabIndex = 13;
+            // 
+            // label119
+            // 
+            label119.AutoSize = true;
+            label119.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label119.Location = new Point(38, 7);
+            label119.Name = "label119";
+            label119.Size = new Size(282, 25);
+            label119.TabIndex = 12;
+            label119.Text = "Quiz Creation - Multiple Choice";
+            // 
+            // flowLayoutPanel3
+            // 
+            flowLayoutPanel3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            flowLayoutPanel3.AutoScroll = true;
+            flowLayoutPanel3.BackColor = SystemColors.Control;
+            flowLayoutPanel3.Controls.Add(pnlControlBar);
+            flowLayoutPanel3.FlowDirection = FlowDirection.TopDown;
+            flowLayoutPanel3.Location = new Point(45, 40);
+            flowLayoutPanel3.Margin = new Padding(3, 2, 3, 2);
+            flowLayoutPanel3.Name = "flowLayoutPanel3";
+            flowLayoutPanel3.Size = new Size(1211, 398);
+            flowLayoutPanel3.TabIndex = 10;
+            flowLayoutPanel3.WrapContents = false;
+            flowLayoutPanel3.Resize += flowLayoutPanel3_Resize;
+            // 
+            // pnlControlBar
+            // 
+            pnlControlBar.Anchor = AnchorStyles.None;
+            pnlControlBar.Controls.Add(tableLayoutPanel24);
+            pnlControlBar.Location = new Point(3, 2);
+            pnlControlBar.Margin = new Padding(3, 2, 3, 2);
+            pnlControlBar.Name = "pnlControlBar";
+            pnlControlBar.Size = new Size(1202, 39);
+            pnlControlBar.TabIndex = 0;
+            // 
+            // tableLayoutPanel24
+            // 
+            tableLayoutPanel24.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel24.ColumnCount = 5;
+            tableLayoutPanel24.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 18F));
+            tableLayoutPanel24.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 44.4460373F));
+            tableLayoutPanel24.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 44.4460373F));
+            tableLayoutPanel24.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 11.1079245F));
+            tableLayoutPanel24.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 19F));
+            tableLayoutPanel24.Controls.Add(btnRemove, 2, 0);
+            tableLayoutPanel24.Controls.Add(btnAddPanel, 1, 0);
+            tableLayoutPanel24.Controls.Add(btnSaveQuiz, 3, 0);
+            tableLayoutPanel24.Location = new Point(4, 2);
+            tableLayoutPanel24.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel24.Name = "tableLayoutPanel24";
+            tableLayoutPanel24.RowCount = 1;
+            tableLayoutPanel24.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel24.Size = new Size(1196, 34);
+            tableLayoutPanel24.TabIndex = 1;
+            // 
+            // btnRemove
+            // 
+            btnRemove.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnRemove.BackColor = Color.FromArgb(128, 0, 0);
+            btnRemove.BorderRadius = 10;
+            btnRemove.FlatAppearance.BorderSize = 0;
+            btnRemove.FlatStyle = FlatStyle.Flat;
+            btnRemove.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
+            btnRemove.ForeColor = Color.White;
+            btnRemove.Location = new Point(942, 2);
+            btnRemove.Margin = new Padding(3, 2, 3, 2);
+            btnRemove.Name = "btnRemove";
+            btnRemove.Size = new Size(103, 24);
+            btnRemove.TabIndex = 13;
+            btnRemove.Text = "Remove";
+            btnRemove.UseVisualStyleBackColor = false;
+            btnRemove.Click += btnRemove_Click;
+            // 
+            // btnAddPanel
+            // 
+            btnAddPanel.BackColor = Color.FromArgb(128, 0, 0);
+            btnAddPanel.BorderRadius = 10;
+            btnAddPanel.FlatAppearance.BorderSize = 0;
+            btnAddPanel.FlatStyle = FlatStyle.Flat;
+            btnAddPanel.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
+            btnAddPanel.ForeColor = Color.White;
+            btnAddPanel.Location = new Point(21, 2);
+            btnAddPanel.Margin = new Padding(3, 2, 3, 2);
+            btnAddPanel.Name = "btnAddPanel";
+            btnAddPanel.Size = new Size(103, 24);
+            btnAddPanel.TabIndex = 11;
+            btnAddPanel.Text = "Add Question";
+            btnAddPanel.UseVisualStyleBackColor = false;
+            btnAddPanel.Click += btnAddPanel_Click;
+            // 
+            // btnSaveQuiz
+            // 
+            btnSaveQuiz.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnSaveQuiz.BackColor = Color.FromArgb(128, 0, 0);
+            btnSaveQuiz.BorderRadius = 10;
+            btnSaveQuiz.FlatAppearance.BorderSize = 0;
+            btnSaveQuiz.FlatStyle = FlatStyle.Flat;
+            btnSaveQuiz.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
+            btnSaveQuiz.ForeColor = Color.White;
+            btnSaveQuiz.Location = new Point(1071, 2);
+            btnSaveQuiz.Margin = new Padding(3, 2, 3, 2);
+            btnSaveQuiz.Name = "btnSaveQuiz";
+            btnSaveQuiz.Size = new Size(102, 24);
+            btnSaveQuiz.TabIndex = 12;
+            btnSaveQuiz.Text = "Save";
+            btnSaveQuiz.UseVisualStyleBackColor = false;
+            btnSaveQuiz.Click += btnSaveQuiz_Click;
+            // 
+            // panel45
+            // 
+            panel45.BackColor = Color.White;
+            panel45.Controls.Add(roundedPanel23);
+            panel45.Controls.Add(roundedPanel22);
+            panel45.Controls.Add(roundedPanel21);
+            panel45.Controls.Add(panel51);
+            panel45.Controls.Add(panel50);
+            panel45.Controls.Add(label116);
+            panel45.Controls.Add(label111);
+            panel45.Controls.Add(label110);
+            panel45.Dock = DockStyle.Top;
+            panel45.Location = new Point(0, 47);
+            panel45.Margin = new Padding(3, 2, 3, 2);
+            panel45.Name = "panel45";
+            panel45.Size = new Size(1271, 140);
+            panel45.TabIndex = 5;
+            // 
+            // roundedPanel23
+            // 
+            roundedPanel23.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            roundedPanel23.BackColor = Color.Maroon;
+            roundedPanel23.BorderRadius = 10;
+            roundedPanel23.Controls.Add(cmbBXActType);
+            roundedPanel23.Location = new Point(954, 17);
+            roundedPanel23.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel23.Name = "roundedPanel23";
+            roundedPanel23.Size = new Size(247, 41);
+            roundedPanel23.TabIndex = 14;
+            // 
+            // cmbBXActType
+            // 
+            cmbBXActType.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            cmbBXActType.Font = new Font("Segoe UI", 13F);
+            cmbBXActType.FormattingEnabled = true;
+            cmbBXActType.Items.AddRange(new object[] { "Quiz", "Assignment" });
+            cmbBXActType.Location = new Point(8, 7);
+            cmbBXActType.Margin = new Padding(3, 2, 3, 2);
+            cmbBXActType.Name = "cmbBXActType";
+            cmbBXActType.Size = new Size(232, 31);
+            cmbBXActType.TabIndex = 7;
+            cmbBXActType.SelectedIndexChanged += cmbBXActType_SelectedIndexChanged;
+            // 
+            // roundedPanel22
+            // 
+            roundedPanel22.BackColor = Color.Maroon;
+            roundedPanel22.BorderRadius = 10;
+            roundedPanel22.Controls.Add(dateTimePicker1);
+            roundedPanel22.Location = new Point(192, 78);
+            roundedPanel22.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel22.Name = "roundedPanel22";
+            roundedPanel22.Size = new Size(412, 41);
+            roundedPanel22.TabIndex = 14;
+            // 
+            // dateTimePicker1
+            // 
+            dateTimePicker1.Font = new Font("Segoe UI", 13F);
+            dateTimePicker1.Format = DateTimePickerFormat.Custom;
+            dateTimePicker1.Location = new Point(10, 8);
+            dateTimePicker1.Margin = new Padding(3, 2, 3, 2);
+            dateTimePicker1.Name = "dateTimePicker1";
+            dateTimePicker1.Size = new Size(394, 31);
+            dateTimePicker1.TabIndex = 10;
+            // 
+            // roundedPanel21
+            // 
+            roundedPanel21.BackColor = Color.Maroon;
+            roundedPanel21.BorderRadius = 10;
+            roundedPanel21.Controls.Add(txtActTitle);
+            roundedPanel21.Location = new Point(192, 17);
+            roundedPanel21.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel21.Name = "roundedPanel21";
+            roundedPanel21.Size = new Size(412, 41);
+            roundedPanel21.TabIndex = 13;
+            // 
+            // txtActTitle
+            // 
+            txtActTitle.BorderStyle = BorderStyle.None;
+            txtActTitle.Font = new Font("Segoe UI", 13F);
+            txtActTitle.Location = new Point(10, 7);
+            txtActTitle.Margin = new Padding(3, 2, 3, 2);
+            txtActTitle.Multiline = true;
+            txtActTitle.Name = "txtActTitle";
+            txtActTitle.Size = new Size(394, 28);
+            txtActTitle.TabIndex = 5;
+            // 
+            // panel51
+            // 
+            panel51.BackColor = SystemColors.Control;
+            panel51.Dock = DockStyle.Top;
+            panel51.Location = new Point(0, 0);
+            panel51.Margin = new Padding(3, 2, 3, 2);
+            panel51.Name = "panel51";
+            panel51.Size = new Size(1271, 13);
+            panel51.TabIndex = 12;
+            // 
+            // panel50
+            // 
+            panel50.BackColor = SystemColors.Control;
+            panel50.Dock = DockStyle.Bottom;
+            panel50.Location = new Point(0, 124);
+            panel50.Margin = new Padding(3, 2, 3, 2);
+            panel50.Name = "panel50";
+            panel50.Size = new Size(1271, 16);
+            panel50.TabIndex = 11;
+            // 
+            // label116
+            // 
+            label116.AutoSize = true;
+            label116.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label116.Location = new Point(41, 88);
+            label116.Name = "label116";
+            label116.Size = new Size(137, 25);
+            label116.TabIndex = 8;
+            label116.Text = "Available Until";
+            // 
+            // label111
+            // 
+            label111.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label111.AutoSize = true;
+            label111.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label111.Location = new Point(808, 22);
+            label111.Name = "label111";
+            label111.Size = new Size(123, 25);
+            label111.TabIndex = 6;
+            label111.Text = "Activity Type";
+            // 
+            // label110
+            // 
+            label110.AutoSize = true;
+            label110.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label110.Location = new Point(41, 26);
+            label110.Name = "label110";
+            label110.Size = new Size(120, 25);
+            label110.TabIndex = 4;
+            label110.Text = "Activity Title";
+            // 
+            // panel44
+            // 
+            panel44.AutoScroll = true;
+            panel44.BackColor = Color.White;
+            panel44.Controls.Add(label109);
+            panel44.Dock = DockStyle.Top;
+            panel44.Location = new Point(0, 13);
+            panel44.Margin = new Padding(3, 2, 3, 2);
+            panel44.Name = "panel44";
+            panel44.Size = new Size(1271, 34);
+            panel44.TabIndex = 0;
+            // 
+            // label109
+            // 
+            label109.AutoSize = true;
+            label109.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label109.Location = new Point(16, 2);
+            label109.Name = "label109";
+            label109.Size = new Size(183, 25);
+            label109.TabIndex = 3;
+            label109.Text = "Create New Activity";
+            // 
+            // panel46
+            // 
+            panel46.Dock = DockStyle.Top;
+            panel46.Location = new Point(0, 0);
+            panel46.Margin = new Padding(3, 2, 3, 2);
+            panel46.Name = "panel46";
+            panel46.Size = new Size(1271, 13);
+            panel46.TabIndex = 6;
+            // 
+            // pnlGenChats
+            // 
+            pnlGenChats.Controls.Add(panel40);
+            pnlGenChats.Dock = DockStyle.Fill;
+            pnlGenChats.Location = new Point(0, 49);
+            pnlGenChats.Margin = new Padding(3, 2, 3, 2);
+            pnlGenChats.Name = "pnlGenChats";
+            pnlGenChats.Size = new Size(1271, 940);
+            pnlGenChats.TabIndex = 1;
+            // 
+            // panel40
+            // 
+            panel40.BackColor = Color.White;
+            panel40.Controls.Add(panel41);
+            panel40.Location = new Point(77, 0);
+            panel40.Margin = new Padding(3, 2, 3, 2);
+            panel40.Name = "panel40";
+            panel40.Size = new Size(1112, 738);
+            panel40.TabIndex = 0;
+            // 
+            // panel41
+            // 
+            panel41.Controls.Add(label107);
+            panel41.Dock = DockStyle.Top;
+            panel41.Location = new Point(0, 0);
+            panel41.Margin = new Padding(3, 2, 3, 2);
+            panel41.Name = "panel41";
+            panel41.Size = new Size(1112, 50);
+            panel41.TabIndex = 1;
+            // 
+            // label107
+            // 
+            label107.AutoSize = true;
+            label107.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label107.Location = new Point(10, 14);
+            label107.Name = "label107";
+            label107.Size = new Size(131, 25);
+            label107.TabIndex = 3;
+            label107.Text = "General Chats";
+            // 
+            // pnlLMSFiles
+            // 
+            pnlLMSFiles.Dock = DockStyle.Fill;
+            pnlLMSFiles.Location = new Point(0, 49);
+            pnlLMSFiles.Margin = new Padding(3, 2, 3, 2);
+            pnlLMSFiles.Name = "pnlLMSFiles";
+            pnlLMSFiles.Size = new Size(1271, 940);
+            pnlLMSFiles.TabIndex = 0;
+            // 
+            // panel38
+            // 
+            panel38.BackColor = Color.White;
+            panel38.Controls.Add(panel39);
+            panel38.Controls.Add(lblSub1Menu);
+            panel38.Controls.Add(btnBack);
+            panel38.Dock = DockStyle.Top;
+            panel38.Location = new Point(0, 0);
+            panel38.Margin = new Padding(3, 2, 3, 2);
+            panel38.Name = "panel38";
+            panel38.Size = new Size(1271, 49);
+            panel38.TabIndex = 0;
+            // 
+            // panel39
+            // 
+            panel39.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            panel39.Controls.Add(btnLMSFiles);
+            panel39.Controls.Add(btnLMSActSub);
+            panel39.Controls.Add(btnGeneralAnnounce);
+            panel39.Location = new Point(713, 3);
+            panel39.Margin = new Padding(3, 2, 3, 2);
+            panel39.Name = "panel39";
+            panel39.Size = new Size(550, 40);
+            panel39.TabIndex = 1;
+            // 
+            // btnLMSFiles
+            // 
+            btnLMSFiles.BackColor = Color.Maroon;
+            btnLMSFiles.FlatStyle = FlatStyle.Flat;
+            btnLMSFiles.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
+            btnLMSFiles.ForeColor = Color.White;
+            btnLMSFiles.Image = (Image)resources.GetObject("btnLMSFiles.Image");
+            btnLMSFiles.Location = new Point(388, 2);
+            btnLMSFiles.Margin = new Padding(3, 2, 3, 2);
+            btnLMSFiles.Name = "btnLMSFiles";
+            btnLMSFiles.Size = new Size(145, 34);
+            btnLMSFiles.TabIndex = 5;
+            btnLMSFiles.Text = "  Class Files";
+            btnLMSFiles.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnLMSFiles.UseVisualStyleBackColor = false;
+            btnLMSFiles.Click += btnLMSFiles_Click;
+            // 
+            // btnLMSActSub
+            // 
+            btnLMSActSub.BackColor = Color.Maroon;
+            btnLMSActSub.FlatStyle = FlatStyle.Flat;
+            btnLMSActSub.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
+            btnLMSActSub.ForeColor = Color.White;
+            btnLMSActSub.Image = (Image)resources.GetObject("btnLMSActSub.Image");
+            btnLMSActSub.Location = new Point(207, 2);
+            btnLMSActSub.Margin = new Padding(3, 2, 3, 2);
+            btnLMSActSub.Name = "btnLMSActSub";
+            btnLMSActSub.Padding = new Padding(0, 0, 0, 1);
+            btnLMSActSub.Size = new Size(145, 34);
+            btnLMSActSub.TabIndex = 4;
+            btnLMSActSub.Text = "  Activities";
+            btnLMSActSub.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnLMSActSub.UseVisualStyleBackColor = false;
+            btnLMSActSub.Click += btnLMSActSub_Click;
+            // 
+            // btnGeneralAnnounce
+            // 
+            btnGeneralAnnounce.BackColor = Color.White;
+            btnGeneralAnnounce.FlatStyle = FlatStyle.Flat;
+            btnGeneralAnnounce.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
+            btnGeneralAnnounce.ForeColor = Color.White;
+            btnGeneralAnnounce.Image = (Image)resources.GetObject("btnGeneralAnnounce.Image");
+            btnGeneralAnnounce.Location = new Point(15, 5);
+            btnGeneralAnnounce.Margin = new Padding(3, 2, 3, 2);
+            btnGeneralAnnounce.Name = "btnGeneralAnnounce";
+            btnGeneralAnnounce.Padding = new Padding(9, 0, 0, 0);
+            btnGeneralAnnounce.Size = new Size(157, 28);
+            btnGeneralAnnounce.TabIndex = 3;
+            btnGeneralAnnounce.Text = "  General Chats";
+            btnGeneralAnnounce.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnGeneralAnnounce.UseVisualStyleBackColor = false;
+            btnGeneralAnnounce.Click += btnGeneralAnnounce_Click;
+            // 
+            // lblSub1Menu
+            // 
+            lblSub1Menu.AutoSize = true;
+            lblSub1Menu.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblSub1Menu.Location = new Point(100, 12);
+            lblSub1Menu.Name = "lblSub1Menu";
+            lblSub1Menu.Size = new Size(283, 25);
+            lblSub1Menu.TabIndex = 2;
+            lblSub1Menu.Text = "Introduction to Programming 1 ";
+            // 
+            // btnBack
+            // 
+            btnBack.BackColor = Color.Maroon;
+            btnBack.FlatStyle = FlatStyle.Flat;
+            btnBack.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
+            btnBack.ForeColor = Color.White;
+            btnBack.Image = (Image)resources.GetObject("btnBack.Image");
+            btnBack.Location = new Point(11, 8);
+            btnBack.Margin = new Padding(3, 2, 3, 2);
+            btnBack.Name = "btnBack";
+            btnBack.Size = new Size(81, 29);
+            btnBack.TabIndex = 0;
+            btnBack.Text = "Back";
+            btnBack.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnBack.UseVisualStyleBackColor = false;
+            btnBack.Click += btnBack_Click;
             // 
             // pnlAttendance
             // 
@@ -5053,1027 +5018,6 @@
             label8.Size = new Size(321, 32);
             label8.TabIndex = 0;
             label8.Text = "Welcome back, <Professor>";
-            // 
-            // pnlSubMenu
-            // 
-            pnlSubMenu.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            pnlSubMenu.Controls.Add(pnlLMSActivities);
-            pnlSubMenu.Controls.Add(pnlCreateAct);
-            pnlSubMenu.Controls.Add(pnlGenChats);
-            pnlSubMenu.Controls.Add(pnlLMSFiles);
-            pnlSubMenu.Controls.Add(panel38);
-            pnlSubMenu.Location = new Point(256, 72);
-            pnlSubMenu.Margin = new Padding(3, 2, 3, 2);
-            pnlSubMenu.Name = "pnlSubMenu";
-            pnlSubMenu.Size = new Size(1271, 989);
-            pnlSubMenu.TabIndex = 19;
-            pnlSubMenu.Visible = false;
-            // 
-            // pnlLMSActivities
-            // 
-            pnlLMSActivities.AutoScroll = true;
-            pnlLMSActivities.Controls.Add(panel42);
-            pnlLMSActivities.Controls.Add(panel47);
-            pnlLMSActivities.Controls.Add(roundedPanel10);
-            pnlLMSActivities.Controls.Add(roundedPanel8);
-            pnlLMSActivities.Controls.Add(roundedPanel6);
-            pnlLMSActivities.Controls.Add(roundedPanel3);
-            pnlLMSActivities.Dock = DockStyle.Fill;
-            pnlLMSActivities.Location = new Point(0, 49);
-            pnlLMSActivities.Margin = new Padding(3, 2, 3, 2);
-            pnlLMSActivities.Name = "pnlLMSActivities";
-            pnlLMSActivities.Size = new Size(1271, 940);
-            pnlLMSActivities.TabIndex = 0;
-            // 
-            // panel42
-            // 
-            panel42.BackColor = Color.White;
-            panel42.Controls.Add(btnCreateAct);
-            panel42.Controls.Add(label108);
-            panel42.Dock = DockStyle.Top;
-            panel42.Location = new Point(0, 13);
-            panel42.Margin = new Padding(3, 2, 3, 2);
-            panel42.Name = "panel42";
-            panel42.Size = new Size(1271, 40);
-            panel42.TabIndex = 0;
-            // 
-            // btnCreateAct
-            // 
-            btnCreateAct.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnCreateAct.BackColor = Color.Maroon;
-            btnCreateAct.FlatStyle = FlatStyle.Flat;
-            btnCreateAct.Font = new Font("Arial", 16.2F, FontStyle.Regular, GraphicsUnit.Pixel);
-            btnCreateAct.ForeColor = Color.White;
-            btnCreateAct.Location = new Point(1102, 7);
-            btnCreateAct.Margin = new Padding(3, 2, 3, 2);
-            btnCreateAct.Name = "btnCreateAct";
-            btnCreateAct.Size = new Size(145, 27);
-            btnCreateAct.TabIndex = 4;
-            btnCreateAct.Text = "Create New Activity";
-            btnCreateAct.UseVisualStyleBackColor = false;
-            btnCreateAct.Click += btnCreateAct_Click;
-            // 
-            // label108
-            // 
-            label108.AutoSize = true;
-            label108.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label108.Location = new Point(9, 8);
-            label108.Name = "label108";
-            label108.Size = new Size(166, 25);
-            label108.TabIndex = 3;
-            label108.Text = "Manage Activities";
-            // 
-            // panel47
-            // 
-            panel47.Dock = DockStyle.Top;
-            panel47.Location = new Point(0, 0);
-            panel47.Margin = new Padding(3, 2, 3, 2);
-            panel47.Name = "panel47";
-            panel47.Size = new Size(1271, 13);
-            panel47.TabIndex = 8;
-            // 
-            // roundedPanel10
-            // 
-            roundedPanel10.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            roundedPanel10.BackColor = Color.Maroon;
-            roundedPanel10.BackgroundImageLayout = ImageLayout.Center;
-            roundedPanel10.BorderRadius = 10;
-            roundedPanel10.BorderStyle = BorderStyle.FixedSingle;
-            roundedPanel10.Controls.Add(roundedPanel9);
-            roundedPanel10.Location = new Point(27, 501);
-            roundedPanel10.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel10.Name = "roundedPanel10";
-            roundedPanel10.Size = new Size(1212, 131);
-            roundedPanel10.TabIndex = 3;
-            // 
-            // roundedPanel9
-            // 
-            roundedPanel9.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            roundedPanel9.BackColor = Color.White;
-            roundedPanel9.BackgroundImageLayout = ImageLayout.Center;
-            roundedPanel9.BorderRadius = 10;
-            roundedPanel9.BorderStyle = BorderStyle.FixedSingle;
-            roundedPanel9.Controls.Add(button26);
-            roundedPanel9.Controls.Add(buttonRounded6);
-            roundedPanel9.Location = new Point(21, 3);
-            roundedPanel9.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel9.Name = "roundedPanel9";
-            roundedPanel9.Size = new Size(1184, 124);
-            roundedPanel9.TabIndex = 2;
-            // 
-            // button26
-            // 
-            button26.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            button26.BackColor = Color.Transparent;
-            button26.FlatStyle = FlatStyle.Flat;
-            button26.Font = new Font("Arial", 16.2F, FontStyle.Regular, GraphicsUnit.Pixel);
-            button26.ForeColor = Color.White;
-            button26.Image = (Image)resources.GetObject("button26.Image");
-            button26.Location = new Point(1006, 44);
-            button26.Margin = new Padding(3, 2, 3, 2);
-            button26.Name = "button26";
-            button26.Size = new Size(38, 32);
-            button26.TabIndex = 11;
-            button26.UseVisualStyleBackColor = false;
-            // 
-            // buttonRounded6
-            // 
-            buttonRounded6.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            buttonRounded6.BackColor = Color.FromArgb(128, 0, 0);
-            buttonRounded6.BorderRadius = 10;
-            buttonRounded6.FlatAppearance.BorderSize = 0;
-            buttonRounded6.FlatStyle = FlatStyle.Flat;
-            buttonRounded6.Font = new Font("Arial", 16.2F, FontStyle.Regular, GraphicsUnit.Pixel);
-            buttonRounded6.ForeColor = Color.White;
-            buttonRounded6.Location = new Point(1053, 44);
-            buttonRounded6.Margin = new Padding(3, 2, 3, 2);
-            buttonRounded6.Name = "buttonRounded6";
-            buttonRounded6.Size = new Size(114, 32);
-            buttonRounded6.TabIndex = 12;
-            buttonRounded6.Text = "Post";
-            buttonRounded6.UseVisualStyleBackColor = false;
-            // 
-            // roundedPanel8
-            // 
-            roundedPanel8.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            roundedPanel8.BackColor = Color.Maroon;
-            roundedPanel8.BackgroundImageLayout = ImageLayout.Center;
-            roundedPanel8.BorderRadius = 10;
-            roundedPanel8.BorderStyle = BorderStyle.FixedSingle;
-            roundedPanel8.Controls.Add(roundedPanel7);
-            roundedPanel8.Location = new Point(27, 357);
-            roundedPanel8.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel8.Name = "roundedPanel8";
-            roundedPanel8.Size = new Size(1212, 131);
-            roundedPanel8.TabIndex = 3;
-            // 
-            // roundedPanel7
-            // 
-            roundedPanel7.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            roundedPanel7.BackColor = Color.White;
-            roundedPanel7.BackgroundImageLayout = ImageLayout.Center;
-            roundedPanel7.BorderRadius = 10;
-            roundedPanel7.BorderStyle = BorderStyle.FixedSingle;
-            roundedPanel7.Controls.Add(button25);
-            roundedPanel7.Controls.Add(buttonRounded5);
-            roundedPanel7.Location = new Point(21, 3);
-            roundedPanel7.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel7.Name = "roundedPanel7";
-            roundedPanel7.Size = new Size(1184, 124);
-            roundedPanel7.TabIndex = 2;
-            // 
-            // button25
-            // 
-            button25.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            button25.BackColor = Color.Transparent;
-            button25.FlatStyle = FlatStyle.Flat;
-            button25.Font = new Font("Arial", 16.2F, FontStyle.Regular, GraphicsUnit.Pixel);
-            button25.ForeColor = Color.White;
-            button25.Image = (Image)resources.GetObject("button25.Image");
-            button25.Location = new Point(1006, 44);
-            button25.Margin = new Padding(3, 2, 3, 2);
-            button25.Name = "button25";
-            button25.Size = new Size(38, 32);
-            button25.TabIndex = 9;
-            button25.UseVisualStyleBackColor = false;
-            // 
-            // buttonRounded5
-            // 
-            buttonRounded5.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            buttonRounded5.BackColor = Color.FromArgb(128, 0, 0);
-            buttonRounded5.BorderRadius = 10;
-            buttonRounded5.FlatAppearance.BorderSize = 0;
-            buttonRounded5.FlatStyle = FlatStyle.Flat;
-            buttonRounded5.Font = new Font("Arial", 16.2F, FontStyle.Regular, GraphicsUnit.Pixel);
-            buttonRounded5.ForeColor = Color.White;
-            buttonRounded5.Location = new Point(1053, 44);
-            buttonRounded5.Margin = new Padding(3, 2, 3, 2);
-            buttonRounded5.Name = "buttonRounded5";
-            buttonRounded5.Size = new Size(114, 32);
-            buttonRounded5.TabIndex = 10;
-            buttonRounded5.Text = "Post";
-            buttonRounded5.UseVisualStyleBackColor = false;
-            // 
-            // roundedPanel6
-            // 
-            roundedPanel6.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            roundedPanel6.BackColor = Color.Maroon;
-            roundedPanel6.BackgroundImageLayout = ImageLayout.Center;
-            roundedPanel6.BorderRadius = 10;
-            roundedPanel6.BorderStyle = BorderStyle.FixedSingle;
-            roundedPanel6.Controls.Add(roundedPanel5);
-            roundedPanel6.Location = new Point(27, 213);
-            roundedPanel6.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel6.Name = "roundedPanel6";
-            roundedPanel6.Size = new Size(1212, 131);
-            roundedPanel6.TabIndex = 7;
-            // 
-            // roundedPanel5
-            // 
-            roundedPanel5.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            roundedPanel5.BackColor = Color.White;
-            roundedPanel5.BackgroundImageLayout = ImageLayout.Center;
-            roundedPanel5.BorderRadius = 10;
-            roundedPanel5.BorderStyle = BorderStyle.FixedSingle;
-            roundedPanel5.Controls.Add(button24);
-            roundedPanel5.Controls.Add(buttonRounded4);
-            roundedPanel5.Location = new Point(21, 3);
-            roundedPanel5.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel5.Name = "roundedPanel5";
-            roundedPanel5.Size = new Size(1184, 124);
-            roundedPanel5.TabIndex = 2;
-            // 
-            // button24
-            // 
-            button24.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            button24.BackColor = Color.Transparent;
-            button24.FlatStyle = FlatStyle.Flat;
-            button24.Font = new Font("Arial", 16.2F, FontStyle.Regular, GraphicsUnit.Pixel);
-            button24.ForeColor = Color.White;
-            button24.Image = (Image)resources.GetObject("button24.Image");
-            button24.Location = new Point(1006, 44);
-            button24.Margin = new Padding(3, 2, 3, 2);
-            button24.Name = "button24";
-            button24.Size = new Size(38, 32);
-            button24.TabIndex = 7;
-            button24.UseVisualStyleBackColor = false;
-            // 
-            // buttonRounded4
-            // 
-            buttonRounded4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            buttonRounded4.BackColor = Color.FromArgb(128, 0, 0);
-            buttonRounded4.BorderRadius = 10;
-            buttonRounded4.FlatAppearance.BorderSize = 0;
-            buttonRounded4.FlatStyle = FlatStyle.Flat;
-            buttonRounded4.Font = new Font("Arial", 16.2F, FontStyle.Regular, GraphicsUnit.Pixel);
-            buttonRounded4.ForeColor = Color.White;
-            buttonRounded4.Location = new Point(1053, 44);
-            buttonRounded4.Margin = new Padding(3, 2, 3, 2);
-            buttonRounded4.Name = "buttonRounded4";
-            buttonRounded4.Size = new Size(114, 32);
-            buttonRounded4.TabIndex = 8;
-            buttonRounded4.Text = "Post";
-            buttonRounded4.UseVisualStyleBackColor = false;
-            // 
-            // roundedPanel3
-            // 
-            roundedPanel3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            roundedPanel3.BackColor = Color.Maroon;
-            roundedPanel3.BackgroundImageLayout = ImageLayout.Center;
-            roundedPanel3.BorderRadius = 10;
-            roundedPanel3.BorderStyle = BorderStyle.FixedSingle;
-            roundedPanel3.Controls.Add(roundedPanel4);
-            roundedPanel3.Location = new Point(27, 69);
-            roundedPanel3.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel3.Name = "roundedPanel3";
-            roundedPanel3.Size = new Size(1212, 131);
-            roundedPanel3.TabIndex = 1;
-            // 
-            // roundedPanel4
-            // 
-            roundedPanel4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            roundedPanel4.BackColor = Color.White;
-            roundedPanel4.BackgroundImageLayout = ImageLayout.Center;
-            roundedPanel4.BorderRadius = 10;
-            roundedPanel4.BorderStyle = BorderStyle.FixedSingle;
-            roundedPanel4.Controls.Add(btnPostDelete);
-            roundedPanel4.Controls.Add(btnPost);
-            roundedPanel4.Location = new Point(21, 3);
-            roundedPanel4.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel4.Name = "roundedPanel4";
-            roundedPanel4.Size = new Size(1184, 124);
-            roundedPanel4.TabIndex = 2;
-            // 
-            // btnPostDelete
-            // 
-            btnPostDelete.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnPostDelete.BackColor = Color.Transparent;
-            btnPostDelete.FlatStyle = FlatStyle.Flat;
-            btnPostDelete.Font = new Font("Arial", 16.2F, FontStyle.Regular, GraphicsUnit.Pixel);
-            btnPostDelete.ForeColor = Color.White;
-            btnPostDelete.Image = (Image)resources.GetObject("btnPostDelete.Image");
-            btnPostDelete.Location = new Point(1006, 43);
-            btnPostDelete.Margin = new Padding(3, 2, 3, 2);
-            btnPostDelete.Name = "btnPostDelete";
-            btnPostDelete.Size = new Size(38, 32);
-            btnPostDelete.TabIndex = 5;
-            btnPostDelete.UseVisualStyleBackColor = false;
-            // 
-            // btnPost
-            // 
-            btnPost.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnPost.BackColor = Color.FromArgb(128, 0, 0);
-            btnPost.BorderRadius = 10;
-            btnPost.FlatAppearance.BorderSize = 0;
-            btnPost.FlatStyle = FlatStyle.Flat;
-            btnPost.Font = new Font("Arial", 16.2F, FontStyle.Regular, GraphicsUnit.Pixel);
-            btnPost.ForeColor = Color.White;
-            btnPost.Location = new Point(1053, 43);
-            btnPost.Margin = new Padding(3, 2, 3, 2);
-            btnPost.Name = "btnPost";
-            btnPost.Size = new Size(114, 32);
-            btnPost.TabIndex = 6;
-            btnPost.Text = "Post";
-            btnPost.UseVisualStyleBackColor = false;
-            // 
-            // pnlCreateAct
-            // 
-            pnlCreateAct.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            pnlCreateAct.Controls.Add(panel43);
-            pnlCreateAct.Location = new Point(0, 49);
-            pnlCreateAct.Margin = new Padding(3, 2, 3, 2);
-            pnlCreateAct.Name = "pnlCreateAct";
-            pnlCreateAct.Size = new Size(1271, 940);
-            pnlCreateAct.TabIndex = 5;
-            // 
-            // panel43
-            // 
-            panel43.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            panel43.Controls.Add(pnlAssign);
-            panel43.Controls.Add(pnlQuiz1);
-            panel43.Controls.Add(panel45);
-            panel43.Controls.Add(panel44);
-            panel43.Controls.Add(panel46);
-            panel43.Location = new Point(0, 0);
-            panel43.Margin = new Padding(3, 2, 3, 2);
-            panel43.Name = "panel43";
-            panel43.Size = new Size(1271, 676);
-            panel43.TabIndex = 1;
-            // 
-            // pnlAssign
-            // 
-            pnlAssign.AutoScroll = true;
-            pnlAssign.BackColor = Color.White;
-            pnlAssign.Controls.Add(pnlAttachAss);
-            pnlAssign.Controls.Add(btnCancelAssign);
-            pnlAssign.Controls.Add(btnAssignAttach);
-            pnlAssign.Controls.Add(btnSaveAss);
-            pnlAssign.Controls.Add(roundedPanel11);
-            pnlAssign.Controls.Add(label117);
-            pnlAssign.Dock = DockStyle.Top;
-            pnlAssign.Location = new Point(0, 187);
-            pnlAssign.Margin = new Padding(3, 2, 3, 2);
-            pnlAssign.Name = "pnlAssign";
-            pnlAssign.Size = new Size(1271, 450);
-            pnlAssign.TabIndex = 10;
-            pnlAssign.Visible = false;
-            // 
-            // pnlAttachAss
-            // 
-            pnlAttachAss.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            pnlAttachAss.BackColor = Color.Maroon;
-            pnlAttachAss.BorderRadius = 10;
-            pnlAttachAss.Controls.Add(btnDoneAttach);
-            pnlAttachAss.Controls.Add(btnAttachCancel);
-            pnlAttachAss.Controls.Add(roundedPanel29);
-            pnlAttachAss.Location = new Point(318, 33);
-            pnlAttachAss.Margin = new Padding(3, 2, 3, 2);
-            pnlAttachAss.MaximumSize = new Size(654, 355);
-            pnlAttachAss.MinimumSize = new Size(598, 355);
-            pnlAttachAss.Name = "pnlAttachAss";
-            pnlAttachAss.Size = new Size(598, 355);
-            pnlAttachAss.TabIndex = 18;
-            pnlAttachAss.Visible = false;
-            // 
-            // btnDoneAttach
-            // 
-            btnDoneAttach.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnDoneAttach.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnDoneAttach.ForeColor = Color.Maroon;
-            btnDoneAttach.Location = new Point(496, 316);
-            btnDoneAttach.Margin = new Padding(3, 2, 3, 2);
-            btnDoneAttach.Name = "btnDoneAttach";
-            btnDoneAttach.Size = new Size(83, 28);
-            btnDoneAttach.TabIndex = 23;
-            btnDoneAttach.Text = "Done";
-            btnDoneAttach.UseVisualStyleBackColor = true;
-            btnDoneAttach.Click += btnDoneAttach_Click;
-            // 
-            // btnAttachCancel
-            // 
-            btnAttachCancel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnAttachCancel.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnAttachCancel.ForeColor = Color.Maroon;
-            btnAttachCancel.Location = new Point(399, 316);
-            btnAttachCancel.Margin = new Padding(3, 2, 3, 2);
-            btnAttachCancel.Name = "btnAttachCancel";
-            btnAttachCancel.Size = new Size(83, 28);
-            btnAttachCancel.TabIndex = 22;
-            btnAttachCancel.Text = "Cancel";
-            btnAttachCancel.UseVisualStyleBackColor = true;
-            btnAttachCancel.Click += btnAttachCancel_Click_1;
-            // 
-            // roundedPanel29
-            // 
-            roundedPanel29.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            roundedPanel29.BackColor = Color.FromArgb(101, 0, 0);
-            roundedPanel29.BackgroundImageLayout = ImageLayout.None;
-            roundedPanel29.BorderRadius = 10;
-            roundedPanel29.Controls.Add(panel48);
-            roundedPanel29.Location = new Point(25, 22);
-            roundedPanel29.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel29.Name = "roundedPanel29";
-            roundedPanel29.Size = new Size(554, 286);
-            roundedPanel29.TabIndex = 19;
-            // 
-            // panel48
-            // 
-            panel48.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            panel48.Controls.Add(label118);
-            panel48.Controls.Add(label115);
-            panel48.Controls.Add(pictureBox46);
-            panel48.Location = new Point(52, 92);
-            panel48.Margin = new Padding(3, 2, 3, 2);
-            panel48.Name = "panel48";
-            panel48.Size = new Size(449, 104);
-            panel48.TabIndex = 24;
-            // 
-            // label118
-            // 
-            label118.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            label118.AutoSize = true;
-            label118.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label118.ForeColor = Color.White;
-            label118.Location = new Point(134, 53);
-            label118.Name = "label118";
-            label118.Size = new Size(206, 32);
-            label118.TabIndex = 23;
-            label118.Text = "or click to browse";
-            // 
-            // label115
-            // 
-            label115.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            label115.AutoSize = true;
-            label115.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label115.ForeColor = Color.White;
-            label115.Location = new Point(136, 20);
-            label115.Name = "label115";
-            label115.Size = new Size(264, 32);
-            label115.TabIndex = 21;
-            label115.Text = "Drag or Drop files here";
-            // 
-            // pictureBox46
-            // 
-            pictureBox46.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            pictureBox46.Image = (Image)resources.GetObject("pictureBox46.Image");
-            pictureBox46.Location = new Point(3, 2);
-            pictureBox46.Margin = new Padding(3, 2, 3, 2);
-            pictureBox46.Name = "pictureBox46";
-            pictureBox46.Size = new Size(116, 96);
-            pictureBox46.TabIndex = 22;
-            pictureBox46.TabStop = false;
-            // 
-            // btnCancelAssign
-            // 
-            btnCancelAssign.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnCancelAssign.BackColor = Color.FromArgb(128, 0, 0);
-            btnCancelAssign.BorderRadius = 10;
-            btnCancelAssign.FlatAppearance.BorderSize = 0;
-            btnCancelAssign.FlatStyle = FlatStyle.Flat;
-            btnCancelAssign.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnCancelAssign.ForeColor = Color.White;
-            btnCancelAssign.Location = new Point(990, 360);
-            btnCancelAssign.Margin = new Padding(3, 2, 3, 2);
-            btnCancelAssign.Name = "btnCancelAssign";
-            btnCancelAssign.Size = new Size(126, 36);
-            btnCancelAssign.TabIndex = 17;
-            btnCancelAssign.Text = "Cancel";
-            btnCancelAssign.UseVisualStyleBackColor = false;
-            // 
-            // btnAssignAttach
-            // 
-            btnAssignAttach.BackColor = Color.FromArgb(128, 0, 0);
-            btnAssignAttach.BorderRadius = 10;
-            btnAssignAttach.FlatAppearance.BorderSize = 0;
-            btnAssignAttach.FlatStyle = FlatStyle.Flat;
-            btnAssignAttach.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnAssignAttach.ForeColor = Color.White;
-            btnAssignAttach.Location = new Point(16, 360);
-            btnAssignAttach.Margin = new Padding(3, 2, 3, 2);
-            btnAssignAttach.Name = "btnAssignAttach";
-            btnAssignAttach.Size = new Size(126, 36);
-            btnAssignAttach.TabIndex = 16;
-            btnAssignAttach.Text = "Attach File";
-            btnAssignAttach.UseVisualStyleBackColor = false;
-            btnAssignAttach.Click += btnAssignAttach_Click;
-            // 
-            // btnSaveAss
-            // 
-            btnSaveAss.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnSaveAss.BackColor = Color.FromArgb(128, 0, 0);
-            btnSaveAss.BorderRadius = 10;
-            btnSaveAss.FlatAppearance.BorderSize = 0;
-            btnSaveAss.FlatStyle = FlatStyle.Flat;
-            btnSaveAss.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnSaveAss.ForeColor = Color.White;
-            btnSaveAss.Location = new Point(1127, 360);
-            btnSaveAss.Margin = new Padding(3, 2, 3, 2);
-            btnSaveAss.Name = "btnSaveAss";
-            btnSaveAss.Size = new Size(126, 36);
-            btnSaveAss.TabIndex = 15;
-            btnSaveAss.Text = "Done";
-            btnSaveAss.UseVisualStyleBackColor = false;
-            // 
-            // roundedPanel11
-            // 
-            roundedPanel11.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            roundedPanel11.BackColor = Color.Maroon;
-            roundedPanel11.BorderRadius = 10;
-            roundedPanel11.Controls.Add(roundedPanel12);
-            roundedPanel11.Location = new Point(16, 52);
-            roundedPanel11.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel11.Name = "roundedPanel11";
-            roundedPanel11.Size = new Size(1237, 301);
-            roundedPanel11.TabIndex = 14;
-            // 
-            // roundedPanel12
-            // 
-            roundedPanel12.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            roundedPanel12.BackColor = Color.White;
-            roundedPanel12.BorderRadius = 10;
-            roundedPanel12.Controls.Add(textBox22);
-            roundedPanel12.Location = new Point(7, 8);
-            roundedPanel12.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel12.Name = "roundedPanel12";
-            roundedPanel12.Size = new Size(1224, 284);
-            roundedPanel12.TabIndex = 15;
-            // 
-            // textBox22
-            // 
-            textBox22.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            textBox22.BorderStyle = BorderStyle.None;
-            textBox22.Location = new Point(13, 7);
-            textBox22.Margin = new Padding(3, 2, 3, 2);
-            textBox22.Multiline = true;
-            textBox22.Name = "textBox22";
-            textBox22.Size = new Size(1199, 270);
-            textBox22.TabIndex = 0;
-            textBox22.Text = "Insert Instructions Here";
-            // 
-            // label117
-            // 
-            label117.AutoSize = true;
-            label117.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label117.Location = new Point(16, 15);
-            label117.Name = "label117";
-            label117.Size = new Size(113, 25);
-            label117.TabIndex = 13;
-            label117.Text = "Instructions";
-            // 
-            // pnlQuiz1
-            // 
-            pnlQuiz1.AllowDrop = true;
-            pnlQuiz1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            pnlQuiz1.BackColor = SystemColors.Control;
-            pnlQuiz1.Controls.Add(panel49);
-            pnlQuiz1.Controls.Add(flowLayoutPanel3);
-            pnlQuiz1.Location = new Point(0, 186);
-            pnlQuiz1.Margin = new Padding(3, 2, 3, 2);
-            pnlQuiz1.Name = "pnlQuiz1";
-            pnlQuiz1.Size = new Size(1271, 490);
-            pnlQuiz1.TabIndex = 7;
-            pnlQuiz1.Visible = false;
-            // 
-            // panel49
-            // 
-            panel49.BackColor = Color.White;
-            panel49.Controls.Add(label119);
-            panel49.Dock = DockStyle.Top;
-            panel49.Location = new Point(0, 0);
-            panel49.Margin = new Padding(3, 2, 3, 2);
-            panel49.Name = "panel49";
-            panel49.Size = new Size(1271, 37);
-            panel49.TabIndex = 13;
-            // 
-            // label119
-            // 
-            label119.AutoSize = true;
-            label119.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label119.Location = new Point(38, 7);
-            label119.Name = "label119";
-            label119.Size = new Size(282, 25);
-            label119.TabIndex = 12;
-            label119.Text = "Quiz Creation - Multiple Choice";
-            // 
-            // flowLayoutPanel3
-            // 
-            flowLayoutPanel3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            flowLayoutPanel3.AutoScroll = true;
-            flowLayoutPanel3.BackColor = SystemColors.Control;
-            flowLayoutPanel3.Controls.Add(pnlControlBar);
-            flowLayoutPanel3.FlowDirection = FlowDirection.TopDown;
-            flowLayoutPanel3.Location = new Point(45, 40);
-            flowLayoutPanel3.Margin = new Padding(3, 2, 3, 2);
-            flowLayoutPanel3.Name = "flowLayoutPanel3";
-            flowLayoutPanel3.Size = new Size(1211, 398);
-            flowLayoutPanel3.TabIndex = 10;
-            flowLayoutPanel3.WrapContents = false;
-            flowLayoutPanel3.Resize += flowLayoutPanel3_Resize;
-            // 
-            // pnlControlBar
-            // 
-            pnlControlBar.Anchor = AnchorStyles.None;
-            pnlControlBar.Controls.Add(tableLayoutPanel24);
-            pnlControlBar.Location = new Point(3, 2);
-            pnlControlBar.Margin = new Padding(3, 2, 3, 2);
-            pnlControlBar.Name = "pnlControlBar";
-            pnlControlBar.Size = new Size(1202, 39);
-            pnlControlBar.TabIndex = 0;
-            // 
-            // tableLayoutPanel24
-            // 
-            tableLayoutPanel24.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            tableLayoutPanel24.ColumnCount = 5;
-            tableLayoutPanel24.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 18F));
-            tableLayoutPanel24.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 44.4460373F));
-            tableLayoutPanel24.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 44.4460373F));
-            tableLayoutPanel24.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 11.1079245F));
-            tableLayoutPanel24.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 19F));
-            tableLayoutPanel24.Controls.Add(btnRemove, 2, 0);
-            tableLayoutPanel24.Controls.Add(btnAddPanel, 1, 0);
-            tableLayoutPanel24.Controls.Add(btnSaveQuiz, 3, 0);
-            tableLayoutPanel24.Location = new Point(4, 2);
-            tableLayoutPanel24.Margin = new Padding(3, 2, 3, 2);
-            tableLayoutPanel24.Name = "tableLayoutPanel24";
-            tableLayoutPanel24.RowCount = 1;
-            tableLayoutPanel24.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel24.Size = new Size(1196, 34);
-            tableLayoutPanel24.TabIndex = 1;
-            // 
-            // btnRemove
-            // 
-            btnRemove.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnRemove.BackColor = Color.FromArgb(128, 0, 0);
-            btnRemove.BorderRadius = 10;
-            btnRemove.FlatAppearance.BorderSize = 0;
-            btnRemove.FlatStyle = FlatStyle.Flat;
-            btnRemove.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
-            btnRemove.ForeColor = Color.White;
-            btnRemove.Location = new Point(942, 2);
-            btnRemove.Margin = new Padding(3, 2, 3, 2);
-            btnRemove.Name = "btnRemove";
-            btnRemove.Size = new Size(103, 24);
-            btnRemove.TabIndex = 13;
-            btnRemove.Text = "Remove";
-            btnRemove.UseVisualStyleBackColor = false;
-            btnRemove.Click += btnRemove_Click;
-            // 
-            // btnAddPanel
-            // 
-            btnAddPanel.BackColor = Color.FromArgb(128, 0, 0);
-            btnAddPanel.BorderRadius = 10;
-            btnAddPanel.FlatAppearance.BorderSize = 0;
-            btnAddPanel.FlatStyle = FlatStyle.Flat;
-            btnAddPanel.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
-            btnAddPanel.ForeColor = Color.White;
-            btnAddPanel.Location = new Point(21, 2);
-            btnAddPanel.Margin = new Padding(3, 2, 3, 2);
-            btnAddPanel.Name = "btnAddPanel";
-            btnAddPanel.Size = new Size(103, 24);
-            btnAddPanel.TabIndex = 11;
-            btnAddPanel.Text = "Add Question";
-            btnAddPanel.UseVisualStyleBackColor = false;
-            btnAddPanel.Click += btnAddPanel_Click;
-            // 
-            // btnSaveQuiz
-            // 
-            btnSaveQuiz.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnSaveQuiz.BackColor = Color.FromArgb(128, 0, 0);
-            btnSaveQuiz.BorderRadius = 10;
-            btnSaveQuiz.FlatAppearance.BorderSize = 0;
-            btnSaveQuiz.FlatStyle = FlatStyle.Flat;
-            btnSaveQuiz.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
-            btnSaveQuiz.ForeColor = Color.White;
-            btnSaveQuiz.Location = new Point(1071, 2);
-            btnSaveQuiz.Margin = new Padding(3, 2, 3, 2);
-            btnSaveQuiz.Name = "btnSaveQuiz";
-            btnSaveQuiz.Size = new Size(102, 24);
-            btnSaveQuiz.TabIndex = 12;
-            btnSaveQuiz.Text = "Save";
-            btnSaveQuiz.UseVisualStyleBackColor = false;
-            btnSaveQuiz.Click += btnSaveQuiz_Click;
-            // 
-            // panel45
-            // 
-            panel45.BackColor = Color.White;
-            panel45.Controls.Add(roundedPanel23);
-            panel45.Controls.Add(roundedPanel22);
-            panel45.Controls.Add(roundedPanel21);
-            panel45.Controls.Add(panel51);
-            panel45.Controls.Add(panel50);
-            panel45.Controls.Add(label116);
-            panel45.Controls.Add(label111);
-            panel45.Controls.Add(label110);
-            panel45.Dock = DockStyle.Top;
-            panel45.Location = new Point(0, 47);
-            panel45.Margin = new Padding(3, 2, 3, 2);
-            panel45.Name = "panel45";
-            panel45.Size = new Size(1271, 140);
-            panel45.TabIndex = 5;
-            // 
-            // roundedPanel23
-            // 
-            roundedPanel23.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            roundedPanel23.BackColor = Color.Maroon;
-            roundedPanel23.BorderRadius = 10;
-            roundedPanel23.Controls.Add(cmbBXActType);
-            roundedPanel23.Location = new Point(954, 17);
-            roundedPanel23.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel23.Name = "roundedPanel23";
-            roundedPanel23.Size = new Size(247, 41);
-            roundedPanel23.TabIndex = 14;
-            // 
-            // cmbBXActType
-            // 
-            cmbBXActType.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            cmbBXActType.Font = new Font("Segoe UI", 13F);
-            cmbBXActType.FormattingEnabled = true;
-            cmbBXActType.Items.AddRange(new object[] { "Quiz", "Assignment" });
-            cmbBXActType.Location = new Point(8, 7);
-            cmbBXActType.Margin = new Padding(3, 2, 3, 2);
-            cmbBXActType.Name = "cmbBXActType";
-            cmbBXActType.Size = new Size(232, 31);
-            cmbBXActType.TabIndex = 7;
-            cmbBXActType.SelectedIndexChanged += cmbBXActType_SelectedIndexChanged;
-            // 
-            // roundedPanel22
-            // 
-            roundedPanel22.BackColor = Color.Maroon;
-            roundedPanel22.BorderRadius = 10;
-            roundedPanel22.Controls.Add(dateTimePicker1);
-            roundedPanel22.Location = new Point(192, 78);
-            roundedPanel22.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel22.Name = "roundedPanel22";
-            roundedPanel22.Size = new Size(412, 41);
-            roundedPanel22.TabIndex = 14;
-            // 
-            // dateTimePicker1
-            // 
-            dateTimePicker1.Font = new Font("Segoe UI", 13F);
-            dateTimePicker1.Format = DateTimePickerFormat.Custom;
-            dateTimePicker1.Location = new Point(10, 8);
-            dateTimePicker1.Margin = new Padding(3, 2, 3, 2);
-            dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(394, 31);
-            dateTimePicker1.TabIndex = 10;
-            // 
-            // roundedPanel21
-            // 
-            roundedPanel21.BackColor = Color.Maroon;
-            roundedPanel21.BorderRadius = 10;
-            roundedPanel21.Controls.Add(txtActTitle);
-            roundedPanel21.Location = new Point(192, 17);
-            roundedPanel21.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel21.Name = "roundedPanel21";
-            roundedPanel21.Size = new Size(412, 41);
-            roundedPanel21.TabIndex = 13;
-            // 
-            // txtActTitle
-            // 
-            txtActTitle.BorderStyle = BorderStyle.None;
-            txtActTitle.Font = new Font("Segoe UI", 13F);
-            txtActTitle.Location = new Point(10, 7);
-            txtActTitle.Margin = new Padding(3, 2, 3, 2);
-            txtActTitle.Multiline = true;
-            txtActTitle.Name = "txtActTitle";
-            txtActTitle.Size = new Size(394, 28);
-            txtActTitle.TabIndex = 5;
-            // 
-            // panel51
-            // 
-            panel51.BackColor = SystemColors.Control;
-            panel51.Dock = DockStyle.Top;
-            panel51.Location = new Point(0, 0);
-            panel51.Margin = new Padding(3, 2, 3, 2);
-            panel51.Name = "panel51";
-            panel51.Size = new Size(1271, 13);
-            panel51.TabIndex = 12;
-            // 
-            // panel50
-            // 
-            panel50.BackColor = SystemColors.Control;
-            panel50.Dock = DockStyle.Bottom;
-            panel50.Location = new Point(0, 124);
-            panel50.Margin = new Padding(3, 2, 3, 2);
-            panel50.Name = "panel50";
-            panel50.Size = new Size(1271, 16);
-            panel50.TabIndex = 11;
-            // 
-            // label116
-            // 
-            label116.AutoSize = true;
-            label116.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label116.Location = new Point(41, 88);
-            label116.Name = "label116";
-            label116.Size = new Size(137, 25);
-            label116.TabIndex = 8;
-            label116.Text = "Available Until";
-            // 
-            // label111
-            // 
-            label111.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            label111.AutoSize = true;
-            label111.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label111.Location = new Point(808, 22);
-            label111.Name = "label111";
-            label111.Size = new Size(123, 25);
-            label111.TabIndex = 6;
-            label111.Text = "Activity Type";
-            // 
-            // label110
-            // 
-            label110.AutoSize = true;
-            label110.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label110.Location = new Point(41, 26);
-            label110.Name = "label110";
-            label110.Size = new Size(120, 25);
-            label110.TabIndex = 4;
-            label110.Text = "Activity Title";
-            // 
-            // panel44
-            // 
-            panel44.AutoScroll = true;
-            panel44.BackColor = Color.White;
-            panel44.Controls.Add(label109);
-            panel44.Dock = DockStyle.Top;
-            panel44.Location = new Point(0, 13);
-            panel44.Margin = new Padding(3, 2, 3, 2);
-            panel44.Name = "panel44";
-            panel44.Size = new Size(1271, 34);
-            panel44.TabIndex = 0;
-            // 
-            // label109
-            // 
-            label109.AutoSize = true;
-            label109.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label109.Location = new Point(16, 2);
-            label109.Name = "label109";
-            label109.Size = new Size(183, 25);
-            label109.TabIndex = 3;
-            label109.Text = "Create New Activity";
-            // 
-            // panel46
-            // 
-            panel46.Dock = DockStyle.Top;
-            panel46.Location = new Point(0, 0);
-            panel46.Margin = new Padding(3, 2, 3, 2);
-            panel46.Name = "panel46";
-            panel46.Size = new Size(1271, 13);
-            panel46.TabIndex = 6;
-            // 
-            // pnlGenChats
-            // 
-            pnlGenChats.Controls.Add(panel40);
-            pnlGenChats.Dock = DockStyle.Fill;
-            pnlGenChats.Location = new Point(0, 49);
-            pnlGenChats.Margin = new Padding(3, 2, 3, 2);
-            pnlGenChats.Name = "pnlGenChats";
-            pnlGenChats.Size = new Size(1271, 940);
-            pnlGenChats.TabIndex = 1;
-            // 
-            // panel40
-            // 
-            panel40.BackColor = Color.White;
-            panel40.Controls.Add(panel41);
-            panel40.Location = new Point(77, 0);
-            panel40.Margin = new Padding(3, 2, 3, 2);
-            panel40.Name = "panel40";
-            panel40.Size = new Size(1112, 738);
-            panel40.TabIndex = 0;
-            // 
-            // panel41
-            // 
-            panel41.Controls.Add(label107);
-            panel41.Dock = DockStyle.Top;
-            panel41.Location = new Point(0, 0);
-            panel41.Margin = new Padding(3, 2, 3, 2);
-            panel41.Name = "panel41";
-            panel41.Size = new Size(1112, 50);
-            panel41.TabIndex = 1;
-            // 
-            // label107
-            // 
-            label107.AutoSize = true;
-            label107.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label107.Location = new Point(10, 14);
-            label107.Name = "label107";
-            label107.Size = new Size(131, 25);
-            label107.TabIndex = 3;
-            label107.Text = "General Chats";
-            // 
-            // pnlLMSFiles
-            // 
-            pnlLMSFiles.Dock = DockStyle.Fill;
-            pnlLMSFiles.Location = new Point(0, 49);
-            pnlLMSFiles.Margin = new Padding(3, 2, 3, 2);
-            pnlLMSFiles.Name = "pnlLMSFiles";
-            pnlLMSFiles.Size = new Size(1271, 940);
-            pnlLMSFiles.TabIndex = 0;
-            // 
-            // panel38
-            // 
-            panel38.BackColor = Color.White;
-            panel38.Controls.Add(panel39);
-            panel38.Controls.Add(lblSub1Menu);
-            panel38.Controls.Add(btnBack);
-            panel38.Dock = DockStyle.Top;
-            panel38.Location = new Point(0, 0);
-            panel38.Margin = new Padding(3, 2, 3, 2);
-            panel38.Name = "panel38";
-            panel38.Size = new Size(1271, 49);
-            panel38.TabIndex = 0;
-            // 
-            // panel39
-            // 
-            panel39.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            panel39.Controls.Add(btnLMSFiles);
-            panel39.Controls.Add(btnLMSActSub);
-            panel39.Controls.Add(btnGeneralAnnounce);
-            panel39.Location = new Point(713, 3);
-            panel39.Margin = new Padding(3, 2, 3, 2);
-            panel39.Name = "panel39";
-            panel39.Size = new Size(550, 40);
-            panel39.TabIndex = 1;
-            // 
-            // btnLMSFiles
-            // 
-            btnLMSFiles.BackColor = Color.Maroon;
-            btnLMSFiles.FlatStyle = FlatStyle.Flat;
-            btnLMSFiles.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
-            btnLMSFiles.ForeColor = Color.White;
-            btnLMSFiles.Image = (Image)resources.GetObject("btnLMSFiles.Image");
-            btnLMSFiles.Location = new Point(388, 2);
-            btnLMSFiles.Margin = new Padding(3, 2, 3, 2);
-            btnLMSFiles.Name = "btnLMSFiles";
-            btnLMSFiles.Size = new Size(145, 34);
-            btnLMSFiles.TabIndex = 5;
-            btnLMSFiles.Text = "  Class Files";
-            btnLMSFiles.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnLMSFiles.UseVisualStyleBackColor = false;
-            btnLMSFiles.Click += btnLMSFiles_Click;
-            // 
-            // btnLMSActSub
-            // 
-            btnLMSActSub.BackColor = Color.Maroon;
-            btnLMSActSub.FlatStyle = FlatStyle.Flat;
-            btnLMSActSub.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
-            btnLMSActSub.ForeColor = Color.White;
-            btnLMSActSub.Image = (Image)resources.GetObject("btnLMSActSub.Image");
-            btnLMSActSub.Location = new Point(207, 2);
-            btnLMSActSub.Margin = new Padding(3, 2, 3, 2);
-            btnLMSActSub.Name = "btnLMSActSub";
-            btnLMSActSub.Padding = new Padding(0, 0, 0, 1);
-            btnLMSActSub.Size = new Size(145, 34);
-            btnLMSActSub.TabIndex = 4;
-            btnLMSActSub.Text = "  Activities";
-            btnLMSActSub.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnLMSActSub.UseVisualStyleBackColor = false;
-            btnLMSActSub.Click += btnLMSActSub_Click;
-            // 
-            // btnGeneralAnnounce
-            // 
-            btnGeneralAnnounce.BackColor = Color.White;
-            btnGeneralAnnounce.FlatStyle = FlatStyle.Flat;
-            btnGeneralAnnounce.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
-            btnGeneralAnnounce.ForeColor = Color.White;
-            btnGeneralAnnounce.Image = (Image)resources.GetObject("btnGeneralAnnounce.Image");
-            btnGeneralAnnounce.Location = new Point(15, 5);
-            btnGeneralAnnounce.Margin = new Padding(3, 2, 3, 2);
-            btnGeneralAnnounce.Name = "btnGeneralAnnounce";
-            btnGeneralAnnounce.Padding = new Padding(9, 0, 0, 0);
-            btnGeneralAnnounce.Size = new Size(157, 28);
-            btnGeneralAnnounce.TabIndex = 3;
-            btnGeneralAnnounce.Text = "  General Chats";
-            btnGeneralAnnounce.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnGeneralAnnounce.UseVisualStyleBackColor = false;
-            btnGeneralAnnounce.Click += btnGeneralAnnounce_Click;
-            // 
-            // lblSub1Menu
-            // 
-            lblSub1Menu.AutoSize = true;
-            lblSub1Menu.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblSub1Menu.Location = new Point(100, 12);
-            lblSub1Menu.Name = "lblSub1Menu";
-            lblSub1Menu.Size = new Size(283, 25);
-            lblSub1Menu.TabIndex = 2;
-            lblSub1Menu.Text = "Introduction to Programming 1 ";
-            // 
-            // btnBack
-            // 
-            btnBack.BackColor = Color.Maroon;
-            btnBack.FlatStyle = FlatStyle.Flat;
-            btnBack.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
-            btnBack.ForeColor = Color.White;
-            btnBack.Image = (Image)resources.GetObject("btnBack.Image");
-            btnBack.Location = new Point(11, 8);
-            btnBack.Margin = new Padding(3, 2, 3, 2);
-            btnBack.Name = "btnBack";
-            btnBack.Size = new Size(81, 29);
-            btnBack.TabIndex = 0;
-            btnBack.Text = "Back";
-            btnBack.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnBack.UseVisualStyleBackColor = false;
-            btnBack.Click += btnBack_Click;
             // 
             // pnlAnnounce
             // 
@@ -8126,120 +7070,88 @@
             pnlLMSAct.ResumeLayout(false);
             pnlLMSAct.PerformLayout();
             pnlCourseAct.ResumeLayout(false);
+            pnlContent.ResumeLayout(false);
+            pnlContent.PerformLayout();
+            pnlFooter.ResumeLayout(false);
+            pnlFooter.PerformLayout();
+            flpActivities.ResumeLayout(false);
+            pnlCard.ResumeLayout(false);
+            pnlCard.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)picCardImage).EndInit();
+            pnlSub1.ResumeLayout(false);
             panel56.ResumeLayout(false);
             panel56.PerformLayout();
-            roundedPanel76.ResumeLayout(false);
-            roundedPanel77.ResumeLayout(false);
-            roundedPanel77.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox68).EndInit();
-            roundedPanel74.ResumeLayout(false);
-            roundedPanel75.ResumeLayout(false);
-            roundedPanel75.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox67).EndInit();
-            roundedPanel72.ResumeLayout(false);
-            roundedPanel73.ResumeLayout(false);
-            roundedPanel73.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox66).EndInit();
-            roundedPanel70.ResumeLayout(false);
-            roundedPanel71.ResumeLayout(false);
-            roundedPanel71.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox65).EndInit();
-            roundedPanel65.ResumeLayout(false);
-            roundedPanel66.ResumeLayout(false);
-            roundedPanel66.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox64).EndInit();
-            roundedPanel24.ResumeLayout(false);
-            roundedPanel24.PerformLayout();
-            roundedPanel26.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox47).EndInit();
-            pnlStudents1.ResumeLayout(false);
-            panel52.ResumeLayout(false);
-            roundedPanel53.ResumeLayout(false);
-            roundedPanel54.ResumeLayout(false);
-            roundedPanel54.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox58).EndInit();
-            roundedPanel51.ResumeLayout(false);
-            roundedPanel52.ResumeLayout(false);
-            roundedPanel52.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox57).EndInit();
-            roundedPanel55.ResumeLayout(false);
-            roundedPanel56.ResumeLayout(false);
-            roundedPanel56.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox59).EndInit();
-            roundedPanel43.ResumeLayout(false);
-            roundedPanel44.ResumeLayout(false);
-            roundedPanel44.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox53).EndInit();
-            roundedPanel57.ResumeLayout(false);
-            roundedPanel58.ResumeLayout(false);
-            roundedPanel58.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox60).EndInit();
-            roundedPanel33.ResumeLayout(false);
-            roundedPanel34.ResumeLayout(false);
-            roundedPanel34.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox48).EndInit();
-            roundedPanel59.ResumeLayout(false);
-            roundedPanel60.ResumeLayout(false);
-            roundedPanel60.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox61).EndInit();
-            roundedPanel41.ResumeLayout(false);
-            roundedPanel42.ResumeLayout(false);
-            roundedPanel42.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox52).EndInit();
-            roundedPanel61.ResumeLayout(false);
-            roundedPanel62.ResumeLayout(false);
-            roundedPanel62.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox62).EndInit();
-            roundedPanel63.ResumeLayout(false);
-            roundedPanel64.ResumeLayout(false);
-            roundedPanel64.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox63).EndInit();
-            roundedPanel35.ResumeLayout(false);
-            roundedPanel36.ResumeLayout(false);
-            roundedPanel36.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox49).EndInit();
-            roundedPanel45.ResumeLayout(false);
-            roundedPanel46.ResumeLayout(false);
-            roundedPanel46.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox54).EndInit();
-            roundedPanel49.ResumeLayout(false);
-            roundedPanel50.ResumeLayout(false);
-            roundedPanel50.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox56).EndInit();
-            roundedPanel39.ResumeLayout(false);
-            roundedPanel40.ResumeLayout(false);
-            roundedPanel40.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox51).EndInit();
-            roundedPanel37.ResumeLayout(false);
-            roundedPanel38.ResumeLayout(false);
-            roundedPanel38.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox50).EndInit();
-            roundedPanel47.ResumeLayout(false);
-            roundedPanel48.ResumeLayout(false);
-            roundedPanel48.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox55).EndInit();
-            panel53.ResumeLayout(false);
-            panel53.PerformLayout();
-            pnlSub1.ResumeLayout(false);
+            pnlListContainer.ResumeLayout(false);
+            pnlHeaderCard.ResumeLayout(false);
+            pnlHeaderCard.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)picHeaderIcon).EndInit();
             panel54.ResumeLayout(false);
             panel54.PerformLayout();
-            roundedPanel67.ResumeLayout(false);
-            roundedPanel67.PerformLayout();
-            roundedPanel69.ResumeLayout(false);
-            roundedPanel28.ResumeLayout(false);
-            roundedPanel28.PerformLayout();
-            roundedPanel32.ResumeLayout(false);
-            roundedPanel25.ResumeLayout(false);
-            roundedPanel25.PerformLayout();
-            roundedPanel30.ResumeLayout(false);
             pnlGrade.ResumeLayout(false);
-            roundedPanel80.ResumeLayout(false);
-            roundedPanel81.ResumeLayout(false);
+            pnlEssayContainer.ResumeLayout(false);
+            pnlEssayContainer.PerformLayout();
             panel55.ResumeLayout(false);
             panel55.PerformLayout();
             roundedPanel79.ResumeLayout(false);
             roundedPanel79.PerformLayout();
             roundedPanel78.ResumeLayout(false);
+            pnlStudents1.ResumeLayout(false);
+            flowLayoutPanel8.ResumeLayout(false);
+            roundedPanel33.ResumeLayout(false);
+            roundedPanel34.ResumeLayout(false);
+            roundedPanel34.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox48).EndInit();
+            roundedPanel24.ResumeLayout(false);
+            roundedPanel25.ResumeLayout(false);
+            roundedPanel25.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox47).EndInit();
+            panel52.ResumeLayout(false);
+            panel52.PerformLayout();
+            pnlSubMenu.ResumeLayout(false);
+            pnlLMSActivities.ResumeLayout(false);
+            panel42.ResumeLayout(false);
+            panel42.PerformLayout();
+            roundedPanel10.ResumeLayout(false);
+            roundedPanel9.ResumeLayout(false);
+            roundedPanel8.ResumeLayout(false);
+            roundedPanel7.ResumeLayout(false);
+            roundedPanel6.ResumeLayout(false);
+            roundedPanel5.ResumeLayout(false);
+            roundedPanel3.ResumeLayout(false);
+            roundedPanel4.ResumeLayout(false);
+            pnlCreateAct.ResumeLayout(false);
+            panel43.ResumeLayout(false);
+            pnlAssign.ResumeLayout(false);
+            pnlAssign.PerformLayout();
+            pnlAttachAss.ResumeLayout(false);
+            roundedPanel29.ResumeLayout(false);
+            panel48.ResumeLayout(false);
+            panel48.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox46).EndInit();
+            roundedPanel11.ResumeLayout(false);
+            roundedPanel12.ResumeLayout(false);
+            roundedPanel12.PerformLayout();
+            pnlQuiz1.ResumeLayout(false);
+            panel49.ResumeLayout(false);
+            panel49.PerformLayout();
+            flowLayoutPanel3.ResumeLayout(false);
+            pnlControlBar.ResumeLayout(false);
+            tableLayoutPanel24.ResumeLayout(false);
+            panel45.ResumeLayout(false);
+            panel45.PerformLayout();
+            roundedPanel23.ResumeLayout(false);
+            roundedPanel22.ResumeLayout(false);
+            roundedPanel21.ResumeLayout(false);
+            roundedPanel21.PerformLayout();
+            panel44.ResumeLayout(false);
+            panel44.PerformLayout();
+            pnlGenChats.ResumeLayout(false);
+            panel40.ResumeLayout(false);
+            panel41.ResumeLayout(false);
+            panel41.PerformLayout();
+            panel38.ResumeLayout(false);
+            panel38.PerformLayout();
+            panel39.ResumeLayout(false);
             pnlAttendance.ResumeLayout(false);
             panel19.ResumeLayout(false);
             panel19.PerformLayout();
@@ -8336,51 +7248,6 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox44).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            pnlSubMenu.ResumeLayout(false);
-            pnlLMSActivities.ResumeLayout(false);
-            panel42.ResumeLayout(false);
-            panel42.PerformLayout();
-            roundedPanel10.ResumeLayout(false);
-            roundedPanel9.ResumeLayout(false);
-            roundedPanel8.ResumeLayout(false);
-            roundedPanel7.ResumeLayout(false);
-            roundedPanel6.ResumeLayout(false);
-            roundedPanel5.ResumeLayout(false);
-            roundedPanel3.ResumeLayout(false);
-            roundedPanel4.ResumeLayout(false);
-            pnlCreateAct.ResumeLayout(false);
-            panel43.ResumeLayout(false);
-            pnlAssign.ResumeLayout(false);
-            pnlAssign.PerformLayout();
-            pnlAttachAss.ResumeLayout(false);
-            roundedPanel29.ResumeLayout(false);
-            panel48.ResumeLayout(false);
-            panel48.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox46).EndInit();
-            roundedPanel11.ResumeLayout(false);
-            roundedPanel12.ResumeLayout(false);
-            roundedPanel12.PerformLayout();
-            pnlQuiz1.ResumeLayout(false);
-            panel49.ResumeLayout(false);
-            panel49.PerformLayout();
-            flowLayoutPanel3.ResumeLayout(false);
-            pnlControlBar.ResumeLayout(false);
-            tableLayoutPanel24.ResumeLayout(false);
-            panel45.ResumeLayout(false);
-            panel45.PerformLayout();
-            roundedPanel23.ResumeLayout(false);
-            roundedPanel22.ResumeLayout(false);
-            roundedPanel21.ResumeLayout(false);
-            roundedPanel21.PerformLayout();
-            panel44.ResumeLayout(false);
-            panel44.PerformLayout();
-            pnlGenChats.ResumeLayout(false);
-            panel40.ResumeLayout(false);
-            panel41.ResumeLayout(false);
-            panel41.PerformLayout();
-            panel38.ResumeLayout(false);
-            panel38.PerformLayout();
-            panel39.ResumeLayout(false);
             pnlAnnounce.ResumeLayout(false);
             pnlCreateAnnounce.ResumeLayout(false);
             pnlCreateAnnounce.PerformLayout();
@@ -8535,7 +7402,6 @@
         private Label lblProf1;
         private Label lblSub1;
         private PictureBox pictureBox22;
-        private RoundedPanel roundedPanel26;
         private Panel panel10;
         private System.Windows.Forms.Timer sideBarTimer;
         private Button button36;
@@ -8600,7 +7466,6 @@
         private Label label11;
         private Label label6;
         private Panel panel17;
-        private RoundedPanel roundedPanel28;
         private FlowLayoutPanel flowLayoutPanel7;
         private Button button20;
         private Button button21;
@@ -8871,158 +7736,11 @@
         private Panel pnlControlBar;
         private DateTimePicker dateTimePicker2;
         private Label label112;
-        private RoundedPanel roundedPanel24;
-        private Label label113;
         private buttonRounded buttonRounded1;
-        private PictureBox pictureBox47;
         private Panel pnlSub1;
-        private RoundedPanel roundedPanel25;
-        private RoundedPanel roundedPanel30;
         private buttonRounded buttonRounded2;
-        private Label label120;
-        private Panel pnlStudents1;
-        private buttonRounded buttonRounded8;
-        private Label label121;
-        private RoundedPanel roundedPanel32;
         private buttonRounded buttonRounded7;
-        private buttonRounded buttonRounded3;
-        private RoundedPanel roundedPanel33;
-        private RoundedPanel roundedPanel34;
-        private Label label125;
-        private Label label124;
-        private Label label123;
-        private PictureBox pictureBox48;
-        private RoundedPanel roundedPanel43;
-        private RoundedPanel roundedPanel44;
-        private Label label144;
-        private Label label145;
-        private Label label146;
-        private PictureBox pictureBox53;
-        private RoundedPanel roundedPanel41;
-        private RoundedPanel roundedPanel42;
-        private Label label140;
-        private Label label141;
-        private Label label142;
-        private PictureBox pictureBox52;
-        private RoundedPanel roundedPanel45;
-        private RoundedPanel roundedPanel46;
-        private Label label148;
-        private Label label149;
-        private Label label150;
-        private PictureBox pictureBox54;
-        private RoundedPanel roundedPanel39;
-        private RoundedPanel roundedPanel40;
-        private Label label136;
-        private Label label137;
-        private Label label138;
-        private PictureBox pictureBox51;
-        private RoundedPanel roundedPanel47;
-        private RoundedPanel roundedPanel48;
-        private Label label152;
-        private Label label153;
-        private Label label154;
-        private PictureBox pictureBox55;
-        private RoundedPanel roundedPanel37;
-        private RoundedPanel roundedPanel38;
-        private Label label132;
-        private Label label133;
-        private Label label134;
-        private PictureBox pictureBox50;
-        private RoundedPanel roundedPanel49;
-        private RoundedPanel roundedPanel50;
-        private Label label156;
-        private Label label157;
-        private Label label158;
-        private PictureBox pictureBox56;
-        private RoundedPanel roundedPanel51;
-        private RoundedPanel roundedPanel52;
-        private Label label160;
-        private Label label161;
-        private Label label162;
-        private PictureBox pictureBox57;
-        private RoundedPanel roundedPanel35;
-        private RoundedPanel roundedPanel36;
-        private Label label128;
-        private Label label129;
-        private Label label130;
-        private PictureBox pictureBox49;
-        private Panel panel53;
-        private Label label163;
-        private Panel panel52;
-        private RoundedPanel roundedPanel53;
-        private RoundedPanel roundedPanel54;
-        private Label label165;
-        private Label label166;
-        private Label label167;
-        private PictureBox pictureBox58;
-        private RoundedPanel roundedPanel55;
-        private RoundedPanel roundedPanel56;
-        private Label label169;
-        private Label label170;
-        private Label label171;
-        private PictureBox pictureBox59;
-        private RoundedPanel roundedPanel57;
-        private RoundedPanel roundedPanel58;
-        private Label label173;
-        private Label label174;
-        private Label label175;
-        private PictureBox pictureBox60;
-        private RoundedPanel roundedPanel59;
-        private RoundedPanel roundedPanel60;
-        private Label label177;
-        private Label label178;
-        private Label label179;
-        private PictureBox pictureBox61;
-        private RoundedPanel roundedPanel61;
-        private RoundedPanel roundedPanel62;
-        private Label label181;
-        private Label label182;
-        private Label label183;
-        private PictureBox pictureBox62;
-        private RoundedPanel roundedPanel63;
-        private RoundedPanel roundedPanel64;
-        private Label label185;
-        private Label label186;
-        private Label label187;
-        private PictureBox pictureBox63;
         private Panel pnlCourseAct;
-        private RoundedPanel roundedPanel31;
-        private RoundedPanel roundedPanel27;
-        private RoundedPanel roundedPanel65;
-        private Label label188;
-        private RoundedPanel roundedPanel66;
-        private PictureBox pictureBox64;
-        private buttonRounded buttonRounded9;
-        private Panel panel54;
-        private Label label189;
-        private RoundedPanel roundedPanel67;
-        private buttonRounded buttonRounded10;
-        private RoundedPanel roundedPanel68;
-        private Label label114;
-        private RoundedPanel roundedPanel69;
-        private RichTextBox richTextBox3;
-        private RichTextBox richTextBox2;
-        private RichTextBox richTextBox1;
-        private RoundedPanel roundedPanel72;
-        private Label label190;
-        private RoundedPanel roundedPanel73;
-        private PictureBox pictureBox66;
-        private buttonRounded buttonRounded12;
-        private RoundedPanel roundedPanel70;
-        private Label label122;
-        private RoundedPanel roundedPanel71;
-        private PictureBox pictureBox65;
-        private buttonRounded buttonRounded11;
-        private RoundedPanel roundedPanel76;
-        private RoundedPanel roundedPanel77;
-        private Label label192;
-        private PictureBox pictureBox68;
-        private buttonRounded buttonRounded14;
-        private RoundedPanel roundedPanel74;
-        private RoundedPanel roundedPanel75;
-        private Label label191;
-        private PictureBox pictureBox67;
-        private buttonRounded buttonRounded13;
         private Panel pnlGrade;
         private buttonRounded buttonRounded15;
         private buttonRounded button9;
@@ -9034,11 +7752,72 @@
         private RoundedPanel roundedPanel78;
         private RichTextBox richTextBox4;
         private Label label126;
-        private RoundedPanel roundedPanel80;
-        private RoundedPanel roundedPanel81;
-        private Label label131;
-        private Label lblScore;
+        private Panel pnlContent;
+        private Panel pnlFooter;
+        private Button btnNext;
+        private Label lblPageNo;
+        private Button btnPrev;
+        private Label lblRecordInfo;
+        private FlowLayoutPanel flpActivities;
+        private Panel pnlCard;
+        private Label lblCardTag;
+        private Label lblCardDesc;
+        private Label lblCardTitle;
+        private PictureBox picCardImage;
+        private Button btnListView;
+        private Button btnGridView;
+        private TextBox txtSearch;
+        private Label lblPageSubtitle;
+        private Label lblPageTitle;
+        private Panel panel54;
+        private Label lblHeaderTitle;
+        private Panel pnlListContainer;
+        private Panel pnlItem1;
+        private Panel pnlHeaderCard;
+        private Button btnAddNew;
+        private Label lblHeaderSub;
+        private Label lblHeaderMain;
+        private PictureBox picHeaderIcon;
         private Panel panel56;
-        private Label label135;
+        private Button button10;
+        private Button button11;
+        private Label lblPage;
+        private Button btnPrevious;
+        private Label lblFooterInfo;
+        private Button button27;
+        private Label label113;
+        private Button button40;
+        private Label label114;
+        private Panel pnlStudents1;
+        private RoundedPanel roundedPanel33;
+        private RoundedPanel roundedPanel34;
+        private Label lblScore;
+        private Label label125;
+        private Label label124;
+        private Label label123;
+        private PictureBox pictureBox48;
+        private buttonRounded buttonRounded3;
+        private Panel panel52;
+        private Label lblTotalStudents;
+        private Label lblTitle;
+        private FlowLayoutPanel flowLayoutPanel8;
+        private Panel pnlEssayContainer;
+        private Label lblStats;
+        private TextBox txtEssayContent;
+        private Label lblEssayHeader;
+        private Label label120;
+        private Label label121;
+        private RoundedPanel roundedPanel24;
+        private RoundedPanel roundedPanel25;
+        private Label label122;
+        private Label label128;
+        private buttonRounded buttonRounded8;
+        private Label label129;
+        private Label label130;
+        private Label label131;
+        private PictureBox pictureBox47;
+        private Button button41;
+        private Label label132;
+        private Button button42;
     }
 }
