@@ -1435,7 +1435,7 @@
             pnlSidebar.Location = new Point(0, 0);
             pnlSidebar.Margin = new Padding(0);
             pnlSidebar.Name = "pnlSidebar";
-            pnlSidebar.Padding = new Padding(0, 79, 0, 0);
+            pnlSidebar.Padding = new Padding(0, 79, 0, 45);
             pnlSidebar.Size = new Size(256, 1041);
             pnlSidebar.TabIndex = 0;
             // 
@@ -1452,7 +1452,7 @@
             flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
             flowLayoutPanel1.Location = new Point(2, 155);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(256, 755);
+            flowLayoutPanel1.Size = new Size(256, 710);
             flowLayoutPanel1.TabIndex = 1;
             flowLayoutPanel1.WrapContents = false;
             // 
@@ -1802,7 +1802,7 @@
             panel12.CausesValidation = false;
             panel12.Controls.Add(panel13);
             panel12.Dock = DockStyle.Bottom;
-            panel12.Location = new Point(0, 960);
+            panel12.Location = new Point(0, 915);
             panel12.Name = "panel12";
             panel12.Size = new Size(256, 81);
             panel12.TabIndex = 0;
@@ -12633,7 +12633,6 @@
             this.Controls.Add(panel3);
             this.Icon = (Icon)resources.GetObject("$this.Icon");
             this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "InstructorPortal";
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Instructor Portal";
