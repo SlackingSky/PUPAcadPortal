@@ -19,7 +19,7 @@ namespace PUPAcadPortal
 
         private void btnSignIn_Click(object sender, EventArgs e)
         {
-            if (Database.VerifyUserLogin(txtUsername.Text, txtPassword.Text))
+            if (DBConnect.VerifyUserLogin(txtUsername.Text, txtPassword.Text))
             {
                 this.Hide();
                 StudentPortal studentPortal = new StudentPortal(this);
@@ -29,7 +29,7 @@ namespace PUPAcadPortal
                 txtPassword.Clear();
                 this.Show();
             }
-            else if (Database.VerifyUserLogin(txtUsername.Text, txtPassword.Text))
+            else if (DBConnect.VerifyUserLogin(txtUsername.Text, txtPassword.Text))
             {
                 this.Hide();
                 AdminPortal adminPortal = new AdminPortal();
@@ -39,7 +39,7 @@ namespace PUPAcadPortal
                 txtPassword.Clear();
                 this.Show(); ;
             }
-            else if (Database.VerifyUserLogin(txtUsername.Text, txtPassword.Text))
+            else if (DBConnect.VerifyUserLogin(txtUsername.Text, txtPassword.Text))
             {
                 this.Hide();
                 InstructorPortal instructorPortal = new InstructorPortal();
