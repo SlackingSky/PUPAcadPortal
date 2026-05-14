@@ -1,4 +1,6 @@
 using System.Drawing.Drawing2D;
+using MySqlConnector;
+using BCrypt.Net;
 
 namespace PUPAcadPortal
 {
@@ -17,7 +19,7 @@ namespace PUPAcadPortal
 
         private void btnSignIn_Click(object sender, EventArgs e)
         {
-            if (txtUsername.Text.ToLower() == "demostudent" && txtPassword.Text.ToLower() == "student")
+            if (Database.VerifyUserLogin(txtUsername.Text, txtPassword.Text))
             {
                 this.Hide();
                 StudentPortal studentPortal = new StudentPortal(this);
@@ -27,7 +29,7 @@ namespace PUPAcadPortal
                 txtPassword.Clear();
                 this.Show();
             }
-            else if (txtUsername.Text.ToLower() == "demoadmin" && txtPassword.Text.ToLower() == "admin")
+            else if (Database.VerifyUserLogin(txtUsername.Text, txtPassword.Text))
             {
                 this.Hide();
                 AdminPortal adminPortal = new AdminPortal();
@@ -37,7 +39,7 @@ namespace PUPAcadPortal
                 txtPassword.Clear();
                 this.Show(); ;
             }
-            else if (txtUsername.Text.ToLower() == "demoinstructor" && txtPassword.Text.ToLower() == "instructor")
+            else if (Database.VerifyUserLogin(txtUsername.Text, txtPassword.Text))
             {
                 this.Hide();
                 InstructorPortal instructorPortal = new InstructorPortal();
@@ -51,7 +53,6 @@ namespace PUPAcadPortal
             {
                 MessageBox.Show("Invalid username or password", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
         }
 
         private void SignIn_Load(object sender, EventArgs e)

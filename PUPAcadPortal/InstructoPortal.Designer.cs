@@ -10350,7 +10350,6 @@
             btnUpload.FlatStyle = FlatStyle.Flat;
             btnUpload.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
             btnUpload.ForeColor = Color.White;
-            btnUpload.Image = (Image)resources.GetObject("btnUpload.Image");
             btnUpload.Location = new Point(1508, 21);
             btnUpload.Margin = new Padding(3, 2, 3, 2);
             btnUpload.Name = "btnUpload";
