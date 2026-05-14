@@ -4,17 +4,17 @@ using System.Collections.Generic;
 namespace PUPAcadPortal.Models;
 
 /// <summary>
-/// Contains users for the portal
+/// A table for the portal&apos;s users
 /// </summary>
 public partial class User
 {
-    public int UserId { get; set; }
-
     public string Username { get; set; } = null!;
-
-    public string? Email { get; set; }
 
     public string PasswordHash { get; set; } = null!;
 
-    public DateTime? CreatedAt { get; set; }
+    public string DisplayName { get; set; } = null!;
+
+    public string? Email { get; set; }
+
+    public string Role { get; set; } = null!;
 }

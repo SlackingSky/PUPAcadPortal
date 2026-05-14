@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,29 +18,22 @@ public partial class DefaultdbContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseMySQL(DBConnect.GetDecodedConnectionString());
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseMySQL("Server=mysql-pupacadportal-pupacadportal.h.aivencloud.com;Port=15204;Database=defaultdb;Uid=pupacadportalapp;Pwd=pupacadportalapp;SslMode=Required;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PRIMARY");
+            entity.HasKey(e => e.Username).HasName("PRIMARY");
 
-            entity.ToTable(tb => tb.HasComment("Contains users for the portal"));
+            entity.ToTable(tb => tb.HasComment("A table for the portal's users"));
 
-            entity.HasIndex(e => e.Email, "Email").IsUnique();
-
-            entity.HasIndex(e => e.Username, "Username").IsUnique();
-
-            entity.Property(e => e.UserId).HasColumnName("UserID");
-            entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp");
-            entity.Property(e => e.Email).HasMaxLength(100);
-            entity.Property(e => e.PasswordHash)
-                .HasMaxLength(60)
-                .IsFixedLength();
             entity.Property(e => e.Username).HasMaxLength(100);
+            entity.Property(e => e.DisplayName).HasMaxLength(100);
+            entity.Property(e => e.Email).HasMaxLength(100);
+            entity.Property(e => e.PasswordHash).HasMaxLength(60);
+            entity.Property(e => e.Role).HasMaxLength(100);
         });
 
         OnModelCreatingPartial(modelBuilder);
