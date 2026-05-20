@@ -1,6 +1,6 @@
 ﻿namespace PUPAcadPortal.PortalContents.Admin
 {
-    partial class AdminDashboardContent
+    partial class DashboardContentAdmin
     {
         /// <summary> 
         /// Required designer variable.
@@ -113,6 +113,7 @@
             pnlDashboardContent.Name = "pnlDashboardContent";
             pnlDashboardContent.Size = new Size(1272, 719);
             pnlDashboardContent.TabIndex = 5;
+            pnlDashboardContent.Resize += pnlDashboardContent_Resize;
             // 
             // pnlDashboardContainerRecentAct
             // 
@@ -642,6 +643,7 @@
             Controls.Add(pnlDashboardContent);
             Name = "AdminDashboardContent";
             Size = new Size(1272, 719);
+            Load += AdminDashboardContent_Load;
             pnlDashboardContent.ResumeLayout(false);
             pnlDashboardContent.PerformLayout();
             pnlDashboardContainerRecentAct.ResumeLayout(false);

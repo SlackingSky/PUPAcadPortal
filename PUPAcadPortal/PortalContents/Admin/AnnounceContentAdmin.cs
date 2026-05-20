@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace PUPAcadPortal.PortalContents.Admin
 {
-    public partial class AdminAnnounceContent : UserControl
+    public partial class AnnounceContentAdmin : UserControl
     {
         // ── Announcement system ──────────────────────────────────────────
         private List<AdminAnnouncement> announcements = new List<AdminAnnouncement>();
@@ -39,7 +39,7 @@ namespace PUPAcadPortal.PortalContents.Admin
             ["Enrollment"] = Color.FromArgb(0xd6, 0xf4, 0xf1),
         };
 
-        public AdminAnnounceContent()
+        public AnnounceContentAdmin()
         {
             InitializeComponent();
         }

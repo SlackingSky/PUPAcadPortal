@@ -1,6 +1,6 @@
 ﻿namespace PUPAcadPortal.PortalContents.Admin
 {
-    partial class AdminAnnounceContent
+    partial class AnnounceContentAdmin
     {
         /// <summary> 
         /// Required designer variable.

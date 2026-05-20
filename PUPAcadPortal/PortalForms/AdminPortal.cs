@@ -47,11 +47,6 @@ namespace PUPAcadPortal
             this.Resize += AdminPortal_Resize;
             this.Load += AdminPortal_Load;
 
-            // Attach resize event handlers for sub-content panels that require dynamic resizing
-            pnlEnrolledStudentsContent.Layout += (s, e) => ResizeEnrolledStudentsContent();
-            pnlAccountingRecordsContent.Layout += (s, e) => ResizeAccountingRecordsContent();
-
-
             // Attach event handlers for filtering controls in View All Users
             btnSearch.Click += (s, e) => ApplyFiltersAndRefresh();
             cmbProgram.SelectedIndexChanged += (s, e) => ApplyFiltersAndRefresh();
@@ -62,9 +57,9 @@ namespace PUPAcadPortal
             {
             //{ btnDashboard, new ContentPanelInfo { Panel = pnlDashboardContent, ResetAction = () => { /* dashboard reset logic */ } } },
             { btnSubjectOffering, new ContentPanelInfo { Panel = pnlSubOfferingContent, ResetAction = () => { /* subject offering reset */ } } },
-            { btnGradesManagement, new ContentPanelInfo { Panel = pnlGradesManagementContent, ResetAction = () => { /* grades reset */ } } },
-            { btnAccountingRecords, new ContentPanelInfo { Panel = pnlAccountingRecordsContent, ResetAction = () => { /* accounting reset */ } } },
-            { btnEnrolledStudents, new ContentPanelInfo { Panel = pnlEnrolledStudentsContent, ResetAction = () => { /* enrolled students reset */ } } },
+            //{ btnGradesManagement, new ContentPanelInfo { Panel = pnlGradesManagementContent, ResetAction = () => { /* grades reset */ } } },
+            //{ btnAccountingRecords, new ContentPanelInfo { Panel = pnlAccountingRecordsContent, ResetAction = () => { /* accounting reset */ } } },
+            //{ btnEnrolledStudents, new ContentPanelInfo { Panel = pnlEnrolledStudentsContent, ResetAction = () => { /* enrolled students reset */ } } },
             { btnRegisterStudent, new ContentPanelInfo { Panel = pnlRegisterStudentContent, ResetAction = () => { /* register student reset */ } } },
             { btnRegisterProfessor, new ContentPanelInfo { Panel = pnlRegisterProfessorContent, ResetAction = () => { /* register professor reset */ } } },
             { btnViewAllUsers, new ContentPanelInfo { Panel = pnlViewAllUsersContent, ResetAction = ResetViewAllUsersPanel } }
@@ -416,19 +411,6 @@ namespace PUPAcadPortal
                     break;
                 }
             }
-
-            // Resize visible sub-content panels
-            if (pnlGradesManagementContent.Visible) FitContentPanel(pnlGradesManagementContent);
-            if (pnlAccountingRecordsContent.Visible)
-            {
-                FitContentPanel(pnlAccountingRecordsContent);
-                ResizeAccountingRecordsContent();
-            }
-            if (pnlEnrolledStudentsContent.Visible)
-            {
-                FitContentPanel(pnlEnrolledStudentsContent);
-                ResizeEnrolledStudentsContent();
-            }
         }
 
         private void FitContentPanel(Panel panel)
@@ -436,25 +418,6 @@ namespace PUPAcadPortal
             panel.Width = this.ClientSize.Width - pnlSidebar.Width;
             panel.Height = this.ClientSize.Height - pnlHeader.Height;
             panel.Location = new Point(pnlSidebar.Width, pnlHeader.Height);
-        }
-
-        private void ShowSubContent(Panel contentPanel)
-        {
-            // Hide all main content panels
-            foreach (var kvp in contentPanels)
-            {
-                kvp.Value.Panel.Visible = false;
-            }
-
-            // Hide all sub‑content panels except the one to show
-            pnlGradesManagementContent.Visible = (contentPanel == pnlGradesManagementContent);
-            pnlAccountingRecordsContent.Visible = (contentPanel == pnlAccountingRecordsContent);
-            pnlEnrolledStudentsContent.Visible = (contentPanel == pnlEnrolledStudentsContent);
-
-            // Position and size the selected panel
-            FitContentPanel(contentPanel);
-            contentPanel.Visible = true;
-            contentPanel.BringToFront();
         }
 
         // EVENT HANDLERS [ToT]
@@ -465,7 +428,7 @@ namespace PUPAcadPortal
             changeButtonColor(sender as Button);
             mainContentPanel.Visible = true;
             mainContentPanel.BringToFront();
-            mainContentPanel.ShowView(new AdminDashboardContent());
+            mainContentPanel.ShowView(new DashboardContentAdmin());
             pnlRegistrarSubmenu.Visible = false;
         }
 
@@ -524,7 +487,7 @@ namespace PUPAcadPortal
         private void btnGradesManagement_Click(object sender, EventArgs e)
         {
             // Show the corresponding content panel
-            ShowSubContent(pnlGradesManagementContent);
+            mainContentPanel.ShowView(new GradesMngContentAdmin());
             // Optional: hide the submenu after selection (remove if you want it to stay open)
             //pnlRegistrarSubmenu.Visible = false;
             // Update the button text arrow to closed state
@@ -533,14 +496,14 @@ namespace PUPAcadPortal
 
         private void btnAccountingRecords_Click(object sender, EventArgs e)
         {
-            ShowSubContent(pnlAccountingRecordsContent);
+            mainContentPanel.ShowView(new AccountsContentAdmin());
             //pnlRegistrarSubmenu.Visible = false;
             btnRegistrarFunctions.Text = " Registrar Functions              ⌄";
         }
 
         private void btnEnrolledStudents_Click(object sender, EventArgs e)
         {
-            ShowSubContent(pnlEnrolledStudentsContent);
+            mainContentPanel.ShowView(new EnrolledStudentsContentAdmin());
             //pnlRegistrarSubmenu.Visible = false;
             btnRegistrarFunctions.Text = " Registrar Functions              ⌄";
         }
@@ -821,19 +784,6 @@ namespace PUPAcadPortal
 
             btnDashboard.PerformClick();
 
-            // Grades Management initial setup (with null checks)
-            if (pnlGMAddNewGradeForm == null)
-                MessageBox.Show("pnlGMAddNewGradeForm is null! Check designer name.");
-            else
-                originalFormTop = pnlGMAddNewGradeForm.Top;
-
-            if (pnlGMAddNewGradeForm != null)
-                pnlGMAddNewGradeForm.Visible = false;
-
-            if (pnlGradesManagementContainer != null)
-                pnlGradesManagementContainer.Top = originalFormTop;
-            else
-                MessageBox.Show("pnlGradesManagementContainer is null! Check designer name.");
 
             // Setup grades data table
             gradesTable = new DataTable();
@@ -847,91 +797,10 @@ namespace PUPAcadPortal
             gradesTable.Columns.Add("Final", typeof(decimal));
             gradesTable.Columns.Add("FinalRating", typeof(decimal));
             gradesTable.Columns.Add("Remarks", typeof(string));
-
-            dgvGrades.DataSource = gradesTable;
-            dgvGrades.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-
-            // Initially hide the grid and show the placeholder if no rows
-            UpdateGradesPlaceholderVisibility();
-
-            // Get distinct years from student data
-            var years = studentList.Select(s => s[4]).Distinct().ToList();
-
-            // Define all standard years you want to show
-            var allStandardYears = new List<string> { "1st Year", "2nd Year", "3rd Year", "4th Year" };
-
-            // Add any missing standard years to the list
-            foreach (var stdYear in allStandardYears)
-            {
-                if (!years.Contains(stdYear))
-                    years.Add(stdYear);
-            }
-
-            // Sort years numerically (based on the number before "st"/"nd"/"rd"/"th")
-            years = years.OrderBy(y => int.Parse(new string(y.TakeWhile(char.IsDigit).ToArray()))).ToList();
-
-            // Insert "All Years" at the top
-            years.Insert(0, "All Years");
-
-            cmbGMYear.DataSource = years;
-            cmbGMYear.SelectedIndex = 0;
-
-            // Initial population of student combo
-            FilterStudentComboBox();
-
-            btnGMSearch.Click += (s, e) => FilterStudentComboBox();
-            cmbGMYear.SelectedIndexChanged += (s, e) => FilterStudentComboBox();
-            cmbGMSection.SelectedIndexChanged += (s, e) => FilterStudentComboBox();
         }
 
-        private void FilterStudentComboBox()
-        {
-            string searchTerm = txGMSearchBar.Text.Trim().ToLower();
-            string selectedYear = cmbGMYear.SelectedItem?.ToString();
-            string selectedSection = cmbGMSection.SelectedItem?.ToString();
 
-            // Treat "All Years" as no filter
-            if (selectedYear == "All Years") selectedYear = null;
 
-            // Section filtering – currently disabled because studentList has no section data.
-            // If you later add a section field (e.g., s[6]), uncomment the appropriate lines.
-            bool useSectionFilter = false; // set to true when you have section data
-            string sectionFilter = null;
-            if (useSectionFilter && selectedSection != null && selectedSection != "All Sections")
-                sectionFilter = selectedSection;
-
-            var filtered = studentList.Where(s =>
-            {
-                bool matchesSearch = string.IsNullOrEmpty(searchTerm) ||
-                    s[0].ToLower().Contains(searchTerm) ||
-                    s[1].ToLower().Contains(searchTerm) ||
-                    s[2].ToLower().Contains(searchTerm);
-
-                bool matchesYear = selectedYear == null || s[4] == selectedYear;
-
-                bool matchesSection = true;
-                if (useSectionFilter && sectionFilter != null)
-                {
-                    // Example: assume section is stored in s[6]
-                    // matchesSection = s[6] == sectionFilter;
-                }
-
-                return matchesSearch && matchesYear && matchesSection;
-            }).Select(s => new { ID = s[0], Name = $"{s[1]} ({s[0]})" }).ToList();
-
-            cmbGMStudent.DataSource = filtered;
-            cmbGMStudent.DisplayMember = "Name";
-            cmbGMStudent.ValueMember = "ID";
-
-        }
-
-        private void UpdateGradesPlaceholderVisibility()
-        {
-            bool hasRows = gradesTable.Rows.Count > 0;
-            //label38.Visible = !hasRows;    // "No grades found"
-            //pictureBox7.Visible = !hasRows;
-            dgvGrades.Visible = hasRows;
-        }
 
         private void LoadStudentPlaceholders()
         {
@@ -1097,185 +966,10 @@ namespace PUPAcadPortal
             btnViewAllUsers.PerformClick();
         }
 
-        private void btnGMAddGrades_Click(object sender, EventArgs e)
-        {
-            // Toggle visibility
-            bool showForm = !pnlGMAddNewGradeForm.Visible;
-
-            if (showForm)
-            {
-                pnlGMAddNewGradeForm.Visible = true;
-                // Push container down below the form (10px gap)
-                pnlGradesManagementContainer.Top = pnlGMAddNewGradeForm.Bottom + 10;
-            }
-            else
-            {
-                pnlGMAddNewGradeForm.Visible = false;
-                // Bring container back to the form's original position
-                pnlGradesManagementContainer.Top = originalFormTop;
-            }
-        }
-
-        private void btmGMClearForm_Click(object sender, EventArgs e)
-        {
-            // Clear all text boxes and comboboxes inside pnlGMAddNewGradeForm
-            foreach (Control ctrl in pnlGMAddNewGradeForm.Controls)
-            {
-                if (ctrl is TextBox tb) tb.Clear();
-                else if (ctrl is ComboBox cb) cb.SelectedIndex = -1;
-            }
-            // Reset year combo to "All Years"
-            cmbGMYear.SelectedIndex = 0;
-            // Reset section combo to its default (e.g., index 0)
-            cmbGMSection.SelectedIndex = 0;
-            // Clear the search box
-            txGMSearchBar.Clear();
-            // Reset student combo
-            FilterStudentComboBox();
-        }
-
-        private void btnGMSaveGrades_Click(object sender, EventArgs e)
-        {
-            // Validate required fields
-            if (cmbGMStudent.SelectedItem == null)
-            {
-                MessageBox.Show("Please select a student.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if (string.IsNullOrEmpty(txtGMSubjectCode.Text))
-            {
-                MessageBox.Show("Subject Code is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if (string.IsNullOrEmpty(txtGMSubjectName.Text))
-            {
-                MessageBox.Show("Subject Name is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if (cmbGMSemester.SelectedIndex == -1)
-            {
-                MessageBox.Show("Please select a semester.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if (string.IsNullOrEmpty(txtGMAcadYear.Text))
-            {
-                MessageBox.Show("Academic Year is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // Parse grades
-            if (!decimal.TryParse(txtGMMidtermGrade.Text, out decimal midterm))
-            {
-                MessageBox.Show("Invalid Midterm Grade.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if (!decimal.TryParse(txtGMFinalGrade.Text, out decimal final))
-            {
-                MessageBox.Show("Invalid Final Grade.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // Calculate final rating
-            decimal finalRating = (midterm + final) / 2;
-            txtGMFinalRating.Text = finalRating.ToString("0.00");
-
-            // Get descriptive remarks
-            string remarks = GetGradeDescription(finalRating);
-            txtGMRemarks.Text = remarks;
-
-            // Get selected student
-            dynamic selected = cmbGMStudent.SelectedItem;
-            string studentName = selected.Name;
-            string studentID = selected.ID;
-
-            // Add to DataTable
-            gradesTable.Rows.Add(
-                studentName,
-                studentID,
-                txtGMSubjectCode.Text,
-                txtGMSubjectName.Text,
-                cmbGMSemester.SelectedItem.ToString(),
-                txtGMAcadYear.Text,
-                midterm,
-                final,
-                finalRating,
-                remarks
-            );
-
-
-            // Update placeholder visibility
-            UpdateGradesPlaceholderVisibility();
-
-            // Clear the entry form
-            btmGMClearForm_Click(sender, e);
-
-            // Hide the add panel and restore container position
-            pnlGMAddNewGradeForm.Visible = false;
-            pnlGradesManagementContainer.Top = originalFormTop;
-
-            MessageBox.Show("Grade saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private string GetGradeDescription(decimal finalRating)
-        {
-            if (finalRating <= 1.00m) return "Excellent";
-            if (finalRating <= 1.25m) return "Very Good";
-            if (finalRating <= 1.50m) return "Very Good";
-            if (finalRating <= 1.75m) return "Good";
-            if (finalRating <= 2.00m) return "Good";
-            if (finalRating <= 2.25m) return "Satisfactory";
-            if (finalRating <= 2.50m) return "Satisfactory";
-            if (finalRating <= 2.75m) return "Fair";
-            if (finalRating <= 3.00m) return "Passed";
-            return "Failed";
-        }
-
-        private void ResizeEnrolledStudentsContent()
-        {
-            if (!pnlEnrolledStudentsContent.Visible) return;
-
-            int contentWidth = pnlEnrolledStudentsContent.ClientSize.Width - 32; // use ClientSize, not Width
-            int gap = 10;
-            int cardWidth = (contentWidth - (gap * 3)) / 4;
-
-            pnlESTotalStudentsCard.Width = cardWidth;
-            pnlESActiveCard.Width = cardWidth;
-            pnlESInactiveCard.Width = cardWidth;
-            pnlESGraduatedCard.Width = cardWidth;
-
-            pnlESTotalStudentsCard.Left = 16;
-            pnlESActiveCard.Left = 16 + cardWidth + gap;
-            pnlESInactiveCard.Left = 16 + (cardWidth + gap) * 2;
-            pnlESGraduatedCard.Left = 16 + (cardWidth + gap) * 3;
-
-        }
-
-        private void ResizeAccountingRecordsContent()
-        {
-            if (!pnlAccountingRecordsContent.Visible) return;
-
-            // Usable width inside the panel (subtract side padding, e.g., 16px left + 16px right)
-            int contentWidth = pnlAccountingRecordsContent.Width - 32; // 16px each side
-            int gap = 10; // space between cards
-
-            // Three cards: Total Amount, Paid Amount, Unpaid Amount
-            int cardWidth = (contentWidth - (gap * 2)) / 3;
-
-            // Resize and reposition the three summary cards
-            pnlARTotalAmount.Width = cardWidth;
-            pnlARPaidAmount.Width = cardWidth;
-            pnlARUnpaidAmount.Width = cardWidth;
-
-            pnlARTotalAmount.Left = 16;
-            pnlARPaidAmount.Left = 16 + cardWidth + gap;
-            pnlARUnpaidAmount.Left = 16 + (cardWidth + gap) * 2;
-
-        }
-
         private void btnAnnouncement_Click(object sender, EventArgs e)
         {
             changeButtonColor(sender as Button);
-            AdminAnnounceContent adminAnnounceContent = new AdminAnnounceContent();
+            AnnounceContentAdmin adminAnnounceContent = new AnnounceContentAdmin();
             mainContentPanel.ShowView(adminAnnounceContent);
             adminAnnounceContent.InitAnnouncementPanelIfNeeded();
         }

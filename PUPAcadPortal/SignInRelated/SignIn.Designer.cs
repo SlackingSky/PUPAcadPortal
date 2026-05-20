@@ -170,7 +170,7 @@ namespace PUPAcadPortal
             panel4.Location = new Point(32, 160);
             panel4.Name = "panel4";
             panel4.Size = new Size(384, 275);
-            panel4.TabIndex = 4;
+            panel4.TabIndex = 0;
             // 
             // btnSignIn
             // 
@@ -185,7 +185,7 @@ namespace PUPAcadPortal
             btnSignIn.Location = new Point(0, 227);
             btnSignIn.Name = "btnSignIn";
             btnSignIn.Size = new Size(384, 48);
-            btnSignIn.TabIndex = 1;
+            btnSignIn.TabIndex = 2;
             btnSignIn.Text = "Sign In";
             btnSignIn.UseVisualStyleBackColor = false;
             btnSignIn.Click += btnSignIn_Click;
@@ -198,7 +198,7 @@ namespace PUPAcadPortal
             panel6.Location = new Point(0, 94);
             panel6.Name = "panel6";
             panel6.Size = new Size(384, 78);
-            panel6.TabIndex = 5;
+            panel6.TabIndex = 1;
             // 
             // panel8
             // 
@@ -211,7 +211,7 @@ namespace PUPAcadPortal
             panel8.Location = new Point(0, 28);
             panel8.Name = "panel8";
             panel8.Size = new Size(384, 50);
-            panel8.TabIndex = 2;
+            panel8.TabIndex = 0;
             // 
             // btnShowPass
             // 
@@ -223,6 +223,7 @@ namespace PUPAcadPortal
             btnShowPass.Name = "btnShowPass";
             btnShowPass.Size = new Size(20, 20);
             btnShowPass.TabIndex = 3;
+            btnShowPass.TabStop = false;
             btnShowPass.UseVisualStyleBackColor = true;
             btnShowPass.Click += btnShowPass_Click;
             // 
@@ -267,7 +268,7 @@ namespace PUPAcadPortal
             panel5.Location = new Point(0, 0);
             panel5.Name = "panel5";
             panel5.Size = new Size(384, 78);
-            panel5.TabIndex = 5;
+            panel5.TabIndex = 0;
             // 
             // panel7
             // 
@@ -279,7 +280,7 @@ namespace PUPAcadPortal
             panel7.Location = new Point(0, 28);
             panel7.Name = "panel7";
             panel7.Size = new Size(384, 50);
-            panel7.TabIndex = 1;
+            panel7.TabIndex = 0;
             // 
             // pictureBox2
             // 
