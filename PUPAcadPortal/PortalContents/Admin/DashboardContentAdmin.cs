@@ -13,6 +13,10 @@ namespace PUPAcadPortal.PortalContents.Admin
         public DashboardContentAdmin()
         {
             InitializeComponent();
+            ToolTip toolTip = new ToolTip();
+            toolTip.SetToolTip(pnlDashboardRegisterStudent, "Click to register a new student");
+            toolTip.SetToolTip(pnlDashboardRegisterProfessor, "Click to register a new professor");
+            toolTip.SetToolTip(pnlDashboardViewAllUsers, "Click to view all users");
         }
         private void FixDashboardLayoutCompletely()
         {

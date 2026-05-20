@@ -1,5 +1,6 @@
 ﻿using PUPAcadPortal.Utils;
 using PUPAcadPortal.PortalContents.Admin;
+using PUPAcadPortal.PHAddress;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -60,8 +61,8 @@ namespace PUPAcadPortal
             //{ btnGradesManagement, new ContentPanelInfo { Panel = pnlGradesManagementContent, ResetAction = () => { /* grades reset */ } } },
             //{ btnAccountingRecords, new ContentPanelInfo { Panel = pnlAccountingRecordsContent, ResetAction = () => { /* accounting reset */ } } },
             //{ btnEnrolledStudents, new ContentPanelInfo { Panel = pnlEnrolledStudentsContent, ResetAction = () => { /* enrolled students reset */ } } },
-            { btnRegisterStudent, new ContentPanelInfo { Panel = pnlRegisterStudentContent, ResetAction = () => { /* register student reset */ } } },
-            { btnRegisterProfessor, new ContentPanelInfo { Panel = pnlRegisterProfessorContent, ResetAction = () => { /* register professor reset */ } } },
+            //{ btnRegisterStudent, new ContentPanelInfo { Panel = pnlRegisterStudentContent, ResetAction = () => { /* register student reset */ } } },
+            //{ btnRegisterProfessor, new ContentPanelInfo { Panel = pnlRegisterProfessorContent, ResetAction = () => { /* register professor reset */ } } },
             { btnViewAllUsers, new ContentPanelInfo { Panel = pnlViewAllUsersContent, ResetAction = ResetViewAllUsersPanel } }
             };
 
@@ -513,14 +514,14 @@ namespace PUPAcadPortal
         private void bgtnRegisterStudents_Click(object sender, EventArgs e)
         {
             changeButtonColor(sender as Button);
-            showContent(clickedButton);
+            mainContentPanel.ShowView(new RegisterStudentsContentAdmin());
             pnlRegistrarSubmenu.Visible = false;
         }
 
         private void btnRegisterProf_Click(object sender, EventArgs e)
         {
             changeButtonColor(sender as Button);
-            showContent(clickedButton);
+            mainContentPanel.ShowView(new RegisterProfContentAdmin());
             pnlRegistrarSubmenu.Visible = false;
         }
 
@@ -761,7 +762,19 @@ namespace PUPAcadPortal
             dgvUsers.DefaultCellStyle.SelectionForeColor = dgvUsers.DefaultCellStyle.ForeColor;
             dgvUsers.ClearSelection();
 
+            try
+            {
+                // Loads addresses for dropdowns in Register Student/Professor forms
+                AddToAddressCMB.LoadData();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to initialize geographic address databases: {ex.Message}",
+                                "System Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
             LoadStudentPlaceholders(); // show students by default
+            
             UpdateUserTypeIndicator();
 
             // Set up placeholder text behavior for search box
