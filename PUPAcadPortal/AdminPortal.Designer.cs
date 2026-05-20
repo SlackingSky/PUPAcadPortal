@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminPortal));
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
             pnlGMAddNewGradeForm = new Panel();
             cmbGMStudent = new ComboBox();
             btnGMSearch = new Button();
@@ -63,6 +63,8 @@
             flowLayoutPanel1 = new FlowLayoutPanel();
             panel7 = new Panel();
             btnDashboard = new Button();
+            panel3 = new Panel();
+            btnAnnouncement = new Button();
             pnlRegistrarFunctions = new Panel();
             btnRegistrarFunctions = new Button();
             pnlRegistrarSubmenu = new Panel();
@@ -172,6 +174,28 @@
             cmbSem = new ComboBox();
             pnlEnrollContent = new Panel();
             pnlContainerAdminPortal = new Panel();
+            pnlAnnouncement = new Panel();
+            pnlInsights = new Panel();
+            lblInsights = new Label();
+            panelPinned = new Panel();
+            flpPinned = new FlowLayoutPanel();
+            lblPinned = new Label();
+            cmbSortBy = new ComboBox();
+            label128 = new Label();
+            cmbFilter = new ComboBox();
+            lblFilter = new Label();
+            pnlCategories = new Panel();
+            flpCategories = new FlowLayoutPanel();
+            lblCategories = new Label();
+            pnlAnnouncementsList = new Panel();
+            fplAnnouncement = new FlowLayoutPanel();
+            lblShowing = new Label();
+            panel60 = new Panel();
+            label145 = new Label();
+            roundedPanel37 = new Panel();
+            txtAnnSearch = new TextBox();
+            pictureBox59 = new PictureBox();
+            btnCreateAnnouncement = new Button();
             pnlAccountingRecordsContent = new Panel();
             pnlARResultContainer = new Panel();
             btnARSearch = new Button();
@@ -386,6 +410,7 @@
             pnlSidebar.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             panel7.SuspendLayout();
+            panel3.SuspendLayout();
             pnlRegistrarFunctions.SuspendLayout();
             pnlRegistrarSubmenu.SuspendLayout();
             pnlGradesManagement.SuspendLayout();
@@ -419,6 +444,14 @@
             pnlCurrentSemester.SuspendLayout();
             panel2.SuspendLayout();
             pnlContainerAdminPortal.SuspendLayout();
+            pnlAnnouncement.SuspendLayout();
+            pnlInsights.SuspendLayout();
+            panelPinned.SuspendLayout();
+            pnlCategories.SuspendLayout();
+            pnlAnnouncementsList.SuspendLayout();
+            panel60.SuspendLayout();
+            roundedPanel37.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox59).BeginInit();
             pnlAccountingRecordsContent.SuspendLayout();
             pnlARResultContainer.SuspendLayout();
             pnlARUnpaidAmount.SuspendLayout();
@@ -811,8 +844,8 @@
             pnlSidebar.Location = new Point(0, 0);
             pnlSidebar.Margin = new Padding(0);
             pnlSidebar.Name = "pnlSidebar";
-            pnlSidebar.Padding = new Padding(0, 72, 0, 45);
-            pnlSidebar.Size = new Size(274, 791);
+            pnlSidebar.Padding = new Padding(0, 72, 0, 0);
+            pnlSidebar.Size = new Size(256, 1041);
             pnlSidebar.TabIndex = 0;
             // 
             // flowLayoutPanel1
@@ -820,6 +853,7 @@
             flowLayoutPanel1.AutoScroll = true;
             flowLayoutPanel1.BackColor = Color.Transparent;
             flowLayoutPanel1.Controls.Add(panel7);
+            flowLayoutPanel1.Controls.Add(panel3);
             flowLayoutPanel1.Controls.Add(pnlRegistrarFunctions);
             flowLayoutPanel1.Controls.Add(pnlRegistrarSubmenu);
             flowLayoutPanel1.Controls.Add(panel17);
@@ -832,7 +866,7 @@
             flowLayoutPanel1.Location = new Point(0, 145);
             flowLayoutPanel1.Margin = new Padding(0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(274, 520);
+            flowLayoutPanel1.Size = new Size(256, 815);
             flowLayoutPanel1.TabIndex = 1;
             flowLayoutPanel1.WrapContents = false;
             // 
@@ -868,11 +902,44 @@
             btnDashboard.UseVisualStyleBackColor = true;
             btnDashboard.Click += btnDashboard_Click;
             // 
+            // panel3
+            // 
+            panel3.BackColor = Color.Transparent;
+            panel3.Controls.Add(btnAnnouncement);
+            panel3.Location = new Point(0, 64);
+            panel3.Margin = new Padding(0);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(256, 48);
+            panel3.TabIndex = 12;
+            // 
+            // btnAnnouncement
+            // 
+            btnAnnouncement.BackgroundImageLayout = ImageLayout.None;
+            btnAnnouncement.Cursor = Cursors.Hand;
+            btnAnnouncement.FlatAppearance.BorderSize = 0;
+            btnAnnouncement.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnAnnouncement.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            btnAnnouncement.FlatStyle = FlatStyle.Flat;
+            btnAnnouncement.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            btnAnnouncement.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            btnAnnouncement.Image = Properties.Resources.edit_user_16;
+            btnAnnouncement.ImageAlign = ContentAlignment.MiddleLeft;
+            btnAnnouncement.Location = new Point(0, 0);
+            btnAnnouncement.Margin = new Padding(0);
+            btnAnnouncement.Name = "btnAnnouncement";
+            btnAnnouncement.Padding = new Padding(16, 0, 0, 0);
+            btnAnnouncement.Size = new Size(256, 48);
+            btnAnnouncement.TabIndex = 4;
+            btnAnnouncement.Text = " Announcements";
+            btnAnnouncement.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnAnnouncement.UseVisualStyleBackColor = true;
+            btnAnnouncement.Click += btnAnnouncement_Click;
+            // 
             // pnlRegistrarFunctions
             // 
             pnlRegistrarFunctions.BackColor = Color.Transparent;
             pnlRegistrarFunctions.Controls.Add(btnRegistrarFunctions);
-            pnlRegistrarFunctions.Location = new Point(0, 64);
+            pnlRegistrarFunctions.Location = new Point(0, 112);
             pnlRegistrarFunctions.Margin = new Padding(0);
             pnlRegistrarFunctions.Name = "pnlRegistrarFunctions";
             pnlRegistrarFunctions.Size = new Size(256, 48);
@@ -907,7 +974,7 @@
             pnlRegistrarSubmenu.Controls.Add(pnlGradesManagement);
             pnlRegistrarSubmenu.Controls.Add(pnlAccountingRecords);
             pnlRegistrarSubmenu.Controls.Add(pnlEnrolledStudents);
-            pnlRegistrarSubmenu.Location = new Point(0, 112);
+            pnlRegistrarSubmenu.Location = new Point(0, 160);
             pnlRegistrarSubmenu.Margin = new Padding(0);
             pnlRegistrarSubmenu.Name = "pnlRegistrarSubmenu";
             pnlRegistrarSubmenu.Size = new Size(256, 144);
@@ -1016,7 +1083,7 @@
             // panel17
             // 
             panel17.Controls.Add(btnRegisterStudent);
-            panel17.Location = new Point(0, 256);
+            panel17.Location = new Point(0, 304);
             panel17.Margin = new Padding(0);
             panel17.Name = "panel17";
             panel17.Size = new Size(256, 48);
@@ -1048,7 +1115,7 @@
             // panel18
             // 
             panel18.Controls.Add(btnRegisterProfessor);
-            panel18.Location = new Point(0, 304);
+            panel18.Location = new Point(0, 352);
             panel18.Margin = new Padding(0);
             panel18.Name = "panel18";
             panel18.Size = new Size(256, 48);
@@ -1080,7 +1147,7 @@
             // panel11
             // 
             panel11.Controls.Add(btnViewAllUsers);
-            panel11.Location = new Point(0, 352);
+            panel11.Location = new Point(0, 400);
             panel11.Margin = new Padding(0);
             panel11.Name = "panel11";
             panel11.Size = new Size(256, 48);
@@ -1112,7 +1179,7 @@
             // panel9
             // 
             panel9.Controls.Add(btnSubjectOffering);
-            panel9.Location = new Point(0, 400);
+            panel9.Location = new Point(0, 448);
             panel9.Margin = new Padding(0);
             panel9.Name = "panel9";
             panel9.Size = new Size(256, 48);
@@ -1149,7 +1216,7 @@
             pnlsubofferingSubmenu.Controls.Add(btnSO_Schedule);
             pnlsubofferingSubmenu.Controls.Add(btnSO_CurriculumArchive);
             pnlsubofferingSubmenu.FlowDirection = FlowDirection.TopDown;
-            pnlsubofferingSubmenu.Location = new Point(0, 448);
+            pnlsubofferingSubmenu.Location = new Point(0, 496);
             pnlsubofferingSubmenu.Margin = new Padding(0);
             pnlsubofferingSubmenu.Name = "pnlsubofferingSubmenu";
             pnlsubofferingSubmenu.Size = new Size(256, 192);
@@ -1244,7 +1311,7 @@
             panel4.Dock = DockStyle.Top;
             panel4.Location = new Point(0, 72);
             panel4.Name = "panel4";
-            panel4.Size = new Size(274, 73);
+            panel4.Size = new Size(256, 73);
             panel4.TabIndex = 0;
             // 
             // panel5
@@ -1302,9 +1369,9 @@
             panel12.BackColor = Color.FromArgb(30, 109, 0, 0);
             panel12.Controls.Add(panel13);
             panel12.Dock = DockStyle.Bottom;
-            panel12.Location = new Point(0, 665);
+            panel12.Location = new Point(0, 960);
             panel12.Name = "panel12";
-            panel12.Size = new Size(274, 81);
+            panel12.Size = new Size(256, 81);
             panel12.TabIndex = 0;
             // 
             // panel13
@@ -1350,7 +1417,7 @@
             pnlEditSchedule.Location = new Point(0, 0);
             pnlEditSchedule.Margin = new Padding(3, 2, 3, 2);
             pnlEditSchedule.Name = "pnlEditSchedule";
-            pnlEditSchedule.Size = new Size(1258, 993);
+            pnlEditSchedule.Size = new Size(1631, 993);
             pnlEditSchedule.TabIndex = 8;
             pnlEditSchedule.Paint += pnlEditSchedule_Paint;
             // 
@@ -1366,7 +1433,7 @@
             panel1.Location = new Point(0, 0);
             panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1242, 72);
+            panel1.Size = new Size(1615, 72);
             panel1.TabIndex = 7;
             // 
             // btnClearSchedule
@@ -1377,7 +1444,7 @@
             btnClearSchedule.FlatAppearance.BorderSize = 0;
             btnClearSchedule.FlatStyle = FlatStyle.Flat;
             btnClearSchedule.ForeColor = Color.White;
-            btnClearSchedule.Location = new Point(974, 36);
+            btnClearSchedule.Location = new Point(1347, 36);
             btnClearSchedule.Margin = new Padding(3, 2, 3, 2);
             btnClearSchedule.Name = "btnClearSchedule";
             btnClearSchedule.Size = new Size(122, 27);
@@ -1394,7 +1461,7 @@
             btnSaveSchedule.FlatAppearance.BorderSize = 0;
             btnSaveSchedule.FlatStyle = FlatStyle.Flat;
             btnSaveSchedule.ForeColor = Color.White;
-            btnSaveSchedule.Location = new Point(1108, 36);
+            btnSaveSchedule.Location = new Point(1481, 36);
             btnSaveSchedule.Margin = new Padding(3, 2, 3, 2);
             btnSaveSchedule.Name = "btnSaveSchedule";
             btnSaveSchedule.Size = new Size(118, 27);
@@ -1453,7 +1520,7 @@
             dgvEditSchedule.RowHeadersVisible = false;
             dgvEditSchedule.RowHeadersWidth = 51;
             dgvEditSchedule.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvEditSchedule.Size = new Size(1216, 495);
+            dgvEditSchedule.Size = new Size(1589, 495);
             dgvEditSchedule.TabIndex = 6;
             dgvEditSchedule.CellContentClick += dgvEditSchedule_CellContentClick;
             // 
@@ -1591,7 +1658,7 @@
             TotalUnits.HeaderText = "Total Units";
             TotalUnits.MinimumWidth = 6;
             TotalUnits.Name = "TotalUnits";
-            TotalUnits.Width = 88;
+            TotalUnits.Width = 87;
             // 
             // Year
             // 
@@ -1610,10 +1677,10 @@
             pnlSubOfferingContent.Controls.Add(pnlSchedule);
             pnlSubOfferingContent.Controls.Add(pnlCurrentSemester);
             pnlSubOfferingContent.Dock = DockStyle.Fill;
-            pnlSubOfferingContent.Location = new Point(274, 72);
+            pnlSubOfferingContent.Location = new Point(256, 72);
             pnlSubOfferingContent.Margin = new Padding(0);
             pnlSubOfferingContent.Name = "pnlSubOfferingContent";
-            pnlSubOfferingContent.Size = new Size(1254, 719);
+            pnlSubOfferingContent.Size = new Size(1648, 969);
             pnlSubOfferingContent.TabIndex = 6;
             pnlSubOfferingContent.Paint += pnlCoursesContent_Paint;
             // 
@@ -1627,7 +1694,7 @@
             pnlCurriculumArchive.Location = new Point(0, 0);
             pnlCurriculumArchive.Margin = new Padding(3, 2, 3, 2);
             pnlCurriculumArchive.Name = "pnlCurriculumArchive";
-            pnlCurriculumArchive.Size = new Size(1258, 993);
+            pnlCurriculumArchive.Size = new Size(1631, 993);
             pnlCurriculumArchive.TabIndex = 7;
             // 
             // pnlCurriculum
@@ -1640,7 +1707,7 @@
             pnlCurriculum.Location = new Point(0, 36);
             pnlCurriculum.Margin = new Padding(3, 2, 3, 2);
             pnlCurriculum.Name = "pnlCurriculum";
-            pnlCurriculum.Size = new Size(1258, 957);
+            pnlCurriculum.Size = new Size(1631, 957);
             pnlCurriculum.TabIndex = 1;
             // 
             // lblCurriculumList
@@ -1661,7 +1728,7 @@
             btnUpdateCurriculum.BackColor = Color.FromArgb(109, 0, 0);
             btnUpdateCurriculum.FlatStyle = FlatStyle.Flat;
             btnUpdateCurriculum.ForeColor = Color.White;
-            btnUpdateCurriculum.Location = new Point(1097, 584);
+            btnUpdateCurriculum.Location = new Point(1470, 584);
             btnUpdateCurriculum.Margin = new Padding(3, 2, 3, 2);
             btnUpdateCurriculum.Name = "btnUpdateCurriculum";
             btnUpdateCurriculum.Size = new Size(140, 27);
@@ -1689,7 +1756,7 @@
             dgvCurriculum.RowHeadersVisible = false;
             dgvCurriculum.RowHeadersWidth = 51;
             dgvCurriculum.ScrollBars = ScrollBars.Vertical;
-            dgvCurriculum.Size = new Size(1192, 495);
+            dgvCurriculum.Size = new Size(1565, 495);
             dgvCurriculum.TabIndex = 0;
             // 
             // CourseCode2
@@ -1743,7 +1810,7 @@
             panel14.Location = new Point(0, 0);
             panel14.Margin = new Padding(3, 2, 3, 2);
             panel14.Name = "panel14";
-            panel14.Size = new Size(1258, 36);
+            panel14.Size = new Size(1631, 36);
             panel14.TabIndex = 0;
             // 
             // btnArchive
@@ -1780,7 +1847,7 @@
             pnlArchive.Location = new Point(0, 0);
             pnlArchive.Margin = new Padding(3, 2, 3, 2);
             pnlArchive.Name = "pnlArchive";
-            pnlArchive.Size = new Size(1258, 993);
+            pnlArchive.Size = new Size(1631, 993);
             pnlArchive.TabIndex = 12;
             // 
             // dgvArchive
@@ -1802,7 +1869,7 @@
             dgvArchive.RowHeadersVisible = false;
             dgvArchive.RowHeadersWidth = 51;
             dgvArchive.ScrollBars = ScrollBars.Vertical;
-            dgvArchive.Size = new Size(1204, 495);
+            dgvArchive.Size = new Size(1577, 495);
             dgvArchive.TabIndex = 0;
             // 
             // Semester
@@ -1850,25 +1917,25 @@
             dgvScheduleView.BackgroundColor = Color.White;
             dgvScheduleView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvScheduleView.Columns.AddRange(new DataGridViewColumn[] { CourseCode1, CourseTitle1, Lec1, Lab1, TotalUnits1, Section1, Day1, Start1, End1, Room1, Instructor1 });
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.Window;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle1.ForeColor = SystemColors.ActiveCaption;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
-            dgvScheduleView.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = SystemColors.Window;
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle5.ForeColor = SystemColors.ActiveCaption;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
+            dgvScheduleView.DefaultCellStyle = dataGridViewCellStyle5;
             dgvScheduleView.Location = new Point(26, 89);
             dgvScheduleView.Margin = new Padding(3, 2, 3, 2);
             dgvScheduleView.Name = "dgvScheduleView";
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle2.ForeColor = Color.Black;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            dgvScheduleView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = SystemColors.Control;
+            dataGridViewCellStyle6.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle6.ForeColor = Color.Black;
+            dataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
+            dgvScheduleView.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             dgvScheduleView.RowHeadersVisible = false;
             dgvScheduleView.RowHeadersWidth = 51;
             dgvScheduleView.ScrollBars = ScrollBars.Vertical;
@@ -2154,12 +2221,13 @@
             pnlEnrollContent.Location = new Point(328, 136);
             pnlEnrollContent.Margin = new Padding(0);
             pnlEnrollContent.Name = "pnlEnrollContent";
-            pnlEnrollContent.Size = new Size(1272, 719);
+            pnlEnrollContent.Size = new Size(1648, 969);
             pnlEnrollContent.TabIndex = 5;
             pnlEnrollContent.Visible = false;
             // 
             // pnlContainerAdminPortal
             // 
+            pnlContainerAdminPortal.Controls.Add(pnlAnnouncement);
             pnlContainerAdminPortal.Controls.Add(pnlAccountingRecordsContent);
             pnlContainerAdminPortal.Controls.Add(pnlRegisterProfessorContent);
             pnlContainerAdminPortal.Controls.Add(pnlSubOfferingContent);
@@ -2175,8 +2243,257 @@
             pnlContainerAdminPortal.Dock = DockStyle.Fill;
             pnlContainerAdminPortal.Location = new Point(0, 0);
             pnlContainerAdminPortal.Name = "pnlContainerAdminPortal";
-            pnlContainerAdminPortal.Size = new Size(1528, 791);
+            pnlContainerAdminPortal.Size = new Size(1904, 1041);
             pnlContainerAdminPortal.TabIndex = 0;
+            // 
+            // pnlAnnouncement
+            // 
+            pnlAnnouncement.Controls.Add(pnlInsights);
+            pnlAnnouncement.Controls.Add(panelPinned);
+            pnlAnnouncement.Controls.Add(cmbSortBy);
+            pnlAnnouncement.Controls.Add(label128);
+            pnlAnnouncement.Controls.Add(cmbFilter);
+            pnlAnnouncement.Controls.Add(lblFilter);
+            pnlAnnouncement.Controls.Add(pnlCategories);
+            pnlAnnouncement.Controls.Add(pnlAnnouncementsList);
+            pnlAnnouncement.Controls.Add(panel60);
+            pnlAnnouncement.Controls.Add(roundedPanel37);
+            pnlAnnouncement.Controls.Add(btnCreateAnnouncement);
+            pnlAnnouncement.Dock = DockStyle.Fill;
+            pnlAnnouncement.Location = new Point(256, 72);
+            pnlAnnouncement.Name = "pnlAnnouncement";
+            pnlAnnouncement.Size = new Size(1648, 969);
+            pnlAnnouncement.TabIndex = 22;
+            // 
+            // pnlInsights
+            // 
+            pnlInsights.BackColor = Color.White;
+            pnlInsights.BorderStyle = BorderStyle.FixedSingle;
+            pnlInsights.Controls.Add(lblInsights);
+            pnlInsights.Location = new Point(1441, 650);
+            pnlInsights.Name = "pnlInsights";
+            pnlInsights.Size = new Size(201, 317);
+            pnlInsights.TabIndex = 18;
+            // 
+            // lblInsights
+            // 
+            lblInsights.AutoSize = true;
+            lblInsights.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblInsights.Location = new Point(3, 2);
+            lblInsights.Name = "lblInsights";
+            lblInsights.Size = new Size(163, 19);
+            lblInsights.TabIndex = 0;
+            lblInsights.Text = "Announcement Insights";
+            // 
+            // panelPinned
+            // 
+            panelPinned.BackColor = Color.White;
+            panelPinned.BorderStyle = BorderStyle.FixedSingle;
+            panelPinned.Controls.Add(flpPinned);
+            panelPinned.Controls.Add(lblPinned);
+            panelPinned.Location = new Point(1203, 45);
+            panelPinned.Name = "panelPinned";
+            panelPinned.Size = new Size(439, 599);
+            panelPinned.TabIndex = 8;
+            // 
+            // flpPinned
+            // 
+            flpPinned.AutoScroll = true;
+            flpPinned.BackColor = Color.White;
+            flpPinned.Location = new Point(5, 27);
+            flpPinned.Name = "flpPinned";
+            flpPinned.Size = new Size(429, 564);
+            flpPinned.TabIndex = 11;
+            // 
+            // lblPinned
+            // 
+            lblPinned.AutoSize = true;
+            lblPinned.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblPinned.Location = new Point(5, 2);
+            lblPinned.Name = "lblPinned";
+            lblPinned.Size = new Size(165, 19);
+            lblPinned.TabIndex = 0;
+            lblPinned.Text = "Pinned Announcements";
+            // 
+            // cmbSortBy
+            // 
+            cmbSortBy.Cursor = Cursors.IBeam;
+            cmbSortBy.Items.AddRange(new object[] { "Newest First" });
+            cmbSortBy.Location = new Point(595, 58);
+            cmbSortBy.Name = "cmbSortBy";
+            cmbSortBy.Size = new Size(150, 23);
+            cmbSortBy.TabIndex = 16;
+            // 
+            // label128
+            // 
+            label128.BackColor = Color.Transparent;
+            label128.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            label128.Location = new Point(532, 58);
+            label128.Name = "label128";
+            label128.Size = new Size(84, 24);
+            label128.TabIndex = 17;
+            label128.Text = "Sort by:";
+            // 
+            // cmbFilter
+            // 
+            cmbFilter.Cursor = Cursors.IBeam;
+            cmbFilter.Items.AddRange(new object[] { "All Announcements" });
+            cmbFilter.Location = new Point(353, 58);
+            cmbFilter.Name = "cmbFilter";
+            cmbFilter.Size = new Size(150, 23);
+            cmbFilter.TabIndex = 15;
+            // 
+            // lblFilter
+            // 
+            lblFilter.BackColor = Color.Transparent;
+            lblFilter.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblFilter.Location = new Point(307, 60);
+            lblFilter.Name = "lblFilter";
+            lblFilter.Size = new Size(84, 24);
+            lblFilter.TabIndex = 10;
+            lblFilter.Text = "Filter:";
+            // 
+            // pnlCategories
+            // 
+            pnlCategories.AutoScroll = true;
+            pnlCategories.BackColor = Color.White;
+            pnlCategories.BorderStyle = BorderStyle.FixedSingle;
+            pnlCategories.Controls.Add(flpCategories);
+            pnlCategories.Controls.Add(lblCategories);
+            pnlCategories.Location = new Point(1203, 650);
+            pnlCategories.Name = "pnlCategories";
+            pnlCategories.Size = new Size(233, 317);
+            pnlCategories.TabIndex = 13;
+            // 
+            // flpCategories
+            // 
+            flpCategories.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
+            flpCategories.BackColor = Color.White;
+            flpCategories.FlowDirection = FlowDirection.TopDown;
+            flpCategories.Location = new Point(8, 16);
+            flpCategories.Name = "flpCategories";
+            flpCategories.Size = new Size(226, 302);
+            flpCategories.TabIndex = 0;
+            flpCategories.WrapContents = false;
+            // 
+            // lblCategories
+            // 
+            lblCategories.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblCategories.Location = new Point(6, 0);
+            lblCategories.Name = "lblCategories";
+            lblCategories.Size = new Size(100, 20);
+            lblCategories.TabIndex = 8;
+            lblCategories.Text = "Categories";
+            // 
+            // pnlAnnouncementsList
+            // 
+            pnlAnnouncementsList.BackColor = Color.White;
+            pnlAnnouncementsList.BorderStyle = BorderStyle.FixedSingle;
+            pnlAnnouncementsList.Controls.Add(fplAnnouncement);
+            pnlAnnouncementsList.Controls.Add(lblShowing);
+            pnlAnnouncementsList.Location = new Point(15, 94);
+            pnlAnnouncementsList.Name = "pnlAnnouncementsList";
+            pnlAnnouncementsList.Size = new Size(1182, 873);
+            pnlAnnouncementsList.TabIndex = 14;
+            // 
+            // fplAnnouncement
+            // 
+            fplAnnouncement.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
+            fplAnnouncement.FlowDirection = FlowDirection.TopDown;
+            fplAnnouncement.Location = new Point(2, 2);
+            fplAnnouncement.Margin = new Padding(0);
+            fplAnnouncement.Name = "fplAnnouncement";
+            fplAnnouncement.Size = new Size(1177, 850);
+            fplAnnouncement.TabIndex = 0;
+            fplAnnouncement.WrapContents = false;
+            // 
+            // lblShowing
+            // 
+            lblShowing.BackColor = Color.Transparent;
+            lblShowing.ForeColor = Color.Gray;
+            lblShowing.Location = new Point(0, 850);
+            lblShowing.Name = "lblShowing";
+            lblShowing.Size = new Size(250, 20);
+            lblShowing.TabIndex = 11;
+            lblShowing.Text = "Showing 1 to 4 of 12 announcements";
+            // 
+            // panel60
+            // 
+            panel60.BackColor = SystemColors.ButtonHighlight;
+            panel60.Controls.Add(label145);
+            panel60.Dock = DockStyle.Top;
+            panel60.Location = new Point(0, 0);
+            panel60.Margin = new Padding(3, 2, 3, 2);
+            panel60.Name = "panel60";
+            panel60.Size = new Size(1648, 41);
+            panel60.TabIndex = 9;
+            // 
+            // label145
+            // 
+            label145.AutoSize = true;
+            label145.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label145.Location = new Point(15, 8);
+            label145.Name = "label145";
+            label145.Size = new Size(152, 25);
+            label145.TabIndex = 0;
+            label145.Text = "Announcements";
+            // 
+            // roundedPanel37
+            // 
+            roundedPanel37.BackColor = Color.White;
+            roundedPanel37.BorderStyle = BorderStyle.FixedSingle;
+            roundedPanel37.Controls.Add(txtAnnSearch);
+            roundedPanel37.Controls.Add(pictureBox59);
+            roundedPanel37.Location = new Point(15, 58);
+            roundedPanel37.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel37.Name = "roundedPanel37";
+            roundedPanel37.Padding = new Padding(4);
+            roundedPanel37.Size = new Size(285, 31);
+            roundedPanel37.TabIndex = 8;
+            // 
+            // txtAnnSearch
+            // 
+            txtAnnSearch.BorderStyle = BorderStyle.None;
+            txtAnnSearch.Cursor = Cursors.IBeam;
+            txtAnnSearch.Location = new Point(38, 8);
+            txtAnnSearch.Margin = new Padding(3, 2, 3, 2);
+            txtAnnSearch.Name = "txtAnnSearch";
+            txtAnnSearch.PlaceholderText = "Search Here";
+            txtAnnSearch.Size = new Size(240, 16);
+            txtAnnSearch.TabIndex = 1;
+            // 
+            // pictureBox59
+            // 
+            pictureBox59.Image = Properties.Resources.magnifier;
+            pictureBox59.Location = new Point(8, 6);
+            pictureBox59.Margin = new Padding(3, 2, 3, 2);
+            pictureBox59.Name = "pictureBox59";
+            pictureBox59.Size = new Size(25, 19);
+            pictureBox59.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox59.TabIndex = 0;
+            pictureBox59.TabStop = false;
+            // 
+            // btnCreateAnnouncement
+            // 
+            btnCreateAnnouncement.BackColor = Color.Maroon;
+            btnCreateAnnouncement.BackgroundImageLayout = ImageLayout.None;
+            btnCreateAnnouncement.Cursor = Cursors.Hand;
+            btnCreateAnnouncement.FlatAppearance.BorderSize = 0;
+            btnCreateAnnouncement.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnCreateAnnouncement.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            btnCreateAnnouncement.FlatStyle = FlatStyle.Flat;
+            btnCreateAnnouncement.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnCreateAnnouncement.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            btnCreateAnnouncement.ImageAlign = ContentAlignment.TopLeft;
+            btnCreateAnnouncement.Location = new Point(912, 57);
+            btnCreateAnnouncement.MinimumSize = new Size(227, 30);
+            btnCreateAnnouncement.Name = "btnCreateAnnouncement";
+            btnCreateAnnouncement.Padding = new Padding(16, 0, 18, 0);
+            btnCreateAnnouncement.Size = new Size(285, 31);
+            btnCreateAnnouncement.TabIndex = 7;
+            btnCreateAnnouncement.Text = "    Create Announcement";
+            btnCreateAnnouncement.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnCreateAnnouncement.UseVisualStyleBackColor = false;
             // 
             // pnlAccountingRecordsContent
             // 
@@ -2190,9 +2507,9 @@
             pnlAccountingRecordsContent.Controls.Add(label67);
             pnlAccountingRecordsContent.Controls.Add(pictureBox10);
             pnlAccountingRecordsContent.Dock = DockStyle.Fill;
-            pnlAccountingRecordsContent.Location = new Point(274, 72);
+            pnlAccountingRecordsContent.Location = new Point(256, 72);
             pnlAccountingRecordsContent.Name = "pnlAccountingRecordsContent";
-            pnlAccountingRecordsContent.Size = new Size(1254, 719);
+            pnlAccountingRecordsContent.Size = new Size(1648, 969);
             pnlAccountingRecordsContent.TabIndex = 10;
             pnlAccountingRecordsContent.Visible = false;
             // 
@@ -2205,7 +2522,7 @@
             pnlARResultContainer.Location = new Point(32, 250);
             pnlARResultContainer.Margin = new Padding(3, 2, 3, 2);
             pnlARResultContainer.Name = "pnlARResultContainer";
-            pnlARResultContainer.Size = new Size(1177, 292);
+            pnlARResultContainer.Size = new Size(1615, 292);
             pnlARResultContainer.TabIndex = 21;
             // 
             // btnARSearch
@@ -2215,7 +2532,7 @@
             btnARSearch.FlatStyle = FlatStyle.Flat;
             btnARSearch.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnARSearch.ForeColor = Color.White;
-            btnARSearch.Location = new Point(1014, 17);
+            btnARSearch.Location = new Point(1408, 17);
             btnARSearch.Margin = new Padding(3, 2, 3, 2);
             btnARSearch.Name = "btnARSearch";
             btnARSearch.Size = new Size(144, 32);
@@ -2428,9 +2745,9 @@
             pnlRegisterProfessorContent.Controls.Add(lblRegisterProfessor);
             pnlRegisterProfessorContent.Controls.Add(pictureBox4);
             pnlRegisterProfessorContent.Dock = DockStyle.Fill;
-            pnlRegisterProfessorContent.Location = new Point(274, 72);
+            pnlRegisterProfessorContent.Location = new Point(256, 72);
             pnlRegisterProfessorContent.Name = "pnlRegisterProfessorContent";
-            pnlRegisterProfessorContent.Size = new Size(1254, 719);
+            pnlRegisterProfessorContent.Size = new Size(1648, 969);
             pnlRegisterProfessorContent.TabIndex = 13;
             pnlRegisterProfessorContent.Visible = false;
             // 
@@ -2867,7 +3184,7 @@
             pnlDashboardContent.Controls.Add(pnlDashboardTotalStudents);
             pnlDashboardContent.Controls.Add(lblAdminDashboard);
             pnlDashboardContent.Controls.Add(lblAdminDashboardDesc);
-            pnlDashboardContent.Location = new Point(256, 72);
+            pnlDashboardContent.Location = new Point(444, 72);
             pnlDashboardContent.Margin = new Padding(0);
             pnlDashboardContent.Name = "pnlDashboardContent";
             pnlDashboardContent.Size = new Size(1272, 719);
@@ -2882,7 +3199,7 @@
             pnlDashboardContainerRecentAct.Controls.Add(pnlDashboardRADummyDara2);
             pnlDashboardContainerRecentAct.Controls.Add(pnlDashboardRADummyDara1);
             pnlDashboardContainerRecentAct.Controls.Add(label89);
-            pnlDashboardContainerRecentAct.Location = new Point(31, 3782);
+            pnlDashboardContainerRecentAct.Location = new Point(31, 4993);
             pnlDashboardContainerRecentAct.Margin = new Padding(3, 2, 3, 2);
             pnlDashboardContainerRecentAct.Name = "pnlDashboardContainerRecentAct";
             pnlDashboardContainerRecentAct.Size = new Size(1194, 325);
@@ -3035,7 +3352,7 @@
             pnlDashboardContainerQuickActions.Controls.Add(pnlDashboardViewAllUsers);
             pnlDashboardContainerQuickActions.Controls.Add(pnlDashboardRegisterStudent);
             pnlDashboardContainerQuickActions.Controls.Add(label81);
-            pnlDashboardContainerQuickActions.Location = new Point(34, 3472);
+            pnlDashboardContainerQuickActions.Location = new Point(34, 4683);
             pnlDashboardContainerQuickActions.Margin = new Padding(3, 2, 3, 2);
             pnlDashboardContainerQuickActions.Name = "pnlDashboardContainerQuickActions";
             pnlDashboardContainerQuickActions.Size = new Size(1194, 283);
@@ -3410,9 +3727,9 @@
             pnlViewAllUsersContent.Controls.Add(lblViewDesc);
             pnlViewAllUsersContent.Controls.Add(lblViewAllUsers);
             pnlViewAllUsersContent.Dock = DockStyle.Fill;
-            pnlViewAllUsersContent.Location = new Point(274, 72);
+            pnlViewAllUsersContent.Location = new Point(256, 72);
             pnlViewAllUsersContent.Name = "pnlViewAllUsersContent";
-            pnlViewAllUsersContent.Size = new Size(1254, 719);
+            pnlViewAllUsersContent.Size = new Size(1648, 969);
             pnlViewAllUsersContent.TabIndex = 14;
             pnlViewAllUsersContent.Visible = false;
             // 
@@ -3453,24 +3770,24 @@
             dgvUsers.BorderStyle = BorderStyle.None;
             dgvUsers.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvUsers.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = Color.Maroon;
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            dataGridViewCellStyle3.ForeColor = Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            dgvUsers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = Color.Maroon;
+            dataGridViewCellStyle7.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            dataGridViewCellStyle7.ForeColor = Color.White;
+            dataGridViewCellStyle7.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
+            dgvUsers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             dgvUsers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvUsers.Columns.AddRange(new DataGridViewColumn[] { colUserID, colUserName, colUserEmail, colUserProgram, colUserYear, colUserStatus });
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = SystemColors.Window;
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(197, 202, 233);
-            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
-            dgvUsers.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = SystemColors.Window;
+            dataGridViewCellStyle8.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle8.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = Color.FromArgb(197, 202, 233);
+            dataGridViewCellStyle8.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
+            dgvUsers.DefaultCellStyle = dataGridViewCellStyle8;
             dgvUsers.Dock = DockStyle.Fill;
             dgvUsers.EnableHeadersVisualStyles = false;
             dgvUsers.GridColor = Color.FromArgb(220, 220, 220);
@@ -3674,9 +3991,9 @@
             pnlEnrolledStudentsContent.Controls.Add(lblEnrolledStudentDesc);
             pnlEnrolledStudentsContent.Controls.Add(pictureBox8);
             pnlEnrolledStudentsContent.Dock = DockStyle.Fill;
-            pnlEnrolledStudentsContent.Location = new Point(274, 72);
+            pnlEnrolledStudentsContent.Location = new Point(256, 72);
             pnlEnrolledStudentsContent.Name = "pnlEnrolledStudentsContent";
-            pnlEnrolledStudentsContent.Size = new Size(1254, 719);
+            pnlEnrolledStudentsContent.Size = new Size(1648, 969);
             pnlEnrolledStudentsContent.TabIndex = 11;
             pnlEnrolledStudentsContent.Visible = false;
             // 
@@ -4036,9 +4353,9 @@
             pnlGradesManagementContent.Controls.Add(label37);
             pnlGradesManagementContent.Controls.Add(pictureBox6);
             pnlGradesManagementContent.Dock = DockStyle.Fill;
-            pnlGradesManagementContent.Location = new Point(274, 72);
+            pnlGradesManagementContent.Location = new Point(256, 72);
             pnlGradesManagementContent.Name = "pnlGradesManagementContent";
-            pnlGradesManagementContent.Size = new Size(1254, 719);
+            pnlGradesManagementContent.Size = new Size(1648, 969);
             pnlGradesManagementContent.TabIndex = 9;
             pnlGradesManagementContent.Visible = false;
             // 
@@ -4160,9 +4477,9 @@
             pnlRegisterStudentContent.Controls.Add(label36);
             pnlRegisterStudentContent.Controls.Add(pictureBox5);
             pnlRegisterStudentContent.Dock = DockStyle.Fill;
-            pnlRegisterStudentContent.Location = new Point(274, 72);
+            pnlRegisterStudentContent.Location = new Point(256, 72);
             pnlRegisterStudentContent.Name = "pnlRegisterStudentContent";
-            pnlRegisterStudentContent.Size = new Size(1254, 719);
+            pnlRegisterStudentContent.Size = new Size(1648, 969);
             pnlRegisterStudentContent.TabIndex = 12;
             pnlRegisterStudentContent.Visible = false;
             // 
@@ -4570,7 +4887,7 @@
             pnlAccountsContent.Location = new Point(288, 272);
             pnlAccountsContent.Margin = new Padding(0);
             pnlAccountsContent.Name = "pnlAccountsContent";
-            pnlAccountsContent.Size = new Size(1272, 719);
+            pnlAccountsContent.Size = new Size(1648, 969);
             pnlAccountsContent.TabIndex = 5;
             pnlAccountsContent.Visible = false;
             // 
@@ -4580,10 +4897,10 @@
             pnlHeader.Controls.Add(pnlYellow);
             pnlHeader.Controls.Add(panel15);
             pnlHeader.Dock = DockStyle.Top;
-            pnlHeader.Location = new Point(274, 0);
+            pnlHeader.Location = new Point(256, 0);
             pnlHeader.Margin = new Padding(0);
             pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(1254, 72);
+            pnlHeader.Size = new Size(1648, 72);
             pnlHeader.TabIndex = 2;
             // 
             // pnlYellow
@@ -4651,13 +4968,13 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1528, 791);
+            ClientSize = new Size(1904, 1041);
             Controls.Add(pnlContainerAdminPortal);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            MaximizeBox = false;
             Name = "AdminPortal";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "AdminPortal";
+            WindowState = FormWindowState.Maximized;
             FormClosing += AdminPortal_Closing;
             pnlGMAddNewGradeForm.ResumeLayout(false);
             pnlGMAddNewGradeForm.PerformLayout();
@@ -4665,6 +4982,7 @@
             flowLayoutPanel1.ResumeLayout(false);
             flowLayoutPanel1.PerformLayout();
             panel7.ResumeLayout(false);
+            panel3.ResumeLayout(false);
             pnlRegistrarFunctions.ResumeLayout(false);
             pnlRegistrarSubmenu.ResumeLayout(false);
             pnlGradesManagement.ResumeLayout(false);
@@ -4704,6 +5022,18 @@
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             pnlContainerAdminPortal.ResumeLayout(false);
+            pnlAnnouncement.ResumeLayout(false);
+            pnlInsights.ResumeLayout(false);
+            pnlInsights.PerformLayout();
+            panelPinned.ResumeLayout(false);
+            panelPinned.PerformLayout();
+            pnlCategories.ResumeLayout(false);
+            pnlAnnouncementsList.ResumeLayout(false);
+            panel60.ResumeLayout(false);
+            panel60.PerformLayout();
+            roundedPanel37.ResumeLayout(false);
+            roundedPanel37.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox59).EndInit();
             pnlAccountingRecordsContent.ResumeLayout(false);
             pnlAccountingRecordsContent.PerformLayout();
             pnlARResultContainer.ResumeLayout(false);
@@ -5153,5 +5483,29 @@
         private Panel pnlGMAddNewGradeForm;
         private FlowLayoutPanel pnlsubofferingSubmenu;
         private PictureBox pictureBox11;
+        private Panel panel3;
+        private Button btnAnnouncement;
+        private Panel pnlAnnouncement;
+        private Panel pnlInsights;
+        private Label lblInsights;
+        private Panel panelPinned;
+        private FlowLayoutPanel flpPinned;
+        private Label lblPinned;
+        private ComboBox cmbSortBy;
+        private Label label128;
+        private ComboBox cmbFilter;
+        private Label lblFilter;
+        private Panel pnlCategories;
+        private Label lblCategories;
+        private FlowLayoutPanel flpCategories;
+        private Panel pnlAnnouncementsList;
+        private FlowLayoutPanel fplAnnouncement;
+        private Label lblShowing;
+        private Panel panel60;
+        private Label label145;
+        private Panel roundedPanel37;
+        private TextBox txtAnnSearch;
+        private PictureBox pictureBox59;
+        private Button btnCreateAnnouncement;
     }
 }

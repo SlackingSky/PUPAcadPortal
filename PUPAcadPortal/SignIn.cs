@@ -19,63 +19,116 @@ namespace PUPAcadPortal
             txtPassword.UseSystemPasswordChar = !txtPassword.UseSystemPasswordChar;
         }
 
-        private void btnSignIn_Click(object sender, EventArgs e)
+        private async void btnSignIn_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtUsername.Text) || string.IsNullOrWhiteSpace(txtPassword.Text))
             {
                 MessageBox.Show("Please enter both username and password.", "Input Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-            try
+
+            User authenticatedUser = null;
+
+            using (LoadingForm loadingBox = new LoadingForm(this))
             {
-                using (var context = new DefaultdbContext())
+                loadingBox.Show(this);
+                this.Enabled = false;
+
+                try
                 {
-                    var user = context.Users.FirstOrDefault(u => u.Username == txtUsername.Text.ToLower().Trim());
+                    string usernameInput = txtUsername.Text.ToLower().Trim();
+                    string passwordInput = txtPassword.Text;
 
+                    authenticatedUser = await Task.Run(() =>
+                    {
+                        using (var context = new DefaultdbContext())
+                        {
+                            var user = context.Users.FirstOrDefault(u => u.Username == usernameInput);
 
-                    if (user != null && BCrypt.Net.BCrypt.Verify(txtPassword.Text, user.PasswordHash))
+                            if (user != null && BCrypt.Net.BCrypt.Verify(passwordInput, user.PasswordHash))
+                            {
+                                return user;
+                            }
+                        }
+                        return null;
+                    });
+                }
+                catch (TimeoutException)
+                {
+                    this.Enabled = true;
+                    loadingBox.Close();
+
+                    MessageBox.Show(
+                        "The login server is currently offline or unreachable. Please check your internet connection or try again later. Chat me (Brylle) for assistance.",
+                        "Database Offline",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                    return;
+                }
+                catch (System.Data.Common.DbException ex)
+                {
+                    this.Enabled = true;
+                    loadingBox.Close();
+
+                    MessageBox.Show(
+                        $"Database configuration error. The system could not connect. Chat me (Brylle) for assistance.\n\nDetails: {ex.Message}",
+                        "Connection Failed",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    this.Enabled = true;
+                    loadingBox.Close();
+
+                    MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                finally
+                {
+                    this.Enabled = true;
+                    if (!loadingBox.IsDisposed)
                     {
-                        var role = user.Role.ToLower().Trim();
-                        if (role == "admin")
-                        {
-                            this.Hide();
-                            AdminPortal adminPortal = new AdminPortal();
-                            adminPortal.WindowState = this.WindowState;
-                            adminPortal.ShowDialog();
-                            txtUsername.Clear();
-                            txtPassword.Clear();
-                            this.Show(); ;
-                        }
-                        else if (role == "instructor")
-                        {
-                            this.Hide();
-                            InstructorPortal instructorPortal = new InstructorPortal();
-                            instructorPortal.WindowState = this.WindowState;
-                            instructorPortal.ShowDialog();
-                            txtUsername.Clear();
-                            txtPassword.Clear();
-                            this.Show(); ;
-                        }
-                        else if (role == "student")
-                        {
-                            this.Hide();
-                            StudentPortal studentPortal = new StudentPortal(this);
-                            studentPortal.WindowState = this.WindowState;
-                            studentPortal.ShowDialog();
-                            txtUsername.Clear();
-                            txtPassword.Clear();
-                            this.Show(); ;
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Invalid username or password", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        loadingBox.Close();
                     }
                 }
             }
-            catch (Exception ex)
+
+            if (authenticatedUser != null)
             {
-                System.Windows.Forms.MessageBox.Show($"Database authentication error: {ex.Message}");
-                return;
+                var role = authenticatedUser.Role.ToLower().Trim();
+
+                this.Hide();
+
+                if (role == "admin")
+                {
+                    AdminPortal adminPortal = new AdminPortal();
+                    adminPortal.WindowState = this.WindowState;
+                    adminPortal.ShowDialog();
+                }
+                else if (role == "instructor")
+                {
+                    InstructorPortal instructorPortal = new InstructorPortal();
+                    instructorPortal.WindowState = this.WindowState;
+                    instructorPortal.ShowDialog();
+                }
+                else if (role == "student")
+                {
+                    StudentPortal studentPortal = new StudentPortal(this);
+                    studentPortal.WindowState = this.WindowState;
+                    studentPortal.ShowDialog();
+                }
+
+                txtUsername.Clear();
+                txtPassword.Clear();
+                this.Show();
+            }
+            else
+            {
+                MessageBox.Show("Invalid username or password", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
