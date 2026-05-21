@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="PortalForms\InstructoPortal.resx~RF18fff6a.TMP" />
     <None Remove="Resources\PUPLogo.ico" />
     <None Remove="Resources\Roboto-VariableFont_wdth,wght.ttf" />
   </ItemGroup>

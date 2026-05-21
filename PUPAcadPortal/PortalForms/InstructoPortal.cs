@@ -17,6 +17,7 @@ using static PUPAcadPortal.PortalForms.InstructorPortal;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
+using PUPAcadPortal.Utils;
 
 
 namespace PUPAcadPortal.PortalForms
@@ -24,6 +25,8 @@ namespace PUPAcadPortal.PortalForms
 {
     public partial class InstructorPortal : Form
     {
+        private SubmenuAnim submenuAnimLMS;
+
         private bool isEditing = false; // New flag to stop event interference
         public static int _year, _month;
         public static Dictionary<DateTime, string> notesDict = new Dictionary<DateTime, string>();
@@ -94,6 +97,9 @@ namespace PUPAcadPortal.PortalForms
         public InstructorPortal()
         {
             InitializeComponent();
+
+            submenuAnimLMS = new SubmenuAnim(pnllmsSubmenu, pnllmsSubmenu.Height);
+
             pnlAttendance.AutoScrollMinSize = new Size(0, 1000);
             SharedCalendarData.LoadData();
             pnlAttendance.AutoScrollMinSize = new Size(0, 1000);
@@ -359,18 +365,12 @@ namespace PUPAcadPortal.PortalForms
             changeButtonColor(sender as Button);
             showContent(clickedButton);
         }
-        private void btnLMS_Click(object sender, EventArgs e)
+        private async void btnLMS_Click(object sender, EventArgs e)
         {
             changeButtonColor(sender as Button);
             showContent(clickedButton);
-            pnllmsSubmenu.Visible = !pnllmsSubmenu.Visible;
-            if (pnllmsSubmenu.Visible)
-            {
-                btnLMS.Text = " LMS                                       ⌄";
-                btnAnnounceIns.PerformClick();
-            }
-            else
-                btnLMS.Text = " LMS                                        ›";
+            btnLMS.Text = !pnllmsSubmenu.Visible ? " LMS                                       ⌄" : " LMS                                        ›";
+            await submenuAnimLMS.ToggleSubMenuAsync();
         }
         private void btnLogout_Click(object sender, EventArgs e)
         {
