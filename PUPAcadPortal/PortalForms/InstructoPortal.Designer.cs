@@ -2634,13 +2634,13 @@
             // 
             // panel3
             // 
+            panel3.Controls.Add(pnlDashboardContent);
             panel3.Controls.Add(pnlAnnouncement);
             panel3.Controls.Add(pnlGrades);
             panel3.Controls.Add(pnlGradesContent);
             panel3.Controls.Add(pnlAttendance);
             panel3.Controls.Add(pnlLMSAct);
             panel3.Controls.Add(pnlCalendar);
-            panel3.Controls.Add(pnlDashboardContent);
             panel3.Controls.Add(pnlCreateAnnounce1);
             panel3.Controls.Add(pnlAnnounce);
             panel3.Controls.Add(pnlSubMenu);
@@ -12499,7 +12499,6 @@
             // 
             // pictureBox12
             // 
-            pictureBox12.Image = (Image)resources.GetObject("pictureBox12.Image");
             pictureBox12.Location = new Point(18, 38);
             pictureBox12.Name = "pictureBox12";
             pictureBox12.Size = new Size(71, 62);
