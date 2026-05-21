@@ -58,12 +58,6 @@
             btnSO_EditSchedule = new Button();
             btnSO_Schedule = new Button();
             btnSO_CurriculumArchive = new Button();
-            panel4 = new Panel();
-            panel5 = new Panel();
-            panel6 = new Panel();
-            label2 = new Label();
-            label1 = new Label();
-            pictureBox1 = new PictureBox();
             panel12 = new Panel();
             panel13 = new Panel();
             btnLogout = new Button();
@@ -96,6 +90,7 @@
             label3 = new Label();
             label4 = new Label();
             pictureBox2 = new PictureBox();
+            userProfile1 = new PUPAcadPortal.PortalContents.Misc.UserProfile();
             pnlSidebar.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             panel7.SuspendLayout();
@@ -110,10 +105,6 @@
             panel11.SuspendLayout();
             panel9.SuspendLayout();
             pnlsubofferingSubmenu.SuspendLayout();
-            panel4.SuspendLayout();
-            panel5.SuspendLayout();
-            panel6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel12.SuspendLayout();
             panel13.SuspendLayout();
             pnlContainerAdminPortal.SuspendLayout();
@@ -134,8 +125,8 @@
             // 
             pnlSidebar.BackColor = Color.Maroon;
             pnlSidebar.Controls.Add(flowLayoutPanel1);
-            pnlSidebar.Controls.Add(panel4);
             pnlSidebar.Controls.Add(panel12);
+            pnlSidebar.Controls.Add(userProfile1);
             pnlSidebar.Dock = DockStyle.Left;
             pnlSidebar.Location = new Point(0, 0);
             pnlSidebar.Margin = new Padding(0);
@@ -604,66 +595,6 @@
             btnSO_CurriculumArchive.UseVisualStyleBackColor = false;
             btnSO_CurriculumArchive.Click += btnSO_CurriculumArchive_Click;
             // 
-            // panel4
-            // 
-            panel4.BackColor = Color.FromArgb(30, 109, 0, 0);
-            panel4.Controls.Add(panel5);
-            panel4.Dock = DockStyle.Top;
-            panel4.Location = new Point(0, 72);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(256, 73);
-            panel4.TabIndex = 0;
-            // 
-            // panel5
-            // 
-            panel5.Controls.Add(panel6);
-            panel5.Controls.Add(pictureBox1);
-            panel5.Location = new Point(16, 16);
-            panel5.Name = "panel5";
-            panel5.Size = new Size(224, 40);
-            panel5.TabIndex = 1;
-            // 
-            // panel6
-            // 
-            panel6.Controls.Add(label2);
-            panel6.Controls.Add(label1);
-            panel6.Location = new Point(52, 0);
-            panel6.Name = "panel6";
-            panel6.Size = new Size(172, 40);
-            panel6.TabIndex = 2;
-            // 
-            // label2
-            // 
-            label2.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Pixel);
-            label2.ForeColor = Color.Transparent;
-            label2.Location = new Point(0, 24);
-            label2.Name = "label2";
-            label2.Size = new Size(172, 16);
-            label2.TabIndex = 1;
-            label2.Text = "Admin";
-            label2.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // label1
-            // 
-            label1.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            label1.ForeColor = Color.Transparent;
-            label1.Location = new Point(0, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(172, 24);
-            label1.TabIndex = 0;
-            label1.Text = "DemoAdmin";
-            label1.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = Properties.Resources.UserY;
-            pictureBox1.Location = new Point(0, 0);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(40, 40);
-            pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
-            pictureBox1.TabIndex = 0;
-            pictureBox1.TabStop = false;
-            // 
             // panel12
             // 
             panel12.BackColor = Color.FromArgb(30, 109, 0, 0);
@@ -1021,6 +952,14 @@
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
             // 
+            // userProfile1
+            // 
+            userProfile1.Dock = DockStyle.Top;
+            userProfile1.Location = new Point(0, 72);
+            userProfile1.Name = "userProfile1";
+            userProfile1.Size = new Size(256, 73);
+            userProfile1.TabIndex = 0;
+            // 
             // AdminPortal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1048,11 +987,6 @@
             panel11.ResumeLayout(false);
             panel9.ResumeLayout(false);
             pnlsubofferingSubmenu.ResumeLayout(false);
-            panel4.ResumeLayout(false);
-            panel5.ResumeLayout(false);
-            panel5.PerformLayout();
-            panel6.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel12.ResumeLayout(false);
             panel13.ResumeLayout(false);
             pnlContainerAdminPortal.ResumeLayout(false);
@@ -1076,12 +1010,6 @@
 
         private Panel pnlSidebar;
         private Panel pnlContainerAdminPortal;
-        private Panel panel4;
-        private Panel panel5;
-        private PictureBox pictureBox1;
-        private Panel panel6;
-        private Label label2;
-        private Label label1;
         private FlowLayoutPanel flowLayoutPanel1;
         private Panel panel7;
         private Button btnDashboard;
@@ -1142,5 +1070,6 @@
         private DataGridViewTextBoxColumn Semester;
         private DataGridViewTextBoxColumn SchoolYear;
         private DataGridViewTextBoxColumn blank;
+        private PortalContents.Misc.UserProfile userProfile1;
     }
 }

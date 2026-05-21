@@ -9,6 +9,7 @@ namespace PUPAcadPortal
 {
     public partial class SignIn : Form
     {
+        public static User? authenticatedUser;
         public SignIn()
         {
             InitializeComponent();
@@ -28,7 +29,7 @@ namespace PUPAcadPortal
                 return;
             }
 
-            User authenticatedUser = null;
+            authenticatedUser = null;
 
             using (LoadingForm loadingBox = new LoadingForm(this))
             {
@@ -53,6 +54,8 @@ namespace PUPAcadPortal
                         }
                         return null;
                     });
+
+
                 }
                 catch (TimeoutException)
                 {

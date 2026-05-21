@@ -68,12 +68,6 @@
             btnActivities = new Button();
             btnSubject = new Button();
             btnAnnounce = new Button();
-            panel4 = new Panel();
-            panel5 = new Panel();
-            panel6 = new Panel();
-            label2 = new Label();
-            label1 = new Label();
-            pictureBox1 = new PictureBox();
             pnlCoursesContent = new Panel();
             pnlContainerStudentPortal = new Panel();
             pnlAnnounce = new Panel();
@@ -762,6 +756,7 @@
             cmsEnrollAction = new ContextMenuStrip(components);
             viewDetailsToolStripMenuItem = new ToolStripMenuItem();
             dropSubjectToolStripMenuItem = new ToolStripMenuItem();
+            userProfile1 = new PUPAcadPortal.PortalContents.Misc.UserProfile();
             pnlSidebar.SuspendLayout();
             panel12.SuspendLayout();
             panel13.SuspendLayout();
@@ -772,10 +767,6 @@
             panel10.SuspendLayout();
             panel11.SuspendLayout();
             pnllmsSubmenu.SuspendLayout();
-            panel4.SuspendLayout();
-            panel5.SuspendLayout();
-            panel6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             pnlContainerStudentPortal.SuspendLayout();
             pnlAnnounce.SuspendLayout();
             pnlInsights.SuspendLayout();
@@ -1069,9 +1060,9 @@
             // pnlSidebar
             // 
             pnlSidebar.BackColor = Color.Maroon;
+            pnlSidebar.Controls.Add(userProfile1);
             pnlSidebar.Controls.Add(panel12);
             pnlSidebar.Controls.Add(flowLayoutPanel1);
-            pnlSidebar.Controls.Add(panel4);
             pnlSidebar.Dock = DockStyle.Left;
             pnlSidebar.Location = new Point(0, 0);
             pnlSidebar.Margin = new Padding(0);
@@ -1461,66 +1452,6 @@
             btnAnnounce.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnAnnounce.UseVisualStyleBackColor = true;
             btnAnnounce.Click += (this.btnAnnounce_Click);
-            // 
-            // panel4
-            // 
-            panel4.BackColor = Color.FromArgb((int)(byte)30, (int)(byte)109, (int)(byte)0, (int)(byte)0);
-            panel4.Controls.Add(panel5);
-            panel4.Dock = DockStyle.Top;
-            panel4.Location = new Point(0, 72);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(256, 73);
-            panel4.TabIndex = 0;
-            // 
-            // panel5
-            // 
-            panel5.Controls.Add(panel6);
-            panel5.Controls.Add(pictureBox1);
-            panel5.Location = new Point(16, 16);
-            panel5.Name = "panel5";
-            panel5.Size = new Size(224, 40);
-            panel5.TabIndex = 1;
-            // 
-            // panel6
-            // 
-            panel6.Controls.Add(label2);
-            panel6.Controls.Add(label1);
-            panel6.Location = new Point(52, 0);
-            panel6.Name = "panel6";
-            panel6.Size = new Size(172, 40);
-            panel6.TabIndex = 2;
-            // 
-            // label2
-            // 
-            label2.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Pixel);
-            label2.ForeColor = Color.FromArgb((int)(byte)179, (int)(byte)255, (int)(byte)255, (int)(byte)255);
-            label2.Location = new Point(0, 24);
-            label2.Name = "label2";
-            label2.Size = new Size(172, 16);
-            label2.TabIndex = 1;
-            label2.Text = "Student";
-            label2.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // label1
-            // 
-            label1.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, (byte)0);
-            label1.ForeColor = Color.White;
-            label1.Location = new Point(0, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(172, 24);
-            label1.TabIndex = 0;
-            label1.Text = "DemoStudent";
-            label1.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = PUPAcadPortal.Properties.Resources.UserY;
-            pictureBox1.Location = new Point(3, 7);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(40, 40);
-            pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
-            pictureBox1.TabIndex = 0;
-            pictureBox1.TabStop = false;
             // 
             // pnlCoursesContent
             // 
@@ -9888,6 +9819,14 @@
             dropSubjectToolStripMenuItem.Size = new Size(142, 22);
             dropSubjectToolStripMenuItem.Text = "Drop Subject";
             // 
+            // userProfile1
+            // 
+            userProfile1.Dock = DockStyle.Top;
+            userProfile1.Location = new Point(0, 72);
+            userProfile1.Name = "userProfile1";
+            userProfile1.Size = new Size(256, 73);
+            userProfile1.TabIndex = 2;
+            // 
             // StudentPortal
             // 
             this.AutoScaleDimensions = new SizeF(7F, 15F);
@@ -9912,11 +9851,6 @@
             panel10.ResumeLayout(false);
             panel11.ResumeLayout(false);
             pnllmsSubmenu.ResumeLayout(false);
-            panel4.ResumeLayout(false);
-            panel5.ResumeLayout(false);
-            panel5.PerformLayout();
-            panel6.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             pnlContainerStudentPortal.ResumeLayout(false);
             pnlAnnounce.ResumeLayout(false);
             pnlInsights.ResumeLayout(false);
@@ -10379,12 +10313,6 @@
 
         private Panel pnlSidebar;
         private Panel pnlContainerStudentPortal;
-        private Panel panel4;
-        private Panel panel5;
-        private PictureBox pictureBox1;
-        private Panel panel6;
-        private Label label2;
-        private Label label1;
         private FlowLayoutPanel flowLayoutPanel1;
         private Panel panel7;
         private Button btnDashboard;
@@ -11095,5 +11023,6 @@
         private Button btnMarkAllRead;
         private Panel panel1;
         private Label label10;
+        private PUPAcadPortal.PortalContents.Misc.UserProfile userProfile1;
     }
 }
