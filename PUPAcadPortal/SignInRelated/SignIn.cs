@@ -3,6 +3,7 @@ using MySqlConnector;
 using BCrypt.Net;
 using Microsoft.EntityFrameworkCore;
 using PUPAcadPortal.Models;
+using PUPAcadPortal.PortalForms;
 
 namespace PUPAcadPortal
 {

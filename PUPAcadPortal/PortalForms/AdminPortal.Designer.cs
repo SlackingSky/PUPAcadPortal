@@ -1,4 +1,4 @@
-﻿namespace PUPAcadPortal
+﻿namespace PUPAcadPortal.PortalForms
 {
     partial class AdminPortal
     {
@@ -30,8 +30,6 @@
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminPortal));
             pnlSidebar = new Panel();
             flowLayoutPanel1 = new FlowLayoutPanel();
@@ -71,6 +69,9 @@
             panel12 = new Panel();
             panel13 = new Panel();
             btnLogout = new Button();
+            pnlContainerAdminPortal = new Panel();
+            mainContentPanel = new Panel();
+            pnlSubOfferingContent = new Panel();
             pnlEditSchedule = new Panel();
             panel1 = new Panel();
             btnClearSchedule = new Button();
@@ -90,14 +91,6 @@
             EsEndTime = new DataGridViewTextBoxColumn();
             ESRoom = new DataGridViewComboBoxColumn();
             ESInstructor = new DataGridViewComboBoxColumn();
-            dgvSchedule = new DataGridView();
-            CourseCode = new DataGridViewTextBoxColumn();
-            CourseTitle = new DataGridViewTextBoxColumn();
-            Lab = new DataGridViewTextBoxColumn();
-            Lec = new DataGridViewTextBoxColumn();
-            TotalUnits = new DataGridViewTextBoxColumn();
-            Year = new DataGridViewTextBoxColumn();
-            pnlSubOfferingContent = new Panel();
             pnlCurriculumArchive = new Panel();
             pnlCurriculum = new Panel();
             lblCurriculumList = new Label();
@@ -138,6 +131,13 @@
             label6 = new Label();
             label5 = new Label();
             pnlCurrentSemester = new Panel();
+            dgvSchedule = new DataGridView();
+            CourseCode = new DataGridViewTextBoxColumn();
+            CourseTitle = new DataGridViewTextBoxColumn();
+            Lab = new DataGridViewTextBoxColumn();
+            Lec = new DataGridViewTextBoxColumn();
+            TotalUnits = new DataGridViewTextBoxColumn();
+            Year = new DataGridViewTextBoxColumn();
             panel2 = new Panel();
             btnSetCurrent = new Button();
             lblSemesterSetup = new Label();
@@ -146,31 +146,6 @@
             lblSY = new Label();
             lblSem = new Label();
             cmbSem = new ComboBox();
-            pnlEnrollContent = new Panel();
-            pnlContainerAdminPortal = new Panel();
-            mainContentPanel = new Panel();
-            pnlViewAllUsersContent = new Panel();
-            pnlViewSPsContent = new Panel();
-            pnlContainerdgvUsers = new Panel();
-            dgvUsers = new DataGridView();
-            colUserID = new DataGridViewTextBoxColumn();
-            colUserName = new DataGridViewTextBoxColumn();
-            colUserEmail = new DataGridViewTextBoxColumn();
-            colUserProgram = new DataGridViewTextBoxColumn();
-            colUserYear = new DataGridViewTextBoxColumn();
-            colUserStatus = new DataGridViewTextBoxColumn();
-            pnlSearchBarVAUs = new Panel();
-            cmbProgram = new ComboBox();
-            btnSearch = new Button();
-            cmbYear = new ComboBox();
-            txtSearchViewAUs = new TextBox();
-            btnViewProf = new Button();
-            pnlUserTypeIndicator = new Panel();
-            btnViewStudents = new Button();
-            pictureBox3 = new PictureBox();
-            lblViewDesc = new Label();
-            lblViewAllUsers = new Label();
-            pnlAccountsContent = new Panel();
             pnlHeader = new Panel();
             pnlYellow = new Panel();
             panel15 = new Panel();
@@ -198,11 +173,11 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel12.SuspendLayout();
             panel13.SuspendLayout();
+            pnlContainerAdminPortal.SuspendLayout();
+            pnlSubOfferingContent.SuspendLayout();
             pnlEditSchedule.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEditSchedule).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dgvSchedule).BeginInit();
-            pnlSubOfferingContent.SuspendLayout();
             pnlCurriculumArchive.SuspendLayout();
             pnlCurriculum.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvCurriculum).BeginInit();
@@ -213,14 +188,8 @@
             ((System.ComponentModel.ISupportInitialize)dgvScheduleView).BeginInit();
             panel10.SuspendLayout();
             pnlCurrentSemester.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvSchedule).BeginInit();
             panel2.SuspendLayout();
-            pnlContainerAdminPortal.SuspendLayout();
-            pnlViewAllUsersContent.SuspendLayout();
-            pnlViewSPsContent.SuspendLayout();
-            pnlContainerdgvUsers.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvUsers).BeginInit();
-            pnlSearchBarVAUs.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             pnlHeader.SuspendLayout();
             panel15.SuspendLayout();
             panel16.SuspendLayout();
@@ -603,7 +572,7 @@
             // 
             // pnlsubofferingSubmenu
             // 
-            pnlsubofferingSubmenu.AutoSize = true;
+            pnlsubofferingSubmenu.BackColor = Color.FromArgb(128, 109, 0, 0);
             pnlsubofferingSubmenu.Controls.Add(btnSO_CurrentSemester);
             pnlsubofferingSubmenu.Controls.Add(btnSO_EditSchedule);
             pnlsubofferingSubmenu.Controls.Add(btnSO_Schedule);
@@ -612,7 +581,7 @@
             pnlsubofferingSubmenu.Location = new Point(0, 496);
             pnlsubofferingSubmenu.Margin = new Padding(0);
             pnlsubofferingSubmenu.Name = "pnlsubofferingSubmenu";
-            pnlsubofferingSubmenu.Size = new Size(256, 192);
+            pnlsubofferingSubmenu.Size = new Size(256, 190);
             pnlsubofferingSubmenu.TabIndex = 11;
             pnlsubofferingSubmenu.Visible = false;
             pnlsubofferingSubmenu.WrapContents = false;
@@ -797,6 +766,43 @@
             btnLogout.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnLogout.UseVisualStyleBackColor = true;
             btnLogout.Click += btnLogout_Click;
+            // 
+            // pnlContainerAdminPortal
+            // 
+            pnlContainerAdminPortal.Controls.Add(mainContentPanel);
+            pnlContainerAdminPortal.Controls.Add(pnlSubOfferingContent);
+            pnlContainerAdminPortal.Controls.Add(pnlHeader);
+            pnlContainerAdminPortal.Controls.Add(pnlSidebar);
+            pnlContainerAdminPortal.Dock = DockStyle.Fill;
+            pnlContainerAdminPortal.Location = new Point(0, 0);
+            pnlContainerAdminPortal.Name = "pnlContainerAdminPortal";
+            pnlContainerAdminPortal.Size = new Size(1904, 1041);
+            pnlContainerAdminPortal.TabIndex = 0;
+            // 
+            // mainContentPanel
+            // 
+            mainContentPanel.BackColor = SystemColors.Control;
+            mainContentPanel.Dock = DockStyle.Fill;
+            mainContentPanel.Location = new Point(256, 72);
+            mainContentPanel.Name = "mainContentPanel";
+            mainContentPanel.Size = new Size(1648, 969);
+            mainContentPanel.TabIndex = 0;
+            // 
+            // pnlSubOfferingContent
+            // 
+            pnlSubOfferingContent.AutoScroll = true;
+            pnlSubOfferingContent.CausesValidation = false;
+            pnlSubOfferingContent.Controls.Add(pnlEditSchedule);
+            pnlSubOfferingContent.Controls.Add(pnlCurriculumArchive);
+            pnlSubOfferingContent.Controls.Add(pnlSchedule);
+            pnlSubOfferingContent.Controls.Add(pnlCurrentSemester);
+            pnlSubOfferingContent.Dock = DockStyle.Fill;
+            pnlSubOfferingContent.Location = new Point(256, 72);
+            pnlSubOfferingContent.Margin = new Padding(0);
+            pnlSubOfferingContent.Name = "pnlSubOfferingContent";
+            pnlSubOfferingContent.Size = new Size(1648, 969);
+            pnlSubOfferingContent.TabIndex = 6;
+            pnlSubOfferingContent.Paint += pnlCoursesContent_Paint;
             // 
             // pnlEditSchedule
             // 
@@ -991,91 +997,6 @@
             ESInstructor.Items.AddRange(new object[] { "Prof. A", "Prof. B" });
             ESInstructor.MinimumWidth = 6;
             ESInstructor.Name = "ESInstructor";
-            // 
-            // dgvSchedule
-            // 
-            dgvSchedule.AllowUserToAddRows = false;
-            dgvSchedule.AllowUserToDeleteRows = false;
-            dgvSchedule.AllowUserToResizeColumns = false;
-            dgvSchedule.AllowUserToResizeRows = false;
-            dgvSchedule.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            dgvSchedule.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvSchedule.BackgroundColor = Color.White;
-            dgvSchedule.ColumnHeadersHeight = 30;
-            dgvSchedule.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dgvSchedule.Columns.AddRange(new DataGridViewColumn[] { CourseCode, CourseTitle, Lab, Lec, TotalUnits, Year });
-            dgvSchedule.Location = new Point(26, 137);
-            dgvSchedule.Margin = new Padding(3, 2, 3, 2);
-            dgvSchedule.MultiSelect = false;
-            dgvSchedule.Name = "dgvSchedule";
-            dgvSchedule.RowHeadersVisible = false;
-            dgvSchedule.RowHeadersWidth = 51;
-            dgvSchedule.ScrollBars = ScrollBars.Vertical;
-            dgvSchedule.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvSchedule.Size = new Size(1216, 495);
-            dgvSchedule.TabIndex = 7;
-            // 
-            // CourseCode
-            // 
-            CourseCode.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            CourseCode.HeaderText = "Course Code";
-            CourseCode.MinimumWidth = 6;
-            CourseCode.Name = "CourseCode";
-            // 
-            // CourseTitle
-            // 
-            CourseTitle.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            CourseTitle.HeaderText = "Course Title";
-            CourseTitle.MinimumWidth = 6;
-            CourseTitle.Name = "CourseTitle";
-            // 
-            // Lab
-            // 
-            Lab.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            Lab.HeaderText = "Lab";
-            Lab.MinimumWidth = 6;
-            Lab.Name = "Lab";
-            Lab.Width = 51;
-            // 
-            // Lec
-            // 
-            Lec.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            Lec.HeaderText = "Lec";
-            Lec.MinimumWidth = 6;
-            Lec.Name = "Lec";
-            Lec.Width = 50;
-            // 
-            // TotalUnits
-            // 
-            TotalUnits.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            TotalUnits.HeaderText = "Total Units";
-            TotalUnits.MinimumWidth = 6;
-            TotalUnits.Name = "TotalUnits";
-            TotalUnits.Width = 88;
-            // 
-            // Year
-            // 
-            Year.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            Year.HeaderText = "Year";
-            Year.MinimumWidth = 6;
-            Year.Name = "Year";
-            Year.Width = 54;
-            // 
-            // pnlSubOfferingContent
-            // 
-            pnlSubOfferingContent.AutoScroll = true;
-            pnlSubOfferingContent.CausesValidation = false;
-            pnlSubOfferingContent.Controls.Add(pnlEditSchedule);
-            pnlSubOfferingContent.Controls.Add(pnlCurriculumArchive);
-            pnlSubOfferingContent.Controls.Add(pnlSchedule);
-            pnlSubOfferingContent.Controls.Add(pnlCurrentSemester);
-            pnlSubOfferingContent.Dock = DockStyle.Fill;
-            pnlSubOfferingContent.Location = new Point(256, 72);
-            pnlSubOfferingContent.Margin = new Padding(0);
-            pnlSubOfferingContent.Name = "pnlSubOfferingContent";
-            pnlSubOfferingContent.Size = new Size(1648, 969);
-            pnlSubOfferingContent.TabIndex = 6;
-            pnlSubOfferingContent.Paint += pnlCoursesContent_Paint;
             // 
             // pnlCurriculumArchive
             // 
@@ -1508,6 +1429,75 @@
             pnlCurrentSemester.Size = new Size(1258, 704);
             pnlCurrentSemester.TabIndex = 0;
             // 
+            // dgvSchedule
+            // 
+            dgvSchedule.AllowUserToAddRows = false;
+            dgvSchedule.AllowUserToDeleteRows = false;
+            dgvSchedule.AllowUserToResizeColumns = false;
+            dgvSchedule.AllowUserToResizeRows = false;
+            dgvSchedule.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            dgvSchedule.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvSchedule.BackgroundColor = Color.White;
+            dgvSchedule.ColumnHeadersHeight = 30;
+            dgvSchedule.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dgvSchedule.Columns.AddRange(new DataGridViewColumn[] { CourseCode, CourseTitle, Lab, Lec, TotalUnits, Year });
+            dgvSchedule.Location = new Point(26, 137);
+            dgvSchedule.Margin = new Padding(3, 2, 3, 2);
+            dgvSchedule.MultiSelect = false;
+            dgvSchedule.Name = "dgvSchedule";
+            dgvSchedule.RowHeadersVisible = false;
+            dgvSchedule.RowHeadersWidth = 51;
+            dgvSchedule.ScrollBars = ScrollBars.Vertical;
+            dgvSchedule.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvSchedule.Size = new Size(1216, 495);
+            dgvSchedule.TabIndex = 7;
+            // 
+            // CourseCode
+            // 
+            CourseCode.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            CourseCode.HeaderText = "Course Code";
+            CourseCode.MinimumWidth = 6;
+            CourseCode.Name = "CourseCode";
+            // 
+            // CourseTitle
+            // 
+            CourseTitle.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            CourseTitle.HeaderText = "Course Title";
+            CourseTitle.MinimumWidth = 6;
+            CourseTitle.Name = "CourseTitle";
+            // 
+            // Lab
+            // 
+            Lab.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            Lab.HeaderText = "Lab";
+            Lab.MinimumWidth = 6;
+            Lab.Name = "Lab";
+            Lab.Width = 51;
+            // 
+            // Lec
+            // 
+            Lec.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            Lec.HeaderText = "Lec";
+            Lec.MinimumWidth = 6;
+            Lec.Name = "Lec";
+            Lec.Width = 50;
+            // 
+            // TotalUnits
+            // 
+            TotalUnits.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            TotalUnits.HeaderText = "Total Units";
+            TotalUnits.MinimumWidth = 6;
+            TotalUnits.Name = "TotalUnits";
+            TotalUnits.Width = 88;
+            // 
+            // Year
+            // 
+            Year.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            Year.HeaderText = "Year";
+            Year.MinimumWidth = 6;
+            Year.Name = "Year";
+            Year.Width = 54;
+            // 
             // panel2
             // 
             panel2.BackColor = Color.White;
@@ -1607,311 +1597,6 @@
             cmbSem.Size = new Size(70, 23);
             cmbSem.TabIndex = 5;
             // 
-            // pnlEnrollContent
-            // 
-            pnlEnrollContent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            pnlEnrollContent.AutoScroll = true;
-            pnlEnrollContent.Location = new Point(328, 136);
-            pnlEnrollContent.Margin = new Padding(0);
-            pnlEnrollContent.Name = "pnlEnrollContent";
-            pnlEnrollContent.Size = new Size(1648, 969);
-            pnlEnrollContent.TabIndex = 5;
-            pnlEnrollContent.Visible = false;
-            // 
-            // pnlContainerAdminPortal
-            // 
-            pnlContainerAdminPortal.Controls.Add(mainContentPanel);
-            pnlContainerAdminPortal.Controls.Add(pnlSubOfferingContent);
-            pnlContainerAdminPortal.Controls.Add(pnlViewAllUsersContent);
-            pnlContainerAdminPortal.Controls.Add(pnlAccountsContent);
-            pnlContainerAdminPortal.Controls.Add(pnlEnrollContent);
-            pnlContainerAdminPortal.Controls.Add(pnlHeader);
-            pnlContainerAdminPortal.Controls.Add(pnlSidebar);
-            pnlContainerAdminPortal.Dock = DockStyle.Fill;
-            pnlContainerAdminPortal.Location = new Point(0, 0);
-            pnlContainerAdminPortal.Name = "pnlContainerAdminPortal";
-            pnlContainerAdminPortal.Size = new Size(1904, 1041);
-            pnlContainerAdminPortal.TabIndex = 0;
-            // 
-            // mainContentPanel
-            // 
-            mainContentPanel.BackColor = SystemColors.Control;
-            mainContentPanel.Dock = DockStyle.Fill;
-            mainContentPanel.Location = new Point(256, 72);
-            mainContentPanel.Name = "mainContentPanel";
-            mainContentPanel.Size = new Size(1648, 969);
-            mainContentPanel.TabIndex = 0;
-            // 
-            // pnlViewAllUsersContent
-            // 
-            pnlViewAllUsersContent.BackColor = SystemColors.ButtonFace;
-            pnlViewAllUsersContent.Controls.Add(pnlViewSPsContent);
-            pnlViewAllUsersContent.Controls.Add(pictureBox3);
-            pnlViewAllUsersContent.Controls.Add(lblViewDesc);
-            pnlViewAllUsersContent.Controls.Add(lblViewAllUsers);
-            pnlViewAllUsersContent.Dock = DockStyle.Fill;
-            pnlViewAllUsersContent.Location = new Point(256, 72);
-            pnlViewAllUsersContent.Name = "pnlViewAllUsersContent";
-            pnlViewAllUsersContent.Size = new Size(1648, 969);
-            pnlViewAllUsersContent.TabIndex = 14;
-            pnlViewAllUsersContent.Visible = false;
-            // 
-            // pnlViewSPsContent
-            // 
-            pnlViewSPsContent.AutoScroll = true;
-            pnlViewSPsContent.BackColor = Color.White;
-            pnlViewSPsContent.BackgroundImageLayout = ImageLayout.Center;
-            pnlViewSPsContent.BorderStyle = BorderStyle.FixedSingle;
-            pnlViewSPsContent.Controls.Add(pnlContainerdgvUsers);
-            pnlViewSPsContent.Controls.Add(pnlSearchBarVAUs);
-            pnlViewSPsContent.Controls.Add(btnViewProf);
-            pnlViewSPsContent.Controls.Add(pnlUserTypeIndicator);
-            pnlViewSPsContent.Controls.Add(btnViewStudents);
-            pnlViewSPsContent.Location = new Point(32, 119);
-            pnlViewSPsContent.Name = "pnlViewSPsContent";
-            pnlViewSPsContent.Size = new Size(1215, 668);
-            pnlViewSPsContent.TabIndex = 5;
-            // 
-            // pnlContainerdgvUsers
-            // 
-            pnlContainerdgvUsers.AutoScroll = true;
-            pnlContainerdgvUsers.AutoSize = true;
-            pnlContainerdgvUsers.Controls.Add(dgvUsers);
-            pnlContainerdgvUsers.Location = new Point(37, 159);
-            pnlContainerdgvUsers.Name = "pnlContainerdgvUsers";
-            pnlContainerdgvUsers.Size = new Size(1141, 459);
-            pnlContainerdgvUsers.TabIndex = 16;
-            // 
-            // dgvUsers
-            // 
-            dgvUsers.AllowUserToAddRows = false;
-            dgvUsers.AllowUserToDeleteRows = false;
-            dgvUsers.AllowUserToResizeColumns = false;
-            dgvUsers.AllowUserToResizeRows = false;
-            dgvUsers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvUsers.BackgroundColor = Color.White;
-            dgvUsers.BorderStyle = BorderStyle.None;
-            dgvUsers.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            dgvUsers.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = Color.Maroon;
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            dataGridViewCellStyle3.ForeColor = Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            dgvUsers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            dgvUsers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvUsers.Columns.AddRange(new DataGridViewColumn[] { colUserID, colUserName, colUserEmail, colUserProgram, colUserYear, colUserStatus });
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = SystemColors.Window;
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(197, 202, 233);
-            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
-            dgvUsers.DefaultCellStyle = dataGridViewCellStyle4;
-            dgvUsers.Dock = DockStyle.Fill;
-            dgvUsers.EnableHeadersVisualStyles = false;
-            dgvUsers.GridColor = Color.FromArgb(220, 220, 220);
-            dgvUsers.Location = new Point(0, 0);
-            dgvUsers.Name = "dgvUsers";
-            dgvUsers.RowHeadersVisible = false;
-            dgvUsers.RowHeadersWidth = 51;
-            dgvUsers.RowTemplate.Height = 40;
-            dgvUsers.SelectionMode = DataGridViewSelectionMode.CellSelect;
-            dgvUsers.Size = new Size(1141, 459);
-            dgvUsers.TabIndex = 15;
-            // 
-            // colUserID
-            // 
-            colUserID.HeaderText = "ID";
-            colUserID.MinimumWidth = 6;
-            colUserID.Name = "colUserID";
-            colUserID.ReadOnly = true;
-            // 
-            // colUserName
-            // 
-            colUserName.HeaderText = "Name";
-            colUserName.MinimumWidth = 6;
-            colUserName.Name = "colUserName";
-            colUserName.ReadOnly = true;
-            // 
-            // colUserEmail
-            // 
-            colUserEmail.HeaderText = "Email";
-            colUserEmail.MinimumWidth = 6;
-            colUserEmail.Name = "colUserEmail";
-            colUserEmail.ReadOnly = true;
-            // 
-            // colUserProgram
-            // 
-            colUserProgram.HeaderText = "Program";
-            colUserProgram.MinimumWidth = 6;
-            colUserProgram.Name = "colUserProgram";
-            colUserProgram.ReadOnly = true;
-            // 
-            // colUserYear
-            // 
-            colUserYear.HeaderText = "Year";
-            colUserYear.MinimumWidth = 6;
-            colUserYear.Name = "colUserYear";
-            colUserYear.ReadOnly = true;
-            // 
-            // colUserStatus
-            // 
-            colUserStatus.HeaderText = "Status";
-            colUserStatus.MinimumWidth = 6;
-            colUserStatus.Name = "colUserStatus";
-            colUserStatus.ReadOnly = true;
-            // 
-            // pnlSearchBarVAUs
-            // 
-            pnlSearchBarVAUs.BackColor = SystemColors.ControlLight;
-            pnlSearchBarVAUs.Controls.Add(cmbProgram);
-            pnlSearchBarVAUs.Controls.Add(btnSearch);
-            pnlSearchBarVAUs.Controls.Add(cmbYear);
-            pnlSearchBarVAUs.Controls.Add(txtSearchViewAUs);
-            pnlSearchBarVAUs.Location = new Point(35, 90);
-            pnlSearchBarVAUs.Name = "pnlSearchBarVAUs";
-            pnlSearchBarVAUs.Size = new Size(1143, 47);
-            pnlSearchBarVAUs.TabIndex = 14;
-            // 
-            // cmbProgram
-            // 
-            cmbProgram.FormattingEnabled = true;
-            cmbProgram.Items.AddRange(new object[] { "All", "BSIT", "BSHM", "BSED-M", "BSED-E", "BSCpE" });
-            cmbProgram.Location = new Point(77, 15);
-            cmbProgram.Name = "cmbProgram";
-            cmbProgram.Size = new Size(73, 23);
-            cmbProgram.TabIndex = 14;
-            cmbProgram.Text = "Program";
-            // 
-            // btnSearch
-            // 
-            btnSearch.BackColor = Color.Maroon;
-            btnSearch.FlatAppearance.BorderSize = 0;
-            btnSearch.FlatStyle = FlatStyle.Flat;
-            btnSearch.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnSearch.ForeColor = SystemColors.ControlLightLight;
-            btnSearch.Location = new Point(1047, 8);
-            btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(82, 32);
-            btnSearch.TabIndex = 13;
-            btnSearch.Text = "Search";
-            btnSearch.UseVisualStyleBackColor = false;
-            // 
-            // cmbYear
-            // 
-            cmbYear.FormattingEnabled = true;
-            cmbYear.Items.AddRange(new object[] { "All", "1st Year", "2nd Year", "3rd Year", "4th Year" });
-            cmbYear.Location = new Point(12, 15);
-            cmbYear.Name = "cmbYear";
-            cmbYear.Size = new Size(59, 23);
-            cmbYear.TabIndex = 13;
-            cmbYear.Text = "Year";
-            // 
-            // txtSearchViewAUs
-            // 
-            txtSearchViewAUs.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtSearchViewAUs.Location = new Point(156, 13);
-            txtSearchViewAUs.Name = "txtSearchViewAUs";
-            txtSearchViewAUs.Size = new Size(885, 25);
-            txtSearchViewAUs.TabIndex = 12;
-            txtSearchViewAUs.Text = "Search here...";
-            // 
-            // btnViewProf
-            // 
-            btnViewProf.BackColor = Color.Transparent;
-            btnViewProf.BackgroundImageLayout = ImageLayout.None;
-            btnViewProf.Cursor = Cursors.Hand;
-            btnViewProf.FlatAppearance.BorderSize = 0;
-            btnViewProf.FlatStyle = FlatStyle.Flat;
-            btnViewProf.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnViewProf.Image = Properties.Resources.professor_black_16;
-            btnViewProf.Location = new Point(288, 31);
-            btnViewProf.Name = "btnViewProf";
-            btnViewProf.Size = new Size(247, 36);
-            btnViewProf.TabIndex = 11;
-            btnViewProf.Text = "Professors";
-            btnViewProf.TextAlign = ContentAlignment.MiddleRight;
-            btnViewProf.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnViewProf.UseVisualStyleBackColor = false;
-            // 
-            // pnlUserTypeIndicator
-            // 
-            pnlUserTypeIndicator.BackColor = Color.Maroon;
-            pnlUserTypeIndicator.Location = new Point(35, 70);
-            pnlUserTypeIndicator.Margin = new Padding(0);
-            pnlUserTypeIndicator.Name = "pnlUserTypeIndicator";
-            pnlUserTypeIndicator.Size = new Size(247, 4);
-            pnlUserTypeIndicator.TabIndex = 8;
-            pnlUserTypeIndicator.Visible = false;
-            // 
-            // btnViewStudents
-            // 
-            btnViewStudents.BackColor = Color.Transparent;
-            btnViewStudents.BackgroundImageLayout = ImageLayout.None;
-            btnViewStudents.Cursor = Cursors.Hand;
-            btnViewStudents.FlatAppearance.BorderSize = 0;
-            btnViewStudents.FlatStyle = FlatStyle.Flat;
-            btnViewStudents.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnViewStudents.Image = Properties.Resources.student_black_16;
-            btnViewStudents.Location = new Point(35, 31);
-            btnViewStudents.Name = "btnViewStudents";
-            btnViewStudents.Size = new Size(247, 36);
-            btnViewStudents.TabIndex = 9;
-            btnViewStudents.Text = "Students";
-            btnViewStudents.TextAlign = ContentAlignment.MiddleRight;
-            btnViewStudents.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnViewStudents.UseVisualStyleBackColor = false;
-            // 
-            // pictureBox3
-            // 
-            pictureBox3.BackColor = Color.Maroon;
-            pictureBox3.BackgroundImageLayout = ImageLayout.Zoom;
-            pictureBox3.BorderStyle = BorderStyle.FixedSingle;
-            pictureBox3.Image = Properties.Resources.visible_32;
-            pictureBox3.Location = new Point(32, 37);
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(57, 60);
-            pictureBox3.SizeMode = PictureBoxSizeMode.CenterImage;
-            pictureBox3.TabIndex = 4;
-            pictureBox3.TabStop = false;
-            // 
-            // lblViewDesc
-            // 
-            lblViewDesc.AutoSize = true;
-            lblViewDesc.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
-            lblViewDesc.ForeColor = Color.DimGray;
-            lblViewDesc.Location = new Point(106, 77);
-            lblViewDesc.Name = "lblViewDesc";
-            lblViewDesc.Size = new Size(211, 19);
-            lblViewDesc.TabIndex = 3;
-            lblViewDesc.Text = "Manage students and professors";
-            // 
-            // lblViewAllUsers
-            // 
-            lblViewAllUsers.AutoSize = true;
-            lblViewAllUsers.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblViewAllUsers.ForeColor = Color.Black;
-            lblViewAllUsers.Location = new Point(95, 37);
-            lblViewAllUsers.Name = "lblViewAllUsers";
-            lblViewAllUsers.Size = new Size(210, 40);
-            lblViewAllUsers.TabIndex = 1;
-            lblViewAllUsers.Text = "View All Users";
-            // 
-            // pnlAccountsContent
-            // 
-            pnlAccountsContent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            pnlAccountsContent.AutoScroll = true;
-            pnlAccountsContent.Location = new Point(288, 272);
-            pnlAccountsContent.Margin = new Padding(0);
-            pnlAccountsContent.Name = "pnlAccountsContent";
-            pnlAccountsContent.Size = new Size(1648, 969);
-            pnlAccountsContent.TabIndex = 5;
-            pnlAccountsContent.Visible = false;
-            // 
             // pnlHeader
             // 
             pnlHeader.BackColor = Color.FromArgb(42, 42, 42);
@@ -2000,7 +1685,6 @@
             Load += AdminPortal_Load;
             pnlSidebar.ResumeLayout(false);
             flowLayoutPanel1.ResumeLayout(false);
-            flowLayoutPanel1.PerformLayout();
             panel7.ResumeLayout(false);
             panel3.ResumeLayout(false);
             pnlRegistrarFunctions.ResumeLayout(false);
@@ -2020,13 +1704,13 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel12.ResumeLayout(false);
             panel13.ResumeLayout(false);
+            pnlContainerAdminPortal.ResumeLayout(false);
+            pnlSubOfferingContent.ResumeLayout(false);
+            pnlSubOfferingContent.PerformLayout();
             pnlEditSchedule.ResumeLayout(false);
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEditSchedule).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dgvSchedule).EndInit();
-            pnlSubOfferingContent.ResumeLayout(false);
-            pnlSubOfferingContent.PerformLayout();
             pnlCurriculumArchive.ResumeLayout(false);
             pnlCurriculum.ResumeLayout(false);
             pnlCurriculum.PerformLayout();
@@ -2039,18 +1723,9 @@
             panel10.ResumeLayout(false);
             panel10.PerformLayout();
             pnlCurrentSemester.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvSchedule).EndInit();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
-            pnlContainerAdminPortal.ResumeLayout(false);
-            pnlViewAllUsersContent.ResumeLayout(false);
-            pnlViewAllUsersContent.PerformLayout();
-            pnlViewSPsContent.ResumeLayout(false);
-            pnlViewSPsContent.PerformLayout();
-            pnlContainerdgvUsers.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvUsers).EndInit();
-            pnlSearchBarVAUs.ResumeLayout(false);
-            pnlSearchBarVAUs.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             pnlHeader.ResumeLayout(false);
             panel15.ResumeLayout(false);
             panel15.PerformLayout();
@@ -2081,9 +1756,6 @@
         private PictureBox pictureBox2;
         private Label label3;
         private Label label4;
-        private Panel pnlEnrollContent;
-        private Panel pnlSubOfferingContent;
-        private Panel pnlAccountsContent;
         private Panel panel9;
         private Button btnSubjectOffering;
         private Panel pnlYellow;
@@ -2091,81 +1763,7 @@
         private Button btnSO_EditSchedule;
         private Button btnSO_Schedule;
         private Button btnSO_CurriculumArchive;
-        private Panel pnlCurrentSemester;
-        private Label lblSemesterSetup;
-        private Label lblSY;
-        private Label lblCourseList;
-        private Label lblSem;
-        private ComboBox cmbSY;
-        private ComboBox cmbSem;
-        private Button btnSetCurrent;
-        private DataGridView dgvSchedule;
-        private Panel pnlEditSchedule;
-        private Label lblESCurrentSem;
-        private Label lblESYearLevel;
-        private ComboBox cmbESYearLevel;
-        private Button btnSaveSchedule;
-        private DataGridView dgvEditSchedule;
-        private Panel panel1;
-        private Panel panel2;
-        private DataGridViewTextBoxColumn ESCourseCode;
-        private DataGridViewTextBoxColumn ESCourseTitle;
-        private DataGridViewTextBoxColumn ESLab;
-        private DataGridViewTextBoxColumn ESLec;
-        private DataGridViewTextBoxColumn ESTotalUnits;
-        private DataGridViewComboBoxColumn ESSection;
-        private DataGridViewComboBoxColumn ESDay;
-        private DataGridViewTextBoxColumn ESStartTime;
-        private DataGridViewTextBoxColumn EsEndTime;
-        private DataGridViewComboBoxColumn ESRoom;
-        private DataGridViewComboBoxColumn ESInstructor;
-        private DataGridViewTextBoxColumn CourseCode;
-        private DataGridViewTextBoxColumn CourseTitle;
-        private DataGridViewTextBoxColumn Lab;
-        private DataGridViewTextBoxColumn Lec;
-        private DataGridViewTextBoxColumn TotalUnits;
-        private DataGridViewTextBoxColumn Year;
-        private Button btnClearSchedule;
-        private Panel pnlSchedule;
-        private Panel panel10;
-        private Label label5;
-        private ComboBox cmbYearLevel;
-        private Label label6;
-        private Button btnExportPDF;
-        private Button btnPrint;
-        private Button btnExportExcel;
-        private DataGridView dgvScheduleView;
-        private DataGridViewTextBoxColumn CourseCode1;
-        private DataGridViewTextBoxColumn CourseTitle1;
-        private DataGridViewTextBoxColumn Lec1;
-        private DataGridViewTextBoxColumn Lab1;
-        private DataGridViewTextBoxColumn TotalUnits1;
-        private DataGridViewTextBoxColumn Section1;
-        private DataGridViewTextBoxColumn Day1;
-        private DataGridViewTextBoxColumn Start1;
-        private DataGridViewTextBoxColumn End1;
-        private DataGridViewTextBoxColumn Room1;
-        private DataGridViewTextBoxColumn Instructor1;
-        private Panel pnlCurriculumArchive;
         private Button button2;
-        private Panel panel14;
-        private Button btnCurriculum;
-        private Button btnUpdateCurriculum;
-        private Button btnArchive;
-        private Panel pnlCurriculum;
-        private DataGridView dgvCurriculum;
-        private Panel pnlArchive;
-        private DataGridView dgvArchive;
-        private DataGridViewTextBoxColumn Semester;
-        private DataGridViewTextBoxColumn SchoolYear;
-        private DataGridViewTextBoxColumn blank;
-        private Label lblCurriculumList;
-        private DataGridViewTextBoxColumn CourseCode2;
-        private DataGridViewTextBoxColumn CourseTitle2;
-        private DataGridViewTextBoxColumn Lab2;
-        private DataGridViewTextBoxColumn Lec2;
-        private DataGridViewTextBoxColumn TotalUnits2;
-        private DataGridViewTextBoxColumn Year2;
         private Panel pnlRegistrarFunctions;
         private Button btnRegistrarFunctions;
         private Panel pnlRegistrarSubmenu;
@@ -2182,30 +1780,84 @@
         private Button btnRegisterProfessor;
         private Panel panel11;
         private Button btnViewAllUsers;
-        private Panel pnlViewAllUsersContent;
-        private Panel pnlViewSPsContent;
-        private Panel pnlContainerdgvUsers;
-        private DataGridView dgvUsers;
-        private DataGridViewTextBoxColumn colUserID;
-        private DataGridViewTextBoxColumn colUserName;
-        private DataGridViewTextBoxColumn colUserEmail;
-        private DataGridViewTextBoxColumn colUserProgram;
-        private DataGridViewTextBoxColumn colUserYear;
-        private DataGridViewTextBoxColumn colUserStatus;
-        private Panel pnlSearchBarVAUs;
-        private ComboBox cmbProgram;
-        private Button btnSearch;
-        private ComboBox cmbYear;
-        private TextBox txtSearchViewAUs;
-        private Button btnViewProf;
-        private Panel pnlUserTypeIndicator;
-        private Button btnViewStudents;
-        private PictureBox pictureBox3;
-        private Label lblViewDesc;
-        private Label lblViewAllUsers;
         private FlowLayoutPanel pnlsubofferingSubmenu;
         private Panel panel3;
         private Button btnAnnouncement;
         private Panel mainContentPanel;
+        private Panel pnlSubOfferingContent;
+        private Panel pnlEditSchedule;
+        private Panel panel1;
+        private Button btnClearSchedule;
+        private Button btnSaveSchedule;
+        private Label lblESYearLevel;
+        private Label lblESCurrentSem;
+        private ComboBox cmbESYearLevel;
+        private DataGridView dgvEditSchedule;
+        private DataGridViewTextBoxColumn ESCourseCode;
+        private DataGridViewTextBoxColumn ESCourseTitle;
+        private DataGridViewTextBoxColumn ESLab;
+        private DataGridViewTextBoxColumn ESLec;
+        private DataGridViewTextBoxColumn ESTotalUnits;
+        private DataGridViewComboBoxColumn ESSection;
+        private DataGridViewComboBoxColumn ESDay;
+        private DataGridViewTextBoxColumn ESStartTime;
+        private DataGridViewTextBoxColumn EsEndTime;
+        private DataGridViewComboBoxColumn ESRoom;
+        private DataGridViewComboBoxColumn ESInstructor;
+        private Panel pnlCurriculumArchive;
+        private Panel pnlCurriculum;
+        private Label lblCurriculumList;
+        private Button btnUpdateCurriculum;
+        private DataGridView dgvCurriculum;
+        private DataGridViewTextBoxColumn CourseCode2;
+        private DataGridViewTextBoxColumn CourseTitle2;
+        private DataGridViewTextBoxColumn Lab2;
+        private DataGridViewTextBoxColumn Lec2;
+        private DataGridViewTextBoxColumn TotalUnits2;
+        private DataGridViewTextBoxColumn Year2;
+        private Panel panel14;
+        private Button btnArchive;
+        private Button btnCurriculum;
+        private Panel pnlArchive;
+        private DataGridView dgvArchive;
+        private DataGridViewTextBoxColumn Semester;
+        private DataGridViewTextBoxColumn SchoolYear;
+        private DataGridViewTextBoxColumn blank;
+        private Panel pnlSchedule;
+        private DataGridView dgvScheduleView;
+        private DataGridViewTextBoxColumn CourseCode1;
+        private DataGridViewTextBoxColumn CourseTitle1;
+        private DataGridViewTextBoxColumn Lec1;
+        private DataGridViewTextBoxColumn Lab1;
+        private DataGridViewTextBoxColumn TotalUnits1;
+        private DataGridViewTextBoxColumn Section1;
+        private DataGridViewTextBoxColumn Day1;
+        private DataGridViewTextBoxColumn Start1;
+        private DataGridViewTextBoxColumn End1;
+        private DataGridViewTextBoxColumn Room1;
+        private DataGridViewTextBoxColumn Instructor1;
+        private Panel panel10;
+        private Button btnPrint;
+        private Button btnExportExcel;
+        private Button btnExportPDF;
+        private ComboBox cmbYearLevel;
+        private Label label6;
+        private Label label5;
+        private Panel pnlCurrentSemester;
+        private DataGridView dgvSchedule;
+        private DataGridViewTextBoxColumn CourseCode;
+        private DataGridViewTextBoxColumn CourseTitle;
+        private DataGridViewTextBoxColumn Lab;
+        private DataGridViewTextBoxColumn Lec;
+        private DataGridViewTextBoxColumn TotalUnits;
+        private DataGridViewTextBoxColumn Year;
+        private Panel panel2;
+        private Button btnSetCurrent;
+        private Label lblSemesterSetup;
+        private ComboBox cmbSY;
+        private Label lblCourseList;
+        private Label lblSY;
+        private Label lblSem;
+        private ComboBox cmbSem;
     }
 }

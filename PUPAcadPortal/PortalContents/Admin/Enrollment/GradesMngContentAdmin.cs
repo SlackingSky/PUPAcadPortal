@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace PUPAcadPortal.PortalContents.Admin
+namespace PUPAcadPortal.PortalContents.Admin.Enrollment
 {
     public partial class GradesMngContentAdmin : UserControl
     {
@@ -41,6 +41,7 @@ namespace PUPAcadPortal.PortalContents.Admin
 
         private void AdminGradesMngContent_Load(object sender, EventArgs e)
         {
+            // Setup grades data table
             gradesTable = new DataTable();
             gradesTable.Columns.Add("StudentName", typeof(string));
             gradesTable.Columns.Add("StudentID", typeof(string));

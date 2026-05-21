@@ -7,7 +7,7 @@ using System.Drawing.Drawing2D;
 using System.Text;
 using System.Windows.Forms;
 
-namespace PUPAcadPortal.PortalContents.Admin
+namespace PUPAcadPortal.PortalContents.Admin.LMS
 {
     public partial class AnnounceContentAdmin : UserControl
     {

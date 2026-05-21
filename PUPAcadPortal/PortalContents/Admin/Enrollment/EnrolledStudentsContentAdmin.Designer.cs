@@ -1,4 +1,4 @@
-﻿namespace PUPAcadPortal.PortalContents.Admin
+﻿namespace PUPAcadPortal.PortalContents.Admin.Enrollment
 {
     partial class EnrolledStudentsContentAdmin
     {

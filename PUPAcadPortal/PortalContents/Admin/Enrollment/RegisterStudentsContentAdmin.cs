@@ -7,7 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using PUPAcadPortal.PHAddress;
 
-namespace PUPAcadPortal.PortalContents.Admin
+namespace PUPAcadPortal.PortalContents.Admin.Enrollment
 {
     public partial class RegisterStudentsContentAdmin : UserControl
     {

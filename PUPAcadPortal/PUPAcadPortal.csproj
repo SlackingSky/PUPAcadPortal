@@ -66,4 +66,8 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="PortalContents\Admin\SubOffering\" />
+  </ItemGroup>
+
 </Project>

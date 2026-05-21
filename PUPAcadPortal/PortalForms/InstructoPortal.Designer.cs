@@ -1,4 +1,4 @@
-﻿namespace PUPAcadPortal
+﻿namespace PUPAcadPortal.PortalForms
 {
     partial class InstructorPortal
     {

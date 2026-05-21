@@ -1,4 +1,4 @@
-﻿namespace PUPAcadPortal.PortalContents.Admin
+﻿namespace PUPAcadPortal.PortalContents.Admin.LMS
 {
     partial class AnnounceContentAdmin
     {
