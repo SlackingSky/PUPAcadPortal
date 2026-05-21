@@ -140,6 +140,7 @@
             // 
             // pnlContainerdgvUsers
             // 
+            pnlContainerdgvUsers.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pnlContainerdgvUsers.AutoScroll = true;
             pnlContainerdgvUsers.AutoSize = true;
             pnlContainerdgvUsers.Controls.Add(dgvUsers);

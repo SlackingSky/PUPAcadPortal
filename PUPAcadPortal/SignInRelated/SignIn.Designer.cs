@@ -208,13 +208,16 @@ namespace PUPAcadPortal
             panel8.Controls.Add(btnShowPass);
             panel8.Controls.Add(pictureBox3);
             panel8.Controls.Add(txtPassword);
+            panel8.Cursor = Cursors.IBeam;
             panel8.Location = new Point(0, 28);
             panel8.Name = "panel8";
             panel8.Size = new Size(384, 50);
             panel8.TabIndex = 0;
+            panel8.Click += panel8_Click;
             // 
             // btnShowPass
             // 
+            btnShowPass.Cursor = Cursors.Hand;
             btnShowPass.FlatAppearance.BorderSize = 0;
             btnShowPass.FlatStyle = FlatStyle.Flat;
             btnShowPass.ForeColor = SystemColors.ControlText;
@@ -277,10 +280,12 @@ namespace PUPAcadPortal
             panel7.BackgroundImageLayout = ImageLayout.Stretch;
             panel7.Controls.Add(pictureBox2);
             panel7.Controls.Add(txtUsername);
+            panel7.Cursor = Cursors.IBeam;
             panel7.Location = new Point(0, 28);
             panel7.Name = "panel7";
             panel7.Size = new Size(384, 50);
             panel7.TabIndex = 0;
+            panel7.Click += panel7_Click;
             // 
             // pictureBox2
             // 

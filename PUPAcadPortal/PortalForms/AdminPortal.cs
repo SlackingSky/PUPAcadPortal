@@ -1,6 +1,7 @@
 ﻿using PUPAcadPortal.Utils;
 using PUPAcadPortal.PortalContents.Admin.Enrollment;
 using PUPAcadPortal.PortalContents.Admin.LMS;
+using PUPAcadPortal.PortalContents.Admin.SubOffering;
 using PUPAcadPortal.PHAddress;
 using System;
 using System.Collections.Generic;
@@ -31,38 +32,9 @@ namespace PUPAcadPortal.PortalForms
         public AdminPortal()
         {
             InitializeComponent();
-            this.Resize += AdminPortal_Resize;
             this.Load += AdminPortal_Load;
             registrarSubmenuAnim = new SubmenuAnim(pnlRegistrarSubmenu, pnlRegistrarSubmenu.Height);
             subjectOfferingSubmenuAnim = new SubmenuAnim(pnlsubofferingSubmenu, pnlsubofferingSubmenu.Height);
-
-            contentPanels = new Dictionary<Button, ContentPanelInfo>
-            {
-            //{ btnDashboard, new ContentPanelInfo { Panel = pnlDashboardContent, ResetAction = () => { /* dashboard reset logic */ } } },
-            { btnSubjectOffering, new ContentPanelInfo { Panel = pnlSubOfferingContent, ResetAction = () => { /* subject offering reset */ } } },
-            //{ btnGradesManagement, new ContentPanelInfo { Panel = pnlGradesManagementContent, ResetAction = () => { /* grades reset */ } } },
-            //{ btnAccountingRecords, new ContentPanelInfo { Panel = pnlAccountingRecordsContent, ResetAction = () => { /* accounting reset */ } } },
-            //{ btnEnrolledStudents, new ContentPanelInfo { Panel = pnlEnrolledStudentsContent, ResetAction = () => { /* enrolled students reset */ } } },
-            //{ btnRegisterStudent, new ContentPanelInfo { Panel = pnlRegisterStudentContent, ResetAction = () => { /* register student reset */ } } },
-            //{ btnRegisterProfessor, new ContentPanelInfo { Panel = pnlRegisterProfessorContent, ResetAction = () => { /* register professor reset */ } } },
-            //{ btnViewAllUsers, new ContentPanelInfo { Panel = pnlViewAllUsersContent, ResetAction = ResetViewAllUsersPanel } }
-            };
-
-            pnlEditSchedule.Visible = false;
-            pnlCurrentSemester.Visible = false;
-            pnlSubOfferingContent.Visible = false;
-            pnlCurriculumArchive.Visible = false;
-
-            pnlSubOfferingContent.AutoScroll = true;
-
-
-            AddDuplicateButtonColumn();
-            AddRemoveButtonColumn();
-
-            // Add 30 default empty rows to the edit schedule grid and Current Semester grid
-            try { dgvSchedule.Rows.Add(30); } catch { }
-            try { dgvEditSchedule.Rows.Add(30); } catch { }
-            try { dgvScheduleView.Rows.Add(30); } catch { }
             try { dgvArchive.Rows.Add(25); } catch { }
 
             // Fill first 3 rows with default data for edit schedule and current semester table (ito na rin gamitin sa other two submenus)
@@ -170,28 +142,6 @@ namespace PUPAcadPortal.PortalForms
                 }
             }
 
-
-            for (int row = 0; row < 3; row++)
-            {
-                for (int col = 0; col < 5; col++)
-                {
-                    dgvEditSchedule.Rows[row].Cells[col].Value = dummyData[row, col];
-                    dgvSchedule.Rows[row].Cells[col].Value = dummyData[row, col];
-                    dgvScheduleView.Rows[row].Cells[col].Value = dummyData[row, col];
-
-                }
-            }
-
-            for (int i = 0; i < 3; i++)
-            {
-                dgvSchedule.Rows[i].Cells["Year"].Value = "2";
-            }
-            // Mark original rows
-            for (int i = 0; i < 3; i++)
-            {
-                dgvEditSchedule.Rows[i].Tag = "original";
-            }
-
         }
 
         public class ContentPanelInfo
@@ -200,88 +150,12 @@ namespace PUPAcadPortal.PortalForms
             public Action ResetAction { get; set; }
         }
 
-        private void AddDuplicateButtonColumn()
-        {
-            DataGridViewButtonColumn btn = new DataGridViewButtonColumn();
-            btn.Name = "colDuplicate";
-            btn.HeaderText = "";
-            btn.Text = "Duplicate";
-            btn.UseColumnTextForButtonValue = true;
-
-            dgvEditSchedule.Columns.Insert(11, btn); // 12th column
-        }
-
-        private void AddRemoveButtonColumn()
-        {
-            DataGridViewButtonColumn btn = new DataGridViewButtonColumn();
-            btn.Name = "colRemove";
-            btn.HeaderText = "";
-            btn.Text = "Remove";
-            btn.UseColumnTextForButtonValue = true;
-
-            dgvEditSchedule.Columns.Insert(12, btn); // 13th column
-        }
-
-        private void dgvEditSchedule_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0) return;
-
-            string colName = dgvEditSchedule.Columns[e.ColumnIndex].Name;
-
-            if (colName == "colDuplicate")
-            {
-                DuplicateRow(e.RowIndex);
-            }
-            else if (colName == "colRemove")
-            {
-                RemoveRow(e.RowIndex);
-            }
-        }
-
-        private void DuplicateRow(int rowIndex)
-        {
-            DataGridViewRow original = dgvEditSchedule.Rows[rowIndex];
-
-            // Insert a new row right below the row duplicate is clicked
-            dgvEditSchedule.Rows.Insert(rowIndex + 1, 1);
-            int newRowIndex = rowIndex + 1; // The newly inserted row
-
-            // Copy columns 0–4 (course info)
-            for (int i = 0; i <= 4; i++)
-            {
-                dgvEditSchedule.Rows[newRowIndex].Cells[i].Value = original.Cells[i].Value;
-            }
-
-            dgvEditSchedule.Rows[newRowIndex].Tag = "Duplicate"; // Mark this row as a duplicate for potential future use (like styling or preventing multiple duplicates)]
-
-            // Leave other columns blank let admin edit them as needed
-        }
-
-        private void RemoveRow(int rowIndex)
-        {
-            var row = dgvEditSchedule.Rows[rowIndex];
-
-            // Block original rows
-            if (row.Tag != null && row.Tag.ToString() == "original")
-            {
-                MessageBox.Show("You cannot remove original subjects.");
-                return;
-            }
-
-            // Allow deletion for duplicates
-            dgvEditSchedule.Rows.RemoveAt(rowIndex);
-        }
-
 
         //--------------------------
         private void btnSO_CurriculumArchive_Click(object sender, EventArgs e)
         {
             changeButtonColor(sender as Button);
-            showContent(clickedButton);
-
-            // Default — ipakita agad ang Curriculum
-            pnlCurriculum.Visible = true;
-            pnlArchive.Visible = false;
+            mainContentPanel.ShowView(new CurriculumArchiveContentAdmin());
         }
 
         private void changeButtonColor(Button button)
@@ -297,52 +171,6 @@ namespace PUPAcadPortal.PortalForms
             pnlYellow.Height = clickedButton.Height;
             pnlYellow.BringToFront();
             clickedButton.BackColor = selectedColor;
-        }
-
-
-        //Method na nagpapakita ng content ng bawat button, wala akong maisip na iba kaya eto
-        private void showContent(Button button)
-        {
-            Dictionary<Button, Panel> contents = new Dictionary<Button, Panel> { };
-            //contents.Add(btnDashboard, pnlDashboardContent);
-            //contents.Add(btnAnnouncement, pnlAnnouncement);
-            contents.Add(btnSO_CurrentSemester, pnlCurrentSemester);
-            contents.Add(btnSO_EditSchedule, pnlEditSchedule);
-            contents.Add(btnSO_Schedule, pnlSchedule);
-            contents.Add(btnSO_CurriculumArchive, pnlCurriculumArchive);
-
-
-            //Kada button na aadd, maglagay ng panel sa form at lagay dito
-            //Tapos, sa click event ng button, icall yung changeButtonColor(sender as Button) at showContent(clickedButton), eto lang ok na - Brylle
-            foreach (KeyValuePair<Button, Panel> content in contents)
-            {
-                if (content.Key == button)
-                {
-                    //Automatic positioning, wag pakialaman maliban nalang kung binago ang position ng sidebar
-                    content.Value.Parent = pnlContainerAdminPortal; //Nakalimutan ko ilagay kaya di mapakita - Brylle
-                    content.Value.Dock = DockStyle.Fill;
-                    content.Value.Visible = true;
-                    content.Value.BringToFront();
-                }
-                else
-                {
-                    content.Value.Visible = false;
-                }
-
-                // Reset the panel we are leaving
-                if (clickedButton != null && contentPanels.ContainsKey(clickedButton))
-                {
-                    contentPanels[clickedButton].ResetAction?.Invoke();
-                }
-
-                // Then show the new panel
-                foreach (var kvp in contentPanels)
-                {
-                    bool isVisible = (kvp.Key == clickedButton);
-                    FitContentPanel(kvp.Value.Panel);
-                    kvp.Value.Panel.Visible = isVisible;
-                }
-            }
         }
 
         //Method para pag pinindot yung X sa taas o mag alt-F4, icclose lahat ng forms para di magerror pag ni run uli
@@ -364,9 +192,7 @@ namespace PUPAcadPortal.PortalForms
         private void btnSO_Schedule_Click(object sender, EventArgs e)
         {
             changeButtonColor(sender as Button);
-            showContent(clickedButton);
-
-            dgvScheduleView.DefaultCellStyle.SelectionForeColor = Color.Black;
+            mainContentPanel.ShowView(new ScheduleContentAdmin());
         }
 
 
@@ -376,34 +202,10 @@ namespace PUPAcadPortal.PortalForms
             //ShowPanel(pnlEditSchedule);
             //MessageBox.Show("Edit Schedule clicked.");
             changeButtonColor(sender as Button);
-            showContent(clickedButton);
+            mainContentPanel.ShowView(new EditScheduleContentAdmin());
 
             cmbYearLevel_EditSchedule_SelectedIndexChanged(null, EventArgs.Empty);
         }
-
-        private void AdminPortal_Resize(object sender, EventArgs e)
-        {
-            if (!IsHandleCreated) return;
-
-            // Resize the currently visible main content panel
-            foreach (var kvp in contentPanels)
-            {
-                if (kvp.Value.Panel.Visible)
-                {
-                    FitContentPanel(kvp.Value.Panel);
-                    break;
-                }
-            }
-        }
-
-        private void FitContentPanel(Panel panel)
-        {
-            panel.Width = this.ClientSize.Width - pnlSidebar.Width;
-            panel.Height = this.ClientSize.Height - pnlHeader.Height;
-            panel.Location = new Point(pnlSidebar.Width, pnlHeader.Height);
-        }
-
-        // EVENT HANDLERS [ToT]
 
 
         private void btnDashboard_Click(object sender, EventArgs e)
@@ -412,14 +214,13 @@ namespace PUPAcadPortal.PortalForms
             mainContentPanel.Visible = true;
             mainContentPanel.BringToFront();
             mainContentPanel.ShowView(new DashboardContentAdmin());
-            pnlRegistrarSubmenu.Visible = false;
         }
 
         private async void btnSubjectOffering_Click(object sender, EventArgs e)
         {
             changeButtonColor(sender as Button);
-            showContent(clickedButton);
             btnSubjectOffering.Text = !pnlsubofferingSubmenu.Visible ? " Subject Offering                    ⌄" : " Subject Offering                     ›";
+            btnSO_CurrentSemester.PerformClick(); // Show Current Semester by default when Subject Offering is clicked
             await subjectOfferingSubmenuAnim.ToggleSubMenuAsync();
             //pnlRegistrarSubmenu.Visible = false;
             //pnlsubofferingSubmenu.Visible = !pnlsubofferingSubmenu.Visible;
@@ -433,9 +234,10 @@ namespace PUPAcadPortal.PortalForms
         private void btnSO_CurrentSemester_Click(object sender, EventArgs e)
         {
             changeButtonColor(sender as Button);
-            showContent(clickedButton);
+            mainContentPanel.ShowView(new CurrentSemesterContentAdmin());
 
             // Show Current Semester panel
+            //pnlSubOfferingContent.Visible = true;
             //pnlSubOfferingContent.Visible = true;
             //pnlCurrentSemester.Visible = true;
 
@@ -457,6 +259,7 @@ namespace PUPAcadPortal.PortalForms
         {
             // Change button color and show the main content panel (if any)
             changeButtonColor(sender as Button);
+            btnGradesManagement.PerformClick(); // Show Grades Management by default when Registrar Functions is clicked
             btnRegistrarFunctions.Text = !pnlRegistrarSubmenu.Visible ? " Registrar Functions              ⌄" : " Registrar Functions              ›";
             await registrarSubmenuAnim.ToggleSubMenuAsync();
         }
@@ -507,130 +310,6 @@ namespace PUPAcadPortal.PortalForms
         private void pnlCoursesContent_Paint(object sender, PaintEventArgs e)
         {
 
-        }
-
-        private void btnSetCurrent_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show($"Set {cmbSY.SelectedItem} semester {cmbSem.SelectedItem} as current.", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        //-------------------------------------------------------------- (events Edit schedule page)
-
-        //edit sched
-        private void btnSaveSchedule_Click(object sender, EventArgs e)
-        {
-            string[] fieldNames = {
-            "Course Code", "Course Title", "Lec Units", "Lab Units", "Total Units",
-            "Section", "Day", "Start Time", "End Time", "Room", "Instructor" };
-
-
-            List<string> errors = new List<string>();
-
-            foreach (DataGridViewRow row in dgvEditSchedule.Rows)
-            {
-                if (row.IsNewRow) continue;
-
-                bool hasAnyData = false;
-                for (int col = 0; col <= 10; col++)
-                {
-                    if (col < row.Cells.Count && !string.IsNullOrWhiteSpace(row.Cells[col].Value?.ToString()))
-                    {
-                        hasAnyData = true;
-                        break;
-                    }
-                }
-                if (!hasAnyData) continue;
-
-                List<string> missingFields = new List<string>();
-                for (int col = 0; col <= 10; col++)
-                {
-                    if (col >= row.Cells.Count) break;
-                    if (string.IsNullOrWhiteSpace(row.Cells[col].Value?.ToString()))
-                        missingFields.Add(fieldNames[col]);
-                }
-
-                if (missingFields.Count > 0)
-                    errors.Add($"Row {row.Index + 1}: Missing — {string.Join(", ", missingFields)}");
-            }
-
-            if (errors.Count > 0)
-            {
-                MessageBox.Show("Please complete all fields before saving.\n\n" + string.Join("\n", errors),
-                    "Incomplete Fields", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            _savedSchedule.Clear();
-
-            dgvScheduleView.Rows.Clear();
-            foreach (var saved in _savedSchedule)
-                dgvScheduleView.Rows.Add(saved);
-
-            while (dgvScheduleView.Rows.Count < 30)
-                dgvScheduleView.Rows.Add();
-
-        }
-
-        private void lblESCurrentSem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblESYearLevel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pnlEditSchedule_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void lblSem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblSemesterSetup_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        //edit sched
-        private void btnClearSchedule_Click_1(object sender, EventArgs e)
-        {
-            var confirm = MessageBox.Show(
-                "Are you sure you want to clear the schedule? Unsaved changes will be lost.",
-                "Confirm Clear", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-            if (confirm != DialogResult.Yes) return;
-
-            //remove non-original rows
-            for (int i = dgvEditSchedule.Rows.Count - 1; i >= 0; i--)
-            {
-                var row = dgvEditSchedule.Rows[i];
-                if (row.IsNewRow) continue;
-                if (row.Tag?.ToString() == "original") continue;
-                dgvEditSchedule.Rows.RemoveAt(i);
-            }
-
-            foreach (DataGridViewRow row in dgvEditSchedule.Rows)
-            {
-                if (row.IsNewRow) continue;
-                if (row.Tag?.ToString() != "original") continue;
-
-                for (int col = 5; col <= 10; col++)
-                {
-                    if (col < row.Cells.Count)
-                        row.Cells[col].Value = null;
-                }
-            }
-
-            while (dgvEditSchedule.Rows.Count < 30)
-                dgvEditSchedule.Rows.Add();
-
-            MessageBox.Show("Schedule cleared.", "Cleared",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         //schedule view only buttons

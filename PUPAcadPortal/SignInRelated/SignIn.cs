@@ -163,5 +163,15 @@ namespace PUPAcadPortal
                 System.Windows.Forms.MessageBox.Show($"Database error: {ex.Message}");
             }
         }
+
+        private void panel7_Click(object sender, EventArgs e)
+        {
+            txtUsername.Focus();
+        }
+
+        private void panel8_Click(object sender, EventArgs e)
+        {
+            txtPassword.Focus();
+        }
     }
 }

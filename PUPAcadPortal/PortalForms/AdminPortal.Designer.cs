@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminPortal));
             pnlSidebar = new Panel();
             flowLayoutPanel1 = new FlowLayoutPanel();
@@ -72,25 +70,6 @@
             pnlContainerAdminPortal = new Panel();
             mainContentPanel = new Panel();
             pnlSubOfferingContent = new Panel();
-            pnlEditSchedule = new Panel();
-            panel1 = new Panel();
-            btnClearSchedule = new Button();
-            btnSaveSchedule = new Button();
-            lblESYearLevel = new Label();
-            lblESCurrentSem = new Label();
-            cmbESYearLevel = new ComboBox();
-            dgvEditSchedule = new DataGridView();
-            ESCourseCode = new DataGridViewTextBoxColumn();
-            ESCourseTitle = new DataGridViewTextBoxColumn();
-            ESLab = new DataGridViewTextBoxColumn();
-            ESLec = new DataGridViewTextBoxColumn();
-            ESTotalUnits = new DataGridViewTextBoxColumn();
-            ESSection = new DataGridViewComboBoxColumn();
-            ESDay = new DataGridViewComboBoxColumn();
-            ESStartTime = new DataGridViewTextBoxColumn();
-            EsEndTime = new DataGridViewTextBoxColumn();
-            ESRoom = new DataGridViewComboBoxColumn();
-            ESInstructor = new DataGridViewComboBoxColumn();
             pnlCurriculumArchive = new Panel();
             pnlCurriculum = new Panel();
             lblCurriculumList = new Label();
@@ -110,42 +89,6 @@
             Semester = new DataGridViewTextBoxColumn();
             SchoolYear = new DataGridViewTextBoxColumn();
             blank = new DataGridViewTextBoxColumn();
-            pnlSchedule = new Panel();
-            dgvScheduleView = new DataGridView();
-            CourseCode1 = new DataGridViewTextBoxColumn();
-            CourseTitle1 = new DataGridViewTextBoxColumn();
-            Lec1 = new DataGridViewTextBoxColumn();
-            Lab1 = new DataGridViewTextBoxColumn();
-            TotalUnits1 = new DataGridViewTextBoxColumn();
-            Section1 = new DataGridViewTextBoxColumn();
-            Day1 = new DataGridViewTextBoxColumn();
-            Start1 = new DataGridViewTextBoxColumn();
-            End1 = new DataGridViewTextBoxColumn();
-            Room1 = new DataGridViewTextBoxColumn();
-            Instructor1 = new DataGridViewTextBoxColumn();
-            panel10 = new Panel();
-            btnPrint = new Button();
-            btnExportExcel = new Button();
-            btnExportPDF = new Button();
-            cmbYearLevel = new ComboBox();
-            label6 = new Label();
-            label5 = new Label();
-            pnlCurrentSemester = new Panel();
-            dgvSchedule = new DataGridView();
-            CourseCode = new DataGridViewTextBoxColumn();
-            CourseTitle = new DataGridViewTextBoxColumn();
-            Lab = new DataGridViewTextBoxColumn();
-            Lec = new DataGridViewTextBoxColumn();
-            TotalUnits = new DataGridViewTextBoxColumn();
-            Year = new DataGridViewTextBoxColumn();
-            panel2 = new Panel();
-            btnSetCurrent = new Button();
-            lblSemesterSetup = new Label();
-            cmbSY = new ComboBox();
-            lblCourseList = new Label();
-            lblSY = new Label();
-            lblSem = new Label();
-            cmbSem = new ComboBox();
             pnlHeader = new Panel();
             pnlYellow = new Panel();
             panel15 = new Panel();
@@ -175,21 +118,12 @@
             panel13.SuspendLayout();
             pnlContainerAdminPortal.SuspendLayout();
             pnlSubOfferingContent.SuspendLayout();
-            pnlEditSchedule.SuspendLayout();
-            panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvEditSchedule).BeginInit();
             pnlCurriculumArchive.SuspendLayout();
             pnlCurriculum.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvCurriculum).BeginInit();
             panel14.SuspendLayout();
             pnlArchive.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvArchive).BeginInit();
-            pnlSchedule.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvScheduleView).BeginInit();
-            panel10.SuspendLayout();
-            pnlCurrentSemester.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvSchedule).BeginInit();
-            panel2.SuspendLayout();
             pnlHeader.SuspendLayout();
             panel15.SuspendLayout();
             panel16.SuspendLayout();
@@ -588,6 +522,7 @@
             // 
             // btnSO_CurrentSemester
             // 
+            btnSO_CurrentSemester.BackColor = Color.Transparent;
             btnSO_CurrentSemester.Cursor = Cursors.Hand;
             btnSO_CurrentSemester.FlatAppearance.BorderSize = 0;
             btnSO_CurrentSemester.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
@@ -603,11 +538,12 @@
             btnSO_CurrentSemester.TabIndex = 0;
             btnSO_CurrentSemester.Text = " Current Semester";
             btnSO_CurrentSemester.TextAlign = ContentAlignment.MiddleLeft;
-            btnSO_CurrentSemester.UseVisualStyleBackColor = true;
+            btnSO_CurrentSemester.UseVisualStyleBackColor = false;
             btnSO_CurrentSemester.Click += btnSO_CurrentSemester_Click;
             // 
             // btnSO_EditSchedule
             // 
+            btnSO_EditSchedule.BackColor = Color.Transparent;
             btnSO_EditSchedule.Cursor = Cursors.Hand;
             btnSO_EditSchedule.FlatAppearance.BorderSize = 0;
             btnSO_EditSchedule.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
@@ -623,11 +559,12 @@
             btnSO_EditSchedule.TabIndex = 1;
             btnSO_EditSchedule.Text = " Edit Schedule";
             btnSO_EditSchedule.TextAlign = ContentAlignment.MiddleLeft;
-            btnSO_EditSchedule.UseVisualStyleBackColor = true;
+            btnSO_EditSchedule.UseVisualStyleBackColor = false;
             btnSO_EditSchedule.Click += btnSO_EditSchedule_Click;
             // 
             // btnSO_Schedule
             // 
+            btnSO_Schedule.BackColor = Color.Transparent;
             btnSO_Schedule.Cursor = Cursors.Hand;
             btnSO_Schedule.FlatAppearance.BorderSize = 0;
             btnSO_Schedule.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
@@ -643,11 +580,12 @@
             btnSO_Schedule.TabIndex = 2;
             btnSO_Schedule.Text = " Schedule";
             btnSO_Schedule.TextAlign = ContentAlignment.MiddleLeft;
-            btnSO_Schedule.UseVisualStyleBackColor = true;
+            btnSO_Schedule.UseVisualStyleBackColor = false;
             btnSO_Schedule.Click += btnSO_Schedule_Click;
             // 
             // btnSO_CurriculumArchive
             // 
+            btnSO_CurriculumArchive.BackColor = Color.Transparent;
             btnSO_CurriculumArchive.Cursor = Cursors.Hand;
             btnSO_CurriculumArchive.FlatAppearance.BorderSize = 0;
             btnSO_CurriculumArchive.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
@@ -663,7 +601,7 @@
             btnSO_CurriculumArchive.TabIndex = 3;
             btnSO_CurriculumArchive.Text = " Curriculum and Archive";
             btnSO_CurriculumArchive.TextAlign = ContentAlignment.MiddleLeft;
-            btnSO_CurriculumArchive.UseVisualStyleBackColor = true;
+            btnSO_CurriculumArchive.UseVisualStyleBackColor = false;
             btnSO_CurriculumArchive.Click += btnSO_CurriculumArchive_Click;
             // 
             // panel4
@@ -792,10 +730,7 @@
             // 
             pnlSubOfferingContent.AutoScroll = true;
             pnlSubOfferingContent.CausesValidation = false;
-            pnlSubOfferingContent.Controls.Add(pnlEditSchedule);
             pnlSubOfferingContent.Controls.Add(pnlCurriculumArchive);
-            pnlSubOfferingContent.Controls.Add(pnlSchedule);
-            pnlSubOfferingContent.Controls.Add(pnlCurrentSemester);
             pnlSubOfferingContent.Dock = DockStyle.Fill;
             pnlSubOfferingContent.Location = new Point(256, 72);
             pnlSubOfferingContent.Margin = new Padding(0);
@@ -803,200 +738,6 @@
             pnlSubOfferingContent.Size = new Size(1648, 969);
             pnlSubOfferingContent.TabIndex = 6;
             pnlSubOfferingContent.Paint += pnlCoursesContent_Paint;
-            // 
-            // pnlEditSchedule
-            // 
-            pnlEditSchedule.AutoScroll = true;
-            pnlEditSchedule.AutoSize = true;
-            pnlEditSchedule.BackColor = Color.White;
-            pnlEditSchedule.Controls.Add(panel1);
-            pnlEditSchedule.Controls.Add(dgvEditSchedule);
-            pnlEditSchedule.Cursor = Cursors.Hand;
-            pnlEditSchedule.Dock = DockStyle.Fill;
-            pnlEditSchedule.Location = new Point(0, 0);
-            pnlEditSchedule.Margin = new Padding(3, 2, 3, 2);
-            pnlEditSchedule.Name = "pnlEditSchedule";
-            pnlEditSchedule.Size = new Size(1631, 993);
-            pnlEditSchedule.TabIndex = 8;
-            pnlEditSchedule.Paint += pnlEditSchedule_Paint;
-            // 
-            // panel1
-            // 
-            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            panel1.BackColor = Color.White;
-            panel1.Controls.Add(btnClearSchedule);
-            panel1.Controls.Add(btnSaveSchedule);
-            panel1.Controls.Add(lblESYearLevel);
-            panel1.Controls.Add(lblESCurrentSem);
-            panel1.Controls.Add(cmbESYearLevel);
-            panel1.Location = new Point(0, 0);
-            panel1.Margin = new Padding(3, 2, 3, 2);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(1615, 72);
-            panel1.TabIndex = 7;
-            // 
-            // btnClearSchedule
-            // 
-            btnClearSchedule.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnClearSchedule.BackColor = SystemColors.GrayText;
-            btnClearSchedule.Cursor = Cursors.Hand;
-            btnClearSchedule.FlatAppearance.BorderSize = 0;
-            btnClearSchedule.FlatStyle = FlatStyle.Flat;
-            btnClearSchedule.ForeColor = Color.White;
-            btnClearSchedule.Location = new Point(1347, 36);
-            btnClearSchedule.Margin = new Padding(3, 2, 3, 2);
-            btnClearSchedule.Name = "btnClearSchedule";
-            btnClearSchedule.Size = new Size(122, 27);
-            btnClearSchedule.TabIndex = 4;
-            btnClearSchedule.Text = "Clear Schedule";
-            btnClearSchedule.UseVisualStyleBackColor = false;
-            btnClearSchedule.Click += btnClearSchedule_Click_1;
-            // 
-            // btnSaveSchedule
-            // 
-            btnSaveSchedule.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnSaveSchedule.BackColor = Color.ForestGreen;
-            btnSaveSchedule.Cursor = Cursors.Hand;
-            btnSaveSchedule.FlatAppearance.BorderSize = 0;
-            btnSaveSchedule.FlatStyle = FlatStyle.Flat;
-            btnSaveSchedule.ForeColor = Color.White;
-            btnSaveSchedule.Location = new Point(1481, 36);
-            btnSaveSchedule.Margin = new Padding(3, 2, 3, 2);
-            btnSaveSchedule.Name = "btnSaveSchedule";
-            btnSaveSchedule.Size = new Size(118, 27);
-            btnSaveSchedule.TabIndex = 3;
-            btnSaveSchedule.Text = "Save Schedule";
-            btnSaveSchedule.UseVisualStyleBackColor = false;
-            btnSaveSchedule.Click += btnSaveSchedule_Click;
-            // 
-            // lblESYearLevel
-            // 
-            lblESYearLevel.AutoSize = true;
-            lblESYearLevel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblESYearLevel.Location = new Point(16, 41);
-            lblESYearLevel.Name = "lblESYearLevel";
-            lblESYearLevel.Size = new Size(88, 18);
-            lblESYearLevel.TabIndex = 1;
-            lblESYearLevel.Text = "Year Level: ";
-            lblESYearLevel.Click += lblESYearLevel_Click;
-            // 
-            // lblESCurrentSem
-            // 
-            lblESCurrentSem.AutoSize = true;
-            lblESCurrentSem.Font = new Font("Arial", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblESCurrentSem.Location = new Point(16, 9);
-            lblESCurrentSem.Name = "lblESCurrentSem";
-            lblESCurrentSem.Size = new Size(219, 29);
-            lblESCurrentSem.TabIndex = 0;
-            lblESCurrentSem.Text = "Current Semester:";
-            lblESCurrentSem.Click += lblESCurrentSem_Click;
-            // 
-            // cmbESYearLevel
-            // 
-            cmbESYearLevel.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbESYearLevel.FormattingEnabled = true;
-            cmbESYearLevel.Items.AddRange(new object[] { "All", "1", "2", "3", "4" });
-            cmbESYearLevel.Location = new Point(123, 41);
-            cmbESYearLevel.Margin = new Padding(3, 2, 3, 2);
-            cmbESYearLevel.Name = "cmbESYearLevel";
-            cmbESYearLevel.Size = new Size(70, 23);
-            cmbESYearLevel.TabIndex = 2;
-            // 
-            // dgvEditSchedule
-            // 
-            dgvEditSchedule.AllowUserToAddRows = false;
-            dgvEditSchedule.AllowUserToDeleteRows = false;
-            dgvEditSchedule.AllowUserToResizeColumns = false;
-            dgvEditSchedule.AllowUserToResizeRows = false;
-            dgvEditSchedule.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            dgvEditSchedule.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvEditSchedule.BackgroundColor = Color.White;
-            dgvEditSchedule.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvEditSchedule.Columns.AddRange(new DataGridViewColumn[] { ESCourseCode, ESCourseTitle, ESLab, ESLec, ESTotalUnits, ESSection, ESDay, ESStartTime, EsEndTime, ESRoom, ESInstructor });
-            dgvEditSchedule.Location = new Point(26, 89);
-            dgvEditSchedule.Margin = new Padding(3, 2, 3, 2);
-            dgvEditSchedule.Name = "dgvEditSchedule";
-            dgvEditSchedule.RowHeadersVisible = false;
-            dgvEditSchedule.RowHeadersWidth = 51;
-            dgvEditSchedule.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvEditSchedule.Size = new Size(1589, 495);
-            dgvEditSchedule.TabIndex = 6;
-            dgvEditSchedule.CellContentClick += dgvEditSchedule_CellContentClick;
-            // 
-            // ESCourseCode
-            // 
-            ESCourseCode.HeaderText = "Course Code";
-            ESCourseCode.MinimumWidth = 6;
-            ESCourseCode.Name = "ESCourseCode";
-            ESCourseCode.ReadOnly = true;
-            // 
-            // ESCourseTitle
-            // 
-            ESCourseTitle.HeaderText = "Course Title";
-            ESCourseTitle.MinimumWidth = 6;
-            ESCourseTitle.Name = "ESCourseTitle";
-            ESCourseTitle.ReadOnly = true;
-            // 
-            // ESLab
-            // 
-            ESLab.HeaderText = "Lab";
-            ESLab.MinimumWidth = 6;
-            ESLab.Name = "ESLab";
-            ESLab.ReadOnly = true;
-            // 
-            // ESLec
-            // 
-            ESLec.HeaderText = "Lec";
-            ESLec.MinimumWidth = 6;
-            ESLec.Name = "ESLec";
-            ESLec.ReadOnly = true;
-            // 
-            // ESTotalUnits
-            // 
-            ESTotalUnits.HeaderText = "Total Units";
-            ESTotalUnits.MinimumWidth = 6;
-            ESTotalUnits.Name = "ESTotalUnits";
-            ESTotalUnits.ReadOnly = true;
-            // 
-            // ESSection
-            // 
-            ESSection.HeaderText = "Section";
-            ESSection.Items.AddRange(new object[] { "1-1", "1-2", "2-1", "2-2", "3-1", "3-2", "4-1", "4-2" });
-            ESSection.MinimumWidth = 6;
-            ESSection.Name = "ESSection";
-            // 
-            // ESDay
-            // 
-            ESDay.HeaderText = "Day";
-            ESDay.Items.AddRange(new object[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" });
-            ESDay.MinimumWidth = 6;
-            ESDay.Name = "ESDay";
-            // 
-            // ESStartTime
-            // 
-            ESStartTime.HeaderText = "Start";
-            ESStartTime.MinimumWidth = 6;
-            ESStartTime.Name = "ESStartTime";
-            // 
-            // EsEndTime
-            // 
-            EsEndTime.HeaderText = "End";
-            EsEndTime.MinimumWidth = 6;
-            EsEndTime.Name = "EsEndTime";
-            // 
-            // ESRoom
-            // 
-            ESRoom.HeaderText = "Room";
-            ESRoom.Items.AddRange(new object[] { "101", "102", "ComLab 1", "ComLab 2" });
-            ESRoom.MinimumWidth = 6;
-            ESRoom.Name = "ESRoom";
-            // 
-            // ESInstructor
-            // 
-            ESInstructor.HeaderText = "Instructor";
-            ESInstructor.Items.AddRange(new object[] { "Prof. A", "Prof. B" });
-            ESInstructor.MinimumWidth = 6;
-            ESInstructor.Name = "ESInstructor";
             // 
             // pnlCurriculumArchive
             // 
@@ -1008,7 +749,7 @@
             pnlCurriculumArchive.Location = new Point(0, 0);
             pnlCurriculumArchive.Margin = new Padding(3, 2, 3, 2);
             pnlCurriculumArchive.Name = "pnlCurriculumArchive";
-            pnlCurriculumArchive.Size = new Size(1631, 993);
+            pnlCurriculumArchive.Size = new Size(1648, 969);
             pnlCurriculumArchive.TabIndex = 7;
             // 
             // pnlCurriculum
@@ -1021,7 +762,7 @@
             pnlCurriculum.Location = new Point(0, 36);
             pnlCurriculum.Margin = new Padding(3, 2, 3, 2);
             pnlCurriculum.Name = "pnlCurriculum";
-            pnlCurriculum.Size = new Size(1631, 957);
+            pnlCurriculum.Size = new Size(1648, 933);
             pnlCurriculum.TabIndex = 1;
             // 
             // lblCurriculumList
@@ -1042,7 +783,7 @@
             btnUpdateCurriculum.BackColor = Color.FromArgb(109, 0, 0);
             btnUpdateCurriculum.FlatStyle = FlatStyle.Flat;
             btnUpdateCurriculum.ForeColor = Color.White;
-            btnUpdateCurriculum.Location = new Point(1470, 584);
+            btnUpdateCurriculum.Location = new Point(1487, 584);
             btnUpdateCurriculum.Margin = new Padding(3, 2, 3, 2);
             btnUpdateCurriculum.Name = "btnUpdateCurriculum";
             btnUpdateCurriculum.Size = new Size(140, 27);
@@ -1070,7 +811,7 @@
             dgvCurriculum.RowHeadersVisible = false;
             dgvCurriculum.RowHeadersWidth = 51;
             dgvCurriculum.ScrollBars = ScrollBars.Vertical;
-            dgvCurriculum.Size = new Size(1565, 495);
+            dgvCurriculum.Size = new Size(1582, 495);
             dgvCurriculum.TabIndex = 0;
             // 
             // CourseCode2
@@ -1124,7 +865,7 @@
             panel14.Location = new Point(0, 0);
             panel14.Margin = new Padding(3, 2, 3, 2);
             panel14.Name = "panel14";
-            panel14.Size = new Size(1631, 36);
+            panel14.Size = new Size(1648, 36);
             panel14.TabIndex = 0;
             // 
             // btnArchive
@@ -1161,7 +902,7 @@
             pnlArchive.Location = new Point(0, 0);
             pnlArchive.Margin = new Padding(3, 2, 3, 2);
             pnlArchive.Name = "pnlArchive";
-            pnlArchive.Size = new Size(1631, 993);
+            pnlArchive.Size = new Size(1648, 969);
             pnlArchive.TabIndex = 12;
             // 
             // dgvArchive
@@ -1183,7 +924,7 @@
             dgvArchive.RowHeadersVisible = false;
             dgvArchive.RowHeadersWidth = 51;
             dgvArchive.ScrollBars = ScrollBars.Vertical;
-            dgvArchive.Size = new Size(1577, 495);
+            dgvArchive.Size = new Size(1594, 495);
             dgvArchive.TabIndex = 0;
             // 
             // Semester
@@ -1206,396 +947,6 @@
             blank.MinimumWidth = 6;
             blank.Name = "blank";
             blank.ReadOnly = true;
-            // 
-            // pnlSchedule
-            // 
-            pnlSchedule.AutoScroll = true;
-            pnlSchedule.BackColor = Color.White;
-            pnlSchedule.Controls.Add(dgvScheduleView);
-            pnlSchedule.Controls.Add(panel10);
-            pnlSchedule.ForeColor = SystemColors.ActiveCaption;
-            pnlSchedule.Location = new Point(0, 0);
-            pnlSchedule.Margin = new Padding(3, 2, 3, 2);
-            pnlSchedule.Name = "pnlSchedule";
-            pnlSchedule.Padding = new Padding(9, 0, 9, 0);
-            pnlSchedule.Size = new Size(1258, 993);
-            pnlSchedule.TabIndex = 7;
-            // 
-            // dgvScheduleView
-            // 
-            dgvScheduleView.AllowUserToDeleteRows = false;
-            dgvScheduleView.AllowUserToResizeColumns = false;
-            dgvScheduleView.AllowUserToResizeRows = false;
-            dgvScheduleView.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            dgvScheduleView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvScheduleView.BackgroundColor = Color.White;
-            dgvScheduleView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvScheduleView.Columns.AddRange(new DataGridViewColumn[] { CourseCode1, CourseTitle1, Lec1, Lab1, TotalUnits1, Section1, Day1, Start1, End1, Room1, Instructor1 });
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.Window;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle1.ForeColor = SystemColors.ActiveCaption;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
-            dgvScheduleView.DefaultCellStyle = dataGridViewCellStyle1;
-            dgvScheduleView.Location = new Point(26, 89);
-            dgvScheduleView.Margin = new Padding(3, 2, 3, 2);
-            dgvScheduleView.Name = "dgvScheduleView";
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle2.ForeColor = Color.Black;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            dgvScheduleView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            dgvScheduleView.RowHeadersVisible = false;
-            dgvScheduleView.RowHeadersWidth = 51;
-            dgvScheduleView.ScrollBars = ScrollBars.Vertical;
-            dgvScheduleView.Size = new Size(1216, 495);
-            dgvScheduleView.TabIndex = 1;
-            // 
-            // CourseCode1
-            // 
-            CourseCode1.HeaderText = "Course Code";
-            CourseCode1.MinimumWidth = 6;
-            CourseCode1.Name = "CourseCode1";
-            // 
-            // CourseTitle1
-            // 
-            CourseTitle1.HeaderText = "Course Title";
-            CourseTitle1.MinimumWidth = 6;
-            CourseTitle1.Name = "CourseTitle1";
-            // 
-            // Lec1
-            // 
-            Lec1.HeaderText = "Lec";
-            Lec1.MinimumWidth = 6;
-            Lec1.Name = "Lec1";
-            // 
-            // Lab1
-            // 
-            Lab1.HeaderText = "Lab";
-            Lab1.MinimumWidth = 6;
-            Lab1.Name = "Lab1";
-            // 
-            // TotalUnits1
-            // 
-            TotalUnits1.HeaderText = "Total Units";
-            TotalUnits1.MinimumWidth = 6;
-            TotalUnits1.Name = "TotalUnits1";
-            // 
-            // Section1
-            // 
-            Section1.HeaderText = "Section";
-            Section1.MinimumWidth = 6;
-            Section1.Name = "Section1";
-            // 
-            // Day1
-            // 
-            Day1.HeaderText = "Day";
-            Day1.MinimumWidth = 6;
-            Day1.Name = "Day1";
-            // 
-            // Start1
-            // 
-            Start1.HeaderText = "Start";
-            Start1.MinimumWidth = 6;
-            Start1.Name = "Start1";
-            // 
-            // End1
-            // 
-            End1.HeaderText = "End";
-            End1.MinimumWidth = 6;
-            End1.Name = "End1";
-            // 
-            // Room1
-            // 
-            Room1.HeaderText = "Room";
-            Room1.MinimumWidth = 6;
-            Room1.Name = "Room1";
-            // 
-            // Instructor1
-            // 
-            Instructor1.HeaderText = "Instructor";
-            Instructor1.MinimumWidth = 6;
-            Instructor1.Name = "Instructor1";
-            // 
-            // panel10
-            // 
-            panel10.BackColor = Color.White;
-            panel10.Controls.Add(btnPrint);
-            panel10.Controls.Add(btnExportExcel);
-            panel10.Controls.Add(btnExportPDF);
-            panel10.Controls.Add(cmbYearLevel);
-            panel10.Controls.Add(label6);
-            panel10.Controls.Add(label5);
-            panel10.Dock = DockStyle.Top;
-            panel10.Location = new Point(9, 0);
-            panel10.Margin = new Padding(3, 2, 3, 2);
-            panel10.Name = "panel10";
-            panel10.Size = new Size(1240, 72);
-            panel10.TabIndex = 0;
-            // 
-            // btnPrint
-            // 
-            btnPrint.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnPrint.BackColor = Color.FromArgb(109, 0, 0);
-            btnPrint.FlatStyle = FlatStyle.Flat;
-            btnPrint.ForeColor = Color.White;
-            btnPrint.Location = new Point(1142, 34);
-            btnPrint.Margin = new Padding(3, 2, 3, 2);
-            btnPrint.Name = "btnPrint";
-            btnPrint.Size = new Size(82, 28);
-            btnPrint.TabIndex = 10;
-            btnPrint.Text = "Print";
-            btnPrint.UseVisualStyleBackColor = false;
-            btnPrint.Click += btnPrint_Click;
-            // 
-            // btnExportExcel
-            // 
-            btnExportExcel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnExportExcel.BackColor = Color.FromArgb(109, 0, 0);
-            btnExportExcel.FlatStyle = FlatStyle.Flat;
-            btnExportExcel.ForeColor = Color.White;
-            btnExportExcel.Location = new Point(856, 34);
-            btnExportExcel.Margin = new Padding(3, 2, 3, 2);
-            btnExportExcel.Name = "btnExportExcel";
-            btnExportExcel.Size = new Size(119, 28);
-            btnExportExcel.TabIndex = 9;
-            btnExportExcel.Text = "Export to Excel";
-            btnExportExcel.UseVisualStyleBackColor = false;
-            btnExportExcel.Click += btnExportExcel_Click;
-            // 
-            // btnExportPDF
-            // 
-            btnExportPDF.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnExportPDF.BackColor = Color.FromArgb(109, 0, 0);
-            btnExportPDF.FlatStyle = FlatStyle.Flat;
-            btnExportPDF.ForeColor = Color.White;
-            btnExportPDF.Location = new Point(1000, 34);
-            btnExportPDF.Margin = new Padding(3, 2, 3, 2);
-            btnExportPDF.Name = "btnExportPDF";
-            btnExportPDF.Size = new Size(119, 28);
-            btnExportPDF.TabIndex = 8;
-            btnExportPDF.Text = "Export to PDF";
-            btnExportPDF.UseVisualStyleBackColor = false;
-            btnExportPDF.Click += btnExportPDF_Click;
-            // 
-            // cmbYearLevel
-            // 
-            cmbYearLevel.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbYearLevel.FormattingEnabled = true;
-            cmbYearLevel.Items.AddRange(new object[] { "1", "2", "3", "4" });
-            cmbYearLevel.Location = new Point(122, 44);
-            cmbYearLevel.Margin = new Padding(3, 2, 3, 2);
-            cmbYearLevel.Name = "cmbYearLevel";
-            cmbYearLevel.Size = new Size(70, 23);
-            cmbYearLevel.TabIndex = 7;
-            cmbYearLevel.SelectedIndexChanged += cmbYearLevel_SelectedIndexChanged;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label6.ForeColor = SystemColors.ActiveCaptionText;
-            label6.Location = new Point(16, 48);
-            label6.Name = "label6";
-            label6.Size = new Size(84, 18);
-            label6.TabIndex = 7;
-            label6.Text = "Year Level:";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.BackColor = Color.White;
-            label5.Font = new Font("Arial", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.ForeColor = SystemColors.ActiveCaptionText;
-            label5.Location = new Point(16, 10);
-            label5.Name = "label5";
-            label5.Size = new Size(219, 29);
-            label5.TabIndex = 7;
-            label5.Text = "Current Semester:";
-            // 
-            // pnlCurrentSemester
-            // 
-            pnlCurrentSemester.BackColor = Color.White;
-            pnlCurrentSemester.Controls.Add(dgvSchedule);
-            pnlCurrentSemester.Controls.Add(panel2);
-            pnlCurrentSemester.Location = new Point(0, 0);
-            pnlCurrentSemester.Margin = new Padding(3, 2, 3, 2);
-            pnlCurrentSemester.Name = "pnlCurrentSemester";
-            pnlCurrentSemester.Size = new Size(1258, 704);
-            pnlCurrentSemester.TabIndex = 0;
-            // 
-            // dgvSchedule
-            // 
-            dgvSchedule.AllowUserToAddRows = false;
-            dgvSchedule.AllowUserToDeleteRows = false;
-            dgvSchedule.AllowUserToResizeColumns = false;
-            dgvSchedule.AllowUserToResizeRows = false;
-            dgvSchedule.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            dgvSchedule.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvSchedule.BackgroundColor = Color.White;
-            dgvSchedule.ColumnHeadersHeight = 30;
-            dgvSchedule.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dgvSchedule.Columns.AddRange(new DataGridViewColumn[] { CourseCode, CourseTitle, Lab, Lec, TotalUnits, Year });
-            dgvSchedule.Location = new Point(26, 137);
-            dgvSchedule.Margin = new Padding(3, 2, 3, 2);
-            dgvSchedule.MultiSelect = false;
-            dgvSchedule.Name = "dgvSchedule";
-            dgvSchedule.RowHeadersVisible = false;
-            dgvSchedule.RowHeadersWidth = 51;
-            dgvSchedule.ScrollBars = ScrollBars.Vertical;
-            dgvSchedule.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvSchedule.Size = new Size(1216, 495);
-            dgvSchedule.TabIndex = 7;
-            // 
-            // CourseCode
-            // 
-            CourseCode.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            CourseCode.HeaderText = "Course Code";
-            CourseCode.MinimumWidth = 6;
-            CourseCode.Name = "CourseCode";
-            // 
-            // CourseTitle
-            // 
-            CourseTitle.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            CourseTitle.HeaderText = "Course Title";
-            CourseTitle.MinimumWidth = 6;
-            CourseTitle.Name = "CourseTitle";
-            // 
-            // Lab
-            // 
-            Lab.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            Lab.HeaderText = "Lab";
-            Lab.MinimumWidth = 6;
-            Lab.Name = "Lab";
-            Lab.Width = 51;
-            // 
-            // Lec
-            // 
-            Lec.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            Lec.HeaderText = "Lec";
-            Lec.MinimumWidth = 6;
-            Lec.Name = "Lec";
-            Lec.Width = 50;
-            // 
-            // TotalUnits
-            // 
-            TotalUnits.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            TotalUnits.HeaderText = "Total Units";
-            TotalUnits.MinimumWidth = 6;
-            TotalUnits.Name = "TotalUnits";
-            TotalUnits.Width = 88;
-            // 
-            // Year
-            // 
-            Year.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            Year.HeaderText = "Year";
-            Year.MinimumWidth = 6;
-            Year.Name = "Year";
-            Year.Width = 54;
-            // 
-            // panel2
-            // 
-            panel2.BackColor = Color.White;
-            panel2.Controls.Add(btnSetCurrent);
-            panel2.Controls.Add(lblSemesterSetup);
-            panel2.Controls.Add(cmbSY);
-            panel2.Controls.Add(lblCourseList);
-            panel2.Controls.Add(lblSY);
-            panel2.Controls.Add(lblSem);
-            panel2.Controls.Add(cmbSem);
-            panel2.Dock = DockStyle.Top;
-            panel2.Location = new Point(0, 0);
-            panel2.Margin = new Padding(3, 2, 3, 2);
-            panel2.Name = "panel2";
-            panel2.Padding = new Padding(18, 0, 18, 0);
-            panel2.Size = new Size(1258, 137);
-            panel2.TabIndex = 8;
-            // 
-            // btnSetCurrent
-            // 
-            btnSetCurrent.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnSetCurrent.BackColor = Color.FromArgb(109, 0, 0);
-            btnSetCurrent.FlatAppearance.BorderSize = 0;
-            btnSetCurrent.FlatStyle = FlatStyle.Flat;
-            btnSetCurrent.ForeColor = Color.White;
-            btnSetCurrent.Location = new Point(1064, 96);
-            btnSetCurrent.Margin = new Padding(3, 2, 3, 2);
-            btnSetCurrent.Name = "btnSetCurrent";
-            btnSetCurrent.Size = new Size(177, 27);
-            btnSetCurrent.TabIndex = 6;
-            btnSetCurrent.Text = "Set as Current Semester";
-            btnSetCurrent.UseVisualStyleBackColor = false;
-            btnSetCurrent.Click += btnSetCurrent_Click;
-            // 
-            // lblSemesterSetup
-            // 
-            lblSemesterSetup.AutoSize = true;
-            lblSemesterSetup.BackColor = Color.White;
-            lblSemesterSetup.Font = new Font("Arial", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblSemesterSetup.Location = new Point(18, 13);
-            lblSemesterSetup.Name = "lblSemesterSetup";
-            lblSemesterSetup.Size = new Size(193, 29);
-            lblSemesterSetup.TabIndex = 0;
-            lblSemesterSetup.Text = "Semester Setup";
-            lblSemesterSetup.Click += lblSemesterSetup_Click;
-            // 
-            // cmbSY
-            // 
-            cmbSY.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbSY.FormattingEnabled = true;
-            cmbSY.Items.AddRange(new object[] { "2025-2026", "2026-2027" });
-            cmbSY.Location = new Point(122, 44);
-            cmbSY.Margin = new Padding(3, 2, 3, 2);
-            cmbSY.Name = "cmbSY";
-            cmbSY.Size = new Size(158, 23);
-            cmbSY.TabIndex = 4;
-            // 
-            // lblCourseList
-            // 
-            lblCourseList.AutoSize = true;
-            lblCourseList.Font = new Font("Arial", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblCourseList.Location = new Point(18, 98);
-            lblCourseList.Name = "lblCourseList";
-            lblCourseList.Size = new Size(315, 26);
-            lblCourseList.TabIndex = 3;
-            lblCourseList.Text = "Current Semester Course List";
-            // 
-            // lblSY
-            // 
-            lblSY.AutoSize = true;
-            lblSY.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblSY.Location = new Point(18, 46);
-            lblSY.Name = "lblSY";
-            lblSY.Size = new Size(99, 18);
-            lblSY.TabIndex = 1;
-            lblSY.Text = "School Year: ";
-            // 
-            // lblSem
-            // 
-            lblSem.AutoSize = true;
-            lblSem.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblSem.Location = new Point(18, 70);
-            lblSem.Name = "lblSem";
-            lblSem.Size = new Size(84, 18);
-            lblSem.TabIndex = 2;
-            lblSem.Text = "Semester: ";
-            lblSem.Click += lblSem_Click;
-            // 
-            // cmbSem
-            // 
-            cmbSem.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbSem.FormattingEnabled = true;
-            cmbSem.Items.AddRange(new object[] { "1", "2" });
-            cmbSem.Location = new Point(122, 70);
-            cmbSem.Margin = new Padding(3, 2, 3, 2);
-            cmbSem.Name = "cmbSem";
-            cmbSem.Size = new Size(70, 23);
-            cmbSem.TabIndex = 5;
             // 
             // pnlHeader
             // 
@@ -1706,11 +1057,6 @@
             panel13.ResumeLayout(false);
             pnlContainerAdminPortal.ResumeLayout(false);
             pnlSubOfferingContent.ResumeLayout(false);
-            pnlSubOfferingContent.PerformLayout();
-            pnlEditSchedule.ResumeLayout(false);
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvEditSchedule).EndInit();
             pnlCurriculumArchive.ResumeLayout(false);
             pnlCurriculum.ResumeLayout(false);
             pnlCurriculum.PerformLayout();
@@ -1718,14 +1064,6 @@
             panel14.ResumeLayout(false);
             pnlArchive.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvArchive).EndInit();
-            pnlSchedule.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvScheduleView).EndInit();
-            panel10.ResumeLayout(false);
-            panel10.PerformLayout();
-            pnlCurrentSemester.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvSchedule).EndInit();
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
             pnlHeader.ResumeLayout(false);
             panel15.ResumeLayout(false);
             panel15.PerformLayout();
@@ -1785,25 +1123,6 @@
         private Button btnAnnouncement;
         private Panel mainContentPanel;
         private Panel pnlSubOfferingContent;
-        private Panel pnlEditSchedule;
-        private Panel panel1;
-        private Button btnClearSchedule;
-        private Button btnSaveSchedule;
-        private Label lblESYearLevel;
-        private Label lblESCurrentSem;
-        private ComboBox cmbESYearLevel;
-        private DataGridView dgvEditSchedule;
-        private DataGridViewTextBoxColumn ESCourseCode;
-        private DataGridViewTextBoxColumn ESCourseTitle;
-        private DataGridViewTextBoxColumn ESLab;
-        private DataGridViewTextBoxColumn ESLec;
-        private DataGridViewTextBoxColumn ESTotalUnits;
-        private DataGridViewComboBoxColumn ESSection;
-        private DataGridViewComboBoxColumn ESDay;
-        private DataGridViewTextBoxColumn ESStartTime;
-        private DataGridViewTextBoxColumn EsEndTime;
-        private DataGridViewComboBoxColumn ESRoom;
-        private DataGridViewComboBoxColumn ESInstructor;
         private Panel pnlCurriculumArchive;
         private Panel pnlCurriculum;
         private Label lblCurriculumList;
@@ -1823,41 +1142,5 @@
         private DataGridViewTextBoxColumn Semester;
         private DataGridViewTextBoxColumn SchoolYear;
         private DataGridViewTextBoxColumn blank;
-        private Panel pnlSchedule;
-        private DataGridView dgvScheduleView;
-        private DataGridViewTextBoxColumn CourseCode1;
-        private DataGridViewTextBoxColumn CourseTitle1;
-        private DataGridViewTextBoxColumn Lec1;
-        private DataGridViewTextBoxColumn Lab1;
-        private DataGridViewTextBoxColumn TotalUnits1;
-        private DataGridViewTextBoxColumn Section1;
-        private DataGridViewTextBoxColumn Day1;
-        private DataGridViewTextBoxColumn Start1;
-        private DataGridViewTextBoxColumn End1;
-        private DataGridViewTextBoxColumn Room1;
-        private DataGridViewTextBoxColumn Instructor1;
-        private Panel panel10;
-        private Button btnPrint;
-        private Button btnExportExcel;
-        private Button btnExportPDF;
-        private ComboBox cmbYearLevel;
-        private Label label6;
-        private Label label5;
-        private Panel pnlCurrentSemester;
-        private DataGridView dgvSchedule;
-        private DataGridViewTextBoxColumn CourseCode;
-        private DataGridViewTextBoxColumn CourseTitle;
-        private DataGridViewTextBoxColumn Lab;
-        private DataGridViewTextBoxColumn Lec;
-        private DataGridViewTextBoxColumn TotalUnits;
-        private DataGridViewTextBoxColumn Year;
-        private Panel panel2;
-        private Button btnSetCurrent;
-        private Label lblSemesterSetup;
-        private ComboBox cmbSY;
-        private Label lblCourseList;
-        private Label lblSY;
-        private Label lblSem;
-        private ComboBox cmbSem;
     }
 }
