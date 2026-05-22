@@ -221,8 +221,8 @@ namespace PUPAcadPortal.PortalForms
         {
             changeButtonColor(sender as Button);
             btnSubjectOffering.Text = !pnlsubofferingSubmenu.Visible ? " Subject Offering                    ⌄" : " Subject Offering                     ›";
-            btnSO_CurrentSemester.PerformClick(); // Show Current Semester by default when Subject Offering is clicked
             await subjectOfferingSubmenuAnim.ToggleSubMenuAsync();
+            btnSO_CurrentSemester.PerformClick(); // Show Current Semester by default when Subject Offering is clicked
             //pnlRegistrarSubmenu.Visible = false;
             //pnlsubofferingSubmenu.Visible = !pnlsubofferingSubmenu.Visible;
             //if (pnlsubofferingSubmenu.Visible)
@@ -260,25 +260,28 @@ namespace PUPAcadPortal.PortalForms
         {
             // Change button color and show the main content panel (if any)
             changeButtonColor(sender as Button);
-            btnGradesManagement.PerformClick(); // Show Grades Management by default when Registrar Functions is clicked
             btnRegistrarFunctions.Text = !pnlRegistrarSubmenu.Visible ? " Registrar Functions              ⌄" : " Registrar Functions              ›";
             await registrarSubmenuAnim.ToggleSubMenuAsync();
+            btnGradesManagement.PerformClick(); // Show Grades Management by default when Registrar Functions is clicked
         }
 
         // Submenu button event handlers
 
         private void btnGradesManagement_Click(object sender, EventArgs e)
         {
+            changeButtonColor(sender as Button);
             mainContentPanel.ShowView(new GradesMngContentAdmin());
         }
 
         private void btnAccountingRecords_Click(object sender, EventArgs e)
         {
+            changeButtonColor(sender as Button);
             mainContentPanel.ShowView(new AccountsContentAdmin());
         }
 
         private void btnEnrolledStudents_Click(object sender, EventArgs e)
         {
+            changeButtonColor(sender as Button);
             mainContentPanel.ShowView(new EnrolledStudentsContentAdmin());
         }
 

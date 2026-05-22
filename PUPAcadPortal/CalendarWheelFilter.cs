@@ -14,12 +14,14 @@ namespace PUPAcadPortal
 
         public CalendarWheelFilter(Control target, Action<int> onScroll)
         {
+            if (target.IsDisposed) return;
             _target = target;
             _onScroll = onScroll;
         }
 
         public bool PreFilterMessage(ref Message m)
         {
+            if (_target.IsDisposed) return false;
             if (m.Msg != WM_MOUSEWHEEL) return false;
 
             var cursorPos = Control.MousePosition;

@@ -28,7 +28,7 @@ namespace PUPAcadPortal.Utils
             _isAnimating = true;
 
             int targetHeight = _isExpanded ? _collapsedHeight : _expandedHeight;
-            int step = 10;
+            int step = _expandedHeight / 10;
 
             while (_panel.Height != targetHeight)
             {

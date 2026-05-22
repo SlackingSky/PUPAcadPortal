@@ -46,6 +46,7 @@ namespace PUPAcadPortal
 
     public static class SharedCalendarData
     {
+        public static bool isLoaded = false;
         private static readonly string SaveFolder =
             Path.Combine(Environment.GetFolderPath(
                 Environment.SpecialFolder.ApplicationData), "PUPAcadPortal");
@@ -242,6 +243,7 @@ namespace PUPAcadPortal
 
         public static void LoadData()
         {
+            if (isLoaded) return;
             try
             {
                 string path = Path.Combine(SaveFolder, "student_notes.txt");
@@ -303,6 +305,7 @@ namespace PUPAcadPortal
                             });
                         }
                     }
+                isLoaded = true;
             }
             catch { }
         }

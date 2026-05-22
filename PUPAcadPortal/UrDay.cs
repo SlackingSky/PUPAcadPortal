@@ -14,11 +14,14 @@ namespace PUPAcadPortal
         private string _day;
         private DateTime _fullDate;
         private Label _lblHoliday;
+        private Label _lblHolidayInline;
         private bool _isCurrentMonth;
         private bool _isStudent;
         private bool _isSelected;
         private bool _isHovered = false;
-        private readonly List<Label> _eventPills = new List<Label>();
+        private readonly List<Button> _eventPills = new List<Button>();
+        private Button _btnEventsDropdown;
+        private Button _btnNoteDropdown;
         private ContextMenuStrip _ctxMenu;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 
@@ -34,13 +37,16 @@ namespace PUPAcadPortal
         }
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public DateTime CellDate => _fullDate;
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public bool IsSelected
         {
             get => _isSelected;
             set
             {
                 _isSelected = value;
-                this.BackColor = value ? Color.FromArgb(240, 245, 255) : Color.White;
+                this.BackColor = value ? Color.FromArgb(255, 245, 245) : Color.White;
                 Invalidate();
             }
         }
@@ -102,17 +108,32 @@ namespace PUPAcadPortal
 
             if (!string.IsNullOrEmpty(holiday))
             {
-                _lblHoliday = MakePill(holiday, Color.FromArgb(52, 168, 83));
-                _lblHoliday.Cursor = Cursors.Help;
-                _lblHoliday.Click += (s, e) =>
+                _lblHolidayInline = new Label
+                {
+                    AutoSize = false,
+                    AutoEllipsis = true,
+                    Text = holiday,
+                    Font = new Font("Segoe UI", 6.5f, FontStyle.Bold),
+                    ForeColor = Color.FromArgb(30, 120, 60),
+                    BackColor = Color.FromArgb(220, 245, 220),
+                    Location = new Point(36, 6),
+                    Height = 18,
+                    TextAlign = ContentAlignment.MiddleLeft,
+                    Padding = new Padding(2, 0, 2, 0),
+                    Cursor = Cursors.Help,
+                    Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
+                };
+                _lblHolidayInline.Width = this.Width - 38;
+
+                _lblHolidayInline.Click += (s, e) =>
                     MessageBox.Show(holiday,
                         "Holiday — " + _fullDate.ToString("MMMM dd, yyyy"),
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 var tip = new ToolTip();
-                tip.SetToolTip(_lblHoliday, "Philippine Holiday — " + holiday);
-                this.Controls.Add(_lblHoliday);
-                _lblHoliday.BringToFront();
+                tip.SetToolTip(_lblHolidayInline, "Philippine Holiday — " + holiday);
+                this.Controls.Add(_lblHolidayInline);
+                _lblHolidayInline.BringToFront();
             }
 
             lblNote.Click += (s, e) => OpenNotesDialog();
@@ -128,10 +149,10 @@ namespace PUPAcadPortal
 
             this.Resize += (s, e) =>
             {
-                if (_lblHoliday != null) _lblHoliday.Width = this.Width - 4;
-                lblNote.Width = this.Width - 4;
-                lblAnnouncement.Width = this.Width - 4;
-                foreach (var lbl in _eventPills) lbl.Width = this.Width - 4;
+                if (_lblHolidayInline != null) _lblHolidayInline.Width = this.Width - 38;
+                if (_btnEventsDropdown != null) _btnEventsDropdown.Width = Math.Max(10, this.Width - 4);
+                if (_btnNoteDropdown != null) _btnNoteDropdown.Width = Math.Max(10, this.Width - 4);
+                foreach (var btn in _eventPills) btn.Width = Math.Max(10, this.Width - 4);
             };
 
             RepositionPills();
@@ -165,12 +186,10 @@ namespace PUPAcadPortal
                 var mnuRemove = new ToolStripMenuItem("🗑  Remove Event");
                 _ctxMenu.Items.Add(mnuRemove);
 
-
                 _ctxMenu.Opening += (s, e) =>
                 {
                     mnuRemove.DropDownItems.Clear();
                     var events = SharedCalendarData.GetEventsForDate(_fullDate);
-
                     mnuRemove.Enabled = _isCurrentMonth && events.Count > 0;
 
                     foreach (var ev in events)
@@ -201,8 +220,6 @@ namespace PUPAcadPortal
                         };
                         mnuRemove.DropDownItems.Add(item);
                     }
-
-                    
                 };
             }
             else
@@ -230,7 +247,6 @@ namespace PUPAcadPortal
                 {
                     mnuRemove.DropDownItems.Clear();
                     var personalEvents = SharedCalendarData.GetStudentEventsForDate(_fullDate);
-
                     mnuRemove.Enabled = _isCurrentMonth && personalEvents.Count > 0;
 
                     foreach (var ev in personalEvents)
@@ -353,47 +369,66 @@ namespace PUPAcadPortal
 
         public void RefreshEventPills()
         {
-            foreach (var lbl in _eventPills) this.Controls.Remove(lbl);
+            foreach (var btn in _eventPills) this.Controls.Remove(btn);
             _eventPills.Clear();
 
+            if (_btnEventsDropdown != null) { this.Controls.Remove(_btnEventsDropdown); _btnEventsDropdown = null; }
+
             var sharedEvents = SharedCalendarData.GetEventsForDate(_fullDate);
-            foreach (var ev in sharedEvents)
+            var personalEvents = _isStudent
+                ? SharedCalendarData.GetStudentEventsForDate(_fullDate)
+                : new System.Collections.Generic.List<CalendarEvent>();
+
+            int totalCount = sharedEvents.Count + personalEvents.Count;
+
+            if (totalCount > 0)
             {
-                var pill = MakePill(ev.Title, ev.GetColor(), isPersonal: false);
-                pill.Tag = ev;
-                pill.Click += (s, e) => ShowEventDetails(ev, isPersonal: false);
+                _btnEventsDropdown = MakeGroupedDropdown(
+                    $"📅 Events ({totalCount})  ▾",
+                    Color.Maroon);
 
-                var tip = new ToolTip();
-                string tipText = ev.GetTypeLabel();
-                if (!string.IsNullOrEmpty(ev.StartTime)) tipText += $"  {ev.StartTime}";
-                if (!string.IsNullOrEmpty(ev.Room)) tipText += $"  •  {ev.Room}";
-                tip.SetToolTip(pill, tipText);
+                var capturedShared = new System.Collections.Generic.List<CalendarEvent>(sharedEvents);
+                var capturedPersonal = new System.Collections.Generic.List<CalendarEvent>(personalEvents);
 
-                _eventPills.Add(pill);
-                this.Controls.Add(pill);
-                pill.BringToFront();
-            }
-
-            if (_isStudent)
-            {
-                var personalEvents = SharedCalendarData.GetStudentEventsForDate(_fullDate);
-                foreach (var ev in personalEvents)
+                _btnEventsDropdown.Click += (s, e) =>
                 {
-                    Color personalColor = BlendWithWhite(ev.GetColor(), 0.70f);
-                    var pill = MakePill("🔒 " + ev.Title, personalColor, isPersonal: true);
-                    pill.Tag = ev;
-                    pill.Click += (s, e) => ShowEventDetails(ev, isPersonal: true);
+                    var cms = new ContextMenuStrip();
+                    cms.Font = new Font("Segoe UI", 8.5f);
 
-                    var tip = new ToolTip();
-                    string tipText = "[MY EVENT] " + ev.GetTypeLabel();
-                    if (!string.IsNullOrEmpty(ev.StartTime)) tipText += $"  {ev.StartTime}";
-                    if (!string.IsNullOrEmpty(ev.Room)) tipText += $"  •  {ev.Room}";
-                    tip.SetToolTip(pill, tipText);
+                    foreach (var ev in capturedShared)
+                    {
+                        string line = $"[{ev.GetTypeLabel()}]  {ev.Title}";
+                        if (!string.IsNullOrEmpty(ev.StartTime))
+                            line += $"  •  {ev.StartTime}" + (string.IsNullOrEmpty(ev.EndTime) ? "" : "–" + ev.EndTime);
+                        if (!string.IsNullOrEmpty(ev.Room))
+                            line += $"  •  Rm {ev.Room}";
+                        var item = new ToolStripMenuItem(line);
+                        item.ForeColor = ev.GetColor();
+                        item.Enabled = false;
+                        cms.Items.Add(item);
+                    }
 
-                    _eventPills.Add(pill);
-                    this.Controls.Add(pill);
-                    pill.BringToFront();
-                }
+                    if (capturedPersonal.Count > 0)
+                    {
+                        if (capturedShared.Count > 0)
+                            cms.Items.Add(new ToolStripSeparator());
+                        foreach (var ev in capturedPersonal)
+                        {
+                            string line = $" [MY {ev.GetTypeLabel()}]  {ev.Title}";
+                            if (!string.IsNullOrEmpty(ev.StartTime))
+                                line += $"  •  {ev.StartTime}" + (string.IsNullOrEmpty(ev.EndTime) ? "" : "–" + ev.EndTime);
+                            var item = new ToolStripMenuItem(line);
+                            item.ForeColor = Color.FromArgb(80, 80, 80);
+                            item.Enabled = false;
+                            cms.Items.Add(item);
+                        }
+                    }
+
+                    cms.Show(_btnEventsDropdown, 0, _btnEventsDropdown.Height);
+                };
+
+                this.Controls.Add(_btnEventsDropdown);
+                _btnEventsDropdown.BringToFront();
             }
 
             RepositionPills();
@@ -424,67 +459,117 @@ namespace PUPAcadPortal
                 (int)(c.B + (255 - c.B) * (1f - ratio)));
         }
 
-        private Label MakePill(string text, Color back, bool isPersonal = false)
+        private Button MakeGroupedDropdown(string label, Color backColor)
         {
-            return new Label
+            float brightness = (backColor.R * 299 + backColor.G * 587 + backColor.B * 114) / 1000f;
+            Color fg = brightness < 128 ? Color.White : Color.FromArgb(30, 30, 30);
+
+            var btn = new Button
+            {
+                AutoSize = false,
+                Text = label,
+                Font = new Font("Segoe UI", 7.5f, FontStyle.Regular),
+                ForeColor = fg,
+                BackColor = backColor,
+                Size = new Size(Math.Max(10, this.Width - 4), 20),
+                TextAlign = ContentAlignment.MiddleLeft,
+                Padding = new Padding(5, 0, 4, 0),
+                Cursor = Cursors.Hand,
+                FlatStyle = FlatStyle.Flat,
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
+                UseVisualStyleBackColor = false,
+            };
+            btn.FlatAppearance.BorderSize = 0;
+            btn.FlatAppearance.MouseOverBackColor = ControlPaint.Dark(backColor, 0.10f);
+            return btn;
+        }
+
+        private Button MakePill(string text, Color back, bool isPersonal = false)
+        {
+            float brightness = (back.R * 299 + back.G * 587 + back.B * 114) / 1000f;
+            Color fg = isPersonal
+                ? Color.FromArgb(40, 40, 40)
+                : (brightness < 128 ? Color.White : Color.FromArgb(30, 30, 30));
+
+            var btn = new Button
             {
                 AutoSize = false,
                 AutoEllipsis = true,
-                Text = text,
+                Text = text + "  ▾",
                 Font = new Font("Segoe UI", 6.8f, isPersonal ? FontStyle.Italic : FontStyle.Regular),
-                ForeColor = isPersonal ? Color.FromArgb(40, 40, 40) : Color.White,
+                ForeColor = fg,
                 BackColor = back,
-                Size = new Size(this.Width - 4, 16),
+                Size = new Size(this.Width - 4, 17),
                 TextAlign = ContentAlignment.MiddleLeft,
                 Padding = new Padding(3, 0, 0, 0),
                 Cursor = Cursors.Hand,
+                FlatStyle = FlatStyle.Flat,
                 Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
+                UseVisualStyleBackColor = false,
             };
+            btn.FlatAppearance.BorderSize = 0;
+            btn.FlatAppearance.MouseOverBackColor = ControlPaint.Dark(back, 0.12f);
+            return btn;
         }
 
         private void RepositionPills()
         {
+            // Day number row ends at y=34 (top=4, height=28, gap=2)
             int y = 34;
 
-            if (_lblHoliday != null)
+            if (_btnEventsDropdown != null)
             {
-                _lblHoliday.Location = new Point(2, y);
-                y += 18;
+                _btnEventsDropdown.Location = new Point(2, y);
+                _btnEventsDropdown.Width = Math.Max(10, this.Width - 4);
+                y += 22;
             }
 
-            foreach (var lbl in _eventPills)
+            if (_btnNoteDropdown != null)
             {
-                lbl.Location = new Point(2, y);
-                y += 18;
+                _btnNoteDropdown.Location = new Point(2, y);
+                _btnNoteDropdown.Width = Math.Max(10, this.Width - 4);
+                y += 22;
             }
 
-            if (lblNote.Visible)
-            {
-                lblNote.Location = new Point(2, y);
-                y += 18;
-            }
-
-            if (lblAnnouncement.Visible)
-                lblAnnouncement.Location = new Point(2, y);
+            if (lblNote != null) lblNote.Visible = false;
+            if (lblAnnouncement != null) lblAnnouncement.Visible = false;
         }
 
         private void LoadNote()
         {
             if (lblNote == null) return;
+            lblNote.Visible = false;
+
+            if (_btnNoteDropdown != null) { this.Controls.Remove(_btnNoteDropdown); _btnNoteDropdown = null; }
+
             var dict = _isStudent ? SharedCalendarData.StudentNotes : InstructorPortal.notesDict;
             bool has = dict.ContainsKey(_fullDate) && !string.IsNullOrWhiteSpace(dict[_fullDate]);
-            lblNote.Text = has ? dict[_fullDate] : "";
-            lblNote.Visible = has;
+
+            if (has)
+            {
+                string noteText = dict[_fullDate];
+                _btnNoteDropdown = MakeGroupedDropdown("🗒 Note  ▾", Color.FromArgb(80, 80, 80));
+                _btnNoteDropdown.Click += (s, e) =>
+                {
+                    var cms = new ContextMenuStrip();
+                    cms.Font = new Font("Segoe UI", 8.5f);
+                    string preview = noteText.Length > 60 ? noteText.Substring(0, 57) + "…" : noteText;
+                    cms.Items.Add(new ToolStripMenuItem(preview) { Enabled = false, ForeColor = Color.FromArgb(50, 50, 50) });
+                    cms.Items.Add(new ToolStripSeparator());
+                    cms.Items.Add(new ToolStripMenuItem("✏  Edit Note", null, (ss, ee) => OpenNotesDialog()));
+                    cms.Show(_btnNoteDropdown, 0, _btnNoteDropdown.Height);
+                };
+                this.Controls.Add(_btnNoteDropdown);
+                _btnNoteDropdown.BringToFront();
+            }
+
             RepositionPills();
         }
 
         private void LoadAnnouncement()
         {
             if (lblAnnouncement == null) return;
-            bool has = SharedCalendarData.InstructorAnnouncements.ContainsKey(_fullDate)
-                       && !string.IsNullOrWhiteSpace(SharedCalendarData.InstructorAnnouncements[_fullDate]);
-            lblAnnouncement.Text = has ? SharedCalendarData.InstructorAnnouncements[_fullDate] : "";
-            lblAnnouncement.Visible = has;
+            lblAnnouncement.Visible = false;
             RepositionPills();
         }
 
@@ -528,12 +613,10 @@ namespace PUPAcadPortal
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            Color borderColor = _isSelected
-                ? Color.FromArgb(66, 133, 244)
-                : _isHovered && _isCurrentMonth
-                    ? Color.FromArgb(200, 80, 40)
-                    : Color.FromArgb(210, 210, 210);
-            int penWidth = (_isSelected || _isHovered) ? 2 : 1;
+            Color borderColor = (_isSelected || (_isHovered && _isCurrentMonth))
+                ? Color.Maroon
+                : Color.FromArgb(210, 210, 210);
+            int penWidth = (_isSelected || (_isHovered && _isCurrentMonth)) ? 2 : 1;
             using (var pen = new Pen(borderColor, penWidth))
                 e.Graphics.DrawRectangle(pen, 0, 0, this.Width - 1, this.Height - 1);
         }
