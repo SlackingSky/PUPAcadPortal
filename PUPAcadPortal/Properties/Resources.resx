@@ -559,4 +559,40 @@
   <data name="COG-MTECH" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\COG-MTECH.pdf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="academic1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\academic1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="academic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\academic.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="administrative" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\administrative.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="administrative1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\administrative1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="emergency1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\emergency1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="enrollmentlms1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\enrollmentlms1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="events1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\events1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="examinations1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\examinations1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="general1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\general1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="schedule1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\schedule1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="schedule12" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\schedule12.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="urgent1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\urgent1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using PUPAcadPortal.PortalForms;
+using PUPAcadPortal.PortalContents.Instructor.LMS;
 
 namespace PUPAcadPortal
 {
@@ -59,7 +59,7 @@ namespace PUPAcadPortal
             Paint += (s, e) => DrawBorder(e.Graphics);
         }
 
-        public void LoadAnnouncement(InstructorPortal.Announcement a)
+        public void LoadAnnouncement(AnnouncementContentInst.Announcement a)
         {
             if (a == null) throw new ArgumentNullException(nameof(a));
             _currentId = a.Id;

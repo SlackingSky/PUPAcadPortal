@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -162,17 +163,37 @@ namespace PUPAcadPortal
             }
 
             // ── Icon circle ──────────────────────────────────────────────────
-            var iconCircle = new Panel { Size = new Size(42, 42), Location = new Point(12, 14), BackColor = iconBg };
+            var iconCircle = new Panel
+            {
+                Size = new Size(42, 42),
+                Location = new Point(12, 14),
+                BackColor = iconBg,
+            };
             iconCircle.Paint += (s, pe) =>
             {
                 pe.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
                 using var b = new SolidBrush(iconBg);
-                pe.Graphics.FillEllipse(b, 0, 0, iconCircle.Width - 1, iconCircle.Height - 1);
-                string letter = category.Length > 0 ? category[..1] : "?";
-                using var font = new Font("Segoe UI", 13f, FontStyle.Bold);
-                using var tb = new SolidBrush(iconCol);
-                var sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
-                pe.Graphics.DrawString(letter, font, tb, new RectangleF(0, 0, iconCircle.Width, iconCircle.Height), sf);
+                pe.Graphics.FillEllipse(b, 1, 1, iconCircle.Width - 3, iconCircle.Height - 3);
+                Image catImg = GetCategoryImage(category);
+                if (catImg != null)
+                {
+                    int pad = 8;
+                    pe.Graphics.DrawImage(catImg,
+                        new Rectangle(pad, pad, iconCircle.Width - pad * 2, iconCircle.Height - pad * 2));
+                }
+                else
+                {
+                    string letter = category.Length > 0 ? category[..1] : "?";
+                    using var font = new Font("Segoe UI", 13f, FontStyle.Bold);
+                    using var tb = new SolidBrush(iconCol);
+                    var sf = new StringFormat
+                    {
+                        Alignment = StringAlignment.Center,
+                        LineAlignment = StringAlignment.Center,
+                    };
+                    pe.Graphics.DrawString(letter, font, tb,
+                        new RectangleF(0, 0, iconCircle.Width, iconCircle.Height), sf);
+                }
             };
             this.Controls.Add(iconCircle);
 
@@ -191,18 +212,46 @@ namespace PUPAcadPortal
             int titleOffsetX = 0;
             if (isPinned)
             {
-                var pin = new Label { AutoSize = true, Text = "📌", Font = new Font("Segoe UI", 9f), Location = new Point(textX, 14), BackColor = Color.Transparent };
+                var pin = new Label
+                {
+                    AutoSize = true,
+                    Text = "📌",
+                    Font = new Font("Segoe UI", 9f),
+                    Location = new Point(textX, 14),
+                    BackColor = Color.Transparent,
+                }; 
                 this.Controls.Add(pin);
                 titleOffsetX = 20;
             }
             if (isUrgent)
             {
+                var urgIconBox = new Panel
+                {
+                    Size = new Size(18, 18),
+                    Location = new Point(textX + titleOffsetX, 13),
+                    BackColor = Color.Transparent,
+                };
+                urgIconBox.Paint += (s, pe) =>
+                {
+                    pe.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                    try
+                    {
+                        pe.Graphics.DrawImage(Properties.Resources.urgent1,
+                            new Rectangle(0, 0, urgIconBox.Width, urgIconBox.Height));
+                    }
+                    catch
+                    {
+                    }
+                };
+                this.Controls.Add(urgIconBox);
+                titleOffsetX += 22;
+
                 var urgentBadge = new Label
                 {
                     AutoSize = false,
                     Size = new Size(52, 18),
                     Location = new Point(textX + titleOffsetX, 14),
-                    Text = "⚠ URGENT",
+                    Text = "URGENT",
                     Font = new Font("Segoe UI", 7f, FontStyle.Bold),
                     ForeColor = Color.White,
                     BackColor = Color.Firebrick,
@@ -316,8 +365,18 @@ namespace PUPAcadPortal
             int barW = Math.Max(40, rightX - barX - 120);
             int pct = totalStudents > 0 ? (int)Math.Round(viewedCount * 100.0 / totalStudents) : 0;
 
-            var progressTrack = new Panel { Size = new Size(barW, 4), Location = new Point(barX, 78), BackColor = Color.FromArgb(220, 220, 220) };
-            var progressFill = new Panel { Size = new Size((int)(barW * pct / 100.0), 4), Location = new Point(0, 0), BackColor = Color.FromArgb(139, 0, 0) };
+            var progressTrack = new Panel
+            {
+                Size = new Size(barW, 4),
+                Location = new Point(barX, 78),
+                BackColor = Color.FromArgb(220, 220, 220),
+            };
+            var progressFill = new Panel
+            {
+                Size = new Size((int)(barW * pct / 100.0), 4),
+                Location = new Point(0, 0),
+                BackColor = Color.FromArgb(139, 0, 0),
+            };
             progressTrack.Controls.Add(progressFill);
             this.Controls.Add(progressTrack);
 
@@ -421,22 +480,45 @@ namespace PUPAcadPortal
             {
                 Size = new Size(indicatorW, 10),
                 Location = new Point(0, 0),
-                BackColor = useMaroonBg ? Color.FromArgb(180, 0, 0) : (isUrgent ? Color.FromArgb(200, 0, 0) : iconCol),
+                BackColor = useMaroonBg
+                    ? Color.FromArgb(180, 0, 0)
+                    : (isUrgent ? Color.FromArgb(200, 0, 0) : iconCol),
             };
             this.Controls.Add(indicator);
 
             // ── Icon circle ──────────────────────────────────────────────────
-            var iconCircle = new Panel { Size = new Size(iconSize, iconSize), Location = new Point(iconX, 20), BackColor = iconBg };
+            var iconCircle = new Panel
+            {
+                Size = new Size(iconSize, iconSize),
+                Location = new Point(iconX, 20),
+                BackColor = iconBg,
+            };
             iconCircle.Paint += (s, pe) =>
             {
                 pe.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
                 using var bgBrush = new SolidBrush(iconBg);
-                pe.Graphics.FillEllipse(bgBrush, 0, 0, iconCircle.Width - 1, iconCircle.Height - 1);
-                string letter = category.Length > 0 ? category[..1] : "?";
-                using var fnt = new Font("Segoe UI", 14f, FontStyle.Bold);
-                using var tb = new SolidBrush(iconCol);
-                var sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
-                pe.Graphics.DrawString(letter, fnt, tb, new RectangleF(0, 0, iconCircle.Width, iconCircle.Height), sf);
+                pe.Graphics.FillEllipse(bgBrush, 1, 1, iconCircle.Width - 3, iconCircle.Height - 3);
+                Image catImg = GetCategoryImage(category);
+                if (catImg != null)
+                {
+                    int pad = 10;
+                    pe.Graphics.DrawImage(catImg,
+                        new Rectangle(pad, pad, iconCircle.Width - pad * 2, iconCircle.Height - pad * 2));
+                }
+                else
+                {
+                    // Fallback: first letter
+                    string letter = category.Length > 0 ? category[..1] : "?";
+                    using var fnt = new Font("Segoe UI", 14f, FontStyle.Bold);
+                    using var tb = new SolidBrush(iconCol);
+                    var sf = new StringFormat
+                    {
+                        Alignment = StringAlignment.Center,
+                        LineAlignment = StringAlignment.Center,
+                    };
+                    pe.Graphics.DrawString(letter, fnt, tb,
+                        new RectangleF(0, 0, iconCircle.Width, iconCircle.Height), sf);
+                }
             };
             this.Controls.Add(iconCircle);
 
@@ -445,11 +527,29 @@ namespace PUPAcadPortal
             // ── URGENT badge ─────────────────────────────────────────────────
             if (isUrgent)
             {
+                var urgIconBox = new Panel
+                {
+                    Size = new Size(18, 18),
+                    Location = new Point(textX, currentY + 1),
+                    BackColor = Color.Transparent,
+                };
+                urgIconBox.Paint += (s, pe) =>
+                {
+                    pe.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                    try
+                    {
+                        pe.Graphics.DrawImage(Properties.Resources.urgent1,
+                            new Rectangle(0, 0, urgIconBox.Width, urgIconBox.Height));
+                    }
+                    catch { }
+                };
+                this.Controls.Add(urgIconBox);
+
                 var urgBadge = new Label
                 {
                     AutoSize = false,
-                    Size = new Size(68, 20),
-                    Location = new Point(textX, currentY),
+                    Size = new Size(60, 20),
+                    Location = new Point(textX + 22, currentY),
                     Text = "URGENT",
                     Font = new Font("Segoe UI", 7.5f, FontStyle.Bold),
                     ForeColor = Color.FromArgb(200, 0, 0),
@@ -589,7 +689,9 @@ namespace PUPAcadPortal
                 Text = isPinned ? "📌" : "📍",
                 Font = new Font("Segoe UI Symbol", 11f),
                 FlatStyle = FlatStyle.Flat,
-                ForeColor = isPinned ? (useMaroonBg ? Color.White : Color.DarkRed) : (useMaroonBg ? Color.FromArgb(255, 180, 180) : Color.Silver),
+                ForeColor = isPinned
+                    ? (useMaroonBg ? Color.White : Color.DarkRed)
+                    : (useMaroonBg ? Color.FromArgb(255, 180, 180) : Color.Silver),
                 BackColor = Color.Transparent,
                 Cursor = Cursors.Hand,
                 TabStop = false,
@@ -616,6 +718,27 @@ namespace PUPAcadPortal
             lblTitle.Click += openDetail;
             lblDesc.Click += openDetail;
             iconCircle.Click += openDetail;
+        }
+        private static Image GetCategoryImage(string category)
+        {
+            try
+            {
+                return category switch
+                {
+                    "General" => Properties.Resources.general1,
+                    "Academic" => Properties.Resources.academic1,
+                    "Schedule" => Properties.Resources.schedule12,
+                    "Events" => Properties.Resources.events1,
+                    "Examinations" => Properties.Resources.examinations1,
+                    "Administrative" => Properties.Resources.administrative1,
+                    "Urgent" => Properties.Resources.urgent1,
+                    _ => null,
+                };
+            }
+            catch
+            {
+                return null; // Graceful fallback if resource is missing
+            }
         }
 
         // ════════════════════════════════════════════════════════════════════

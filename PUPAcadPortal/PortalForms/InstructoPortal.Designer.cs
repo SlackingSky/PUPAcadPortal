@@ -31,8 +31,6 @@
             components = new System.ComponentModel.Container();
             Button button29;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InstructorPortal));
-            pnlInsights = new Panel();
-            lblInsights = new Label();
             pnlSidebar = new Panel();
             userProfile1 = new PUPAcadPortal.PortalContents.Misc.UserProfile();
             flowLayoutPanel1 = new FlowLayoutPanel();
@@ -54,26 +52,6 @@
             panel12 = new Panel();
             panel13 = new Panel();
             btnLogout = new Button();
-            pnlAnnouncement = new Panel();
-            panelPinned = new Panel();
-            flpPinned = new FlowLayoutPanel();
-            lblPinned = new Label();
-            cmbSortBy = new ComboBox();
-            label128 = new Label();
-            cmbFilter = new ComboBox();
-            lblFilter = new Label();
-            pnlCategories = new Panel();
-            lblCategories = new Label();
-            flpCategories = new FlowLayoutPanel();
-            pnlAnnouncementsList = new Panel();
-            flowLayoutPanelAnnouncements = new FlowLayoutPanel();
-            lblShowing = new Label();
-            panel60 = new Panel();
-            label145 = new Label();
-            roundedPanel37 = new RoundedPanel();
-            textBox25 = new TextBox();
-            pictureBox59 = new PictureBox();
-            btnCreateAnnouncement = new Button();
             pnlCreateAct = new Panel();
             pnlAssign = new Panel();
             lblFileNameDisplay = new Label();
@@ -118,6 +96,7 @@
             panel46 = new Panel();
             pnlCoursesContent = new Panel();
             panel3 = new Panel();
+            mainContentPanel = new Panel();
             pnlDashboardContent = new Panel();
             pnlMainLower = new Panel();
             pnlQuickActions = new Panel();
@@ -987,7 +966,6 @@
             sideBarTimer = new System.Windows.Forms.Timer(components);
             roundedPanel20 = new RoundedPanel();
             button29 = new Button();
-            pnlInsights.SuspendLayout();
             pnlSidebar.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             panel7.SuspendLayout();
@@ -997,13 +975,6 @@
             pnllmsSubmenu.SuspendLayout();
             panel12.SuspendLayout();
             panel13.SuspendLayout();
-            pnlAnnouncement.SuspendLayout();
-            panelPinned.SuspendLayout();
-            pnlCategories.SuspendLayout();
-            pnlAnnouncementsList.SuspendLayout();
-            panel60.SuspendLayout();
-            roundedPanel37.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox59).BeginInit();
             pnlCreateAct.SuspendLayout();
             pnlAssign.SuspendLayout();
             pnlAttachAss.SuspendLayout();
@@ -1396,26 +1367,6 @@
             button29.TextImageRelation = TextImageRelation.ImageAboveText;
             button29.UseVisualStyleBackColor = false;
             // 
-            // pnlInsights
-            // 
-            pnlInsights.BackColor = Color.White;
-            pnlInsights.BorderStyle = BorderStyle.FixedSingle;
-            pnlInsights.Controls.Add(lblInsights);
-            pnlInsights.Location = new Point(1441, 650);
-            pnlInsights.Name = "pnlInsights";
-            pnlInsights.Size = new Size(201, 317);
-            pnlInsights.TabIndex = 18;
-            // 
-            // lblInsights
-            // 
-            lblInsights.AutoSize = true;
-            lblInsights.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblInsights.Location = new Point(3, 2);
-            lblInsights.Name = "lblInsights";
-            lblInsights.Size = new Size(163, 19);
-            lblInsights.TabIndex = 0;
-            lblInsights.Text = "Announcement Insights";
-            // 
             // pnlSidebar
             // 
             pnlSidebar.BackColor = Color.Maroon;
@@ -1776,238 +1727,6 @@
             btnLogout.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnLogout.UseVisualStyleBackColor = true;
             btnLogout.Click += (this.btnLogout_Click);
-            // 
-            // pnlAnnouncement
-            // 
-            pnlAnnouncement.Anchor = (AnchorStyles)((AnchorStyles.Top) | (AnchorStyles.Left)) | (AnchorStyles.Right);
-            pnlAnnouncement.Controls.Add(pnlInsights);
-            pnlAnnouncement.Controls.Add(panelPinned);
-            pnlAnnouncement.Controls.Add(cmbSortBy);
-            pnlAnnouncement.Controls.Add(label128);
-            pnlAnnouncement.Controls.Add(cmbFilter);
-            pnlAnnouncement.Controls.Add(lblFilter);
-            pnlAnnouncement.Controls.Add(pnlCategories);
-            pnlAnnouncement.Controls.Add(pnlAnnouncementsList);
-            pnlAnnouncement.Controls.Add(panel60);
-            pnlAnnouncement.Controls.Add(roundedPanel37);
-            pnlAnnouncement.Controls.Add(btnCreateAnnouncement);
-            pnlAnnouncement.Location = new Point(256, 72);
-            pnlAnnouncement.Margin = new Padding(3, 2, 3, 2);
-            pnlAnnouncement.Name = "pnlAnnouncement";
-            pnlAnnouncement.Size = new Size(2040, 989);
-            pnlAnnouncement.TabIndex = 6;
-            pnlAnnouncement.Visible = false;
-            // 
-            // panelPinned
-            // 
-            panelPinned.BackColor = Color.White;
-            panelPinned.BorderStyle = BorderStyle.FixedSingle;
-            panelPinned.Controls.Add(flpPinned);
-            panelPinned.Controls.Add(lblPinned);
-            panelPinned.Location = new Point(1203, 45);
-            panelPinned.Name = "panelPinned";
-            panelPinned.Size = new Size(439, 599);
-            panelPinned.TabIndex = 8;
-            // 
-            // flpPinned
-            // 
-            flpPinned.AutoScroll = true;
-            flpPinned.BackColor = Color.White;
-            flpPinned.Location = new Point(5, 27);
-            flpPinned.Name = "flpPinned";
-            flpPinned.Size = new Size(429, 564);
-            flpPinned.TabIndex = 11;
-            // 
-            // lblPinned
-            // 
-            lblPinned.AutoSize = true;
-            lblPinned.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblPinned.Location = new Point(5, 2);
-            lblPinned.Name = "lblPinned";
-            lblPinned.Size = new Size(165, 19);
-            lblPinned.TabIndex = 0;
-            lblPinned.Text = "Pinned Announcements";
-            // 
-            // cmbSortBy
-            // 
-            cmbSortBy.Cursor = Cursors.IBeam;
-            cmbSortBy.Items.AddRange(new object[] { "Newest First" });
-            cmbSortBy.Location = new Point(595, 58);
-            cmbSortBy.Name = "cmbSortBy";
-            cmbSortBy.Size = new Size(150, 23);
-            cmbSortBy.TabIndex = 16;
-            // 
-            // label128
-            // 
-            label128.BackColor = Color.Transparent;
-            label128.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            label128.Location = new Point(532, 58);
-            label128.Name = "label128";
-            label128.Size = new Size(84, 24);
-            label128.TabIndex = 17;
-            label128.Text = "Sort by:";
-            // 
-            // cmbFilter
-            // 
-            cmbFilter.Cursor = Cursors.IBeam;
-            cmbFilter.Items.AddRange(new object[] { "All Announcements" });
-            cmbFilter.Location = new Point(353, 58);
-            cmbFilter.Name = "cmbFilter";
-            cmbFilter.Size = new Size(150, 23);
-            cmbFilter.TabIndex = 15;
-            // 
-            // lblFilter
-            // 
-            lblFilter.BackColor = Color.Transparent;
-            lblFilter.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblFilter.Location = new Point(307, 60);
-            lblFilter.Name = "lblFilter";
-            lblFilter.Size = new Size(84, 24);
-            lblFilter.TabIndex = 10;
-            lblFilter.Text = "Filter:";
-            // 
-            // pnlCategories
-            // 
-            pnlCategories.AutoScroll = true;
-            pnlCategories.BackColor = Color.White;
-            pnlCategories.BorderStyle = BorderStyle.FixedSingle;
-            pnlCategories.Controls.Add(lblCategories);
-            pnlCategories.Controls.Add(flpCategories);
-            pnlCategories.Location = new Point(1203, 650);
-            pnlCategories.Name = "pnlCategories";
-            pnlCategories.Size = new Size(233, 317);
-            pnlCategories.TabIndex = 13;
-            // 
-            // lblCategories
-            // 
-            lblCategories.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblCategories.Location = new Point(6, 0);
-            lblCategories.Name = "lblCategories";
-            lblCategories.Size = new Size(100, 20);
-            lblCategories.TabIndex = 8;
-            lblCategories.Text = "Categories";
-            // 
-            // flpCategories
-            // 
-            flpCategories.Anchor = (AnchorStyles)(AnchorStyles.Top) | (AnchorStyles.Bottom);
-            flpCategories.BackColor = Color.White;
-            flpCategories.FlowDirection = FlowDirection.TopDown;
-            flpCategories.Location = new Point(8, 23);
-            flpCategories.Name = "flpCategories";
-            flpCategories.Size = new Size(226, 284);
-            flpCategories.TabIndex = 0;
-            flpCategories.WrapContents = false;
-            // 
-            // pnlAnnouncementsList
-            // 
-            pnlAnnouncementsList.BackColor = Color.White;
-            pnlAnnouncementsList.BorderStyle = BorderStyle.FixedSingle;
-            pnlAnnouncementsList.Controls.Add(flowLayoutPanelAnnouncements);
-            pnlAnnouncementsList.Controls.Add(lblShowing);
-            pnlAnnouncementsList.Location = new Point(15, 106);
-            pnlAnnouncementsList.Name = "pnlAnnouncementsList";
-            pnlAnnouncementsList.Size = new Size(1182, 861);
-            pnlAnnouncementsList.TabIndex = 14;
-            // 
-            // flowLayoutPanelAnnouncements
-            // 
-            flowLayoutPanelAnnouncements.Anchor = (AnchorStyles)(AnchorStyles.Top) | (AnchorStyles.Bottom);
-            flowLayoutPanelAnnouncements.FlowDirection = FlowDirection.TopDown;
-            flowLayoutPanelAnnouncements.Location = new Point(3, 6);
-            flowLayoutPanelAnnouncements.Margin = new Padding(0);
-            flowLayoutPanelAnnouncements.Name = "flowLayoutPanelAnnouncements";
-            flowLayoutPanelAnnouncements.Size = new Size(1190, 836);
-            flowLayoutPanelAnnouncements.TabIndex = 0;
-            flowLayoutPanelAnnouncements.WrapContents = false;
-            // 
-            // lblShowing
-            // 
-            lblShowing.BackColor = Color.Transparent;
-            lblShowing.ForeColor = Color.Gray;
-            lblShowing.Location = new Point(0, 840);
-            lblShowing.Name = "lblShowing";
-            lblShowing.Size = new Size(250, 20);
-            lblShowing.TabIndex = 11;
-            lblShowing.Text = "Showing 1 to 4 of 12 announcements";
-            // 
-            // panel60
-            // 
-            panel60.BackColor = SystemColors.ButtonHighlight;
-            panel60.Controls.Add(label145);
-            panel60.Dock = DockStyle.Top;
-            panel60.Location = new Point(0, 0);
-            panel60.Margin = new Padding(3, 2, 3, 2);
-            panel60.Name = "panel60";
-            panel60.Size = new Size(2040, 41);
-            panel60.TabIndex = 9;
-            // 
-            // label145
-            // 
-            label145.AutoSize = true;
-            label145.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            label145.Location = new Point(15, 8);
-            label145.Name = "label145";
-            label145.Size = new Size(152, 25);
-            label145.TabIndex = 0;
-            label145.Text = "Announcements";
-            // 
-            // roundedPanel37
-            // 
-            roundedPanel37.BackColor = Color.White;
-            roundedPanel37.BorderRadius = 10;
-            roundedPanel37.Controls.Add(textBox25);
-            roundedPanel37.Controls.Add(pictureBox59);
-            roundedPanel37.Location = new Point(15, 58);
-            roundedPanel37.Margin = new Padding(3, 2, 3, 2);
-            roundedPanel37.Name = "roundedPanel37";
-            roundedPanel37.Padding = new Padding(4);
-            roundedPanel37.Size = new Size(285, 31);
-            roundedPanel37.TabIndex = 8;
-            // 
-            // textBox25
-            // 
-            textBox25.BorderStyle = BorderStyle.None;
-            textBox25.Cursor = Cursors.IBeam;
-            textBox25.Location = new Point(38, 8);
-            textBox25.Margin = new Padding(3, 2, 3, 2);
-            textBox25.Name = "textBox25";
-            textBox25.PlaceholderText = "Search Here";
-            textBox25.Size = new Size(240, 16);
-            textBox25.TabIndex = 1;
-            // 
-            // pictureBox59
-            // 
-            pictureBox59.Image = PUPAcadPortal.Properties.Resources.magnifier;
-            pictureBox59.Location = new Point(8, 6);
-            pictureBox59.Margin = new Padding(3, 2, 3, 2);
-            pictureBox59.Name = "pictureBox59";
-            pictureBox59.Size = new Size(25, 19);
-            pictureBox59.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox59.TabIndex = 0;
-            pictureBox59.TabStop = false;
-            // 
-            // btnCreateAnnouncement
-            // 
-            btnCreateAnnouncement.BackColor = Color.Maroon;
-            btnCreateAnnouncement.BackgroundImageLayout = ImageLayout.None;
-            btnCreateAnnouncement.Cursor = Cursors.Hand;
-            btnCreateAnnouncement.FlatAppearance.BorderSize = 0;
-            btnCreateAnnouncement.FlatAppearance.MouseDownBackColor = Color.FromArgb((int)(byte)109, (int)(byte)0, (int)(byte)0);
-            btnCreateAnnouncement.FlatAppearance.MouseOverBackColor = Color.FromArgb((int)(byte)109, (int)(byte)0, (int)(byte)0);
-            btnCreateAnnouncement.FlatStyle = FlatStyle.Flat;
-            btnCreateAnnouncement.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-            btnCreateAnnouncement.ForeColor = Color.FromArgb((int)(byte)179, (int)(byte)255, (int)(byte)255, (int)(byte)255);
-            btnCreateAnnouncement.ImageAlign = ContentAlignment.TopLeft;
-            btnCreateAnnouncement.Location = new Point(917, 62);
-            btnCreateAnnouncement.MinimumSize = new Size(227, 30);
-            btnCreateAnnouncement.Name = "btnCreateAnnouncement";
-            btnCreateAnnouncement.Padding = new Padding(16, 0, 18, 0);
-            btnCreateAnnouncement.Size = new Size(265, 31);
-            btnCreateAnnouncement.TabIndex = 7;
-            btnCreateAnnouncement.Text = "    Create Announcement";
-            btnCreateAnnouncement.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnCreateAnnouncement.UseVisualStyleBackColor = false;
-            btnCreateAnnouncement.Click += (this.btnCreateAnnouncement_Click);
             // 
             // pnlCreateAct
             // 
@@ -2573,7 +2292,7 @@
             // 
             // panel3
             // 
-            panel3.Controls.Add(pnlAnnouncement);
+            panel3.Controls.Add(mainContentPanel);
             panel3.Controls.Add(pnlDashboardContent);
             panel3.Controls.Add(pnlGrades);
             panel3.Controls.Add(pnlGradesContent);
@@ -2592,6 +2311,14 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(1904, 1041);
             panel3.TabIndex = 0;
+            // 
+            // mainContentPanel
+            // 
+            mainContentPanel.Dock = DockStyle.Fill;
+            mainContentPanel.Location = new Point(256, 72);
+            mainContentPanel.Name = "mainContentPanel";
+            mainContentPanel.Size = new Size(1648, 969);
+            mainContentPanel.TabIndex = 2;
             // 
             // pnlDashboardContent
             // 
@@ -12572,8 +12299,6 @@
             this.FormClosing += (this.InstructorPortal_Closing);
             this.Load += (this.InstructorPortal_Load);
             this.Resize += (this.InstructorPortal_Resize);
-            pnlInsights.ResumeLayout(false);
-            pnlInsights.PerformLayout();
             pnlSidebar.ResumeLayout(false);
             flowLayoutPanel1.ResumeLayout(false);
             panel7.ResumeLayout(false);
@@ -12583,16 +12308,6 @@
             pnllmsSubmenu.ResumeLayout(false);
             panel12.ResumeLayout(false);
             panel13.ResumeLayout(false);
-            pnlAnnouncement.ResumeLayout(false);
-            panelPinned.ResumeLayout(false);
-            panelPinned.PerformLayout();
-            pnlCategories.ResumeLayout(false);
-            pnlAnnouncementsList.ResumeLayout(false);
-            panel60.ResumeLayout(false);
-            panel60.PerformLayout();
-            roundedPanel37.ResumeLayout(false);
-            roundedPanel37.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox59).EndInit();
             pnlCreateAct.ResumeLayout(false);
             pnlAssign.ResumeLayout(false);
             pnlAssign.PerformLayout();
@@ -13458,7 +13173,6 @@
         private PictureBox pictureBox44;
         private Button btnGo1;
         private Label label106;
-        private Panel pnlAnnouncement;
         private Panel panel1;
         private Label label8;
         private DateTimePicker dateTimePicker3;
@@ -13660,7 +13374,6 @@
         private PictureBox pictureBox53;
         private RoundedPanel roundedPanel57;
         private RoundedPanel roundedPanel58;
-        private Label lblInsights;
         private Label label173;
         private Label label174;
         private Label label175;
@@ -13675,10 +13388,6 @@
         private PictureBox pictureBox54;
         private RoundedPanel roundedPanel59;
         private RoundedPanel roundedPanel60;
-        private RoundedPanel roundedPanel37;
-        private TextBox textBox25;
-        private PictureBox pictureBox59;
-        private Button btnCreateAnnouncement;
         private Label label177;
         private Label label178;
         private Label label179;
@@ -13693,7 +13402,6 @@
         private RoundedPanel roundedPanel62;
         private Label label181;
         private Label label182;
-        private Panel pnlInsights;
         private Label label183;
         private PictureBox pictureBox62;
         private RoundedPanel roundedPanel63;
@@ -13909,8 +13617,6 @@
         private Panel panel122;
         private Label label256;
         private Label label257;
-        private Panel panelPinned;
-        private FlowLayoutPanel flpPinned;
         private FlowLayoutPanel flowLayoutPanel21;
         private Panel panel123;
         private Panel panel124;
@@ -14017,19 +13723,6 @@
         private Label label299;
         private Label label300;
         private FlowLayoutPanel flowLayoutPanel42;
-        private Label lblPinned;
-        private ComboBox cmbSortBy;
-        private Label label128;
-        private ComboBox cmbFilter;
-        private Label lblFilter;
-        private Panel pnlCategories;
-        private Panel pnlAnnouncementsList;
-        private FlowLayoutPanel flowLayoutPanelAnnouncements;
-        private Label lblShowing;
-        private Panel panel60;
-        private Label label145;
-        private Label lblCategories;
-        private FlowLayoutPanel flpCategories;
         private Panel panel165;
         private Panel panel166;
         private Label label301;
@@ -14076,5 +13769,6 @@
         private DataGridViewComboBoxColumn dataGridViewComboBoxColumn1;
         private TableLayoutPanel tableLayoutPanel28;
         private PUPAcadPortal.PortalContents.Misc.UserProfile userProfile1;
+        private Panel mainContentPanel;
     }
 }

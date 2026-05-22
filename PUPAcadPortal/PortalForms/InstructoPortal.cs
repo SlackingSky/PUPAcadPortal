@@ -17,6 +17,7 @@ using static PUPAcadPortal.PortalForms.InstructorPortal;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
+using PUPAcadPortal.PortalContents.Instructor.LMS;
 using PUPAcadPortal.Utils;
 
 
@@ -306,7 +307,7 @@ namespace PUPAcadPortal.PortalForms
             {
                 { btnDashboard, pnlDashboardContent },
                 { btnGrades, pnlGradesContent },
-                { btnAnnounceIns, pnlAnnouncement  },
+                //{ btnAnnounceIns, pnlAnnouncement  },
                 { btnCalendarIns, pnlCalendar },
                 { btnSubjectIns, pnlSubject },
                 { btnActivitiesIns, pnlLMSAct },
@@ -385,7 +386,8 @@ namespace PUPAcadPortal.PortalForms
         private void btnAnnounceIns_Click(object sender, EventArgs e)
         {
             changeButtonColor(sender as Button);
-            showContent(clickedButton);
+            mainContentPanel.BringToFront();
+            mainContentPanel.ShowView(new AnnouncementContentInst());
         }
 
         private void btnCalendarIns_Click(object sender, EventArgs e)
@@ -882,9 +884,6 @@ namespace PUPAcadPortal.PortalForms
             listView_file.Columns.Add("  Date Uploaded", 650); // Column index 1
             listView_file.Columns.Add("  Size", 350);          // Column index 2
 
-            // This ensures that when the window gets bigger, the cards stretch to fit.
-            flowLayoutPanelAnnouncements.Resize += (s, e) => UpdateCardWidths();
-
             // ENSURE LMS PANELS START HIDDEN
             pnlCreateAct.Visible = false;
             pnlQuiz1.Visible = false;
@@ -894,8 +893,6 @@ namespace PUPAcadPortal.PortalForms
             if (cmbBXActType.Items.Count > 0)
                 cmbBXActType.SelectedIndex = 0;
 
-            // This ensures that when the window gets bigger, the cards stretch to fit.
-            flowLayoutPanelAnnouncements.Resize += (s, ev) => UpdateCardWidths();
 
             // Fixes the width of the cards in the Management area
             foreach (Control ctrl in ManageAct.Controls)
@@ -946,48 +943,6 @@ namespace PUPAcadPortal.PortalForms
                 CenterMonthLabel();
                 PositionBottomPanel();
             }));
-
-            cmbFilter.Items.Clear();
-            cmbFilter.Items.AddRange(new object[] { "All announcements", "Active only", "Inactive only" });
-            cmbFilter.SelectedIndex = 0;
-
-            cmbSortBy.Items.Clear();
-            cmbSortBy.Items.AddRange(new object[] { "Newest first", "Oldest first" });
-            cmbSortBy.SelectedIndex = 0;
-
-            textBox25.TextChanged += AnnSearch_Changed;
-            cmbFilter.SelectedIndexChanged += AnnFilter_Changed;
-            cmbSortBy.SelectedIndexChanged += AnnSort_Changed;
-
-            SeedSampleAnnouncements();
-
-            _createAnnouncementUC = new CreateAnnouncement
-            {
-                Visible = false,
-                Anchor = AnchorStyles.None,
-            };
-            _createAnnouncementUC.AnnouncementPosted += OnAnnouncementPosted;
-            _createAnnouncementUC.CloseRequested += (s, ev) => HideCreateAnnouncementUC();
-            pnlAnnouncement.Controls.Add(_createAnnouncementUC);
-
-            _viewAnnouncementUC = new ViewAnnouncement
-            {
-                Visible = false,
-                Anchor = AnchorStyles.None,
-            };
-            _viewAnnouncementUC.EditRequested += OnViewEdit;
-            _viewAnnouncementUC.DeleteRequested += OnViewDelete;
-            _viewAnnouncementUC.CloseRequested += (s, ev) => HideViewAnnouncementUC();
-            pnlAnnouncement.Controls.Add(_viewAnnouncementUC);
-
-            BuildCategorySidebar();
-            RenderAnnouncements();
-
-            flpPinned.AutoScroll = true;
-            flpPinned.WrapContents = false;
-            flpPinned.FlowDirection = FlowDirection.TopDown;
-
-            pnlInsights.AutoScroll = false;
 
             this.MinimumSize = new Size(1024, 700);
 
@@ -1163,15 +1118,6 @@ namespace PUPAcadPortal.PortalForms
 
         private void BuildCategorySidebar()
         {
-            flpCategories.SuspendLayout();
-            flpCategories.Controls.Clear();
-            flpCategories.FlowDirection = FlowDirection.TopDown;
-            flpCategories.WrapContents = false;
-            flpCategories.AutoScroll = true;
-            flpCategories.HorizontalScroll.Enabled = false;
-            flpCategories.HorizontalScroll.Visible = false;
-            flpCategories.VerticalScroll.Visible = true;
-            flpCategories.BackColor = Color.White;
 
             var categories = new[] { "all", "General", "Academic", "Schedule", "Events", "Examinations" };
 
@@ -1192,7 +1138,6 @@ namespace PUPAcadPortal.PortalForms
 
                 var row = new Panel
                 {
-                    Width = flpCategories.ClientSize.Width - 25,
                     Height = 34,
                     Margin = new Padding(0, 0, 0, 4),
                     BackColor = isActive ? Color.FromArgb(245, 238, 238) : Color.Transparent,
@@ -1246,12 +1191,9 @@ namespace PUPAcadPortal.PortalForms
                 lbl.Click += handler;
                 badge.Click += handler;
 
-                flpCategories.Controls.Add(row);
             }
 
-            flpCategories.HorizontalScroll.Maximum = 0;
-            flpCategories.AutoScrollPosition = new Point(0, 0);
-            flpCategories.ResumeLayout();
+
         }
 
         private void CategoryFilter_Click(string category)
@@ -1261,35 +1203,9 @@ namespace PUPAcadPortal.PortalForms
             RenderAnnouncements();
         }
 
-        private void AnnSearch_Changed(object sender, EventArgs e)
-        {
-            _searchQuery = textBox25.Text.Trim();
-            RenderAnnouncements();
-        }
-
-        private void AnnFilter_Changed(object sender, EventArgs e)
-        {
-            _activeStatusFilter = cmbFilter.SelectedItem?.ToString() switch
-            {
-                "Active only" => "active",
-                "Inactive only" => "inactive",
-                _ => "all",
-            };
-            RenderAnnouncements();
-        }
-
-        private void AnnSort_Changed(object sender, EventArgs e) => RenderAnnouncements();
 
         private void RenderAnnouncements()
         {
-            flowLayoutPanelAnnouncements.SuspendLayout();
-            flowLayoutPanelAnnouncements.Controls.Clear();
-            flowLayoutPanelAnnouncements.FlowDirection = FlowDirection.TopDown;
-            flowLayoutPanelAnnouncements.WrapContents = false;
-            flowLayoutPanelAnnouncements.AutoScroll = true;
-            flowLayoutPanelAnnouncements.HorizontalScroll.Enabled = false;
-            flowLayoutPanelAnnouncements.HorizontalScroll.Visible = false;
-            flowLayoutPanelAnnouncements.VerticalScroll.Visible = true;
 
             var filtered = announcements.AsEnumerable();
 
@@ -1309,175 +1225,11 @@ namespace PUPAcadPortal.PortalForms
                     a.Description.ToLower().Contains(q));
             }
 
-            bool oldestFirst = cmbSortBy.SelectedItem?.ToString() == "Oldest first";
-
-            var sorted = oldestFirst
-                ? filtered.OrderBy(a => a.IsPinned ? 0 : 1).ThenBy(a => a.Date).ToList()
-                : filtered.OrderBy(a => a.IsPinned ? 0 : 1).ThenByDescending(a => a.Date).ToList();
-
-            int panelWidth = Math.Max(300, flowLayoutPanelAnnouncements.ClientSize.Width - 30);
-
+            
             var newThreshold = TimeSpan.FromDays(1);
 
-            foreach (var a in sorted)
-            {
-                var card = BuildAnnouncementCard(a, panelWidth, newThreshold);
-                card.Margin = new Padding(6, 4, 6, 4);
-                flowLayoutPanelAnnouncements.Controls.Add(card);
-            }
-
-            int showing = sorted.Count;
-            lblShowing.Text = showing == 0
-                ? "No announcements found"
-                : $"Showing 1–{showing} of {showing} announcements";
-
-            flowLayoutPanelAnnouncements.HorizontalScroll.Maximum = 0;
-            flowLayoutPanelAnnouncements.AutoScrollPosition = new Point(0, 0);
-            flowLayoutPanelAnnouncements.ResumeLayout();
 
             BuildCategorySidebar();
-            RenderPinnedAnnouncements();
-            RenderAnnouncementInsights();
-        }
-
-        private AnnouncementLayout BuildAnnouncementCard(
-            Announcement a, int panelWidth, TimeSpan newThreshold)
-        {
-            var card = new AnnouncementLayout();
-
-            card.LoadInstructor(
-                id: a.Id,
-                title: a.Title,
-                description: a.Description,
-                category: a.Category,
-                status: a.Status,
-                instructorName: a.InstructorName,
-                date: a.Date,
-                isPinned: a.IsPinned,
-                isUrgent: a.IsUrgent,
-                viewedCount: a.ViewedCount,
-                totalStudents: a.TotalStudents,
-                cardWidth: panelWidth);
-
-            card.CardClicked += (s, id) =>
-            {
-                var ann = announcements.Find(x => x.Id == id);
-                if (ann != null) ShowViewAnnouncementUC(ann);
-            };
-            card.PinToggled += (s, id) =>
-            {
-                var ann = announcements.Find(x => x.Id == id);
-                if (ann != null)
-                {
-                    ann.IsPinned = !ann.IsPinned;
-                    RenderAnnouncements();
-                }
-            };
-            card.MenuEditClicked += (s, id) => EditAnnouncement(id);
-            card.MenuToggleClicked += (s, id) => ToggleAnnouncement(id);
-            card.MenuDeleteClicked += (s, id) => DeleteAnnouncement(id);
-
-            return card;
-        }
-
-        private void ShowViewAnnouncementUC(Announcement a)
-        {
-            _viewAnnouncementUC.LoadAnnouncement(a);
-            CenterControl(_viewAnnouncementUC, pnlAnnouncement);
-            _viewAnnouncementUC.BringToFront();
-            _viewAnnouncementUC.Visible = true;
-        }
-
-        private void HideViewAnnouncementUC() => _viewAnnouncementUC.Visible = false;
-
-        private void OnViewEdit(object sender, int id)
-        {
-            HideViewAnnouncementUC();
-            EditAnnouncement(id);
-        }
-
-        private void OnViewDelete(object sender, int id) => DeleteAnnouncement(id);
-
-        private void OnAnnouncementPosted(object sender, AnnouncementData data)
-        {
-            if (editingAnnouncementId != -1)
-            {
-                var a = announcements.Find(x => x.Id == editingAnnouncementId);
-                if (a != null)
-                {
-                    a.Title = data.Title;
-                    a.Description = data.Description;
-                    a.Category = data.Category;
-                    a.Date = data.PostDate;
-                    a.IsUrgent = data.IsUrgent;
-                    a.IsPinned = data.IsPinned;
-                }
-            }
-            else
-            {
-                announcements.Insert(0, new Announcement
-                {
-                    Id = DateTime.Now.Millisecond + new Random().Next(1000, 9999),
-                    Title = data.Title,
-                    Description = data.Description,
-                    Category = data.Category,
-                    Date = data.PostDate,
-                    Status = "active",
-                    IsUrgent = data.IsUrgent,
-                    IsPinned = data.IsPinned,
-                    InstructorName = "Prof. Santos",
-                    TotalStudents = 40,
-                });
-            }
-
-            editingAnnouncementId = -1;
-            RenderAnnouncements();
-        }
-
-        private void EditAnnouncement(int id)
-        {
-            var a = announcements.Find(x => x.Id == id);
-            if (a == null) return;
-
-            editingAnnouncementId = id;
-            var data = new AnnouncementData
-            {
-                Title = a.Title,
-                Description = a.Description,
-                Category = a.Category,
-                PostDate = a.Date,
-                IsUrgent = a.IsUrgent,
-                IsPinned = a.IsPinned,
-            };
-            _createAnnouncementUC.LoadForEdit(data);
-            ShowCreateAnnouncementUC();
-        }
-
-        private void ToggleAnnouncement(int id)
-        {
-            var a = announcements.Find(x => x.Id == id);
-            if (a != null) a.Status = a.Status == "active" ? "inactive" : "active";
-            RenderAnnouncements();
-        }
-
-        private void btnCreateAnnouncement_Click(object sender, EventArgs e)
-        {
-            editingAnnouncementId = -1;
-            _createAnnouncementUC.LoadForEdit(new AnnouncementData());
-            ShowCreateAnnouncementUC();
-        }
-
-        private void ShowCreateAnnouncementUC()
-        {
-            CenterControl(_createAnnouncementUC, pnlAnnouncement);
-            _createAnnouncementUC.BringToFront();
-            _createAnnouncementUC.Visible = true;
-        }
-
-        private void HideCreateAnnouncementUC()
-        {
-            _createAnnouncementUC.Visible = false;
-            editingAnnouncementId = -1;
         }
 
         private static void CenterControl(Control child, Control parent)
@@ -1939,30 +1691,6 @@ namespace PUPAcadPortal.PortalForms
         private void picNext_Click(object sender, EventArgs e) { _month++; if (_month > 12) { _month = 1; _year++; } showDays(_month, _year); }
         private void picPrev_Click(object sender, EventArgs e) { _month--; if (_month < 1) { _month = 12; _year--; } showDays(_month, _year); }
 
-
-        private void UpdateCardWidths()
-        {
-            flowLayoutPanelAnnouncements.SuspendLayout();
-            foreach (Control c in flowLayoutPanelAnnouncements.Controls)
-            {
-                if (c is Panel card)
-                {
-                    card.Width = flowLayoutPanelAnnouncements.ClientSize.Width - 50;
-                    ApplyRoundedRegion(card, 20);
-
-                    foreach (Control child in card.Controls)
-                    {
-                        if (child is FlowLayoutPanel pnl)
-                            pnl.Left = card.Width - pnl.Width - 20;
-
-                        if (child is Label lbl && lbl.Name == "lblDesc")
-                            lbl.Width = card.Width - 150;
-                    }
-                }
-            }
-            flowLayoutPanelAnnouncements.ResumeLayout();
-        }
-
         private void listView_file_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (listView_file.SelectedItems.Count == 0) return;
@@ -2192,15 +1920,8 @@ namespace PUPAcadPortal.PortalForms
             ScaleControls(this.Controls, rx, ry);
             this.ResumeLayout(true);
 
-            if (_createAnnouncementUC != null && _createAnnouncementUC.Visible)
-                CenterControl(_createAnnouncementUC, pnlAnnouncement);
-            if (_viewAnnouncementUC != null && _viewAnnouncementUC.Visible)
-                CenterControl(_viewAnnouncementUC, pnlAnnouncement);
-
             RenderAnnouncements();
             BuildCategorySidebar();
-            RenderPinnedAnnouncements();
-            RenderAnnouncementInsights();
         }
 
         private void panel18_Paint(object sender, PaintEventArgs e)
@@ -2386,159 +2107,7 @@ namespace PUPAcadPortal.PortalForms
                     break;
             }
         }
-        private void RenderPinnedAnnouncements()
-        {
-            flpPinned.SuspendLayout();
-            flpPinned.Controls.Clear();
-            flpPinned.FlowDirection = FlowDirection.TopDown;
-            flpPinned.WrapContents = false;
-            flpPinned.AutoScroll = false;
-            flpPinned.HorizontalScroll.Enabled = false;
-            flpPinned.HorizontalScroll.Visible = false;
-            flpPinned.AutoScroll = true;
-            flpPinned.BackColor = Color.White;
-
-            var pinnedList = announcements
-                .Where(a => a.IsPinned)
-                .OrderByDescending(a => a.Date)
-                .ToList();
-
-            if (pinnedList.Count == 0)
-            {
-                flpPinned.Controls.Add(new Label
-                {
-                    Text = "No pinned announcements.",
-                    Font = new Font("Segoe UI", 8.5f),
-                    ForeColor = Color.Gray,
-                    AutoSize = true,
-                    Padding = new Padding(4),
-                });
-                flpPinned.ResumeLayout();
-                return;
-            }
-
-            foreach (var a in pinnedList)
-            {
-                Color dotColor = CatIconColor.GetValueOrDefault(a.Category, Color.Gray);
-                int rowW = Math.Max(100, flpPinned.ClientSize.Width - 4);
-
-                var row = new Panel
-                {
-                    Width = rowW,
-                    Height = 52,
-                    BackColor = Color.White,
-                    Margin = new Padding(0, 2, 0, 2),
-                    Cursor = Cursors.Hand,
-                    Tag = a,
-                };
-                row.Paint += (s, pe) =>
-                {
-                    using var pen = new Pen(Color.FromArgb(230, 230, 230), 1f);
-                    pe.Graphics.DrawRectangle(pen, 0, 0, row.Width - 1, row.Height - 1);
-                };
-
-                var dot = new Panel
-                {
-                    Size = new Size(8, 8),
-                    Location = new Point(8, 22),
-                    BackColor = dotColor,
-                };
-                MakeCircleRegion(dot);
-                row.Controls.Add(dot);
-
-                var rowTitle = new Label
-                {
-                    AutoSize = false,
-                    Size = new Size(rowW - 28, 20),
-                    Location = new Point(22, 8),
-                    Text = a.Title,
-                    Font = new Font("Segoe UI", 8.5f, FontStyle.Bold),
-                    ForeColor = Color.FromArgb(25, 25, 25),
-                    AutoEllipsis = true,
-                };
-                row.Controls.Add(rowTitle);
-
-                row.Controls.Add(new Label
-                {
-                    AutoSize = true,
-                    Location = new Point(22, 28),
-                    Text = a.Date.ToString("MMM d, yyyy"),
-                    Font = new Font("Segoe UI", 7.5f),
-                    ForeColor = Color.Gray,
-                });
-
-                EventHandler openHandler = (s, ev) =>
-                {
-                    var found = announcements.Find(x => x.Id == a.Id);
-                    if (found != null) ShowViewAnnouncementUC(found);
-                };
-                row.Click += openHandler;
-                rowTitle.Click += openHandler;
-
-                flpPinned.Controls.Add(row);
-            }
-
-            flpPinned.ResumeLayout();
-        }
-
-        private void RenderAnnouncementInsights()
-        {
-            var toRemove = pnlInsights.Controls
-                .OfType<Control>()
-                .Where(c => c.Name.StartsWith("ins_"))
-                .ToList();
-            foreach (var c in toRemove) pnlInsights.Controls.Remove(c);
-
-            pnlInsights.BackColor = Color.White;
-            pnlInsights.AutoScroll = false;
-
-            int total = announcements.Count;
-            int active = announcements.Count(a => a.Status == "active");
-            int pinned = announcements.Count(a => a.IsPinned);
-            int urgent = announcements.Count(a => a.IsUrgent);
-            int totalViews = announcements.Sum(a => a.ViewedCount);
-            int totalStudents = announcements.Sum(a => a.TotalStudents);
-            int reach = totalStudents > 0 ? (int)((double)totalViews / totalStudents * 100) : 0;
-
-            void AddRow(string label, string value, int y, Color col)
-            {
-                pnlInsights.Controls.Add(new Label
-                {
-                    Name = "ins_lbl_" + y,
-                    AutoSize = true,
-                    Text = label,
-                    Font = new Font("Segoe UI", 8.5f),
-                    ForeColor = Color.FromArgb(80, 80, 80),
-                    Location = new Point(8, y),
-                });
-                pnlInsights.Controls.Add(new Label
-                {
-                    Name = "ins_val_" + y,
-                    AutoSize = true,
-                    Text = value,
-                    Font = new Font("Segoe UI", 10f, FontStyle.Bold),
-                    ForeColor = col,
-                    Location = new Point(pnlInsights.Width - 50, y - 2),
-                });
-            }
-
-            AddRow("Total Announcements", total.ToString(), 30, Color.FromArgb(50, 50, 50));
-            AddRow("Active", active.ToString(), 58, Color.ForestGreen);
-            AddRow("Pinned", pinned.ToString(), 86, Color.DarkOrange);
-            AddRow("Urgent", urgent.ToString(), 114, Color.Firebrick);
-            AddRow("Avg. Reach", reach + "%", 142, Color.RoyalBlue);
-
-            pnlInsights.Refresh();
-        }
-
-        private static void DrawCardBorder(Graphics g, Panel card)
-        {
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-            using var pen = new Pen(Color.FromArgb(220, 220, 220), 1f);
-            using var path = RoundedRectPath(new Rectangle(0, 0, card.Width - 1, card.Height - 1), 10);
-            g.DrawPath(pen, path);
-        }
-
+       
         private static GraphicsPath RoundedRectPath(Rectangle r, int rad)
         {
             var p = new GraphicsPath();
