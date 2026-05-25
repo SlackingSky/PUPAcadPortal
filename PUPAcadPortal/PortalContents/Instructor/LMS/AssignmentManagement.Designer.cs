@@ -91,6 +91,8 @@ namespace PUPAcadPortal
             btnCreateAssignment.BackColor = Color.FromArgb(255, 193, 7);
             btnCreateAssignment.BorderRadius = 10;
             btnCreateAssignment.FlatAppearance.BorderSize = 0;
+            btnCreateAssignment.FlatAppearance.MouseDownBackColor = Color.FromArgb(255, 193, 7);
+            btnCreateAssignment.FlatAppearance.MouseOverBackColor = Color.DimGray;
             btnCreateAssignment.FlatStyle = FlatStyle.Flat;
             btnCreateAssignment.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnCreateAssignment.ForeColor = Color.Black;

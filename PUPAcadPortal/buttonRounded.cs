@@ -80,17 +80,17 @@ namespace PUPAcadPortal
             }
         }
 
-        // Hover Effect Logic
-        protected override void OnMouseEnter(EventArgs e)
-        {
-            base.OnMouseEnter(e);
-            this.BackColor = Color.FromArgb(160, 0, 0); // Lighter maroon on hover
-        }
+        //// Hover Effect Logic
+        //protected override void OnMouseEnter(EventArgs e)
+        //{
+        //    base.OnMouseEnter(e);
+        //    this.BackColor = Color.FromArgb(160, 0, 0); // Lighter maroon on hover
+        //}
 
-        protected override void OnMouseLeave(EventArgs e)
-        {
-            base.OnMouseLeave(e);
-            this.BackColor = normalColor;
-        }
+        //protected override void OnMouseLeave(EventArgs e)
+        //{
+        //    base.OnMouseLeave(e);
+        //    this.BackColor = normalColor;
+        //}
     }
 }
