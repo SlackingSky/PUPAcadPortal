@@ -37,7 +37,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="PortalForms\InstructoPortal.cs">
+    <Compile Update="PortalForms\InstructorPortal.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
@@ -65,6 +65,10 @@
     <None Update="Resources\COG-MTECH.pdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ReusableUserControls\" />
   </ItemGroup>
 
 </Project>

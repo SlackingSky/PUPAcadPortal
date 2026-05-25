@@ -483,6 +483,26 @@ namespace PUPAcadPortal.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap check {
+            get {
+                object obj = ResourceManager.GetObject("check", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap check__3_ {
+            get {
+                object obj = ResourceManager.GetObject("check (3)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Check_icon {
             get {
                 object obj = ResourceManager.GetObject("Check_icon", resourceCulture);
@@ -516,6 +536,16 @@ namespace PUPAcadPortal.Properties {
         internal static System.Drawing.Bitmap check_mark_6_48 {
             get {
                 object obj = ResourceManager.GetObject("check-mark-6-48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap check1 {
+            get {
+                object obj = ResourceManager.GetObject("check1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
