@@ -1,6 +1,6 @@
 ﻿using System.Reflection.PortableExecutable;
 
-namespace PUPAcadPortal
+namespace PUPAcadPortal.Dialogs
 {
     partial class CreateEditActivityDialog
     {

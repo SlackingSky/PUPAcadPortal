@@ -333,7 +333,6 @@ namespace PUPAcadPortal.PortalForms
         private async void btnLMS_Click(object sender, EventArgs e)
         {
             changeButtonColor(sender as Button);
-            showContent(clickedButton);
             btnLMS.Text = !fpnlLMSSubmenu.Visible ? " LMS                                       ⌄" : " LMS                                        ›";
             await submenuAnimLMS.ToggleSubMenuAsync();
             btnAnnounceIns.PerformClick();
@@ -376,7 +375,7 @@ namespace PUPAcadPortal.PortalForms
         private void btnGradeIns_Click(object sender, EventArgs e)
         {
             changeButtonColor(sender as Button);
-            showContent(clickedButton);
+            mainContentPanel.ShowView(new GradesContentInst());
         }
 
         private void label24_Click(object sender, EventArgs e)
@@ -485,21 +484,6 @@ namespace PUPAcadPortal.PortalForms
         private void panel102_Click(object sender, EventArgs e) { if (fpnlLMSSubmenu.Visible == false) { btnLMS.PerformClick(); } btnAttendanceIns.PerformClick(); }
         private void panel104_Click(object sender, EventArgs e) { if (btnCourses != null) btnCourses_Click(btnCourses, e); }
 
-        private void button2_Click(object sender, EventArgs e) { if (btnGrades != null) btnGrades_Click(btnGrades, e); }
-        private void button4_Click(object sender, EventArgs e) { if (btnCourses != null) btnCourses_Click(btnCourses, e); }
-        private void button6_Click(object sender, EventArgs e) { if (btnGrades != null) btnGrades_Click(btnGrades, e); }
-
-        // --- SUBMIT FINAL GRADES BUTTON FIX ---
-        private void button9_Click(object sender, EventArgs e)
-        {
-            DialogResult result = MessageBox.Show("Are you sure you want to submit all final grades? This action cannot be undone.", "Submit Final Grades", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-            if (result == DialogResult.Yes)
-            {
-                MessageBox.Show("Grades submitted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
         private void label303_Click(object sender, EventArgs e)
         {
 
@@ -531,19 +515,6 @@ namespace PUPAcadPortal.PortalForms
             p.AddArc(r.X, r.Bottom - rad, rad, rad, 90, 90);
             p.CloseFigure();
             return p;
-        }
-
-        private static void MakeRoundedRegion(Label lbl, int radius)
-        {
-            using var path = RoundedRectPath(new Rectangle(0, 0, lbl.Width, lbl.Height), radius);
-            lbl.Region = new Region(path);
-        }
-
-        private static void MakeCircleRegion(Panel p)
-        {
-            var path = new GraphicsPath();
-            path.AddEllipse(0, 0, p.Width, p.Height);
-            p.Region = new Region(path);
         }
     }
 }

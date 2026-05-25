@@ -388,7 +388,6 @@ namespace PUPAcadPortal
             Name = "SignIn";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Sign In";
-            WindowState = FormWindowState.Maximized;
             Load += SignIn_Load;
             panel1.ResumeLayout(false);
             panel9.ResumeLayout(false);

@@ -4,11 +4,15 @@ using BCrypt.Net;
 using Microsoft.EntityFrameworkCore;
 using PUPAcadPortal.Models;
 using PUPAcadPortal.PortalForms;
+using PUPAcadPortal.Utils;
+using ZstdSharp.Unsafe;
 
 namespace PUPAcadPortal
 {
     public partial class SignIn : Form
     {
+        private Point _usableScreenLoc = Screen.PrimaryScreen.WorkingArea.Location;
+        private Size _usableScreenSize = Screen.PrimaryScreen.WorkingArea.Size;
         public static User? authenticatedUser;
         public SignIn()
         {
@@ -109,21 +113,31 @@ namespace PUPAcadPortal
 
                 if (role == "admin")
                 {
-                    AdminPortal adminPortal = new AdminPortal();
-                    adminPortal.WindowState = this.WindowState;
-                    adminPortal.ShowDialog();
+                    using (AdminPortal adminPortal = new AdminPortal())
+                    {
+                        adminPortal.Size = _usableScreenSize;
+                        adminPortal.Location = _usableScreenLoc;
+                        adminPortal.ShowDialog();
+                    }
+
                 }
                 else if (role == "instructor")
                 {
-                    InstructorPortal instructorPortal = new InstructorPortal();
-                    instructorPortal.WindowState = this.WindowState;
-                    instructorPortal.ShowDialog();
+                    using (InstructorPortal instructorPortal = new InstructorPortal())
+                    {
+                        instructorPortal.Size = _usableScreenSize;
+                        instructorPortal.Location = _usableScreenLoc;
+                        instructorPortal.ShowDialog();
+                    }
                 }
                 else if (role == "student")
                 {
-                    StudentPortal studentPortal = new StudentPortal(this);
-                    studentPortal.WindowState = this.WindowState;
-                    studentPortal.ShowDialog();
+                    using (StudentPortal studentPortal = new StudentPortal(this))
+                    {
+                        studentPortal.Size = _usableScreenSize;
+                        studentPortal.Location = _usableScreenLoc;
+                        studentPortal.ShowDialog();
+                    }
                 }
 
                 txtUsername.Clear();
@@ -138,6 +152,8 @@ namespace PUPAcadPortal
 
         private void SignIn_Load(object sender, EventArgs e)
         {
+            this.Size = _usableScreenSize;
+            this.Location = _usableScreenLoc;
             txtUsername.Select();
         }
 

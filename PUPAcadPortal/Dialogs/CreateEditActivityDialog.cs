@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace PUPAcadPortal
+namespace PUPAcadPortal.Dialogs
 {
     public partial class CreateEditActivityDialog : Form
     {

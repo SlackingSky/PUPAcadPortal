@@ -6,7 +6,7 @@ namespace PUPAcadPortal.Utils
 {
     public class SubmenuAnim
     {
-        private readonly Panel _panel;
+        private readonly Control _panel;
         private readonly int _collapsedHeight = 0;
         private readonly int _expandedHeight;
 
@@ -14,9 +14,16 @@ namespace PUPAcadPortal.Utils
         private bool _isAnimating = false;
 
         // Constructor to pass each menu's unique controls and dimensions
-        public SubmenuAnim(Panel panel, int expandedHeight)
+        public SubmenuAnim(Control panel, int expandedHeight)
         {
-            _panel = panel;
+            if (panel is Panel)
+            {
+                _panel = panel as Panel;
+            }
+            else
+            {
+                _panel = panel as FlowLayoutPanel;
+            }
             _expandedHeight = expandedHeight;
         }
 

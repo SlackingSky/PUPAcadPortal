@@ -1035,10 +1035,13 @@
             fpnlLMSSubmenu.Controls.Add(btnAttendanceIns);
             fpnlLMSSubmenu.Controls.Add(btnGradeIns);
             fpnlLMSSubmenu.Dock = DockStyle.Fill;
+            fpnlLMSSubmenu.FlowDirection = FlowDirection.TopDown;
             fpnlLMSSubmenu.Location = new Point(3, 211);
             fpnlLMSSubmenu.Name = "fpnlLMSSubmenu";
             fpnlLMSSubmenu.Size = new Size(250, 269);
             fpnlLMSSubmenu.TabIndex = 11;
+            fpnlLMSSubmenu.Visible = false;
+            fpnlLMSSubmenu.WrapContents = false;
             // 
             // btnAnnounceIns
             // 
@@ -1052,8 +1055,8 @@
             btnAnnounceIns.ForeColor = Color.FromArgb(179, 255, 255, 255);
             btnAnnounceIns.Image = Properties.Resources.marketing;
             btnAnnounceIns.ImageAlign = ContentAlignment.MiddleLeft;
-            btnAnnounceIns.Location = new Point(1, 1);
-            btnAnnounceIns.Margin = new Padding(1);
+            btnAnnounceIns.Location = new Point(0, 1);
+            btnAnnounceIns.Margin = new Padding(0, 1, 1, 1);
             btnAnnounceIns.Name = "btnAnnounceIns";
             btnAnnounceIns.Padding = new Padding(16, 0, 0, 0);
             btnAnnounceIns.Size = new Size(256, 48);
@@ -1076,8 +1079,8 @@
             btnCalendarIns.ForeColor = Color.FromArgb(179, 255, 255, 255);
             btnCalendarIns.Image = Properties.Resources.calendar__4_;
             btnCalendarIns.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCalendarIns.Location = new Point(1, 51);
-            btnCalendarIns.Margin = new Padding(1);
+            btnCalendarIns.Location = new Point(0, 51);
+            btnCalendarIns.Margin = new Padding(0, 1, 1, 1);
             btnCalendarIns.Name = "btnCalendarIns";
             btnCalendarIns.Padding = new Padding(16, 0, 0, 0);
             btnCalendarIns.Size = new Size(256, 48);
@@ -1100,8 +1103,8 @@
             btnActivitiesIns.ForeColor = Color.FromArgb(179, 255, 255, 255);
             btnActivitiesIns.Image = (Image)resources.GetObject("btnActivitiesIns.Image");
             btnActivitiesIns.ImageAlign = ContentAlignment.MiddleLeft;
-            btnActivitiesIns.Location = new Point(1, 101);
-            btnActivitiesIns.Margin = new Padding(1);
+            btnActivitiesIns.Location = new Point(0, 101);
+            btnActivitiesIns.Margin = new Padding(0, 1, 1, 1);
             btnActivitiesIns.Name = "btnActivitiesIns";
             btnActivitiesIns.Padding = new Padding(16, 0, 0, 0);
             btnActivitiesIns.Size = new Size(256, 48);
@@ -1124,8 +1127,8 @@
             btnAttendanceIns.ForeColor = Color.FromArgb(179, 255, 255, 255);
             btnAttendanceIns.Image = Properties.Resources.user_check;
             btnAttendanceIns.ImageAlign = ContentAlignment.MiddleLeft;
-            btnAttendanceIns.Location = new Point(1, 151);
-            btnAttendanceIns.Margin = new Padding(1);
+            btnAttendanceIns.Location = new Point(0, 151);
+            btnAttendanceIns.Margin = new Padding(0, 1, 1, 1);
             btnAttendanceIns.Name = "btnAttendanceIns";
             btnAttendanceIns.Padding = new Padding(16, 0, 0, 0);
             btnAttendanceIns.Size = new Size(256, 48);
@@ -1148,8 +1151,8 @@
             btnGradeIns.ForeColor = Color.FromArgb(179, 255, 255, 255);
             btnGradeIns.Image = Properties.Resources.report;
             btnGradeIns.ImageAlign = ContentAlignment.MiddleLeft;
-            btnGradeIns.Location = new Point(1, 201);
-            btnGradeIns.Margin = new Padding(1);
+            btnGradeIns.Location = new Point(0, 201);
+            btnGradeIns.Margin = new Padding(0, 1, 1, 1);
             btnGradeIns.Name = "btnGradeIns";
             btnGradeIns.Padding = new Padding(16, 0, 0, 0);
             btnGradeIns.Size = new Size(256, 48);
@@ -7579,7 +7582,6 @@
             Text = "Instructor Portal";
             FormClosing += InstructorPortal_Closing;
             Load += InstructorPortal_Load;
-            Resize += InstructorPortal_Resize;
             pnlSidebar.ResumeLayout(false);
             flowLayoutPanel1.ResumeLayout(false);
             panel7.ResumeLayout(false);
