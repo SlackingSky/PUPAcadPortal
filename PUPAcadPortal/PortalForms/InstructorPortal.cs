@@ -31,7 +31,6 @@ namespace PUPAcadPortal.PortalForms
         private bool isEditing = false; // New flag to stop event interference
         public static int _year, _month;
         public static Dictionary<DateTime, string> notesDict = new Dictionary<DateTime, string>();
-        private ActivityItem? currentEditingItem = null;
         private Button clickedButton;
         private Color defaultColor = Color.Maroon;
         private Color selectedColor = Color.FromArgb(109, 0, 0);
@@ -40,36 +39,15 @@ namespace PUPAcadPortal.PortalForms
         private LMSActivityHost lmsHost;
 
 
-        private SizeF _designSize;
-        private readonly Dictionary<Control, RectangleF> _origBounds = new();
-        private readonly Dictionary<Control, float> _origFontSz = new();
-
-
         public InstructorPortal()
         {
             InitializeComponent();
-
             submenuAnimLMS = new SubmenuAnim(fpnlLMSSubmenu, fpnlLMSSubmenu.Height);
 
             pnlAttendance.AutoScrollMinSize = new Size(0, 1000);
             SharedCalendarData.LoadData();
             pnlAttendance.AutoScrollMinSize = new Size(0, 1000);
             this.DoubleBuffered = true;
-
-            // ✅ FIX: Wire the resize event ONLY ONCE here.
-            // If you put this inside a Click event, it stacks and causes the "creeping" movement.
-            //Temporary Data (Grade Feature)
-            string[] row1 = { "2024-00074-SM-0", "Ablong, Adrian P." };
-            string[] row2 = { "2024-00194-SM-0", "Alcaiz, Jared B." };
-            string[] row3 = { "2024-00146-SM-0", "Amar, Charles Manuel C." };
-            string[] row4 = { "2024-00123-SM-0", "Amen, Jessie C." };
-            string[] row5 = { "2024-00274-SM-0", "Amolata, Jhayphee V." };
-
-            dataGridView1.Rows.Add(row1);
-            dataGridView1.Rows.Add(row2);
-            dataGridView1.Rows.Add(row3);
-            dataGridView1.Rows.Add(row4);
-            dataGridView1.Rows.Add(row5);
 
             if (panel3 != null)
             {
@@ -273,7 +251,7 @@ namespace PUPAcadPortal.PortalForms
                 //{ btnSubjectIns, pnlSubject },
                 //{ btnActivitiesIns, pnlLMSAct },
                 { btnAttendanceIns, pnlAttendance },
-                { btnGradeIns, pnlGrades }
+                //{ btnGradeIns, pnlGrades }
             };
 
             foreach (var content in contents)
@@ -398,8 +376,6 @@ namespace PUPAcadPortal.PortalForms
         {
             this.MinimumSize = new Size(1024, 700);
 
-            _designSize = new SizeF(this.ClientSize.Width, this.ClientSize.Height);
-            SnapshotControls(this.Controls);
 
             this.FormClosed += (s, ev) =>
             {
@@ -407,70 +383,9 @@ namespace PUPAcadPortal.PortalForms
             };
         }
 
-        private void SnapshotControls(Control.ControlCollection controls)
+        private void InstructorPortal_ResizeEnd(object sender, EventArgs e)
         {
-            foreach (Control ctrl in controls)
-            {
-                if (ctrl.Tag is string t && t.Contains("noScale")) continue;
-                _origBounds[ctrl] = new RectangleF(ctrl.Left, ctrl.Top, ctrl.Width, ctrl.Height);
-                _origFontSz[ctrl] = ctrl.Font.Size;
-                if (ctrl.HasChildren) SnapshotControls(ctrl.Controls);
-            }
-        }
 
-        private void ScaleControls(Control.ControlCollection controls, float rx, float ry)
-        {
-            foreach (Control ctrl in controls)
-            {
-                if (ctrl.Tag is string t && t.Contains("noScale")) continue;
-                if (!_origBounds.TryGetValue(ctrl, out RectangleF ob)) continue;
-
-                int newX = ScaleRound(ob.X * rx);
-                int newY = ScaleRound(ob.Y * ry);
-                int newW = Math.Max(1, ScaleRound(ob.Width * rx));
-                int newH = Math.Max(1, ScaleRound(ob.Height * ry));
-
-                switch (ctrl.Dock)
-                {
-                    case DockStyle.Fill: break;
-                    case DockStyle.Top: ctrl.Height = newH; break;
-                    case DockStyle.Bottom: ctrl.Height = newH; break;
-                    case DockStyle.Left: ctrl.Width = newW; break;
-                    case DockStyle.Right: ctrl.Width = newW; break;
-                    default: ctrl.SetBounds(newX, newY, newW, newH); break;
-                }
-
-                if (_origFontSz.TryGetValue(ctrl, out float origSz))
-                {
-                    float newSz = Math.Max(6f, origSz * Math.Min(rx, ry));
-                    if (Math.Abs(ctrl.Font.Size - newSz) > 0.15f)
-                    {
-                        try
-                        {
-                            ctrl.Font = new Font(
-                                ctrl.Font.FontFamily, newSz,
-                                ctrl.Font.Style, GraphicsUnit.Point);
-                        }
-                        catch { /* font too small – silently skip */ }
-                    }
-                }
-
-                if (ctrl.HasChildren) ScaleControls(ctrl.Controls, rx, ry);
-            }
-        }
-
-        private static int ScaleRound(float v) => (int)Math.Round(v);
-
-        private void InstructorPortal_Resize(object sender, EventArgs e)
-        {
-            if (_designSize.Width == 0 || _designSize.Height == 0) return;
-
-            float rx = Math.Max(this.ClientSize.Width, 1024) / _designSize.Width;
-            float ry = Math.Max(this.ClientSize.Height, 700) / _designSize.Height;
-
-            this.SuspendLayout();
-            ScaleControls(this.Controls, rx, ry);
-            this.ResumeLayout(true);
         }
 
         private void panel18_Paint(object sender, PaintEventArgs e)
@@ -483,38 +398,5 @@ namespace PUPAcadPortal.PortalForms
         private void panel103_Click(object sender, EventArgs e) { if (fpnlLMSSubmenu.Visible == false) { btnLMS.PerformClick(); } } //btnSubjectIns.PerformClick(); }
         private void panel102_Click(object sender, EventArgs e) { if (fpnlLMSSubmenu.Visible == false) { btnLMS.PerformClick(); } btnAttendanceIns.PerformClick(); }
         private void panel104_Click(object sender, EventArgs e) { if (btnCourses != null) btnCourses_Click(btnCourses, e); }
-
-        private void label303_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void cmbCourse_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            pnlGradeRecords.Visible = false;
-
-            switch (cmbCourse.SelectedIndex)
-            {
-                case 0:
-                    pnlGradeRecords.Visible = true;
-                    break;
-            }
-        }
-       
-        private static GraphicsPath RoundedRectPath(Rectangle r, int rad)
-        {
-            var p = new GraphicsPath();
-            p.AddArc(r.X, r.Y, rad, rad, 180, 90);
-            p.AddArc(r.Right - rad, r.Y, rad, rad, 270, 90);
-            p.AddArc(r.Right - rad, r.Bottom - rad, rad, rad, 0, 90);
-            p.AddArc(r.X, r.Bottom - rad, rad, rad, 90, 90);
-            p.CloseFigure();
-            return p;
-        }
     }
 }

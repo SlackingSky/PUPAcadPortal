@@ -71,6 +71,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="PortalContents\Student\Enrollment\" />
+    <Folder Include="PortalContents\Student\LMS\" />
     <Folder Include="ReusableUserControls\" />
   </ItemGroup>
 
