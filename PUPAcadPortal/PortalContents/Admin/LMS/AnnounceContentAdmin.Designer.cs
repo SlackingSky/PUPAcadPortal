@@ -309,13 +309,14 @@
             btnCreateAnnouncement.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnCreateAnnouncement.UseVisualStyleBackColor = false;
             // 
-            // AdminAnnounceContent
+            // AnnounceContentAdmin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(pnlAnnouncement);
-            Name = "AdminAnnounceContent";
+            Name = "AnnounceContentAdmin";
             Size = new Size(1648, 969);
+            Load += AnnounceContentAdmin_Load;
             pnlAnnouncement.ResumeLayout(false);
             pnlInsights.ResumeLayout(false);
             pnlInsights.PerformLayout();

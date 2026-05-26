@@ -117,6 +117,7 @@
             // 
             // pnlEnrollContent
             // 
+            pnlEnrollContent.AutoScroll = true;
             pnlEnrollContent.BackColor = SystemColors.Control;
             pnlEnrollContent.Controls.Add(pnlRA10391);
             pnlEnrollContent.Controls.Add(pnlOptOutWaiver);
@@ -135,7 +136,7 @@
             pnlEnrollContent.Location = new Point(0, 0);
             pnlEnrollContent.Margin = new Padding(0);
             pnlEnrollContent.Name = "pnlEnrollContent";
-            pnlEnrollContent.Size = new Size(1648, 969);
+            pnlEnrollContent.Size = new Size(1883, 1292);
             pnlEnrollContent.TabIndex = 39;
             // 
             // pnlRA10391
@@ -144,9 +145,10 @@
             pnlRA10391.BorderStyle = BorderStyle.Fixed3D;
             pnlRA10391.Controls.Add(pictureBox10);
             pnlRA10391.Controls.Add(label49);
-            pnlRA10391.Location = new Point(20, 94);
+            pnlRA10391.Location = new Point(23, 125);
+            pnlRA10391.Margin = new Padding(3, 4, 3, 4);
             pnlRA10391.Name = "pnlRA10391";
-            pnlRA10391.Size = new Size(1232, 79);
+            pnlRA10391.Size = new Size(1407, 104);
             pnlRA10391.TabIndex = 24;
             // 
             // pictureBox10
@@ -154,9 +156,10 @@
             pictureBox10.BackColor = Color.Transparent;
             pictureBox10.BackgroundImageLayout = ImageLayout.None;
             pictureBox10.Image = Properties.Resources.Check_icon;
-            pictureBox10.Location = new Point(17, 17);
+            pictureBox10.Location = new Point(19, 23);
+            pictureBox10.Margin = new Padding(3, 4, 3, 4);
             pictureBox10.Name = "pictureBox10";
-            pictureBox10.Size = new Size(35, 39);
+            pictureBox10.Size = new Size(40, 52);
             pictureBox10.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox10.TabIndex = 10;
             pictureBox10.TabStop = false;
@@ -165,11 +168,11 @@
             // 
             label49.AutoSize = true;
             label49.BackColor = Color.Transparent;
-            label49.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label49.Font = new Font("Segoe UI", 11.4000006F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label49.ForeColor = Color.Green;
-            label49.Location = new Point(60, 23);
+            label49.Location = new Point(69, 31);
             label49.Name = "label49";
-            label49.Size = new Size(429, 25);
+            label49.Size = new Size(459, 28);
             label49.TabIndex = 8;
             label49.Text = "You are qualified to Free Higher Education Act!";
             // 
@@ -182,9 +185,10 @@
             pnlOptOutWaiver.Controls.Add(label50);
             pnlOptOutWaiver.Controls.Add(label48);
             pnlOptOutWaiver.Controls.Add(label47);
-            pnlOptOutWaiver.Location = new Point(19, 185);
+            pnlOptOutWaiver.Location = new Point(22, 247);
+            pnlOptOutWaiver.Margin = new Padding(3, 4, 3, 4);
             pnlOptOutWaiver.Name = "pnlOptOutWaiver";
-            pnlOptOutWaiver.Size = new Size(1233, 263);
+            pnlOptOutWaiver.Size = new Size(1409, 351);
             pnlOptOutWaiver.TabIndex = 3;
             // 
             // btnDlOOWaiver
@@ -194,12 +198,13 @@
             btnDlOOWaiver.FlatAppearance.BorderColor = Color.Maroon;
             btnDlOOWaiver.FlatAppearance.BorderSize = 2;
             btnDlOOWaiver.FlatStyle = FlatStyle.Flat;
-            btnDlOOWaiver.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnDlOOWaiver.Font = new Font("Segoe UI", 9.6F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDlOOWaiver.ForeColor = Color.Maroon;
             btnDlOOWaiver.Image = Properties.Resources.download_2_16_maroon;
-            btnDlOOWaiver.Location = new Point(839, 201);
+            btnDlOOWaiver.Location = new Point(959, 268);
+            btnDlOOWaiver.Margin = new Padding(3, 4, 3, 4);
             btnDlOOWaiver.Name = "btnDlOOWaiver";
-            btnDlOOWaiver.Size = new Size(367, 41);
+            btnDlOOWaiver.Size = new Size(419, 55);
             btnDlOOWaiver.TabIndex = 20;
             btnDlOOWaiver.Text = " Download Opt-Out Waiver Form Here";
             btnDlOOWaiver.TextAlign = ContentAlignment.MiddleRight;
@@ -209,8 +214,8 @@
             // label53
             // 
             label53.AutoSize = true;
-            label53.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label53.Location = new Point(13, 66);
+            label53.Font = new Font("Segoe UI", 9.6F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label53.Location = new Point(15, 88);
             label53.Name = "label53";
             label53.Size = new Size(91, 21);
             label53.TabIndex = 4;
@@ -219,8 +224,8 @@
             // label51
             // 
             label51.AutoSize = true;
-            label51.Font = new Font("Segoe UI", 12F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label51.Location = new Point(26, 172);
+            label51.Font = new Font("Segoe UI", 9.6F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            label51.Location = new Point(30, 229);
             label51.Name = "label51";
             label51.Size = new Size(891, 21);
             label51.TabIndex = 3;
@@ -228,18 +233,18 @@
             // 
             // label50
             // 
-            label50.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label50.Location = new Point(13, 88);
+            label50.Font = new Font("Segoe UI", 9.6F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label50.Location = new Point(15, 117);
             label50.Name = "label50";
-            label50.Size = new Size(1124, 100);
+            label50.Size = new Size(1285, 133);
             label50.TabIndex = 2;
             label50.Text = resources.GetString("label50.Text");
             // 
             // label48
             // 
             label48.AutoSize = true;
-            label48.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label48.Location = new Point(13, 36);
+            label48.Font = new Font("Segoe UI", 9.6F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label48.Location = new Point(15, 48);
             label48.Name = "label48";
             label48.Size = new Size(1025, 21);
             label48.TabIndex = 1;
@@ -248,10 +253,10 @@
             // label47
             // 
             label47.AutoSize = true;
-            label47.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label47.Location = new Point(9, 11);
+            label47.Font = new Font("Segoe UI", 11.4000006F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label47.Location = new Point(10, 15);
             label47.Name = "label47";
-            label47.Size = new Size(307, 25);
+            label47.Size = new Size(328, 28);
             label47.TabIndex = 0;
             label47.Text = "Opt-Out Waiver Form (RA 10931)";
             // 
@@ -261,29 +266,30 @@
             pnlTotalUnits.BorderStyle = BorderStyle.Fixed3D;
             pnlTotalUnits.Controls.Add(lblTotalUnitsValue);
             pnlTotalUnits.Controls.Add(lblTotalUnitss);
-            pnlTotalUnits.Location = new Point(1145, 16);
+            pnlTotalUnits.Location = new Point(1309, 21);
+            pnlTotalUnits.Margin = new Padding(3, 4, 3, 4);
             pnlTotalUnits.Name = "pnlTotalUnits";
-            pnlTotalUnits.Size = new Size(107, 65);
+            pnlTotalUnits.Size = new Size(122, 85);
             pnlTotalUnits.TabIndex = 23;
             // 
             // lblTotalUnitsValue
             // 
             lblTotalUnitsValue.AutoSize = true;
             lblTotalUnitsValue.BackColor = Color.Transparent;
-            lblTotalUnitsValue.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTotalUnitsValue.Font = new Font("Segoe UI", 14.4000006F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblTotalUnitsValue.ForeColor = Color.Black;
-            lblTotalUnitsValue.Location = new Point(42, 22);
+            lblTotalUnitsValue.Location = new Point(48, 29);
             lblTotalUnitsValue.Name = "lblTotalUnitsValue";
-            lblTotalUnitsValue.Size = new Size(0, 32);
+            lblTotalUnitsValue.Size = new Size(0, 35);
             lblTotalUnitsValue.TabIndex = 2;
             // 
             // lblTotalUnitss
             // 
             lblTotalUnitss.AutoSize = true;
             lblTotalUnitss.BackColor = Color.Transparent;
-            lblTotalUnitss.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTotalUnitss.Font = new Font("Segoe UI Semibold", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblTotalUnitss.ForeColor = SystemColors.ActiveCaptionText;
-            lblTotalUnitss.Location = new Point(2, 2);
+            lblTotalUnitss.Location = new Point(2, 3);
             lblTotalUnitss.Name = "lblTotalUnitss";
             lblTotalUnitss.Size = new Size(72, 17);
             lblTotalUnitss.TabIndex = 1;
@@ -294,13 +300,14 @@
             btnSaveAndAssess.Anchor = AnchorStyles.Top;
             btnSaveAndAssess.BackColor = Color.Maroon;
             btnSaveAndAssess.FlatStyle = FlatStyle.Flat;
-            btnSaveAndAssess.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSaveAndAssess.Font = new Font("Segoe UI", 9.6F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSaveAndAssess.ForeColor = Color.White;
             btnSaveAndAssess.Image = Properties.Resources.save_16;
             btnSaveAndAssess.ImageAlign = ContentAlignment.MiddleRight;
-            btnSaveAndAssess.Location = new Point(1054, 801);
+            btnSaveAndAssess.Location = new Point(1197, 1068);
+            btnSaveAndAssess.Margin = new Padding(3, 4, 3, 4);
             btnSaveAndAssess.Name = "btnSaveAndAssess";
-            btnSaveAndAssess.Size = new Size(198, 35);
+            btnSaveAndAssess.Size = new Size(226, 47);
             btnSaveAndAssess.TabIndex = 22;
             btnSaveAndAssess.Text = " Save and Assess";
             btnSaveAndAssess.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -310,9 +317,10 @@
             // 
             pnlEnrollmentConfirmedDGV.AutoScroll = true;
             pnlEnrollmentConfirmedDGV.Controls.Add(dgvEnrollmentConfirmed);
-            pnlEnrollmentConfirmedDGV.Location = new Point(18, 966);
+            pnlEnrollmentConfirmedDGV.Location = new Point(21, 1288);
+            pnlEnrollmentConfirmedDGV.Margin = new Padding(3, 4, 3, 4);
             pnlEnrollmentConfirmedDGV.Name = "pnlEnrollmentConfirmedDGV";
-            pnlEnrollmentConfirmedDGV.Size = new Size(1205, 300);
+            pnlEnrollmentConfirmedDGV.Size = new Size(1377, 400);
             pnlEnrollmentConfirmedDGV.TabIndex = 21;
             // 
             // dgvEnrollmentConfirmed
@@ -339,11 +347,12 @@
             dgvEnrollmentConfirmed.EnableHeadersVisualStyles = false;
             dgvEnrollmentConfirmed.GridColor = Color.White;
             dgvEnrollmentConfirmed.Location = new Point(0, 0);
+            dgvEnrollmentConfirmed.Margin = new Padding(3, 4, 3, 4);
             dgvEnrollmentConfirmed.Name = "dgvEnrollmentConfirmed";
             dgvEnrollmentConfirmed.RowHeadersVisible = false;
             dgvEnrollmentConfirmed.RowHeadersWidth = 51;
             dgvEnrollmentConfirmed.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvEnrollmentConfirmed.Size = new Size(1205, 300);
+            dgvEnrollmentConfirmed.Size = new Size(1377, 400);
             dgvEnrollmentConfirmed.TabIndex = 13;
             dgvEnrollmentConfirmed.Visible = false;
             // 
@@ -427,12 +436,13 @@
             // 
             btnDownloadCOR.Anchor = AnchorStyles.Top;
             btnDownloadCOR.BackColor = Color.DarkGray;
-            btnDownloadCOR.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnDownloadCOR.Font = new Font("Segoe UI", 9.6F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDownloadCOR.ForeColor = SystemColors.ControlLightLight;
             btnDownloadCOR.Image = Properties.Resources.download_2_16;
-            btnDownloadCOR.Location = new Point(806, 27);
+            btnDownloadCOR.Location = new Point(913, 36);
+            btnDownloadCOR.Margin = new Padding(3, 4, 3, 4);
             btnDownloadCOR.Name = "btnDownloadCOR";
-            btnDownloadCOR.Size = new Size(325, 41);
+            btnDownloadCOR.Size = new Size(371, 55);
             btnDownloadCOR.TabIndex = 19;
             btnDownloadCOR.Text = " Certificate of Registration";
             btnDownloadCOR.TextAlign = ContentAlignment.MiddleRight;
@@ -445,9 +455,10 @@
             pnlContainerEnrollmentDGV.Anchor = AnchorStyles.Top;
             pnlContainerEnrollmentDGV.AutoScroll = true;
             pnlContainerEnrollmentDGV.Controls.Add(dgvEnrollment);
-            pnlContainerEnrollmentDGV.Location = new Point(21, 482);
+            pnlContainerEnrollmentDGV.Location = new Point(16, 643);
+            pnlContainerEnrollmentDGV.Margin = new Padding(3, 4, 3, 4);
             pnlContainerEnrollmentDGV.Name = "pnlContainerEnrollmentDGV";
-            pnlContainerEnrollmentDGV.Size = new Size(1231, 300);
+            pnlContainerEnrollmentDGV.Size = new Size(1407, 400);
             pnlContainerEnrollmentDGV.TabIndex = 20;
             // 
             // dgvEnrollment
@@ -474,11 +485,12 @@
             dgvEnrollment.EnableHeadersVisualStyles = false;
             dgvEnrollment.GridColor = Color.White;
             dgvEnrollment.Location = new Point(0, 0);
+            dgvEnrollment.Margin = new Padding(3, 4, 3, 4);
             dgvEnrollment.Name = "dgvEnrollment";
             dgvEnrollment.RowHeadersVisible = false;
             dgvEnrollment.RowHeadersWidth = 51;
             dgvEnrollment.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvEnrollment.Size = new Size(1231, 300);
+            dgvEnrollment.Size = new Size(1407, 400);
             dgvEnrollment.TabIndex = 13;
             dgvEnrollment.CellClick += dgvEnrollment_CellClick;
             dgvEnrollment.CellPainting += dgvEnrollment_CellPainting;
@@ -577,21 +589,22 @@
             pnlEnrollRightCard.BorderStyle = BorderStyle.Fixed3D;
             pnlEnrollRightCard.Controls.Add(lblCurrentSectionIndicator);
             pnlEnrollRightCard.Controls.Add(label183);
-            pnlEnrollRightCard.Location = new Point(20, 852);
-            pnlEnrollRightCard.MaximumSize = new Size(384, 70);
-            pnlEnrollRightCard.MinimumSize = new Size(384, 70);
+            pnlEnrollRightCard.Location = new Point(15, 1532);
+            pnlEnrollRightCard.Margin = new Padding(3, 4, 3, 4);
+            pnlEnrollRightCard.MaximumSize = new Size(438, 92);
+            pnlEnrollRightCard.MinimumSize = new Size(438, 92);
             pnlEnrollRightCard.Name = "pnlEnrollRightCard";
-            pnlEnrollRightCard.Size = new Size(384, 70);
+            pnlEnrollRightCard.Size = new Size(438, 92);
             pnlEnrollRightCard.TabIndex = 17;
             // 
             // lblCurrentSectionIndicator
             // 
             lblCurrentSectionIndicator.AutoSize = true;
-            lblCurrentSectionIndicator.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblCurrentSectionIndicator.Font = new Font("Segoe UI", 14.4000006F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblCurrentSectionIndicator.ForeColor = Color.Black;
-            lblCurrentSectionIndicator.Location = new Point(37, 23);
+            lblCurrentSectionIndicator.Location = new Point(42, 31);
             lblCurrentSectionIndicator.Name = "lblCurrentSectionIndicator";
-            lblCurrentSectionIndicator.Size = new Size(102, 32);
+            lblCurrentSectionIndicator.Size = new Size(104, 35);
             lblCurrentSectionIndicator.TabIndex = 1;
             lblCurrentSectionIndicator.Text = "Regular";
             // 
@@ -599,9 +612,9 @@
             // 
             label183.AutoSize = true;
             label183.BackColor = Color.Transparent;
-            label183.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label183.Font = new Font("Segoe UI Semibold", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label183.ForeColor = Color.Maroon;
-            label183.Location = new Point(14, 7);
+            label183.Location = new Point(16, 9);
             label183.Name = "label183";
             label183.Size = new Size(109, 17);
             label183.TabIndex = 0;
@@ -614,20 +627,21 @@
             pnlEnrollMiddleCard.BorderStyle = BorderStyle.Fixed3D;
             pnlEnrollMiddleCard.Controls.Add(label184);
             pnlEnrollMiddleCard.Controls.Add(lblMaximumUnitsValue);
-            pnlEnrollMiddleCard.Location = new Point(444, 852);
-            pnlEnrollMiddleCard.MaximumSize = new Size(384, 70);
-            pnlEnrollMiddleCard.MinimumSize = new Size(384, 70);
+            pnlEnrollMiddleCard.Location = new Point(499, 1532);
+            pnlEnrollMiddleCard.Margin = new Padding(3, 4, 3, 4);
+            pnlEnrollMiddleCard.MaximumSize = new Size(438, 92);
+            pnlEnrollMiddleCard.MinimumSize = new Size(438, 92);
             pnlEnrollMiddleCard.Name = "pnlEnrollMiddleCard";
-            pnlEnrollMiddleCard.Size = new Size(384, 70);
+            pnlEnrollMiddleCard.Size = new Size(438, 92);
             pnlEnrollMiddleCard.TabIndex = 16;
             // 
             // label184
             // 
             label184.AutoSize = true;
             label184.BackColor = Color.Transparent;
-            label184.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label184.Font = new Font("Segoe UI Semibold", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label184.ForeColor = Color.Maroon;
-            label184.Location = new Point(12, 7);
+            label184.Location = new Point(14, 9);
             label184.Name = "label184";
             label184.Size = new Size(104, 17);
             label184.TabIndex = 0;
@@ -637,11 +651,11 @@
             // 
             lblMaximumUnitsValue.AutoSize = true;
             lblMaximumUnitsValue.BackColor = Color.Transparent;
-            lblMaximumUnitsValue.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblMaximumUnitsValue.Font = new Font("Segoe UI", 14.4000006F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblMaximumUnitsValue.ForeColor = Color.Black;
-            lblMaximumUnitsValue.Location = new Point(32, 22);
+            lblMaximumUnitsValue.Location = new Point(37, 29);
             lblMaximumUnitsValue.Name = "lblMaximumUnitsValue";
-            lblMaximumUnitsValue.Size = new Size(108, 32);
+            lblMaximumUnitsValue.Size = new Size(111, 35);
             lblMaximumUnitsValue.TabIndex = 1;
             lblMaximumUnitsValue.Text = "23 Units";
             // 
@@ -652,20 +666,21 @@
             pnlEnrollLeftCard.BorderStyle = BorderStyle.Fixed3D;
             pnlEnrollLeftCard.Controls.Add(label185);
             pnlEnrollLeftCard.Controls.Add(label186);
-            pnlEnrollLeftCard.Location = new Point(868, 852);
-            pnlEnrollLeftCard.MaximumSize = new Size(384, 70);
-            pnlEnrollLeftCard.MinimumSize = new Size(384, 70);
+            pnlEnrollLeftCard.Location = new Point(984, 1532);
+            pnlEnrollLeftCard.Margin = new Padding(3, 4, 3, 4);
+            pnlEnrollLeftCard.MaximumSize = new Size(438, 92);
+            pnlEnrollLeftCard.MinimumSize = new Size(438, 92);
             pnlEnrollLeftCard.Name = "pnlEnrollLeftCard";
-            pnlEnrollLeftCard.Size = new Size(384, 70);
+            pnlEnrollLeftCard.Size = new Size(438, 92);
             pnlEnrollLeftCard.TabIndex = 15;
             // 
             // label185
             // 
             label185.AutoSize = true;
             label185.BackColor = Color.Transparent;
-            label185.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
+            label185.Font = new Font("Segoe UI Semibold", 7.8F, FontStyle.Bold);
             label185.ForeColor = Color.Maroon;
-            label185.Location = new Point(15, 7);
+            label185.Location = new Point(17, 9);
             label185.Name = "label185";
             label185.Size = new Size(122, 17);
             label185.TabIndex = 0;
@@ -675,33 +690,33 @@
             // 
             label186.AutoSize = true;
             label186.BackColor = Color.Transparent;
-            label186.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+            label186.Font = new Font("Segoe UI", 14.4000006F, FontStyle.Bold);
             label186.ForeColor = Color.Black;
-            label186.Location = new Point(32, 22);
+            label186.Location = new Point(37, 29);
             label186.Name = "label186";
-            label186.Size = new Size(266, 32);
+            label186.Size = new Size(270, 35);
             label186.TabIndex = 1;
             label186.Text = "February 1 - 11,  2026";
             // 
             // lblAcademicYear
             // 
             lblAcademicYear.AutoSize = true;
-            lblAcademicYear.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblAcademicYear.Font = new Font("Segoe UI", 7.20000029F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblAcademicYear.ForeColor = SystemColors.ControlDarkDark;
-            lblAcademicYear.Location = new Point(23, 54);
+            lblAcademicYear.Location = new Point(26, 72);
             lblAcademicYear.Name = "lblAcademicYear";
-            lblAcademicYear.Size = new Size(221, 15);
+            lblAcademicYear.Size = new Size(249, 17);
             lblAcademicYear.TabIndex = 7;
             lblAcademicYear.Text = "Academic Year 2025-2026 | 2nd Semester";
             // 
             // label188
             // 
             label188.AutoSize = true;
-            label188.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label188.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label188.ForeColor = Color.Maroon;
-            label188.Location = new Point(12, 17);
+            label188.Location = new Point(14, 23);
             label188.Name = "label188";
-            label188.Size = new Size(206, 37);
+            label188.Size = new Size(212, 38);
             label188.TabIndex = 6;
             label188.Text = "My Enrollment";
             // 
@@ -716,9 +731,10 @@
             pnlViewDetails.Controls.Add(lblDetailCode);
             pnlViewDetails.Controls.Add(btnEnrollCloseDetails);
             pnlViewDetails.Controls.Add(lblSubjectDetails);
-            pnlViewDetails.Location = new Point(575, 279);
+            pnlViewDetails.Location = new Point(657, 372);
+            pnlViewDetails.Margin = new Padding(3, 4, 3, 4);
             pnlViewDetails.Name = "pnlViewDetails";
-            pnlViewDetails.Size = new Size(498, 410);
+            pnlViewDetails.Size = new Size(569, 546);
             pnlViewDetails.TabIndex = 25;
             pnlViewDetails.Visible = false;
             // 
@@ -726,20 +742,21 @@
             // 
             txtDetailSchedule.BackColor = SystemColors.ControlLightLight;
             txtDetailSchedule.BorderStyle = BorderStyle.None;
-            txtDetailSchedule.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtDetailSchedule.Location = new Point(15, 214);
+            txtDetailSchedule.Font = new Font("Segoe UI", 9.6F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtDetailSchedule.Location = new Point(17, 285);
+            txtDetailSchedule.Margin = new Padding(3, 4, 3, 4);
             txtDetailSchedule.Multiline = true;
             txtDetailSchedule.Name = "txtDetailSchedule";
             txtDetailSchedule.ReadOnly = true;
-            txtDetailSchedule.Size = new Size(445, 49);
+            txtDetailSchedule.Size = new Size(509, 65);
             txtDetailSchedule.TabIndex = 7;
             txtDetailSchedule.Text = "Schedule: ";
             // 
             // lblDetailTitle
             // 
             lblDetailTitle.AutoSize = true;
-            lblDetailTitle.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblDetailTitle.Location = new Point(14, 99);
+            lblDetailTitle.Font = new Font("Segoe UI", 9.6F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblDetailTitle.Location = new Point(16, 132);
             lblDetailTitle.Name = "lblDetailTitle";
             lblDetailTitle.Size = new Size(99, 21);
             lblDetailTitle.TabIndex = 6;
@@ -748,8 +765,8 @@
             // lblDetailUnits
             // 
             lblDetailUnits.AutoSize = true;
-            lblDetailUnits.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblDetailUnits.Location = new Point(14, 134);
+            lblDetailUnits.Font = new Font("Segoe UI", 9.6F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblDetailUnits.Location = new Point(16, 179);
             lblDetailUnits.Name = "lblDetailUnits";
             lblDetailUnits.Size = new Size(53, 21);
             lblDetailUnits.TabIndex = 5;
@@ -758,8 +775,8 @@
             // lblDetailStatus
             // 
             lblDetailStatus.AutoSize = true;
-            lblDetailStatus.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblDetailStatus.Location = new Point(15, 172);
+            lblDetailStatus.Font = new Font("Segoe UI", 9.6F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblDetailStatus.Location = new Point(17, 229);
             lblDetailStatus.Name = "lblDetailStatus";
             lblDetailStatus.Size = new Size(59, 21);
             lblDetailStatus.TabIndex = 3;
@@ -768,8 +785,8 @@
             // lblDetailCode
             // 
             lblDetailCode.AutoSize = true;
-            lblDetailCode.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblDetailCode.Location = new Point(14, 65);
+            lblDetailCode.Font = new Font("Segoe UI", 9.6F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblDetailCode.Location = new Point(16, 87);
             lblDetailCode.Name = "lblDetailCode";
             lblDetailCode.Size = new Size(53, 21);
             lblDetailCode.TabIndex = 2;
@@ -777,9 +794,10 @@
             // 
             // btnEnrollCloseDetails
             // 
-            btnEnrollCloseDetails.Location = new Point(411, 365);
+            btnEnrollCloseDetails.Location = new Point(470, 487);
+            btnEnrollCloseDetails.Margin = new Padding(3, 4, 3, 4);
             btnEnrollCloseDetails.Name = "btnEnrollCloseDetails";
-            btnEnrollCloseDetails.Size = new Size(75, 23);
+            btnEnrollCloseDetails.Size = new Size(86, 31);
             btnEnrollCloseDetails.TabIndex = 1;
             btnEnrollCloseDetails.Text = "Close";
             btnEnrollCloseDetails.UseVisualStyleBackColor = true;
@@ -787,8 +805,8 @@
             // lblSubjectDetails
             // 
             lblSubjectDetails.AutoSize = true;
-            lblSubjectDetails.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
-            lblSubjectDetails.Location = new Point(14, 21);
+            lblSubjectDetails.Font = new Font("Segoe UI", 12.8F, FontStyle.Bold);
+            lblSubjectDetails.Location = new Point(16, 28);
             lblSubjectDetails.Name = "lblSubjectDetails";
             lblSubjectDetails.Size = new Size(167, 30);
             lblSubjectDetails.TabIndex = 0;
@@ -799,27 +817,28 @@
             cmsEnrollAction.ImageScalingSize = new Size(20, 20);
             cmsEnrollAction.Items.AddRange(new ToolStripItem[] { viewDetailsToolStripMenuItem, dropSubjectToolStripMenuItem });
             cmsEnrollAction.Name = "cmsAction";
-            cmsEnrollAction.Size = new Size(143, 48);
+            cmsEnrollAction.Size = new Size(166, 52);
             // 
             // viewDetailsToolStripMenuItem
             // 
             viewDetailsToolStripMenuItem.Name = "viewDetailsToolStripMenuItem";
-            viewDetailsToolStripMenuItem.Size = new Size(142, 22);
+            viewDetailsToolStripMenuItem.Size = new Size(165, 24);
             viewDetailsToolStripMenuItem.Text = "View Details";
             // 
             // dropSubjectToolStripMenuItem
             // 
             dropSubjectToolStripMenuItem.Name = "dropSubjectToolStripMenuItem";
-            dropSubjectToolStripMenuItem.Size = new Size(142, 22);
+            dropSubjectToolStripMenuItem.Size = new Size(165, 24);
             dropSubjectToolStripMenuItem.Text = "Drop Subject";
             // 
             // EnrollmentContentStudent
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(pnlEnrollContent);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "EnrollmentContentStudent";
-            Size = new Size(1648, 969);
+            Size = new Size(1883, 1292);
             Load += EnrollmentContentStudent_Load;
             pnlEnrollContent.ResumeLayout(false);
             pnlEnrollContent.PerformLayout();

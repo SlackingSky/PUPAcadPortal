@@ -720,7 +720,7 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
         {
             //CreateFlexibleAddressSection();
             phAddressFields = new PHAddressFields();
-            phAddressFields.Location = new Point(26, 425);
+            phAddressFields.Location = new Point(label26.Location.X, label26.Location.Y + 26);
             phAddressFields.Size = new Size(850, 250);
             pnlStudentRegistrationContainer.Controls.Add(phAddressFields);
         }

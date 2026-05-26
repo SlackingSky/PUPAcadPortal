@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Linq; // Required for your LINQ queries (.Where, .FirstOrDefault)
 using System.Text;
 using System.Windows.Forms;
 
@@ -10,15 +11,14 @@ namespace PUPAcadPortal.PHAddress
 {
     public partial class PHAddressFields : UserControl
     {
-        // 1. Declare layout elements internally
-        private FlowLayoutPanel flowLayoutPanel1;
+        // Removed the unused FlowLayoutPanel.
         private ComboBox cmbRegions;
         private ComboBox cmbProvinces;
         private ComboBox cmbCities;
         private ComboBox cmbBarangays;
         private TextBox txtPostal;
 
-        // 2. Public Read-Only Properties to expose selected names/codes to your Main Form
+        // 2. Public Read-Only Properties
         public string SelectedAddressLine1 => ((TextBox)this.Controls.Find("txtAddress1", true)[0]).Text.Trim();
         public string SelectedAddressLine2 => ((TextBox)this.Controls.Find("txtAddress2", true)[0]).Text.Trim();
         public string SelectedPostalCode => ((TextBox)this.Controls.Find("txtPostal", true)[0]).Text.Trim();
@@ -36,50 +36,45 @@ namespace PUPAcadPortal.PHAddress
 
         public PHAddressFields()
         {
+            this.AutoSize = true;
+
             InitializeComponentLayout();
             SetRegistrationFontsTo12pt();
         }
 
-        // Programmatic UI creation removes the need for an accompanying .Designer.cs file
         private void InitializeComponentLayout()
         {
             this.Load += PHAddressFields_Load;
-            // Address Panel
-            Panel addressPanel = new Panel();
-            addressPanel.Location = new Point(0, 0);
-            addressPanel.Size = new Size(850, 250);
+
+            // ===== DYNAMIC LAYOUT: TableLayoutPanel =====
+            // This grid automatically adjusts heights when fonts change, preventing overlaps.
+            TableLayoutPanel addressPanel = new TableLayoutPanel();
             addressPanel.Name = "addressPanel";
+            addressPanel.Dock = DockStyle.Top;
+            addressPanel.AutoSize = true;
+            addressPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            addressPanel.ColumnCount = 4;
 
-            // Address Line 1 (Required)
-            System.Windows.Forms.Label lblAddress1 = new System.Windows.Forms.Label();
-            lblAddress1.Text = "Address Line 1:*";
-            lblAddress1.Location = new Point(0, 0);
-            lblAddress1.Size = new Size(120, 25);
-            lblAddress1.ForeColor = Color.Maroon;
+            // Grid Columns: [Primary Labels] | [Main Inputs] | [Postal Label] | [Postal Input]
+            addressPanel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+            addressPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            addressPanel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+            addressPanel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+            addressPanel.Padding = new Padding(0, 0, 10, 10);
 
-            TextBox txtAddress1 = new TextBox();
-            txtAddress1.Name = "txtAddress1";
-            txtAddress1.Location = new Point(130, 0);
-            txtAddress1.Size = new Size(500, 23);
-            txtAddress1.PlaceholderText = "House/Unit No., Street Name, Subdivision";
+            // Using Object Initializers for cleaner code. AnchorStyles.Left aligns them vertically without hardcoding coordinates.
+            Padding marginSpacing = new Padding(3, 8, 3, 8); // Adds vertical breathing room between rows
 
-            // Address Line 2 (Optional)
-            System.Windows.Forms.Label lblAddress2 = new System.Windows.Forms.Label();
-            lblAddress2.Text = "Address Line 2:";
-            lblAddress2.Location = new Point(0, 35);
-            lblAddress2.Size = new Size(120, 25);
+            // Address Line 1
+            Label lblAddress1 = new Label { Text = "Address Line 1:*", AutoSize = true, ForeColor = Color.Maroon, Anchor = AnchorStyles.Left, Margin = marginSpacing };
+            TextBox txtAddress1 = new TextBox { Name = "txtAddress1", Width = 500, PlaceholderText = "House/Unit No., Street Name, Subdivision", Anchor = AnchorStyles.Left, Margin = marginSpacing };
 
-            TextBox txtAddress2 = new TextBox();
-            txtAddress2.Name = "txtAddress2";
-            txtAddress2.Location = new Point(130, 35);
-            txtAddress2.Size = new Size(500, 23);
-            txtAddress2.PlaceholderText = "Building, Barangay (Optional)";
+            // Address Line 2
+            Label lblAddress2 = new Label { Text = "Address Line 2:", AutoSize = true, Anchor = AnchorStyles.Left, Margin = marginSpacing };
+            TextBox txtAddress2 = new TextBox { Name = "txtAddress2", Width = 500, PlaceholderText = "Building, Barangay (Optional)", Anchor = AnchorStyles.Left, Margin = marginSpacing };
 
             // "Same as Address 1" Checkbox
-            CheckBox chkSameAddress = new CheckBox();
-            chkSameAddress.Text = "Same as Address Line 1";
-            chkSameAddress.Location = new Point(130, 65);
-            chkSameAddress.Size = new Size(200, 25);
+            CheckBox chkSameAddress = new CheckBox { Text = "Same as Address Line 1", AutoSize = true, Anchor = AnchorStyles.Left, Margin = new Padding(3, 0, 3, 15) };
             chkSameAddress.CheckedChanged += (s, e) =>
             {
                 if (chkSameAddress.Checked)
@@ -96,93 +91,66 @@ namespace PUPAcadPortal.PHAddress
                 }
             };
 
-            // ===== FLEXIBLE LOCATION FIELDS =====
-
-            // Region (Dropdown)
-            System.Windows.Forms.Label lblRegion = new System.Windows.Forms.Label();
-            lblRegion.Text = "Region:*";
-            lblRegion.Location = new Point(0, 100);
-            lblRegion.Size = new Size(120, 25);
-            lblRegion.ForeColor = Color.Maroon;
-
-            cmbRegions = new ComboBox();
-            cmbRegions.Name = "cmbRegion";
-            cmbRegions.Location = new Point(130, 100);
-            cmbRegions.Size = new Size(250, 23);
+            // Region
+            Label lblRegion = new Label { Text = "Region:*", AutoSize = true, ForeColor = Color.Maroon, Anchor = AnchorStyles.Left, Margin = marginSpacing };
+            cmbRegions = new ComboBox { Name = "cmbRegion", Width = 250, Anchor = AnchorStyles.Left, Margin = marginSpacing };
             cmbRegions.DataSource = AddToAddressCMB.Regions;
             cmbRegions.DisplayMember = "Name";
             cmbRegions.ValueMember = "Code";
 
-            // Province (Dropdown)
-            System.Windows.Forms.Label lblProvince = new System.Windows.Forms.Label();
-            lblProvince.Text = "Province:*";
-            lblProvince.Location = new Point(0, 135);
-            lblProvince.Size = new Size(120, 25);
-            lblProvince.ForeColor = Color.Maroon;
+            // Province
+            Label lblProvince = new Label { Text = "Province:*", AutoSize = true, ForeColor = Color.Maroon, Anchor = AnchorStyles.Left, Margin = marginSpacing };
+            cmbProvinces = new ComboBox { Name = "cmbProvince", Width = 250, Anchor = AnchorStyles.Left, Margin = marginSpacing };
 
-            cmbProvinces = new ComboBox();
-            cmbProvinces.Name = "cmbProvince";
-            cmbProvinces.Location = new Point(130, 135);
-            cmbProvinces.Size = new Size(250, 23);
+            // City
+            Label lblCity = new Label { Text = "City/Municipality:*", AutoSize = true, ForeColor = Color.Maroon, Anchor = AnchorStyles.Left, Margin = marginSpacing };
+            cmbCities = new ComboBox { Name = "cmbCity", Width = 250, Anchor = AnchorStyles.Left, Margin = marginSpacing };
 
-            // City/Municipality (Dropdown)
-            System.Windows.Forms.Label lblCity = new System.Windows.Forms.Label();
-            lblCity.Text = "City/Municipality:*";
-            lblCity.Location = new Point(0, 170);
-            lblCity.Size = new Size(120, 25);
-            lblCity.ForeColor = Color.Maroon;
+            // Postal Code (Shares a row with City)
+            Label lblPostal = new Label { Text = "Postal Code:", AutoSize = true, Anchor = AnchorStyles.Left, Margin = new Padding(20, 8, 3, 8) };
+            txtPostal = new TextBox { Name = "txtPostal", Width = 120, PlaceholderText = "Postal code", Anchor = AnchorStyles.Left, Margin = marginSpacing };
 
-            cmbCities = new ComboBox();
-            cmbCities.Name = "cmbCity";
-            cmbCities.Location = new Point(130, 170);
-            cmbCities.Size = new Size(250, 23);
+            // Barangay
+            Label lblBarangay = new Label { Text = "Barangay:*", AutoSize = true, ForeColor = Color.Maroon, Anchor = AnchorStyles.Left, Margin = marginSpacing };
+            cmbBarangays = new ComboBox { Name = "cmbBarangays", Width = 250, Anchor = AnchorStyles.Left, Margin = marginSpacing };
 
-            // Barangay (Textbox - can type or select from common ones)
-            System.Windows.Forms.Label lblBarangay = new System.Windows.Forms.Label();
-            lblBarangay.Text = "Barangay:*";
-            lblBarangay.Location = new Point(0, 205);
-            lblBarangay.Size = new Size(120, 25);
-            lblBarangay.ForeColor = Color.Maroon;
+            // ===== ADD CONTROLS TO GRID (Control, Column Index, Row Index) =====
 
-            cmbBarangays = new ComboBox();
-            cmbBarangays.Name = "cmbBarangays";
-            cmbBarangays.Location = new Point(130, 205);
-            cmbBarangays.Size = new Size(250, 23);
+            // Row 0
+            addressPanel.Controls.Add(lblAddress1, 0, 0);
+            addressPanel.Controls.Add(txtAddress1, 1, 0);
+            addressPanel.SetColumnSpan(txtAddress1, 3); // Spans across remaining columns
 
-            // Changed to combo box
-            //TextBox txtBarangay = new TextBox();
-            //txtBarangay.Name = "txtBarangay";
-            //txtBarangay.Location = new Point(130, 205);
-            //txtBarangay.Size = new Size(250, 23);
-            //txtBarangay.PlaceholderText = "Enter barangay/district";
+            // Row 1
+            addressPanel.Controls.Add(lblAddress2, 0, 1);
+            addressPanel.Controls.Add(txtAddress2, 1, 1);
+            addressPanel.SetColumnSpan(txtAddress2, 3);
 
-            // Postal Code
-            System.Windows.Forms.Label lblPostal = new System.Windows.Forms.Label();
-            lblPostal.Text = "Postal Code:";
-            lblPostal.Location = new Point(400, 170);
-            lblPostal.Size = new Size(80, 25);
+            // Row 2
+            addressPanel.Controls.Add(chkSameAddress, 1, 2);
+            addressPanel.SetColumnSpan(chkSameAddress, 3);
 
-            txtPostal = new TextBox();
-            txtPostal.Name = "txtPostal";
-            txtPostal.Location = new Point(480, 170);
-            txtPostal.Size = new Size(120, 23);
-            txtPostal.PlaceholderText = "Postal code";
+            // Row 3
+            addressPanel.Controls.Add(lblRegion, 0, 3);
+            addressPanel.Controls.Add(cmbRegions, 1, 3);
+            addressPanel.SetColumnSpan(cmbRegions, 3);
 
-            addressPanel.Controls.Add(lblAddress1);
-            addressPanel.Controls.Add(txtAddress1);
-            addressPanel.Controls.Add(lblAddress2);
-            addressPanel.Controls.Add(txtAddress2);
-            addressPanel.Controls.Add(chkSameAddress);
-            addressPanel.Controls.Add(lblRegion);
-            addressPanel.Controls.Add(cmbRegions);
-            addressPanel.Controls.Add(lblProvince);
-            addressPanel.Controls.Add(cmbProvinces);
-            addressPanel.Controls.Add(lblCity);
-            addressPanel.Controls.Add(cmbCities);
-            addressPanel.Controls.Add(lblBarangay);
-            addressPanel.Controls.Add(cmbBarangays);
-            addressPanel.Controls.Add(lblPostal);
-            addressPanel.Controls.Add(txtPostal);
+            // Row 4
+            addressPanel.Controls.Add(lblProvince, 0, 4);
+            addressPanel.Controls.Add(cmbProvinces, 1, 4);
+            addressPanel.SetColumnSpan(cmbProvinces, 3);
+
+            // Row 5 (City & Postal share this row side-by-side)
+            addressPanel.Controls.Add(lblCity, 0, 5);
+            addressPanel.Controls.Add(cmbCities, 1, 5);
+            addressPanel.Controls.Add(lblPostal, 2, 5);
+            addressPanel.Controls.Add(txtPostal, 3, 5);
+
+            // Row 6
+            addressPanel.Controls.Add(lblBarangay, 0, 6);
+            addressPanel.Controls.Add(cmbBarangays, 1, 6);
+            addressPanel.SetColumnSpan(cmbBarangays, 3);
+
             this.Controls.Add(addressPanel);
         }
 
@@ -203,7 +171,7 @@ namespace PUPAcadPortal.PHAddress
 
             Action<ComboBox, Action> wireAutoSnapOnLeave = (cb, updateCascadeAction) =>
             {
-                cb.Leave += (s, e) =>
+                cb.Leave += (s, ev) =>
                 {
                     if (cb.SelectedIndex == -1 && !string.IsNullOrEmpty(cb.Text))
                     {
@@ -298,15 +266,15 @@ namespace PUPAcadPortal.PHAddress
                 }
             };
 
-            EventHandler regionChangeTrigger = (s, e) => updateProvinces();
+            EventHandler regionChangeTrigger = (s, ev) => updateProvinces();
             cmbRegions.SelectedIndexChanged += regionChangeTrigger;
             cmbRegions.TextUpdate += regionChangeTrigger;
 
-            EventHandler provinceChangeTrigger = (s, e) => updateCities();
+            EventHandler provinceChangeTrigger = (s, ev) => updateCities();
             cmbProvinces.SelectedIndexChanged += provinceChangeTrigger;
             cmbProvinces.TextUpdate += provinceChangeTrigger;
 
-            EventHandler cityChangeTrigger = (s, e) => updateBarangays();
+            EventHandler cityChangeTrigger = (s, ev) => updateBarangays();
             cmbCities.SelectedIndexChanged += cityChangeTrigger;
             cmbCities.TextUpdate += cityChangeTrigger;
 
@@ -333,12 +301,9 @@ namespace PUPAcadPortal.PHAddress
 
         private void SetRegistrationFontsTo12pt()
         {
-            // Font for labels (Bold)
             Font labelFont = new Font("Segoe UI", 12F, FontStyle.Bold);
-            // Font for textboxes and inputs (Regular)
             Font inputFont = new Font("Segoe UI", 12F, FontStyle.Regular);
 
-            // Update all labels in the registration container
             foreach (Control ctrl in this.Controls)
             {
                 if (ctrl is Label lbl)
@@ -361,9 +326,9 @@ namespace PUPAcadPortal.PHAddress
                 {
                     dtp.Font = inputFont;
                 }
+                // Because TableLayoutPanel inherits from Panel, this condition still works beautifully
                 else if (ctrl is Panel panel && panel.HasChildren)
                 {
-                    // Recursively update child controls
                     foreach (Control child in panel.Controls)
                     {
                         if (child is Label lblChild) lblChild.Font = labelFont;
@@ -375,8 +340,10 @@ namespace PUPAcadPortal.PHAddress
                 }
             }
         }
+
         public void ClearAddressFields()
         {
+            // The existing .Find(..., true) logic will still easily locate your controls inside the TableLayoutPanel
             var txtAddress1 = this.Controls.Find("txtAddress1", true).FirstOrDefault() as TextBox;
             var txtAddress2 = this.Controls.Find("txtAddress2", true).FirstOrDefault() as TextBox;
             var chkSameAddress = this.Controls.Find("chkSameAddress", true).FirstOrDefault() as CheckBox;
@@ -393,7 +360,7 @@ namespace PUPAcadPortal.PHAddress
 
             if (cmbRegions.Items.Count > 0)
             {
-                cmbRegions.SelectedIndex = 0; // Triggers "--- Select Region ---"
+                cmbRegions.SelectedIndex = 0;
             }
             else
             {

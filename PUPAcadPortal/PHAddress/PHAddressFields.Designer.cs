@@ -32,10 +32,12 @@
             // 
             // PHAddressFields
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoSize = true;
+            Margin = new Padding(3, 4, 3, 4);
             Name = "PHAddressFields";
-            Size = new Size(850, 250);
+            Size = new Size(971, 333);
             ResumeLayout(false);
         }
 

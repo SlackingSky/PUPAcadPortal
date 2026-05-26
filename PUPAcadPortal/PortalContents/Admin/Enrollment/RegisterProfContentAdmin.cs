@@ -263,9 +263,9 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             yOffset += 25;
 
             phAddressFields.Location = new Point(leftMargin, yOffset);
-            phAddressFields.Size = new Size(850, 250);
+            phAddressFields.Size = new Size(860, phAddressFields.Height);
             pnlProfRegistrationContainer.Controls.Add(phAddressFields);
-            yOffset += 260;
+            yOffset += phAddressFields.Height + 20;
 
             // ===== PROFESSIONAL INFORMATION =====
             Label lblProfessional = new Label()

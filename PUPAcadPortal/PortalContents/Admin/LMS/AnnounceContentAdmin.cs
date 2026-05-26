@@ -11,6 +11,11 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
 {
     public partial class AnnounceContentAdmin : UserControl
     {
+        private SizeF _designSize;
+
+        private readonly Dictionary<Control, RectangleF> _origBounds = new();
+        private readonly Dictionary<Control, float> _origFontSz = new();
+
         // ── Announcement system ──────────────────────────────────────────
         private List<AdminAnnouncement> announcements = new List<AdminAnnouncement>();
         private int editingAnnouncementId = -1;
@@ -146,14 +151,6 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
             pnlAnnouncement.Controls.Add(_viewAnnouncementUC);
 
             // Resize → re-center overlay UCs
-            pnlAnnouncement.Resize += (s, e) =>
-            {
-                if (_createAnnouncementUC.Visible) CenterAnnControl(_createAnnouncementUC);
-                if (_viewAnnouncementUC.Visible) CenterAnnControl(_viewAnnouncementUC);
-                RenderAnnouncements();
-                BuildAnnCategorySidebar();
-                RenderAnnInsights();
-            };
 
             // Seed data and first render
             SeedAnnouncements();
@@ -932,6 +929,83 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
             path.AddArc(0, c.Height - r, r, r, 90, 90);
             path.CloseFigure();
             c.Region = new Region(path);
+        }
+
+        private void UserControl_Resize(object sender, EventArgs e)
+        {
+            if (_designSize.Width == 0 || _designSize.Height == 0) return;
+
+            float rx = Math.Max(this.ClientSize.Width, 1024) / _designSize.Width;
+            float ry = Math.Max(this.ClientSize.Height, 700) / _designSize.Height;
+
+            this.SuspendLayout();
+            ScaleControls(this.Controls, rx, ry);
+            this.ResumeLayout(true);
+
+            if (_createAnnouncementUC != null && _createAnnouncementUC.Visible)
+                CenterAnnControl(_createAnnouncementUC);
+
+            if (_viewAnnouncementUC != null && _viewAnnouncementUC.Visible)
+                CenterAnnControl(_viewAnnouncementUC);
+            RenderAnnouncements();
+            BuildAnnCategorySidebar();
+            RenderAnnInsights();
+        }
+
+        private void ScaleControls(Control.ControlCollection controls, float rx, float ry)
+        {
+            foreach (Control ctrl in controls)
+            {
+                if (ctrl.Tag is string t && t.Contains("noScale")) continue;
+                if (!_origBounds.TryGetValue(ctrl, out RectangleF ob)) continue;
+
+                int newX = R(ob.X * rx);
+                int newY = R(ob.Y * ry);
+                int newW = Math.Max(1, R(ob.Width * rx));
+                int newH = Math.Max(1, R(ob.Height * ry));
+
+                switch (ctrl.Dock)
+                {
+                    case DockStyle.Fill: break;
+                    case DockStyle.Top: ctrl.Height = newH; break;
+                    case DockStyle.Bottom: ctrl.Height = newH; break;
+                    case DockStyle.Left: ctrl.Width = newW; break;
+                    case DockStyle.Right: ctrl.Width = newW; break;
+                    default: ctrl.SetBounds(newX, newY, newW, newH); break;
+                }
+
+                if (_origFontSz.TryGetValue(ctrl, out float origSz))
+                {
+                    float newSz = Math.Max(6f, origSz * Math.Min(rx, ry));
+                    if (Math.Abs(ctrl.Font.Size - newSz) > 0.15f)
+                    {
+                        try { ctrl.Font = new Font(ctrl.Font.FontFamily, newSz, ctrl.Font.Style, GraphicsUnit.Point); }
+                        catch { }
+                    }
+                }
+
+                if (ctrl.HasChildren) ScaleControls(ctrl.Controls, rx, ry);
+            }
+        }
+        private static int R(float v) => (int)Math.Round(v);
+
+        private void AnnounceContentAdmin_Load(object sender, EventArgs e)
+        {
+            _designSize = this.ClientSize;
+
+            this.Resize += UserControl_Resize;
+            SnapshotControls(this.Controls);
+        }
+
+        private void SnapshotControls(Control.ControlCollection controls)
+        {
+            foreach (Control ctrl in controls)
+            {
+                if (ctrl.Tag is string t && t.Contains("noScale")) continue;
+                _origBounds[ctrl] = new RectangleF(ctrl.Left, ctrl.Top, ctrl.Width, ctrl.Height);
+                _origFontSz[ctrl] = ctrl.Font.Size;
+                if (ctrl.HasChildren) SnapshotControls(ctrl.Controls);
+            }
         }
     }
 }
