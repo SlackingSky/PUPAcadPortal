@@ -39,18 +39,6 @@ namespace PUPAcadPortal.PortalForms
 
 
             this.Load += StudentPortal_Load;
-
-            string[] mrow1 = { "Integrated Programming and Technologies 1", "1.00", "P" };
-            string[] mrow2 = { "Principles of Accounting", "1.00", "P" };
-
-            dgvMidtermGradeStudent.Rows.Add(mrow1);
-            dgvMidtermGradeStudent.Rows.Add(mrow2);
-
-            string[] frow1 = { "Objected Oriented Programming", "1.00", "P" };
-            string[] frow2 = { "PATHFIT 4", "1.00", "P" };
-
-            dgvFinalGradeStudent.Rows.Add(frow1);
-            dgvFinalGradeStudent.Rows.Add(frow2);
         }
 
         private void BuildStudentLMSHost()
@@ -85,7 +73,6 @@ namespace PUPAcadPortal.PortalForms
             Dictionary<Button, Panel> contents = new Dictionary<Button, Panel>
             {
                 { btnAttendance, pnlAttendance  },
-                { btnGrade, pnlGrades  },
             };
             //Kada button na aadd, maglagay ng panel sa form at lagay dito
             foreach (KeyValuePair<Button, Panel> content in contents)
@@ -190,7 +177,7 @@ namespace PUPAcadPortal.PortalForms
         private void btnGrade_Click(object sender, EventArgs e)
         {
             changeButtonColor(sender as Button);
-            showContent(clickedButton);
+            mainContentPanel.ShowView(new GradesContentStudent());
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -380,22 +367,6 @@ namespace PUPAcadPortal.PortalForms
             }
         }
 
-        private void button8_Click(object sender, EventArgs e)
-        {
-            rpnlGradeBreakdown.Visible = false;
-        }
-
-        private void button11_Click(object sender, EventArgs e)
-        {
-            rpnlGradeBreakdown.Visible = true;
-            rpnlGradeBreakdown.BringToFront();
-        }
-
-        private void btnViewGrades_Click(object sender, EventArgs e)
-        {
-
-        }
-
 
         private void btnThisWeek_Click(object sender, EventArgs e)
         {
@@ -534,47 +505,6 @@ namespace PUPAcadPortal.PortalForms
             {
                 pnlAttAcc.Visible = true;
 
-            }
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0 && dgvMidtermGradeStudent.Columns[e.ColumnIndex].Name == "GradeBreakdown")
-            {
-                rpnlGradeBreakdown.Visible = true;
-                rpnlGradeBreakdown.BringToFront();
-            }
-        }
-
-        private void cmbGradingPeriod_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            pnlMidtermGradeStudent.Visible = false;
-            pnlFinalGradeStudent.Visible = false;
-
-            switch (cmbGradingPeriod.SelectedIndex)
-            {
-                case 0:
-                    pnlMidtermGradeStudent.Visible = true;
-                    label9.Visible = true;
-                    break;
-                case 1:
-                    pnlFinalGradeStudent.Visible = true;
-                    label9.Visible = true;
-                    break;
-            }
-        }
-
-        private void label9_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dgvFinalGradeStudent_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0 && dgvFinalGradeStudent.Columns[e.ColumnIndex].Name == "FGradeBreakdown")
-            {
-                rpnlGradeBreakdown.Visible = true;
-                rpnlGradeBreakdown.BringToFront();
             }
         }
     }
