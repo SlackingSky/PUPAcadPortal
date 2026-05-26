@@ -72,6 +72,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             flpAnnouncements.HorizontalScroll.Enabled = false;
             flpAnnouncements.HorizontalScroll.Visible = false;
             flpAnnouncements.AutoScroll = true;
+            this.Resize += UserControl_Resize;
 
             _viewStudentUC = new ViewAnnouncementStudent
             {
@@ -96,7 +97,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             SnapshotControls(this.Controls);
         }
 
-        private void StudentPortal_ResizeHandler(object sender, EventArgs e)
+        private void UserControl_Resize(object sender, EventArgs e)
         {
             if (_designSize.Width == 0 || _designSize.Height == 0) return;
 

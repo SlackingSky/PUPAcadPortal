@@ -76,18 +76,17 @@
             pnlAnnouncement.Controls.Add(btnCreateAnnouncement);
             pnlAnnouncement.Dock = DockStyle.Fill;
             pnlAnnouncement.Location = new Point(0, 0);
-            pnlAnnouncement.Margin = new Padding(3, 2, 3, 2);
             pnlAnnouncement.Name = "pnlAnnouncement";
-            pnlAnnouncement.Size = new Size(1649, 989);
+            pnlAnnouncement.Size = new Size(1885, 1319);
             pnlAnnouncement.TabIndex = 7;
             // 
             // lblShowing
             // 
             lblShowing.BackColor = Color.Transparent;
             lblShowing.ForeColor = Color.Gray;
-            lblShowing.Location = new Point(14, 950);
+            lblShowing.Location = new Point(16, 1267);
             lblShowing.Name = "lblShowing";
-            lblShowing.Size = new Size(250, 20);
+            lblShowing.Size = new Size(286, 27);
             lblShowing.TabIndex = 11;
             lblShowing.Text = "Showing 1 to 4 of 12 announcements";
             // 
@@ -96,18 +95,19 @@
             pnlInsights.BackColor = Color.White;
             pnlInsights.BorderStyle = BorderStyle.FixedSingle;
             pnlInsights.Controls.Add(lblInsights);
-            pnlInsights.Location = new Point(1441, 650);
+            pnlInsights.Location = new Point(1647, 867);
+            pnlInsights.Margin = new Padding(3, 4, 3, 4);
             pnlInsights.Name = "pnlInsights";
-            pnlInsights.Size = new Size(201, 317);
+            pnlInsights.Size = new Size(229, 422);
             pnlInsights.TabIndex = 18;
             // 
             // lblInsights
             // 
             lblInsights.AutoSize = true;
             lblInsights.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblInsights.Location = new Point(3, 2);
+            lblInsights.Location = new Point(3, 3);
             lblInsights.Name = "lblInsights";
-            lblInsights.Size = new Size(163, 19);
+            lblInsights.Size = new Size(198, 23);
             lblInsights.TabIndex = 0;
             lblInsights.Text = "Announcement Insights";
             // 
@@ -117,27 +117,29 @@
             panelPinned.BorderStyle = BorderStyle.FixedSingle;
             panelPinned.Controls.Add(flpPinned);
             panelPinned.Controls.Add(lblPinned);
-            panelPinned.Location = new Point(1203, 45);
+            panelPinned.Location = new Point(1375, 60);
+            panelPinned.Margin = new Padding(3, 4, 3, 4);
             panelPinned.Name = "panelPinned";
-            panelPinned.Size = new Size(439, 599);
+            panelPinned.Size = new Size(501, 798);
             panelPinned.TabIndex = 8;
             // 
             // flpPinned
             // 
             flpPinned.AutoScroll = true;
             flpPinned.BackColor = Color.White;
-            flpPinned.Location = new Point(5, 27);
+            flpPinned.Location = new Point(6, 36);
+            flpPinned.Margin = new Padding(3, 4, 3, 4);
             flpPinned.Name = "flpPinned";
-            flpPinned.Size = new Size(429, 564);
+            flpPinned.Size = new Size(490, 752);
             flpPinned.TabIndex = 11;
             // 
             // lblPinned
             // 
             lblPinned.AutoSize = true;
             lblPinned.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblPinned.Location = new Point(5, 2);
+            lblPinned.Location = new Point(6, 3);
             lblPinned.Name = "lblPinned";
-            lblPinned.Size = new Size(165, 19);
+            lblPinned.Size = new Size(198, 23);
             lblPinned.TabIndex = 0;
             lblPinned.Text = "Pinned Announcements";
             // 
@@ -145,18 +147,19 @@
             // 
             cmbSortBy.Cursor = Cursors.IBeam;
             cmbSortBy.Items.AddRange(new object[] { "Newest First" });
-            cmbSortBy.Location = new Point(595, 58);
+            cmbSortBy.Location = new Point(680, 77);
+            cmbSortBy.Margin = new Padding(3, 4, 3, 4);
             cmbSortBy.Name = "cmbSortBy";
-            cmbSortBy.Size = new Size(150, 23);
+            cmbSortBy.Size = new Size(171, 28);
             cmbSortBy.TabIndex = 16;
             // 
             // label128
             // 
             label128.BackColor = Color.Transparent;
             label128.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            label128.Location = new Point(532, 58);
+            label128.Location = new Point(608, 77);
             label128.Name = "label128";
-            label128.Size = new Size(84, 24);
+            label128.Size = new Size(96, 32);
             label128.TabIndex = 17;
             label128.Text = "Sort by:";
             // 
@@ -164,18 +167,19 @@
             // 
             cmbFilter.Cursor = Cursors.IBeam;
             cmbFilter.Items.AddRange(new object[] { "All Announcements" });
-            cmbFilter.Location = new Point(353, 58);
+            cmbFilter.Location = new Point(403, 77);
+            cmbFilter.Margin = new Padding(3, 4, 3, 4);
             cmbFilter.Name = "cmbFilter";
-            cmbFilter.Size = new Size(150, 23);
+            cmbFilter.Size = new Size(171, 28);
             cmbFilter.TabIndex = 15;
             // 
             // lblFilter
             // 
             lblFilter.BackColor = Color.Transparent;
             lblFilter.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblFilter.Location = new Point(307, 60);
+            lblFilter.Location = new Point(351, 80);
             lblFilter.Name = "lblFilter";
-            lblFilter.Size = new Size(84, 24);
+            lblFilter.Size = new Size(96, 32);
             lblFilter.TabIndex = 10;
             lblFilter.Text = "Filter:";
             // 
@@ -186,17 +190,18 @@
             pnlCategories.BorderStyle = BorderStyle.FixedSingle;
             pnlCategories.Controls.Add(lblCategories);
             pnlCategories.Controls.Add(flpCategories);
-            pnlCategories.Location = new Point(1203, 650);
+            pnlCategories.Location = new Point(1375, 867);
+            pnlCategories.Margin = new Padding(3, 4, 3, 4);
             pnlCategories.Name = "pnlCategories";
-            pnlCategories.Size = new Size(233, 317);
+            pnlCategories.Size = new Size(266, 422);
             pnlCategories.TabIndex = 13;
             // 
             // lblCategories
             // 
             lblCategories.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblCategories.Location = new Point(6, 0);
+            lblCategories.Location = new Point(7, 0);
             lblCategories.Name = "lblCategories";
-            lblCategories.Size = new Size(100, 20);
+            lblCategories.Size = new Size(114, 27);
             lblCategories.TabIndex = 8;
             lblCategories.Text = "Categories";
             // 
@@ -204,9 +209,10 @@
             // 
             flpCategories.BackColor = Color.White;
             flpCategories.FlowDirection = FlowDirection.TopDown;
-            flpCategories.Location = new Point(8, 23);
+            flpCategories.Location = new Point(9, 31);
+            flpCategories.Margin = new Padding(3, 4, 3, 4);
             flpCategories.Name = "flpCategories";
-            flpCategories.Size = new Size(226, 284);
+            flpCategories.Size = new Size(258, 379);
             flpCategories.TabIndex = 0;
             flpCategories.WrapContents = false;
             // 
@@ -215,9 +221,10 @@
             pnlAnnouncementsList.BackColor = Color.White;
             pnlAnnouncementsList.BorderStyle = BorderStyle.FixedSingle;
             pnlAnnouncementsList.Controls.Add(flowLayoutPanelAnnouncements);
-            pnlAnnouncementsList.Location = new Point(15, 106);
+            pnlAnnouncementsList.Location = new Point(17, 141);
+            pnlAnnouncementsList.Margin = new Padding(3, 4, 3, 4);
             pnlAnnouncementsList.Name = "pnlAnnouncementsList";
-            pnlAnnouncementsList.Size = new Size(1182, 843);
+            pnlAnnouncementsList.Size = new Size(1351, 1123);
             pnlAnnouncementsList.TabIndex = 14;
             // 
             // flowLayoutPanelAnnouncements
@@ -228,7 +235,7 @@
             flowLayoutPanelAnnouncements.Location = new Point(0, 0);
             flowLayoutPanelAnnouncements.Margin = new Padding(0);
             flowLayoutPanelAnnouncements.Name = "flowLayoutPanelAnnouncements";
-            flowLayoutPanelAnnouncements.Size = new Size(1180, 841);
+            flowLayoutPanelAnnouncements.Size = new Size(1349, 1121);
             flowLayoutPanelAnnouncements.TabIndex = 0;
             flowLayoutPanelAnnouncements.WrapContents = false;
             // 
@@ -238,18 +245,17 @@
             panel60.Controls.Add(label145);
             panel60.Dock = DockStyle.Top;
             panel60.Location = new Point(0, 0);
-            panel60.Margin = new Padding(3, 2, 3, 2);
             panel60.Name = "panel60";
-            panel60.Size = new Size(1649, 41);
+            panel60.Size = new Size(1885, 55);
             panel60.TabIndex = 9;
             // 
             // label145
             // 
             label145.AutoSize = true;
             label145.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label145.Location = new Point(15, 8);
+            label145.Location = new Point(17, 11);
             label145.Name = "label145";
-            label145.Size = new Size(152, 25);
+            label145.Size = new Size(181, 31);
             label145.TabIndex = 0;
             label145.Text = "Announcements";
             // 
@@ -259,31 +265,28 @@
             roundedPanel37.BorderRadius = 10;
             roundedPanel37.Controls.Add(textBox25);
             roundedPanel37.Controls.Add(pictureBox59);
-            roundedPanel37.Location = new Point(15, 58);
-            roundedPanel37.Margin = new Padding(3, 2, 3, 2);
+            roundedPanel37.Location = new Point(17, 77);
             roundedPanel37.Name = "roundedPanel37";
-            roundedPanel37.Padding = new Padding(4);
-            roundedPanel37.Size = new Size(285, 31);
+            roundedPanel37.Padding = new Padding(5, 5, 5, 5);
+            roundedPanel37.Size = new Size(326, 41);
             roundedPanel37.TabIndex = 8;
             // 
             // textBox25
             // 
             textBox25.BorderStyle = BorderStyle.None;
             textBox25.Cursor = Cursors.IBeam;
-            textBox25.Location = new Point(38, 8);
-            textBox25.Margin = new Padding(3, 2, 3, 2);
+            textBox25.Location = new Point(43, 11);
             textBox25.Name = "textBox25";
             textBox25.PlaceholderText = "Search Here";
-            textBox25.Size = new Size(240, 16);
+            textBox25.Size = new Size(274, 20);
             textBox25.TabIndex = 1;
             // 
             // pictureBox59
             // 
             pictureBox59.Image = Properties.Resources.magnifier;
-            pictureBox59.Location = new Point(8, 6);
-            pictureBox59.Margin = new Padding(3, 2, 3, 2);
+            pictureBox59.Location = new Point(9, 8);
             pictureBox59.Name = "pictureBox59";
-            pictureBox59.Size = new Size(25, 19);
+            pictureBox59.Size = new Size(29, 25);
             pictureBox59.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox59.TabIndex = 0;
             pictureBox59.TabStop = false;
@@ -300,23 +303,26 @@
             btnCreateAnnouncement.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnCreateAnnouncement.ForeColor = Color.FromArgb(179, 255, 255, 255);
             btnCreateAnnouncement.ImageAlign = ContentAlignment.TopLeft;
-            btnCreateAnnouncement.Location = new Point(917, 62);
-            btnCreateAnnouncement.MinimumSize = new Size(227, 30);
+            btnCreateAnnouncement.Location = new Point(1048, 83);
+            btnCreateAnnouncement.Margin = new Padding(3, 4, 3, 4);
+            btnCreateAnnouncement.MinimumSize = new Size(259, 40);
             btnCreateAnnouncement.Name = "btnCreateAnnouncement";
-            btnCreateAnnouncement.Padding = new Padding(16, 0, 18, 0);
-            btnCreateAnnouncement.Size = new Size(265, 31);
+            btnCreateAnnouncement.Padding = new Padding(18, 0, 21, 0);
+            btnCreateAnnouncement.Size = new Size(303, 41);
             btnCreateAnnouncement.TabIndex = 7;
             btnCreateAnnouncement.Text = "    Create Announcement";
             btnCreateAnnouncement.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnCreateAnnouncement.UseVisualStyleBackColor = false;
+            btnCreateAnnouncement.Click += btnCreateAnnouncement_Click;
             // 
             // AnnouncementContentInst
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(pnlAnnouncement);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "AnnouncementContentInst";
-            Size = new Size(1649, 989);
+            Size = new Size(1885, 1319);
             Load += AnnouncementContentInst_Load;
             Resize += AnnouncementContentInst_Resize;
             pnlAnnouncement.ResumeLayout(false);

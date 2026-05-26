@@ -1,5 +1,6 @@
 ﻿using PUPAcadPortal.PortalContents.Instructor.LMS;
 using PUPAcadPortal.PortalContents.Student.LMS;
+using PUPAcadPortal.Utils;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Text;
@@ -31,11 +32,15 @@ namespace PUPAcadPortal.Utils
                 // Configure the layout rules for the incoming view
                 newView.Dock = DockStyle.Fill;
 
-                // Drop it into the panel container
-                if (newView.GetType() != typeof(CalendarContentInst) || newView.GetType() != typeof(CalendarContentStudent))
-                {
-                    Resizer resizer = new Resizer(newView);
-                }
+                //// Drop it into the panel container
+                //if (newView is not CalendarContentInst and not CalendarContentStudent)
+                //{ 
+                //    newView.Load += (sender, e) =>
+                //    {
+                //        UIResizer resizer = new UIResizer();
+                //        resizer.Initialize(newView);
+                //    };
+                //}
                 containerPanel.Controls.Add(newView);
                 _oldView = newView;
             }

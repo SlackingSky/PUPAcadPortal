@@ -152,13 +152,9 @@ namespace PUPAcadPortal
 
         private void SignIn_Load(object sender, EventArgs e)
         {
-            Resizer resizer = new Resizer(this);
             this.Size = _usableScreenSize;
             this.Location = _usableScreenLoc;
             txtUsername.Select();
-            btnSignIn.Select();
-            txtUsername.Text = "demostudent";
-            txtPassword.Text = "student";
         }
 
         // This method is for testing purposes only. It allows you to add a user with a hashed password to the database. DO NOT USE. WAG GAMITIN.

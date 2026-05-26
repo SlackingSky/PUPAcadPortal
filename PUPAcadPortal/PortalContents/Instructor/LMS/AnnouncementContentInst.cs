@@ -170,7 +170,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         }
         private static int ScaleRound(float v) => (int)Math.Round(v);
 
-        private void InstructorPortal_Resize(object sender, EventArgs e)
+        private void AnnouncementContentInst_Resize(object sender, EventArgs e)
         {
             if (_designSize.Width == 0 || _designSize.Height == 0) return;
 
@@ -616,13 +616,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             ShowCreateAnnouncementUC();
         }
 
-        private void CreateAnnounce_Click_1(object sender, EventArgs e)
-        {
-            editingAnnouncementId = -1;
-            _createAnnouncementUC.LoadForEdit(new AnnouncementData());
-            ShowCreateAnnouncementUC();
-        }
-
         private void ShowCreateAnnouncementUC()
         {
             CenterControl(_createAnnouncementUC, pnlAnnouncement);
@@ -818,16 +811,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             var path = new GraphicsPath();
             path.AddEllipse(0, 0, p.Width, p.Height);
             p.Region = new Region(path);
-        }
-
-        private void AnnouncementContentInst_Resize(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pnlAnnouncementsList_Paint(object sender, PaintEventArgs e)
-        {
-
         }
     }
 }
