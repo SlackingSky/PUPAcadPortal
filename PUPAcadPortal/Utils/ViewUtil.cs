@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using System.Text;
 
 namespace PUPAcadPortal.Utils
@@ -29,6 +30,7 @@ namespace PUPAcadPortal.Utils
                 newView.Dock = DockStyle.Fill;
 
                 // Drop it into the panel container
+                Resizer resizer = new Resizer(newView);
                 containerPanel.Controls.Add(newView);
                 _oldView = newView;
             }

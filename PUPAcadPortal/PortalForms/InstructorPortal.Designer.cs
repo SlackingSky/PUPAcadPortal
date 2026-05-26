@@ -3449,7 +3449,7 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 75F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 75F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 75F));
-            tableLayoutPanel1.Size = new Size(1488, 1658);
+            tableLayoutPanel1.Size = new Size(1471, 1658);
             tableLayoutPanel1.TabIndex = 22;
             // 
             // tableLayoutPanel23
@@ -3500,18 +3500,18 @@
             tableLayoutPanel21.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
             tableLayoutPanel21.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
             tableLayoutPanel21.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
-            tableLayoutPanel21.Size = new Size(520, 78);
+            tableLayoutPanel21.Size = new Size(503, 78);
             tableLayoutPanel21.TabIndex = 48;
             // 
             // textBox20
             // 
             textBox20.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             textBox20.BorderStyle = BorderStyle.FixedSingle;
-            textBox20.Location = new Point(45, 17);
+            textBox20.Location = new Point(44, 17);
             textBox20.Margin = new Padding(3, 2, 3, 2);
             textBox20.Multiline = true;
             textBox20.Name = "textBox20";
-            textBox20.Size = new Size(428, 36);
+            textBox20.Size = new Size(414, 36);
             textBox20.TabIndex = 33;
             // 
             // tableLayoutPanel22
@@ -3529,18 +3529,18 @@
             tableLayoutPanel22.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
             tableLayoutPanel22.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
             tableLayoutPanel22.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
-            tableLayoutPanel22.Size = new Size(520, 78);
+            tableLayoutPanel22.Size = new Size(503, 78);
             tableLayoutPanel22.TabIndex = 49;
             // 
             // textBox21
             // 
             textBox21.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             textBox21.BorderStyle = BorderStyle.FixedSingle;
-            textBox21.Location = new Point(45, 17);
+            textBox21.Location = new Point(44, 17);
             textBox21.Margin = new Padding(3, 2, 3, 2);
             textBox21.Multiline = true;
             textBox21.Name = "textBox21";
-            textBox21.Size = new Size(428, 36);
+            textBox21.Size = new Size(414, 36);
             textBox21.TabIndex = 33;
             // 
             // tableLayoutPanel20
@@ -3558,18 +3558,18 @@
             tableLayoutPanel20.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
             tableLayoutPanel20.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
             tableLayoutPanel20.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
-            tableLayoutPanel20.Size = new Size(520, 78);
+            tableLayoutPanel20.Size = new Size(503, 78);
             tableLayoutPanel20.TabIndex = 47;
             // 
             // textBox19
             // 
             textBox19.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             textBox19.BorderStyle = BorderStyle.FixedSingle;
-            textBox19.Location = new Point(45, 17);
+            textBox19.Location = new Point(44, 17);
             textBox19.Margin = new Padding(3, 2, 3, 2);
             textBox19.Multiline = true;
             textBox19.Name = "textBox19";
-            textBox19.Size = new Size(428, 36);
+            textBox19.Size = new Size(414, 36);
             textBox19.TabIndex = 33;
             // 
             // tableLayoutPanel19
@@ -3587,18 +3587,18 @@
             tableLayoutPanel19.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
             tableLayoutPanel19.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
             tableLayoutPanel19.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
-            tableLayoutPanel19.Size = new Size(520, 78);
+            tableLayoutPanel19.Size = new Size(503, 78);
             tableLayoutPanel19.TabIndex = 46;
             // 
             // textBox18
             // 
             textBox18.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             textBox18.BorderStyle = BorderStyle.FixedSingle;
-            textBox18.Location = new Point(45, 17);
+            textBox18.Location = new Point(44, 17);
             textBox18.Margin = new Padding(3, 2, 3, 2);
             textBox18.Multiline = true;
             textBox18.Name = "textBox18";
-            textBox18.Size = new Size(428, 36);
+            textBox18.Size = new Size(414, 36);
             textBox18.TabIndex = 33;
             // 
             // tableLayoutPanel18
@@ -3616,18 +3616,18 @@
             tableLayoutPanel18.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
             tableLayoutPanel18.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
             tableLayoutPanel18.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
-            tableLayoutPanel18.Size = new Size(520, 78);
+            tableLayoutPanel18.Size = new Size(503, 78);
             tableLayoutPanel18.TabIndex = 45;
             // 
             // textBox17
             // 
             textBox17.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             textBox17.BorderStyle = BorderStyle.FixedSingle;
-            textBox17.Location = new Point(45, 17);
+            textBox17.Location = new Point(44, 17);
             textBox17.Margin = new Padding(3, 2, 3, 2);
             textBox17.Multiline = true;
             textBox17.Name = "textBox17";
-            textBox17.Size = new Size(428, 36);
+            textBox17.Size = new Size(414, 36);
             textBox17.TabIndex = 33;
             // 
             // tableLayoutPanel17
@@ -3645,18 +3645,18 @@
             tableLayoutPanel17.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
             tableLayoutPanel17.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
             tableLayoutPanel17.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
-            tableLayoutPanel17.Size = new Size(520, 78);
+            tableLayoutPanel17.Size = new Size(503, 78);
             tableLayoutPanel17.TabIndex = 40;
             // 
             // textBox16
             // 
             textBox16.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             textBox16.BorderStyle = BorderStyle.FixedSingle;
-            textBox16.Location = new Point(45, 17);
+            textBox16.Location = new Point(44, 17);
             textBox16.Margin = new Padding(3, 2, 3, 2);
             textBox16.Multiline = true;
             textBox16.Name = "textBox16";
-            textBox16.Size = new Size(428, 36);
+            textBox16.Size = new Size(414, 36);
             textBox16.TabIndex = 33;
             // 
             // tableLayoutPanel16
@@ -3674,18 +3674,18 @@
             tableLayoutPanel16.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
             tableLayoutPanel16.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
             tableLayoutPanel16.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
-            tableLayoutPanel16.Size = new Size(520, 78);
+            tableLayoutPanel16.Size = new Size(503, 78);
             tableLayoutPanel16.TabIndex = 40;
             // 
             // textBox15
             // 
             textBox15.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             textBox15.BorderStyle = BorderStyle.FixedSingle;
-            textBox15.Location = new Point(45, 17);
+            textBox15.Location = new Point(44, 17);
             textBox15.Margin = new Padding(3, 2, 3, 2);
             textBox15.Multiline = true;
             textBox15.Name = "textBox15";
-            textBox15.Size = new Size(428, 36);
+            textBox15.Size = new Size(414, 36);
             textBox15.TabIndex = 33;
             // 
             // tableLayoutPanel15
@@ -3703,18 +3703,18 @@
             tableLayoutPanel15.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
             tableLayoutPanel15.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
             tableLayoutPanel15.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
-            tableLayoutPanel15.Size = new Size(520, 78);
+            tableLayoutPanel15.Size = new Size(503, 78);
             tableLayoutPanel15.TabIndex = 40;
             // 
             // textBox14
             // 
             textBox14.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             textBox14.BorderStyle = BorderStyle.FixedSingle;
-            textBox14.Location = new Point(45, 17);
+            textBox14.Location = new Point(44, 17);
             textBox14.Margin = new Padding(3, 2, 3, 2);
             textBox14.Multiline = true;
             textBox14.Name = "textBox14";
-            textBox14.Size = new Size(428, 36);
+            textBox14.Size = new Size(414, 36);
             textBox14.TabIndex = 33;
             // 
             // tableLayoutPanel12
@@ -3732,18 +3732,18 @@
             tableLayoutPanel12.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
             tableLayoutPanel12.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
             tableLayoutPanel12.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
-            tableLayoutPanel12.Size = new Size(520, 78);
+            tableLayoutPanel12.Size = new Size(503, 78);
             tableLayoutPanel12.TabIndex = 40;
             // 
             // textBox13
             // 
             textBox13.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             textBox13.BorderStyle = BorderStyle.FixedSingle;
-            textBox13.Location = new Point(45, 17);
+            textBox13.Location = new Point(44, 17);
             textBox13.Margin = new Padding(3, 2, 3, 2);
             textBox13.Multiline = true;
             textBox13.Name = "textBox13";
-            textBox13.Size = new Size(428, 36);
+            textBox13.Size = new Size(414, 36);
             textBox13.TabIndex = 33;
             // 
             // tableLayoutPanel11
@@ -3959,18 +3959,18 @@
             tableLayoutPanel14.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
             tableLayoutPanel14.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
             tableLayoutPanel14.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
-            tableLayoutPanel14.Size = new Size(520, 78);
+            tableLayoutPanel14.Size = new Size(503, 78);
             tableLayoutPanel14.TabIndex = 41;
             // 
             // textBox12
             // 
             textBox12.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             textBox12.BorderStyle = BorderStyle.FixedSingle;
-            textBox12.Location = new Point(45, 17);
+            textBox12.Location = new Point(44, 17);
             textBox12.Margin = new Padding(3, 2, 3, 2);
             textBox12.Multiline = true;
             textBox12.Name = "textBox12";
-            textBox12.Size = new Size(428, 36);
+            textBox12.Size = new Size(414, 36);
             textBox12.TabIndex = 33;
             // 
             // tableLayoutPanel13
@@ -3988,18 +3988,18 @@
             tableLayoutPanel13.RowStyles.Add(new RowStyle(SizeType.Percent, 20.1489716F));
             tableLayoutPanel13.RowStyles.Add(new RowStyle(SizeType.Percent, 52.29465F));
             tableLayoutPanel13.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5563812F));
-            tableLayoutPanel13.Size = new Size(520, 78);
+            tableLayoutPanel13.Size = new Size(503, 78);
             tableLayoutPanel13.TabIndex = 39;
             // 
             // textBox2
             // 
             textBox2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             textBox2.BorderStyle = BorderStyle.FixedSingle;
-            textBox2.Location = new Point(45, 17);
+            textBox2.Location = new Point(44, 17);
             textBox2.Margin = new Padding(3, 2, 3, 2);
             textBox2.Multiline = true;
             textBox2.Name = "textBox2";
-            textBox2.Size = new Size(428, 36);
+            textBox2.Size = new Size(414, 36);
             textBox2.TabIndex = 33;
             // 
             // tableLayoutPanel3
@@ -4606,7 +4606,7 @@
             btnAttendanceSave.FlatStyle = FlatStyle.Flat;
             btnAttendanceSave.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnAttendanceSave.ForeColor = Color.White;
-            btnAttendanceSave.Location = new Point(1276, 924);
+            btnAttendanceSave.Location = new Point(1259, 924);
             btnAttendanceSave.Margin = new Padding(44, 22, 44, 0);
             btnAttendanceSave.Name = "btnAttendanceSave";
             btnAttendanceSave.Size = new Size(168, 34);

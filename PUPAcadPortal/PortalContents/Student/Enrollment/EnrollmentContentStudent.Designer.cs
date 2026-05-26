@@ -572,12 +572,12 @@
             // 
             // pnlEnrollRightCard
             // 
-            pnlEnrollRightCard.Anchor = AnchorStyles.Top;
+            pnlEnrollRightCard.Anchor = AnchorStyles.None;
             pnlEnrollRightCard.BackColor = SystemColors.ControlLightLight;
             pnlEnrollRightCard.BorderStyle = BorderStyle.Fixed3D;
             pnlEnrollRightCard.Controls.Add(lblCurrentSectionIndicator);
             pnlEnrollRightCard.Controls.Add(label183);
-            pnlEnrollRightCard.Location = new Point(20, 854);
+            pnlEnrollRightCard.Location = new Point(20, 852);
             pnlEnrollRightCard.MaximumSize = new Size(384, 70);
             pnlEnrollRightCard.MinimumSize = new Size(384, 70);
             pnlEnrollRightCard.Name = "pnlEnrollRightCard";
@@ -609,7 +609,7 @@
             // 
             // pnlEnrollMiddleCard
             // 
-            pnlEnrollMiddleCard.Anchor = AnchorStyles.Top;
+            pnlEnrollMiddleCard.Anchor = AnchorStyles.None;
             pnlEnrollMiddleCard.BackColor = SystemColors.ControlLightLight;
             pnlEnrollMiddleCard.BorderStyle = BorderStyle.Fixed3D;
             pnlEnrollMiddleCard.Controls.Add(label184);
@@ -647,7 +647,7 @@
             // 
             // pnlEnrollLeftCard
             // 
-            pnlEnrollLeftCard.Anchor = AnchorStyles.Top;
+            pnlEnrollLeftCard.Anchor = AnchorStyles.None;
             pnlEnrollLeftCard.BackColor = SystemColors.ControlLightLight;
             pnlEnrollLeftCard.BorderStyle = BorderStyle.Fixed3D;
             pnlEnrollLeftCard.Controls.Add(label185);

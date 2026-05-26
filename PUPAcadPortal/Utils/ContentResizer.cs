@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-public class FormResizing
+public class ContentResizer
 {
-    private readonly Form _targetForm;
+    private readonly UserControl _targetUserControl;
     private readonly Size _initialFormSize;
     private readonly List<KeyValuePair<Control, ControlData>> _controlDataList = new List<KeyValuePair<Control, ControlData>>();
     private readonly float _minFontSize;
@@ -21,16 +21,16 @@ public class FormResizing
     /// <summary>
     /// Initializes the resizer safely. Call this right after InitializeComponent().
     /// </summary>
-    public FormResizing(Form form, float minFontSize = 8.0f)
+    public ContentResizer(UserControl userControl, float minFontSize = 8.0f)
     {
-        _targetForm = form ?? throw new ArgumentNullException(nameof(form));
-        _initialFormSize = form.ClientSize;
+        _targetUserControl = userControl ?? throw new ArgumentNullException(nameof(userControl));
+        _initialFormSize = userControl.ClientSize;
         _minFontSize = minFontSize;
 
         // Cache positions safely using a linear list to avoid dictionary lookups during drag operations
-        RegisterControls(_targetForm);
+        RegisterControls(_targetUserControl);
 
-        _targetForm.Resize += OnFormResize;
+        _targetUserControl.Resize += OnFormResize;
     }
 
     private void RegisterControls(Control parent)
@@ -71,15 +71,15 @@ public class FormResizing
     private void OnFormResize(object sender, EventArgs e)
     {
         // Prevent division by zero crashes when minimized
-        if (_targetForm == null || _targetForm.IsDisposed || _targetForm.WindowState == FormWindowState.Minimized) return;
-        if (_targetForm.ClientSize.Width <= 0 || _targetForm.ClientSize.Height <= 0) return;
+        if (_targetUserControl == null || _targetUserControl.IsDisposed) return;
+        if (_targetUserControl.ClientSize.Width <= 0 || _targetUserControl.ClientSize.Height <= 0) return;
 
-        float widthRatio = (float)_targetForm.ClientSize.Width / _initialFormSize.Width;
-        float heightRatio = (float)_targetForm.ClientSize.Height / _initialFormSize.Height;
+        float widthRatio = (float)_targetUserControl.ClientSize.Width / _initialFormSize.Width;
+        float heightRatio = (float)_targetUserControl.ClientSize.Height / _initialFormSize.Height;
         float fontRatio = Math.Min(widthRatio, heightRatio);
 
         // Suspend rendering to prevent flickering and stop layout loops
-        _targetForm.SuspendLayout();
+        _targetUserControl.SuspendLayout();
 
         // Loop through a static index array to ensure changes to controls don't crash the loop
         int totalControls = _controlDataList.Count;
@@ -128,6 +128,6 @@ public class FormResizing
             }
         }
 
-        _targetForm.ResumeLayout(true);
+        _targetUserControl.ResumeLayout(true);
     }
 }

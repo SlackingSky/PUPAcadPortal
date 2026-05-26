@@ -62,7 +62,6 @@
             // 
             // pnlAnnouncement
             // 
-            pnlAnnouncement.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pnlAnnouncement.Controls.Add(lblShowing);
             pnlAnnouncement.Controls.Add(pnlInsights);
             pnlAnnouncement.Controls.Add(panelPinned);
@@ -75,10 +74,11 @@
             pnlAnnouncement.Controls.Add(panel60);
             pnlAnnouncement.Controls.Add(roundedPanel37);
             pnlAnnouncement.Controls.Add(btnCreateAnnouncement);
-            pnlAnnouncement.Location = new Point(2, 2);
+            pnlAnnouncement.Dock = DockStyle.Fill;
+            pnlAnnouncement.Location = new Point(0, 0);
             pnlAnnouncement.Margin = new Padding(3, 2, 3, 2);
             pnlAnnouncement.Name = "pnlAnnouncement";
-            pnlAnnouncement.Size = new Size(2040, 989);
+            pnlAnnouncement.Size = new Size(1649, 989);
             pnlAnnouncement.TabIndex = 7;
             // 
             // lblShowing
@@ -206,7 +206,7 @@
             flpCategories.FlowDirection = FlowDirection.TopDown;
             flpCategories.Location = new Point(8, 23);
             flpCategories.Name = "flpCategories";
-            flpCategories.Size = new Size(216, 284);
+            flpCategories.Size = new Size(226, 284);
             flpCategories.TabIndex = 0;
             flpCategories.WrapContents = false;
             // 
@@ -240,7 +240,7 @@
             panel60.Location = new Point(0, 0);
             panel60.Margin = new Padding(3, 2, 3, 2);
             panel60.Name = "panel60";
-            panel60.Size = new Size(2040, 41);
+            panel60.Size = new Size(1649, 41);
             panel60.TabIndex = 9;
             // 
             // label145
@@ -309,7 +309,6 @@
             btnCreateAnnouncement.Text = "    Create Announcement";
             btnCreateAnnouncement.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnCreateAnnouncement.UseVisualStyleBackColor = false;
-            btnCreateAnnouncement.Click += btnCreateAnnouncement_Click;
             // 
             // AnnouncementContentInst
             // 
@@ -317,8 +316,9 @@
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(pnlAnnouncement);
             Name = "AnnouncementContentInst";
-            Size = new Size(2040, 989);
+            Size = new Size(1649, 989);
             Load += AnnouncementContentInst_Load;
+            Resize += AnnouncementContentInst_Resize;
             pnlAnnouncement.ResumeLayout(false);
             pnlInsights.ResumeLayout(false);
             pnlInsights.PerformLayout();

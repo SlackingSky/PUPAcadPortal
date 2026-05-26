@@ -819,5 +819,15 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             path.AddEllipse(0, 0, p.Width, p.Height);
             p.Region = new Region(path);
         }
+
+        private void AnnouncementContentInst_Resize(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pnlAnnouncementsList_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
