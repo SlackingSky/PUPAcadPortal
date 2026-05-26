@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StudentPortal));
             pnlSidebar = new Panel();
             userProfile1 = new PUPAcadPortal.PortalContents.Misc.UserProfile();
@@ -46,19 +46,10 @@
             btnDashboard = new Button();
             panel8 = new Panel();
             btnEnrollment = new Button();
-            panel9 = new Panel();
-            btnCourses = new Button();
             panel10 = new Panel();
             btnAccounts = new Button();
             panel11 = new Panel();
             btnLMS = new Button();
-            pnllmsSubmenu = new Panel();
-            btnGrade = new Button();
-            btnAttendance = new Button();
-            btnCalendar = new Button();
-            btnActivities = new Button();
-            btnSubject = new Button();
-            btnAnnounce = new Button();
             pnlCoursesContent = new Panel();
             pnlContainerStudentPortal = new Panel();
             mainContentPanel = new Panel();
@@ -496,11 +487,6 @@
             roundedPanel33 = new RoundedPanel();
             label65 = new Label();
             label72 = new Label();
-            pnlCalendar = new Panel();
-            picPrev = new PictureBox();
-            picNext = new PictureBox();
-            lblMonthYear = new Label();
-            FPLmonth = new FlowLayoutPanel();
             pnlSubject = new Panel();
             tableLayoutPanel25 = new TableLayoutPanel();
             roundedPanel6 = new RoundedPanel();
@@ -548,16 +534,21 @@
             label3 = new Label();
             label4 = new Label();
             pictureBox2 = new PictureBox();
+            pnllmsSubmenu = new Panel();
+            flowLayoutPanel2 = new FlowLayoutPanel();
+            btnAnnounce = new Button();
+            btnCalendar = new Button();
+            btnCourses = new Button();
+            btnAttendance = new Button();
+            btnGrade = new Button();
             pnlSidebar.SuspendLayout();
             panel12.SuspendLayout();
             panel13.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             panel7.SuspendLayout();
             panel8.SuspendLayout();
-            panel9.SuspendLayout();
             panel10.SuspendLayout();
             panel11.SuspendLayout();
-            pnllmsSubmenu.SuspendLayout();
             pnlContainerStudentPortal.SuspendLayout();
             pnlGrades.SuspendLayout();
             panel57.SuspendLayout();
@@ -757,9 +748,6 @@
             roundedPanel31.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox14).BeginInit();
             roundedPanel33.SuspendLayout();
-            pnlCalendar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picPrev).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)picNext).BeginInit();
             pnlSubject.SuspendLayout();
             tableLayoutPanel25.SuspendLayout();
             roundedPanel6.SuspendLayout();
@@ -779,6 +767,8 @@
             panel15.SuspendLayout();
             panel16.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            pnllmsSubmenu.SuspendLayout();
+            flowLayoutPanel2.SuspendLayout();
             SuspendLayout();
             // 
             // pnlSidebar
@@ -853,7 +843,6 @@
             flowLayoutPanel1.BackColor = Color.Transparent;
             flowLayoutPanel1.Controls.Add(panel7);
             flowLayoutPanel1.Controls.Add(panel8);
-            flowLayoutPanel1.Controls.Add(panel9);
             flowLayoutPanel1.Controls.Add(panel10);
             flowLayoutPanel1.Controls.Add(panel11);
             flowLayoutPanel1.Controls.Add(pnllmsSubmenu);
@@ -938,42 +927,10 @@
             btnEnrollment.UseVisualStyleBackColor = true;
             btnEnrollment.Click += btnEnrollment_Click;
             // 
-            // panel9
-            // 
-            panel9.Controls.Add(btnCourses);
-            panel9.Location = new Point(0, 112);
-            panel9.Margin = new Padding(0);
-            panel9.Name = "panel9";
-            panel9.Size = new Size(256, 48);
-            panel9.TabIndex = 2;
-            panel9.Visible = false;
-            // 
-            // btnCourses
-            // 
-            btnCourses.BackgroundImageLayout = ImageLayout.None;
-            btnCourses.Cursor = Cursors.Hand;
-            btnCourses.FlatAppearance.BorderSize = 0;
-            btnCourses.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            btnCourses.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            btnCourses.FlatStyle = FlatStyle.Flat;
-            btnCourses.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            btnCourses.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            btnCourses.Image = Properties.Resources.Course;
-            btnCourses.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCourses.Location = new Point(0, 0);
-            btnCourses.Name = "btnCourses";
-            btnCourses.Padding = new Padding(16, 0, 0, 0);
-            btnCourses.Size = new Size(256, 48);
-            btnCourses.TabIndex = 3;
-            btnCourses.Text = " Courses";
-            btnCourses.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnCourses.UseVisualStyleBackColor = true;
-            btnCourses.Click += btnCourses_Click;
-            // 
             // panel10
             // 
             panel10.Controls.Add(btnAccounts);
-            panel10.Location = new Point(0, 160);
+            panel10.Location = new Point(0, 112);
             panel10.Margin = new Padding(0);
             panel10.Name = "panel10";
             panel10.Size = new Size(256, 48);
@@ -1004,7 +961,7 @@
             // panel11
             // 
             panel11.Controls.Add(btnLMS);
-            panel11.Location = new Point(0, 208);
+            panel11.Location = new Point(0, 160);
             panel11.Margin = new Padding(0);
             panel11.Name = "panel11";
             panel11.Size = new Size(256, 48);
@@ -1032,160 +989,6 @@
             btnLMS.UseVisualStyleBackColor = true;
             btnLMS.Click += btnLMS_Click;
             // 
-            // pnllmsSubmenu
-            // 
-            pnllmsSubmenu.BackColor = Color.FromArgb(128, 109, 0, 0);
-            pnllmsSubmenu.Controls.Add(btnGrade);
-            pnllmsSubmenu.Controls.Add(btnAttendance);
-            pnllmsSubmenu.Controls.Add(btnCalendar);
-            pnllmsSubmenu.Controls.Add(btnActivities);
-            pnllmsSubmenu.Controls.Add(btnSubject);
-            pnllmsSubmenu.Controls.Add(btnAnnounce);
-            pnllmsSubmenu.Location = new Point(0, 256);
-            pnllmsSubmenu.Margin = new Padding(0);
-            pnllmsSubmenu.Name = "pnllmsSubmenu";
-            pnllmsSubmenu.Size = new Size(256, 289);
-            pnllmsSubmenu.TabIndex = 5;
-            pnllmsSubmenu.Visible = false;
-            // 
-            // btnGrade
-            // 
-            btnGrade.BackgroundImageLayout = ImageLayout.None;
-            btnGrade.Cursor = Cursors.Hand;
-            btnGrade.FlatAppearance.BorderSize = 0;
-            btnGrade.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            btnGrade.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            btnGrade.FlatStyle = FlatStyle.Flat;
-            btnGrade.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            btnGrade.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            btnGrade.Image = Properties.Resources.report;
-            btnGrade.ImageAlign = ContentAlignment.MiddleLeft;
-            btnGrade.Location = new Point(1, 240);
-            btnGrade.Name = "btnGrade";
-            btnGrade.Padding = new Padding(16, 0, 0, 0);
-            btnGrade.Size = new Size(256, 48);
-            btnGrade.TabIndex = 9;
-            btnGrade.Text = "  Grades";
-            btnGrade.TextAlign = ContentAlignment.MiddleLeft;
-            btnGrade.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnGrade.UseVisualStyleBackColor = true;
-            btnGrade.Click += btnGrade_Click;
-            // 
-            // btnAttendance
-            // 
-            btnAttendance.BackgroundImageLayout = ImageLayout.None;
-            btnAttendance.Cursor = Cursors.Hand;
-            btnAttendance.FlatAppearance.BorderSize = 0;
-            btnAttendance.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            btnAttendance.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            btnAttendance.FlatStyle = FlatStyle.Flat;
-            btnAttendance.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            btnAttendance.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            btnAttendance.Image = Properties.Resources.user_check;
-            btnAttendance.ImageAlign = ContentAlignment.MiddleLeft;
-            btnAttendance.Location = new Point(1, 192);
-            btnAttendance.Name = "btnAttendance";
-            btnAttendance.Padding = new Padding(16, 0, 0, 0);
-            btnAttendance.Size = new Size(256, 48);
-            btnAttendance.TabIndex = 8;
-            btnAttendance.Text = "  Attendance";
-            btnAttendance.TextAlign = ContentAlignment.MiddleLeft;
-            btnAttendance.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnAttendance.UseVisualStyleBackColor = true;
-            btnAttendance.Click += btnAttendance_Click;
-            // 
-            // btnCalendar
-            // 
-            btnCalendar.BackgroundImageLayout = ImageLayout.None;
-            btnCalendar.Cursor = Cursors.Hand;
-            btnCalendar.FlatAppearance.BorderSize = 0;
-            btnCalendar.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            btnCalendar.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            btnCalendar.FlatStyle = FlatStyle.Flat;
-            btnCalendar.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            btnCalendar.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            btnCalendar.Image = Properties.Resources.calendar__4_;
-            btnCalendar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCalendar.Location = new Point(1, 48);
-            btnCalendar.Name = "btnCalendar";
-            btnCalendar.Padding = new Padding(16, 0, 0, 0);
-            btnCalendar.Size = new Size(256, 48);
-            btnCalendar.TabIndex = 7;
-            btnCalendar.Text = " Calendar";
-            btnCalendar.TextAlign = ContentAlignment.MiddleLeft;
-            btnCalendar.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnCalendar.UseVisualStyleBackColor = true;
-            btnCalendar.Click += btnCalendar_Click;
-            // 
-            // btnActivities
-            // 
-            btnActivities.BackgroundImageLayout = ImageLayout.None;
-            btnActivities.Cursor = Cursors.Hand;
-            btnActivities.FlatAppearance.BorderSize = 0;
-            btnActivities.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            btnActivities.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            btnActivities.FlatStyle = FlatStyle.Flat;
-            btnActivities.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            btnActivities.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            btnActivities.Image = Properties.Resources.checklist;
-            btnActivities.ImageAlign = ContentAlignment.MiddleLeft;
-            btnActivities.Location = new Point(1, 144);
-            btnActivities.Name = "btnActivities";
-            btnActivities.Padding = new Padding(16, 0, 0, 0);
-            btnActivities.Size = new Size(256, 48);
-            btnActivities.TabIndex = 6;
-            btnActivities.Text = "  Activities";
-            btnActivities.TextAlign = ContentAlignment.MiddleLeft;
-            btnActivities.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnActivities.UseVisualStyleBackColor = true;
-            btnActivities.Click += btnActivities_Click;
-            // 
-            // btnSubject
-            // 
-            btnSubject.BackgroundImageLayout = ImageLayout.None;
-            btnSubject.Cursor = Cursors.Hand;
-            btnSubject.FlatAppearance.BorderSize = 0;
-            btnSubject.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            btnSubject.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            btnSubject.FlatStyle = FlatStyle.Flat;
-            btnSubject.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            btnSubject.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            btnSubject.Image = Properties.Resources.group_chat__1_;
-            btnSubject.ImageAlign = ContentAlignment.MiddleLeft;
-            btnSubject.Location = new Point(1, 96);
-            btnSubject.Name = "btnSubject";
-            btnSubject.Padding = new Padding(13, 0, 0, 0);
-            btnSubject.Size = new Size(256, 48);
-            btnSubject.TabIndex = 5;
-            btnSubject.Text = "Courses";
-            btnSubject.TextAlign = ContentAlignment.MiddleLeft;
-            btnSubject.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnSubject.UseVisualStyleBackColor = true;
-            btnSubject.Click += btnSubject_Click;
-            // 
-            // btnAnnounce
-            // 
-            btnAnnounce.BackgroundImageLayout = ImageLayout.None;
-            btnAnnounce.Cursor = Cursors.Hand;
-            btnAnnounce.FlatAppearance.BorderSize = 0;
-            btnAnnounce.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            btnAnnounce.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            btnAnnounce.FlatStyle = FlatStyle.Flat;
-            btnAnnounce.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            btnAnnounce.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            btnAnnounce.Image = Properties.Resources.marketing;
-            btnAnnounce.ImageAlign = ContentAlignment.MiddleLeft;
-            btnAnnounce.Location = new Point(1, 0);
-            btnAnnounce.Name = "btnAnnounce";
-            btnAnnounce.Padding = new Padding(16, 0, 0, 0);
-            btnAnnounce.Size = new Size(256, 48);
-            btnAnnounce.TabIndex = 4;
-            btnAnnounce.Text = " Announcements";
-            btnAnnounce.TextAlign = ContentAlignment.MiddleLeft;
-            btnAnnounce.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnAnnounce.UseVisualStyleBackColor = true;
-            btnAnnounce.Click += btnAnnounce_Click;
-            // 
             // pnlCoursesContent
             // 
             pnlCoursesContent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -1206,7 +1009,6 @@
             pnlContainerStudentPortal.Controls.Add(pnlSubMenu);
             pnlContainerStudentPortal.Controls.Add(pnlAttendance);
             pnlContainerStudentPortal.Controls.Add(pnlActivities);
-            pnlContainerStudentPortal.Controls.Add(pnlCalendar);
             pnlContainerStudentPortal.Controls.Add(pnlSubject);
             pnlContainerStudentPortal.Controls.Add(pnlCoursesContent);
             pnlContainerStudentPortal.Controls.Add(pnlHeader);
@@ -1359,8 +1161,8 @@
             // 
             // FStudentGrade
             // 
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            FStudentGrade.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            FStudentGrade.DefaultCellStyle = dataGridViewCellStyle7;
             FStudentGrade.FillWeight = 43.64141F;
             FStudentGrade.HeaderText = "Grade";
             FStudentGrade.MinimumWidth = 6;
@@ -1368,8 +1170,8 @@
             // 
             // FStudentRemark
             // 
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            FStudentRemark.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            FStudentRemark.DefaultCellStyle = dataGridViewCellStyle8;
             FStudentRemark.FillWeight = 62.7119637F;
             FStudentRemark.HeaderText = "Remarks";
             FStudentRemark.MinimumWidth = 6;
@@ -1377,9 +1179,9 @@
             // 
             // FGradeBreakdown
             // 
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new Font("Microsoft Sans Serif", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            FGradeBreakdown.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.Font = new Font("Microsoft Sans Serif", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            FGradeBreakdown.DefaultCellStyle = dataGridViewCellStyle9;
             FGradeBreakdown.FillWeight = 79.74287F;
             FGradeBreakdown.HeaderText = "Grade Breakdown";
             FGradeBreakdown.MinimumWidth = 6;
@@ -1427,8 +1229,8 @@
             // 
             // StudentGrade
             // 
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            StudentGrade.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            StudentGrade.DefaultCellStyle = dataGridViewCellStyle10;
             StudentGrade.FillWeight = 43.64141F;
             StudentGrade.HeaderText = "Grade";
             StudentGrade.MinimumWidth = 6;
@@ -1436,8 +1238,8 @@
             // 
             // StudentRemark
             // 
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            StudentRemark.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            StudentRemark.DefaultCellStyle = dataGridViewCellStyle11;
             StudentRemark.FillWeight = 62.7119637F;
             StudentRemark.HeaderText = "Remarks";
             StudentRemark.MinimumWidth = 6;
@@ -1445,9 +1247,9 @@
             // 
             // GradeBreakdown
             // 
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Font = new Font("Microsoft Sans Serif", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            GradeBreakdown.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle12.Font = new Font("Microsoft Sans Serif", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            GradeBreakdown.DefaultCellStyle = dataGridViewCellStyle12;
             GradeBreakdown.FillWeight = 79.74287F;
             GradeBreakdown.HeaderText = "Grade Breakdown";
             GradeBreakdown.MinimumWidth = 6;
@@ -6580,62 +6382,6 @@
             label72.TabIndex = 3;
             label72.Text = "System Simulations";
             // 
-            // pnlCalendar
-            // 
-            pnlCalendar.AutoScroll = true;
-            pnlCalendar.BackColor = SystemColors.Control;
-            pnlCalendar.CausesValidation = false;
-            pnlCalendar.Controls.Add(picPrev);
-            pnlCalendar.Controls.Add(picNext);
-            pnlCalendar.Controls.Add(lblMonthYear);
-            pnlCalendar.Controls.Add(FPLmonth);
-            pnlCalendar.Dock = DockStyle.Fill;
-            pnlCalendar.Location = new Point(256, 72);
-            pnlCalendar.Margin = new Padding(0);
-            pnlCalendar.Name = "pnlCalendar";
-            pnlCalendar.Size = new Size(1428, 719);
-            pnlCalendar.TabIndex = 33;
-            pnlCalendar.Visible = false;
-            // 
-            // picPrev
-            // 
-            picPrev.Cursor = Cursors.Hand;
-            picPrev.Location = new Point(11, 8);
-            picPrev.Name = "picPrev";
-            picPrev.Size = new Size(32, 32);
-            picPrev.SizeMode = PictureBoxSizeMode.Zoom;
-            picPrev.TabIndex = 11;
-            picPrev.TabStop = false;
-            // 
-            // picNext
-            // 
-            picNext.Cursor = Cursors.Hand;
-            picNext.Location = new Point(52, 8);
-            picNext.Name = "picNext";
-            picNext.Size = new Size(32, 32);
-            picNext.SizeMode = PictureBoxSizeMode.Zoom;
-            picNext.TabIndex = 12;
-            picNext.TabStop = false;
-            // 
-            // lblMonthYear
-            // 
-            lblMonthYear.AutoSize = true;
-            lblMonthYear.Font = new Font("Maiandra GD", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblMonthYear.Location = new Point(527, 1);
-            lblMonthYear.Name = "lblMonthYear";
-            lblMonthYear.Size = new Size(208, 39);
-            lblMonthYear.TabIndex = 10;
-            lblMonthYear.Text = "Month 0000";
-            lblMonthYear.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // FPLmonth
-            // 
-            FPLmonth.AutoScroll = true;
-            FPLmonth.Location = new Point(11, 68);
-            FPLmonth.Name = "FPLmonth";
-            FPLmonth.Size = new Size(1239, 635);
-            FPLmonth.TabIndex = 9;
-            // 
             // pnlSubject
             // 
             pnlSubject.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
@@ -7201,6 +6947,145 @@
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
             // 
+            // pnllmsSubmenu
+            // 
+            pnllmsSubmenu.BackColor = Color.FromArgb(128, 109, 0, 0);
+            pnllmsSubmenu.Controls.Add(flowLayoutPanel2);
+            pnllmsSubmenu.Location = new Point(0, 208);
+            pnllmsSubmenu.Margin = new Padding(0);
+            pnllmsSubmenu.Name = "pnllmsSubmenu";
+            pnllmsSubmenu.Size = new Size(256, 281);
+            pnllmsSubmenu.TabIndex = 6;
+            pnllmsSubmenu.Visible = false;
+            // 
+            // flowLayoutPanel2
+            // 
+            flowLayoutPanel2.Controls.Add(btnAnnounce);
+            flowLayoutPanel2.Controls.Add(btnCalendar);
+            flowLayoutPanel2.Controls.Add(btnCourses);
+            flowLayoutPanel2.Controls.Add(btnAttendance);
+            flowLayoutPanel2.Controls.Add(btnGrade);
+            flowLayoutPanel2.Dock = DockStyle.Fill;
+            flowLayoutPanel2.Location = new Point(0, 0);
+            flowLayoutPanel2.Name = "flowLayoutPanel2";
+            flowLayoutPanel2.Size = new Size(256, 281);
+            flowLayoutPanel2.TabIndex = 5;
+            // 
+            // btnAnnounce
+            // 
+            btnAnnounce.BackgroundImageLayout = ImageLayout.None;
+            btnAnnounce.Cursor = Cursors.Hand;
+            btnAnnounce.FlatAppearance.BorderSize = 0;
+            btnAnnounce.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnAnnounce.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            btnAnnounce.FlatStyle = FlatStyle.Flat;
+            btnAnnounce.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            btnAnnounce.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            btnAnnounce.Image = Properties.Resources.marketing;
+            btnAnnounce.ImageAlign = ContentAlignment.MiddleLeft;
+            btnAnnounce.Location = new Point(3, 3);
+            btnAnnounce.Name = "btnAnnounce";
+            btnAnnounce.Padding = new Padding(16, 0, 0, 0);
+            btnAnnounce.Size = new Size(256, 48);
+            btnAnnounce.TabIndex = 4;
+            btnAnnounce.Text = " Announcements";
+            btnAnnounce.TextAlign = ContentAlignment.MiddleLeft;
+            btnAnnounce.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnAnnounce.UseVisualStyleBackColor = true;
+            btnAnnounce.Click += btnAnnounce_Click;
+            // 
+            // btnCalendar
+            // 
+            btnCalendar.BackgroundImageLayout = ImageLayout.None;
+            btnCalendar.Cursor = Cursors.Hand;
+            btnCalendar.FlatAppearance.BorderSize = 0;
+            btnCalendar.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnCalendar.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            btnCalendar.FlatStyle = FlatStyle.Flat;
+            btnCalendar.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            btnCalendar.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            btnCalendar.Image = Properties.Resources.calendar__4_;
+            btnCalendar.ImageAlign = ContentAlignment.MiddleLeft;
+            btnCalendar.Location = new Point(3, 57);
+            btnCalendar.Name = "btnCalendar";
+            btnCalendar.Padding = new Padding(16, 0, 0, 0);
+            btnCalendar.Size = new Size(256, 48);
+            btnCalendar.TabIndex = 7;
+            btnCalendar.Text = " Calendar";
+            btnCalendar.TextAlign = ContentAlignment.MiddleLeft;
+            btnCalendar.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnCalendar.UseVisualStyleBackColor = true;
+            btnCalendar.Click += btnCalendar_Click;
+            // 
+            // btnCourses
+            // 
+            btnCourses.BackgroundImageLayout = ImageLayout.None;
+            btnCourses.Cursor = Cursors.Hand;
+            btnCourses.FlatAppearance.BorderSize = 0;
+            btnCourses.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnCourses.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            btnCourses.FlatStyle = FlatStyle.Flat;
+            btnCourses.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            btnCourses.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            btnCourses.Image = (Image)resources.GetObject("btnCourses.Image");
+            btnCourses.ImageAlign = ContentAlignment.MiddleLeft;
+            btnCourses.Location = new Point(3, 111);
+            btnCourses.Name = "btnCourses";
+            btnCourses.Padding = new Padding(16, 0, 0, 0);
+            btnCourses.Size = new Size(256, 48);
+            btnCourses.TabIndex = 6;
+            btnCourses.Text = "Courses";
+            btnCourses.TextAlign = ContentAlignment.MiddleLeft;
+            btnCourses.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnCourses.UseVisualStyleBackColor = true;
+            btnCourses.Click += btnCourses_Click;
+            // 
+            // btnAttendance
+            // 
+            btnAttendance.BackgroundImageLayout = ImageLayout.None;
+            btnAttendance.Cursor = Cursors.Hand;
+            btnAttendance.FlatAppearance.BorderSize = 0;
+            btnAttendance.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnAttendance.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            btnAttendance.FlatStyle = FlatStyle.Flat;
+            btnAttendance.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            btnAttendance.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            btnAttendance.Image = Properties.Resources.user_check;
+            btnAttendance.ImageAlign = ContentAlignment.MiddleLeft;
+            btnAttendance.Location = new Point(3, 165);
+            btnAttendance.Name = "btnAttendance";
+            btnAttendance.Padding = new Padding(16, 0, 0, 0);
+            btnAttendance.Size = new Size(256, 48);
+            btnAttendance.TabIndex = 8;
+            btnAttendance.Text = "  Attendance";
+            btnAttendance.TextAlign = ContentAlignment.MiddleLeft;
+            btnAttendance.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnAttendance.UseVisualStyleBackColor = true;
+            btnAttendance.Click += btnAttendance_Click;
+            // 
+            // btnGrade
+            // 
+            btnGrade.BackgroundImageLayout = ImageLayout.None;
+            btnGrade.Cursor = Cursors.Hand;
+            btnGrade.FlatAppearance.BorderSize = 0;
+            btnGrade.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnGrade.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            btnGrade.FlatStyle = FlatStyle.Flat;
+            btnGrade.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            btnGrade.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            btnGrade.Image = Properties.Resources.report;
+            btnGrade.ImageAlign = ContentAlignment.MiddleLeft;
+            btnGrade.Location = new Point(3, 219);
+            btnGrade.Name = "btnGrade";
+            btnGrade.Padding = new Padding(16, 0, 0, 0);
+            btnGrade.Size = new Size(256, 48);
+            btnGrade.TabIndex = 9;
+            btnGrade.Text = "  Grades";
+            btnGrade.TextAlign = ContentAlignment.MiddleLeft;
+            btnGrade.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnGrade.UseVisualStyleBackColor = true;
+            btnGrade.Click += btnGrade_Click;
+            // 
             // StudentPortal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -7220,10 +7105,8 @@
             flowLayoutPanel1.ResumeLayout(false);
             panel7.ResumeLayout(false);
             panel8.ResumeLayout(false);
-            panel9.ResumeLayout(false);
             panel10.ResumeLayout(false);
             panel11.ResumeLayout(false);
-            pnllmsSubmenu.ResumeLayout(false);
             pnlContainerStudentPortal.ResumeLayout(false);
             pnlGrades.ResumeLayout(false);
             pnlGrades.PerformLayout();
@@ -7538,10 +7421,6 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox14).EndInit();
             roundedPanel33.ResumeLayout(false);
             roundedPanel33.PerformLayout();
-            pnlCalendar.ResumeLayout(false);
-            pnlCalendar.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)picPrev).EndInit();
-            ((System.ComponentModel.ISupportInitialize)picNext).EndInit();
             pnlSubject.ResumeLayout(false);
             pnlSubject.PerformLayout();
             tableLayoutPanel25.ResumeLayout(false);
@@ -7570,6 +7449,8 @@
             panel15.PerformLayout();
             panel16.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            pnllmsSubmenu.ResumeLayout(false);
+            flowLayoutPanel2.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -7582,8 +7463,6 @@
         private Button btnDashboard;
         private Panel panel8;
         private Button btnEnrollment;
-        private Panel panel9;
-        private Button btnCourses;
         private Panel panel10;
         private Button btnAccounts;
         private Panel panel11;
@@ -7597,17 +7476,10 @@
         private PictureBox pictureBox2;
         private Label label3;
         private Label label4;
-        private Panel pnllmsSubmenu;
         private Panel pnlCoursesContent;
         private Panel pnlYellow;
         private Button button6;
-        private Button btnAttendance;
         private Button btnGrades;
-        private Button btnGrade;
-        private System.Windows.Forms.Button btnAnnounce;
-        private System.Windows.Forms.Button btnCalendar;
-        private System.Windows.Forms.Button btnActivities;
-        private System.Windows.Forms.Button btnSubject;
         private Panel pnlSubject;
         private Label label106;
         private Panel pnlSubMenu;
@@ -7733,11 +7605,6 @@
         private Label label45;
         private PictureBox pictureBox25;
         private Button btnGo1;
-        private Panel pnlCalendar;
-        private PictureBox picPrev;
-        private PictureBox picNext;
-        private Label lblMonthYear;
-        private FlowLayoutPanel FPLmonth;
         private Panel pnlGrades;
         private Panel panel57;
         private RoundedPanel roundedPanel38;
@@ -8089,5 +7956,12 @@
         private DataGridViewButtonColumn FGradeBreakdown;
         private PUPAcadPortal.PortalContents.Misc.UserProfile userProfile1;
         private Panel mainContentPanel;
+        private Panel pnllmsSubmenu;
+        private FlowLayoutPanel flowLayoutPanel2;
+        private Button btnAnnounce;
+        private Button btnCalendar;
+        private Button btnCourses;
+        private Button btnAttendance;
+        private Button btnGrade;
     }
 }

@@ -53,7 +53,6 @@
             pnlCalendar.Name = "pnlCalendar";
             pnlCalendar.Size = new Size(1272, 719);
             pnlCalendar.TabIndex = 34;
-            pnlCalendar.Visible = false;
             // 
             // picPrev
             // 
