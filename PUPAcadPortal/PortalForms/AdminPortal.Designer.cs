@@ -61,6 +61,7 @@
             panel12 = new Panel();
             panel13 = new Panel();
             btnLogout = new Button();
+            userProfile1 = new PUPAcadPortal.PortalContents.Misc.UserProfile();
             pnlContainerAdminPortal = new Panel();
             mainContentPanel = new Panel();
             pnlSubOfferingContent = new Panel();
@@ -90,7 +91,6 @@
             label3 = new Label();
             label4 = new Label();
             pictureBox2 = new PictureBox();
-            userProfile1 = new PUPAcadPortal.PortalContents.Misc.UserProfile();
             pnlSidebar.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             panel7.SuspendLayout();
@@ -636,6 +636,14 @@
             btnLogout.UseVisualStyleBackColor = true;
             btnLogout.Click += btnLogout_Click;
             // 
+            // userProfile1
+            // 
+            userProfile1.Dock = DockStyle.Top;
+            userProfile1.Location = new Point(0, 72);
+            userProfile1.Name = "userProfile1";
+            userProfile1.Size = new Size(256, 73);
+            userProfile1.TabIndex = 0;
+            // 
             // pnlContainerAdminPortal
             // 
             pnlContainerAdminPortal.Controls.Add(mainContentPanel);
@@ -952,14 +960,6 @@
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
             // 
-            // userProfile1
-            // 
-            userProfile1.Dock = DockStyle.Top;
-            userProfile1.Location = new Point(0, 72);
-            userProfile1.Name = "userProfile1";
-            userProfile1.Size = new Size(256, 73);
-            userProfile1.TabIndex = 0;
-            // 
             // AdminPortal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -970,7 +970,6 @@
             Name = "AdminPortal";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "AdminPortal";
-            WindowState = FormWindowState.Maximized;
             FormClosing += AdminPortal_Closing;
             Load += AdminPortal_Load;
             pnlSidebar.ResumeLayout(false);

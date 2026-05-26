@@ -792,13 +792,14 @@
             pnlSidebar.Margin = new Padding(0);
             pnlSidebar.Name = "pnlSidebar";
             pnlSidebar.Padding = new Padding(0, 72, 0, 45);
-            pnlSidebar.Size = new Size(256, 1041);
+            pnlSidebar.Size = new Size(256, 791);
             pnlSidebar.TabIndex = 0;
             // 
             // userProfile1
             // 
             userProfile1.Dock = DockStyle.Top;
             userProfile1.Location = new Point(0, 72);
+            userProfile1.Margin = new Padding(3, 4, 3, 4);
             userProfile1.Name = "userProfile1";
             userProfile1.Size = new Size(256, 73);
             userProfile1.TabIndex = 2;
@@ -808,7 +809,7 @@
             panel12.BackColor = Color.FromArgb(30, 109, 0, 0);
             panel12.Controls.Add(panel13);
             panel12.Dock = DockStyle.Bottom;
-            panel12.Location = new Point(0, 915);
+            panel12.Location = new Point(0, 665);
             panel12.Margin = new Padding(0);
             panel12.Name = "panel12";
             panel12.Size = new Size(256, 81);
@@ -860,7 +861,7 @@
             flowLayoutPanel1.Location = new Point(0, 145);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Padding = new Padding(0, 0, 0, 45);
-            flowLayoutPanel1.Size = new Size(256, 750);
+            flowLayoutPanel1.Size = new Size(256, 500);
             flowLayoutPanel1.TabIndex = 1;
             flowLayoutPanel1.WrapContents = false;
             // 
@@ -1194,7 +1195,7 @@
             pnlCoursesContent.Location = new Point(312, 200);
             pnlCoursesContent.Margin = new Padding(0);
             pnlCoursesContent.Name = "pnlCoursesContent";
-            pnlCoursesContent.Size = new Size(1648, 969);
+            pnlCoursesContent.Size = new Size(1427, 719);
             pnlCoursesContent.TabIndex = 6;
             pnlCoursesContent.Visible = false;
             // 
@@ -1213,7 +1214,7 @@
             pnlContainerStudentPortal.Dock = DockStyle.Fill;
             pnlContainerStudentPortal.Location = new Point(0, 0);
             pnlContainerStudentPortal.Name = "pnlContainerStudentPortal";
-            pnlContainerStudentPortal.Size = new Size(1904, 1041);
+            pnlContainerStudentPortal.Size = new Size(1684, 791);
             pnlContainerStudentPortal.TabIndex = 0;
             // 
             // mainContentPanel
@@ -1221,7 +1222,7 @@
             mainContentPanel.Dock = DockStyle.Fill;
             mainContentPanel.Location = new Point(256, 72);
             mainContentPanel.Name = "mainContentPanel";
-            mainContentPanel.Size = new Size(1648, 969);
+            mainContentPanel.Size = new Size(1428, 719);
             mainContentPanel.TabIndex = 28;
             // 
             // pnlGrades
@@ -1238,7 +1239,7 @@
             pnlGrades.Location = new Point(256, 72);
             pnlGrades.Margin = new Padding(0);
             pnlGrades.Name = "pnlGrades";
-            pnlGrades.Size = new Size(1648, 969);
+            pnlGrades.Size = new Size(1428, 719);
             pnlGrades.TabIndex = 34;
             pnlGrades.Visible = false;
             // 
@@ -1268,7 +1269,7 @@
             panel57.Location = new Point(0, 0);
             panel57.Margin = new Padding(3, 2, 3, 2);
             panel57.Name = "panel57";
-            panel57.Size = new Size(1648, 64);
+            panel57.Size = new Size(1428, 64);
             panel57.TabIndex = 2;
             // 
             // roundedPanel38
@@ -1299,7 +1300,7 @@
             btnGenerate.BackColor = Color.Maroon;
             btnGenerate.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnGenerate.ForeColor = Color.White;
-            btnGenerate.Location = new Point(1392, 10);
+            btnGenerate.Location = new Point(1173, 10);
             btnGenerate.Margin = new Padding(3, 2, 3, 2);
             btnGenerate.Name = "btnGenerate";
             btnGenerate.Size = new Size(236, 40);
@@ -1325,7 +1326,7 @@
             pnlFinalGradeStudent.Location = new Point(48, 110);
             pnlFinalGradeStudent.Margin = new Padding(3, 2, 3, 2);
             pnlFinalGradeStudent.Name = "pnlFinalGradeStudent";
-            pnlFinalGradeStudent.Size = new Size(1563, 566);
+            pnlFinalGradeStudent.Size = new Size(1343, 566);
             pnlFinalGradeStudent.TabIndex = 11;
             pnlFinalGradeStudent.Visible = false;
             // 
@@ -1345,7 +1346,7 @@
             dgvFinalGradeStudent.RowHeadersVisible = false;
             dgvFinalGradeStudent.RowHeadersWidth = 51;
             dgvFinalGradeStudent.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvFinalGradeStudent.Size = new Size(1563, 566);
+            dgvFinalGradeStudent.Size = new Size(1343, 566);
             dgvFinalGradeStudent.TabIndex = 9;
             dgvFinalGradeStudent.CellContentClick += dgvFinalGradeStudent_CellContentClick;
             // 
@@ -1393,7 +1394,7 @@
             pnlMidtermGradeStudent.Location = new Point(49, 110);
             pnlMidtermGradeStudent.Margin = new Padding(3, 2, 3, 2);
             pnlMidtermGradeStudent.Name = "pnlMidtermGradeStudent";
-            pnlMidtermGradeStudent.Size = new Size(1563, 566);
+            pnlMidtermGradeStudent.Size = new Size(1343, 566);
             pnlMidtermGradeStudent.TabIndex = 10;
             pnlMidtermGradeStudent.Visible = false;
             // 
@@ -1413,7 +1414,7 @@
             dgvMidtermGradeStudent.RowHeadersVisible = false;
             dgvMidtermGradeStudent.RowHeadersWidth = 51;
             dgvMidtermGradeStudent.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvMidtermGradeStudent.Size = new Size(1563, 566);
+            dgvMidtermGradeStudent.Size = new Size(1343, 566);
             dgvMidtermGradeStudent.TabIndex = 9;
             dgvMidtermGradeStudent.CellContentClick += dataGridView1_CellContentClick;
             // 
@@ -1460,7 +1461,7 @@
             rpnlGradeBreakdown.BackColor = Color.Maroon;
             rpnlGradeBreakdown.BorderRadius = 10;
             rpnlGradeBreakdown.Controls.Add(roundedPanel37);
-            rpnlGradeBreakdown.Location = new Point(300, 333);
+            rpnlGradeBreakdown.Location = new Point(191, 208);
             rpnlGradeBreakdown.Margin = new Padding(3, 2, 3, 2);
             rpnlGradeBreakdown.Name = "rpnlGradeBreakdown";
             rpnlGradeBreakdown.Size = new Size(1030, 250);
@@ -1504,7 +1505,7 @@
             listBox1.Location = new Point(46, 47);
             listBox1.Margin = new Padding(3, 2, 3, 2);
             listBox1.Name = "listBox1";
-            listBox1.Size = new Size(710, 118);
+            listBox1.Size = new Size(710, 99);
             listBox1.TabIndex = 6;
             // 
             // label5
@@ -1528,7 +1529,7 @@
             pnlSubMenu.Location = new Point(256, 72);
             pnlSubMenu.Margin = new Padding(3, 2, 3, 2);
             pnlSubMenu.Name = "pnlSubMenu";
-            pnlSubMenu.Size = new Size(1648, 969);
+            pnlSubMenu.Size = new Size(1428, 719);
             pnlSubMenu.TabIndex = 32;
             pnlSubMenu.Visible = false;
             // 
@@ -1540,7 +1541,7 @@
             pnlAnsAct1.Location = new Point(0, 49);
             pnlAnsAct1.Margin = new Padding(3, 2, 3, 2);
             pnlAnsAct1.Name = "pnlAnsAct1";
-            pnlAnsAct1.Size = new Size(1648, 676);
+            pnlAnsAct1.Size = new Size(1428, 676);
             pnlAnsAct1.TabIndex = 5;
             pnlAnsAct1.Visible = false;
             // 
@@ -1576,7 +1577,7 @@
             tableLayoutPanel11.RowStyles.Add(new RowStyle(SizeType.Absolute, 75F));
             tableLayoutPanel11.RowStyles.Add(new RowStyle(SizeType.Absolute, 75F));
             tableLayoutPanel11.RowStyles.Add(new RowStyle(SizeType.Absolute, 75F));
-            tableLayoutPanel11.Size = new Size(1517, 3541);
+            tableLayoutPanel11.Size = new Size(1298, 3541);
             tableLayoutPanel11.TabIndex = 0;
             // 
             // pictureBox19
@@ -1586,7 +1587,7 @@
             pictureBox19.Location = new Point(3, 2219);
             pictureBox19.Margin = new Padding(3, 2, 3, 2);
             pictureBox19.Name = "pictureBox19";
-            pictureBox19.Size = new Size(1511, 439);
+            pictureBox19.Size = new Size(1292, 439);
             pictureBox19.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox19.TabIndex = 9;
             pictureBox19.TabStop = false;
@@ -1598,7 +1599,7 @@
             pictureBox18.Location = new Point(3, 1776);
             pictureBox18.Margin = new Padding(3, 2, 3, 2);
             pictureBox18.Name = "pictureBox18";
-            pictureBox18.Size = new Size(1511, 439);
+            pictureBox18.Size = new Size(1292, 439);
             pictureBox18.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox18.TabIndex = 8;
             pictureBox18.TabStop = false;
@@ -1610,7 +1611,7 @@
             pictureBox17.Location = new Point(3, 1333);
             pictureBox17.Margin = new Padding(3, 2, 3, 2);
             pictureBox17.Name = "pictureBox17";
-            pictureBox17.Size = new Size(1511, 439);
+            pictureBox17.Size = new Size(1292, 439);
             pictureBox17.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox17.TabIndex = 7;
             pictureBox17.TabStop = false;
@@ -1622,7 +1623,7 @@
             pictureBox16.Location = new Point(3, 890);
             pictureBox16.Margin = new Padding(3, 2, 3, 2);
             pictureBox16.Name = "pictureBox16";
-            pictureBox16.Size = new Size(1511, 439);
+            pictureBox16.Size = new Size(1292, 439);
             pictureBox16.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox16.TabIndex = 6;
             pictureBox16.TabStop = false;
@@ -1637,7 +1638,7 @@
             panel54.Location = new Point(3, 3105);
             panel54.Margin = new Padding(3, 2, 3, 2);
             panel54.Name = "panel54";
-            panel54.Size = new Size(1511, 56);
+            panel54.Size = new Size(1292, 56);
             panel54.TabIndex = 5;
             // 
             // btnSubmit
@@ -1647,7 +1648,7 @@
             btnSubmit.FlatStyle = FlatStyle.Flat;
             btnSubmit.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
             btnSubmit.ForeColor = Color.White;
-            btnSubmit.Location = new Point(1389, 20);
+            btnSubmit.Location = new Point(1169, 20);
             btnSubmit.Margin = new Padding(3, 2, 3, 2);
             btnSubmit.Name = "btnSubmit";
             btnSubmit.Size = new Size(107, 29);
@@ -1680,7 +1681,7 @@
             panel55.Location = new Point(0, 0);
             panel55.Margin = new Padding(3, 2, 3, 2);
             panel55.Name = "panel55";
-            panel55.Size = new Size(1511, 16);
+            panel55.Size = new Size(1292, 16);
             panel55.TabIndex = 0;
             // 
             // pictureBox15
@@ -1690,7 +1691,7 @@
             pictureBox15.Location = new Point(3, 2662);
             pictureBox15.Margin = new Padding(3, 2, 3, 2);
             pictureBox15.Name = "pictureBox15";
-            pictureBox15.Size = new Size(1511, 439);
+            pictureBox15.Size = new Size(1292, 439);
             pictureBox15.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox15.TabIndex = 2;
             pictureBox15.TabStop = false;
@@ -1704,7 +1705,7 @@
             roundedPanel17.Location = new Point(3, 2);
             roundedPanel17.Margin = new Padding(3, 2, 3, 2);
             roundedPanel17.Name = "roundedPanel17";
-            roundedPanel17.Size = new Size(1511, 441);
+            roundedPanel17.Size = new Size(1292, 441);
             roundedPanel17.TabIndex = 0;
             // 
             // roundedPanel18
@@ -1722,7 +1723,7 @@
             roundedPanel18.Location = new Point(-3, 11);
             roundedPanel18.Margin = new Padding(3, 2, 3, 2);
             roundedPanel18.Name = "roundedPanel18";
-            roundedPanel18.Size = new Size(1513, 418);
+            roundedPanel18.Size = new Size(1293, 418);
             roundedPanel18.TabIndex = 1;
             // 
             // panel52
@@ -1743,7 +1744,7 @@
             panel49.Location = new Point(27, 354);
             panel49.Margin = new Padding(3, 2, 3, 2);
             panel49.Name = "panel49";
-            panel49.Size = new Size(1443, 50);
+            panel49.Size = new Size(1223, 50);
             panel49.TabIndex = 8;
             // 
             // panel50
@@ -1762,7 +1763,7 @@
             panel51.Location = new Point(83, 4);
             panel51.Margin = new Padding(3, 2, 3, 2);
             panel51.Name = "panel51";
-            panel51.Size = new Size(1353, 42);
+            panel51.Size = new Size(1133, 42);
             panel51.TabIndex = 6;
             // 
             // panel44
@@ -1774,7 +1775,7 @@
             panel44.Location = new Point(27, 295);
             panel44.Margin = new Padding(3, 2, 3, 2);
             panel44.Name = "panel44";
-            panel44.Size = new Size(1443, 50);
+            panel44.Size = new Size(1223, 50);
             panel44.TabIndex = 8;
             // 
             // panel45
@@ -1793,7 +1794,7 @@
             panel48.Location = new Point(83, 4);
             panel48.Margin = new Padding(3, 2, 3, 2);
             panel48.Name = "panel48";
-            panel48.Size = new Size(1353, 42);
+            panel48.Size = new Size(1133, 42);
             panel48.TabIndex = 6;
             // 
             // panel40
@@ -1805,7 +1806,7 @@
             panel40.Location = new Point(27, 236);
             panel40.Margin = new Padding(3, 2, 3, 2);
             panel40.Name = "panel40";
-            panel40.Size = new Size(1443, 50);
+            panel40.Size = new Size(1223, 50);
             panel40.TabIndex = 8;
             // 
             // panel41
@@ -1824,7 +1825,7 @@
             panel43.Location = new Point(83, 4);
             panel43.Margin = new Padding(3, 2, 3, 2);
             panel43.Name = "panel43";
-            panel43.Size = new Size(1353, 42);
+            panel43.Size = new Size(1133, 42);
             panel43.TabIndex = 6;
             // 
             // panel36
@@ -1836,7 +1837,7 @@
             panel36.Location = new Point(27, 176);
             panel36.Margin = new Padding(3, 2, 3, 2);
             panel36.Name = "panel36";
-            panel36.Size = new Size(1447, 50);
+            panel36.Size = new Size(1228, 50);
             panel36.TabIndex = 6;
             // 
             // panel46
@@ -1855,7 +1856,7 @@
             panel37.Location = new Point(83, 4);
             panel37.Margin = new Padding(3, 2, 3, 2);
             panel37.Name = "panel37";
-            panel37.Size = new Size(1359, 42);
+            panel37.Size = new Size(1139, 42);
             panel37.TabIndex = 6;
             // 
             // panel23
@@ -1866,7 +1867,7 @@
             panel23.Location = new Point(25, 44);
             panel23.Margin = new Padding(3, 2, 3, 2);
             panel23.Name = "panel23";
-            panel23.Size = new Size(1448, 126);
+            panel23.Size = new Size(1228, 126);
             panel23.TabIndex = 5;
             // 
             // panel35
@@ -1876,7 +1877,7 @@
             panel35.Location = new Point(4, 4);
             panel35.Margin = new Padding(3, 2, 3, 2);
             panel35.Name = "panel35";
-            panel35.Size = new Size(1439, 118);
+            panel35.Size = new Size(1220, 118);
             panel35.TabIndex = 6;
             // 
             // label12
@@ -1896,7 +1897,7 @@
             pictureBox8.Location = new Point(3, 447);
             pictureBox8.Margin = new Padding(3, 2, 3, 2);
             pictureBox8.Name = "pictureBox8";
-            pictureBox8.Size = new Size(1511, 439);
+            pictureBox8.Size = new Size(1292, 439);
             pictureBox8.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox8.TabIndex = 1;
             pictureBox8.TabStop = false;
@@ -1914,7 +1915,7 @@
             pnlAnsAss.Location = new Point(0, 49);
             pnlAnsAss.Margin = new Padding(3, 2, 3, 2);
             pnlAnsAss.Name = "pnlAnsAss";
-            pnlAnsAss.Size = new Size(1648, 676);
+            pnlAnsAss.Size = new Size(1428, 676);
             pnlAnsAss.TabIndex = 0;
             // 
             // pnlAttachAss
@@ -1930,7 +1931,7 @@
             pnlAttachAss.MaximumSize = new Size(654, 355);
             pnlAttachAss.MinimumSize = new Size(598, 355);
             pnlAttachAss.Name = "pnlAttachAss";
-            pnlAttachAss.Size = new Size(654, 355);
+            pnlAttachAss.Size = new Size(599, 355);
             pnlAttachAss.TabIndex = 23;
             pnlAttachAss.Visible = false;
             // 
@@ -1939,7 +1940,7 @@
             btnDoneAttach.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnDoneAttach.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnDoneAttach.ForeColor = Color.Maroon;
-            btnDoneAttach.Location = new Point(554, 316);
+            btnDoneAttach.Location = new Point(499, 316);
             btnDoneAttach.Margin = new Padding(3, 2, 3, 2);
             btnDoneAttach.Name = "btnDoneAttach";
             btnDoneAttach.Size = new Size(83, 28);
@@ -1953,7 +1954,7 @@
             btnAttachCancel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnAttachCancel.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnAttachCancel.ForeColor = Color.Maroon;
-            btnAttachCancel.Location = new Point(466, 316);
+            btnAttachCancel.Location = new Point(411, 316);
             btnAttachCancel.Margin = new Padding(3, 2, 3, 2);
             btnAttachCancel.Name = "btnAttachCancel";
             btnAttachCancel.Size = new Size(83, 28);
@@ -1972,7 +1973,7 @@
             roundedPanel29.Location = new Point(25, 22);
             roundedPanel29.Margin = new Padding(3, 2, 3, 2);
             roundedPanel29.Name = "roundedPanel29";
-            roundedPanel29.Size = new Size(609, 286);
+            roundedPanel29.Size = new Size(554, 286);
             roundedPanel29.TabIndex = 19;
             // 
             // panel56
@@ -1984,7 +1985,7 @@
             panel56.Location = new Point(52, 92);
             panel56.Margin = new Padding(3, 2, 3, 2);
             panel56.Name = "panel56";
-            panel56.Size = new Size(507, 104);
+            panel56.Size = new Size(452, 104);
             panel56.TabIndex = 24;
             // 
             // label118
@@ -2018,7 +2019,7 @@
             pictureBox46.Location = new Point(6, 2);
             pictureBox46.Margin = new Padding(3, 2, 3, 2);
             pictureBox46.Name = "pictureBox46";
-            pictureBox46.Size = new Size(178, 96);
+            pictureBox46.Size = new Size(123, 96);
             pictureBox46.TabIndex = 22;
             pictureBox46.TabStop = false;
             // 
@@ -2031,7 +2032,7 @@
             panel39.Location = new Point(0, 0);
             panel39.Margin = new Padding(3, 2, 3, 2);
             panel39.Name = "panel39";
-            panel39.Size = new Size(1648, 59);
+            panel39.Size = new Size(1428, 59);
             panel39.TabIndex = 22;
             // 
             // panel53
@@ -2041,7 +2042,7 @@
             panel53.Location = new Point(0, 0);
             panel53.Margin = new Padding(3, 2, 3, 2);
             panel53.Name = "panel53";
-            panel53.Size = new Size(1648, 14);
+            panel53.Size = new Size(1428, 14);
             panel53.TabIndex = 22;
             // 
             // label17
@@ -2073,7 +2074,7 @@
             btnCancelAssign.FlatStyle = FlatStyle.Flat;
             btnCancelAssign.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnCancelAssign.ForeColor = Color.White;
-            btnCancelAssign.Location = new Point(1369, 457);
+            btnCancelAssign.Location = new Point(1150, 457);
             btnCancelAssign.Margin = new Padding(3, 2, 3, 2);
             btnCancelAssign.Name = "btnCancelAssign";
             btnCancelAssign.Size = new Size(126, 36);
@@ -2108,7 +2109,7 @@
             btnSaveAss.FlatStyle = FlatStyle.Flat;
             btnSaveAss.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnSaveAss.ForeColor = Color.White;
-            btnSaveAss.Location = new Point(1506, 457);
+            btnSaveAss.Location = new Point(1286, 457);
             btnSaveAss.Margin = new Padding(3, 2, 3, 2);
             btnSaveAss.Name = "btnSaveAss";
             btnSaveAss.Size = new Size(126, 36);
@@ -2126,7 +2127,7 @@
             roundedPanel4.Location = new Point(18, 102);
             roundedPanel4.Margin = new Padding(3, 2, 3, 2);
             roundedPanel4.Name = "roundedPanel4";
-            roundedPanel4.Size = new Size(1614, 337);
+            roundedPanel4.Size = new Size(1395, 337);
             roundedPanel4.TabIndex = 5;
             // 
             // roundedPanel19
@@ -2137,7 +2138,7 @@
             roundedPanel19.Location = new Point(7, 6);
             roundedPanel19.Margin = new Padding(3, 2, 3, 2);
             roundedPanel19.Name = "roundedPanel19";
-            roundedPanel19.Size = new Size(1599, 325);
+            roundedPanel19.Size = new Size(1379, 325);
             roundedPanel19.TabIndex = 6;
             // 
             // pnlLMSActivities
@@ -2153,7 +2154,7 @@
             pnlLMSActivities.Location = new Point(0, 49);
             pnlLMSActivities.Margin = new Padding(3, 2, 3, 2);
             pnlLMSActivities.Name = "pnlLMSActivities";
-            pnlLMSActivities.Size = new Size(1648, 940);
+            pnlLMSActivities.Size = new Size(1428, 940);
             pnlLMSActivities.TabIndex = 0;
             // 
             // roundedPanel15
@@ -2167,7 +2168,7 @@
             roundedPanel15.Location = new Point(21, 504);
             roundedPanel15.Margin = new Padding(3, 2, 3, 2);
             roundedPanel15.Name = "roundedPanel15";
-            roundedPanel15.Size = new Size(1607, 131);
+            roundedPanel15.Size = new Size(1387, 131);
             roundedPanel15.TabIndex = 12;
             // 
             // roundedPanel16
@@ -2182,7 +2183,7 @@
             roundedPanel16.Location = new Point(19, 3);
             roundedPanel16.Margin = new Padding(3, 2, 3, 2);
             roundedPanel16.Name = "roundedPanel16";
-            roundedPanel16.Size = new Size(1575, 123);
+            roundedPanel16.Size = new Size(1355, 123);
             roundedPanel16.TabIndex = 2;
             roundedPanel16.MouseEnter += roundedPanel16_MouseEnter;
             roundedPanel16.MouseLeave += roundedPanel16_MouseLeave;
@@ -2229,7 +2230,7 @@
             roundedPanel13.Location = new Point(21, 356);
             roundedPanel13.Margin = new Padding(3, 2, 3, 2);
             roundedPanel13.Name = "roundedPanel13";
-            roundedPanel13.Size = new Size(1607, 131);
+            roundedPanel13.Size = new Size(1387, 131);
             roundedPanel13.TabIndex = 11;
             // 
             // roundedPanel14
@@ -2245,7 +2246,7 @@
             roundedPanel14.Margin = new Padding(3, 2, 3, 2);
             roundedPanel14.MinimumSize = new Size(1198, 123);
             roundedPanel14.Name = "roundedPanel14";
-            roundedPanel14.Size = new Size(1575, 123);
+            roundedPanel14.Size = new Size(1355, 123);
             roundedPanel14.TabIndex = 2;
             roundedPanel14.MouseEnter += roundedPanel14_MouseEnter;
             roundedPanel14.MouseLeave += roundedPanel14_MouseLeave;
@@ -2292,7 +2293,7 @@
             roundedPanel5.Location = new Point(20, 208);
             roundedPanel5.Margin = new Padding(3, 2, 3, 2);
             roundedPanel5.Name = "roundedPanel5";
-            roundedPanel5.Size = new Size(1607, 131);
+            roundedPanel5.Size = new Size(1387, 131);
             roundedPanel5.TabIndex = 10;
             // 
             // pnlAss1
@@ -2307,7 +2308,7 @@
             pnlAss1.Location = new Point(19, 3);
             pnlAss1.Margin = new Padding(3, 2, 3, 2);
             pnlAss1.Name = "pnlAss1";
-            pnlAss1.Size = new Size(1575, 123);
+            pnlAss1.Size = new Size(1355, 123);
             pnlAss1.TabIndex = 2;
             pnlAss1.Click += pnlAss1_Click;
             pnlAss1.MouseEnter += pnlAss1_MouseEnter;
@@ -2355,7 +2356,7 @@
             roundedPanel3.Location = new Point(20, 61);
             roundedPanel3.Margin = new Padding(3, 2, 3, 2);
             roundedPanel3.Name = "roundedPanel3";
-            roundedPanel3.Size = new Size(1606, 131);
+            roundedPanel3.Size = new Size(1386, 131);
             roundedPanel3.TabIndex = 9;
             // 
             // pnlAct1
@@ -2370,7 +2371,7 @@
             pnlAct1.Location = new Point(19, 3);
             pnlAct1.Margin = new Padding(3, 2, 3, 2);
             pnlAct1.Name = "pnlAct1";
-            pnlAct1.Size = new Size(1575, 123);
+            pnlAct1.Size = new Size(1355, 123);
             pnlAct1.TabIndex = 2;
             pnlAct1.Click += pnlAct1_Click;
             pnlAct1.MouseEnter += pnlAct1_MouseEnter;
@@ -2415,7 +2416,7 @@
             panel42.Location = new Point(0, 13);
             panel42.Margin = new Padding(3, 2, 3, 2);
             panel42.Name = "panel42";
-            panel42.Size = new Size(1648, 40);
+            panel42.Size = new Size(1428, 40);
             panel42.TabIndex = 0;
             // 
             // label108
@@ -2434,7 +2435,7 @@
             panel47.Location = new Point(0, 0);
             panel47.Margin = new Padding(3, 2, 3, 2);
             panel47.Name = "panel47";
-            panel47.Size = new Size(1648, 13);
+            panel47.Size = new Size(1428, 13);
             panel47.TabIndex = 8;
             // 
             // pnlLMSFiles
@@ -2446,7 +2447,7 @@
             pnlLMSFiles.Location = new Point(0, 49);
             pnlLMSFiles.Margin = new Padding(3, 2, 3, 2);
             pnlLMSFiles.Name = "pnlLMSFiles";
-            pnlLMSFiles.Size = new Size(1648, 920);
+            pnlLMSFiles.Size = new Size(1428, 670);
             pnlLMSFiles.TabIndex = 1;
             pnlLMSFiles.Visible = false;
             // 
@@ -2457,7 +2458,7 @@
             pictureBox3.Location = new Point(16, 70);
             pictureBox3.Margin = new Padding(3, 2, 3, 2);
             pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(1622, 544);
+            pictureBox3.Size = new Size(1403, 544);
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox3.TabIndex = 2;
             pictureBox3.TabStop = false;
@@ -2471,7 +2472,7 @@
             panel25.Location = new Point(0, 0);
             panel25.Margin = new Padding(3, 2, 3, 2);
             panel25.Name = "panel25";
-            panel25.Size = new Size(1648, 59);
+            panel25.Size = new Size(1428, 59);
             panel25.TabIndex = 1;
             // 
             // panel26
@@ -2481,7 +2482,7 @@
             panel26.Location = new Point(0, 0);
             panel26.Margin = new Padding(3, 2, 3, 2);
             panel26.Name = "panel26";
-            panel26.Size = new Size(1648, 16);
+            panel26.Size = new Size(1428, 16);
             panel26.TabIndex = 2;
             // 
             // label121
@@ -2504,7 +2505,7 @@
             panel38.Location = new Point(0, 0);
             panel38.Margin = new Padding(3, 2, 3, 2);
             panel38.Name = "panel38";
-            panel38.Size = new Size(1648, 49);
+            panel38.Size = new Size(1428, 49);
             panel38.TabIndex = 0;
             // 
             // panel18
@@ -2513,7 +2514,7 @@
             panel18.Controls.Add(btnStudFiles);
             panel18.Controls.Add(btnStudAct);
             panel18.Controls.Add(button3);
-            panel18.Location = new Point(1096, 3);
+            panel18.Location = new Point(877, 3);
             panel18.Margin = new Padding(3, 2, 3, 2);
             panel18.Name = "panel18";
             panel18.Size = new Size(550, 40);
@@ -2608,7 +2609,7 @@
             pnlAttendance.Location = new Point(256, 72);
             pnlAttendance.Margin = new Padding(0);
             pnlAttendance.Name = "pnlAttendance";
-            pnlAttendance.Size = new Size(1648, 969);
+            pnlAttendance.Size = new Size(1428, 719);
             pnlAttendance.TabIndex = 39;
             pnlAttendance.Visible = false;
             // 
@@ -2621,7 +2622,7 @@
             panel17.Location = new Point(0, 176);
             panel17.Margin = new Padding(3, 2, 3, 2);
             panel17.Name = "panel17";
-            panel17.Size = new Size(1648, 534);
+            panel17.Size = new Size(1428, 534);
             panel17.TabIndex = 32;
             // 
             // pnlAttIntro
@@ -2629,7 +2630,7 @@
             pnlAttIntro.Anchor = AnchorStyles.Top;
             pnlAttIntro.AutoScroll = true;
             pnlAttIntro.Controls.Add(tableLayoutPanel1);
-            pnlAttIntro.Location = new Point(200, 12);
+            pnlAttIntro.Location = new Point(91, 12);
             pnlAttIntro.Margin = new Padding(3, 2, 3, 2);
             pnlAttIntro.Name = "pnlAttIntro";
             pnlAttIntro.Size = new Size(1250, 527);
@@ -3390,7 +3391,7 @@
             pnlAttAcc.AutoScroll = true;
             pnlAttAcc.BackgroundImageLayout = ImageLayout.None;
             pnlAttAcc.Controls.Add(tableLayoutPanel21);
-            pnlAttAcc.Location = new Point(199, 12);
+            pnlAttAcc.Location = new Point(89, 12);
             pnlAttAcc.Margin = new Padding(3, 2, 3, 2);
             pnlAttAcc.Name = "pnlAttAcc";
             pnlAttAcc.Size = new Size(1250, 527);
@@ -4159,7 +4160,7 @@
             panel90.Location = new Point(0, 0);
             panel90.Margin = new Padding(3, 2, 3, 2);
             panel90.Name = "panel90";
-            panel90.Size = new Size(1648, 176);
+            panel90.Size = new Size(1428, 176);
             panel90.TabIndex = 31;
             // 
             // label168
@@ -4167,7 +4168,7 @@
             label168.Anchor = AnchorStyles.None;
             label168.AutoSize = true;
             label168.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label168.Location = new Point(1171, 146);
+            label168.Location = new Point(1061, 146);
             label168.Name = "label168";
             label168.Size = new Size(85, 25);
             label168.TabIndex = 29;
@@ -4189,7 +4190,7 @@
             panel91.Controls.Add(label197);
             panel91.Controls.Add(lblAttendancePercent);
             panel91.Controls.Add(label198);
-            panel91.Location = new Point(199, 44);
+            panel91.Location = new Point(89, 44);
             panel91.Margin = new Padding(3, 2, 3, 2);
             panel91.Name = "panel91";
             panel91.Size = new Size(1229, 92);
@@ -4327,7 +4328,7 @@
             label199.Anchor = AnchorStyles.Top;
             label199.AutoSize = true;
             label199.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label199.Location = new Point(2340, 184);
+            label199.Location = new Point(2231, 184);
             label199.Name = "label199";
             label199.Size = new Size(85, 25);
             label199.TabIndex = 28;
@@ -4339,7 +4340,7 @@
             panel92.BackColor = SystemColors.ButtonHighlight;
             panel92.Controls.Add(textBox11);
             panel92.Controls.Add(pictureBox29);
-            panel92.Location = new Point(1011, 2);
+            panel92.Location = new Point(901, 2);
             panel92.Margin = new Padding(3, 2, 3, 2);
             panel92.Name = "panel92";
             panel92.Size = new Size(417, 35);
@@ -4372,7 +4373,7 @@
             label200.Anchor = AnchorStyles.None;
             label200.AutoSize = true;
             label200.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label200.Location = new Point(833, 146);
+            label200.Location = new Point(724, 146);
             label200.Name = "label200";
             label200.Size = new Size(64, 25);
             label200.TabIndex = 27;
@@ -4383,7 +4384,7 @@
             label201.Anchor = AnchorStyles.None;
             label201.AutoSize = true;
             label201.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label201.Location = new Point(363, 146);
+            label201.Location = new Point(254, 146);
             label201.Name = "label201";
             label201.Size = new Size(144, 25);
             label201.TabIndex = 3;
@@ -4396,7 +4397,7 @@
             panel93.BackColor = SystemColors.ButtonHighlight;
             panel93.Controls.Add(cmbbxCourseSelection);
             panel93.Controls.Add(label202);
-            panel93.Location = new Point(199, 3);
+            panel93.Location = new Point(89, 3);
             panel93.Margin = new Padding(3, 2, 3, 2);
             panel93.Name = "panel93";
             panel93.Size = new Size(797, 34);
@@ -4448,7 +4449,7 @@
             pnlActivities.Location = new Point(256, 72);
             pnlActivities.Margin = new Padding(0);
             pnlActivities.Name = "pnlActivities";
-            pnlActivities.Size = new Size(1648, 969);
+            pnlActivities.Size = new Size(1428, 719);
             pnlActivities.TabIndex = 35;
             pnlActivities.Visible = false;
             // 
@@ -4456,7 +4457,7 @@
             // 
             pnlNW.Anchor = AnchorStyles.Top;
             pnlNW.Controls.Add(roundedPanel41);
-            pnlNW.Location = new Point(223, 114);
+            pnlNW.Location = new Point(114, 114);
             pnlNW.Name = "pnlNW";
             pnlNW.Size = new Size(783, 394);
             pnlNW.TabIndex = 7;
@@ -4548,7 +4549,7 @@
             panel68.Anchor = AnchorStyles.Top;
             panel68.BackColor = Color.MintCream;
             panel68.Controls.Add(label134);
-            panel68.Location = new Point(1127, 332);
+            panel68.Location = new Point(1018, 332);
             panel68.Name = "panel68";
             panel68.Size = new Size(307, 46);
             panel68.TabIndex = 11;
@@ -4570,7 +4571,7 @@
             panel69.BackColor = Color.Maroon;
             panel69.Controls.Add(roundedPanel74);
             panel69.Controls.Add(roundedPanel75);
-            panel69.Location = new Point(1127, 378);
+            panel69.Location = new Point(1018, 378);
             panel69.Name = "panel69";
             panel69.Size = new Size(307, 192);
             panel69.TabIndex = 10;
@@ -4632,7 +4633,7 @@
             panel70.Anchor = AnchorStyles.Top;
             panel70.BackColor = Color.MistyRose;
             panel70.Controls.Add(label138);
-            panel70.Location = new Point(1127, 68);
+            panel70.Location = new Point(1018, 68);
             panel70.Name = "panel70";
             panel70.Size = new Size(307, 46);
             panel70.TabIndex = 9;
@@ -4655,7 +4656,7 @@
             panel71.Controls.Add(roundedPanel76);
             panel71.Controls.Add(roundedPanel77);
             panel71.Controls.Add(roundedPanel78);
-            panel71.Location = new Point(1127, 114);
+            panel71.Location = new Point(1018, 114);
             panel71.Name = "panel71";
             panel71.Size = new Size(307, 192);
             panel71.TabIndex = 8;
@@ -4764,7 +4765,7 @@
             panel72.Controls.Add(btnThisWeek);
             panel72.Controls.Add(btnToday);
             panel72.Controls.Add(btnAll);
-            panel72.Location = new Point(224, 68);
+            panel72.Location = new Point(115, 68);
             panel72.Name = "panel72";
             panel72.Size = new Size(782, 46);
             panel72.TabIndex = 5;
@@ -4833,7 +4834,7 @@
             panel73.Dock = DockStyle.Top;
             panel73.Location = new Point(0, 0);
             panel73.Name = "panel73";
-            panel73.Size = new Size(1648, 37);
+            panel73.Size = new Size(1428, 37);
             panel73.TabIndex = 0;
             // 
             // label145
@@ -4864,7 +4865,7 @@
             pnlVA.Dock = DockStyle.Fill;
             pnlVA.Location = new Point(0, 0);
             pnlVA.Name = "pnlVA";
-            pnlVA.Size = new Size(1648, 969);
+            pnlVA.Size = new Size(1428, 719);
             pnlVA.TabIndex = 12;
             pnlVA.Visible = false;
             // 
@@ -4880,7 +4881,7 @@
             panel66.Dock = DockStyle.Fill;
             panel66.Location = new Point(0, 99);
             panel66.Name = "panel66";
-            panel66.Size = new Size(1648, 870);
+            panel66.Size = new Size(1428, 620);
             panel66.TabIndex = 2;
             // 
             // groupBox4
@@ -5256,7 +5257,7 @@
             panel67.Dock = DockStyle.Top;
             panel67.Location = new Point(0, 0);
             panel67.Name = "panel67";
-            panel67.Size = new Size(1648, 99);
+            panel67.Size = new Size(1428, 99);
             panel67.TabIndex = 1;
             // 
             // buttonRounded7
@@ -5313,7 +5314,7 @@
             pnlRA.Dock = DockStyle.Fill;
             pnlRA.Location = new Point(0, 0);
             pnlRA.Name = "pnlRA";
-            pnlRA.Size = new Size(1648, 969);
+            pnlRA.Size = new Size(1428, 719);
             pnlRA.TabIndex = 13;
             pnlRA.Visible = false;
             // 
@@ -5329,7 +5330,7 @@
             panel64.Dock = DockStyle.Fill;
             panel64.Location = new Point(0, 99);
             panel64.Name = "panel64";
-            panel64.Size = new Size(1648, 870);
+            panel64.Size = new Size(1428, 620);
             panel64.TabIndex = 2;
             // 
             // buttonRounded15
@@ -5719,7 +5720,7 @@
             panel65.Dock = DockStyle.Top;
             panel65.Location = new Point(0, 0);
             panel65.Name = "panel65";
-            panel65.Size = new Size(1648, 99);
+            panel65.Size = new Size(1428, 99);
             panel65.TabIndex = 1;
             // 
             // roundedPanel54
@@ -5761,7 +5762,7 @@
             pnlToday.Controls.Add(roundedPanel40);
             pnlToday.Controls.Add(roundedPanel44);
             pnlToday.ForeColor = Color.Maroon;
-            pnlToday.Location = new Point(223, 114);
+            pnlToday.Location = new Point(114, 114);
             pnlToday.Name = "pnlToday";
             pnlToday.Size = new Size(783, 394);
             pnlToday.TabIndex = 6;
@@ -5996,7 +5997,7 @@
             pnlAll.Controls.Add(roundedPanel70);
             pnlAll.Controls.Add(roundedPanel72);
             pnlAll.ForeColor = Color.Maroon;
-            pnlAll.Location = new Point(223, 114);
+            pnlAll.Location = new Point(114, 114);
             pnlAll.Name = "pnlAll";
             pnlAll.Size = new Size(783, 394);
             pnlAll.TabIndex = 7;
@@ -6409,7 +6410,7 @@
             pnlTW.AutoScroll = true;
             pnlTW.Controls.Add(roundedPanel26);
             pnlTW.Controls.Add(roundedPanel31);
-            pnlTW.Location = new Point(223, 114);
+            pnlTW.Location = new Point(114, 114);
             pnlTW.Name = "pnlTW";
             pnlTW.Size = new Size(783, 394);
             pnlTW.TabIndex = 7;
@@ -6592,7 +6593,7 @@
             pnlCalendar.Location = new Point(256, 72);
             pnlCalendar.Margin = new Padding(0);
             pnlCalendar.Name = "pnlCalendar";
-            pnlCalendar.Size = new Size(1648, 969);
+            pnlCalendar.Size = new Size(1428, 719);
             pnlCalendar.TabIndex = 33;
             pnlCalendar.Visible = false;
             // 
@@ -6647,7 +6648,7 @@
             pnlSubject.Location = new Point(256, 72);
             pnlSubject.Margin = new Padding(0);
             pnlSubject.Name = "pnlSubject";
-            pnlSubject.Size = new Size(1647, 989);
+            pnlSubject.Size = new Size(1426, 989);
             pnlSubject.TabIndex = 30;
             pnlSubject.Visible = false;
             // 
@@ -6671,7 +6672,7 @@
             tableLayoutPanel25.RowStyles.Add(new RowStyle());
             tableLayoutPanel25.RowStyles.Add(new RowStyle());
             tableLayoutPanel25.RowStyles.Add(new RowStyle());
-            tableLayoutPanel25.Size = new Size(1598, 630);
+            tableLayoutPanel25.Size = new Size(1377, 630);
             tableLayoutPanel25.TabIndex = 27;
             // 
             // roundedPanel6
@@ -6684,10 +6685,10 @@
             roundedPanel6.Controls.Add(label27);
             roundedPanel6.Controls.Add(pictureBox20);
             roundedPanel6.Controls.Add(button1);
-            roundedPanel6.Location = new Point(843, 437);
+            roundedPanel6.Location = new Point(732, 437);
             roundedPanel6.Margin = new Padding(44, 38, 44, 38);
             roundedPanel6.Name = "roundedPanel6";
-            roundedPanel6.Size = new Size(711, 135);
+            roundedPanel6.Size = new Size(601, 135);
             roundedPanel6.TabIndex = 20;
             // 
             // label25
@@ -6741,7 +6742,7 @@
             button1.Location = new Point(178, 88);
             button1.Margin = new Padding(3, 2, 3, 2);
             button1.Name = "button1";
-            button1.Size = new Size(507, 32);
+            button1.Size = new Size(396, 32);
             button1.TabIndex = 0;
             button1.Text = "Go To Course";
             button1.UseVisualStyleBackColor = true;
@@ -6759,7 +6760,7 @@
             roundedPanel20.Location = new Point(44, 437);
             roundedPanel20.Margin = new Padding(44, 38, 44, 38);
             roundedPanel20.Name = "roundedPanel20";
-            roundedPanel20.Size = new Size(711, 135);
+            roundedPanel20.Size = new Size(600, 135);
             roundedPanel20.TabIndex = 22;
             // 
             // label31
@@ -6813,7 +6814,7 @@
             button2.Location = new Point(178, 88);
             button2.Margin = new Padding(3, 2, 3, 2);
             button2.Name = "button2";
-            button2.Size = new Size(508, 32);
+            button2.Size = new Size(397, 32);
             button2.TabIndex = 0;
             button2.Text = "Go To Course";
             button2.UseVisualStyleBackColor = true;
@@ -6828,10 +6829,10 @@
             roundedPanel21.Controls.Add(label36);
             roundedPanel21.Controls.Add(pictureBox22);
             roundedPanel21.Controls.Add(button4);
-            roundedPanel21.Location = new Point(843, 226);
+            roundedPanel21.Location = new Point(732, 226);
             roundedPanel21.Margin = new Padding(44, 38, 44, 38);
             roundedPanel21.Name = "roundedPanel21";
-            roundedPanel21.Size = new Size(711, 135);
+            roundedPanel21.Size = new Size(601, 135);
             roundedPanel21.TabIndex = 21;
             // 
             // label34
@@ -6885,7 +6886,7 @@
             button4.Location = new Point(178, 88);
             button4.Margin = new Padding(3, 2, 3, 2);
             button4.Name = "button4";
-            button4.Size = new Size(507, 32);
+            button4.Size = new Size(396, 32);
             button4.TabIndex = 0;
             button4.Text = "Go To Course";
             button4.UseVisualStyleBackColor = true;
@@ -6903,7 +6904,7 @@
             roundedPanel22.Location = new Point(44, 226);
             roundedPanel22.Margin = new Padding(44, 38, 44, 38);
             roundedPanel22.Name = "roundedPanel22";
-            roundedPanel22.Size = new Size(711, 135);
+            roundedPanel22.Size = new Size(600, 135);
             roundedPanel22.TabIndex = 19;
             // 
             // label37
@@ -6957,7 +6958,7 @@
             button5.Location = new Point(178, 88);
             button5.Margin = new Padding(3, 2, 3, 2);
             button5.Name = "button5";
-            button5.Size = new Size(508, 32);
+            button5.Size = new Size(397, 32);
             button5.TabIndex = 0;
             button5.Text = "Go To Course";
             button5.UseVisualStyleBackColor = true;
@@ -6972,10 +6973,10 @@
             roundedPanel23.Controls.Add(label42);
             roundedPanel23.Controls.Add(pictureBox24);
             roundedPanel23.Controls.Add(button6);
-            roundedPanel23.Location = new Point(843, 15);
+            roundedPanel23.Location = new Point(732, 15);
             roundedPanel23.Margin = new Padding(44, 15, 44, 38);
             roundedPanel23.Name = "roundedPanel23";
-            roundedPanel23.Size = new Size(711, 135);
+            roundedPanel23.Size = new Size(601, 135);
             roundedPanel23.TabIndex = 18;
             // 
             // label40
@@ -7029,7 +7030,7 @@
             button6.Location = new Point(178, 88);
             button6.Margin = new Padding(3, 2, 3, 2);
             button6.Name = "button6";
-            button6.Size = new Size(507, 32);
+            button6.Size = new Size(396, 32);
             button6.TabIndex = 0;
             button6.Text = "Go To Course";
             button6.UseVisualStyleBackColor = true;
@@ -7047,7 +7048,7 @@
             roundedPanel28.Location = new Point(44, 15);
             roundedPanel28.Margin = new Padding(44, 15, 44, 38);
             roundedPanel28.Name = "roundedPanel28";
-            roundedPanel28.Size = new Size(711, 135);
+            roundedPanel28.Size = new Size(600, 135);
             roundedPanel28.TabIndex = 17;
             // 
             // label43
@@ -7101,7 +7102,7 @@
             btnGo1.Location = new Point(178, 88);
             btnGo1.Margin = new Padding(3, 2, 3, 2);
             btnGo1.Name = "btnGo1";
-            btnGo1.Size = new Size(508, 32);
+            btnGo1.Size = new Size(397, 32);
             btnGo1.TabIndex = 0;
             btnGo1.Text = "Go To Course";
             btnGo1.UseVisualStyleBackColor = true;
@@ -7125,7 +7126,7 @@
             panel2.Location = new Point(0, 0);
             panel2.Margin = new Padding(3, 2, 3, 2);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1647, 46);
+            panel2.Size = new Size(1426, 46);
             panel2.TabIndex = 16;
             // 
             // label8
@@ -7146,7 +7147,7 @@
             pnlHeader.Location = new Point(256, 0);
             pnlHeader.Margin = new Padding(0);
             pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(1648, 72);
+            pnlHeader.Size = new Size(1428, 72);
             pnlHeader.TabIndex = 2;
             // 
             // panel15
@@ -7204,7 +7205,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1904, 1041);
+            ClientSize = new Size(1684, 791);
             Controls.Add(pnlContainerStudentPortal);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;

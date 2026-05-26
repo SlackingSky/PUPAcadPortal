@@ -39,48 +39,6 @@ namespace PUPAcadPortal.PortalForms
         private readonly Dictionary<Control, RectangleF> _origBounds = new();
         private readonly Dictionary<Control, float> _origFontSz = new();
 
-        private class StudentAnnouncement
-        {
-            public int Id { get; set; }
-            public string Title { get; set; } = string.Empty;
-            public string Description { get; set; } = string.Empty;
-            public string Category { get; set; } = "General";
-            public string OfficeName { get; set; } = "Admin Office";
-            public string InstructorName { get; set; } = string.Empty;
-            public DateTime Date { get; set; } = DateTime.Now;
-            public bool IsUrgent { get; set; }
-            public bool IsPinned { get; set; }
-            public bool IsRead { get; set; }
-            public string Status { get; set; } = "active";
-        }
-
-        private List<StudentAnnouncement> _announcements = new();
-        private string _annCategoryFilter = "All Categories";
-        private string _annSortOrder = "Latest First";
-        private string _annSearchText = "";
-
-        private ViewAnnouncementStudent _viewStudentUC;
-
-        private static readonly Dictionary<string, Color> CatIconColor = new()
-        {
-            ["General"] = Color.FromArgb(55, 138, 221),
-            ["Academic"] = Color.FromArgb(99, 153, 34),
-            ["Schedule"] = Color.FromArgb(186, 117, 23),
-            ["Events"] = Color.FromArgb(212, 83, 126),
-            ["Examinations"] = Color.FromArgb(127, 119, 221),
-            ["Administrative"] = Color.FromArgb(90, 90, 200),
-            ["Urgent"] = Color.FromArgb(220, 50, 50),
-        };
-        private static readonly Dictionary<string, Color> CatBgColor = new()
-        {
-            ["General"] = Color.FromArgb(230, 241, 251),
-            ["Academic"] = Color.FromArgb(234, 243, 222),
-            ["Schedule"] = Color.FromArgb(250, 238, 218),
-            ["Events"] = Color.FromArgb(251, 234, 240),
-            ["Examinations"] = Color.FromArgb(238, 237, 254),
-            ["Administrative"] = Color.FromArgb(230, 230, 245),
-            ["Urgent"] = Color.FromArgb(255, 235, 235),
-        };
 
         private UrDay _selectedCell;
 
