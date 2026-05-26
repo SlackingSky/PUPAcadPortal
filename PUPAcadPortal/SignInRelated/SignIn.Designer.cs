@@ -69,7 +69,6 @@ namespace PUPAcadPortal
             label6 = new Label();
             panel3 = new Panel();
             panel4 = new Panel();
-            btnSignIn = new Button();
             panel6 = new Panel();
             panel8 = new Panel();
             btnShowPass = new Button();
@@ -86,6 +85,7 @@ namespace PUPAcadPortal
             label2 = new Label();
             label1 = new Label();
             pictureBox1 = new PictureBox();
+            btnSignIn = new buttonRounded();
             panel1.SuspendLayout();
             panel9.SuspendLayout();
             panel3.SuspendLayout();
@@ -171,24 +171,6 @@ namespace PUPAcadPortal
             panel4.Name = "panel4";
             panel4.Size = new Size(384, 275);
             panel4.TabIndex = 0;
-            // 
-            // btnSignIn
-            // 
-            btnSignIn.Anchor = AnchorStyles.None;
-            btnSignIn.BackColor = Color.Transparent;
-            btnSignIn.Cursor = Cursors.Hand;
-            btnSignIn.FlatAppearance.BorderSize = 0;
-            btnSignIn.FlatStyle = FlatStyle.Flat;
-            btnSignIn.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            btnSignIn.ForeColor = Color.White;
-            btnSignIn.Image = Properties.Resources.button__1_;
-            btnSignIn.Location = new Point(0, 227);
-            btnSignIn.Name = "btnSignIn";
-            btnSignIn.Size = new Size(384, 48);
-            btnSignIn.TabIndex = 2;
-            btnSignIn.Text = "Sign In";
-            btnSignIn.UseVisualStyleBackColor = false;
-            btnSignIn.Click += btnSignIn_Click;
             // 
             // panel6
             // 
@@ -374,6 +356,22 @@ namespace PUPAcadPortal
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
+            // btnSignIn
+            // 
+            btnSignIn.BackColor = Color.FromArgb(128, 0, 0);
+            btnSignIn.BorderRadius = 20;
+            btnSignIn.FlatAppearance.BorderSize = 0;
+            btnSignIn.FlatStyle = FlatStyle.Flat;
+            btnSignIn.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSignIn.ForeColor = Color.White;
+            btnSignIn.Location = new Point(0, 227);
+            btnSignIn.Name = "btnSignIn";
+            btnSignIn.Size = new Size(384, 48);
+            btnSignIn.TabIndex = 4;
+            btnSignIn.Text = "Sign In";
+            btnSignIn.UseVisualStyleBackColor = false;
+            btnSignIn.Click += btnSignIn_Click;
+            // 
             // SignIn
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -428,9 +426,9 @@ namespace PUPAcadPortal
         private PictureBox pictureBox3;
         private TextBox txtPassword;
         private Button btnShowPass;
-        private Button btnSignIn;
         private Panel panel9;
         private Label label6;
         private Label label7;
+        private buttonRounded btnSignIn;
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PUPAcadPortal.PortalContents.Instructor.LMS;
+using PUPAcadPortal.PortalContents.Student.LMS;
+using System;
 using System.Collections.Generic;
 using System.Drawing.Text;
 using System.Text;
@@ -30,7 +32,10 @@ namespace PUPAcadPortal.Utils
                 newView.Dock = DockStyle.Fill;
 
                 // Drop it into the panel container
-                Resizer resizer = new Resizer(newView);
+                if (newView.GetType() != typeof(CalendarContentInst) || newView.GetType() != typeof(CalendarContentStudent))
+                {
+                    Resizer resizer = new Resizer(newView);
+                }
                 containerPanel.Controls.Add(newView);
                 _oldView = newView;
             }
