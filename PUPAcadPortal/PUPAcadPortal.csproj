@@ -6,6 +6,8 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+	  <NuGetAudit>false</NuGetAudit>
+	  <NoWarn>NU1902;NU1701</NoWarn>
 	 <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
   </PropertyGroup>
 
@@ -18,21 +20,20 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\PUPLogo.ico" />
     <PackageReference Include="BCrypt.Net-Next" Version="4.2.0" />
+    <PackageReference Include="BouncyCastle.Cryptography" Version="2.6.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.0">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="MySql.EntityFrameworkCore" Version="10.0.0-preview" />
+    <PackageReference Include="MySql.EntityFrameworkCore" Version="10.0.7" />
     <PackageReference Include="MySqlConnector" Version="2.5.0" />
-    <Resource Include="Resources\Roboto-VariableFont_wdth,wght.ttf" /><PackageReference Include="BouncyCastle" Version="1.8.6.1" />
+    <Resource Include="Resources\Roboto-VariableFont_wdth,wght.ttf" />
     <PackageReference Include="itextsharp.xfaworker" Version="5.5.13.2" />
-	<PackageReference Include="BouncyCastle" Version="1.8.6.1" />
-	<PackageReference Include="itextsharp.xfaworker" Version="5.5.13.2" />
   </ItemGroup>
 
   <ItemGroup>

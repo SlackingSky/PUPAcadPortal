@@ -47,9 +47,9 @@ namespace PUPAcadPortal
 
                     authenticatedUser = await Task.Run(() =>
                     {
-                        using (var context = new DefaultdbContext())
+                        using (var context = new AppDbContext())
                         {
-                            var user = context.Users.FirstOrDefault(u => u.Username == usernameInput);
+                            var user = context.Users.Include(u => u.Role).FirstOrDefault(u => u.Username == usernameInput);
 
                             if (user != null && BCrypt.Net.BCrypt.Verify(passwordInput, user.PasswordHash))
                             {
@@ -107,38 +107,40 @@ namespace PUPAcadPortal
 
             if (authenticatedUser != null)
             {
-                var role = authenticatedUser.Role.ToLower().Trim();
-
                 this.Hide();
-
-                if (role == "admin")
+                switch (authenticatedUser.Role.RoleName)
                 {
-                    using (AdminPortal adminPortal = new AdminPortal())
-                    {
-                        adminPortal.Size = _usableScreenSize;
-                        adminPortal.Location = _usableScreenLoc;
-                        adminPortal.ShowDialog();
+                    case "Admin":
+                        {
+                            using (AdminPortal adminPortal = new AdminPortal())
+                            {
+                                adminPortal.Size = _usableScreenSize;
+                                adminPortal.Location = _usableScreenLoc;
+                                adminPortal.ShowDialog();
+                            }
+                            break;
+                        }
+                    case "Instructor":
+                        {
+                            using (InstructorPortal instructorPortal = new InstructorPortal())
+                            {
+                                instructorPortal.Size = _usableScreenSize;
+                                instructorPortal.Location = _usableScreenLoc;
+                                instructorPortal.ShowDialog();
+                            }
+                            break;
+                        }
+                    case "Student":
+                        {
+                            using (StudentPortal studentPortal = new StudentPortal(this))
+                            {
+                                studentPortal.Size = _usableScreenSize;
+                                studentPortal.Location = _usableScreenLoc;
+                                studentPortal.ShowDialog();
+                            }
+                            break;
+                        }
                     }
-
-                }
-                else if (role == "instructor")
-                {
-                    using (InstructorPortal instructorPortal = new InstructorPortal())
-                    {
-                        instructorPortal.Size = _usableScreenSize;
-                        instructorPortal.Location = _usableScreenLoc;
-                        instructorPortal.ShowDialog();
-                    }
-                }
-                else if (role == "student")
-                {
-                    using (StudentPortal studentPortal = new StudentPortal(this))
-                    {
-                        studentPortal.Size = _usableScreenSize;
-                        studentPortal.Location = _usableScreenLoc;
-                        studentPortal.ShowDialog();
-                    }
-                }
 
                 txtUsername.Clear();
                 txtPassword.Clear();
@@ -164,15 +166,49 @@ namespace PUPAcadPortal
             string loweredUsername = username.ToLower();
             try
             {
-                using (var context = new DefaultdbContext())
+                using (var context = new AppDbContext())
                 {
+                    // ==========================================
+                    // 1. CHECK FOR OR CREATE THE ROLE
+                    // ==========================================
+
+                    // Look to see if the "Instructor" role already exists
+                    var adminRole = context.Roles.FirstOrDefault(r => r.RoleName == "Student");
+
+                    // If it doesn't exist, create it and save it to the database
+                    if (adminRole == null)
+                    {
+                        adminRole = new Role
+                        {
+                            RoleName = "Student"
+                        };
+
+                        context.Roles.Add(adminRole);
+                        context.SaveChanges(); // This assigns a real RoleID from MySQL
+                    }
+
+                    // ==========================================
+                    // 2. CREATE THE NEW USER
+                    // ==========================================
+
+                    // Note: In a real app, never store plain text! Use BCrypt to hash it first.
+                    string rawPassword = plainTextPassword;
+                    string hashedPassword = BCrypt.Net.BCrypt.HashPassword(rawPassword);
+
                     var newUser = new User
                     {
-                        Username = loweredUsername,
-                        PasswordHash = passwordHash,
-                        Role = plainTextPassword,
-                        DisplayName = username
+                        RoleId = adminRole.RoleId, // Link the user to the Admin role we just found/created
+                        Username = username.ToLower(),
+                        PasswordHash = hashedPassword,
+                        Email = "DemoStudent@university.edu",
+                        FirstName = "Demo",
+                        LastName = "Student",
+                        IsActive = true,
+                        CreatedAt = DateTime.Now
+                        // You can leave Birthdate, ContactNumber, etc. blank since they are NULLable in your DB
                     };
+
+                    // Add the user to the context and push it to the live database
                     context.Users.Add(newUser);
                     context.SaveChanges();
                 }
@@ -191,6 +227,11 @@ namespace PUPAcadPortal
         private void panel8_Click(object sender, EventArgs e)
         {
             txtPassword.Focus();
+        }
+
+        private void AddUserForTestingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddUser(txtUsername.Text, txtPassword.Text);
         }
     }
 }

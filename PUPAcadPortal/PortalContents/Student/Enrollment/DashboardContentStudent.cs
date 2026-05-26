@@ -45,7 +45,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
 
         private void DashboardContentStudent_Load(object sender, EventArgs e)
         {
-            lblDashboardGreeting.Text = $"Welcome back, {SignIn.authenticatedUser?.DisplayName}!";
+            lblDashboardGreeting.Text = $"Welcome back, {SignIn.authenticatedUser?.FirstName} {SignIn.authenticatedUser?.LastName}!";
             ShowNotEnrolledState();
             lblEnrolledUnits.Text = $"{EnrollmentContentStudent.totalUnits} Units";
             if (EnrollmentContentStudent.isEnrolled)

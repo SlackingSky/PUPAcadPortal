@@ -23,8 +23,8 @@ namespace PUPAcadPortal.PortalContents.Misc
                 return;
             }
 
-            lblName.Text = SignIn.authenticatedUser.DisplayName;
-            lblRole.Text = SignIn.authenticatedUser.Role.ToUpper();
+            lblName.Text = SignIn.authenticatedUser.FirstName + " " + SignIn.authenticatedUser.LastName;
+            lblRole.Text = SignIn.authenticatedUser.Role.RoleName.ToUpper();
         }
     }
 }

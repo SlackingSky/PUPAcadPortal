@@ -69,6 +69,7 @@ namespace PUPAcadPortal
             label6 = new Label();
             panel3 = new Panel();
             panel4 = new Panel();
+            btnSignIn = new buttonRounded();
             panel6 = new Panel();
             panel8 = new Panel();
             btnShowPass = new Button();
@@ -85,7 +86,6 @@ namespace PUPAcadPortal
             label2 = new Label();
             label1 = new Label();
             pictureBox1 = new PictureBox();
-            btnSignIn = new buttonRounded();
             panel1.SuspendLayout();
             panel9.SuspendLayout();
             panel3.SuspendLayout();
@@ -171,6 +171,22 @@ namespace PUPAcadPortal
             panel4.Name = "panel4";
             panel4.Size = new Size(384, 275);
             panel4.TabIndex = 0;
+            // 
+            // btnSignIn
+            // 
+            btnSignIn.BackColor = Color.FromArgb(128, 0, 0);
+            btnSignIn.BorderRadius = 20;
+            btnSignIn.FlatAppearance.BorderSize = 0;
+            btnSignIn.FlatStyle = FlatStyle.Flat;
+            btnSignIn.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSignIn.ForeColor = Color.White;
+            btnSignIn.Location = new Point(0, 227);
+            btnSignIn.Name = "btnSignIn";
+            btnSignIn.Size = new Size(384, 48);
+            btnSignIn.TabIndex = 4;
+            btnSignIn.Text = "Sign In";
+            btnSignIn.UseVisualStyleBackColor = false;
+            btnSignIn.Click += btnSignIn_Click;
             // 
             // panel6
             // 
@@ -287,7 +303,7 @@ namespace PUPAcadPortal
             txtUsername.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
             txtUsername.Location = new Point(40, 15);
             txtUsername.Name = "txtUsername";
-            txtUsername.PlaceholderText = "Student Number";
+            txtUsername.PlaceholderText = "Enter your username";
             txtUsername.Size = new Size(328, 19);
             txtUsername.TabIndex = 0;
             // 
@@ -299,7 +315,7 @@ namespace PUPAcadPortal
             label4.Name = "label4";
             label4.Size = new Size(384, 20);
             label4.TabIndex = 0;
-            label4.Text = "Username or Student/Employee ID\r\n";
+            label4.Text = "Username";
             // 
             // label3
             // 
@@ -355,22 +371,6 @@ namespace PUPAcadPortal
             pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
-            // 
-            // btnSignIn
-            // 
-            btnSignIn.BackColor = Color.FromArgb(128, 0, 0);
-            btnSignIn.BorderRadius = 20;
-            btnSignIn.FlatAppearance.BorderSize = 0;
-            btnSignIn.FlatStyle = FlatStyle.Flat;
-            btnSignIn.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnSignIn.ForeColor = Color.White;
-            btnSignIn.Location = new Point(0, 227);
-            btnSignIn.Name = "btnSignIn";
-            btnSignIn.Size = new Size(384, 48);
-            btnSignIn.TabIndex = 4;
-            btnSignIn.Text = "Sign In";
-            btnSignIn.UseVisualStyleBackColor = false;
-            btnSignIn.Click += btnSignIn_Click;
             // 
             // SignIn
             // 
