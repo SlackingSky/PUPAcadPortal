@@ -113,7 +113,7 @@ namespace PUPAcadPortal.Utils
                     float safeFontScale = Math.Min(rawFontScale, MaxFontScaleFactor);
 
                     // 3. Compute final size with a minimum safety floor of 6pt
-                    float newSz = Math.Max(6f, origSz * safeFontScale);
+                    float newSz = Math.Max(10f, origSz * safeFontScale);
 
                     // 4. Reduce font rendering updates to prevent flickering text layouts
                     if (Math.Abs(ctrl.Font.Size - newSz) > 0.25f)
