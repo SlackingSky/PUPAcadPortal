@@ -713,6 +713,16 @@ namespace PUPAcadPortal.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap download_2_16_maroon {
+            get {
+                object obj = ResourceManager.GetObject("download-2-16-maroon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap download_icon_ {
             get {
                 object obj = ResourceManager.GetObject("download(icon)", resourceCulture);
