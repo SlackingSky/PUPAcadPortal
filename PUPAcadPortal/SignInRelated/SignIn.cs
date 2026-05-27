@@ -1,11 +1,15 @@
-using System.Drawing.Drawing2D;
-using MySqlConnector;
 using BCrypt.Net;
+using CloudinaryDotNet;
 using Microsoft.EntityFrameworkCore;
+using MySqlConnector;
 using PUPAcadPortal.Models;
 using PUPAcadPortal.PortalForms;
+using PUPAcadPortal.Services;
 using PUPAcadPortal.Utils;
+using System.Configuration;
+using System.Drawing.Drawing2D;
 using ZstdSharp.Unsafe;
+using static PUPAcadPortal.Services.FileServerConnectService;
 
 namespace PUPAcadPortal
 {
@@ -152,8 +156,10 @@ namespace PUPAcadPortal
             }
         }
 
-        private void SignIn_Load(object sender, EventArgs e)
+        private async void SignIn_Load(object sender, EventArgs e)
         {
+            await DBConnectService.GetDecryptedConnectionStringAsync();
+            await FileServerConnectService.GetDecryptedCredentialsAsync();
             this.Size = _usableScreenSize;
             this.Location = _usableScreenLoc;
             txtUsername.Select();
@@ -168,14 +174,9 @@ namespace PUPAcadPortal
             {
                 using (var context = new AppDbContext())
                 {
-                    // ==========================================
-                    // 1. CHECK FOR OR CREATE THE ROLE
-                    // ==========================================
-
-                    // Look to see if the "Instructor" role already exists
                     var adminRole = context.Roles.FirstOrDefault(r => r.RoleName == "Student");
 
-                    // If it doesn't exist, create it and save it to the database
+                 
                     if (adminRole == null)
                     {
                         adminRole = new Role
@@ -184,20 +185,15 @@ namespace PUPAcadPortal
                         };
 
                         context.Roles.Add(adminRole);
-                        context.SaveChanges(); // This assigns a real RoleID from MySQL
+                        context.SaveChanges();
                     }
 
-                    // ==========================================
-                    // 2. CREATE THE NEW USER
-                    // ==========================================
-
-                    // Note: In a real app, never store plain text! Use BCrypt to hash it first.
                     string rawPassword = plainTextPassword;
                     string hashedPassword = BCrypt.Net.BCrypt.HashPassword(rawPassword);
 
                     var newUser = new User
                     {
-                        RoleId = adminRole.RoleId, // Link the user to the Admin role we just found/created
+                        RoleId = adminRole.RoleId,
                         Username = username.ToLower(),
                         PasswordHash = hashedPassword,
                         Email = "DemoStudent@university.edu",
@@ -205,10 +201,8 @@ namespace PUPAcadPortal
                         LastName = "Student",
                         IsActive = true,
                         CreatedAt = DateTime.Now
-                        // You can leave Birthdate, ContactNumber, etc. blank since they are NULLable in your DB
                     };
 
-                    // Add the user to the context and push it to the live database
                     context.Users.Add(newUser);
                     context.SaveChanges();
                 }
