@@ -723,6 +723,7 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             phAddressFields.Location = new Point(label26.Location.X, label26.Location.Y + 26);
             phAddressFields.Size = new Size(850, 250);
             pnlStudentRegistrationContainer.Controls.Add(phAddressFields);
+
         }
 
         private void btnStudentClearForm_Click(object sender, EventArgs e)

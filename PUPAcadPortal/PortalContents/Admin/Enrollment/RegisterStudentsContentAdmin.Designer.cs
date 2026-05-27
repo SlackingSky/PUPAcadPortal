@@ -131,7 +131,7 @@
             pnlStudentRegistrationContainer.Controls.Add(lblStudentPersonalInfo);
             pnlStudentRegistrationContainer.Location = new Point(112, 112);
             pnlStudentRegistrationContainer.Name = "pnlStudentRegistrationContainer";
-            pnlStudentRegistrationContainer.Size = new Size(959, 876);
+            pnlStudentRegistrationContainer.Size = new Size(959, 990);
             pnlStudentRegistrationContainer.TabIndex = 9;
             // 
             // label1
@@ -161,7 +161,7 @@
             btnStudentClearForm.FlatAppearance.BorderColor = Color.Gray;
             btnStudentClearForm.FlatStyle = FlatStyle.Flat;
             btnStudentClearForm.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnStudentClearForm.Location = new Point(542, 812);
+            btnStudentClearForm.Location = new Point(542, 898);
             btnStudentClearForm.Name = "btnStudentClearForm";
             btnStudentClearForm.Size = new Size(147, 37);
             btnStudentClearForm.TabIndex = 57;
@@ -177,7 +177,7 @@
             btnStudentRegistration.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnStudentRegistration.ForeColor = Color.White;
             btnStudentRegistration.Image = Properties.Resources.student_2_161;
-            btnStudentRegistration.Location = new Point(702, 812);
+            btnStudentRegistration.Location = new Point(702, 898);
             btnStudentRegistration.Name = "btnStudentRegistration";
             btnStudentRegistration.Size = new Size(215, 37);
             btnStudentRegistration.TabIndex = 56;
@@ -192,7 +192,7 @@
             cmbRSEnrollmentStatus.Font = new Font("Segoe UI", 12F);
             cmbRSEnrollmentStatus.FormattingEnabled = true;
             cmbRSEnrollmentStatus.Items.AddRange(new object[] { "Select Applicant Type", "Regular Freshman", "Transferee", "Second Courser", "Returning Student", "Cross Enrollee", "Foreign Student" });
-            cmbRSEnrollmentStatus.Location = new Point(617, 769);
+            cmbRSEnrollmentStatus.Location = new Point(617, 855);
             cmbRSEnrollmentStatus.Name = "cmbRSEnrollmentStatus";
             cmbRSEnrollmentStatus.Size = new Size(294, 29);
             cmbRSEnrollmentStatus.TabIndex = 55;
@@ -203,7 +203,7 @@
             label17.AutoSize = true;
             label17.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label17.ForeColor = Color.Black;
-            label17.Location = new Point(617, 745);
+            label17.Location = new Point(617, 831);
             label17.Name = "label17";
             label17.Size = new Size(139, 21);
             label17.TabIndex = 54;
@@ -215,7 +215,7 @@
             cmbRSStudentCourse.Font = new Font("Segoe UI", 12F);
             cmbRSStudentCourse.FormattingEnabled = true;
             cmbRSStudentCourse.Items.AddRange(new object[] { "Select Course", "BS Information Technology" });
-            cmbRSStudentCourse.Location = new Point(29, 769);
+            cmbRSStudentCourse.Location = new Point(29, 855);
             cmbRSStudentCourse.Name = "cmbRSStudentCourse";
             cmbRSStudentCourse.Size = new Size(328, 29);
             cmbRSStudentCourse.TabIndex = 50;
@@ -226,7 +226,7 @@
             cmbRSYearLevel.Font = new Font("Segoe UI", 12F);
             cmbRSYearLevel.FormattingEnabled = true;
             cmbRSYearLevel.Items.AddRange(new object[] { "Select Year Level", "1st Year", "2nd Year", "3rd Year", "4th Year" });
-            cmbRSYearLevel.Location = new Point(363, 769);
+            cmbRSYearLevel.Location = new Point(363, 855);
             cmbRSYearLevel.Name = "cmbRSYearLevel";
             cmbRSYearLevel.Size = new Size(246, 29);
             cmbRSYearLevel.TabIndex = 49;
@@ -237,7 +237,7 @@
             label22.AutoSize = true;
             label22.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label22.ForeColor = Color.Black;
-            label22.Location = new Point(362, 745);
+            label22.Location = new Point(362, 831);
             label22.Name = "label22";
             label22.Size = new Size(83, 21);
             label22.TabIndex = 43;
@@ -248,7 +248,7 @@
             label23.AutoSize = true;
             label23.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label23.ForeColor = Color.Black;
-            label23.Location = new Point(26, 745);
+            label23.Location = new Point(26, 831);
             label23.Name = "label23";
             label23.Size = new Size(61, 21);
             label23.TabIndex = 41;
@@ -257,7 +257,7 @@
             // pnlStudentMaroonLine3
             // 
             pnlStudentMaroonLine3.BackColor = Color.Maroon;
-            pnlStudentMaroonLine3.Location = new Point(26, 723);
+            pnlStudentMaroonLine3.Location = new Point(26, 809);
             pnlStudentMaroonLine3.Margin = new Padding(0);
             pnlStudentMaroonLine3.Name = "pnlStudentMaroonLine3";
             pnlStudentMaroonLine3.Size = new Size(890, 3);
@@ -268,7 +268,7 @@
             lblStudentAcademicInfo.AutoSize = true;
             lblStudentAcademicInfo.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblStudentAcademicInfo.ForeColor = Color.Black;
-            lblStudentAcademicInfo.Location = new Point(26, 688);
+            lblStudentAcademicInfo.Location = new Point(26, 774);
             lblStudentAcademicInfo.Name = "lblStudentAcademicInfo";
             lblStudentAcademicInfo.Size = new Size(226, 30);
             lblStudentAcademicInfo.TabIndex = 38;

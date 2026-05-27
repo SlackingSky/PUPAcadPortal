@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PUPAcadPortal.Utils;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -173,63 +174,11 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             FixDashboardLayoutCompletely();
         }
 
-        private void MakePanelClickable(Panel panel, Action onClickAction)
-        {
-            panel.Cursor = Cursors.Hand;
-            panel.Click += (s, e) => onClickAction();
-
-            // Also make all child controls clickable to trigger the same action
-            foreach (Control ctrl in panel.Controls)
-            {
-                ctrl.Cursor = Cursors.Hand;
-                ctrl.Click += (s, e) => onClickAction();
-            }
-        }
-
-        //private void SetupClickableQuickActions()
-        //{
-        //    // Register Student Card -> Navigate to Register Student
-        //    MakePanelClickable(pnlDashboardRegisterStudent, () =>
-        //    {
-        //        btnRegisterStudent.PerformClick();
-        //    });
-
-        //    // Register Professor Card -> Navigate to Register Professor
-        //    MakePanelClickable(pnlDashboardRegisterProfessor, () =>
-        //    {
-        //        btnRegisterProfessor.PerformClick();
-        //    });
-
-        //    // View All Users Card -> Navigate to View All Users (Students tab by default)
-        //    MakePanelClickable(pnlDashboardViewAllUsers, () =>
-        //    {
-        //        viewingStudents = true;
-        //        btnViewAllUsers.PerformClick();
-        //    });
-
-        //    AddCardHoverEffect(pnlDashboardRegisterStudent);
-        //    AddCardHoverEffect(pnlDashboardRegisterProfessor);
-        //    AddCardHoverEffect(pnlDashboardViewAllUsers);
-        //}
-
-        private void AddCardHoverEffect(Panel card)
-        {
-            Color originalColor = card.BackColor;
-            Color hoverColor = Color.FromArgb(245, 245, 245); // Slightly darker
-
-            card.MouseEnter += (s, e) => card.BackColor = hoverColor;
-            card.MouseLeave += (s, e) => card.BackColor = originalColor;
-
-            foreach (Control ctrl in card.Controls)
-            {
-                ctrl.MouseEnter += (s, e) => card.BackColor = hoverColor;
-                ctrl.MouseLeave += (s, e) => card.BackColor = originalColor;
-            }
-        }
-
         private void AdminDashboardContent_Load(object sender, EventArgs e)
         {
-
+            pnlDashboardRegisterProfessor.BindClick();
+            pnlDashboardRegisterStudent.BindClick();
+            pnlDashboardViewAllUsers.BindClick();
         }
     }
 }

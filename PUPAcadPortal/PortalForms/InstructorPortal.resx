@@ -136,7 +136,7 @@
         C8vcLoO16Zpw04gcI01lXpdBD5zD67zaHchugwbMzHnVUOp/4yeFo+E8drZOqAAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="btnActivitiesIns.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="btnCoursesIns.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAI2SURBVFhH7dXJ
@@ -152,57 +152,6 @@
         jY2/YhZXzPuUfg0aNPgv+AFrUivA0uOkcQAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="pictureBox78.ErrorImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAAOZJREFUWEftlrEKwjAQhvM+voAvoC/gc/gEDo66dRJ3F8d2c3QUXDo6uiiOgovj
-        Lz8xkF4JaWuIyx18UO5C7ksoR8zrDawPwGiZl0UJ3J+AmW3bxVxMC8DIZG5UQAVUICowXtmhIZkU/daE
-        iAqcrwjG5minaCguj/Z+kqgAx2VZN3M8MZu72J1szl/j6nI/ySABB2+HdZknWQSq2krIPFEBFVCBpAK3
-        r4QPh4+bA2wm65yCSQTme7sZG/nwMeuC37JOujx2owIhOHrZmPBxKetdGSxAeEL+BzLfh58EUqACKqAC
-        fxf4APN8GSNCzaoyAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="pictureBox78.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAAOZJREFUWEftlrEKwjAQhvM+voAvoC/gc/gEDo66dRJ3F8d2c3QUXDo6uiiOgovj
-        Lz8xkF4JaWuIyx18UO5C7ksoR8zrDawPwGiZl0UJ3J+AmW3bxVxMC8DIZG5UQAVUICowXtmhIZkU/daE
-        iAqcrwjG5minaCguj/Z+kqgAx2VZN3M8MZu72J1szl/j6nI/ySABB2+HdZknWQSq2krIPFEBFVCBpAK3
-        r4QPh4+bA2wm65yCSQTme7sZG/nwMeuC37JOujx2owIhOHrZmPBxKetdGSxAeEL+BzLfh58EUqACKqAC
-        fxf4APN8GSNCzaoyAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="pictureBox78.InitialImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAAOZJREFUWEftlrEKwjAQhvM+voAvoC/gc/gEDo66dRJ3F8d2c3QUXDo6uiiOgovj
-        Lz8xkF4JaWuIyx18UO5C7ksoR8zrDawPwGiZl0UJ3J+AmW3bxVxMC8DIZG5UQAVUICowXtmhIZkU/daE
-        iAqcrwjG5minaCguj/Z+kqgAx2VZN3M8MZu72J1szl/j6nI/ySABB2+HdZknWQSq2krIPFEBFVCBpAK3
-        r4QPh4+bA2wm65yCSQTme7sZG/nwMeuC37JOujx2owIhOHrZmPBxKetdGSxAeEL+BzLfh58EUqACKqAC
-        fxf4APN8GSNCzaoyAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <metadata name="StudentNumber.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colName.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Midterm.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Finals.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Average.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Remarks.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Action.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
   <data name="button36.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAA
@@ -542,12 +491,6 @@
         uqOXGTsiANoEwDt4qyadUPgb/4bH2rJp8XP2TtxaDR8/xo7CyVP/Bw6ZBew9tIS2AAAAAElFTkSuQmCC
 </value>
   </data>
-  <metadata name="timer1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="sideBarTimer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>120, 1</value>
-  </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>88</value>
   </metadata>

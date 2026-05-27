@@ -542,7 +542,7 @@ namespace PUPAcadPortal
 
             if (_btnNoteDropdown != null) { this.Controls.Remove(_btnNoteDropdown); _btnNoteDropdown = null; }
 
-            var dict = _isStudent ? SharedCalendarData.StudentNotes : InstructorPortal.notesDict;
+            var dict = _isStudent ? SharedCalendarData.StudentNotes : PUPAcadPortal.PortalContents.Instructor.LMS.CalendarContentInst.notesDict;
             bool has = dict.ContainsKey(_fullDate) && !string.IsNullOrWhiteSpace(dict[_fullDate]);
 
             if (has)
@@ -576,7 +576,7 @@ namespace PUPAcadPortal
         private void OpenNotesDialog()
         {
             if (string.IsNullOrEmpty(_day) || !_isCurrentMonth) return;
-            var dict = _isStudent ? SharedCalendarData.StudentNotes : InstructorPortal.notesDict;
+            var dict = _isStudent ? SharedCalendarData.StudentNotes : PUPAcadPortal.PortalContents.Instructor.LMS.CalendarContentInst.notesDict;
             string existing = dict.ContainsKey(_fullDate) ? dict[_fullDate] : "";
 
             using var form = new AddNotesForm(_fullDate, existing);

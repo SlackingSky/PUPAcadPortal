@@ -17,8 +17,11 @@ using static PUPAcadPortal.PortalForms.InstructorPortal;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
+using PUPAcadPortal.PortalContents.Instructor.Enrollment;
 using PUPAcadPortal.PortalContents.Instructor.LMS;
 using PUPAcadPortal.Utils;
+using System.Runtime.InteropServices.Marshalling;
+using PUPAcadPortal.Events;
 
 
 namespace PUPAcadPortal.PortalForms
@@ -28,13 +31,6 @@ namespace PUPAcadPortal.PortalForms
     {
         private SubmenuAnim submenuAnimLMS;
 
-        private bool isEditing = false; // New flag to stop event interference
-        public static int _year, _month;
-        public static Dictionary<DateTime, string> notesDict = new Dictionary<DateTime, string>();
-        private Button clickedButton;
-        private Color defaultColor = Color.Maroon;
-        private Color selectedColor = Color.FromArgb(109, 0, 0);
-
         private Panel pnlLMSActivitiesHost;
         private LMSActivityHost lmsHost;
 
@@ -43,27 +39,24 @@ namespace PUPAcadPortal.PortalForms
         {
             InitializeComponent();
             submenuAnimLMS = new SubmenuAnim(fpnlLMSSubmenu, fpnlLMSSubmenu.Height);
+            this.FormClosing += CloseApp.Form_Closing;
+            btnLogout.Click += LogOut.LogOut_Click;
+            this.Disposed += InstructorPortal_Disposed;
+            QuickActionClickEvent.QuickActionClicked += DashboardContentInst_QuickActionClicked;
 
-            pnlAttendance.AutoScrollMinSize = new Size(0, 1000);
             SharedCalendarData.LoadData();
-            pnlAttendance.AutoScrollMinSize = new Size(0, 1000);
             this.DoubleBuffered = true;
 
             if (panel3 != null)
             {
                 panel3.Dock = DockStyle.Fill;
             }
-
-            SetupQuickActions();
-
-            if (btnDashboard != null)
-            {
-                changeButtonColor(btnDashboard);
-                showContent(btnDashboard);
-            }
-
-            SetupGradeLogic();
             BuildLMSActivitiesPanel();
+        }
+
+        private void InstructorPortal_Disposed(object? sender, EventArgs e)
+        {
+            QuickActionClickEvent.QuickActionClicked -= DashboardContentInst_QuickActionClicked;
         }
 
         private void BuildLMSActivitiesPanel()
@@ -82,321 +75,75 @@ namespace PUPAcadPortal.PortalForms
             mainContentPanel.Controls.Add(pnlLMSActivitiesHost);
         }
 
-        // --- NEW: QUICK ACTIONS CLICK FIX ---
-        private void SetupQuickActions()
-        {
-            void BindClick(Control ctrl, EventHandler handler)
-            {
-                if (ctrl == null) return;
-
-                ctrl.Click += handler;
-                ctrl.Cursor = Cursors.Hand;
-
-                foreach (Control child in ctrl.Controls)
-                {
-                    BindClick(child, handler);
-                }
-            }
-
-            BindClick(panel105, panel105_Click);
-            BindClick(panel103, panel103_Click);
-            BindClick(panel102, panel102_Click);
-            BindClick(panel104, panel104_Click);
-        }
-
-        // --- GRADE MANAGEMENT LOGIC ---
-        private void SetupGradeLogic()
-        {
-            if (dataGridView2 != null)
-            {
-                dataGridView2.AllowUserToAddRows = false;
-                dataGridView2.AllowUserToOrderColumns = false;
-                dataGridView2.AllowUserToResizeColumns = false;
-                dataGridView2.AllowUserToResizeRows = false;
-
-                // --- FIX 1.5: Anchor to stretch downward, and AutoSize to fill the gray space ---
-                dataGridView2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-                dataGridView2.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            }
-
-            if (cmbSelectCourse != null && cmbSelectCourse.Items.Count == 0)
-            {
-                cmbSelectCourse.Items.Add("IT 101 - Introduction to Computing");
-                cmbSelectCourse.Items.Add("CS 102 - Data Structures");
-                cmbSelectCourse.Items.Add("IS 103 - Database Management");
-            }
-
-            if (dataGridView2 != null && dataGridView2.Rows.Count == 0)
-            {
-                dataGridView2.Rows.Add("2021-00001-SM-0", "Eisen Nodesca", "85", "88");
-                dataGridView2.Rows.Add("2021-00002-SM-0", "Clarisa Matias", "92", "95");
-                dataGridView2.Rows.Add("2021-00003-SM-0", "Trisha Walang Last Name", "78", "82");
-                dataGridView2.Rows.Add("2021-00004-SM-0", "Liza Soberano", "88", "90");
-                dataGridView2.Rows.Add("2021-00005-SM-0", "Kween Yasmin", "72", "75");
-                dataGridView2.Rows.Add("2021-00006-SM-0", "Maine Love Alden", "98", "89");
-            }
-
-            // 2. AUTO-CALCULATE GRADES LOGIC
-            if (dataGridView2 != null)
-            {
-                dataGridView2.CellValueChanged += (s, e) =>
-                {
-                    if (e.RowIndex >= 0 && (e.ColumnIndex == 2 || e.ColumnIndex == 3))
-                    {
-                        IList cells = dataGridView2.Rows[e.RowIndex].Cells;
-                        // FIX: Re-applied the missing array indexes so it won't crash!
-                        DataGridViewCell midCell = (DataGridViewCell)cells;
-                        DataGridViewCell finCell = (DataGridViewCell)cells;
-                        DataGridViewCell avgCell = (DataGridViewCell)cells;
-                        DataGridViewCell remCell = (DataGridViewCell)cells;
-
-                        double m, f;
-                        bool hasMid = double.TryParse(Convert.ToString(midCell.Value), out m);
-                        bool hasFin = double.TryParse(Convert.ToString(finCell.Value), out f);
-
-                        if (hasMid && hasFin)
-                        {
-                            double avg = (m + f) / 2.0;
-                            avgCell.Value = avg.ToString("F2");
-                            remCell.Value = avg >= 75.0 ? "Passed" : "Failed";
-                            if (remCell.Style != null) remCell.Style.ForeColor = avg >= 75.0 ? Color.Green : Color.Red;
-                        }
-                        else
-                        {
-                            avgCell.Value = "";
-                            remCell.Value = "Incomplete";
-                            if (remCell.Style != null) remCell.Style.ForeColor = Color.Gray;
-                        }
-                    }
-                };
-            }
-
-            // 3. SEARCH BAR LOGIC
-            if (textBox1 != null)
-            {
-                textBox1.TextChanged += (s, e) =>
-                {
-                    string q = textBox1.Text != null ? textBox1.Text.Trim().ToLower() : "";
-
-                    if (dataGridView2 != null)
-                    {
-                        dataGridView2.CurrentCell = null;
-
-                        foreach (DataGridViewRow r in dataGridView2.Rows)
-                        {
-                            if (r.IsNewRow) continue;
-
-                            IList cells = r.Cells;
-
-                            // FIX: Re-applied the missing array indexes here too!
-                            DataGridViewCell cell0 = (DataGridViewCell)cells;
-                            DataGridViewCell cell1 = (DataGridViewCell)cells;
-
-                            string sn = cell0.Value != null ? cell0.Value.ToString().ToLower() : "";
-                            string nm = cell1.Value != null ? cell1.Value.ToString().ToLower() : "";
-
-                            r.Visible = string.IsNullOrEmpty(q) || sn.Contains(q) || nm.Contains(q);
-                        }
-                    }
-                };
-            }
-        }
-
-        // --- SIDEBAR NAVIGATION LOGIC ---
-        private void changeButtonColor(Button button)
-        {
-            if (button == null) return;
-
-            if (clickedButton != null)
-            {
-                clickedButton.BackColor = defaultColor;
-            }
-
-            clickedButton = button;
-
-            if (pnlYellow == null)
-            {
-                pnlYellow = new Panel
-                {
-                    Name = "pnlYellow",
-                    Size = new Size(6, 64),
-                    BackColor = Color.Gold,
-                    Visible = false
-                };
-                if (pnlSidebar != null)
-                    pnlSidebar.Controls.Add(pnlYellow);
-                else
-                    this.Controls.Add(pnlYellow);
-            }
-
-            clickedButton.BackColor = selectedColor;
-            pnlYellow.Visible = true;
-            pnlYellow.Parent = button;
-            pnlYellow.Height = button.Height;
-            pnlYellow.BringToFront();
-
-        }
-
-        //Method na nagpapakita ng content ng bawat button, wala akong maisip na iba kaya eto
-        private void showContent(Button button)
-        {
-            if (button == null) return;
-
-            var contents = new Dictionary<Button, Panel>()
-            {
-                { btnDashboard, pnlDashboardContent },
-                { btnGrades, pnlGradesContent },
-                //{ btnAnnounceIns, pnlAnnouncement  },
-                //{ btnCalendarIns, pnlCalendar },
-                //{ btnSubjectIns, pnlSubject },
-                //{ btnActivitiesIns, pnlLMSAct },
-                { btnAttendanceIns, pnlAttendance },
-                //{ btnGradeIns, pnlGrades }
-            };
-
-            foreach (var content in contents)
-            {
-                if (content.Key == button)
-                {
-                    content.Value.Visible = true;
-                    content.Value.Parent = panel3;
-                    content.Value.Dock = DockStyle.Fill;
-                    content.Value.BringToFront();
-                }
-                else
-                {
-                    if (content.Value != null)
-                    {
-                        content.Value.Visible = false;
-                    }
-                }
-            }
-        }
-
-        //Method para pag pinindot yung X sa taas o mag alt-F4, icclose lahat ng forms para di magerror pag ni run uli
-        //Lagay to sa bawat form na iaadd, Step 1: Hanapin sa properties ng form yung event na FormClosing, Step 2: Double click para gumawa ng method, Step 3: Copy paste code na nasa loob nito
-        private void InstructorPortal_Closing(object sender, FormClosingEventArgs e)
-        {
-            if (e.CloseReason == CloseReason.UserClosing)
-            {
-                if (MessageBox.Show("Are you sure you want to exit?", "Confirm Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-                {
-                    e.Cancel = true;
-                }
-                else
-                    Application.Exit();
-            }
-        }
-
         private void btnDashboard_Click(object sender, EventArgs e)
         {
-            changeButtonColor(sender as Button);
-            showContent(clickedButton);
+            mainContentPanel.ShowView(new DashboardContentInst());
         }
 
-        private void btnGrades_Click(object sender, EventArgs e)
+        private async void DashboardContentInst_QuickActionClicked(object? sender, EventArgs e)
         {
-            changeButtonColor(sender as Button);
-            showContent(clickedButton);
+            Panel panel = sender as Panel;
+            if (panel != null)
+            {
+                if (!fpnlLMSSubmenu.Visible)
+                    btnLMS.PerformClick();
+
+                Button? button = panel.Name switch
+                {
+                    "pnlQAGrades" => btnGradeIns,
+                    "pnlQACourses" => btnCoursesIns,
+                    "pnlQAStudentList" => btnAttendanceIns,
+                    _ => null
+                };
+
+                button?.PerformClick();
+            }
         }
 
-        private void btnCourses_Click(object sender, EventArgs e)
-        {
-            changeButtonColor(sender as Button);
-            lmsHost.ShowDashboard();
-            pnlLMSActivitiesHost.Dock = DockStyle.Fill;
-            pnlLMSActivitiesHost.Visible = true;
-            pnlLMSActivitiesHost.BringToFront();
-        }
         private async void btnLMS_Click(object sender, EventArgs e)
         {
-            changeButtonColor(sender as Button);
             btnLMS.Text = !fpnlLMSSubmenu.Visible ? " LMS                                       ⌄" : " LMS                                        ›";
             await submenuAnimLMS.ToggleSubMenuAsync();
-            btnAnnounceIns.PerformClick();
-        }
-        private void btnLogout_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-        }
-
-        private void pnlCoursesContent_Paint(object sender, PaintEventArgs e)
-        {
-
         }
 
         private void btnAnnounceIns_Click(object sender, EventArgs e)
         {
-            changeButtonColor(sender as Button);
             mainContentPanel.BringToFront();
             mainContentPanel.ShowView(new AnnouncementContentInst());
         }
 
         private void btnCalendarIns_Click(object sender, EventArgs e)
         {
-            changeButtonColor(sender as Button);
             mainContentPanel.ShowView(new CalendarContentInst());
         }
 
         private void btnCoursesIns_Click(object sender, EventArgs e)
         {
-            changeButtonColor(sender as Button);
             mainContentPanel.ShowView(new ActivityDashboard());
         }
 
         private void btnAttendanceIns_Click(object sender, EventArgs e)
         {
-            changeButtonColor(sender as Button);
-            showContent(clickedButton);
+            mainContentPanel.ShowView(new AttendanceContentInst());
         }
 
         private void btnGradeIns_Click(object sender, EventArgs e)
         {
-            changeButtonColor(sender as Button);
             mainContentPanel.ShowView(new GradesContentInst());
-        }
-
-        private void label24_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        bool expand = false;
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pnlAttendance_Paint(object sender, PaintEventArgs e)
-        {
-
         }
 
         private void InstructorPortal_Load(object sender, EventArgs e)
         {
             this.MinimumSize = new Size(1024, 700);
-
-
             this.FormClosed += (s, ev) =>
             {
                 SharedCalendarData.SaveData();
             };
+
+            ButtonInteraction buttonInteraction = new ButtonInteraction();
+            buttonInteraction.InitializeMyPanelEvents(flowLayoutPanel1);
+
+            btnDashboard.PerformClick();
         }
-
-        private void InstructorPortal_ResizeEnd(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel18_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        // --- QUICK ACTIONS REDIRECTS ---
-        private void panel105_Click(object sender, EventArgs e) { if (btnGrades != null) btnGrades_Click(btnGrades, e); }
-        private void panel103_Click(object sender, EventArgs e) { if (fpnlLMSSubmenu.Visible == false) { btnLMS.PerformClick(); } } //btnSubjectIns.PerformClick(); }
-        private void panel102_Click(object sender, EventArgs e) { if (fpnlLMSSubmenu.Visible == false) { btnLMS.PerformClick(); } btnAttendanceIns.PerformClick(); }
-        private void panel104_Click(object sender, EventArgs e) { if (btnCourses != null) btnCourses_Click(btnCourses, e); }
     }
 }

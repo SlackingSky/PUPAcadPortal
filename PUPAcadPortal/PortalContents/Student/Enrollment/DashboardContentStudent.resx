@@ -121,7 +121,7 @@
   <data name="pictureBox47.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAzNJREFUWEe1l19k1lEYx2cyyWQXk8mkq3SVzCRJMkm6mOxiJrtIMkmmi3SRRBe7
+        vAAADrwBlbxySQAAAzNJREFUWEe1l19k1lEYx2cyyWQXk8mkq3SVzCRJMkm6mOxiJrtIMkmmi3SRRBe7
         SCZJJkmSJJMkkyQzmUmyiyTpIkmSJEmS5JPv63venT3v7317l98+vBfvOed5nnOe8/w5v5aWJQLodxF4
         C9wBTgDbgVVx7bIAnKWYX8Az4AIwBKzTZksFOBat/oP3wCQwCvQCK6LOpvGp/kQLS+Q78Bg4A2yINuoC
         9NnF4htwyL9rwJtgpFmeRDuFAJttNDFQsGatPTQBvMrWNuJw1FMDsB74EARngONAD9AaZYQ3dD3I5UxE
@@ -141,7 +141,7 @@
   <data name="pbEnrollmentStatusCard.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADgAAAAyCAYAAAAJHRh4AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vQAADr0BR/uQrQAAAvVJREFUaEPtmTtyGkEQQDmCjqAjcASOwA3EEXQDETokszPIpAwyO4PMIcoUokwh
+        vAAADrwBlbxySQAAAvVJREFUaEPtmTtyGkEQQDmCjqAjcASOwA3EEXQDETokszPIpAwyO4PMIcoUokwh
         ocN1Papa1e6d0XbPzqqMarvqVUnsSDNver7LZDmZNF+Zif3gqzEKXjuj4LUzCvZldXvbPM7nzXaxeIff
         17NZ8+3mplW+NoMI0vjfq1Xz53xuuuK031+k6Qj7f2pQVZCGnk8n6+CO43pdXbSKII0iE7kgk+fX1+Z0
         OFzg51xQNjd0v0+n4Q7oLbi7u0sORUR+3d9nG4TEZjZrjptNK+tP83mrPNklKJvrgBS9BA8PD/80jECM
@@ -160,7 +160,7 @@
   <data name="pictureBox44.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAgxJREFUWEft1k+ITWEYx/FJkyTJQhaSNEmShWQhSdMkC2mSZmkhyUoWspKNrC0k
+        vAAADrwBlbxySQAAAgxJREFUWEft1k+ITWEYx/FJkyTJQhaSNEmShWQhSdMkC2mSZmkhyUoWspKNrC0k
         SZIkTbKQJElWFppkIQtZaBaaJEmSJOmj5/YcnfvOuc7cDEX3u5rznnee3+/5877nDg0NGPAvguU4iLt4
         gTPYhgXl3nkDK3AYD/BNMzM4hx3zYiYzbRPtxRuc79tMn6JfUqiNysxooxksxQHcn4PodzzEfizBynJD
         C2Em2rQVHfGd+FTuauA1TmMkTS/DIUyVG/vgUQSKLI7icWZXJ57vYRzDUT6M4To+F3v74T0uY3vZitV4
@@ -175,7 +175,7 @@
   <data name="pictureBox43.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAiRJREFUWEfFlzFOHTEQhilQ9MQBqKioOAAFoqTmAByAigpRI3oK9A7ACVJQUUUp
+        vAAADrwBlbxySQAAAiRJREFUWEfFlzFOHTEQhilQ9MQBqKioOAAFoqTmAByAigpRI3oK9A7ACVJQUUUp
         EGWUMyCK1CiiSBl96JdmxORfP7PLU7SfZGnX83vstcdj78bGSIAFcAwsgQfgGXiJomfVySbNwtt/GmAn
         HP9mPNKqzY77Gw2wCVwCf8y53h+BW+A6ip5V19LKx6b77xJf/aM4+gvcx/R+cX0iW2ikVZtEvsbNBrAH
         /CqNfwL7rvsItYm2iXzuue4f4str5zeTp68QyygfdRDtmQhxnfYL11SAA+B7lAO3V+Sr+FUfw4+KYElu
@@ -190,7 +190,7 @@
   <data name="btnDashboardCourses.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAflJREFUSEvtlDFrVEEURkMIYiESRMQihUgQEREREbGyFhGLIFYiVv4CEbGxSCFW
+        vAAADrwBlbxySQAAAflJREFUSEvtlDFrVEEURkMIYiESRMQihUgQEREREbGyFhGLIFYiVv4CEbGxSCFW
         FiJiYSEWElKISAqRlJJCUoiIBAtJIUFEggQJknPkeztP3o4rESNWOTDs7JuZb+bO/e4MDW3yr1DTdqrj
         wHA9/leow8Au4Lw6pX5Ul9WXwFX1gLqlXrcu6ja1Ff1kB+DnL7CazdRrJbJaqkcJvz3pNLBSCaW7Csyp
         c+23qq0B88B14BAw0oofVh+V8GvW1A/qTSDzxoBb9aQBrJSDXM4GJ9Rn6rfOhAg/B86po+pJ9UEO0UYW
@@ -204,7 +204,7 @@
   <data name="btnDashboardPaymentStatus.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAopJREFUSEutlT9IlWEUxiUkQhwuERIODRERISIR0RARDQ0SDSEhjSERDhEREq3R
+        vAAADrwBlbxySQAAAopJREFUSEutlT9IlWEUxiUkQhwuERIODRERISIR0RARDQ0SDSEhjSERDhEREq3R
         INEQDdEQIk4OEY0NEREOEeEYEhESDtEgEhERPb94vs5rx+/ez27YgQPvfd/znT/Pec65PT1bFMB6ANhe
         f9uyAHsk3QXWgIsO9l9EUr+kKUmf+CPvJe2q2/6TADuACUnLkn5IWrVnSZUCN+vfdCXGFzgNvAa+S3oO
         nAD2AS+Bt8AK8BnYW/++UaKBh4CngDNeknQ2N9RnSU7gYPTi/kYvDRLMmDMUwAfgUiemAIPASCQzHfZD
@@ -221,7 +221,7 @@
   <data name="btnDashboardViewEnrollment.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAilJREFUSEu1lrFrlEEQxYOIiIiISJAgwcpKrMRCxEJSWKWwFJFgJf4bYhH8a8Ra
+        vAAADrwBlbxySQAAAilJREFUSEu1lrFrlEEQxYOIiIiISJAgwcpKrMRCxEJSWKWwFJFgJf4bYhH8a8Ra
         QhARsRJLCUEkiIQQwmEhgfeTt86se/t95xmID+Zu7tuZeTtvd7+9hYUGwBLwCHgArEq6Jeky0IZlbImX
         dBu4DzyM3KU+tgJYYRqHwB7wCrgZRW03gJcx5pgWK33dipZAUs0I/1t0aNupg0NME0h6Imm9JXDBJEhf
         0j5wxWZ/LCb8QgCsA0/tfAe2gqyXqEUlCH8WkmBL0q4dz6YQjKxBiymCWR10BAd2DpIgOxhLniXRiBUC

@@ -76,15 +76,15 @@
             btnDashboardGrades = new Button();
             lblQAGradesDesc = new Label();
             lblQAGrades = new Label();
-            panel84 = new Panel();
+            pnlQACourses = new Panel();
             btnDashboardCourses = new Button();
             label167 = new Label();
             lblCourses = new Label();
-            panel86 = new Panel();
+            pnlQAPaymentStatus = new Panel();
             btnDashboardPaymentStatus = new Button();
             label170 = new Label();
             label171 = new Label();
-            panel87 = new Panel();
+            pnlQAViewEnrollment = new Panel();
             btnDashboardViewEnrollment = new Button();
             label172 = new Label();
             label173 = new Label();
@@ -133,9 +133,9 @@
             pnlQuickActionsContainer.SuspendLayout();
             pnlQACalendar.SuspendLayout();
             pnlQAGrades.SuspendLayout();
-            panel84.SuspendLayout();
-            panel86.SuspendLayout();
-            panel87.SuspendLayout();
+            pnlQACourses.SuspendLayout();
+            pnlQAPaymentStatus.SuspendLayout();
+            pnlQAViewEnrollment.SuspendLayout();
             pnlAnnouncementsContainer.SuspendLayout();
             panel74.SuspendLayout();
             panel76.SuspendLayout();
@@ -590,9 +590,9 @@
             pnlQuickActionsContainer.BorderStyle = BorderStyle.FixedSingle;
             pnlQuickActionsContainer.Controls.Add(pnlQACalendar);
             pnlQuickActionsContainer.Controls.Add(pnlQAGrades);
-            pnlQuickActionsContainer.Controls.Add(panel84);
-            pnlQuickActionsContainer.Controls.Add(panel86);
-            pnlQuickActionsContainer.Controls.Add(panel87);
+            pnlQuickActionsContainer.Controls.Add(pnlQACourses);
+            pnlQuickActionsContainer.Controls.Add(pnlQAPaymentStatus);
+            pnlQuickActionsContainer.Controls.Add(pnlQAViewEnrollment);
             pnlQuickActionsContainer.Controls.Add(label174);
             pnlQuickActionsContainer.Location = new Point(178, 152);
             pnlQuickActionsContainer.Name = "pnlQuickActionsContainer";
@@ -621,7 +621,6 @@
             btnDashboardCalendar.Size = new Size(56, 54);
             btnDashboardCalendar.TabIndex = 20;
             btnDashboardCalendar.UseVisualStyleBackColor = false;
-            btnDashboardCalendar.Click += btnDashboardCalendar_Click;
             // 
             // label56
             // 
@@ -643,7 +642,7 @@
             label57.Name = "label57";
             label57.Size = new Size(140, 17);
             label57.TabIndex = 1;
-            label57.Text = "Check account balance";
+            label57.Text = "Manage your calendar";
             // 
             // pnlQAGrades
             // 
@@ -667,7 +666,6 @@
             btnDashboardGrades.Size = new Size(56, 54);
             btnDashboardGrades.TabIndex = 20;
             btnDashboardGrades.UseVisualStyleBackColor = false;
-            btnDashboardGrades.Click += btnDashboardGrades_Click;
             // 
             // lblQAGradesDesc
             // 
@@ -691,17 +689,17 @@
             lblQAGrades.TabIndex = 17;
             lblQAGrades.Text = "Grades";
             // 
-            // panel84
+            // pnlQACourses
             // 
-            panel84.BackColor = SystemColors.ControlLightLight;
-            panel84.BorderStyle = BorderStyle.FixedSingle;
-            panel84.Controls.Add(btnDashboardCourses);
-            panel84.Controls.Add(label167);
-            panel84.Controls.Add(lblCourses);
-            panel84.Location = new Point(400, 53);
-            panel84.Name = "panel84";
-            panel84.Size = new Size(363, 80);
-            panel84.TabIndex = 28;
+            pnlQACourses.BackColor = SystemColors.ControlLightLight;
+            pnlQACourses.BorderStyle = BorderStyle.FixedSingle;
+            pnlQACourses.Controls.Add(btnDashboardCourses);
+            pnlQACourses.Controls.Add(label167);
+            pnlQACourses.Controls.Add(lblCourses);
+            pnlQACourses.Location = new Point(400, 53);
+            pnlQACourses.Name = "pnlQACourses";
+            pnlQACourses.Size = new Size(363, 80);
+            pnlQACourses.TabIndex = 28;
             // 
             // btnDashboardCourses
             // 
@@ -736,17 +734,17 @@
             lblCourses.TabIndex = 17;
             lblCourses.Text = "Courses";
             // 
-            // panel86
+            // pnlQAPaymentStatus
             // 
-            panel86.BackColor = SystemColors.ControlLightLight;
-            panel86.BorderStyle = BorderStyle.FixedSingle;
-            panel86.Controls.Add(btnDashboardPaymentStatus);
-            panel86.Controls.Add(label170);
-            panel86.Controls.Add(label171);
-            panel86.Location = new Point(19, 148);
-            panel86.Name = "panel86";
-            panel86.Size = new Size(363, 80);
-            panel86.TabIndex = 26;
+            pnlQAPaymentStatus.BackColor = SystemColors.ControlLightLight;
+            pnlQAPaymentStatus.BorderStyle = BorderStyle.FixedSingle;
+            pnlQAPaymentStatus.Controls.Add(btnDashboardPaymentStatus);
+            pnlQAPaymentStatus.Controls.Add(label170);
+            pnlQAPaymentStatus.Controls.Add(label171);
+            pnlQAPaymentStatus.Location = new Point(19, 148);
+            pnlQAPaymentStatus.Name = "pnlQAPaymentStatus";
+            pnlQAPaymentStatus.Size = new Size(363, 80);
+            pnlQAPaymentStatus.TabIndex = 26;
             // 
             // btnDashboardPaymentStatus
             // 
@@ -781,17 +779,17 @@
             label171.TabIndex = 1;
             label171.Text = "Check account balance";
             // 
-            // panel87
+            // pnlQAViewEnrollment
             // 
-            panel87.BackColor = SystemColors.ControlLightLight;
-            panel87.BorderStyle = BorderStyle.FixedSingle;
-            panel87.Controls.Add(btnDashboardViewEnrollment);
-            panel87.Controls.Add(label172);
-            panel87.Controls.Add(label173);
-            panel87.Location = new Point(18, 53);
-            panel87.Name = "panel87";
-            panel87.Size = new Size(363, 80);
-            panel87.TabIndex = 22;
+            pnlQAViewEnrollment.BackColor = SystemColors.ControlLightLight;
+            pnlQAViewEnrollment.BorderStyle = BorderStyle.FixedSingle;
+            pnlQAViewEnrollment.Controls.Add(btnDashboardViewEnrollment);
+            pnlQAViewEnrollment.Controls.Add(label172);
+            pnlQAViewEnrollment.Controls.Add(label173);
+            pnlQAViewEnrollment.Location = new Point(18, 53);
+            pnlQAViewEnrollment.Name = "pnlQAViewEnrollment";
+            pnlQAViewEnrollment.Size = new Size(363, 80);
+            pnlQAViewEnrollment.TabIndex = 22;
             // 
             // btnDashboardViewEnrollment
             // 
@@ -1137,12 +1135,12 @@
             pnlQACalendar.PerformLayout();
             pnlQAGrades.ResumeLayout(false);
             pnlQAGrades.PerformLayout();
-            panel84.ResumeLayout(false);
-            panel84.PerformLayout();
-            panel86.ResumeLayout(false);
-            panel86.PerformLayout();
-            panel87.ResumeLayout(false);
-            panel87.PerformLayout();
+            pnlQACourses.ResumeLayout(false);
+            pnlQACourses.PerformLayout();
+            pnlQAPaymentStatus.ResumeLayout(false);
+            pnlQAPaymentStatus.PerformLayout();
+            pnlQAViewEnrollment.ResumeLayout(false);
+            pnlQAViewEnrollment.PerformLayout();
             pnlAnnouncementsContainer.ResumeLayout(false);
             pnlAnnouncementsContainer.PerformLayout();
             panel74.ResumeLayout(false);
@@ -1204,15 +1202,15 @@
         private Panel pnlQAGrades;
         private Label lblQAGradesDesc;
         private Label lblQAGrades;
-        private Panel panel84;
+        private Panel pnlQACourses;
         private Button btnDashboardCourses;
         private Label label167;
         private Label lblCourses;
-        private Panel panel86;
+        private Panel pnlQAPaymentStatus;
         private Button btnDashboardPaymentStatus;
         private Label label170;
         private Label label171;
-        private Panel panel87;
+        private Panel pnlQAViewEnrollment;
         private Button btnDashboardViewEnrollment;
         private Label label172;
         private Label label173;

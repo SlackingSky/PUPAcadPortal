@@ -71,12 +71,14 @@ namespace PUPAcadPortal
             panel4 = new Panel();
             btnSignIn = new buttonRounded();
             panel6 = new Panel();
+            lblPassWarn = new Label();
             panel8 = new Panel();
             btnShowPass = new Button();
             pictureBox3 = new PictureBox();
             txtPassword = new TextBox();
             label5 = new Label();
             panel5 = new Panel();
+            lblUsernameWarn = new Label();
             panel7 = new Panel();
             pictureBox2 = new PictureBox();
             txtUsername = new TextBox();
@@ -191,12 +193,24 @@ namespace PUPAcadPortal
             // panel6
             // 
             panel6.Anchor = AnchorStyles.None;
+            panel6.Controls.Add(lblPassWarn);
             panel6.Controls.Add(panel8);
             panel6.Controls.Add(label5);
             panel6.Location = new Point(0, 94);
             panel6.Name = "panel6";
             panel6.Size = new Size(384, 78);
             panel6.TabIndex = 1;
+            // 
+            // lblPassWarn
+            // 
+            lblPassWarn.AutoSize = true;
+            lblPassWarn.ForeColor = Color.Red;
+            lblPassWarn.Location = new Point(82, 2);
+            lblPassWarn.Name = "lblPassWarn";
+            lblPassWarn.Size = new Size(107, 15);
+            lblPassWarn.TabIndex = 5;
+            lblPassWarn.Text = "Password Required";
+            lblPassWarn.Visible = false;
             // 
             // panel8
             // 
@@ -250,6 +264,8 @@ namespace PUPAcadPortal
             txtPassword.Size = new Size(312, 19);
             txtPassword.TabIndex = 0;
             txtPassword.UseSystemPasswordChar = true;
+            txtPassword.TextChanged += txtPassword_TextChanged;
+            txtPassword.KeyDown += txtPassword_KeyDown;
             // 
             // label5
             // 
@@ -259,11 +275,12 @@ namespace PUPAcadPortal
             label5.Name = "label5";
             label5.Size = new Size(384, 20);
             label5.TabIndex = 1;
-            label5.Text = "Password";
+            label5.Text = "Password:";
             // 
             // panel5
             // 
             panel5.Anchor = AnchorStyles.None;
+            panel5.Controls.Add(lblUsernameWarn);
             panel5.Controls.Add(panel7);
             panel5.Controls.Add(label4);
             panel5.Location = new Point(0, 0);
@@ -271,9 +288,21 @@ namespace PUPAcadPortal
             panel5.Size = new Size(384, 78);
             panel5.TabIndex = 0;
             // 
+            // lblUsernameWarn
+            // 
+            lblUsernameWarn.AutoSize = true;
+            lblUsernameWarn.ForeColor = Color.Red;
+            lblUsernameWarn.Location = new Point(82, 2);
+            lblUsernameWarn.Name = "lblUsernameWarn";
+            lblUsernameWarn.Size = new Size(110, 15);
+            lblUsernameWarn.TabIndex = 4;
+            lblUsernameWarn.Text = "Username Required";
+            lblUsernameWarn.Visible = false;
+            // 
             // panel7
             // 
             panel7.Anchor = AnchorStyles.None;
+            panel7.BackColor = Color.White;
             panel7.BackgroundImage = Properties.Resources.input;
             panel7.BackgroundImageLayout = ImageLayout.Stretch;
             panel7.Controls.Add(pictureBox2);
@@ -306,6 +335,8 @@ namespace PUPAcadPortal
             txtUsername.PlaceholderText = "Enter your username";
             txtUsername.Size = new Size(328, 19);
             txtUsername.TabIndex = 0;
+            txtUsername.TextChanged += txtUsername_TextChanged;
+            txtUsername.KeyDown += txtUsername_KeyDown;
             // 
             // label4
             // 
@@ -315,7 +346,7 @@ namespace PUPAcadPortal
             label4.Name = "label4";
             label4.Size = new Size(384, 20);
             label4.TabIndex = 0;
-            label4.Text = "Username";
+            label4.Text = "Username:";
             // 
             // label3
             // 
@@ -386,16 +417,19 @@ namespace PUPAcadPortal
             Name = "SignIn";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Sign In";
+            Activated += SignIn_Activated;
             Load += SignIn_Load;
             panel1.ResumeLayout(false);
             panel9.ResumeLayout(false);
             panel3.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel6.ResumeLayout(false);
+            panel6.PerformLayout();
             panel8.ResumeLayout(false);
             panel8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             panel5.ResumeLayout(false);
+            panel5.PerformLayout();
             panel7.ResumeLayout(false);
             panel7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
@@ -420,7 +454,6 @@ namespace PUPAcadPortal
         private Panel panel5;
         private Label label4;
         private TextBox txtUsername;
-        private Panel panel7;
         private PictureBox pictureBox2;
         private Panel panel8;
         private PictureBox pictureBox3;
@@ -430,5 +463,8 @@ namespace PUPAcadPortal
         private Label label6;
         private Label label7;
         private buttonRounded btnSignIn;
+        private Panel panel7;
+        private Label lblUsernameWarn;
+        private Label lblPassWarn;
     }
 }

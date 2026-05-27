@@ -64,26 +64,6 @@
             userProfile1 = new PUPAcadPortal.PortalContents.Misc.UserProfile();
             pnlContainerAdminPortal = new Panel();
             mainContentPanel = new Panel();
-            pnlSubOfferingContent = new Panel();
-            pnlCurriculumArchive = new Panel();
-            pnlCurriculum = new Panel();
-            lblCurriculumList = new Label();
-            btnUpdateCurriculum = new Button();
-            dgvCurriculum = new DataGridView();
-            CourseCode2 = new DataGridViewTextBoxColumn();
-            CourseTitle2 = new DataGridViewTextBoxColumn();
-            Lab2 = new DataGridViewTextBoxColumn();
-            Lec2 = new DataGridViewTextBoxColumn();
-            TotalUnits2 = new DataGridViewTextBoxColumn();
-            Year2 = new DataGridViewTextBoxColumn();
-            panel14 = new Panel();
-            btnArchive = new Button();
-            btnCurriculum = new Button();
-            pnlArchive = new Panel();
-            dgvArchive = new DataGridView();
-            Semester = new DataGridViewTextBoxColumn();
-            SchoolYear = new DataGridViewTextBoxColumn();
-            blank = new DataGridViewTextBoxColumn();
             pnlHeader = new Panel();
             pnlYellow = new Panel();
             panel15 = new Panel();
@@ -108,13 +88,6 @@
             panel12.SuspendLayout();
             panel13.SuspendLayout();
             pnlContainerAdminPortal.SuspendLayout();
-            pnlSubOfferingContent.SuspendLayout();
-            pnlCurriculumArchive.SuspendLayout();
-            pnlCurriculum.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvCurriculum).BeginInit();
-            panel14.SuspendLayout();
-            pnlArchive.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvArchive).BeginInit();
             pnlHeader.SuspendLayout();
             panel15.SuspendLayout();
             panel16.SuspendLayout();
@@ -311,7 +284,7 @@
             // 
             pnlAccountingRecords.BackColor = Color.Transparent;
             pnlAccountingRecords.Controls.Add(btnAccountingRecords);
-            pnlAccountingRecords.Location = new Point(-3, 48);
+            pnlAccountingRecords.Location = new Point(0, 48);
             pnlAccountingRecords.Name = "pnlAccountingRecords";
             pnlAccountingRecords.Size = new Size(256, 48);
             pnlAccountingRecords.TabIndex = 8;
@@ -341,7 +314,7 @@
             // 
             pnlEnrolledStudents.BackColor = Color.Transparent;
             pnlEnrolledStudents.Controls.Add(btnEnrolledStudents);
-            pnlEnrolledStudents.Location = new Point(-3, 96);
+            pnlEnrolledStudents.Location = new Point(0, 96);
             pnlEnrolledStudents.Name = "pnlEnrolledStudents";
             pnlEnrolledStudents.Size = new Size(256, 48);
             pnlEnrolledStudents.TabIndex = 9;
@@ -634,7 +607,6 @@
             btnLogout.Text = " Logout";
             btnLogout.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnLogout.UseVisualStyleBackColor = true;
-            btnLogout.Click += btnLogout_Click;
             // 
             // userProfile1
             // 
@@ -647,7 +619,6 @@
             // pnlContainerAdminPortal
             // 
             pnlContainerAdminPortal.Controls.Add(mainContentPanel);
-            pnlContainerAdminPortal.Controls.Add(pnlSubOfferingContent);
             pnlContainerAdminPortal.Controls.Add(pnlHeader);
             pnlContainerAdminPortal.Controls.Add(pnlSidebar);
             pnlContainerAdminPortal.Dock = DockStyle.Fill;
@@ -664,228 +635,6 @@
             mainContentPanel.Name = "mainContentPanel";
             mainContentPanel.Size = new Size(1648, 969);
             mainContentPanel.TabIndex = 0;
-            // 
-            // pnlSubOfferingContent
-            // 
-            pnlSubOfferingContent.AutoScroll = true;
-            pnlSubOfferingContent.CausesValidation = false;
-            pnlSubOfferingContent.Controls.Add(pnlCurriculumArchive);
-            pnlSubOfferingContent.Dock = DockStyle.Fill;
-            pnlSubOfferingContent.Location = new Point(256, 72);
-            pnlSubOfferingContent.Margin = new Padding(0);
-            pnlSubOfferingContent.Name = "pnlSubOfferingContent";
-            pnlSubOfferingContent.Size = new Size(1648, 969);
-            pnlSubOfferingContent.TabIndex = 6;
-            pnlSubOfferingContent.Paint += pnlCoursesContent_Paint;
-            // 
-            // pnlCurriculumArchive
-            // 
-            pnlCurriculumArchive.BackColor = Color.White;
-            pnlCurriculumArchive.Controls.Add(pnlCurriculum);
-            pnlCurriculumArchive.Controls.Add(panel14);
-            pnlCurriculumArchive.Controls.Add(pnlArchive);
-            pnlCurriculumArchive.Dock = DockStyle.Fill;
-            pnlCurriculumArchive.Location = new Point(0, 0);
-            pnlCurriculumArchive.Margin = new Padding(3, 2, 3, 2);
-            pnlCurriculumArchive.Name = "pnlCurriculumArchive";
-            pnlCurriculumArchive.Size = new Size(1648, 969);
-            pnlCurriculumArchive.TabIndex = 7;
-            // 
-            // pnlCurriculum
-            // 
-            pnlCurriculum.BackColor = Color.White;
-            pnlCurriculum.Controls.Add(lblCurriculumList);
-            pnlCurriculum.Controls.Add(btnUpdateCurriculum);
-            pnlCurriculum.Controls.Add(dgvCurriculum);
-            pnlCurriculum.Dock = DockStyle.Fill;
-            pnlCurriculum.Location = new Point(0, 36);
-            pnlCurriculum.Margin = new Padding(3, 2, 3, 2);
-            pnlCurriculum.Name = "pnlCurriculum";
-            pnlCurriculum.Size = new Size(1648, 933);
-            pnlCurriculum.TabIndex = 1;
-            // 
-            // lblCurriculumList
-            // 
-            lblCurriculumList.AutoSize = true;
-            lblCurriculumList.BackColor = Color.White;
-            lblCurriculumList.Font = new Font("Arial", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblCurriculumList.ForeColor = SystemColors.ActiveCaptionText;
-            lblCurriculumList.Location = new Point(32, 24);
-            lblCurriculumList.Name = "lblCurriculumList";
-            lblCurriculumList.Size = new Size(198, 29);
-            lblCurriculumList.TabIndex = 11;
-            lblCurriculumList.Text = "Curriculum List:";
-            // 
-            // btnUpdateCurriculum
-            // 
-            btnUpdateCurriculum.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnUpdateCurriculum.BackColor = Color.FromArgb(109, 0, 0);
-            btnUpdateCurriculum.FlatStyle = FlatStyle.Flat;
-            btnUpdateCurriculum.ForeColor = Color.White;
-            btnUpdateCurriculum.Location = new Point(1487, 584);
-            btnUpdateCurriculum.Margin = new Padding(3, 2, 3, 2);
-            btnUpdateCurriculum.Name = "btnUpdateCurriculum";
-            btnUpdateCurriculum.Size = new Size(140, 27);
-            btnUpdateCurriculum.TabIndex = 11;
-            btnUpdateCurriculum.Text = "Update Curriculum";
-            btnUpdateCurriculum.UseVisualStyleBackColor = false;
-            btnUpdateCurriculum.Click += btnUpdateCurriculum_Click;
-            // 
-            // dgvCurriculum
-            // 
-            dgvCurriculum.AllowUserToAddRows = false;
-            dgvCurriculum.AllowUserToDeleteRows = false;
-            dgvCurriculum.AllowUserToOrderColumns = true;
-            dgvCurriculum.AllowUserToResizeColumns = false;
-            dgvCurriculum.AllowUserToResizeRows = false;
-            dgvCurriculum.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            dgvCurriculum.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvCurriculum.BackgroundColor = Color.White;
-            dgvCurriculum.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvCurriculum.Columns.AddRange(new DataGridViewColumn[] { CourseCode2, CourseTitle2, Lab2, Lec2, TotalUnits2, Year2 });
-            dgvCurriculum.Location = new Point(44, 76);
-            dgvCurriculum.Margin = new Padding(3, 2, 3, 2);
-            dgvCurriculum.Name = "dgvCurriculum";
-            dgvCurriculum.ReadOnly = true;
-            dgvCurriculum.RowHeadersVisible = false;
-            dgvCurriculum.RowHeadersWidth = 51;
-            dgvCurriculum.ScrollBars = ScrollBars.Vertical;
-            dgvCurriculum.Size = new Size(1582, 495);
-            dgvCurriculum.TabIndex = 0;
-            // 
-            // CourseCode2
-            // 
-            CourseCode2.HeaderText = "Course Code";
-            CourseCode2.MinimumWidth = 6;
-            CourseCode2.Name = "CourseCode2";
-            CourseCode2.ReadOnly = true;
-            // 
-            // CourseTitle2
-            // 
-            CourseTitle2.HeaderText = "Course Title";
-            CourseTitle2.MinimumWidth = 6;
-            CourseTitle2.Name = "CourseTitle2";
-            CourseTitle2.ReadOnly = true;
-            // 
-            // Lab2
-            // 
-            Lab2.HeaderText = "Lab";
-            Lab2.MinimumWidth = 6;
-            Lab2.Name = "Lab2";
-            Lab2.ReadOnly = true;
-            // 
-            // Lec2
-            // 
-            Lec2.HeaderText = "Lec";
-            Lec2.MinimumWidth = 6;
-            Lec2.Name = "Lec2";
-            Lec2.ReadOnly = true;
-            // 
-            // TotalUnits2
-            // 
-            TotalUnits2.HeaderText = "Total Units";
-            TotalUnits2.MinimumWidth = 6;
-            TotalUnits2.Name = "TotalUnits2";
-            TotalUnits2.ReadOnly = true;
-            // 
-            // Year2
-            // 
-            Year2.HeaderText = "Year";
-            Year2.MinimumWidth = 6;
-            Year2.Name = "Year2";
-            Year2.ReadOnly = true;
-            // 
-            // panel14
-            // 
-            panel14.BackColor = Color.White;
-            panel14.Controls.Add(btnArchive);
-            panel14.Controls.Add(btnCurriculum);
-            panel14.Dock = DockStyle.Top;
-            panel14.Location = new Point(0, 0);
-            panel14.Margin = new Padding(3, 2, 3, 2);
-            panel14.Name = "panel14";
-            panel14.Size = new Size(1648, 36);
-            panel14.TabIndex = 0;
-            // 
-            // btnArchive
-            // 
-            btnArchive.BackColor = Color.Transparent;
-            btnArchive.FlatStyle = FlatStyle.Flat;
-            btnArchive.Location = new Point(119, 3);
-            btnArchive.Margin = new Padding(3, 2, 3, 2);
-            btnArchive.Name = "btnArchive";
-            btnArchive.Size = new Size(105, 30);
-            btnArchive.TabIndex = 1;
-            btnArchive.Text = "Archive";
-            btnArchive.UseVisualStyleBackColor = false;
-            btnArchive.Click += btnArchive_Click;
-            // 
-            // btnCurriculum
-            // 
-            btnCurriculum.BackColor = Color.Transparent;
-            btnCurriculum.FlatStyle = FlatStyle.Flat;
-            btnCurriculum.Location = new Point(9, 3);
-            btnCurriculum.Margin = new Padding(3, 2, 3, 2);
-            btnCurriculum.Name = "btnCurriculum";
-            btnCurriculum.Size = new Size(105, 30);
-            btnCurriculum.TabIndex = 0;
-            btnCurriculum.Text = "Curriculum";
-            btnCurriculum.UseVisualStyleBackColor = false;
-            btnCurriculum.Click += btnCurriculum_Click_1;
-            // 
-            // pnlArchive
-            // 
-            pnlArchive.BackColor = Color.White;
-            pnlArchive.Controls.Add(dgvArchive);
-            pnlArchive.Dock = DockStyle.Fill;
-            pnlArchive.Location = new Point(0, 0);
-            pnlArchive.Margin = new Padding(3, 2, 3, 2);
-            pnlArchive.Name = "pnlArchive";
-            pnlArchive.Size = new Size(1648, 969);
-            pnlArchive.TabIndex = 12;
-            // 
-            // dgvArchive
-            // 
-            dgvArchive.AllowUserToAddRows = false;
-            dgvArchive.AllowUserToDeleteRows = false;
-            dgvArchive.AllowUserToOrderColumns = true;
-            dgvArchive.AllowUserToResizeColumns = false;
-            dgvArchive.AllowUserToResizeRows = false;
-            dgvArchive.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            dgvArchive.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvArchive.BackgroundColor = Color.White;
-            dgvArchive.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvArchive.Columns.AddRange(new DataGridViewColumn[] { Semester, SchoolYear, blank });
-            dgvArchive.Location = new Point(36, 68);
-            dgvArchive.Margin = new Padding(3, 2, 3, 2);
-            dgvArchive.Name = "dgvArchive";
-            dgvArchive.ReadOnly = true;
-            dgvArchive.RowHeadersVisible = false;
-            dgvArchive.RowHeadersWidth = 51;
-            dgvArchive.ScrollBars = ScrollBars.Vertical;
-            dgvArchive.Size = new Size(1594, 495);
-            dgvArchive.TabIndex = 0;
-            // 
-            // Semester
-            // 
-            Semester.HeaderText = "Semester";
-            Semester.MinimumWidth = 6;
-            Semester.Name = "Semester";
-            Semester.ReadOnly = true;
-            // 
-            // SchoolYear
-            // 
-            SchoolYear.HeaderText = "School Year";
-            SchoolYear.MinimumWidth = 6;
-            SchoolYear.Name = "SchoolYear";
-            SchoolYear.ReadOnly = true;
-            // 
-            // blank
-            // 
-            blank.HeaderText = "";
-            blank.MinimumWidth = 6;
-            blank.Name = "blank";
-            blank.ReadOnly = true;
             // 
             // pnlHeader
             // 
@@ -970,7 +719,6 @@
             Name = "AdminPortal";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "AdminPortal";
-            FormClosing += AdminPortal_Closing;
             Load += AdminPortal_Load;
             pnlSidebar.ResumeLayout(false);
             flowLayoutPanel1.ResumeLayout(false);
@@ -989,14 +737,6 @@
             panel12.ResumeLayout(false);
             panel13.ResumeLayout(false);
             pnlContainerAdminPortal.ResumeLayout(false);
-            pnlSubOfferingContent.ResumeLayout(false);
-            pnlCurriculumArchive.ResumeLayout(false);
-            pnlCurriculum.ResumeLayout(false);
-            pnlCurriculum.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvCurriculum).EndInit();
-            panel14.ResumeLayout(false);
-            pnlArchive.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvArchive).EndInit();
             pnlHeader.ResumeLayout(false);
             panel15.ResumeLayout(false);
             panel15.PerformLayout();
@@ -1049,26 +789,6 @@
         private Panel panel3;
         private Button btnAnnouncement;
         private Panel mainContentPanel;
-        private Panel pnlSubOfferingContent;
-        private Panel pnlCurriculumArchive;
-        private Panel pnlCurriculum;
-        private Label lblCurriculumList;
-        private Button btnUpdateCurriculum;
-        private DataGridView dgvCurriculum;
-        private DataGridViewTextBoxColumn CourseCode2;
-        private DataGridViewTextBoxColumn CourseTitle2;
-        private DataGridViewTextBoxColumn Lab2;
-        private DataGridViewTextBoxColumn Lec2;
-        private DataGridViewTextBoxColumn TotalUnits2;
-        private DataGridViewTextBoxColumn Year2;
-        private Panel panel14;
-        private Button btnArchive;
-        private Button btnCurriculum;
-        private Panel pnlArchive;
-        private DataGridView dgvArchive;
-        private DataGridViewTextBoxColumn Semester;
-        private DataGridViewTextBoxColumn SchoolYear;
-        private DataGridViewTextBoxColumn blank;
         private PortalContents.Misc.UserProfile userProfile1;
     }
 }

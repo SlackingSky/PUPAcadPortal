@@ -22,6 +22,7 @@ namespace PUPAcadPortal
         {
             InitializeComponent();
             this.SetClientSizeCore(1513, 823);
+            this.FormClosing += CloseApp.Form_Closing;
         }
 
         private void btnShowPass_Click(object sender, EventArgs e)
@@ -112,43 +113,23 @@ namespace PUPAcadPortal
             if (authenticatedUser != null)
             {
                 this.Hide();
-                switch (authenticatedUser.Role.RoleName)
+                using Form? form = authenticatedUser.Role.RoleName switch
                 {
-                    case "Admin":
-                        {
-                            using (AdminPortal adminPortal = new AdminPortal())
-                            {
-                                adminPortal.Size = _usableScreenSize;
-                                adminPortal.Location = _usableScreenLoc;
-                                adminPortal.ShowDialog();
-                            }
-                            break;
-                        }
-                    case "Instructor":
-                        {
-                            using (InstructorPortal instructorPortal = new InstructorPortal())
-                            {
-                                instructorPortal.Size = _usableScreenSize;
-                                instructorPortal.Location = _usableScreenLoc;
-                                instructorPortal.ShowDialog();
-                            }
-                            break;
-                        }
-                    case "Student":
-                        {
-                            using (StudentPortal studentPortal = new StudentPortal(this))
-                            {
-                                studentPortal.Size = _usableScreenSize;
-                                studentPortal.Location = _usableScreenLoc;
-                                studentPortal.ShowDialog();
-                            }
-                            break;
-                        }
-                    }
+                    "Admin" => new AdminPortal(),
+                    "Instructor" => new InstructorPortal(),
+                    "Student" => new StudentPortal(),
+                    _ => null
+                };
 
-                txtUsername.Clear();
-                txtPassword.Clear();
-                this.Show();
+                if (form != null)
+                 {
+                    form.Size = _usableScreenSize;
+                    form.Location = _usableScreenLoc;
+                    form.ShowDialog();
+                    txtUsername.Clear();
+                    txtPassword.Clear();
+                    this.Show();
+                }
             }
             else
             {
@@ -176,7 +157,7 @@ namespace PUPAcadPortal
                 {
                     var adminRole = context.Roles.FirstOrDefault(r => r.RoleName == "Student");
 
-                 
+
                     if (adminRole == null)
                     {
                         adminRole = new Role
@@ -223,9 +204,63 @@ namespace PUPAcadPortal
             txtPassword.Focus();
         }
 
-        private void AddUserForTestingToolStripMenuItem_Click(object sender, EventArgs e)
+        private void txtUsername_KeyDown(object sender, KeyEventArgs e)
         {
-            AddUser(txtUsername.Text, txtPassword.Text);
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (!string.IsNullOrEmpty(txtUsername.Text))
+                {
+                    txtPassword.Focus();
+                }
+                else
+                {
+                    txtUsername.Focus();
+                    txtUsername.BackColor = Color.FromArgb(255, 192, 192);
+                    panel7.BackColor = Color.FromArgb(255, 192, 192);
+                    lblUsernameWarn.Visible = true;
+                }
+            }
+        }
+
+        private void txtPassword_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (string.IsNullOrEmpty(txtUsername.Text))
+                {
+                    txtUsername_KeyDown(sender, e);
+                }
+                else if (!string.IsNullOrEmpty(txtPassword.Text))
+                {
+                    btnSignIn.PerformClick();
+                }
+                else
+                {
+                    txtPassword.Focus();
+                    txtPassword.BackColor = Color.FromArgb(255, 192, 192);
+                    panel8.BackColor = Color.FromArgb(255, 192, 192);
+                    lblPassWarn.Visible = true;
+                }
+            }
+        }
+
+        private void txtUsername_TextChanged(object sender, EventArgs e)
+        {
+            lblUsernameWarn.Visible = false;
+            txtUsername.BackColor = Color.White;
+            panel7.BackColor = Color.White;
+        }
+
+        private void txtPassword_TextChanged(object sender, EventArgs e)
+        {
+            lblPassWarn.Visible = false;
+            txtPassword.BackColor = Color.White;
+            panel8.BackColor = Color.White;
+        }
+
+        private void SignIn_Activated(object sender, EventArgs e)
+        {
+            txtUsername.Focus();
         }
     }
 }
