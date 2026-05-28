@@ -27,6 +27,8 @@ public partial class Professor
 
     public virtual ICollection<FinalCourseGrade> FinalCourseGrades { get; set; } = new List<FinalCourseGrade>();
 
+    public virtual ICollection<ProfessorAvailability> ProfessorAvailabilities { get; set; } = new List<ProfessorAvailability>();
+
     public virtual ICollection<SubjectOffering> SubjectOfferings { get; set; } = new List<SubjectOffering>();
 
     public virtual User User { get; set; } = null!;

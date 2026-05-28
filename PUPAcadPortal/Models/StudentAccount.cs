@@ -19,6 +19,8 @@ public partial class StudentAccount
 
     public virtual AcademicPeriod AcademicPeriod { get; set; } = null!;
 
+    public virtual ICollection<FeeBreakdown> FeeBreakdowns { get; set; } = new List<FeeBreakdown>();
+
     public virtual ICollection<PaymentHistory> PaymentHistories { get; set; } = new List<PaymentHistory>();
 
     public virtual Student Student { get; set; } = null!;

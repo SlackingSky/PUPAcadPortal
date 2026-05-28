@@ -23,6 +23,8 @@ public partial class Student
 
     public virtual ICollection<StudentAccount> StudentAccounts { get; set; } = new List<StudentAccount>();
 
+    public virtual ICollection<StudentDiscount> StudentDiscounts { get; set; } = new List<StudentDiscount>();
+
     public virtual ICollection<Submission> Submissions { get; set; } = new List<Submission>();
 
     public virtual User User { get; set; } = null!;

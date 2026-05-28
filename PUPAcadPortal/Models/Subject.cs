@@ -20,4 +20,8 @@ public partial class Subject
     public virtual ICollection<Curriculum> Curricula { get; set; } = new List<Curriculum>();
 
     public virtual ICollection<SubjectOffering> SubjectOfferings { get; set; } = new List<SubjectOffering>();
+
+    public virtual ICollection<SubjectPrerequisite> SubjectPrerequisiteRequiredSubjects { get; set; } = new List<SubjectPrerequisite>();
+
+    public virtual ICollection<SubjectPrerequisite> SubjectPrerequisiteSubjects { get; set; } = new List<SubjectPrerequisite>();
 }

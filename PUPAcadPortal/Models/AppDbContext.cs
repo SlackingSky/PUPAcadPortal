@@ -33,6 +33,8 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<EnrollmentSubject> EnrollmentSubjects { get; set; }
 
+    public virtual DbSet<FeeBreakdown> FeeBreakdowns { get; set; }
+
     public virtual DbSet<FinalCourseGrade> FinalCourseGrades { get; set; }
 
     public virtual DbSet<GradingCategory> GradingCategories { get; set; }
@@ -45,6 +47,8 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<Professor> Professors { get; set; }
 
+    public virtual DbSet<ProfessorAvailability> ProfessorAvailabilities { get; set; }
+
     public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<Room> Rooms { get; set; }
@@ -55,9 +59,13 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<StudentAccount> StudentAccounts { get; set; }
 
+    public virtual DbSet<StudentDiscount> StudentDiscounts { get; set; }
+
     public virtual DbSet<Subject> Subjects { get; set; }
 
     public virtual DbSet<SubjectOffering> SubjectOfferings { get; set; }
+
+    public virtual DbSet<SubjectPrerequisite> SubjectPrerequisites { get; set; }
 
     public virtual DbSet<Submission> Submissions { get; set; }
 
@@ -367,6 +375,25 @@ public partial class AppDbContext : DbContext
                 .HasConstraintName("FK_EnrollmentSubj_Offering");
         });
 
+        modelBuilder.Entity<FeeBreakdown>(entity =>
+        {
+            entity.HasKey(e => e.FeeId).HasName("PRIMARY");
+
+            entity.ToTable("FeeBreakdown");
+
+            entity.HasIndex(e => e.AccountId, "FK_Fee_Account");
+
+            entity.Property(e => e.FeeId).HasColumnName("FeeID");
+            entity.Property(e => e.AccountId).HasColumnName("AccountID");
+            entity.Property(e => e.Amount).HasPrecision(10);
+            entity.Property(e => e.FeeName).HasMaxLength(100);
+
+            entity.HasOne(d => d.Account).WithMany(p => p.FeeBreakdowns)
+                .HasForeignKey(d => d.AccountId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Fee_Account");
+        });
+
         modelBuilder.Entity<FinalCourseGrade>(entity =>
         {
             entity.HasKey(e => e.GradeId).HasName("PRIMARY");
@@ -526,6 +553,26 @@ public partial class AppDbContext : DbContext
                 .HasConstraintName("FK_Professor_User");
         });
 
+        modelBuilder.Entity<ProfessorAvailability>(entity =>
+        {
+            entity.HasKey(e => e.AvailabilityId).HasName("PRIMARY");
+
+            entity.ToTable("ProfessorAvailability");
+
+            entity.HasIndex(e => e.ProfessorId, "FK_ProfAvail_Professor");
+
+            entity.Property(e => e.AvailabilityId).HasColumnName("AvailabilityID");
+            entity.Property(e => e.DayOfWeek).HasMaxLength(20);
+            entity.Property(e => e.EndTime).HasColumnType("time");
+            entity.Property(e => e.ProfessorId).HasColumnName("ProfessorID");
+            entity.Property(e => e.StartTime).HasColumnType("time");
+
+            entity.HasOne(d => d.Professor).WithMany(p => p.ProfessorAvailabilities)
+                .HasForeignKey(d => d.ProfessorId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ProfAvail_Professor");
+        });
+
         modelBuilder.Entity<Role>(entity =>
         {
             entity.HasKey(e => e.RoleId).HasName("PRIMARY");
@@ -643,6 +690,28 @@ public partial class AppDbContext : DbContext
                 .HasConstraintName("FK_Account_Student");
         });
 
+        modelBuilder.Entity<StudentDiscount>(entity =>
+        {
+            entity.HasKey(e => e.DiscountId).HasName("PRIMARY");
+
+            entity.ToTable("StudentDiscount");
+
+            entity.HasIndex(e => e.StudentId, "FK_Discount_Student");
+
+            entity.Property(e => e.DiscountId).HasColumnName("DiscountID");
+            entity.Property(e => e.DiscountName).HasMaxLength(100);
+            entity.Property(e => e.IsActive)
+                .IsRequired()
+                .HasDefaultValueSql("'1'");
+            entity.Property(e => e.Percentage).HasPrecision(5);
+            entity.Property(e => e.StudentId).HasColumnName("StudentID");
+
+            entity.HasOne(d => d.Student).WithMany(p => p.StudentDiscounts)
+                .HasForeignKey(d => d.StudentId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Discount_Student");
+        });
+
         modelBuilder.Entity<Subject>(entity =>
         {
             entity.HasKey(e => e.SubjectId).HasName("PRIMARY");
@@ -702,6 +771,35 @@ public partial class AppDbContext : DbContext
                 .HasForeignKey(d => d.SubjectId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Offering_Subject");
+        });
+
+        modelBuilder.Entity<SubjectPrerequisite>(entity =>
+        {
+            entity.HasKey(e => e.PrerequisiteId).HasName("PRIMARY");
+
+            entity.ToTable("SubjectPrerequisite");
+
+            entity.HasIndex(e => e.SubjectId, "FK_SubjReq_Main");
+
+            entity.HasIndex(e => e.RequiredSubjectId, "FK_SubjReq_Required");
+
+            entity.Property(e => e.PrerequisiteId).HasColumnName("PrerequisiteID");
+            entity.Property(e => e.RequiredSubjectId)
+                .HasMaxLength(50)
+                .HasColumnName("RequiredSubjectID");
+            entity.Property(e => e.SubjectId)
+                .HasMaxLength(50)
+                .HasColumnName("SubjectID");
+
+            entity.HasOne(d => d.RequiredSubject).WithMany(p => p.SubjectPrerequisiteRequiredSubjects)
+                .HasForeignKey(d => d.RequiredSubjectId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_SubjReq_Required");
+
+            entity.HasOne(d => d.Subject).WithMany(p => p.SubjectPrerequisiteSubjects)
+                .HasForeignKey(d => d.SubjectId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_SubjReq_Main");
         });
 
         modelBuilder.Entity<Submission>(entity =>
