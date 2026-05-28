@@ -482,10 +482,6 @@
             btnGradeIns.UseVisualStyleBackColor = true;
             btnGradeIns.Click += btnGradeIns_Click;
             // 
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 0;
-            pictureBox1.TabStop = false;
-            // 
             // panel12
             // 
             panel12.BackColor = Color.FromArgb(30, 109, 0, 0);
