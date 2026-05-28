@@ -13,6 +13,8 @@ public partial class SubjectOffering
 
     public string AcademicPeriodId { get; set; } = null!;
 
+    public string Section { get; set; } = null!;
+
     public int MaxSlots { get; set; }
 
     public string Status { get; set; } = null!;

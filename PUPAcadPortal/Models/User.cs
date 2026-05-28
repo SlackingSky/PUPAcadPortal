@@ -17,17 +17,27 @@ public partial class User
 
     public string FirstName { get; set; } = null!;
 
+    public string? MiddleName { get; set; }
+
     public string LastName { get; set; } = null!;
+
+    public string? Suffix { get; set; }
 
     public DateTime? Birthdate { get; set; }
 
-    public string? Street { get; set; }
+    public string AddressLine1 { get; set; } = null!;
 
-    public string? City { get; set; }
+    public string? AddressLine2 { get; set; }
 
-    public string? State { get; set; }
+    public string Region { get; set; } = null!;
 
-    public string? ZipCode { get; set; }
+    public string CityMunicipality { get; set; } = null!;
+
+    public string Barangay { get; set; } = null!;
+
+    public string Province { get; set; } = null!;
+
+    public string PostalCode { get; set; } = null!;
 
     public string? ContactNumber { get; set; }
 

@@ -13,6 +13,16 @@ public partial class Professor
 
     public string Department { get; set; } = null!;
 
+    public string EmploymentType { get; set; } = null!;
+
+    public int MaxLoad { get; set; }
+
+    public string HighestDegree { get; set; } = null!;
+
+    public int YearsOfExperience { get; set; }
+
+    public string EmploymentStatus { get; set; } = null!;
+
     public string Rank { get; set; } = null!;
 
     public virtual ICollection<FinalCourseGrade> FinalCourseGrades { get; set; } = new List<FinalCourseGrade>();

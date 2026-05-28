@@ -17,13 +17,15 @@ public partial class CalendarEvent
 
     public string EventType { get; set; } = null!;
 
-    public string? Room { get; set; }
+    public int? RoomId { get; set; }
 
     public DateTime StartTime { get; set; }
 
     public DateTime EndTime { get; set; }
 
     public bool? IsPrivate { get; set; }
+
+    public virtual Room? Room { get; set; }
 
     public virtual SubjectOffering? SubjectOffering { get; set; }
 

@@ -17,6 +17,8 @@ public partial class Announcement
 
     public bool IsUrgent { get; set; }
 
+    public bool IsPinned { get; set; }
+
     public string? AttachedFile { get; set; }
 
     public DateTime PostedDate { get; set; }

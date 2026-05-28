@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using PUPAcadPortal.Services;
 
 namespace PUPAcadPortal.Models;
 
 public partial class AppDbContext : DbContext
 {
-    public AppDbContext()
-    {
-    }
-
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options)
     {
@@ -52,6 +47,8 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<Role> Roles { get; set; }
 
+    public virtual DbSet<Room> Rooms { get; set; }
+
     public virtual DbSet<RoomSchedule> RoomSchedules { get; set; }
 
     public virtual DbSet<Student> Students { get; set; }
@@ -65,10 +62,6 @@ public partial class AppDbContext : DbContext
     public virtual DbSet<Submission> Submissions { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseMySQL(DBConnectService.ConnectionString);
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -233,6 +226,8 @@ public partial class AppDbContext : DbContext
         {
             entity.HasKey(e => e.EventId).HasName("PRIMARY");
 
+            entity.HasIndex(e => e.RoomId, "FK_CalendarEvents_Room");
+
             entity.HasIndex(e => e.SubjectOfferingId, "FK_Calendar_Subject");
 
             entity.HasIndex(e => e.UserId, "FK_Calendar_User");
@@ -244,13 +239,17 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.IsPrivate)
                 .IsRequired()
                 .HasDefaultValueSql("'1'");
-            entity.Property(e => e.Room).HasMaxLength(100);
+            entity.Property(e => e.RoomId).HasColumnName("RoomID");
             entity.Property(e => e.StartTime).HasColumnType("datetime");
             entity.Property(e => e.SubjectOfferingId)
                 .HasMaxLength(50)
                 .HasColumnName("SubjectOfferingID");
             entity.Property(e => e.Title).HasMaxLength(255);
             entity.Property(e => e.UserId).HasColumnName("UserID");
+
+            entity.HasOne(d => d.Room).WithMany(p => p.CalendarEvents)
+                .HasForeignKey(d => d.RoomId)
+                .HasConstraintName("FK_CalendarEvents_Room");
 
             entity.HasOne(d => d.SubjectOffering).WithMany(p => p.CalendarEvents)
                 .HasForeignKey(d => d.SubjectOfferingId)
@@ -510,6 +509,15 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.EmployeeId)
                 .HasMaxLength(50)
                 .HasColumnName("EmployeeID");
+            entity.Property(e => e.EmploymentStatus)
+                .HasMaxLength(50)
+                .HasDefaultValueSql("'Active'");
+            entity.Property(e => e.EmploymentType)
+                .HasMaxLength(50)
+                .HasDefaultValueSql("'Full-Time'");
+            entity.Property(e => e.HighestDegree)
+                .HasMaxLength(100)
+                .HasDefaultValueSql("'Not Specified'");
             entity.Property(e => e.Rank).HasMaxLength(50);
             entity.Property(e => e.UserId).HasColumnName("UserID");
 
@@ -528,22 +536,53 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.RoleName).HasMaxLength(50);
         });
 
+        modelBuilder.Entity<Room>(entity =>
+        {
+            entity.HasKey(e => e.RoomId).HasName("PRIMARY");
+
+            entity.ToTable("Room");
+
+            entity.HasIndex(e => e.RoomName, "RoomName").IsUnique();
+
+            entity.Property(e => e.RoomId).HasColumnName("RoomID");
+            entity.Property(e => e.Building)
+                .HasMaxLength(100)
+                .HasDefaultValueSql("'Main Building'");
+            entity.Property(e => e.Capacity).HasDefaultValueSql("'40'");
+            entity.Property(e => e.RoomName).HasMaxLength(50);
+            entity.Property(e => e.RoomType)
+                .HasMaxLength(50)
+                .HasDefaultValueSql("'Lecture Room'");
+            entity.Property(e => e.Status)
+                .HasMaxLength(20)
+                .HasDefaultValueSql("'Available'");
+        });
+
         modelBuilder.Entity<RoomSchedule>(entity =>
         {
             entity.HasKey(e => e.ScheduleId).HasName("PRIMARY");
 
             entity.ToTable("RoomSchedule");
 
+            entity.HasIndex(e => e.RoomId, "FK_RoomSchedule_Room");
+
             entity.HasIndex(e => e.SubjectOfferingId, "FK_Schedule_Offering");
 
             entity.Property(e => e.ScheduleId).HasColumnName("ScheduleID");
             entity.Property(e => e.DayOfWeek).HasMaxLength(20);
             entity.Property(e => e.EndTime).HasColumnType("time");
-            entity.Property(e => e.RoomName).HasMaxLength(50);
+            entity.Property(e => e.RoomId).HasColumnName("RoomID");
+            entity.Property(e => e.SessionType)
+                .HasMaxLength(20)
+                .HasDefaultValueSql("'Lecture'");
             entity.Property(e => e.StartTime).HasColumnType("time");
             entity.Property(e => e.SubjectOfferingId)
                 .HasMaxLength(50)
                 .HasColumnName("SubjectOfferingID");
+
+            entity.HasOne(d => d.Room).WithMany(p => p.RoomSchedules)
+                .HasForeignKey(d => d.RoomId)
+                .HasConstraintName("FK_RoomSchedule_Room");
 
             entity.HasOne(d => d.SubjectOffering).WithMany(p => p.RoomSchedules)
                 .HasForeignKey(d => d.SubjectOfferingId)
@@ -641,6 +680,9 @@ public partial class AppDbContext : DbContext
                 .HasMaxLength(50)
                 .HasColumnName("AcademicPeriodID");
             entity.Property(e => e.ProfessorId).HasColumnName("ProfessorID");
+            entity.Property(e => e.Section)
+                .HasMaxLength(50)
+                .HasDefaultValueSql("'TBA'");
             entity.Property(e => e.Status).HasMaxLength(20);
             entity.Property(e => e.SubjectId)
                 .HasMaxLength(50)
@@ -705,8 +747,13 @@ public partial class AppDbContext : DbContext
             entity.HasIndex(e => e.Username, "Username").IsUnique();
 
             entity.Property(e => e.UserId).HasColumnName("UserID");
+            entity.Property(e => e.AddressLine1).HasMaxLength(255);
+            entity.Property(e => e.AddressLine2).HasMaxLength(255);
+            entity.Property(e => e.Barangay)
+                .HasMaxLength(100)
+                .HasDefaultValueSql("'N/A'");
             entity.Property(e => e.Birthdate).HasColumnType("date");
-            entity.Property(e => e.City).HasMaxLength(100);
+            entity.Property(e => e.CityMunicipality).HasMaxLength(100);
             entity.Property(e => e.ContactNumber).HasMaxLength(20);
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
@@ -717,12 +764,16 @@ public partial class AppDbContext : DbContext
                 .IsRequired()
                 .HasDefaultValueSql("'1'");
             entity.Property(e => e.LastName).HasMaxLength(100);
+            entity.Property(e => e.MiddleName).HasMaxLength(100);
             entity.Property(e => e.PasswordHash).HasMaxLength(255);
+            entity.Property(e => e.PostalCode).HasMaxLength(20);
+            entity.Property(e => e.Province).HasMaxLength(100);
+            entity.Property(e => e.Region)
+                .HasMaxLength(100)
+                .HasDefaultValueSql("'N/A'");
             entity.Property(e => e.RoleId).HasColumnName("RoleID");
-            entity.Property(e => e.State).HasMaxLength(100);
-            entity.Property(e => e.Street).HasMaxLength(255);
+            entity.Property(e => e.Suffix).HasMaxLength(20);
             entity.Property(e => e.Username).HasMaxLength(50);
-            entity.Property(e => e.ZipCode).HasMaxLength(20);
 
             entity.HasOne(d => d.Role).WithMany(p => p.Users)
                 .HasForeignKey(d => d.RoleId)
