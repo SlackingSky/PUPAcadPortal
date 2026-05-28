@@ -2,6 +2,7 @@ using BCrypt.Net;
 using CloudinaryDotNet;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
+using PUPAcadPortal.Data;
 using PUPAcadPortal.Models;
 using PUPAcadPortal.PortalForms;
 using PUPAcadPortal.Services;
@@ -17,7 +18,6 @@ namespace PUPAcadPortal
     {
         private Point _usableScreenLoc = Screen.PrimaryScreen.WorkingArea.Location;
         private Size _usableScreenSize = Screen.PrimaryScreen.WorkingArea.Size;
-        public static User? authenticatedUser;
         public SignIn()
         {
             InitializeComponent();
@@ -38,7 +38,7 @@ namespace PUPAcadPortal
                 return;
             }
 
-            authenticatedUser = null;
+            User? authenticatedUser = null;
 
             using (LoadingForm loadingBox = new LoadingForm(this))
             {
@@ -58,6 +58,45 @@ namespace PUPAcadPortal
 
                             if (user != null && BCrypt.Net.BCrypt.Verify(passwordInput, user.PasswordHash))
                             {
+                                if (!(bool)user.IsActive)
+                                {
+                                    MessageBox.Show("Your account has been deactivated. Please contact the administrator.", "Account Disabled", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                }
+
+                                (int? studentId, int? professorId, int?adminId) = user.Role.RoleName switch
+                                {
+                                    "Student" => (
+                                        (int?)context.Students.Where(s => s.StudentId == user.UserId).Select(s => (int?)s.StudentId).FirstOrDefault(),
+                                        (int?)null,
+                                        (int?)null
+                                    ),
+
+                                    "Professor" => (
+                                        (int?)null,
+                                        (int?)context.Professors.Where(p => p.UserId == user.UserId).Select(p => (int?)p.ProfessorId).FirstOrDefault(),
+                                        (int?)null
+                                    ),
+
+                                    "Admin" => (
+                                        (int?)null,
+                                        (int?)null,
+                                        (int?)context.Admins.Where(a => a.UserId == user.UserId).Select(a => (int?)a.AdminId).FirstOrDefault()
+                                    ),
+
+                                    _ => ((int?)null, (int?)null, (int?)null)
+                                };
+
+                                UserSession.Login
+                                (
+                                    username: user.Username,
+                                    userID: user.UserId,
+                                    firstName: user.FirstName,
+                                    lastName: user.LastName,
+                                    role: user.Role.RoleName,
+                                    studentID: studentId,
+                                    professorID: professorId,
+                                    adminID: adminId
+                                );
                                 return user;
                             }
                         }
@@ -116,7 +155,7 @@ namespace PUPAcadPortal
                 using Form? form = authenticatedUser.Role.RoleName switch
                 {
                     "Admin" => new AdminPortal(),
-                    "Instructor" => new InstructorPortal(),
+                    "Professor" => new ProfessorPortal(),
                     "Student" => new StudentPortal(),
                     _ => null
                 };
@@ -155,14 +194,14 @@ namespace PUPAcadPortal
             {
                 using (var context = new AppDbContext())
                 {
-                    var adminRole = context.Roles.FirstOrDefault(r => r.RoleName == "Student");
+                    var adminRole = context.Roles.FirstOrDefault(r => r.RoleName == "Professor");
 
 
                     if (adminRole == null)
                     {
                         adminRole = new Role
                         {
-                            RoleName = "Student"
+                            RoleName = "Professor"
                         };
 
                         context.Roles.Add(adminRole);
@@ -177,9 +216,9 @@ namespace PUPAcadPortal
                         RoleId = adminRole.RoleId,
                         Username = username.ToLower(),
                         PasswordHash = hashedPassword,
-                        Email = "DemoStudent@university.edu",
+                        Email = "DemoProfessor@university.edu",
                         FirstName = "Demo",
-                        LastName = "Student",
+                        LastName = "Professor",
                         IsActive = true,
                         CreatedAt = DateTime.Now
                     };

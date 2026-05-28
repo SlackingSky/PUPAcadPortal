@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using PUPAcadPortal.Utils;
 using PUPAcadPortal.PortalContents.Student.Enrollment;
+using PUPAcadPortal.Data;
 
 namespace PUPAcadPortal.PortalContents.Student.Enrollment
 {
@@ -25,7 +26,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
 
         private void DashboardContentStudent_Load(object sender, EventArgs e)
         {
-            lblDashboardGreeting.Text = $"Welcome back, {SignIn.authenticatedUser?.FirstName} {SignIn.authenticatedUser?.LastName}!";
+            lblDashboardGreeting.Text = $"Welcome back, {UserSession.FullName}!";
             ShowNotEnrolledState();
             lblEnrolledUnits.Text = $"{EnrollmentContentStudent.totalUnits} Units";
             if (EnrollmentContentStudent.isEnrolled)

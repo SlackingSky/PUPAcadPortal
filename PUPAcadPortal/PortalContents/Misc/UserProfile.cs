@@ -1,4 +1,5 @@
-﻿using PUPAcadPortal.Models;
+﻿using PUPAcadPortal.Data;
+using PUPAcadPortal.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,8 +24,8 @@ namespace PUPAcadPortal.PortalContents.Misc
                 return;
             }
 
-            lblName.Text = SignIn.authenticatedUser.FirstName + " " + SignIn.authenticatedUser.LastName;
-            lblRole.Text = SignIn.authenticatedUser.Role.RoleName.ToUpper();
+            lblName.Text = UserSession.FullName;
+            lblRole.Text = UserSession.Role;
         }
     }
 }

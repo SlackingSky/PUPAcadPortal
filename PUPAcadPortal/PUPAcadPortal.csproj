@@ -44,7 +44,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="PortalForms\InstructorPortal.cs">
+    <Compile Update="PortalForms\ProfessorPortal.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

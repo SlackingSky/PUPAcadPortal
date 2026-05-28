@@ -13,7 +13,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using static PUPAcadPortal.PortalForms.InstructorPortal;
+using static PUPAcadPortal.PortalForms.ProfessorPortal;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
@@ -27,7 +27,7 @@ using PUPAcadPortal.Events;
 namespace PUPAcadPortal.PortalForms
 
 {
-    public partial class InstructorPortal : Form
+    public partial class ProfessorPortal : Form
     {
         private SubmenuAnim submenuAnimLMS;
 
@@ -35,7 +35,7 @@ namespace PUPAcadPortal.PortalForms
         private LMSActivityHost lmsHost;
 
 
-        public InstructorPortal()
+        public ProfessorPortal()
         {
             InitializeComponent();
             submenuAnimLMS = new SubmenuAnim(fpnlLMSSubmenu, fpnlLMSSubmenu.Height);

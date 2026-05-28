@@ -1,6 +1,6 @@
 ﻿namespace PUPAcadPortal.PortalForms
 {
-    partial class InstructorPortal
+    partial class ProfessorPortal
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             Button button29;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InstructorPortal));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProfessorPortal));
             pnlSidebar = new Panel();
             userProfile1 = new PUPAcadPortal.PortalContents.Misc.UserProfile();
             flowLayoutPanel1 = new FlowLayoutPanel();
