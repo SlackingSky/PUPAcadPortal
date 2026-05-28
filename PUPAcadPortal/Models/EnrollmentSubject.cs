@@ -13,6 +13,12 @@ public partial class EnrollmentSubject
 
     public string? Section { get; set; }
 
+    public string SubjectStatus { get; set; } = null!;
+
+    public DateTime? StatusDate { get; set; }
+
+    public string? Remarks { get; set; }
+
     public virtual Enrollment Enrollment { get; set; } = null!;
 
     public virtual ICollection<FinalCourseGrade> FinalCourseGrades { get; set; } = new List<FinalCourseGrade>();

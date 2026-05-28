@@ -11,7 +11,7 @@ public partial class Professor
 
     public string EmployeeId { get; set; } = null!;
 
-    public string Department { get; set; } = null!;
+    public int? DepartmentId { get; set; }
 
     public string EmploymentType { get; set; } = null!;
 
@@ -24,6 +24,10 @@ public partial class Professor
     public string EmploymentStatus { get; set; } = null!;
 
     public string Rank { get; set; } = null!;
+
+    public virtual Department? Department { get; set; }
+
+    public virtual ICollection<Department> Departments { get; set; } = new List<Department>();
 
     public virtual ICollection<FinalCourseGrade> FinalCourseGrades { get; set; } = new List<FinalCourseGrade>();
 

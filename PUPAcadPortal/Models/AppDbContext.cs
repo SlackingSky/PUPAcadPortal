@@ -29,6 +29,8 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<Curriculum> Curricula { get; set; }
 
+    public virtual DbSet<Department> Departments { get; set; }
+
     public virtual DbSet<Enrollment> Enrollments { get; set; }
 
     public virtual DbSet<EnrollmentSubject> EnrollmentSubjects { get; set; }
@@ -60,6 +62,8 @@ public partial class AppDbContext : DbContext
     public virtual DbSet<StudentAccount> StudentAccounts { get; set; }
 
     public virtual DbSet<StudentDiscount> StudentDiscounts { get; set; }
+
+    public virtual DbSet<StudentHold> StudentHolds { get; set; }
 
     public virtual DbSet<Subject> Subjects { get; set; }
 
@@ -313,6 +317,29 @@ public partial class AppDbContext : DbContext
                 .HasConstraintName("FK_Curriculum_Subject");
         });
 
+        modelBuilder.Entity<Department>(entity =>
+        {
+            entity.HasKey(e => e.DepartmentId).HasName("PRIMARY");
+
+            entity.ToTable("Department");
+
+            entity.HasIndex(e => e.DepartmentCode, "DepartmentCode").IsUnique();
+
+            entity.HasIndex(e => e.DeanProfessorId, "FK_Department_Dean");
+
+            entity.Property(e => e.DepartmentId).HasColumnName("DepartmentID");
+            entity.Property(e => e.DeanProfessorId).HasColumnName("DeanProfessorID");
+            entity.Property(e => e.DepartmentCode).HasMaxLength(20);
+            entity.Property(e => e.DepartmentName).HasMaxLength(100);
+            entity.Property(e => e.IsActive)
+                .IsRequired()
+                .HasDefaultValueSql("'1'");
+
+            entity.HasOne(d => d.DeanProfessor).WithMany(p => p.Departments)
+                .HasForeignKey(d => d.DeanProfessorId)
+                .HasConstraintName("FK_Department_Dean");
+        });
+
         modelBuilder.Entity<Enrollment>(entity =>
         {
             entity.HasKey(e => e.EnrollmentId).HasName("PRIMARY");
@@ -360,10 +387,15 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.EnrollmentId)
                 .HasMaxLength(50)
                 .HasColumnName("EnrollmentID");
+            entity.Property(e => e.Remarks).HasMaxLength(255);
             entity.Property(e => e.Section).HasMaxLength(20);
+            entity.Property(e => e.StatusDate).HasColumnType("datetime");
             entity.Property(e => e.SubjectOfferingId)
                 .HasMaxLength(50)
                 .HasColumnName("SubjectOfferingID");
+            entity.Property(e => e.SubjectStatus)
+                .HasMaxLength(20)
+                .HasDefaultValueSql("'Enrolled'");
 
             entity.HasOne(d => d.Enrollment).WithMany(p => p.EnrollmentSubjects)
                 .HasForeignKey(d => d.EnrollmentId)
@@ -529,10 +561,12 @@ public partial class AppDbContext : DbContext
 
             entity.HasIndex(e => e.EmployeeId, "EmployeeID").IsUnique();
 
+            entity.HasIndex(e => e.DepartmentId, "FK_Professor_Department");
+
             entity.HasIndex(e => e.UserId, "FK_Professor_User");
 
             entity.Property(e => e.ProfessorId).HasColumnName("ProfessorID");
-            entity.Property(e => e.Department).HasMaxLength(100);
+            entity.Property(e => e.DepartmentId).HasColumnName("DepartmentID");
             entity.Property(e => e.EmployeeId)
                 .HasMaxLength(50)
                 .HasColumnName("EmployeeID");
@@ -547,6 +581,10 @@ public partial class AppDbContext : DbContext
                 .HasDefaultValueSql("'Not Specified'");
             entity.Property(e => e.Rank).HasMaxLength(50);
             entity.Property(e => e.UserId).HasColumnName("UserID");
+
+            entity.HasOne(d => d.Department).WithMany(p => p.Professors)
+                .HasForeignKey(d => d.DepartmentId)
+                .HasConstraintName("FK_Professor_Department");
 
             entity.HasOne(d => d.User).WithMany(p => p.Professors)
                 .HasForeignKey(d => d.UserId)
@@ -710,6 +748,34 @@ public partial class AppDbContext : DbContext
                 .HasForeignKey(d => d.StudentId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Discount_Student");
+        });
+
+        modelBuilder.Entity<StudentHold>(entity =>
+        {
+            entity.HasKey(e => e.HoldId).HasName("PRIMARY");
+
+            entity.ToTable("StudentHold");
+
+            entity.HasIndex(e => e.StudentId, "FK_Hold_Student");
+
+            entity.HasIndex(e => e.PlacedByUserId, "FK_Hold_User");
+
+            entity.Property(e => e.HoldId).HasColumnName("HoldID");
+            entity.Property(e => e.Description).HasMaxLength(255);
+            entity.Property(e => e.HoldType).HasMaxLength(50);
+            entity.Property(e => e.PlacedByUserId).HasColumnName("PlacedByUserID");
+            entity.Property(e => e.ResolvedDate).HasColumnType("datetime");
+            entity.Property(e => e.StudentId).HasColumnName("StudentID");
+
+            entity.HasOne(d => d.PlacedByUser).WithMany(p => p.StudentHolds)
+                .HasForeignKey(d => d.PlacedByUserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Hold_User");
+
+            entity.HasOne(d => d.Student).WithMany(p => p.StudentHolds)
+                .HasForeignKey(d => d.StudentId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Hold_Student");
         });
 
         modelBuilder.Entity<Subject>(entity =>
