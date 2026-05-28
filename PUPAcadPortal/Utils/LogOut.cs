@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PUPAcadPortal.Data;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -13,6 +14,7 @@ namespace PUPAcadPortal.Utils
             Form form = button.FindForm();
             if (MessageBox.Show("Are you sure you want to logout?", "Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
+                UserSession.Logout();
                 form.Hide();
             }
         }

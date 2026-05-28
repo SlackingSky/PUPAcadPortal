@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace PUPAcadPortal
+namespace PUPAcadPortal.Utils
 {
     public class CalendarWheelFilter : IMessageFilter
     {

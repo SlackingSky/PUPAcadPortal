@@ -20,7 +20,7 @@ using System.Drawing.Drawing2D;
 using System.IO;
 using System.Windows.Forms;
 
-namespace PUPAcadPortal
+namespace PUPAcadPortal.PortalContents.Misc.LMS
 {
     // ----------------------------------------------------------
     //  AnnouncementData  (posted / edited data transfer object)

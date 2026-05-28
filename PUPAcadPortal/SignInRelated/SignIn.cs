@@ -38,6 +38,7 @@ namespace PUPAcadPortal
                 return;
             }
 
+            // Declares who is trying to sign in
             User? authenticatedUser = null;
 
             using (LoadingForm loadingBox = new LoadingForm(this))
@@ -50,12 +51,15 @@ namespace PUPAcadPortal
                     string usernameInput = txtUsername.Text.ToLower().Trim();
                     string passwordInput = txtPassword.Text;
 
+                    // Fetches data from database matching user credentials
                     authenticatedUser = await Task.Run(() =>
                     {
                         using (var context = new AppDbContext())
                         {
+                            // Searches database with the same username
                             var user = context.Users.Include(u => u.Role).FirstOrDefault(u => u.Username == usernameInput);
 
+                            // If found, compares password hash to database
                             if (user != null && BCrypt.Net.BCrypt.Verify(passwordInput, user.PasswordHash))
                             {
                                 if (!(bool)user.IsActive)
@@ -63,10 +67,12 @@ namespace PUPAcadPortal
                                     MessageBox.Show("Your account has been deactivated. Please contact the administrator.", "Account Disabled", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 }
 
+                                // Fetches the respective IDs of the user, only 1 ID can be selected per user based on their role
                                 (int? studentId, int? professorId, int?adminId) = user.Role.RoleName switch
                                 {
                                     "Student" => (
-                                        (int?)context.Students.Where(s => s.StudentId == user.UserId).Select(s => (int?)s.StudentId).FirstOrDefault(),
+                                        // v this line gets the user's student id since userid is a foreign key of the student table
+                                        (int?)context.Students.Where(s => s.UserId == user.UserId).Select(s => (int?)s.StudentId).FirstOrDefault(),
                                         (int?)null,
                                         (int?)null
                                     ),
@@ -86,6 +92,7 @@ namespace PUPAcadPortal
                                     _ => ((int?)null, (int?)null, (int?)null)
                                 };
 
+                                // This saves the login session
                                 UserSession.Login
                                 (
                                     username: user.Username,
@@ -152,6 +159,7 @@ namespace PUPAcadPortal
             if (authenticatedUser != null)
             {
                 this.Hide();
+                // if authentication success, checks user roles and shows portal based on it
                 using Form? form = authenticatedUser.Role.RoleName switch
                 {
                     "Admin" => new AdminPortal(),
@@ -178,6 +186,7 @@ namespace PUPAcadPortal
 
         private async void SignIn_Load(object sender, EventArgs e)
         {
+            // Gets credentials
             await DBConnectService.GetDecryptedConnectionStringAsync();
             await FileServerConnectService.GetDecryptedCredentialsAsync();
             this.Size = _usableScreenSize;
@@ -229,7 +238,7 @@ namespace PUPAcadPortal
             }
             catch (Exception ex)
             {
-                System.Windows.Forms.MessageBox.Show($"Database error: {ex.Message}");
+                MessageBox.Show($"Database error: {ex.Message}");
             }
         }
 

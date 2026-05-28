@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PUPAcadPortal.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -6,6 +7,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Text;
 using System.Windows.Forms;
+using PUPAcadPortal.Utils;
 
 namespace PUPAcadPortal.PortalContents.Student.LMS
 {
