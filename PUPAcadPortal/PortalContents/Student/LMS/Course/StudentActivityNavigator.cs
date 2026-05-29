@@ -45,6 +45,7 @@ namespace PUPAcadPortal
         }
 
         private StudentCourse GetCurrentCourse()
+        {
             return _list != null
                 ? new StudentCourse { Name = "", Code = "" }
                 : new StudentCourse();
