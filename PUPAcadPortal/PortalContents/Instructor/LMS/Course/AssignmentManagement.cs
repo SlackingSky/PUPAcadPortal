@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PUPAcadPortal.PortalContents.Instructor.LMS.Course;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -7,10 +8,6 @@ using System.Windows.Forms;
 
 namespace PUPAcadPortal
 {
-    /// <summary>
-    /// Shows all activities inside a chosen course.
-    /// Navigates to ActivityFormPage (create/edit), SubmissionList (check), CopyActivityDialog.
-    /// </summary>
     public partial class AssignmentManagement : UserControl
     {
         public event Action OnBack;
@@ -32,7 +29,6 @@ namespace PUPAcadPortal
             this.Load += (s, e) => RefreshList();
         }
 
-        // ── Header ───────────────────────────────────────────────────────────
         private void PopulateHeader()
         {
             lblCourseName.Text = _course.CourseName;
@@ -40,14 +36,12 @@ namespace PUPAcadPortal
             btnSave.Text = "+ Create Activity";
         }
 
-        // ── Debounce ─────────────────────────────────────────────────────────
         private void SetupDebounce()
         {
             _searchTimer = new System.Windows.Forms.Timer { Interval = 200 };
             _searchTimer.Tick += (s, e) => { _searchTimer.Stop(); RefreshList(); };
         }
 
-        // ── Refresh activity cards ────────────────────────────────────────────
         private void RefreshList()
         {
             flpActivities.SuspendLayout();
@@ -91,7 +85,6 @@ namespace PUPAcadPortal
             lblSummaryBar.Text = $"Showing {total} of {_course.Activities.Count} activities  ·  {pending} pending checks  ·  {checked_} checked";
         }
 
-        // ── Empty state ───────────────────────────────────────────────────────
         private Panel BuildEmptyState()
         {
             int w = Math.Max(700, flpActivities.ClientSize.Width - 40);
@@ -126,7 +119,7 @@ namespace PUPAcadPortal
             return pnl;
         }
 
-        // ── Activity card builder ─────────────────────────────────────────────
+        //  Activity card builder 
         private Panel BuildActivityCard(ActivityItem act)
         {
             int w = Math.Max(700, flpActivities.ClientSize.Width - 40);
@@ -247,7 +240,7 @@ namespace PUPAcadPortal
             var btnCopy = BuildCardBtn("Copy", Color.FromArgb(90, 90, 100), 60, btnH);
             right -= btnCopy.Width;
             btnCopy.Location = new Point(right, btnY);
-            //btnCopy.Click += (s, e) => ShowCopyDialog(act);
+            btnCopy.Click += (s, e) => ShowCopyDialog(act);
             card.Controls.Add(btnCopy);
 
             right -= gap;
@@ -272,7 +265,7 @@ namespace PUPAcadPortal
                 Cursor = Cursors.Hand
             };
 
-        // ── Navigation to sub-pages ───────────────────────────────────────────
+        //  Navigation to sub-pages 
         private void OpenActivityForm(ActivityItem? existingActivity)
         {
             var parent = this.Parent; if (parent == null) return;
@@ -320,10 +313,9 @@ namespace PUPAcadPortal
             subList.BringToFront();
         }
 
-        /*private void ShowCopyDialog(ActivityItem act)
+        private void ShowCopyDialog(ActivityItem act)
         {
             // All courses available to copy into – in a real app you'd fetch from DB.
-            // Here we demonstrate with the current single course list.
             var allCourses = new List<CourseActivity> { _course }; // extend as needed
             using var dlg = new CopyActivityDialog(act, allCourses);
             if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -331,7 +323,7 @@ namespace PUPAcadPortal
                 MessageBox.Show($"Activity \"{act.Title}\" copied successfully.", "Copy Activity",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-        }*/
+        }
 
         private void DeleteActivity(ActivityItem act)
         {
@@ -344,7 +336,15 @@ namespace PUPAcadPortal
             }
         }
 
-        // ── Toolbar events ────────────────────────────────────────────────────
+        private void pnlHeader_SizeChanged(object sender, System.EventArgs e)
+        {
+            if (this.btnSave != null && this.pnlHeader != null)
+            {
+                this.btnSave.Location = new System.Drawing.Point(this.pnlHeader.Width - this.btnSave.Width - 12, 17);
+            }
+        }
+
+        //  Toolbar events 
         private void btnSave_Click(object sender, EventArgs e)
             => OpenActivityForm(null);
 

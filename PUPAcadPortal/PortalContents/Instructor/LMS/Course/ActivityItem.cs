@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PUPAcadPortal
+namespace PUPAcadPortal.PortalContents.Instructor.LMS.Course
 {
-    // ── Activity types ────────────────────────────────────────────────────────
     public enum ActivityType { Assignment, Quiz, Essay, FileUpload }
 
-    // ── Main activity model ───────────────────────────────────────────────────
     public class ActivityItem
     {
         public int Id { get; set; }
@@ -19,24 +17,21 @@ namespace PUPAcadPortal
         public int Points { get; set; } = 100;
         public bool HasRubric { get; set; } = false;
 
-        // Submission counters (in-memory)
         public int TotalStudents { get; set; } = 35;
         public int SubmittedCount { get; set; }
         public int LateCount { get; set; }
         public int MissingCount { get; set; }
         public int CheckedCount { get; set; }
 
-        // Sub-collections
         public List<QuizQuestion> Questions { get; set; } = new();
         public List<RubricCriteria> RubricItems { get; set; } = new();
         public List<CourseFileItem> AttachedFiles { get; set; } = new();
 
-        // Derived helpers
         public bool IsOverdue => Deadline < DateTime.Now;
         public int PendingCount => SubmittedCount - CheckedCount;
     }
 
-    // ── Quiz ─────────────────────────────────────────────────────────────────
+    //  Quiz 
     public class QuizQuestion
     {
         public int QuestionId { get; set; }
@@ -47,7 +42,6 @@ namespace PUPAcadPortal
         public int Points { get; set; } = 1;
     }
 
-    // ── Rubric ───────────────────────────────────────────────────────────────
     public class RubricCriteria
     {
         public int CriteriaId { get; set; }
@@ -56,7 +50,6 @@ namespace PUPAcadPortal
         public int MaxPoints { get; set; } = 25;
     }
 
-    // ── Course files ─────────────────────────────────────────────────────────
     public class CourseFileItem
     {
         public int FileId { get; set; }
@@ -68,7 +61,6 @@ namespace PUPAcadPortal
         public int CourseId { get; set; }
     }
 
-    // ── Student submission ───────────────────────────────────────────────────
     public class StudentSubmission
     {
         public string StudentId { get; set; } = "";
@@ -82,11 +74,9 @@ namespace PUPAcadPortal
         public string Remarks { get; set; } = "";
         public bool HasFile { get; set; } = false;
         public string EssayContent { get; set; } = "";
-        // Rubric per-criterion scores (keyed by CriteriaId)
         public Dictionary<int, int> RubricScores { get; set; } = new();
     }
 
-    // ── Course activity (course card model) ──────────────────────────────────
     public class CourseActivity
     {
         public int CourseId { get; set; }
@@ -101,9 +91,7 @@ namespace PUPAcadPortal
         public string Status { get; set; } = "Active";
         public int ActivityCount { get; set; }
 
-        // Activities owned by this course
         public List<ActivityItem> Activities { get; set; } = new();
-        // Course-level files
         public List<CourseFileItem> CourseFiles { get; set; } = new();
     }
 }

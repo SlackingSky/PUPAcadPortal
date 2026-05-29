@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PUPAcadPortal.PortalContents.Instructor.LMS.Course;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -6,10 +7,6 @@ using System.Windows.Forms;
 
 namespace PUPAcadPortal
 {
-    /// <summary>
-    /// Inline Create / Edit Activity page.
-    /// Emits OnSave(ActivityItem) or OnCancel; never shows a popup.
-    /// </summary>
     public partial class ActivityFormPage : UserControl
     {
         public event Action<ActivityItem> OnSave;
@@ -34,7 +31,7 @@ namespace PUPAcadPortal
             PopulateForm();
         }
 
-        // ── Populate ──────────────────────────────────────────────────────────
+        //  Populate 
         private void PopulateForm()
         {
             lblPageTitle.Text = _isNew ? "Create Activity" : "Edit Activity";
@@ -62,7 +59,7 @@ namespace PUPAcadPortal
             RefreshFilesPanel();
         }
 
-        // ── Type toggle ───────────────────────────────────────────────────────
+        //  Type toggle 
         private void cmbType_SelectedIndexChanged(object sender, EventArgs e) => RefreshTypePanel();
 
         private void RefreshTypePanel()
@@ -73,7 +70,7 @@ namespace PUPAcadPortal
             lblPointsNote.Text = t == "Quiz" ? "ℹ Points calculated from questions." : "";
         }
 
-        // ── Quiz builder ──────────────────────────────────────────────────────
+        //  Quiz builder 
         private void btnAddQuestion_Click(object sender, EventArgs e)
         {
             _questions.Add(new QuizQuestion { QuestionId = _nextQId++, QuestionType = "MultipleChoice", Points = 1 });
@@ -205,7 +202,7 @@ namespace PUPAcadPortal
             _ => "Answer key / model answer"
         };
 
-        // ── Rubric builder ────────────────────────────────────────────────────
+        //  Rubric builder 
         private void chkRubric_CheckedChanged(object sender, EventArgs e)
         {
             pnlRubricRows.Visible = chkRubric.Checked;
@@ -274,7 +271,7 @@ namespace PUPAcadPortal
             return row;
         }
 
-        // ── File attach panel ─────────────────────────────────────────────────
+        //  File attach panel 
         private void btnAttachFile_Click(object sender, EventArgs e)
         {
             using var ofd = new OpenFileDialog
@@ -338,7 +335,7 @@ namespace PUPAcadPortal
             return chip;
         }
 
-        // ── Save ──────────────────────────────────────────────────────────────
+        //  Save 
         private void btnSave_Click(object sender, EventArgs e)
         {
             lblError.Text = "";
@@ -368,9 +365,80 @@ namespace PUPAcadPortal
             OnSave?.Invoke(act);
         }
 
+        //  Designer-side responsive helpers 
+        private void pnlHeader_SizeChanged(object sender, System.EventArgs e)
+        {
+            if (this.btnSave != null && this.pnlHeader != null)
+            {
+                this.btnSave.Location = new System.Drawing.Point(this.pnlHeader.Width - this.btnSave.Width - 12, 17);
+            }
+        }
+
+        private void pnlQuizSection_SizeChanged(object sender, System.EventArgs e)
+        {
+            if (this.btnAddQuestion != null && this.pnlQuizSection != null)
+            {
+                this.btnAddQuestion.Location = new System.Drawing.Point(this.pnlQuizSection.Width - 148, 12);
+            }
+        }
+
+        private void pnlRubricSection_SizeChanged(object sender, System.EventArgs e)
+        {
+            if (this.btnAddCriteria != null && this.pnlRubricSection != null)
+            {
+                this.btnAddCriteria.Location = new System.Drawing.Point(this.pnlRubricSection.Width - 143, 12);
+            }
+        }
+
+        private void pnlFilesSection_SizeChanged(object sender, System.EventArgs e)
+        {
+            if (this.btnAttachFile != null && this.pnlFilesSection != null)
+            {
+                this.btnAttachFile.Location = new System.Drawing.Point(this.pnlFilesSection.Width - 138, 12);
+            }
+        }
+
+        private void pnlScroll_SizeChanged(object sender, System.EventArgs e)
+        {
+            if (this.pnlScroll == null || this.stackPanel == null) return;
+            int w = System.Math.Max(600, this.pnlScroll.ClientSize.Width - 44);
+            foreach (System.Windows.Forms.Control c in this.stackPanel.Controls)
+            {
+                c.Width = w;
+                if (c is System.Windows.Forms.Panel p)
+                {
+                    foreach (System.Windows.Forms.Control inner in p.Controls)
+                    {
+                        if (inner is System.Windows.Forms.TextBox tb &&
+                            (tb.Name == "txtTitle" || tb.Name == "txtDescription"))
+                            tb.Width = w - 36;
+                    }
+                }
+            }
+        }
+
+        private static void SetupSectionLabel(System.Windows.Forms.Label lbl, string text, int x, int y, System.Drawing.Color color)
+        {
+            lbl.AutoSize = true;
+            lbl.Font = new System.Drawing.Font("Segoe UI", 10.5F, System.Drawing.FontStyle.Bold);
+            lbl.ForeColor = color;
+            lbl.Location = new System.Drawing.Point(x, y);
+            lbl.Text = text;
+            lbl.TabIndex = 0;
+        }
+
+        private static void SetupFieldLabel(System.Windows.Forms.Label lbl, string text, int x, int y)
+        {
+            lbl.AutoSize = true;
+            lbl.Font = new System.Drawing.Font("Segoe UI", 9F);
+            lbl.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            lbl.Location = new System.Drawing.Point(x, y);
+            lbl.Text = text;
+        }
+
         private void btnCancel_Click(object sender, EventArgs e) => OnCancel?.Invoke();
 
-        // ── Helpers ───────────────────────────────────────────────────────────
+        //  Helpers 
         private static void SetCombo(ComboBox c, string val)
         { int i = c.FindStringExact(val); c.SelectedIndex = i >= 0 ? i : 0; }
 

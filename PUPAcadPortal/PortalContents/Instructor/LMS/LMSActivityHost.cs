@@ -1,12 +1,9 @@
-﻿using System;
+﻿using PUPAcadPortal.PortalContents.Instructor.LMS.Course;
+using System;
 using System.Windows.Forms;
 
 namespace PUPAcadPortal
 {
-    /// <summary>
-    /// Top-level host that owns the navigation stack for the entire LMS module.
-    /// All view swaps happen here; child controls never reference each other directly.
-    /// </summary>
     public partial class LMSActivityHost : UserControl
     {
         private Control _currentView;
@@ -17,13 +14,11 @@ namespace PUPAcadPortal
             ShowDashboard();
         }
 
-        // ── Public entry-points ───────────────────────────────────────────────
 
         public void ShowDashboard()
         {
             var dashboard = new ActivityDashboard();
             dashboard.Dock = DockStyle.Fill;
-            // Dashboard tells host to open a course
             dashboard.OnOpenCourse += course => OpenCourse(course);
             SwapView(dashboard);
         }
@@ -36,7 +31,6 @@ namespace PUPAcadPortal
             SwapView(mgmt);
         }
 
-        // ── Internal swap ────────────────────────────────────────────────────
 
         private void SwapView(Control next)
         {

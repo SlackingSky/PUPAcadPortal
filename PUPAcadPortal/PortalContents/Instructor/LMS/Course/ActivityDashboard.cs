@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PUPAcadPortal.PortalContents.Instructor.LMS.Course;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -7,10 +8,7 @@ namespace PUPAcadPortal
 {
     public partial class ActivityDashboard : UserControl
     {
-        // ── Events ───────────────────────────────────────────────────────────
         public event Action<CourseActivity> OnOpenCourse;
-
-        // ── State ────────────────────────────────────────────────────────────
         private List<CourseActivity> _courses = new();
         private string _filterStatus = "All";
         private string _searchTerm = "";
@@ -26,7 +24,6 @@ namespace PUPAcadPortal
             this.Load += (s, e) => ResizeCards();
         }
 
-        // ── Sample data ───────────────────────────────────────────────────────
         private void LoadSampleData()
         {
             _courses = new List<CourseActivity>
@@ -110,7 +107,6 @@ namespace PUPAcadPortal
             return list;
         }
 
-        // ── Debounce timer for search ─────────────────────────────────────────
         private System.Windows.Forms.Timer _searchTimer;
         private void SetupSearchDebounce()
         {
@@ -122,7 +118,6 @@ namespace PUPAcadPortal
             };
         }
 
-        // ── Refresh ───────────────────────────────────────────────────────────
         private void RefreshDashboard()
         {
             flpCourseCards.SuspendLayout();
@@ -145,7 +140,6 @@ namespace PUPAcadPortal
             ResizeCards();
         }
 
-        // ── Card resize ───────────────────────────────────────────────────────
         private void ResizeCards()
         {
             if (flpCourseCards.Controls.Count == 0) return;
@@ -180,7 +174,6 @@ namespace PUPAcadPortal
             }
         }
 
-        // ── Card builder ──────────────────────────────────────────────────────
         private Panel CreateCourseCard(CourseActivity course)
         {
             const int cardW = 430;
@@ -198,7 +191,6 @@ namespace PUPAcadPortal
                 e.Graphics.DrawRectangle(pen, 0, 0, card.Width - 1, card.Height - 1);
             };
 
-            // ── Header band ──
             var hdr = new Panel
             {
                 Width = cardW,
@@ -247,7 +239,6 @@ namespace PUPAcadPortal
             hdr.Controls.AddRange(new Control[] { lblName, lblCode, lblStatus });
             card.Controls.Add(hdr);
 
-            // ── Instructor ──
             var lblInst = new Label
             {
                 Text = "👤 " + course.InstructorName,
@@ -260,7 +251,6 @@ namespace PUPAcadPortal
             };
             card.Controls.Add(lblInst);
 
-            // ── Stats row ──
             var pnlStats = new Panel
             {
                 Location = new Point(12, 98),
@@ -306,7 +296,6 @@ namespace PUPAcadPortal
             }
             card.Controls.Add(pnlStats);
 
-            // ── Deadline ──
             TimeSpan left = course.NearestDeadline - DateTime.Now;
             string deadlineTxt = left.TotalDays <= 0 ? "⚠ Due Today!" : left.Days == 1 ? "⏰ Due Tomorrow" : $"📅 Due in {left.Days} days";
             Color deadlineClr = left.TotalDays <= 0 ? Color.Red : left.Days <= 1 ? Color.OrangeRed : left.Days <= 3 ? Color.DarkOrange : Color.FromArgb(34, 139, 34);
@@ -321,7 +310,6 @@ namespace PUPAcadPortal
             };
             card.Controls.Add(lblDeadline);
 
-            // ── Open button ──
             var btnOpen = new buttonRounded
             {
                 Text = "Open Course →",
@@ -334,10 +322,9 @@ namespace PUPAcadPortal
                 Font = new Font("Segoe UI", 8.5F, FontStyle.Bold),
                 Tag = "OPEN_BTN"
             };
-            btnOpen.Click += (s, e) => OnOpenCourse?.Invoke(course);
+            btnOpen.Click += (s, e) => OpenCourseView(course);
             card.Controls.Add(btnOpen);
 
-            // ── Activity count badge ──
             var lblCount = new Label
             {
                 Text = $"{course.ActivityCount} Activities",
@@ -351,7 +338,33 @@ namespace PUPAcadPortal
             return card;
         }
 
-        // ── Stats banner ──────────────────────────────────────────────────────
+        private void OpenCourseView(CourseActivity course)
+        {
+            if (OnOpenCourse != null)
+            {
+                OnOpenCourse.Invoke(course);
+                return;
+            }
+
+            Control container = this.Parent;
+            if (container == null) return;
+
+            var mgmt = new AssignmentManagement(course);
+            mgmt.Dock = DockStyle.Fill;
+
+            mgmt.OnBack += () =>
+            {
+                container.Controls.Remove(mgmt);
+                mgmt.Dispose();
+                container.Controls.Add(this);
+                this.BringToFront();
+            };
+
+            container.Controls.Remove(this);
+            container.Controls.Add(mgmt);
+            mgmt.BringToFront();
+        }
+
         private void UpdateSummaryStats()
         {
             int acts = 0, pend = 0, chk = 0;
@@ -367,7 +380,6 @@ namespace PUPAcadPortal
             lblTotalChecked.Text = chk.ToString();
         }
 
-        // ── Event handlers ────────────────────────────────────────────────────
         private void txtSearchCourse_TextChanged(object sender, EventArgs e)
         {
             _searchTerm = txtSearchCourse.Text;

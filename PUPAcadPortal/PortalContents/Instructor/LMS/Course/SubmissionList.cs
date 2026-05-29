@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PUPAcadPortal.PortalContents.Instructor.LMS.Course;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -29,11 +30,21 @@ namespace PUPAcadPortal
             LoadSampleSubmissions();
             RefreshList();
 
+            cmbSortBy.SelectedIndex = 0;
+            cmbFilterStatus.SelectedIndex = 0;
             flpSubmissions.SizeChanged += (s, e) => RefreshList();
             this.Load += (s, e) => RefreshList();
         }
 
-        // ── Header ────────────────────────────────────────────────────────────
+        private void pnlHeader_SizeChanged(object sender, EventArgs e)
+        {
+            if (btnReturnAll != null && pnlHeader != null)
+            {
+                btnReturnAll.Location = new System.Drawing.Point(pnlHeader.Width - btnReturnAll.Width - 12, 18);
+            }
+        }
+
+        //  Header 
         private void PopulateHeader()
         {
             lblActivityTitle.Text = _activity.Title;
@@ -41,14 +52,14 @@ namespace PUPAcadPortal
             lblMaxPoints.Text = $"🏆 Max: {_activity.Points} pts";
         }
 
-        // ── Debounce ──────────────────────────────────────────────────────────
+        //  Debounce 
         private void SetupDebounce()
         {
             _searchTimer = new System.Windows.Forms.Timer { Interval = 180 };
             _searchTimer.Tick += (s, e) => { _searchTimer.Stop(); RefreshList(); };
         }
 
-        // ── Sample data ───────────────────────────────────────────────────────
+        //  Sample data 
         private void LoadSampleSubmissions()
         {
             string[] names =
@@ -86,7 +97,7 @@ namespace PUPAcadPortal
             }
         }
 
-        // ── Refresh list ──────────────────────────────────────────────────────
+        //  Refresh list 
         private void RefreshList()
         {
             flpSubmissions.SuspendLayout();
@@ -122,7 +133,7 @@ namespace PUPAcadPortal
             flpSubmissions.ResumeLayout();
         }
 
-        // ── Row builder ───────────────────────────────────────────────────────
+        //  Row builder 
         private Panel CreateRow(StudentSubmission sub)
         {
             int rowW = Math.Max(980, flpSubmissions.ClientSize.Width - 30);
@@ -190,7 +201,6 @@ namespace PUPAcadPortal
             if (!string.IsNullOrEmpty(sub.Remarks))
                 row.Controls.Add(new Label { Text = "💬 " + sub.Remarks, Font = new Font("Segoe UI", 8F, FontStyle.Italic), ForeColor = Color.DimGray, Location = new Point(360, 56), Width = 240, Height = 18, AutoEllipsis = true });
 
-            // ── Buttons (right-aligned) ──
             int right = rowW - 12;
             const int btnH = 30, gap = 6;
 
@@ -280,7 +290,7 @@ namespace PUPAcadPortal
                 Cursor = Cursors.Hand
             };
 
-        // ── Open grading ──────────────────────────────────────────────────────
+        //  Open grading 
         private void OpenGrading(StudentSubmission sub)
         {
             var parent = this.Parent; if (parent == null) return;
@@ -301,7 +311,7 @@ namespace PUPAcadPortal
             gi.BringToFront();
         }
 
-        // ── Toolbar events ────────────────────────────────────────────────────
+        //  Toolbar events 
         private void btnBack_Click(object sender, EventArgs e) => OnBack?.Invoke();
 
         private void txtSearchStudent_TextChanged(object sender, EventArgs e)
@@ -334,7 +344,7 @@ namespace PUPAcadPortal
             }
         }
 
-        // ── Helper ────────────────────────────────────────────────────────────
+        //  Helper 
         private static string GetInitials(string name)
         {
             var parts = name.Split(',');

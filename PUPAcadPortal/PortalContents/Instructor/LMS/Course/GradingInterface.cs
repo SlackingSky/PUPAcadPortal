@@ -1,6 +1,8 @@
-﻿using System;
+﻿using PUPAcadPortal.PortalContents.Instructor.LMS.Course;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace PUPAcadPortal
@@ -9,14 +11,15 @@ namespace PUPAcadPortal
     {
         public event Action OnBack;
 
-        private StudentSubmission currentSubmission;
-        private ActivityItem currentActivity;
-        private System.Windows.Forms.Timer autoSaveTimer;
-        private List<StudentSubmission> studentList;
-        private int studentIndex;
+        private StudentSubmission _current;
+        private readonly ActivityItem _activity;
+        private readonly List<StudentSubmission> _students;
+        private int _index;
 
-        private const int RubricCriterionMax = 25;
-        private const int RubricTotalMax = RubricCriterionMax * 4;
+        private System.Windows.Forms.Timer _autoSaveTimer;
+
+        // Dynamic rubric rows (built at runtime from activity.RubricItems)
+        private readonly List<(RubricCriteria criteria, NumericUpDown nud)> _rubricRows = new();
 
         public GradingInterface(
             StudentSubmission submission,
@@ -24,276 +27,261 @@ namespace PUPAcadPortal
             List<StudentSubmission> allStudents = null,
             int index = 0)
         {
+            _current = submission;
+            _activity = activity;
+            _students = allStudents ?? new List<StudentSubmission> { submission };
+            _index = index;
+
             InitializeComponent();
-
-            currentSubmission = submission;
-            currentActivity = activity;
-            studentList = allStudents;
-            studentIndex = index;
-
-            SetupRubricLabels();
-            SetupRubricStyle();
-
-
-            nudContent.Maximum = RubricCriterionMax;
-            nudStructure.Maximum = RubricCriterionMax;
-            nudGrammar.Maximum = RubricCriterionMax;
-            nudRelevance.Maximum = RubricCriterionMax;
-
-            nudContent.ValueChanged += nudRubric_ValueChanged;
-            nudStructure.ValueChanged += nudRubric_ValueChanged;
-            nudGrammar.ValueChanged += nudRubric_ValueChanged;
-            nudRelevance.ValueChanged += nudRubric_ValueChanged;
-
-            LoadSubmissionData();
-
-            if (studentList != null)
-            {
-                btnPrevStudent.Enabled = studentIndex > 0;
-                btnNextStudent.Enabled = studentIndex < studentList.Count - 1;
-            }
+            BuildRubricRows();
+            SetupAutoSave();
+            LoadStudent();
+            UpdateNavButtons();
         }
 
-
-        private void SetupRubricLabels()
+        //  Rubric rows 
+        private void BuildRubricRows()
         {
-            lblContentLabel.Text = "Content";
-            lblStructureLabel.Text = "Structure";
-            lblGrammarLabel.Text = "Grammar";
-            lblRelevanceLabel.Text = "Relevance";
+            _rubricRows.Clear();
+            flpRubricRows.Controls.Clear();
 
-            lblContentMax.Text = $"/ {RubricCriterionMax}";
-            lblStructureMax.Text = $"/ {RubricCriterionMax}";
-            lblGrammarMax.Text = $"/ {RubricCriterionMax}";
-            lblRelevanceMax.Text = $"/ {RubricCriterionMax}";
-
-        }
-
-        private void SetupRubricStyle()
-        {
-            Font rubricFont = new Font("Segoe UI", 9F, FontStyle.Bold);
-
-            lblContentLabel.Font = rubricFont;
-            lblStructureLabel.Font = rubricFont;
-            lblGrammarLabel.Font = rubricFont;
-            lblRelevanceLabel.Font = rubricFont;
-
-            lblRubricTotal.ForeColor = Color.Maroon;
-            lblRubricTotal.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-        }
-
-        
-        private void LoadSubmissionData()
-        {
-            autoSaveTimer?.Stop();
-            autoSaveTimer?.Dispose();
-
-            autoSaveTimer = new System.Windows.Forms.Timer();
-            autoSaveTimer.Interval = 30000;
-
-            autoSaveTimer.Tick += (s, e) =>
-            {
-                if (int.TryParse(txtScore.Text, out int score))
+            // Use activity's rubric items if defined; fallback to defaults
+            var items = _activity.RubricItems.Count > 0
+                ? _activity.RubricItems
+                : new List<RubricCriteria>
                 {
-                    currentSubmission.Score = score;
-                    currentSubmission.Remarks = txtRemarks.Text;
+                    new RubricCriteria { CriteriaId = 1, Name = "Content",   MaxPoints = 25 },
+                    new RubricCriteria { CriteriaId = 2, Name = "Structure", MaxPoints = 25 },
+                    new RubricCriteria { CriteriaId = 3, Name = "Grammar",   MaxPoints = 25 },
+                    new RubricCriteria { CriteriaId = 4, Name = "Relevance", MaxPoints = 25 }
+                };
 
-                    lblSaveStatus.Text =
-                        $"Auto-saved at {DateTime.Now:hh:mm tt}";
+            foreach (var crit in items)
+            {
+                var row = BuildRubricRow(crit, out var nud);
+                _rubricRows.Add((crit, nud));
+                flpRubricRows.Controls.Add(row);
+            }
 
-                    lblSaveStatus.ForeColor = Color.Gray;
-                }
+            UpdateRubricTotal();
+        }
+
+        private Panel BuildRubricRow(RubricCriteria crit, out NumericUpDown nud)
+        {
+            var row = new Panel { Width = 406, Height = 34, BackColor = Color.Transparent };
+
+            var lbl = new Label
+            {
+                Text = crit.Name,
+                Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                ForeColor = Color.FromArgb(50, 50, 60),
+                Location = new Point(0, 8),
+                Size = new Size(110, 20)
             };
 
-            autoSaveTimer.Start();
+            nud = new NumericUpDown
+            {
+                Minimum = 0,
+                Maximum = crit.MaxPoints,
+                Value = 0,
+                Font = new Font("Segoe UI", 9F),
+                Location = new Point(118, 5),
+                Size = new Size(62, 24)
+            };
+            nud.ValueChanged += nudRubric_ValueChanged;
 
-            lblStudentName.Text = currentSubmission.StudentName;
-            lblStudentId.Text = currentSubmission.StudentId;
-            lblActivityTitle.Text = currentActivity.Title;
-            lblMaxPoints.Text =
-                $"Max Points: {currentActivity.Points}";
+            var lblMax = new Label
+            {
+                Text = $"/ {crit.MaxPoints}",
+                Font = new Font("Segoe UI", 9F),
+                ForeColor = Color.Gray,
+                Location = new Point(186, 9),
+                Size = new Size(50, 18)
+            };
 
-            lblSubmissionTime.Text =
-                currentSubmission.SubmissionTime == DateTime.MinValue
+            // Mini progress bar
+            var bar = new Panel
+            {
+                Location = new Point(240, 12),
+                Size = new Size(160, 10),
+                BackColor = Color.FromArgb(235, 235, 240)
+            };
+            var fill = new Panel { Location = new Point(0, 0), Size = new Size(0, 10), BackColor = Color.FromArgb(128, 0, 0) };
+            bar.Controls.Add(fill);
+
+            
+
+            row.Controls.AddRange(new Control[] { lbl, nud, lblMax, bar });
+            return row;
+        }
+
+        //  Auto-save 
+        private void SetupAutoSave()
+        {
+            _autoSaveTimer = new System.Windows.Forms.Timer { Interval = 30_000 };
+            _autoSaveTimer.Tick += (s, e) =>
+            {
+                if (int.TryParse(txtScore.Text, out int sc))
+                {
+                    _current.Score = sc;
+                    _current.Remarks = txtRemarks.Text;
+                    lblSaveStatus.Text = $"Auto-saved at {DateTime.Now:hh:mm tt}";
+                    lblSaveStatus.ForeColor = Color.DimGray;
+                }
+            };
+            _autoSaveTimer.Start();
+        }
+
+        //  Load student data 
+        private void LoadStudent()
+        {
+            lblActivityTitle.Text = _activity.Title;
+            lblMaxPoints.Text = $"Max: {_activity.Points} pts";
+            lblStudentName.Text = _current.StudentName;
+            lblStudentId.Text = _current.StudentId;
+            lblSubmissionTime.Text = _current.SubmissionTime == DateTime.MinValue
                 ? "Not submitted"
-                : $"Submitted: {currentSubmission.SubmissionTime:MMM dd, yyyy hh:mm tt}";
+                : $"Submitted: {_current.SubmissionTime:MMM dd, yyyy  hh:mm tt}";
 
-            txtEssayContent.Text = currentSubmission.EssayContent;
-            txtRemarks.Text = currentSubmission.Remarks;
-            txtScore.Text =
-                currentSubmission.Score >= 0
-                ? currentSubmission.Score.ToString()
-                : "";
+            txtEssayContent.Text = _current.EssayContent;
+            txtRemarks.Text = _current.Remarks;
+            txtScore.Text = _current.Score >= 0 ? _current.Score.ToString() : "";
+            lblScoreOf.Text = $"/ {_activity.Points}";
 
-            lblScoreOf.Text = $"/ {currentActivity.Points}";
-            nudContent.Value = 0;
-            nudStructure.Value = 0;
-            nudGrammar.Value = 0;
-            nudRelevance.Value = 0;
+            // Lock inputs if already checked
+            bool locked = _current.IsChecked;
+            txtScore.ReadOnly = locked;
+            btnSaveScore.Enabled = !locked;
+            txtRemarks.ReadOnly = locked;
+
+            // Reset rubric nudges
+            foreach (var (crit, nud) in _rubricRows)
+            {
+                nud.Value = _current.RubricScores.TryGetValue(crit.CriteriaId, out int v) ? Math.Min(v, crit.MaxPoints) : 0;
+                nud.Enabled = !locked;
+            }
+
+            chkAutoScore.Enabled = !locked;
+            lblSaveStatus.Text = locked ? "✅ Already checked – score locked" : "";
+            lblSaveStatus.ForeColor = locked ? Color.FromArgb(128, 0, 0) : Color.ForestGreen;
 
             UpdateWordCount();
             UpdateRubricTotal();
         }
 
+        //  Rubric total 
         private void UpdateRubricTotal()
         {
-            int total =
-                (int)nudContent.Value +
-                (int)nudStructure.Value +
-                (int)nudGrammar.Value +
-                (int)nudRelevance.Value;
+            int rubricMax = _rubricRows.Sum(r => (int)r.criteria.MaxPoints);
+            if (rubricMax == 0) rubricMax = _activity.Points;
 
-            lblRubricTotal.Text =
-                $"Rubric Total: {total} / {RubricTotalMax}";
+            int total = _rubricRows.Sum(r => (int)r.nud.Value);
+            lblRubricTotal.Text = $"Rubric Total: {total} / {rubricMax}";
 
             if (chkAutoScore.Checked)
             {
-                double percentage =
-                    (double)total / RubricTotalMax;
-
-                int computedScore =
-                    (int)Math.Round(
-                        percentage * currentActivity.Points);
-
-                txtScore.Text = computedScore.ToString();
+                double pct = rubricMax > 0 ? (double)total / rubricMax : 0;
+                txtScore.Text = ((int)Math.Round(pct * _activity.Points)).ToString();
             }
         }
 
-        private void nudRubric_ValueChanged(
-            object sender,
-            EventArgs e)
-        {
-            UpdateRubricTotal();
-        }
+        private void nudRubric_ValueChanged(object sender, EventArgs e) => UpdateRubricTotal();
 
+        //  Word count 
         private void UpdateWordCount()
         {
             string text = txtEssayContent.Text.Trim();
-
-            int words =
-                string.IsNullOrWhiteSpace(text)
-                ? 0
-                : text.Split(
-                    new char[]
-                    {
-                        ' ',
-                        '\n',
-                        '\r',
-                        '\t'
-                    },
-                    StringSplitOptions.RemoveEmptyEntries
-                ).Length;
-
+            int words = string.IsNullOrWhiteSpace(text) ? 0
+                : text.Split(new[] { ' ', '\n', '\r', '\t' }, StringSplitOptions.RemoveEmptyEntries).Length;
             lblWordCount.Text = $"Words: {words}";
             lblCharCount.Text = $"Characters: {text.Length}";
         }
 
-        private void txtEssayContent_TextChanged(
-            object sender,
-            EventArgs e)
+        private void txtEssayContent_TextChanged(object sender, EventArgs e) => UpdateWordCount();
+
+        //  Auto-score toggle 
+        private void chkAutoScore_CheckedChanged(object sender, EventArgs e)
         {
-            UpdateWordCount();
-        }
-
-        private void btnSaveScore_Click(
-            object sender,
-            EventArgs e)
-        {
-            if (!int.TryParse(txtScore.Text, out int score))
-            {
-                MessageBox.Show(
-                    "Please enter a valid score.",
-                    "Validation Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
-
-                return;
-            }
-
-            if (score < 0 || score > currentActivity.Points)
-            {
-                MessageBox.Show(
-                    $"Score must be between 0 and {currentActivity.Points}.",
-                    "Validation Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
-
-                return;
-            }
-
-            currentSubmission.Score = score;
-            currentSubmission.IsChecked = true;
-            currentSubmission.Remarks = txtRemarks.Text;
-
-            lblSaveStatus.Text =
-                $"Saved at {DateTime.Now:hh:mm tt}";
-
-            lblSaveStatus.ForeColor = Color.ForestGreen;
-
-            MessageBox.Show(
-                $"Score saved: {score}/{currentActivity.Points}",
-                "Success",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
-        }
-
-        private void chkAutoScore_CheckedChanged(
-            object sender,
-            EventArgs e)
-        {
-            txtScore.ReadOnly = chkAutoScore.Checked;
+            txtScore.ReadOnly = chkAutoScore.Checked || _current.IsChecked;
             UpdateRubricTotal();
         }
 
-        private void btnNextStudent_Click(
-            object sender,
-            EventArgs e)
+        //  Save score 
+        private void btnSaveScore_Click(object sender, EventArgs e)
         {
-            if (studentList == null ||
-                studentIndex >= studentList.Count - 1)
-                return;
-
-            currentSubmission = studentList[++studentIndex];
-
-            LoadSubmissionData();
-
-            btnPrevStudent.Enabled = true;
-
-            btnNextStudent.Enabled =
-                studentIndex < studentList.Count - 1;
-        }
-
-        private void btnPrevStudent_Click(
-            object sender,
-            EventArgs e)
-        {
-            if (studentList == null ||
-                studentIndex <= 0)
-                return;
-
-            currentSubmission = studentList[--studentIndex];
-
-            LoadSubmissionData();
-
-            btnNextStudent.Enabled = true;
-
-            btnPrevStudent.Enabled =
-                studentIndex > 0;
-        }
-
-        private void btnBack_Click(
-            object sender,
-            EventArgs e)
-        {
-            autoSaveTimer?.Stop();
-            autoSaveTimer?.Dispose();
-
-            var parentContainer = this.Parent;
-
-            if (parentContainer != null)
+            if (!int.TryParse(txtScore.Text, out int score))
             {
-                parentContainer.Controls.Remove(this);
+                MessageBox.Show("Please enter a valid score.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
+            if (score < 0 || score > _activity.Points)
+            {
+                MessageBox.Show($"Score must be between 0 and {_activity.Points}.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Persist rubric scores
+            foreach (var (crit, nud) in _rubricRows)
+                _current.RubricScores[crit.CriteriaId] = (int)nud.Value;
+
+            _current.Score = score;
+            _current.IsChecked = true;
+            _current.Remarks = txtRemarks.Text;
+
+            // Lock UI
+            txtScore.ReadOnly = true;
+            btnSaveScore.Enabled = false;
+            txtRemarks.ReadOnly = true;
+            foreach (var (_, nud) in _rubricRows) nud.Enabled = false;
+            chkAutoScore.Enabled = false;
+
+            lblSaveStatus.Text = $"✅ Saved at {DateTime.Now:hh:mm tt}";
+            lblSaveStatus.ForeColor = Color.FromArgb(46, 160, 67);
+
+            MessageBox.Show($"Score saved: {score}/{_activity.Points}", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        //  Navigation 
+        private void btnNextStudent_Click(object sender, EventArgs e)
+        {
+            if (_index >= _students.Count - 1) return;
+            _current = _students[++_index];
+            LoadStudent();
+            UpdateNavButtons();
+        }
+
+        private void btnPrevStudent_Click(object sender, EventArgs e)
+        {
+            if (_index <= 0) return;
+            _current = _students[--_index];
+            LoadStudent();
+            UpdateNavButtons();
+        }
+
+        private void UpdateNavButtons()
+        {
+            btnPrevStudent.Enabled = _index > 0;
+            btnNextStudent.Enabled = _index < _students.Count - 1;
+            lblNavCounter.Text = $"{_index + 1} / {_students.Count}";
+        }
+
+        private void pnlHeader_SizeChanged(object sender, System.EventArgs e)
+        {
+            if (this.btnNextStudent == null || this.pnlHeader == null) return;
+            this.btnNextStudent.Location = new System.Drawing.Point(this.pnlHeader.Width - this.btnNextStudent.Width - 12, 28);
+            this.btnPrevStudent.Location = new System.Drawing.Point(this.pnlHeader.Width - this.btnNextStudent.Width - this.btnPrevStudent.Width - 18, 28);
+            this.lblNavCounter.Location = new System.Drawing.Point(this.pnlHeader.Width - this.btnNextStudent.Width - this.btnPrevStudent.Width - 98, 60);
+        }
+
+        //  Back 
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            _autoSaveTimer?.Stop();
+            _autoSaveTimer?.Dispose();
+
+            var parent = this.Parent;
+            if (parent != null)
+                parent.Controls.Remove(this);
 
             OnBack?.Invoke();
         }
