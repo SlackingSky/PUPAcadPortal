@@ -5,11 +5,10 @@ using System.IO;
 using System.Linq;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-
 using PdfFont = iTextSharp.text.Font;
 using PdfImage = iTextSharp.text.Image;
 
-namespace PUPAcadPortal
+namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
 {
     internal static class CogGenerator
     {
