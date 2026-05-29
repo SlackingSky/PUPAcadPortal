@@ -7,29 +7,29 @@ namespace PUPAcadPortal
 {
     public partial class ActivityDashboard : UserControl
     {
-        private List<CourseActivity> courses = new List<CourseActivity>();
-        private string currentFilter = "All";
-        private string searchTerm = "";
+        // ── Events ───────────────────────────────────────────────────────────
+        public event Action<CourseActivity> OnOpenCourse;
+
+        // ── State ────────────────────────────────────────────────────────────
+        private List<CourseActivity> _courses = new();
+        private string _filterStatus = "All";
+        private string _searchTerm = "";
 
         public ActivityDashboard()
         {
             InitializeComponent();
-
             LoadSampleData();
-
-            flpCourseCards.WrapContents = true;
-            flpCourseCards.AutoScroll = true;
-            flpCourseCards.FlowDirection = FlowDirection.LeftToRight;
-
+            SetupSearchDebounce();
             RefreshDashboard();
 
             flpCourseCards.SizeChanged += (s, e) => ResizeCards();
             this.Load += (s, e) => ResizeCards();
         }
 
+        // ── Sample data ───────────────────────────────────────────────────────
         private void LoadSampleData()
         {
-            courses = new List<CourseActivity>
+            _courses = new List<CourseActivity>
             {
                 new CourseActivity
                 {
@@ -37,455 +37,348 @@ namespace PUPAcadPortal
                     CourseName = "Introduction to Programming 1",
                     CourseCode = "ITP 101",
                     InstructorName = "Prof. Juan dela Cruz",
-                    TotalAssignments = 5,
-                    TotalQuizzes = 3,
-                    PendingSubmissions = 2,
-                    CheckedSubmissions = 6,
+                    TotalAssignments = 5, TotalQuizzes = 3,
+                    PendingSubmissions = 2, CheckedSubmissions = 6,
                     NearestDeadline = DateTime.Now.AddDays(2),
-                    Status = "Active",
-                    ActivityCount = 8
+                    Status = "Active", ActivityCount = 8,
+                    Activities = SampleActivities(1)
                 },
-
                 new CourseActivity
                 {
                     CourseId = 2,
                     CourseName = "Principles of Accounting",
                     CourseCode = "ACC 201",
                     InstructorName = "Prof. Maria Santos",
-                    TotalAssignments = 3,
-                    TotalQuizzes = 2,
-                    PendingSubmissions = 1,
-                    CheckedSubmissions = 4,
+                    TotalAssignments = 3, TotalQuizzes = 2,
+                    PendingSubmissions = 1, CheckedSubmissions = 4,
                     NearestDeadline = DateTime.Now.AddDays(5),
-                    Status = "Active",
-                    ActivityCount = 5
+                    Status = "Active", ActivityCount = 5,
+                    Activities = SampleActivities(2)
                 },
-
                 new CourseActivity
                 {
                     CourseId = 3,
                     CourseName = "Human Computer Interactions",
                     CourseCode = "HCI 301",
                     InstructorName = "Prof. Ana Reyes",
-                    TotalAssignments = 4,
-                    TotalQuizzes = 1,
-                    PendingSubmissions = 0,
-                    CheckedSubmissions = 5,
+                    TotalAssignments = 4, TotalQuizzes = 1,
+                    PendingSubmissions = 0, CheckedSubmissions = 5,
                     NearestDeadline = DateTime.Now.AddDays(10),
-                    Status = "Ongoing",
-                    ActivityCount = 5
+                    Status = "Ongoing", ActivityCount = 5,
+                    Activities = SampleActivities(3)
                 },
-
                 new CourseActivity
                 {
                     CourseId = 4,
                     CourseName = "Programming and Technologies 1",
                     CourseCode = "PT 101",
                     InstructorName = "Prof. Carlos Bautista",
-                    TotalAssignments = 6,
-                    TotalQuizzes = 4,
-                    PendingSubmissions = 3,
-                    CheckedSubmissions = 7,
+                    TotalAssignments = 6, TotalQuizzes = 4,
+                    PendingSubmissions = 3, CheckedSubmissions = 7,
                     NearestDeadline = DateTime.Now.AddDays(1),
-                    Status = "Active",
-                    ActivityCount = 10
+                    Status = "Active", ActivityCount = 10,
+                    Activities = SampleActivities(4)
                 }
             };
         }
 
+        private static List<ActivityItem> SampleActivities(int courseId)
+        {
+            var rng = new Random(courseId * 7);
+            var types = new[] { ActivityType.Assignment, ActivityType.Quiz, ActivityType.Essay, ActivityType.FileUpload };
+            var list = new List<ActivityItem>();
+            string[] titles = {
+                "Lab Exercise 1", "Midterm Quiz", "Written Report", "Final Project", "Weekly Assignment"
+            };
+            for (int i = 0; i < titles.Length; i++)
+            {
+                list.Add(new ActivityItem
+                {
+                    Id = courseId * 100 + i + 1,
+                    CourseId = courseId,
+                    Title = titles[i],
+                    Type = types[i % types.Length],
+                    Deadline = DateTime.Now.AddDays(rng.Next(-2, 14)),
+                    Points = (rng.Next(3) + 1) * 25,
+                    TotalStudents = 35,
+                    SubmittedCount = rng.Next(15, 35),
+                    LateCount = rng.Next(0, 5),
+                    CheckedCount = rng.Next(5, 15),
+                    Description = "Sample activity description for demonstration."
+                });
+            }
+            return list;
+        }
+
+        // ── Debounce timer for search ─────────────────────────────────────────
+        private System.Windows.Forms.Timer _searchTimer;
+        private void SetupSearchDebounce()
+        {
+            _searchTimer = new System.Windows.Forms.Timer { Interval = 200 };
+            _searchTimer.Tick += (s, e) =>
+            {
+                _searchTimer.Stop();
+                RefreshDashboard();
+            };
+        }
+
+        // ── Refresh ───────────────────────────────────────────────────────────
         private void RefreshDashboard()
         {
             flpCourseCards.SuspendLayout();
-
             flpCourseCards.Controls.Clear();
 
-            var filtered = courses.FindAll(c =>
+            var filtered = _courses.FindAll(c =>
             {
-                bool matchFilter =
-                    currentFilter == "All" ||
-                    c.Status == currentFilter;
-
-                bool matchSearch =
-                    string.IsNullOrEmpty(searchTerm) ||
-                    c.CourseName.ToLower().Contains(searchTerm.ToLower()) ||
-                    c.CourseCode.ToLower().Contains(searchTerm.ToLower());
-
+                bool matchFilter = _filterStatus == "All" || c.Status == _filterStatus;
+                bool matchSearch = string.IsNullOrEmpty(_searchTerm)
+                    || c.CourseName.IndexOf(_searchTerm, StringComparison.OrdinalIgnoreCase) >= 0
+                    || c.CourseCode.IndexOf(_searchTerm, StringComparison.OrdinalIgnoreCase) >= 0;
                 return matchFilter && matchSearch;
             });
 
             foreach (var course in filtered)
-            {
-                Panel card = CreateCourseCard(course);
-                flpCourseCards.Controls.Add(card);
-            }
+                flpCourseCards.Controls.Add(CreateCourseCard(course));
 
             UpdateSummaryStats();
-
             flpCourseCards.ResumeLayout();
-
             ResizeCards();
         }
 
+        // ── Card resize ───────────────────────────────────────────────────────
         private void ResizeCards()
         {
-            if (flpCourseCards.Controls.Count == 0)
-                return;
-
-            const int columns = 3;
-            const int margin = 10;
-
-            int availableWidth =
-                flpCourseCards.ClientSize.Width -
-                flpCourseCards.Padding.Left -
-                flpCourseCards.Padding.Right -
-                ((margin * 2) * columns);
-
-            int cardWidth = Math.Max(300, availableWidth / columns);
+            if (flpCourseCards.Controls.Count == 0) return;
+            const int columns = 3, margin = 10;
+            int available = flpCourseCards.ClientSize.Width
+                            - flpCourseCards.Padding.Horizontal
+                            - (margin * 2 * columns);
+            int cardW = Math.Max(320, available / columns);
 
             foreach (Control ctrl in flpCourseCards.Controls)
             {
-                if (ctrl is Panel card)
+                if (!(ctrl is Panel card)) continue;
+                card.Width = cardW;
+                foreach (Control c in card.Controls)
                 {
-                    card.Width = cardWidth;
-
-                    foreach (Control control in card.Controls)
-                    {
-                        if (control.Tag?.ToString() == "HEADER")
-                        {
-                            control.Width = cardWidth;
-
-                            foreach (Control headerCtrl in control.Controls)
-                            {
-                                if (headerCtrl.Tag?.ToString() == "STATUS")
-                                {
-                                    headerCtrl.Location = new Point(
-                                        cardWidth - headerCtrl.Width - 15,
-                                        headerCtrl.Location.Y
-                                    );
-                                }
-
-                                if (headerCtrl.Tag?.ToString() == "COURSE")
-                                {
-                                    headerCtrl.Width = cardWidth - 100;
-                                }
-                            }
-                        }
-
-                        if (control.Tag?.ToString() == "INSTRUCTOR")
-                        {
-                            control.Width = cardWidth - 20;
-                        }
-
-                        if (control.Tag?.ToString() == "STATS")
-                        {
-                            control.Width = cardWidth - 20;
-                        }
-
-                        if (control is buttonRounded btn)
-                        {
-                            btn.Location = new Point(
-                                cardWidth - btn.Width - 15,
-                                btn.Location.Y
-                            );
-
-                            btn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-
-                            btn.Invalidate();
-                        }
-                    }
-
-                    card.Invalidate();
-                    card.Refresh();
+                    if (c.Tag?.ToString() == "HEADER") { c.Width = cardW; UpdateHeaderChildren(c, cardW); }
+                    else if (c.Tag?.ToString() == "INSTRUCTOR") c.Width = cardW - 20;
+                    else if (c.Tag?.ToString() == "STATS") c.Width = cardW - 20;
+                    else if (c is buttonRounded b && b.Tag?.ToString() == "OPEN_BTN")
+                        b.Location = new Point(cardW - b.Width - 15, b.Location.Y);
                 }
+                card.Invalidate();
             }
         }
 
+        private static void UpdateHeaderChildren(Control header, int cardW)
+        {
+            foreach (Control h in header.Controls)
+            {
+                if (h.Tag?.ToString() == "STATUS") h.Location = new Point(cardW - h.Width - 12, h.Location.Y);
+                else if (h.Tag?.ToString() == "COURSE") h.Width = cardW - 100;
+            }
+        }
+
+        // ── Card builder ──────────────────────────────────────────────────────
         private Panel CreateCourseCard(CourseActivity course)
         {
-            int cardWidth = 430;
+            const int cardW = 430;
 
-            Panel card = new Panel
+            var card = new Panel
             {
-                Width = cardWidth,
-                Height = 220,
+                Width = cardW,
+                Height = 228,
                 BackColor = Color.White,
                 Margin = new Padding(10)
             };
-
             card.Paint += (s, e) =>
             {
-                using (Pen pen = new Pen(Color.FromArgb(220, 220, 220)))
-                {
-                    e.Graphics.DrawRectangle(
-                        pen,
-                        0,
-                        0,
-                        card.Width - 1,
-                        card.Height - 1
-                    );
-                }
+                using var pen = new Pen(Color.FromArgb(218, 218, 225));
+                e.Graphics.DrawRectangle(pen, 0, 0, card.Width - 1, card.Height - 1);
             };
 
-            Panel headerPanel = new Panel
+            // ── Header band ──
+            var hdr = new Panel
             {
-                Width = cardWidth,
-                Height = 62,
+                Width = cardW,
+                Height = 64,
                 Dock = DockStyle.Top,
-                BackColor = Color.Maroon,
+                BackColor = Color.FromArgb(128, 0, 0),
                 Tag = "HEADER"
             };
 
-            Label lblCourse = new Label
+            var lblName = new Label
             {
                 Text = course.CourseName,
                 ForeColor = Color.White,
-                Font = new Font("Segoe UI", 11F, FontStyle.Bold),
-                Location = new Point(10, 8),
-                Width = cardWidth - 100,
-                Height = 25,
+                Font = new Font("Segoe UI", 10.5F, FontStyle.Bold),
+                Location = new Point(12, 8),
+                Width = cardW - 100,
+                Height = 26,
                 AutoEllipsis = true,
                 Tag = "COURSE"
             };
-
-            Label lblCode = new Label
+            var lblCode = new Label
             {
                 Text = course.CourseCode,
-                ForeColor = Color.FromArgb(230, 180, 180),
-                Font = new Font("Segoe UI", 9F),
-                Location = new Point(10, 35),
-                Width = 200,
+                ForeColor = Color.FromArgb(230, 185, 185),
+                Font = new Font("Segoe UI", 8.5F),
+                Location = new Point(12, 36),
+                Width = 180,
                 Height = 18
             };
 
-            Color statusColor =
-                course.Status == "Active"
-                ? Color.LightGreen
-                : course.Status == "Completed"
-                    ? Color.LightBlue
-                    : Color.Yellow;
-
-            Label lblStatus = new Label
+            Color statusBg = course.Status == "Active" ? Color.FromArgb(46, 160, 67)
+                           : course.Status == "Completed" ? Color.FromArgb(58, 130, 200)
+                           : Color.FromArgb(200, 165, 0);
+            var lblStatus = new Label
             {
                 Text = course.Status,
-                BackColor = statusColor,
-                ForeColor = Color.Black,
-                Font = new Font("Segoe UI", 8F, FontStyle.Bold),
-                Size = new Size(65, 22),
-                Location = new Point(cardWidth - 80, 18),
+                BackColor = statusBg,
+                ForeColor = Color.White,
+                Font = new Font("Segoe UI", 7.5F, FontStyle.Bold),
+                Size = new Size(62, 20),
+                Location = new Point(cardW - 77, 22),
                 TextAlign = ContentAlignment.MiddleCenter,
                 Tag = "STATUS"
             };
 
-            headerPanel.Controls.Add(lblCourse);
-            headerPanel.Controls.Add(lblCode);
-            headerPanel.Controls.Add(lblStatus);
+            hdr.Controls.AddRange(new Control[] { lblName, lblCode, lblStatus });
+            card.Controls.Add(hdr);
 
-            Label lblInstructor = new Label
+            // ── Instructor ──
+            var lblInst = new Label
             {
-                Text = "Instructor: " + course.InstructorName,
-                Font = new Font("Segoe UI", 9F),
-                ForeColor = Color.FromArgb(80, 80, 80),
-                Location = new Point(10, 72),
-                Width = cardWidth - 20,
+                Text = "👤 " + course.InstructorName,
+                Font = new Font("Segoe UI", 8.5F),
+                ForeColor = Color.FromArgb(75, 75, 80),
+                Location = new Point(12, 74),
+                Width = cardW - 24,
                 Height = 18,
                 Tag = "INSTRUCTOR"
             };
+            card.Controls.Add(lblInst);
 
-            Panel pnlStats = new Panel
+            // ── Stats row ──
+            var pnlStats = new Panel
             {
-                Location = new Point(10, 95),
-                Size = new Size(cardWidth - 20, 52),
-                BackColor = Color.FromArgb(248, 248, 248),
+                Location = new Point(12, 98),
+                Size = new Size(cardW - 24, 54),
+                BackColor = Color.FromArgb(248, 248, 251),
                 Tag = "STATS"
             };
-
-            string[] titles =
+            pnlStats.Paint += (s, e) =>
             {
-                "Assignments",
-                "Quizzes",
-                "Pending",
-                "Checked"
+                using var pen = new Pen(Color.FromArgb(235, 235, 240));
+                e.Graphics.DrawRectangle(pen, 0, 0, pnlStats.Width - 1, pnlStats.Height - 1);
             };
 
-            string[] values =
+            string[] statVals = { course.TotalAssignments.ToString(), course.TotalQuizzes.ToString(),
+                                  course.PendingSubmissions.ToString(), course.CheckedSubmissions.ToString() };
+            string[] statLbls = { "Assign.", "Quizzes", "Pending", "Checked" };
+            Color[] statColors = { Color.FromArgb(63, 81, 181), Color.FromArgb(0, 150, 136),
+                                   Color.FromArgb(211, 84, 0),  Color.FromArgb(46, 160, 67) };
+            for (int i = 0; i < 4; i++)
             {
-                course.TotalAssignments.ToString(),
-                course.TotalQuizzes.ToString(),
-                course.PendingSubmissions.ToString(),
-                course.CheckedSubmissions.ToString()
-            };
-
-            for (int i = 0; i < titles.Length; i++)
-            {
-                int columnWidth = (cardWidth - 20) / 4;
-                int x = i * columnWidth;
-
-                Label lblValue = new Label
+                int colW = (cardW - 24) / 4;
+                int x = i * colW;
+                pnlStats.Controls.Add(new Label
                 {
-                    Text = values[i],
-                    Font = new Font("Segoe UI", 14F, FontStyle.Bold),
-                    ForeColor = Color.Maroon,
+                    Text = statVals[i],
+                    Font = new Font("Segoe UI", 15F, FontStyle.Bold),
+                    ForeColor = statColors[i],
                     Location = new Point(x, 2),
-                    Width = columnWidth,
-                    Height = 26,
+                    Width = colW,
+                    Height = 28,
                     TextAlign = ContentAlignment.MiddleCenter
-                };
-
-                Label lblTitle = new Label
+                });
+                pnlStats.Controls.Add(new Label
                 {
-                    Text = titles[i],
+                    Text = statLbls[i],
                     Font = new Font("Segoe UI", 7F),
                     ForeColor = Color.Gray,
-                    Location = new Point(x, 30),
-                    Width = columnWidth,
+                    Location = new Point(x, 32),
+                    Width = colW,
                     Height = 15,
                     TextAlign = ContentAlignment.MiddleCenter
-                };
-
-                pnlStats.Controls.Add(lblValue);
-                pnlStats.Controls.Add(lblTitle);
+                });
             }
+            card.Controls.Add(pnlStats);
 
-            TimeSpan daysLeft = course.NearestDeadline - DateTime.Now;
-
-            string deadlineText;
-
-            if (daysLeft.TotalDays <= 0)
-                deadlineText = "Due Today!";
-            else if (daysLeft.Days == 1)
-                deadlineText = "Due Tomorrow";
-            else
-                deadlineText = "Due in " + daysLeft.Days + " days";
-
-            Color deadlineColor;
-
-            if (daysLeft.TotalDays <= 0)
-                deadlineColor = Color.Red;
-            else if (daysLeft.Days <= 1)
-                deadlineColor = Color.Red;
-            else if (daysLeft.Days <= 3)
-                deadlineColor = Color.Orange;
-            else
-                deadlineColor = Color.ForestGreen;
-
-            Label lblDeadline = new Label
+            // ── Deadline ──
+            TimeSpan left = course.NearestDeadline - DateTime.Now;
+            string deadlineTxt = left.TotalDays <= 0 ? "⚠ Due Today!" : left.Days == 1 ? "⏰ Due Tomorrow" : $"📅 Due in {left.Days} days";
+            Color deadlineClr = left.TotalDays <= 0 ? Color.Red : left.Days <= 1 ? Color.OrangeRed : left.Days <= 3 ? Color.DarkOrange : Color.FromArgb(34, 139, 34);
+            var lblDeadline = new Label
             {
-                Text = "Nearest: " + deadlineText,
-                Font = new Font("Segoe UI", 9F, FontStyle.Bold),
-                ForeColor = deadlineColor,
-                Location = new Point(10, 158),
-                Width = 220,
+                Text = deadlineTxt,
+                Font = new Font("Segoe UI", 8.5F, FontStyle.Bold),
+                ForeColor = deadlineClr,
+                Location = new Point(12, 162),
+                Width = 200,
                 Height = 20
             };
-
-            buttonRounded btnView = new buttonRounded
-            {
-                Text = "Open Course",
-                Size = new Size(110, 32),
-                Location = new Point(cardWidth - 125, 152),
-                BackColor = Color.Maroon,
-                ForeColor = Color.White,
-                BorderRadius = 15,
-                Cursor = Cursors.Hand,
-                Tag = course
-            };
-
-            btnView.Click += BtnViewCourse_Click;
-
-            card.Controls.Add(headerPanel);
-            card.Controls.Add(lblInstructor);
-            card.Controls.Add(pnlStats);
             card.Controls.Add(lblDeadline);
-            card.Controls.Add(btnView);
+
+            // ── Open button ──
+            var btnOpen = new buttonRounded
+            {
+                Text = "Open Course →",
+                Size = new Size(120, 30),
+                Location = new Point(cardW - 135, 158),
+                BackColor = Color.FromArgb(128, 0, 0),
+                ForeColor = Color.White,
+                BorderRadius = 14,
+                Cursor = Cursors.Hand,
+                Font = new Font("Segoe UI", 8.5F, FontStyle.Bold),
+                Tag = "OPEN_BTN"
+            };
+            btnOpen.Click += (s, e) => OnOpenCourse?.Invoke(course);
+            card.Controls.Add(btnOpen);
+
+            // ── Activity count badge ──
+            var lblCount = new Label
+            {
+                Text = $"{course.ActivityCount} Activities",
+                Font = new Font("Segoe UI", 7.5F),
+                ForeColor = Color.FromArgb(120, 120, 130),
+                Location = new Point(12, 198),
+                AutoSize = true
+            };
+            card.Controls.Add(lblCount);
 
             return card;
         }
 
-        private void BtnViewCourse_Click(object sender, EventArgs e)
-        {
-            if (sender is buttonRounded btn &&
-                btn.Tag is CourseActivity course)
-            {
-                AssignmentManagement assignmentMgmt =
-                    new AssignmentManagement(course);
-
-                assignmentMgmt.Dock = DockStyle.Fill;
-
-                Control container = this.Parent;
-
-                if (container != null)
-                {
-                    container.Controls.Remove(this);
-
-                    assignmentMgmt.OnBack += () =>
-                    {
-                        container.Controls.Remove(assignmentMgmt);
-                        container.Controls.Add(this);
-                        this.BringToFront();
-                    };
-
-                    container.Controls.Add(assignmentMgmt);
-                    assignmentMgmt.BringToFront();
-                }
-            }
-        }
-
+        // ── Stats banner ──────────────────────────────────────────────────────
         private void UpdateSummaryStats()
         {
-            int totalActivities = 0;
-            int totalPending = 0;
-            int totalChecked = 0;
-
-            foreach (var c in courses)
+            int acts = 0, pend = 0, chk = 0;
+            foreach (var c in _courses)
             {
-                totalActivities += c.ActivityCount;
-                totalPending += c.PendingSubmissions;
-                totalChecked += c.CheckedSubmissions;
+                acts += c.ActivityCount;
+                pend += c.PendingSubmissions;
+                chk += c.CheckedSubmissions;
             }
-
-            lblTotalActivities.Text = totalActivities.ToString();
-            lblTotalPending.Text = totalPending.ToString();
-            lblTotalChecked.Text = totalChecked.ToString();
-            lblTotalCourses.Text = courses.Count.ToString();
+            lblTotalCourses.Text = _courses.Count.ToString();
+            lblTotalActivities.Text = acts.ToString();
+            lblTotalPending.Text = pend.ToString();
+            lblTotalChecked.Text = chk.ToString();
         }
 
+        // ── Event handlers ────────────────────────────────────────────────────
         private void txtSearchCourse_TextChanged(object sender, EventArgs e)
         {
-            searchTerm = txtSearchCourse.Text;
-            RefreshDashboard();
+            _searchTerm = txtSearchCourse.Text;
+            _searchTimer.Stop();
+            _searchTimer.Start();
         }
 
         private void cmbFilterCourse_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFilter =
-                cmbFilterCourse.SelectedItem?.ToString() ?? "All";
-
+            _filterStatus = cmbFilterCourse.SelectedItem?.ToString() ?? "All";
             RefreshDashboard();
         }
-    }
-
-    public class CourseActivity
-    {
-        public int CourseId { get; set; }
-
-        public string CourseName { get; set; } = "";
-
-        public string CourseCode { get; set; } = "";
-
-        public string InstructorName { get; set; } = "";
-
-        public int TotalAssignments { get; set; }
-
-        public int TotalQuizzes { get; set; }
-
-        public int PendingSubmissions { get; set; }
-
-        public int CheckedSubmissions { get; set; }
-
-        public DateTime NearestDeadline { get; set; }
-
-        public string Status { get; set; } = "Active";
-
-        public int ActivityCount { get; set; }
     }
 }

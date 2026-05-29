@@ -1,247 +1,199 @@
-﻿using System.Reflection.PortableExecutable;
-
-namespace PUPAcadPortal
+﻿namespace PUPAcadPortal
 {
     partial class AssignmentManagement
     {
-        /// <summary> 
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
+            if (disposing && components != null) components.Dispose();
             base.Dispose(disposing);
         }
 
-        #region Component Designer generated code
-
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            pnlHeader = new Panel();
+            pnlHeader = new System.Windows.Forms.Panel();
             btnBack = new buttonRounded();
-            lblCourseTitle = new Label();
-            btnCreateAssignment = new buttonRounded();
-            pnlToolbar = new Panel();
-            txtSearchActivities = new TextBox();
-            lblFilterLabel = new Label();
-            cmbFilterType = new ComboBox();
-            flpActivities = new FlowLayoutPanel();
-            pnlPagination = new Panel();
-            btnPrevPage = new buttonRounded();
-            lblPageInfo = new Label();
-            btnNextPage = new buttonRounded();
+            lblCourseName = new System.Windows.Forms.Label();
+            lblCourseCode = new System.Windows.Forms.Label();
+            btnSave = new buttonRounded();
+            pnlToolbar = new System.Windows.Forms.Panel();
+            txtSearch = new System.Windows.Forms.TextBox();
+            cmbFilterType = new System.Windows.Forms.ComboBox();
+            pnlSummaryBar = new System.Windows.Forms.Panel();
+            lblSummaryBar = new System.Windows.Forms.Label();
+            pnlScroll = new System.Windows.Forms.Panel();
+            flpActivities = new System.Windows.Forms.FlowLayoutPanel();
+
             pnlHeader.SuspendLayout();
             pnlToolbar.SuspendLayout();
-            pnlPagination.SuspendLayout();
+            pnlSummaryBar.SuspendLayout();
+            pnlScroll.SuspendLayout();
             SuspendLayout();
-            // 
-            // pnlHeader
-            // 
-            pnlHeader.BackColor = Color.Maroon;
+
+            // ── pnlHeader ─────────────────────────────────────────────────────
+            pnlHeader.BackColor = System.Drawing.Color.FromArgb(128, 0, 0);
             pnlHeader.Controls.Add(btnBack);
-            pnlHeader.Controls.Add(lblCourseTitle);
-            pnlHeader.Controls.Add(btnCreateAssignment);
-            pnlHeader.Dock = DockStyle.Top;
-            pnlHeader.Location = new Point(0, 0);
+            pnlHeader.Controls.Add(lblCourseName);
+            pnlHeader.Controls.Add(lblCourseCode);
+            pnlHeader.Controls.Add(btnSave);
+            pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            pnlHeader.Location = new System.Drawing.Point(0, 0);
             pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(1661, 60);
-            pnlHeader.TabIndex = 3;
-            // 
+            pnlHeader.Size = new System.Drawing.Size(1680, 68);
+            pnlHeader.TabIndex = 0;
+            pnlHeader.SizeChanged += pnlHeader_SizeChanged;
+
             // btnBack
-            // 
-            btnBack.BackColor = Color.Maroon;
+            btnBack.BackColor = System.Drawing.Color.FromArgb(100, 0, 0);
             btnBack.BorderRadius = 10;
+            btnBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             btnBack.FlatAppearance.BorderSize = 0;
-            btnBack.FlatStyle = FlatStyle.Flat;
-            btnBack.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnBack.ForeColor = Color.White;
-            btnBack.Location = new Point(15, 13);
+            btnBack.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            btnBack.ForeColor = System.Drawing.Color.White;
+            btnBack.Location = new System.Drawing.Point(12, 18);
             btnBack.Name = "btnBack";
-            btnBack.Size = new Size(80, 32);
+            btnBack.Size = new System.Drawing.Size(80, 32);
             btnBack.TabIndex = 0;
-            btnBack.Text = "Back";
+            btnBack.Text = "← Back";
             btnBack.UseVisualStyleBackColor = false;
             btnBack.Click += btnBack_Click;
-            // 
-            // lblCourseTitle
-            // 
-            lblCourseTitle.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            lblCourseTitle.ForeColor = Color.White;
-            lblCourseTitle.Location = new Point(105, 15);
-            lblCourseTitle.Name = "lblCourseTitle";
-            lblCourseTitle.Size = new Size(700, 30);
-            lblCourseTitle.TabIndex = 1;
-            lblCourseTitle.Text = "Course Activities";
-            // 
-            // btnCreateAssignment
-            // 
-            btnCreateAssignment.BackColor = Color.FromArgb(255, 193, 7);
-            btnCreateAssignment.BorderRadius = 10;
-            btnCreateAssignment.FlatAppearance.BorderSize = 0;
-            btnCreateAssignment.FlatAppearance.MouseDownBackColor = Color.FromArgb(255, 193, 7);
-            btnCreateAssignment.FlatAppearance.MouseOverBackColor = Color.DimGray;
-            btnCreateAssignment.FlatStyle = FlatStyle.Flat;
-            btnCreateAssignment.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnCreateAssignment.ForeColor = Color.Black;
-            btnCreateAssignment.Location = new Point(1493, 15);
-            btnCreateAssignment.Name = "btnCreateAssignment";
-            btnCreateAssignment.Size = new Size(150, 32);
-            btnCreateAssignment.TabIndex = 2;
-            btnCreateAssignment.Text = "+ Create Activity";
-            btnCreateAssignment.UseVisualStyleBackColor = false;
-            btnCreateAssignment.Click += btnCreateAssignment_Click;
-            // 
-            // pnlToolbar
-            // 
-            pnlToolbar.BackColor = Color.FromArgb(245, 245, 245);
-            pnlToolbar.Controls.Add(txtSearchActivities);
-            pnlToolbar.Controls.Add(lblFilterLabel);
+
+            // lblCourseName
+            lblCourseName.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold);
+            lblCourseName.ForeColor = System.Drawing.Color.White;
+            lblCourseName.Location = new System.Drawing.Point(106, 10);
+            lblCourseName.Name = "lblCourseName";
+            lblCourseName.Size = new System.Drawing.Size(700, 28);
+            lblCourseName.TabIndex = 1;
+            lblCourseName.Text = "Course Name";
+
+            // lblCourseCode
+            lblCourseCode.Font = new System.Drawing.Font("Segoe UI", 8.5F);
+            lblCourseCode.ForeColor = System.Drawing.Color.FromArgb(230, 185, 185);
+            lblCourseCode.Location = new System.Drawing.Point(106, 40);
+            lblCourseCode.Name = "lblCourseCode";
+            lblCourseCode.Size = new System.Drawing.Size(500, 18);
+            lblCourseCode.TabIndex = 2;
+            lblCourseCode.Text = "Course Code";
+
+            // btnSave
+            btnSave.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            btnSave.BackColor = System.Drawing.Color.FromArgb(255, 196, 0);
+            btnSave.BorderRadius = 10;
+            btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btnSave.FlatAppearance.BorderSize = 0;
+            btnSave.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+            btnSave.ForeColor = System.Drawing.Color.Black;
+            btnSave.Location = new System.Drawing.Point(1510, 17);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new System.Drawing.Size(158, 34);
+            btnSave.TabIndex = 3;
+            btnSave.Text = "+ Create Activity";
+            btnSave.UseVisualStyleBackColor = false;
+            btnSave.Click += btnSave_Click;
+
+            // ── pnlToolbar ────────────────────────────────────────────────────
+            pnlToolbar.BackColor = System.Drawing.Color.White;
+            pnlToolbar.Controls.Add(txtSearch);
             pnlToolbar.Controls.Add(cmbFilterType);
-            pnlToolbar.Dock = DockStyle.Top;
-            pnlToolbar.Location = new Point(0, 60);
+            pnlToolbar.Dock = System.Windows.Forms.DockStyle.Top;
+            pnlToolbar.Location = new System.Drawing.Point(0, 68);
             pnlToolbar.Name = "pnlToolbar";
-            pnlToolbar.Size = new Size(1661, 50);
-            pnlToolbar.TabIndex = 2;
-            // 
-            // txtSearchActivities
-            // 
-            txtSearchActivities.Font = new Font("Segoe UI", 10F);
-            txtSearchActivities.Location = new Point(15, 12);
-            txtSearchActivities.Name = "txtSearchActivities";
-            txtSearchActivities.PlaceholderText = "Search activities...";
-            txtSearchActivities.Size = new Size(250, 25);
-            txtSearchActivities.TabIndex = 0;
-            txtSearchActivities.TextChanged += txtSearchActivities_TextChanged;
-            // 
-            // lblFilterLabel
-            // 
-            lblFilterLabel.Font = new Font("Segoe UI", 10F);
-            lblFilterLabel.Location = new Point(285, 15);
-            lblFilterLabel.Name = "lblFilterLabel";
-            lblFilterLabel.Size = new Size(45, 22);
-            lblFilterLabel.TabIndex = 1;
-            lblFilterLabel.Text = "Filter:";
-            // 
-            // cmbFilterType
-            // 
-            cmbFilterType.Font = new Font("Segoe UI", 10F);
+            pnlToolbar.Padding = new System.Windows.Forms.Padding(14, 10, 14, 10);
+            pnlToolbar.Size = new System.Drawing.Size(1680, 50);
+            pnlToolbar.TabIndex = 1;
+
+            txtSearch.Font = new System.Drawing.Font("Segoe UI", 10F);
+            txtSearch.Location = new System.Drawing.Point(14, 12);
+            txtSearch.Name = "txtSearch";
+            txtSearch.PlaceholderText = "🔍  Search activities...";
+            txtSearch.Size = new System.Drawing.Size(240, 26);
+            txtSearch.TabIndex = 0;
+            txtSearch.TextChanged += txtSearch_TextChanged;
+
+            cmbFilterType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cmbFilterType.Font = new System.Drawing.Font("Segoe UI", 10F);
             cmbFilterType.Items.AddRange(new object[] { "All", "Assignment", "Quiz", "Essay", "FileUpload" });
-            cmbFilterType.Location = new Point(335, 12);
+            cmbFilterType.Location = new System.Drawing.Point(268, 12);
             cmbFilterType.Name = "cmbFilterType";
-            cmbFilterType.Size = new Size(140, 25);
-            cmbFilterType.TabIndex = 2;
+            cmbFilterType.Size = new System.Drawing.Size(150, 26);
+            cmbFilterType.TabIndex = 1;
+            cmbFilterType.SelectedIndex = 0;
             cmbFilterType.SelectedIndexChanged += cmbFilterType_SelectedIndexChanged;
-            // 
-            // flpActivities
-            // 
-            flpActivities.AutoScroll = true;
-            flpActivities.BackColor = Color.FromArgb(240, 240, 240);
-            flpActivities.Dock = DockStyle.Fill;
-            flpActivities.FlowDirection = FlowDirection.TopDown;
-            flpActivities.Location = new Point(0, 110);
+
+            // ── pnlSummaryBar ─────────────────────────────────────────────────
+            pnlSummaryBar.BackColor = System.Drawing.Color.FromArgb(241, 241, 246);
+            pnlSummaryBar.Controls.Add(lblSummaryBar);
+            pnlSummaryBar.Dock = System.Windows.Forms.DockStyle.Top;
+            pnlSummaryBar.Location = new System.Drawing.Point(0, 118);
+            pnlSummaryBar.Name = "pnlSummaryBar";
+            pnlSummaryBar.Size = new System.Drawing.Size(1680, 30);
+            pnlSummaryBar.TabIndex = 2;
+
+            lblSummaryBar.Font = new System.Drawing.Font("Segoe UI", 8.5F);
+            lblSummaryBar.ForeColor = System.Drawing.Color.FromArgb(90, 90, 100);
+            lblSummaryBar.Location = new System.Drawing.Point(18, 7);
+            lblSummaryBar.Name = "lblSummaryBar";
+            lblSummaryBar.Size = new System.Drawing.Size(900, 18);
+            lblSummaryBar.TabIndex = 0;
+
+            // ── pnlScroll ─────────────────────────────────────────────────────
+            pnlScroll.AutoScroll = true;
+            pnlScroll.BackColor = System.Drawing.Color.FromArgb(245, 245, 248);
+            pnlScroll.Controls.Add(flpActivities);
+            pnlScroll.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlScroll.Location = new System.Drawing.Point(0, 148);
+            pnlScroll.Name = "pnlScroll";
+            pnlScroll.Size = new System.Drawing.Size(1680, 841);
+            pnlScroll.TabIndex = 3;
+
+            flpActivities.AutoSize = true;
+            flpActivities.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            flpActivities.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            flpActivities.Dock = System.Windows.Forms.DockStyle.Top;
+            flpActivities.Location = new System.Drawing.Point(0, 0);
             flpActivities.Name = "flpActivities";
-            flpActivities.Padding = new Padding(10);
-            flpActivities.Size = new Size(1661, 834);
-            flpActivities.TabIndex = 0;
+            flpActivities.Padding = new System.Windows.Forms.Padding(20, 16, 20, 20);
             flpActivities.WrapContents = false;
-            // 
-            // pnlPagination
-            // 
-            pnlPagination.BackColor = Color.White;
-            pnlPagination.Controls.Add(btnPrevPage);
-            pnlPagination.Controls.Add(lblPageInfo);
-            pnlPagination.Controls.Add(btnNextPage);
-            pnlPagination.Dock = DockStyle.Bottom;
-            pnlPagination.Location = new Point(0, 944);
-            pnlPagination.Name = "pnlPagination";
-            pnlPagination.Size = new Size(1661, 45);
-            pnlPagination.TabIndex = 1;
-            // 
-            // btnPrevPage
-            // 
-            btnPrevPage.BackColor = Color.Maroon;
-            btnPrevPage.BorderRadius = 10;
-            btnPrevPage.FlatAppearance.BorderSize = 0;
-            btnPrevPage.FlatStyle = FlatStyle.Flat;
-            btnPrevPage.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnPrevPage.ForeColor = Color.White;
-            btnPrevPage.Location = new Point(480, 8);
-            btnPrevPage.Name = "btnPrevPage";
-            btnPrevPage.Size = new Size(80, 28);
-            btnPrevPage.TabIndex = 0;
-            btnPrevPage.Text = "< Prev";
-            btnPrevPage.UseVisualStyleBackColor = false;
-            btnPrevPage.Click += btnPrevPage_Click;
-            // 
-            // lblPageInfo
-            // 
-            lblPageInfo.Font = new Font("Segoe UI", 9F);
-            lblPageInfo.ForeColor = Color.Gray;
-            lblPageInfo.Location = new Point(570, 14);
-            lblPageInfo.Name = "lblPageInfo";
-            lblPageInfo.Size = new Size(200, 18);
-            lblPageInfo.TabIndex = 1;
-            lblPageInfo.Text = "Page 1 of 1";
-            lblPageInfo.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // btnNextPage
-            // 
-            btnNextPage.BackColor = Color.Maroon;
-            btnNextPage.BorderRadius = 10;
-            btnNextPage.FlatAppearance.BorderSize = 0;
-            btnNextPage.FlatStyle = FlatStyle.Flat;
-            btnNextPage.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnNextPage.ForeColor = Color.White;
-            btnNextPage.Location = new Point(780, 8);
-            btnNextPage.Name = "btnNextPage";
-            btnNextPage.Size = new Size(80, 28);
-            btnNextPage.TabIndex = 2;
-            btnNextPage.Text = "Next >";
-            btnNextPage.UseVisualStyleBackColor = false;
-            btnNextPage.Click += btnNextPage_Click;
-            // 
-            // AssignmentManagement
-            // 
-            Controls.Add(flpActivities);
-            Controls.Add(pnlPagination);
+            flpActivities.TabIndex = 0;
+
+            // ── AssignmentManagement ──────────────────────────────────────────
+            Controls.Add(pnlScroll);
+            Controls.Add(pnlSummaryBar);
             Controls.Add(pnlToolbar);
             Controls.Add(pnlHeader);
             Name = "AssignmentManagement";
-            Size = new Size(1661, 989);
+            Size = new System.Drawing.Size(1680, 989);
+
             pnlHeader.ResumeLayout(false);
             pnlToolbar.ResumeLayout(false);
             pnlToolbar.PerformLayout();
-            pnlPagination.ResumeLayout(false);
+            pnlSummaryBar.ResumeLayout(false);
+            pnlScroll.ResumeLayout(false);
+            pnlScroll.PerformLayout();
             ResumeLayout(false);
         }
 
-        #endregion
+        // ── Responsive header ──
+        private void pnlHeader_SizeChanged(object sender, System.EventArgs e)
+        {
+            if (btnSave != null && pnlHeader != null)
+                btnSave.Location = new System.Drawing.Point(pnlHeader.Width - btnSave.Width - 12, 17);
+        }
 
+        // ── Field declarations ─────────────────────────────────────────────────
         private System.Windows.Forms.Panel pnlHeader;
         private buttonRounded btnBack;
-        private System.Windows.Forms.Label lblCourseTitle;
-        private buttonRounded btnCreateAssignment;
+        private System.Windows.Forms.Label lblCourseName;
+        private System.Windows.Forms.Label lblCourseCode;
+        private buttonRounded btnSave;
         private System.Windows.Forms.Panel pnlToolbar;
-        private System.Windows.Forms.TextBox txtSearchActivities;
-        private System.Windows.Forms.Label lblFilterLabel;
+        private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.ComboBox cmbFilterType;
+        private System.Windows.Forms.Panel pnlSummaryBar;
+        private System.Windows.Forms.Label lblSummaryBar;
+        private System.Windows.Forms.Panel pnlScroll;
         private System.Windows.Forms.FlowLayoutPanel flpActivities;
-        private System.Windows.Forms.Panel pnlPagination;
-        private buttonRounded btnPrevPage;
-        private System.Windows.Forms.Label lblPageInfo;
-        private buttonRounded btnNextPage;
     }
 }

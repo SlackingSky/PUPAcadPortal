@@ -24,7 +24,7 @@ namespace PUPAcadPortal.Dialogs
                 lblHeader.Text = "Edit Activity";
                 txtTitle.Text = activity.Title;
 
-                int idx = cmbType.FindStringExact(activity.Type);
+                int idx = cmbType.FindStringExact(activity.TypeString);
                 cmbType.SelectedIndex = idx >= 0 ? idx : 0;
 
                 dtpDeadline.Value = activity.Deadline > DateTime.MinValue

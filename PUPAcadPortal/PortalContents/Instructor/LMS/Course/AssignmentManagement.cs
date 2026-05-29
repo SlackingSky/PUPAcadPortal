@@ -1,405 +1,367 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
-using PUPAcadPortal.Dialogs;
 
 namespace PUPAcadPortal
 {
+    /// <summary>
+    /// Shows all activities inside a chosen course.
+    /// Navigates to ActivityFormPage (create/edit), SubmissionList (check), CopyActivityDialog.
+    /// </summary>
     public partial class AssignmentManagement : UserControl
     {
         public event Action OnBack;
-        private CourseActivity currentCourse;
-        private List<ActivityItem> activities = new List<ActivityItem>();
-        private string filterType = "All";
-        private int currentPage = 1;
-        private const int ItemsPerPage = 5;
+
+        private readonly CourseActivity _course;
+        private string _searchTerm = "";
+        private string _filterType = "All";
+        private System.Windows.Forms.Timer _searchTimer;
 
         public AssignmentManagement(CourseActivity course)
         {
+            _course = course;
             InitializeComponent();
-            currentCourse = course;
-            lblCourseTitle.Text = course.CourseName + " — " + course.CourseCode;
-            LoadSampleActivities();
+            SetupDebounce();
+            PopulateHeader();
+            RefreshList();
 
-            flpActivities.SizeChanged += (s, e) => RefreshActivityList();
-            this.Load += (s, e) => RefreshActivityList();
+            flpActivities.SizeChanged += (s, e) => RefreshList();
+            this.Load += (s, e) => RefreshList();
         }
 
-        private void LoadSampleActivities()
+        // ── Header ───────────────────────────────────────────────────────────
+        private void PopulateHeader()
         {
-            activities = new List<ActivityItem>
-            {
-                new ActivityItem { Id=1, Title="System Simulations", Type="Quiz",
-                    Deadline=DateTime.Now.AddDays(3), Points=50, Status="Published",
-                    TotalStudents=40, Submitted=35, Checked=30, IsDraft=false },
-                new ActivityItem { Id=2, Title="Integrating Methodologies", Type="Assignment",
-                    Deadline=DateTime.Now.AddDays(7), Points=100, Status="Published",
-                    TotalStudents=40, Submitted=20, Checked=15, IsDraft=false },
-                new ActivityItem { Id=3, Title="Human Computer Interactions Essay", Type="Essay",
-                    Deadline=DateTime.Now.AddDays(14), Points=75, Status="Draft",
-                    TotalStudents=40, Submitted=0, Checked=0, IsDraft=true },
-                new ActivityItem { Id=4, Title="Programming Lab Activity 1", Type="Assignment",
-                    Deadline=DateTime.Now.AddDays(1), Points=50, Status="Published",
-                    TotalStudents=40, Submitted=38, Checked=38, IsDraft=false },
-                new ActivityItem { Id=5, Title="Midterm Quiz", Type="Quiz",
-                    Deadline=DateTime.Now.AddDays(-2), Points=100, Status="Published",
-                    TotalStudents=40, Submitted=40, Checked=40, IsDraft=false },
-                new ActivityItem { Id=6, Title="File Upload Activity", Type="FileUpload",
-                    Deadline=DateTime.Now.AddDays(5), Points=25, Status="Published",
-                    TotalStudents=40, Submitted=10, Checked=5, IsDraft=false },
-            };
+            lblCourseName.Text = _course.CourseName;
+            lblCourseCode.Text = _course.CourseCode + "  ·  " + _course.InstructorName;
+            btnSave.Text = "+ Create Activity";
         }
 
-        private void RefreshActivityList()
+        // ── Debounce ─────────────────────────────────────────────────────────
+        private void SetupDebounce()
         {
-            if (flpActivities.ClientSize.Width < 100) return;
+            _searchTimer = new System.Windows.Forms.Timer { Interval = 200 };
+            _searchTimer.Tick += (s, e) => { _searchTimer.Stop(); RefreshList(); };
+        }
 
+        // ── Refresh activity cards ────────────────────────────────────────────
+        private void RefreshList()
+        {
+            flpActivities.SuspendLayout();
             flpActivities.Controls.Clear();
 
-            string search = txtSearchActivities.Text.ToLower();
-            var filtered = activities.FindAll(a =>
+            var filtered = _course.Activities.FindAll(a =>
             {
-                bool matchType = filterType == "All" || a.Type == filterType;
-                bool matchSearch = string.IsNullOrEmpty(search) ||
-                    a.Title.ToLower().Contains(search);
-                return matchType && matchSearch;
+                bool typeMatch = _filterType == "All" || a.TypeString == _filterType;
+                bool searchMatch = string.IsNullOrEmpty(_searchTerm)
+                    || a.Title.IndexOf(_searchTerm, StringComparison.OrdinalIgnoreCase) >= 0;
+                return typeMatch && searchMatch;
             });
 
-            int totalPages = (int)Math.Ceiling(filtered.Count / (double)ItemsPerPage);
-            if (currentPage > totalPages && totalPages > 0) currentPage = totalPages;
-
-            int start = (currentPage - 1) * ItemsPerPage;
-            var pageItems = filtered.GetRange(start, Math.Min(ItemsPerPage, filtered.Count - start));
-
-            foreach (var a in activities)
+            // Sort: overdue first, then by deadline asc
+            filtered.Sort((a, b) =>
             {
-                if (!a.IsDraft && a.Deadline < DateTime.Now && !a.IsLocked)
-                    a.IsLocked = true;
+                if (a.IsOverdue && !b.IsOverdue) return -1;
+                if (!a.IsOverdue && b.IsOverdue) return 1;
+                return a.Deadline.CompareTo(b.Deadline);
+            });
+
+            if (filtered.Count == 0)
+            {
+                flpActivities.Controls.Add(BuildEmptyState());
+            }
+            else
+            {
+                foreach (var act in filtered)
+                    flpActivities.Controls.Add(BuildActivityCard(act));
             }
 
-            foreach (var activity in pageItems)
-            {
-                var row = CreateActivityRow(activity);
-                flpActivities.Controls.Add(row);
-            }
-
-            lblPageInfo.Text = $"Page {currentPage} of {Math.Max(1, totalPages)}  ({filtered.Count} items)";
-            btnPrevPage.Enabled = currentPage > 1;
-            btnNextPage.Enabled = currentPage < totalPages;
+            UpdateSummaryBar(filtered);
+            flpActivities.ResumeLayout();
         }
 
-        private Panel CreateActivityRow(ActivityItem activity)
+        private void UpdateSummaryBar(List<ActivityItem> list)
         {
-            int rowWidth = Math.Max(900, flpActivities.ClientSize.Width - 22);
+            int total = list.Count;
+            int pending = list.Sum(a => a.PendingCount);
+            int checked_ = list.Sum(a => a.CheckedCount);
+            lblSummaryBar.Text = $"Showing {total} of {_course.Activities.Count} activities  ·  {pending} pending checks  ·  {checked_} checked";
+        }
 
-            var row = new Panel
+        // ── Empty state ───────────────────────────────────────────────────────
+        private Panel BuildEmptyState()
+        {
+            int w = Math.Max(700, flpActivities.ClientSize.Width - 40);
+            var pnl = new Panel { Width = w, Height = 180, BackColor = Color.FromArgb(252, 252, 255) };
+            pnl.Paint += (s, e) =>
             {
-                Width = rowWidth,
-                Height = 70,
-                BackColor = activity.IsDraft ? Color.FromArgb(255, 250, 230) : Color.White,
-                Margin = new Padding(5, 5, 5, 0),
-                BorderStyle = BorderStyle.FixedSingle,
-                Cursor = Cursors.Default
+                using var pen = new Pen(Color.FromArgb(220, 220, 230), 1.5f);
+                e.Graphics.DrawRectangle(pen, 1, 1, pnl.Width - 3, pnl.Height - 3);
+            };
+            pnl.Controls.Add(new Label
+            {
+                Text = "📋  No activities found",
+                Font = new Font("Segoe UI", 13F, FontStyle.Bold),
+                ForeColor = Color.FromArgb(160, 160, 170),
+                AutoSize = false,
+                Width = w,
+                Height = 60,
+                TextAlign = ContentAlignment.BottomCenter,
+                Location = new Point(0, 40)
+            });
+            pnl.Controls.Add(new Label
+            {
+                Text = "Create a new activity using the \"+ Create Activity\" button above.",
+                Font = new Font("Segoe UI", 9.5F),
+                ForeColor = Color.FromArgb(180, 180, 190),
+                AutoSize = false,
+                Width = w,
+                Height = 24,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Location = new Point(0, 102)
+            });
+            return pnl;
+        }
+
+        // ── Activity card builder ─────────────────────────────────────────────
+        private Panel BuildActivityCard(ActivityItem act)
+        {
+            int w = Math.Max(700, flpActivities.ClientSize.Width - 40);
+            var card = new Panel
+            {
+                Width = w,
+                Height = 100,
+                BackColor = Color.White,
+                Margin = new Padding(0, 0, 0, 10)
             };
 
-            Color typeColor = activity.Type switch
+            // Left accent bar colour by type
+            Color typeColor = act.Type switch
             {
-                "Quiz" => Color.FromArgb(63, 81, 181),
-                "Assignment" => Color.FromArgb(33, 150, 83),
-                "Essay" => Color.FromArgb(156, 39, 176),
-                "FileUpload" => Color.FromArgb(255, 152, 0),
-                _ => Color.Gray
+                ActivityType.Quiz => Color.FromArgb(63, 81, 181),
+                ActivityType.Essay => Color.FromArgb(0, 150, 136),
+                ActivityType.FileUpload => Color.FromArgb(76, 175, 80),
+                _ => Color.FromArgb(128, 0, 0)
             };
 
-            var pnlTypeBar = new Panel
+            card.Paint += (s, e) =>
             {
-                Width = 5,
-                Dock = DockStyle.Left,
-                BackColor = typeColor
+                using var accentBrush = new SolidBrush(typeColor);
+                e.Graphics.FillRectangle(accentBrush, 0, 0, 6, card.Height);
+                using var pen = new Pen(Color.FromArgb(225, 225, 232));
+                e.Graphics.DrawRectangle(pen, 0, 0, card.Width - 1, card.Height - 1);
             };
 
-            var lblTitle = new Label
+            // ── Type badge ──
+            string typeIcon = act.Type switch
             {
-                Text = activity.Title,
-                Font = new Font("Segoe UI", 11F, FontStyle.Bold),
-                ForeColor = Color.FromArgb(40, 40, 40),
-                Location = new Point(15, 8),
-                Size = new Size(280, 22),
-                AutoEllipsis = true
+                ActivityType.Quiz => "❓ Quiz",
+                ActivityType.Essay => "📝 Essay",
+                ActivityType.FileUpload => "📎 File Upload",
+                _ => "📋 Assignment"
             };
-
-            string typeDisplay = activity.Type == "FileUpload" ? "File Upload" : activity.Type;
             var lblType = new Label
             {
-                Text = typeDisplay,
+                Text = typeIcon,
+                Font = new Font("Segoe UI", 7.5F, FontStyle.Bold),
                 BackColor = typeColor,
                 ForeColor = Color.White,
-                Font = new Font("Segoe UI", 8F, FontStyle.Bold),
-                Location = new Point(15, 34),
-                Size = new Size(80, 20),
+                Location = new Point(16, 8),
+                AutoSize = false,
+                Size = new Size(92, 18),
                 TextAlign = ContentAlignment.MiddleCenter
             };
+            card.Controls.Add(lblType);
 
-            TimeSpan deadline = activity.Deadline - DateTime.Now;
-            string dueText = deadline.TotalDays < 0 ? "Overdue" :
-                             deadline.Days == 0 ? "Due Today" :
-                             $"Due in {deadline.Days}d";
-            Color dueColor = deadline.TotalDays < 0 ? Color.Red :
-                             deadline.Days <= 2 ? Color.OrangeRed : Color.ForestGreen;
+            // ── Title ──
+            var lblTitle = new Label
+            {
+                Text = act.Title,
+                Font = new Font("Segoe UI", 11F, FontStyle.Bold),
+                ForeColor = Color.FromArgb(30, 30, 35),
+                Location = new Point(16, 30),
+                Width = w - 400,
+                Height = 24,
+                AutoEllipsis = true
+            };
+            card.Controls.Add(lblTitle);
 
+            // ── Deadline ──
+            TimeSpan left = act.Deadline - DateTime.Now;
+            string dlText = act.IsOverdue ? "⚠ Overdue" : left.Days == 0 ? "⏰ Due Today" : $"📅 {act.Deadline:MMM dd, yyyy}";
+            Color dlColor = act.IsOverdue ? Color.Red : left.Days <= 1 ? Color.OrangeRed : Color.FromArgb(80, 80, 90);
             var lblDeadline = new Label
             {
-                Text = $"{activity.Deadline:MMM dd, yyyy}  ({dueText})",
-                Font = new Font("Segoe UI", 9F),
-                ForeColor = dueColor,
-                Location = new Point(310, 10),
-                Size = new Size(200, 18)
+                Text = dlText,
+                Font = new Font("Segoe UI", 8.5F, act.IsOverdue ? FontStyle.Bold : FontStyle.Regular),
+                ForeColor = dlColor,
+                Location = new Point(16, 58),
+                AutoSize = true
             };
+            card.Controls.Add(lblDeadline);
 
-            var lblPoints = new Label
+            // ── Points ──
+            var lblPts = new Label
             {
-                Text = $"{activity.Points} pts",
-                Font = new Font("Segoe UI", 9F, FontStyle.Bold),
-                ForeColor = Color.Maroon,
-                Location = new Point(310, 32),
-                Size = new Size(80, 18)
+                Text = $"🏆 {act.Points} pts",
+                Font = new Font("Segoe UI", 8.5F),
+                ForeColor = Color.FromArgb(100, 100, 110),
+                Location = new Point(180, 58),
+                AutoSize = true
             };
+            card.Controls.Add(lblPts);
 
-            var lblSubmission = new Label
+            // ── Submission counts ──
+            var lblSub = new Label
             {
-                Text = $"Submitted: {activity.Submitted}/{activity.TotalStudents}   Checked: {activity.Checked}",
-                Font = new Font("Segoe UI", 9F),
-                ForeColor = Color.Gray,
-                Location = new Point(520, 26),
-                Size = new Size(260, 18)
+                Text = $"✅ {act.SubmittedCount}/{act.TotalStudents} submitted  ·  🔍 {act.CheckedCount} checked  ·  ⏳ {act.PendingCount} pending",
+                Font = new Font("Segoe UI", 8F),
+                ForeColor = Color.FromArgb(100, 100, 110),
+                Location = new Point(16, 78),
+                AutoSize = true
             };
+            card.Controls.Add(lblSub);
 
-            var lblStatusBadge = new Label
-            {
-                Text = activity.Status,
-                BackColor = activity.IsDraft ? Color.FromArgb(255, 200, 50) : Color.FromArgb(76, 175, 80),
-                ForeColor = activity.IsDraft ? Color.Black : Color.White,
-                Font = new Font("Segoe UI", 8F, FontStyle.Bold),
-                Location = new Point(520, 8),
-                Size = new Size(70, 18),
-                TextAlign = ContentAlignment.MiddleCenter
-            };
+            // ── Action buttons (right-side) ──
+            int btnY = 32;
+            int right = w - 14;
+            const int btnH = 28, gap = 6;
 
-            int rx = rowWidth - 405;
+            var btnCheck = BuildCardBtn("Check", Color.FromArgb(63, 81, 181), 80, btnH);
+            right -= btnCheck.Width;
+            btnCheck.Location = new Point(right, btnY);
+            btnCheck.Click += (s, e) => OpenSubmissions(act);
+            card.Controls.Add(btnCheck);
 
-            var btnViewStudents = new buttonRounded
-            {
-                Text = "Students",
-                Location = new Point(rx, 20),
-                Size = new Size(80, 28),
-                BackColor = Color.FromArgb(33, 150, 83),
-                ForeColor = Color.White,
-                BorderRadius = 10,
-                Tag = activity
-            };
-            btnViewStudents.Click += BtnViewStudents_Click;
+            right -= gap;
+            var btnEdit = BuildCardBtn("Edit", Color.FromArgb(0, 130, 115), 60, btnH);
+            right -= btnEdit.Width;
+            btnEdit.Location = new Point(right, btnY);
+            btnEdit.Click += (s, e) => OpenActivityForm(act);
+            card.Controls.Add(btnEdit);
 
-            var btnEdit = new buttonRounded
-            {
-                Text = "Edit",
-                Location = new Point(rx + 88, 20),
-                Size = new Size(60, 28),
-                BackColor = Color.FromArgb(33, 100, 180),
-                ForeColor = Color.White,
-                BorderRadius = 10,
-                Tag = activity
-            };
-            btnEdit.Click += BtnEditActivity_Click;
+            right -= gap;
+            var btnCopy = BuildCardBtn("Copy", Color.FromArgb(90, 90, 100), 60, btnH);
+            right -= btnCopy.Width;
+            btnCopy.Location = new Point(right, btnY);
+            //btnCopy.Click += (s, e) => ShowCopyDialog(act);
+            card.Controls.Add(btnCopy);
 
-            var btnDelete = new buttonRounded
-            {
-                Text = "Delete",
-                Location = new Point(rx + 156, 20),
-                Size = new Size(65, 28),
-                BackColor = Color.FromArgb(180, 30, 30),
-                ForeColor = Color.White,
-                BorderRadius = 10,
-                Tag = activity
-            };
-            btnDelete.Click += BtnDeleteActivity_Click;
+            right -= gap;
+            var btnDelete = BuildCardBtn("Delete", Color.FromArgb(185, 50, 50), 68, btnH);
+            right -= btnDelete.Width;
+            btnDelete.Location = new Point(right, btnY);
+            btnDelete.Click += (s, e) => DeleteActivity(act);
+            card.Controls.Add(btnDelete);
 
-            var btnPublish = new buttonRounded
-            {
-                Text = activity.IsDraft ? "Publish" : "Unpublish",
-                Location = new Point(rx + 229, 20),
-                Size = new Size(85, 28),
-                BackColor = activity.IsDraft ? Color.DarkGoldenrod : Color.SlateGray,
-                ForeColor = Color.White,
-                BorderRadius = 10,
-                Tag = activity
-            };
-            btnPublish.Click += BtnPublishToggle_Click;
-
-            var btnDuplicate = new buttonRounded
-            {
-                Text = "Copy",
-                Location = new Point(rx + 322, 20),
-                Size = new Size(60, 28),
-                BackColor = Color.DimGray,
-                ForeColor = Color.White,
-                BorderRadius = 10,
-                Tag = activity
-            };
-            btnDuplicate.Click += (s, e) =>
-            {
-                if (s is buttonRounded b && b.Tag is ActivityItem src)
-                {
-                    var copy = new ActivityItem
-                    {
-                        Id = activities.Count + 1,
-                        Title = src.Title + " (Copy)",
-                        Type = src.Type,
-                        Deadline = src.Deadline,
-                        Points = src.Points,
-                        Status = "Draft",
-                        IsDraft = true,
-                        TotalStudents = src.TotalStudents,
-                        Submitted = 0,
-                        Checked = 0
-                    };
-                    activities.Insert(0, copy);
-                    RefreshActivityList();
-                }
-            };
-
-            row.Controls.AddRange(new Control[] {
-                pnlTypeBar, lblTitle, lblType, lblDeadline, lblPoints,
-                lblSubmission, lblStatusBadge,
-                btnViewStudents, btnEdit, btnDelete, btnPublish, btnDuplicate
-            });
-
-            return row;
+            return card;
         }
 
-
-        private void BtnViewStudents_Click(object sender, EventArgs e)
-        {
-            if (sender is buttonRounded btn && btn.Tag is ActivityItem activity)
+        private static buttonRounded BuildCardBtn(string text, Color bg, int w, int h)
+            => new buttonRounded
             {
-                var submissionList = new SubmissionList(activity, currentCourse);
-                submissionList.Dock = DockStyle.Fill;
+                Text = text,
+                Size = new Size(w, h),
+                BackColor = bg,
+                ForeColor = Color.White,
+                BorderRadius = 8,
+                Font = new Font("Segoe UI", 8.5F, FontStyle.Bold),
+                Cursor = Cursors.Hand
+            };
 
-                submissionList.OnBack += () =>
-                {
-                    var container = this.Parent;
-                    if (container != null)
-                    {
-                        container.Controls.Remove(submissionList);
-                        container.Controls.Add(this);
-                        this.BringToFront();
-                    }
-                };
+        // ── Navigation to sub-pages ───────────────────────────────────────────
+        private void OpenActivityForm(ActivityItem? existingActivity)
+        {
+            var parent = this.Parent; if (parent == null) return;
 
-                var parentContainer = this.Parent;
-                if (parentContainer != null)
-                {
-                    parentContainer.Controls.Remove(this);
-                    parentContainer.Controls.Add(submissionList);
-                    submissionList.BringToFront();
-                }
+            var form = new ActivityFormPage(_course, existingActivity);
+            form.Dock = DockStyle.Fill;
+            form.OnSave += saved =>
+            {
+                if (existingActivity == null)
+                    _course.Activities.Add(saved);
+                // if editing, object ref already updated
+                parent.Controls.Remove(form);
+                parent.Controls.Add(this);
+                this.BringToFront();
+                RefreshList();
+            };
+            form.OnCancel += () =>
+            {
+                parent.Controls.Remove(form);
+                parent.Controls.Add(this);
+                this.BringToFront();
+            };
+
+            parent.Controls.Remove(this);
+            parent.Controls.Add(form);
+            form.BringToFront();
+        }
+
+        private void OpenSubmissions(ActivityItem act)
+        {
+            var parent = this.Parent; if (parent == null) return;
+
+            var subList = new SubmissionList(act, _course);
+            subList.Dock = DockStyle.Fill;
+            subList.OnBack += () =>
+            {
+                parent.Controls.Remove(subList);
+                parent.Controls.Add(this);
+                this.BringToFront();
+                RefreshList();
+            };
+
+            parent.Controls.Remove(this);
+            parent.Controls.Add(subList);
+            subList.BringToFront();
+        }
+
+        /*private void ShowCopyDialog(ActivityItem act)
+        {
+            // All courses available to copy into – in a real app you'd fetch from DB.
+            // Here we demonstrate with the current single course list.
+            var allCourses = new List<CourseActivity> { _course }; // extend as needed
+            using var dlg = new CopyActivityDialog(act, allCourses);
+            if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                MessageBox.Show($"Activity \"{act.Title}\" copied successfully.", "Copy Activity",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }*/
+
+        private void DeleteActivity(ActivityItem act)
+        {
+            var res = MessageBox.Show($"Delete activity \"{act.Title}\"?\nThis cannot be undone.",
+                "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (res == DialogResult.Yes)
+            {
+                _course.Activities.Remove(act);
+                RefreshList();
             }
         }
 
-        private void BtnEditActivity_Click(object sender, EventArgs e)
-        {
-            if (sender is buttonRounded btn && btn.Tag is ActivityItem activity)
-            {
-                var dlg = new CreateEditActivityDialog(activity);
-                if (dlg.ShowDialog() == DialogResult.OK)
-                {
-                    activity.Title = dlg.ActivityTitle;
-                    activity.Deadline = dlg.ActivityDeadline;
-                    activity.Points = dlg.ActivityPoints;
-                    RefreshActivityList();
-                }
-            }
-        }
+        // ── Toolbar events ────────────────────────────────────────────────────
+        private void btnSave_Click(object sender, EventArgs e)
+            => OpenActivityForm(null);
 
-        private void BtnDeleteActivity_Click(object sender, EventArgs e)
-        {
-            if (sender is buttonRounded btn && btn.Tag is ActivityItem activity)
-            {
-                var result = MessageBox.Show(
-                    $"Delete \"{activity.Title}\"?", "Confirm Delete",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (result == DialogResult.Yes)
-                {
-                    activities.Remove(activity);
-                    RefreshActivityList();
-                }
-            }
-        }
+        private void btnBack_Click(object sender, EventArgs e)
+            => OnBack?.Invoke();
 
-        private void BtnPublishToggle_Click(object sender, EventArgs e)
+        private void txtSearch_TextChanged(object sender, EventArgs e)
         {
-            if (sender is buttonRounded btn && btn.Tag is ActivityItem activity)
-            {
-                activity.IsDraft = !activity.IsDraft;
-                activity.Status = activity.IsDraft ? "Draft" : "Published";
-                RefreshActivityList();
-            }
-        }
-
-        private void btnCreateAssignment_Click(object sender, EventArgs e)
-        {
-            var dlg = new CreateEditActivityDialog(null);
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                var newActivity = new ActivityItem
-                {
-                    Id = activities.Count + 1,
-                    Title = dlg.ActivityTitle,
-                    Type = dlg.ActivityType,
-                    Deadline = dlg.ActivityDeadline,
-                    Points = dlg.ActivityPoints,
-                    Status = "Draft",
-                    IsDraft = true,
-                    TotalStudents = 40,
-                    Submitted = 0,
-                    Checked = 0
-                };
-                activities.Insert(0, newActivity);
-                RefreshActivityList();
-            }
-        }
-
-        private void btnBack_Click(object sender, EventArgs e) => OnBack?.Invoke();
-
-        private void txtSearchActivities_TextChanged(object sender, EventArgs e)
-        {
-            currentPage = 1;
-            RefreshActivityList();
+            _searchTerm = txtSearch.Text;
+            _searchTimer.Stop();
+            _searchTimer.Start();
         }
 
         private void cmbFilterType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            filterType = cmbFilterType.SelectedItem?.ToString() ?? "All";
-            currentPage = 1;
-            RefreshActivityList();
+            _filterType = cmbFilterType.SelectedItem?.ToString() ?? "All";
+            RefreshList();
         }
-
-        private void btnNextPage_Click(object sender, EventArgs e) { currentPage++; RefreshActivityList(); }
-        private void btnPrevPage_Click(object sender, EventArgs e) { currentPage--; RefreshActivityList(); }
-    }
-
-    public class ActivityItem
-    {
-        public int Id { get; set; }
-        public string Title { get; set; } = "";
-        public string Type { get; set; } = "Assignment";
-        public DateTime Deadline { get; set; }
-        public int Points { get; set; }
-        public string Status { get; set; } = "Draft";
-        public bool IsDraft { get; set; } = true;
-        public int TotalStudents { get; set; }
-        public int Submitted { get; set; }
-        public int Checked { get; set; }
-        public bool IsLocked { get; set; } = false;
     }
 }
