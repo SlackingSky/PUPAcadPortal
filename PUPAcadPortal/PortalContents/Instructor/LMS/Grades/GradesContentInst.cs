@@ -189,7 +189,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             }
 
             if (txtSearch != null) txtSearch.TextChanged += TxtGradeSearch_TextChanged;
-            if (btnClearFilters != null) btnClearFilters.Click += BtnClearGradeFilters_Click;
             if (btnReleaseGrades != null) btnReleaseGrades.Click += BtnReleaseGrades_Click;
             if (btnColumnOptions != null) btnColumnOptions.Click += BtnColumnOptions_Click;
             if (btnSaveChanges != null) btnSaveChanges.Click += BtnSaveChanges_Click;

@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GradesContentInst));
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
             pnlGrades = new Panel();
             panel61 = new Panel();
             pnlBottomControls = new Panel();
@@ -109,7 +109,6 @@
             lblCourseSection = new Label();
             panel168 = new Panel();
             btnImportExcel1 = new Button();
-            btnClearFilters = new Button();
             label304 = new Label();
             label305 = new Label();
             pnlGrades.SuspendLayout();
@@ -443,24 +442,24 @@
             gridStudents.AllowUserToDeleteRows = false;
             gridStudents.BackgroundColor = Color.White;
             gridStudents.BorderStyle = BorderStyle.None;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(106, 0, 0);
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle1.ForeColor = Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            gridStudents.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = Color.FromArgb(106, 0, 0);
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle5.ForeColor = Color.White;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            gridStudents.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             gridStudents.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             gridStudents.Columns.AddRange(new DataGridViewColumn[] { colID, dataGridViewTextBoxColumn1, colCourse, colQuiz, colMidterm, colFinals, colAssignments, colFinalGrade, colStatus, colRemarks, colActions });
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle2.ForeColor = Color.Black;
-            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(245, 246, 248);
-            dataGridViewCellStyle2.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            gridStudents.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = SystemColors.Window;
+            dataGridViewCellStyle6.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle6.ForeColor = Color.Black;
+            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(245, 246, 248);
+            dataGridViewCellStyle6.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
+            gridStudents.DefaultCellStyle = dataGridViewCellStyle6;
             gridStudents.Dock = DockStyle.Fill;
             gridStudents.EnableHeadersVisualStyles = false;
             gridStudents.Location = new Point(3, 2);
@@ -554,7 +553,7 @@
             tabPage2.Margin = new Padding(3, 2, 3, 2);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3, 2, 3, 2);
-            tabPage2.Size = new Size(1620, 470);
+            tabPage2.Size = new Size(1620, 480);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Finalterm";
             tabPage2.UseVisualStyleBackColor = true;
@@ -565,24 +564,24 @@
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.BackgroundColor = Color.White;
             dataGridView1.BorderStyle = BorderStyle.None;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = Color.FromArgb(106, 0, 0);
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle3.ForeColor = Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = Color.FromArgb(106, 0, 0);
+            dataGridViewCellStyle7.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle7.ForeColor = Color.White;
+            dataGridViewCellStyle7.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
+            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Column1, dataGridViewTextBoxColumn3, dataGridViewTextBoxColumn5, dataGridViewTextBoxColumn6, dataGridViewTextBoxColumn7, dataGridViewTextBoxColumn8, dataGridViewTextBoxColumn9, dataGridViewTextBoxColumn11 });
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = SystemColors.Window;
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle4.ForeColor = Color.Black;
-            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(245, 246, 248);
-            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
-            dataGridView1.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = SystemColors.Window;
+            dataGridViewCellStyle8.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle8.ForeColor = Color.Black;
+            dataGridViewCellStyle8.SelectionBackColor = Color.FromArgb(245, 246, 248);
+            dataGridViewCellStyle8.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
+            dataGridView1.DefaultCellStyle = dataGridViewCellStyle8;
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.Location = new Point(3, 2);
             dataGridView1.Margin = new Padding(4, 3, 4, 3);
@@ -939,7 +938,7 @@
             lblTotalTitle.Location = new Point(64, 17);
             lblTotalTitle.Margin = new Padding(4, 0, 4, 0);
             lblTotalTitle.Name = "lblTotalTitle";
-            lblTotalTitle.Size = new Size(80, 13);
+            lblTotalTitle.Size = new Size(81, 13);
             lblTotalTitle.TabIndex = 0;
             lblTotalTitle.Text = "Total Students";
             // 
@@ -963,8 +962,8 @@
             cmbCourseSection.Margin = new Padding(3, 2, 3, 2);
             cmbCourseSection.Name = "cmbCourseSection";
             cmbCourseSection.Size = new Size(341, 23);
+            cmbCourseSection.Sorted = true;
             cmbCourseSection.TabIndex = 2;
-            cmbCourseSection.Text = "IT 101 - Introduction to Computing | BSIT 2-1";
             // 
             // lblCourseSection
             // 
@@ -982,7 +981,6 @@
             // 
             panel168.BackColor = Color.White;
             panel168.Controls.Add(btnImportExcel1);
-            panel168.Controls.Add(btnClearFilters);
             panel168.Controls.Add(label304);
             panel168.Controls.Add(label305);
             panel168.Dock = DockStyle.Top;
@@ -1000,28 +998,13 @@
             btnImportExcel1.FlatStyle = FlatStyle.Flat;
             btnImportExcel1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnImportExcel1.ForeColor = Color.White;
-            btnImportExcel1.Location = new Point(1368, 13);
+            btnImportExcel1.Location = new Point(1498, 11);
             btnImportExcel1.Margin = new Padding(4, 3, 4, 3);
             btnImportExcel1.Name = "btnImportExcel1";
             btnImportExcel1.Size = new Size(122, 35);
             btnImportExcel1.TabIndex = 7;
             btnImportExcel1.Text = "Import from CSV";
             btnImportExcel1.UseVisualStyleBackColor = false;
-            // 
-            // btnClearFilters
-            // 
-            btnClearFilters.BackColor = Color.White;
-            btnClearFilters.FlatAppearance.BorderColor = Color.LightGray;
-            btnClearFilters.FlatStyle = FlatStyle.Flat;
-            btnClearFilters.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnClearFilters.ImageAlign = ContentAlignment.TopLeft;
-            btnClearFilters.Location = new Point(1496, 11);
-            btnClearFilters.Margin = new Padding(4, 3, 4, 3);
-            btnClearFilters.Name = "btnClearFilters";
-            btnClearFilters.Size = new Size(117, 35);
-            btnClearFilters.TabIndex = 6;
-            btnClearFilters.Text = "Clear Filters";
-            btnClearFilters.UseVisualStyleBackColor = false;
             // 
             // label304
             // 
@@ -1180,7 +1163,6 @@
         private Label lblCourseSection;
         private Panel panel168;
         private Button btnImportExcel1;
-        private Button btnClearFilters;
         private Label label304;
         private Label label305;
     }
