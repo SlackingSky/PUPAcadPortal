@@ -15,232 +15,246 @@
 
         private void InitializeComponent()
         {
-            pnlHeader = new Panel();
-            lblTitle = new Label();
-            txtSearch = new TextBox();
-            pnlStats = new Panel();
-            pnlStatTotal = new Panel();
-            lblTotalValue = new Label();
-            lblTotalName = new Label();
-            pnlStatPending = new Panel();
-            lblPendingValue = new Label();
-            lblPendingName = new Label();
-            pnlStatSubmitted = new Panel();
-            lblSubmittedValue = new Label();
-            lblSubmittedName = new Label();
-            pnlStatOverdue = new Panel();
-            lblOverdueValue = new Label();
-            lblOverdueName = new Label();
-            flpCards = new FlowLayoutPanel();
-            pnlHeader.SuspendLayout();
-            pnlStats.SuspendLayout();
-            pnlStatTotal.SuspendLayout();
-            pnlStatPending.SuspendLayout();
-            pnlStatSubmitted.SuspendLayout();
-            pnlStatOverdue.SuspendLayout();
-            SuspendLayout();
-            // 
-            // pnlHeader
-            // 
-            pnlHeader.BackColor = Color.Maroon;
-            pnlHeader.Controls.Add(lblTitle);
-            pnlHeader.Controls.Add(txtSearch);
-            pnlHeader.Dock = DockStyle.Top;
-            pnlHeader.Location = new Point(0, 0);
-            pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(1640, 50);
-            pnlHeader.TabIndex = 2;
-            // 
-            // lblTitle
-            // 
-            lblTitle.AutoSize = true;
-            lblTitle.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            lblTitle.ForeColor = Color.White;
-            lblTitle.Location = new Point(16, 12);
-            lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(124, 25);
-            lblTitle.TabIndex = 0;
-            lblTitle.Text = "My Activities";
-            // 
+            this.pnlHeader = new System.Windows.Forms.Panel();
+            this.lblWelcome = new System.Windows.Forms.Label();
+            this.lblStudentName = new System.Windows.Forms.Label();
+            this.txtSearch = new System.Windows.Forms.TextBox();
+            this.pnlSectionBar = new System.Windows.Forms.Panel();
+            this.lblSectionTitle = new System.Windows.Forms.Label();
+            this.pnlStats = new System.Windows.Forms.Panel();
+            this.pnlStatTotal = new System.Windows.Forms.Panel();
+            this.lblTotalValue = new System.Windows.Forms.Label();
+            this.lblTotalName = new System.Windows.Forms.Label();
+            this.pnlStatPending = new System.Windows.Forms.Panel();
+            this.lblPendingValue = new System.Windows.Forms.Label();
+            this.lblPendingName = new System.Windows.Forms.Label();
+            this.pnlStatSubmitted = new System.Windows.Forms.Panel();
+            this.lblSubmittedValue = new System.Windows.Forms.Label();
+            this.lblSubmittedName = new System.Windows.Forms.Label();
+            this.pnlStatOverdue = new System.Windows.Forms.Panel();
+            this.lblOverdueValue = new System.Windows.Forms.Label();
+            this.lblOverdueName = new System.Windows.Forms.Label();
+            this.flpCards = new System.Windows.Forms.FlowLayoutPanel();
+
+            this.pnlHeader.SuspendLayout();
+            this.pnlSectionBar.SuspendLayout();
+            this.pnlStats.SuspendLayout();
+            this.pnlStatTotal.SuspendLayout();
+            this.pnlStatPending.SuspendLayout();
+            this.pnlStatSubmitted.SuspendLayout();
+            this.pnlStatOverdue.SuspendLayout();
+            this.SuspendLayout();
+
+            this.pnlHeader.BackColor = System.Drawing.Color.Maroon;
+            this.pnlHeader.Controls.Add(this.lblWelcome);
+            this.pnlHeader.Controls.Add(this.lblStudentName);
+            this.pnlHeader.Controls.Add(this.txtSearch);
+            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
+            this.pnlHeader.Name = "pnlHeader";
+            this.pnlHeader.Size = new System.Drawing.Size(1640, 68);
+            this.pnlHeader.TabIndex = 3;
+
+            // lblWelcome
+            this.lblWelcome.AutoSize = true;
+            this.lblWelcome.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lblWelcome.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.lblWelcome.Location = new System.Drawing.Point(16, 10);
+            this.lblWelcome.Name = "lblWelcome";
+            this.lblWelcome.Size = new System.Drawing.Size(69, 19);
+            this.lblWelcome.TabIndex = 0;
+            this.lblWelcome.Text = "Welcome,";
+
+            // lblStudentName
+            this.lblStudentName.AutoSize = true;
+            this.lblStudentName.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
+            this.lblStudentName.ForeColor = System.Drawing.Color.White;
+            this.lblStudentName.Location = new System.Drawing.Point(14, 28);
+            this.lblStudentName.Name = "lblStudentName";
+            this.lblStudentName.Size = new System.Drawing.Size(95, 30);
+            this.lblStudentName.TabIndex = 1;
+            this.lblStudentName.Text = "Student";
+
             // txtSearch
-            // 
-            txtSearch.Font = new Font("Segoe UI", 10F);
-            txtSearch.Location = new Point(1391, 12);
-            txtSearch.Name = "txtSearch";
-            txtSearch.PlaceholderText = "Search course...";
-            txtSearch.Size = new Size(220, 25);
-            txtSearch.TabIndex = 1;
-            txtSearch.TextChanged += txtSearch_TextChanged;
-            // 
-            // pnlStats
-            // 
-            pnlStats.BackColor = Color.White;
-            pnlStats.Controls.Add(pnlStatTotal);
-            pnlStats.Controls.Add(pnlStatPending);
-            pnlStats.Controls.Add(pnlStatSubmitted);
-            pnlStats.Controls.Add(pnlStatOverdue);
-            pnlStats.Dock = DockStyle.Top;
-            pnlStats.Location = new Point(0, 50);
-            pnlStats.Name = "pnlStats";
-            pnlStats.Padding = new Padding(16, 8, 16, 0);
-            pnlStats.Size = new Size(1640, 80);
-            pnlStats.TabIndex = 1;
-            // 
-            // pnlStatTotal
-            // 
-            pnlStatTotal.BackColor = Color.White;
-            pnlStatTotal.Controls.Add(lblTotalValue);
-            pnlStatTotal.Controls.Add(lblTotalName);
-            pnlStatTotal.Location = new Point(16, 8);
-            pnlStatTotal.Name = "pnlStatTotal";
-            pnlStatTotal.Size = new Size(160, 60);
-            pnlStatTotal.TabIndex = 0;
-            // 
+            this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.txtSearch.Location = new System.Drawing.Point(1390, 22);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.PlaceholderText = "Search course or instructor...";
+            this.txtSearch.Size = new System.Drawing.Size(234, 25);
+            this.txtSearch.TabIndex = 2;
+
+            this.pnlSectionBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
+            this.pnlSectionBar.Controls.Add(this.lblSectionTitle);
+            this.pnlSectionBar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlSectionBar.Location = new System.Drawing.Point(0, 150);
+            this.pnlSectionBar.Name = "pnlSectionBar";
+            this.pnlSectionBar.Size = new System.Drawing.Size(1640, 36);
+            this.pnlSectionBar.TabIndex = 2;
+
+            // lblSectionTitle
+            this.lblSectionTitle.AutoSize = true;
+            this.lblSectionTitle.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.lblSectionTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblSectionTitle.Location = new System.Drawing.Point(16, 8);
+            this.lblSectionTitle.Name = "lblSectionTitle";
+            this.lblSectionTitle.Size = new System.Drawing.Size(64, 20);
+            this.lblSectionTitle.TabIndex = 0;
+            this.lblSectionTitle.Text = "Courses";
+
+            this.pnlStats.BackColor = System.Drawing.Color.White;
+            this.pnlStats.Controls.Add(this.pnlStatTotal);
+            this.pnlStats.Controls.Add(this.pnlStatPending);
+            this.pnlStats.Controls.Add(this.pnlStatSubmitted);
+            this.pnlStats.Controls.Add(this.pnlStatOverdue);
+            this.pnlStats.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlStats.Location = new System.Drawing.Point(0, 68);
+            this.pnlStats.Name = "pnlStats";
+            this.pnlStats.Padding = new System.Windows.Forms.Padding(16, 10, 16, 0);
+            this.pnlStats.Size = new System.Drawing.Size(1640, 82);
+            this.pnlStats.TabIndex = 1;
+
+            this.pnlStatTotal.BackColor = System.Drawing.Color.White;
+            this.pnlStatTotal.Controls.Add(this.lblTotalValue);
+            this.pnlStatTotal.Controls.Add(this.lblTotalName);
+            this.pnlStatTotal.Location = new System.Drawing.Point(16, 10);
+            this.pnlStatTotal.Name = "pnlStatTotal";
+            this.pnlStatTotal.Size = new System.Drawing.Size(160, 60);
+            this.pnlStatTotal.TabIndex = 0;
+
             // lblTotalValue
-            // 
-            lblTotalValue.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
-            lblTotalValue.ForeColor = Color.Maroon;
-            lblTotalValue.Location = new Point(10, 5);
-            lblTotalValue.Name = "lblTotalValue";
-            lblTotalValue.Size = new Size(90, 36);
-            lblTotalValue.TabIndex = 0;
-            lblTotalValue.Text = "0";
-            // 
+            this.lblTotalValue.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold);
+            this.lblTotalValue.ForeColor = System.Drawing.Color.Maroon;
+            this.lblTotalValue.Location = new System.Drawing.Point(10, 4);
+            this.lblTotalValue.Name = "lblTotalValue";
+            this.lblTotalValue.Size = new System.Drawing.Size(140, 34);
+            this.lblTotalValue.TabIndex = 0;
+            this.lblTotalValue.Text = "0";
+
             // lblTotalName
-            // 
-            lblTotalName.Font = new Font("Segoe UI", 9F);
-            lblTotalName.ForeColor = Color.Gray;
-            lblTotalName.Location = new Point(7, 39);
-            lblTotalName.Name = "lblTotalName";
-            lblTotalName.Size = new Size(150, 18);
-            lblTotalName.TabIndex = 1;
-            lblTotalName.Text = "Total Activities";
-            // 
-            // pnlStatPending
-            // 
-            pnlStatPending.BackColor = Color.White;
-            pnlStatPending.Controls.Add(lblPendingValue);
-            pnlStatPending.Controls.Add(lblPendingName);
-            pnlStatPending.Location = new Point(200, 8);
-            pnlStatPending.Name = "pnlStatPending";
-            pnlStatPending.Size = new Size(160, 60);
-            pnlStatPending.TabIndex = 1;
-            // 
+            this.lblTotalName.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblTotalName.ForeColor = System.Drawing.Color.Gray;
+            this.lblTotalName.Location = new System.Drawing.Point(10, 40);
+            this.lblTotalName.Name = "lblTotalName";
+            this.lblTotalName.Size = new System.Drawing.Size(140, 16);
+            this.lblTotalName.TabIndex = 1;
+            this.lblTotalName.Text = "Total Activities";
+
+            this.pnlStatPending.BackColor = System.Drawing.Color.White;
+            this.pnlStatPending.Controls.Add(this.lblPendingValue);
+            this.pnlStatPending.Controls.Add(this.lblPendingName);
+            this.pnlStatPending.Location = new System.Drawing.Point(196, 10);
+            this.pnlStatPending.Name = "pnlStatPending";
+            this.pnlStatPending.Size = new System.Drawing.Size(160, 60);
+            this.pnlStatPending.TabIndex = 1;
+
             // lblPendingValue
-            // 
-            lblPendingValue.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
-            lblPendingValue.ForeColor = Color.OrangeRed;
-            lblPendingValue.Location = new Point(10, 5);
-            lblPendingValue.Name = "lblPendingValue";
-            lblPendingValue.Size = new Size(90, 36);
-            lblPendingValue.TabIndex = 0;
-            lblPendingValue.Text = "0";
-            // 
+            this.lblPendingValue.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold);
+            this.lblPendingValue.ForeColor = System.Drawing.Color.OrangeRed;
+            this.lblPendingValue.Location = new System.Drawing.Point(10, 4);
+            this.lblPendingValue.Name = "lblPendingValue";
+            this.lblPendingValue.Size = new System.Drawing.Size(140, 34);
+            this.lblPendingValue.TabIndex = 0;
+            this.lblPendingValue.Text = "0";
+
             // lblPendingName
-            // 
-            lblPendingName.Font = new Font("Segoe UI", 9F);
-            lblPendingName.ForeColor = Color.Gray;
-            lblPendingName.Location = new Point(8, 38);
-            lblPendingName.Name = "lblPendingName";
-            lblPendingName.Size = new Size(150, 18);
-            lblPendingName.TabIndex = 1;
-            lblPendingName.Text = "Pending";
-            // 
-            // pnlStatSubmitted
-            // 
-            pnlStatSubmitted.BackColor = Color.White;
-            pnlStatSubmitted.Controls.Add(lblSubmittedValue);
-            pnlStatSubmitted.Controls.Add(lblSubmittedName);
-            pnlStatSubmitted.Location = new Point(384, 8);
-            pnlStatSubmitted.Name = "pnlStatSubmitted";
-            pnlStatSubmitted.Size = new Size(160, 60);
-            pnlStatSubmitted.TabIndex = 2;
-            // 
+            this.lblPendingName.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblPendingName.ForeColor = System.Drawing.Color.Gray;
+            this.lblPendingName.Location = new System.Drawing.Point(10, 40);
+            this.lblPendingName.Name = "lblPendingName";
+            this.lblPendingName.Size = new System.Drawing.Size(140, 16);
+            this.lblPendingName.TabIndex = 1;
+            this.lblPendingName.Text = "Pending";
+
+            this.pnlStatSubmitted.BackColor = System.Drawing.Color.White;
+            this.pnlStatSubmitted.Controls.Add(this.lblSubmittedValue);
+            this.pnlStatSubmitted.Controls.Add(this.lblSubmittedName);
+            this.pnlStatSubmitted.Location = new System.Drawing.Point(376, 10);
+            this.pnlStatSubmitted.Name = "pnlStatSubmitted";
+            this.pnlStatSubmitted.Size = new System.Drawing.Size(160, 60);
+            this.pnlStatSubmitted.TabIndex = 2;
+
             // lblSubmittedValue
-            // 
-            lblSubmittedValue.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
-            lblSubmittedValue.ForeColor = Color.ForestGreen;
-            lblSubmittedValue.Location = new Point(10, 5);
-            lblSubmittedValue.Name = "lblSubmittedValue";
-            lblSubmittedValue.Size = new Size(90, 36);
-            lblSubmittedValue.TabIndex = 0;
-            lblSubmittedValue.Text = "0";
-            // 
+            this.lblSubmittedValue.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold);
+            this.lblSubmittedValue.ForeColor = System.Drawing.Color.ForestGreen;
+            this.lblSubmittedValue.Location = new System.Drawing.Point(10, 4);
+            this.lblSubmittedValue.Name = "lblSubmittedValue";
+            this.lblSubmittedValue.Size = new System.Drawing.Size(140, 34);
+            this.lblSubmittedValue.TabIndex = 0;
+            this.lblSubmittedValue.Text = "0";
+
             // lblSubmittedName
-            // 
-            lblSubmittedName.Font = new Font("Segoe UI", 9F);
-            lblSubmittedName.ForeColor = Color.Gray;
-            lblSubmittedName.Location = new Point(7, 39);
-            lblSubmittedName.Name = "lblSubmittedName";
-            lblSubmittedName.Size = new Size(150, 18);
-            lblSubmittedName.TabIndex = 1;
-            lblSubmittedName.Text = "Submitted";
-            // 
-            // pnlStatOverdue
-            // 
-            pnlStatOverdue.BackColor = Color.White;
-            pnlStatOverdue.Controls.Add(lblOverdueValue);
-            pnlStatOverdue.Controls.Add(lblOverdueName);
-            pnlStatOverdue.Location = new Point(568, 8);
-            pnlStatOverdue.Name = "pnlStatOverdue";
-            pnlStatOverdue.Size = new Size(160, 60);
-            pnlStatOverdue.TabIndex = 3;
-            // 
+            this.lblSubmittedName.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblSubmittedName.ForeColor = System.Drawing.Color.Gray;
+            this.lblSubmittedName.Location = new System.Drawing.Point(10, 40);
+            this.lblSubmittedName.Name = "lblSubmittedName";
+            this.lblSubmittedName.Size = new System.Drawing.Size(140, 16);
+            this.lblSubmittedName.TabIndex = 1;
+            this.lblSubmittedName.Text = "Submitted";
+
+            this.pnlStatOverdue.BackColor = System.Drawing.Color.White;
+            this.pnlStatOverdue.Controls.Add(this.lblOverdueValue);
+            this.pnlStatOverdue.Controls.Add(this.lblOverdueName);
+            this.pnlStatOverdue.Location = new System.Drawing.Point(556, 10);
+            this.pnlStatOverdue.Name = "pnlStatOverdue";
+            this.pnlStatOverdue.Size = new System.Drawing.Size(160, 60);
+            this.pnlStatOverdue.TabIndex = 3;
+
             // lblOverdueValue
-            // 
-            lblOverdueValue.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
-            lblOverdueValue.ForeColor = Color.Red;
-            lblOverdueValue.Location = new Point(10, 5);
-            lblOverdueValue.Name = "lblOverdueValue";
-            lblOverdueValue.Size = new Size(90, 36);
-            lblOverdueValue.TabIndex = 0;
-            lblOverdueValue.Text = "0";
-            // 
+            this.lblOverdueValue.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold);
+            this.lblOverdueValue.ForeColor = System.Drawing.Color.Red;
+            this.lblOverdueValue.Location = new System.Drawing.Point(10, 4);
+            this.lblOverdueValue.Name = "lblOverdueValue";
+            this.lblOverdueValue.Size = new System.Drawing.Size(140, 34);
+            this.lblOverdueValue.TabIndex = 0;
+            this.lblOverdueValue.Text = "0";
+
             // lblOverdueName
-            // 
-            lblOverdueName.Font = new Font("Segoe UI", 9F);
-            lblOverdueName.ForeColor = Color.Gray;
-            lblOverdueName.Location = new Point(7, 38);
-            lblOverdueName.Name = "lblOverdueName";
-            lblOverdueName.Size = new Size(150, 18);
-            lblOverdueName.TabIndex = 1;
-            lblOverdueName.Text = "Overdue";
-            // 
-            // flpCards
-            // 
-            flpCards.AutoScroll = true;
-            flpCards.BackColor = Color.FromArgb(240, 240, 240);
-            flpCards.Dock = DockStyle.Fill;
-            flpCards.Location = new Point(0, 130);
-            flpCards.Name = "flpCards";
-            flpCards.Padding = new Padding(16);
-            flpCards.Size = new Size(1640, 859);
-            flpCards.TabIndex = 0;
-            // 
-            // StudentActivityDashboard
-            // 
-            BackColor = Color.FromArgb(245, 245, 245);
-            Controls.Add(flpCards);
-            Controls.Add(pnlStats);
-            Controls.Add(pnlHeader);
-            Name = "StudentActivityDashboard";
-            Size = new Size(1640, 989);
-            pnlHeader.ResumeLayout(false);
-            pnlHeader.PerformLayout();
-            pnlStats.ResumeLayout(false);
-            pnlStatTotal.ResumeLayout(false);
-            pnlStatPending.ResumeLayout(false);
-            pnlStatSubmitted.ResumeLayout(false);
-            pnlStatOverdue.ResumeLayout(false);
-            ResumeLayout(false);
+            this.lblOverdueName.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblOverdueName.ForeColor = System.Drawing.Color.Gray;
+            this.lblOverdueName.Location = new System.Drawing.Point(10, 40);
+            this.lblOverdueName.Name = "lblOverdueName";
+            this.lblOverdueName.Size = new System.Drawing.Size(140, 16);
+            this.lblOverdueName.TabIndex = 1;
+            this.lblOverdueName.Text = "Overdue";
+
+            this.flpCards.AutoScroll = true;
+            this.flpCards.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.flpCards.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flpCards.Location = new System.Drawing.Point(0, 186);
+            this.flpCards.Name = "flpCards";
+            this.flpCards.Padding = new System.Windows.Forms.Padding(16);
+            this.flpCards.Size = new System.Drawing.Size(1640, 803);
+            this.flpCards.TabIndex = 4;
+
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.Controls.Add(this.flpCards);
+            this.Controls.Add(this.pnlSectionBar);
+            this.Controls.Add(this.pnlStats);
+            this.Controls.Add(this.pnlHeader);
+            this.Name = "StudentActivityDashboard";
+            this.Size = new System.Drawing.Size(1640, 989);
+
+            this.pnlHeader.ResumeLayout(false);
+            this.pnlHeader.PerformLayout();
+            this.pnlSectionBar.ResumeLayout(false);
+            this.pnlSectionBar.PerformLayout();
+            this.pnlStats.ResumeLayout(false);
+            this.pnlStatTotal.ResumeLayout(false);
+            this.pnlStatPending.ResumeLayout(false);
+            this.pnlStatSubmitted.ResumeLayout(false);
+            this.pnlStatOverdue.ResumeLayout(false);
+            this.ResumeLayout(false);
         }
 
         #endregion
 
-        // ── Control declarations ───────────────────────────────────────────────
         private System.Windows.Forms.Panel pnlHeader;
-        private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.Label lblWelcome;
+        private System.Windows.Forms.Label lblStudentName;
         private System.Windows.Forms.TextBox txtSearch;
+        private System.Windows.Forms.Panel pnlSectionBar;
+        private System.Windows.Forms.Label lblSectionTitle;
         private System.Windows.Forms.Panel pnlStats;
         private System.Windows.Forms.Panel pnlStatTotal;
         private System.Windows.Forms.Label lblTotalValue;
