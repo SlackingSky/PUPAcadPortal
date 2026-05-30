@@ -63,7 +63,6 @@
             this.pnlHeader.Name = "pnlHeader";
             this.pnlHeader.Size = new System.Drawing.Size(1680, 68);
             this.pnlHeader.TabIndex = 3;
-            this.pnlHeader.SizeChanged += new System.EventHandler(this.pnlHeader_SizeChanged);
 
             // 
             // btnBack

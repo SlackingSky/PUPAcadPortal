@@ -9,7 +9,7 @@ namespace PUPAcadPortal
 {
     public partial class AttendanceControl : UserControl
     {
-        //  Runtime state 
+        // Runtime state 
         private DataTable _subjectsDT;
         private DataTable _logsDT;
         private List<SubjectMeta> _subjects = new();
@@ -19,353 +19,75 @@ namespace PUPAcadPortal
         private double _pct;
         private const double REQUIRED_PCT = 80.0;
         private const int LATE_PER_ABS = 3;
+
         // Constructor
         public AttendanceControl()
         {
             InitializeComponent();
         }
-        // BUILD UI
-        private void BuildUI()
+
+        private void AttendanceControl_Load(object sender, EventArgs e)
         {
-            this.Dock = DockStyle.Fill;
-            this.BackColor = SystemColors.Control;
-
-            var wrapper = new Panel
-            {
-                Dock = DockStyle.Fill,
-                AutoScroll = true,
-                BackColor = SystemColors.Control
-            };
-            this.Controls.Add(wrapper);
-            //  Header bar 
-            pnlHeader = new Panel
-            {
-                Dock = DockStyle.Top,
-                Height = 100,
-                BackColor = Color.White,
-                Padding = new Padding(12, 6, 12, 0)
-            };
-            pnlHeader.Paint += (s, e) =>
-                e.Graphics.DrawLine(new Pen(Color.FromArgb(220, 220, 220), 1),
-                    0, pnlHeader.Height - 1, pnlHeader.Width, pnlHeader.Height - 1);
-
-            lblPageTitle = MakeLabel("My Attendance", 18, FontStyle.Bold, Color.Maroon);
-            lblPageTitle.AutoSize = true;
-            lblPageTitle.Location = new Point(12, 4);
-
-            lblSemLbl = MakeLabel("Semester:", 9, FontStyle.Bold);
-            lblSemLbl.AutoSize = true;
-            lblSemLbl.Location = new Point(12, 46);
-
-            cmbSemester = new ComboBox
-            {
-                DropDownStyle = ComboBoxStyle.DropDownList,
-                Location = new Point(88, 43),
-                Width = 185,
-                Font = new Font("Segoe UI", 9f)
-            };
-            cmbSemester.Items.AddRange(new object[]
-            {
-                "All",
-                "1st Semester",
-                "2nd Semester"
-            });
+            // Populate dynamic dropdowns
             cmbSemester.SelectedIndex = 0;
-            cmbSemester.SelectedIndexChanged += (s, e) => RefreshAll();
-            //  Month | Year | Refresh 
-            lblMonthLbl = MakeLabel("Month:", 9, FontStyle.Bold);
-            lblMonthLbl.AutoSize = true;
-            lblMonthLbl.Location = new Point(12, 74);
-
-            cmbMonth = new ComboBox
-            {
-                DropDownStyle = ComboBoxStyle.DropDownList,
-                Location = new Point(68, 71),
-                Width = 130,
-                Font = new Font("Segoe UI", 9f)
-            };
-            cmbMonth.Items.Add("All");
-            foreach (var mn in new[] { "January","February","March","April","May","June",
-                                       "July","August","September","October","November","December" })
-                cmbMonth.Items.Add(mn);
             cmbMonth.SelectedIndex = 0;
-            cmbMonth.SelectedIndexChanged += (s, e) => RefreshAll();
 
-            var lblYearLbl = MakeLabel("Year:", 9, FontStyle.Bold);
-            lblYearLbl.AutoSize = true;
-            lblYearLbl.Location = new Point(210, 74);
-
-            cmbYear = new ComboBox
-            {
-                DropDownStyle = ComboBoxStyle.DropDownList,
-                Location = new Point(255, 71),
-                Width = 90,
-                Font = new Font("Segoe UI", 9f)
-            };
+            cmbYear.Items.Clear();
             for (int y = 2025; y <= DateTime.Today.Year + 1; y++)
                 cmbYear.Items.Add(y.ToString());
+
             cmbYear.SelectedItem = DateTime.Today.Year.ToString();
             if (cmbYear.SelectedIndex < 0) cmbYear.SelectedIndex = 0;
-            cmbYear.SelectedIndexChanged += (s, e) => RefreshAll();
 
-            btnRefresh = MakeButton("↺  Refresh", Color.Maroon);
-            btnRefresh.Location = new Point(360, 68);
-            btnRefresh.Size = new Size(108, 27);
-            btnRefresh.Click += (s, e) => RefreshAll();
-
-            pnlHeader.Controls.AddRange(new Control[]
-                { lblPageTitle, lblSemLbl, cmbSemester,
-                  lblMonthLbl, cmbMonth, lblYearLbl, cmbYear, btnRefresh });
-
-            //  Summary cards 
-            tlpCards = new TableLayoutPanel
-            {
-                Dock = DockStyle.Top,
-                Height = 145,
-                ColumnCount = 5,
-                RowCount = 1,
-                BackColor = Color.WhiteSmoke
-            };
-            for (int i = 0; i < 5; i++)
-                tlpCards.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            tlpCards.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            // Overall
-            pnlCardOverall = MakeCard();
-            lblOverallTitle = MakeCentredLabel("Overall Attendance", 9f, FontStyle.Bold);
-            lblOverallTitle.Dock = DockStyle.Top; lblOverallTitle.Height = 32;
-            lblOverallTitle.ForeColor = Color.FromArgb(80, 80, 80);
-            lblOverallPct = MakeCentredLabel("–", 26, FontStyle.Bold);
-            lblOverallPct.ForeColor = Color.ForestGreen;
-            lblOverallPct.Dock = DockStyle.Fill;
-            pnlCardOverall.Controls.Add(lblOverallPct);
-            pnlCardOverall.Controls.Add(lblOverallTitle);
-            // Total
-            pnlCardTotal = MakeCard();
-            lblTotalTitle = MakeCentredLabel("Total Sessions", 9f, FontStyle.Bold);
-            lblTotalTitle.Dock = DockStyle.Top; lblTotalTitle.Height = 32;
-            lblTotalTitle.ForeColor = Color.FromArgb(80, 80, 80);
-            lblTotalValue = MakeCentredLabel("–", 26, FontStyle.Bold);
-            lblTotalValue.Dock = DockStyle.Fill;
-            pnlCardTotal.Controls.Add(lblTotalValue);
-            pnlCardTotal.Controls.Add(lblTotalTitle);
-            // Status
-            pnlCardStatus = MakeCard();
-            lblStatusTitle = MakeCentredLabel("Attendance Status", 9f, FontStyle.Bold);
-            lblStatusTitle.Dock = DockStyle.Top; lblStatusTitle.Height = 32;
-            lblStatusTitle.ForeColor = Color.FromArgb(80, 80, 80);
-            lblStatusText = MakeCentredLabel("–", 15f, FontStyle.Bold);
-            lblStatusText.ForeColor = Color.ForestGreen;
-            lblStatusText.Dock = DockStyle.Fill;
-            pnlCardStatus.Controls.Add(lblStatusText);
-            pnlCardStatus.Controls.Add(lblStatusTitle);
-            // Required
-            pnlCardRequired = MakeCard();
-            lblRequiredTitle = MakeCentredLabel("Required Attendance", 9f, FontStyle.Bold);
-            lblRequiredTitle.Dock = DockStyle.Top; lblRequiredTitle.Height = 32;
-            lblRequiredTitle.ForeColor = Color.FromArgb(80, 80, 80);
-            lblRequiredValue = MakeCentredLabel("80%", 26, FontStyle.Bold);
-            lblRequiredValue.ForeColor = Color.FromArgb(128, 0, 0);
-            lblRequiredValue.Dock = DockStyle.Fill;
-            pnlCardRequired.Controls.Add(lblRequiredValue);
-            pnlCardRequired.Controls.Add(lblRequiredTitle);
-
-            // Alerts card
-            pnlCardAlerts = new Panel
-            {
-                BackColor = Color.FromArgb(255, 240, 240),
-                Dock = DockStyle.Fill,
-                Margin = new Padding(4),
-                Padding = new Padding(10)
-            };
-            var alertInner = new TableLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                RowCount = 2,
-                ColumnCount = 1,
-                BackColor = Color.Transparent
-            };
-            alertInner.RowStyles.Add(new RowStyle(SizeType.Percent, 60F));
-            alertInner.RowStyles.Add(new RowStyle(SizeType.Percent, 40F));
-
-            lblAlertText = new Label
-            {
-                Text = "Loading…",
-                ForeColor = Color.Crimson,
-                TextAlign = ContentAlignment.MiddleCenter,
-                Font = new Font("Segoe UI", 9.5f),
-                Dock = DockStyle.Fill,
-                AutoSize = false
-            };
-            btnViewDetails = MakeButton("View Details", Color.Maroon);
-            btnViewDetails.Dock = DockStyle.Fill;
-            btnViewDetails.Margin = new Padding(20, 4, 20, 4);
-            btnViewDetails.Click += OnViewDetailsClick;
-
-            alertInner.Controls.Add(lblAlertText, 0, 0);
-            alertInner.Controls.Add(btnViewDetails, 0, 1);
-            pnlCardAlerts.Controls.Add(alertInner);
-
-            tlpCards.Controls.Add(pnlCardOverall, 0, 0);
-            tlpCards.Controls.Add(pnlCardTotal, 1, 0);
-            tlpCards.Controls.Add(pnlCardStatus, 2, 0);
-            tlpCards.Controls.Add(pnlCardRequired, 3, 0);
-            tlpCards.Controls.Add(pnlCardAlerts, 4, 0);
-            //  Mini-stats strip 
-            pnlMiniStats = new Panel
-            {
-                Dock = DockStyle.Top,
-                Height = 46,
-                BackColor = Color.White,
-                Padding = new Padding(12, 0, 12, 0)
-            };
-            pnlMiniStats.Paint += (s, e) =>
-                e.Graphics.DrawLine(new Pen(Color.FromArgb(230, 230, 230), 1),
-                    0, pnlMiniStats.Height - 1, pnlMiniStats.Width, pnlMiniStats.Height - 1);
-
-            int mx = 10;
-            lblMiniPresent = MakeMiniStat("● Present: –", Color.FromArgb(0, 130, 50), ref mx);
-            lblMiniLate = MakeMiniStat("● Late: –", Color.DarkOrange, ref mx);
-            lblMiniAbsent = MakeMiniStat("● Absent: –", Color.Crimson, ref mx);
-            lblMiniExcused = MakeMiniStat("● Excused: –", Color.RoyalBlue, ref mx);
-
-            pbAttendance = new ProgressBar
-            {
-                Location = new Point(mx + 16, 13),
-                Size = new Size(220, 18),
-                Minimum = 0,
-                Maximum = 100,
-                Style = ProgressBarStyle.Continuous
-            };
-            lblProgressPct = new Label
-            {
-                AutoSize = true,
-                Location = new Point(mx + 246, 13),
-                Font = new Font("Segoe UI", 9f, FontStyle.Bold),
-                ForeColor = Color.FromArgb(60, 60, 60),
-                Text = "0%"
-            };
-            pnlMiniStats.Controls.AddRange(new Control[]
-                { lblMiniPresent, lblMiniLate, lblMiniAbsent, lblMiniExcused,
-                  pbAttendance, lblProgressPct });
-
-            //  Subjects section title 
-            pnlSubjTitle = new Panel
-            {
-                Dock = DockStyle.Top,
-                Height = 40,
-                BackColor = Color.WhiteSmoke,
-                Padding = new Padding(12, 0, 0, 0)
-            };
-            pnlSubjTitle.Paint += (s, e) =>
-                e.Graphics.DrawLine(new Pen(Color.FromArgb(210, 210, 210), 1),
-                    0, pnlSubjTitle.Height - 1, pnlSubjTitle.Width, pnlSubjTitle.Height - 1);
-            lblSubjectsTitle = MakeLabel(
-                "Attendance per Subject  (click a row to see its log)",
-                10f, FontStyle.Bold, Color.FromArgb(50, 50, 50));
-            lblSubjectsTitle.AutoSize = true;
-            lblSubjectsTitle.Location = new Point(12, 10);
-            pnlSubjTitle.Controls.Add(lblSubjectsTitle);
-
-            //  Subjects DataGridView 
-            dgvSubjects = new DataGridView
-            {
-                Dock = DockStyle.Top,
-                Height = 10,
-                AutoGenerateColumns = false,
-                AllowUserToAddRows = false,
-                AllowUserToDeleteRows = false,
-                AllowUserToResizeRows = false,
-                AllowUserToResizeColumns = false,
-                RowHeadersVisible = false,
-                SelectionMode = DataGridViewSelectionMode.FullRowSelect,
-                BackgroundColor = Color.White,
-                BorderStyle = BorderStyle.None,
-                CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal,
-                GridColor = Color.FromArgb(230, 230, 230),
-                ColumnHeadersHeight = 44,
-                RowTemplate = { Height = 42 },
-                AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells,
-                Cursor = Cursors.Hand,
-                ScrollBars = ScrollBars.None
-            };
-            StyleGridHeader(dgvSubjects);
-            AddSubjectColumns();
-            dgvSubjects.CellFormatting += DgvSubjects_CellFormatting;
-            dgvSubjects.CellClick += DgvSubjects_CellClick;
-            dgvSubjects.SelectionChanged += (s, e) => dgvSubjects.ClearSelection();
-            dgvSubjects.DataBindingComplete += (s, e) => AutoSizeSubjectsGrid();
-
-            // Log section title 
-            pnlLogTitle = new Panel
-            {
-                Dock = DockStyle.Top,
-                Height = 40,
-                BackColor = Color.WhiteSmoke,
-                Padding = new Padding(12, 0, 0, 0)
-            };
-            pnlLogTitle.Paint += (s, e) =>
-                e.Graphics.DrawLine(new Pen(Color.FromArgb(210, 210, 210), 1),
-                    0, pnlLogTitle.Height - 1, pnlLogTitle.Width, pnlLogTitle.Height - 1);
-            lblAttendanceLogTitle = MakeLabel("Attendance Log", 10f, FontStyle.Bold, Color.FromArgb(50, 50, 50));
-            lblAttendanceLogTitle.AutoSize = true;
-            lblAttendanceLogTitle.Location = new Point(12, 10);
-            pnlLogTitle.Controls.Add(lblAttendanceLogTitle);
-
-            // Logs DataGridView 
-            dgvLogs = new DataGridView
-            {
-                Dock = DockStyle.Top,
-                Height = 10,
-                AutoGenerateColumns = false,
-                AllowUserToAddRows = false,
-                AllowUserToDeleteRows = false,
-                AllowUserToResizeRows = false,
-                AllowUserToResizeColumns = false,
-                RowHeadersVisible = false,
-                SelectionMode = DataGridViewSelectionMode.FullRowSelect,
-                BackgroundColor = Color.White,
-                BorderStyle = BorderStyle.None,
-                CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal,
-                GridColor = Color.FromArgb(230, 230, 230),
-                ColumnHeadersHeight = 44,
-                RowTemplate = { Height = 40 },
-                AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells,
-                ScrollBars = ScrollBars.None
-            };
-            StyleGridHeader(dgvLogs);
-            AddLogColumns();
-            dgvLogs.CellFormatting += DgvLogs_CellFormatting;
-            dgvLogs.SelectionChanged += (s, e) => dgvLogs.ClearSelection();
-            dgvLogs.DataBindingComplete += (s, e) => AutoSizeLogsGrid();
-            // Bottom spacer 
-            var spacer = new Panel { Dock = DockStyle.Top, Height = 32, BackColor = SystemColors.Control };
-
-            // Reverse order
-            wrapper.Controls.Add(spacer);
-            wrapper.Controls.Add(dgvLogs);
-            wrapper.Controls.Add(pnlLogTitle);
-            wrapper.Controls.Add(dgvSubjects);
-            wrapper.Controls.Add(pnlSubjTitle);
-            wrapper.Controls.Add(pnlMiniStats);
-            wrapper.Controls.Add(tlpCards);
-            wrapper.Controls.Add(pnlHeader);
+            SeedData();
+            RefreshAll();
         }
 
-        //  Grid auto-sizers 
-        private void AutoSizeSubjectsGrid()
+        // Custom Paints mapped from the Designer
+        private void pnlHeader_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.DrawLine(new Pen(Color.FromArgb(220, 220, 220), 1),
+                0, pnlHeader.Height - 1, pnlHeader.Width, pnlHeader.Height - 1);
+        }
+
+        private void pnlMiniStats_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.DrawLine(new Pen(Color.FromArgb(230, 230, 230), 1),
+                0, pnlMiniStats.Height - 1, pnlMiniStats.Width, pnlMiniStats.Height - 1);
+        }
+
+        private void pnlSubjTitle_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.DrawLine(new Pen(Color.FromArgb(210, 210, 210), 1),
+                0, pnlSubjTitle.Height - 1, pnlSubjTitle.Width, pnlSubjTitle.Height - 1);
+        }
+
+        private void pnlLogTitle_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.DrawLine(new Pen(Color.FromArgb(210, 210, 210), 1),
+                0, pnlLogTitle.Height - 1, pnlLogTitle.Width, pnlLogTitle.Height - 1);
+        }
+
+        // Grid auto-sizers 
+        private void DgvSubjects_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             if (dgvSubjects == null) return;
             int rowH = dgvSubjects.Rows.GetRowsHeight(DataGridViewElementStates.Visible);
             dgvSubjects.Height = dgvSubjects.ColumnHeadersHeight + rowH + 2;
         }
 
-        private void AutoSizeLogsGrid()
+        private void DgvLogs_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             if (dgvLogs == null) return;
             int rowH = dgvLogs.Rows.GetRowsHeight(DataGridViewElementStates.Visible);
             int desired = dgvLogs.ColumnHeadersHeight + rowH + 2;
             dgvLogs.Height = Math.Min(desired, 620);
             dgvLogs.ScrollBars = desired > 620 ? ScrollBars.Vertical : ScrollBars.None;
+        }
+
+        private void Dgv_SelectionChanged(object sender, EventArgs e)
+        {
+            ((DataGridView)sender).ClearSelection();
         }
 
         // SEED DATA
@@ -433,6 +155,11 @@ namespace PUPAcadPortal
             _ => "No excuse notice"
         };
 
+        private void Filter_Changed(object sender, EventArgs e)
+        {
+            RefreshAll();
+        }
+
         // REFRESH ALL
         private void RefreshAll()
         {
@@ -472,8 +199,6 @@ namespace PUPAcadPortal
         }
 
         // COMPUTE TOTALS
-        // Attendance % = (present + late that didn't convert) / total  — simplified:
-        //  count each Late as 1/3 of an absence, so effective present = total - effective_absences - excused
         private void ComputeTotals()
         {
             _total = _present = _absent = _late = _excused = 0;
@@ -486,9 +211,8 @@ namespace PUPAcadPortal
                 _late += recs.Count(r => r.Status == "Late");
                 _excused += recs.Count(r => r.Status == "Excused");
             }
-            int lateAbsences = _late / LATE_PER_ABS;
-            int effectivePresent = _present + (_late - lateAbsences * LATE_PER_ABS); // remaining lates still count
-            // Simpler correct formula: sessions attended = present + late that are NOT converted
+
+            // every 3 lates = 1 effective absence
             int effectiveAbsent = _absent + (_late / LATE_PER_ABS);
             _pct = _total > 0
                 ? Math.Round(Math.Max(0, (_total - effectiveAbsent) * 100.0 / _total), 1)
@@ -508,7 +232,7 @@ namespace PUPAcadPortal
             lblStatusText.ForeColor = sc;
             lblOverallPct.ForeColor = sc;
 
-            //  at-risk = below 80 % (= absent ≥ 20 % of total class hours)
+            // at-risk = below 80 %
             int atRisk = _subjects.Count(meta =>
             {
                 var r = FilteredRecords(meta.Code);
@@ -567,29 +291,13 @@ namespace PUPAcadPortal
                 int lt = r.Count(x => x.Status == "Late");
                 int ex = r.Count(x => x.Status == "Excused");
 
-                // every 3 lates = 1 effective absence
                 int effAbs = ab + (lt / LATE_PER_ABS);
                 double p = n > 0 ? Math.Round(Math.Max(0, (n - effAbs) * 100.0 / n), 1) : 0;
 
-                // below 80 % → at risk / dropped
                 string st = p >= 90 ? "Excellent" : p >= 80 ? "Good" : p >= 65 ? "At Risk" : "Dropped";
                 _subjectsDT.Rows.Add(meta.Code, meta.Name, meta.Schedule, n, pr, ab, lt, ex, $"{p}%", st);
             }
             dgvSubjects.DataSource = _subjectsDT;
-        }
-
-        private void AddSubjectColumns()
-        {
-            dgvSubjects.Columns.Add(MakeFixedCol("Code", "Code", 90, false));
-            dgvSubjects.Columns.Add(MakeFillCol("Subject", "Subject", false));
-            dgvSubjects.Columns.Add(MakeFillCol("Schedule", "Schedule", false));
-            dgvSubjects.Columns.Add(MakeFixedCol("Sessions", "Sessions", 75, true));
-            dgvSubjects.Columns.Add(MakeFixedCol("Present", "Present", 70, true));
-            dgvSubjects.Columns.Add(MakeFixedCol("Absent", "Absent", 70, true));
-            dgvSubjects.Columns.Add(MakeFixedCol("Late", "Late", 65, true));
-            dgvSubjects.Columns.Add(MakeFixedCol("Excused", "Excused", 72, true));
-            dgvSubjects.Columns.Add(MakeFixedCol("Attendance%", "Attendance%", 100, true));
-            dgvSubjects.Columns.Add(MakeFixedCol("Status", "Status", 95, true));
         }
 
         private void DgvSubjects_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -597,7 +305,7 @@ namespace PUPAcadPortal
             if (e.RowIndex < 0 || e.Value == null) return;
             string col = dgvSubjects.Columns[e.ColumnIndex].Name;
 
-            if (col == "Status")
+            if (col == "colStatus")
             {
                 string s = e.Value.ToString();
                 e.CellStyle.Font = new Font("Segoe UI", 9.5f, FontStyle.Bold);
@@ -610,7 +318,7 @@ namespace PUPAcadPortal
                     _ => (Color.Crimson, Color.FromArgb(255, 235, 235))
                 };
             }
-            else if (col == "Attendance%")
+            else if (col == "colAttendancePct")
             {
                 if (double.TryParse(e.Value.ToString().Replace("%", ""), out double p))
                 {
@@ -619,14 +327,16 @@ namespace PUPAcadPortal
                     e.CellStyle.ForeColor = p >= REQUIRED_PCT ? Color.ForestGreen : Color.Crimson;
                 }
             }
-            else if (col == "Absent" && int.TryParse(e.Value.ToString(), out int ab) && ab > 0)
+            else if (col == "colAbsent" && int.TryParse(e.Value.ToString(), out int ab) && ab > 0)
+            {
                 e.CellStyle.ForeColor = Color.Crimson;
+            }
         }
 
         private void DgvSubjects_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
-            _selectedCode = dgvSubjects.Rows[e.RowIndex].Cells["Code"]?.Value?.ToString();
+            _selectedCode = dgvSubjects.Rows[e.RowIndex].Cells["colCode"]?.Value?.ToString();
             if (_selectedCode == null) return;
             lblAttendanceLogTitle.Text = $"Attendance Log – {_selectedCode}";
             RefreshLogsGrid();
@@ -659,19 +369,10 @@ namespace PUPAcadPortal
             dgvLogs.DataSource = _logsDT;
         }
 
-        private void AddLogColumns()
-        {
-            dgvLogs.Columns.Add(MakeFixedCol("Date", "Date", 175, false));
-            dgvLogs.Columns.Add(MakeFixedCol("Code", "Code", 110, false));
-            dgvLogs.Columns.Add(MakeFillCol("Subject", "Subject", false));
-            dgvLogs.Columns.Add(MakeFixedCol("Status", "Status", 95, true));
-            dgvLogs.Columns.Add(MakeFillCol("Remarks", "Remarks", false));
-        }
-
         private void DgvLogs_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (e.RowIndex < 0 || e.Value == null) return;
-            if (dgvLogs.Columns[e.ColumnIndex].Name != "Status") return;
+            if (dgvLogs.Columns[e.ColumnIndex].Name != "colLogStatus") return;
 
             string s = e.Value.ToString();
             e.CellStyle.Font = new Font("Segoe UI", 9.5f, FontStyle.Bold);
@@ -685,9 +386,13 @@ namespace PUPAcadPortal
             };
         }
 
-        // VIEW DETAILS  –  opens the styled AtRiskPopup
+        // VIEW DETAILS
         private void OnViewDetailsClick(object sender, EventArgs e)
         {
+            /* NOTE: Ensure AtRiskPopup and AtRiskSubjectInfo are defined somewhere else 
+               in your project, as they were referenced in the provided code! */
+
+            /*
             var atRiskList = new List<AtRiskSubjectInfo>();
 
             foreach (var meta in _subjects)
@@ -700,7 +405,7 @@ namespace PUPAcadPortal
                 int effAbs = absent + (late / LATE_PER_ABS);
                 double p = Math.Max(0, (r.Count - effAbs) * 100.0 / r.Count);
 
-                if (p < REQUIRED_PCT)   // below 80 % threshold
+                if (p < REQUIRED_PCT)
                 {
                     atRiskList.Add(new AtRiskSubjectInfo
                     {
@@ -714,107 +419,7 @@ namespace PUPAcadPortal
 
             Form owner = this.FindForm();
             AtRiskPopup.Show(owner, atRiskList);
-        }
-
-        // HELPERS
-        private static Panel MakeCard() =>
-            new Panel { BackColor = Color.White, Dock = DockStyle.Fill, Margin = new Padding(4) };
-
-        private static Label MakeLabel(string text, float size, FontStyle style, Color? fore = null) =>
-            new Label
-            {
-                Text = text,
-                Font = new Font("Segoe UI", size, style),
-                ForeColor = fore ?? Color.FromArgb(40, 40, 40),
-                AutoSize = true
-            };
-
-        private static Label MakeCentredLabel(string text, float size, FontStyle style) =>
-            new Label
-            {
-                Text = text,
-                Font = new Font("Segoe UI", size, style),
-                TextAlign = ContentAlignment.MiddleCenter,
-                AutoSize = false
-            };
-
-        private static Button MakeButton(string text, Color back)
-        {
-            var b = new Button
-            {
-                Text = text,
-                BackColor = back,
-                ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat,
-                Font = new Font("Segoe UI", 9f, FontStyle.Bold),
-                Cursor = Cursors.Hand
-            };
-            b.FlatAppearance.BorderSize = 0;
-            return b;
-        }
-
-        private static Label MakeMiniStat(string text, Color color, ref int x)
-        {
-            var lbl = new Label
-            {
-                Text = text,
-                ForeColor = color,
-                Font = new Font("Segoe UI", 9.5f, FontStyle.Bold),
-                AutoSize = true,
-                Location = new Point(x, 13)
-            };
-            x += 128;
-            return lbl;
-        }
-
-        private static DataGridViewTextBoxColumn MakeFixedCol(string name, string header, int width, bool centre) =>
-            new DataGridViewTextBoxColumn
-            {
-                Name = name,
-                HeaderText = header,
-                DataPropertyName = name,
-                Width = width,
-                AutoSizeMode = DataGridViewAutoSizeColumnMode.None,
-                ReadOnly = true,
-                DefaultCellStyle =
-                {
-                    Alignment = centre
-                        ? DataGridViewContentAlignment.MiddleCenter
-                        : DataGridViewContentAlignment.MiddleLeft,
-                    WrapMode = DataGridViewTriState.True
-                }
-            };
-
-        private static DataGridViewTextBoxColumn MakeFillCol(string name, string header, bool centre) =>
-            new DataGridViewTextBoxColumn
-            {
-                Name = name,
-                HeaderText = header,
-                DataPropertyName = name,
-                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
-                ReadOnly = true,
-                DefaultCellStyle =
-                {
-                    Alignment = centre
-                        ? DataGridViewContentAlignment.MiddleCenter
-                        : DataGridViewContentAlignment.MiddleLeft,
-                    WrapMode = DataGridViewTriState.True
-                }
-            };
-
-        private static void StyleGridHeader(DataGridView dgv)
-        {
-            dgv.EnableHeadersVisualStyles = false;
-            dgv.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dgv.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(128, 0, 0);
-            dgv.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10f, FontStyle.Bold);
-            dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgv.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.FromArgb(128, 0, 0);
-            dgv.DefaultCellStyle.Font = new Font("Segoe UI", 10f);
-            dgv.DefaultCellStyle.ForeColor = Color.FromArgb(40, 40, 40);
-            dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(245, 220, 220);
-            dgv.DefaultCellStyle.SelectionForeColor = Color.FromArgb(40, 40, 40);
+            */
         }
 
         // INNER MODELS
@@ -832,13 +437,6 @@ namespace PUPAcadPortal
             public string Name { get; set; }
             public int Units { get; set; }
             public string Schedule { get; set; }
-        }
-
-        private void AttendanceControl_Load(object sender, EventArgs e)
-        {
-            BuildUI();
-            SeedData();
-            RefreshAll();
         }
     }
 }

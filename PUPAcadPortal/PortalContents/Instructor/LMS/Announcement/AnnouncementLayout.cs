@@ -1,42 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Metrics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace PUPAcadPortal
 {
-    // ═══════════════════════════════════════════════════════════════════════
-    //  AnnouncementLayout  –  shared announcement card UserControl
-    //
-    //  Used by both InstructorPortal and StudentPortal.
-    //
-    //  INSTRUCTOR usage:
-    //      var card = new AnnouncementLayout();
-    //      card.LoadInstructor(announcement, cardWidth);
-    //      card.MenuEditClicked   += (s, id) => EditAnnouncement(id);
-    //      card.MenuToggleClicked += (s, id) => ToggleAnnouncement(id);
-    //      card.MenuDeleteClicked += (s, id) => DeleteAnnouncement(id);
-    //      card.CardClicked       += (s, id) => ShowViewAnnouncementUC(...);
-    //      flowLayoutPanelAnnouncements.Controls.Add(card);
-    //
-    //  STUDENT usage:
-    //      var card = new AnnouncementLayout();
-    //      card.LoadStudent(studentAnnouncement, cardWidth);
-    //      card.CardClicked  += (s, id) => ShowStudentAnnouncementDetail(...);
-    //      card.PinToggled   += (s, id) => { ann.IsPinned = !ann.IsPinned; RenderAnnouncements(); };
-    //      flpAnnouncements.Controls.Add(card);
-    // ═══════════════════════════════════════════════════════════════════════
-
     public partial class AnnouncementLayout : UserControl
     {
         // ── Public events ────────────────────────────────────────────────────
-        public event EventHandler<int> CardClicked;
-        public event EventHandler<int> PinToggled;          // student portal
-        public event EventHandler<int> MenuEditClicked;     // instructor portal
-        public event EventHandler<int> MenuToggleClicked;   // instructor portal
-        public event EventHandler<int> MenuDeleteClicked;   // instructor portal
+        public event EventHandler<int>? CardClicked;
+        public event EventHandler<int>? PinToggled;          // student portal
+        public event EventHandler<int>? MenuEditClicked;     // instructor portal
+        public event EventHandler<int>? MenuToggleClicked;   // instructor portal
+        public event EventHandler<int>? MenuDeleteClicked;   // instructor portal
 
         // ── Per-category colours (shared palette) ────────────────────────────
         private static readonly Dictionary<string, Color> CatIconColor = new()
@@ -49,6 +26,7 @@ namespace PUPAcadPortal
             ["Administrative"] = Color.FromArgb(90, 90, 200),
             ["Urgent"] = Color.FromArgb(220, 50, 50),
         };
+
         private static readonly Dictionary<string, Color> CatBgColor = new()
         {
             ["General"] = Color.FromArgb(0xe6, 0xf1, 0xfb),
@@ -67,7 +45,6 @@ namespace PUPAcadPortal
         public AnnouncementLayout()
         {
             InitializeComponent();
-            this.DoubleBuffered = true;
         }
 
         // ════════════════════════════════════════════════════════════════════
@@ -143,7 +120,6 @@ namespace PUPAcadPortal
             Color iconCol = CatIconColor.GetValueOrDefault(category, Color.Gray);
             Color iconBg = CatBgColor.GetValueOrDefault(category, Color.WhiteSmoke);
 
-            // ── NEW ribbon ───────────────────────────────────────────────────
             if (isNew)
             {
                 var ribbon = new Label
@@ -162,7 +138,6 @@ namespace PUPAcadPortal
                 ribbon.BringToFront();
             }
 
-            // ── Icon circle ──────────────────────────────────────────────────
             var iconCircle = new Panel
             {
                 Size = new Size(42, 42),
@@ -174,32 +149,24 @@ namespace PUPAcadPortal
                 pe.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
                 using var b = new SolidBrush(iconBg);
                 pe.Graphics.FillEllipse(b, 1, 1, iconCircle.Width - 3, iconCircle.Height - 3);
-                Image catImg = GetCategoryImage(category);
+                Image? catImg = GetCategoryImage(category);
                 if (catImg != null)
                 {
                     int pad = 8;
-                    pe.Graphics.DrawImage(catImg,
-                        new Rectangle(pad, pad, iconCircle.Width - pad * 2, iconCircle.Height - pad * 2));
+                    pe.Graphics.DrawImage(catImg, new Rectangle(pad, pad, iconCircle.Width - pad * 2, iconCircle.Height - pad * 2));
                 }
                 else
                 {
                     string letter = category.Length > 0 ? category[..1] : "?";
                     using var font = new Font("Segoe UI", 13f, FontStyle.Bold);
                     using var tb = new SolidBrush(iconCol);
-                    var sf = new StringFormat
-                    {
-                        Alignment = StringAlignment.Center,
-                        LineAlignment = StringAlignment.Center,
-                    };
-                    pe.Graphics.DrawString(letter, font, tb,
-                        new RectangleF(0, 0, iconCircle.Width, iconCircle.Height), sf);
+                    var sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
+                    pe.Graphics.DrawString(letter, font, tb, new RectangleF(0, 0, iconCircle.Width, iconCircle.Height), sf);
                 }
             };
             this.Controls.Add(iconCircle);
 
             int textX = 64;
-
-            // ── Date label ───────────────────────────────────────────────────
             var dateFont = new Font("Segoe UI", 8f);
             string dateText = date.ToString("MMM d, yyyy  h:mm tt");
             int dateLabelW = TextRenderer.MeasureText(dateText, dateFont).Width + 4;
@@ -208,7 +175,6 @@ namespace PUPAcadPortal
             int menuBtnX = panelWidth - menuBtnRight - menuBtnW;
             int dateLabelX = menuBtnX - dateLabelW - 6;
 
-            // ── Pin & urgent offsets ─────────────────────────────────────────
             int titleOffsetX = 0;
             if (isPinned)
             {
@@ -219,7 +185,7 @@ namespace PUPAcadPortal
                     Font = new Font("Segoe UI", 9f),
                     Location = new Point(textX, 14),
                     BackColor = Color.Transparent,
-                }; 
+                };
                 this.Controls.Add(pin);
                 titleOffsetX = 20;
             }
@@ -234,14 +200,7 @@ namespace PUPAcadPortal
                 urgIconBox.Paint += (s, pe) =>
                 {
                     pe.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                    try
-                    {
-                        pe.Graphics.DrawImage(Properties.Resources.urgent1,
-                            new Rectangle(0, 0, urgIconBox.Width, urgIconBox.Height));
-                    }
-                    catch
-                    {
-                    }
+                    try { pe.Graphics.DrawImage(Properties.Resources.urgent1, new Rectangle(0, 0, urgIconBox.Width, urgIconBox.Height)); } catch { }
                 };
                 this.Controls.Add(urgIconBox);
                 titleOffsetX += 22;
@@ -380,7 +339,6 @@ namespace PUPAcadPortal
             progressTrack.Controls.Add(progressFill);
             this.Controls.Add(progressTrack);
 
-            // ── Pin toggle button (instructor) ───────────────────────────────
             const int pinBtnW = 32;
             int pinBtnX = panelWidth - menuBtnRight - menuBtnW - pinBtnW - 4;
 
@@ -401,7 +359,6 @@ namespace PUPAcadPortal
             btnPinToggle.Click += (s, ev) => PinToggled?.Invoke(this, id);
             this.Controls.Add(btnPinToggle);
 
-            // ── ⋮ context menu button ────────────────────────────────────────
             var btnMenu = new Button
             {
                 Size = new Size(menuBtnW, 28),
@@ -419,21 +376,17 @@ namespace PUPAcadPortal
 
             var ctx = new ContextMenuStrip();
             ctx.Items.Add("✏  Edit", null, (s, ev) => MenuEditClicked?.Invoke(this, id));
-            ctx.Items.Add(isPinned ? "📌  Unpin" : "📌  Pin",
-                          null, (s, ev) => PinToggled?.Invoke(this, id));
-            ctx.Items.Add(status == "active" ? "⏸  Set inactive" : "▶  Set active",
-                          null, (s, ev) => MenuToggleClicked?.Invoke(this, id));
+            ctx.Items.Add(isPinned ? "📌  Unpin" : "📌  Pin", null, (s, ev) => PinToggled?.Invoke(this, id));
+            ctx.Items.Add(status == "active" ? "⏸  Set inactive" : "▶  Set active", null, (s, ev) => MenuToggleClicked?.Invoke(this, id));
             ctx.Items.Add(new ToolStripSeparator());
             ctx.Items.Add("🗑  Delete", null, (s, ev) =>
             {
-                if (MessageBox.Show($"Delete \"{title}\"?", "Confirm",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                if (MessageBox.Show($"Delete \"{title}\"?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                     MenuDeleteClicked?.Invoke(this, id);
             });
             btnMenu.Click += (s, ev) => ctx.Show(btnMenu, new Point(0, btnMenu.Height));
             this.Controls.Add(btnMenu);
 
-            // ── Click → open view ────────────────────────────────────────────
             EventHandler viewHandler = (s, ev) => CardClicked?.Invoke(this, id);
             this.Click += viewHandler;
             lblTitle.Click += viewHandler;
@@ -453,7 +406,6 @@ namespace PUPAcadPortal
             Color iconCol = CatIconColor.GetValueOrDefault(category, Color.Gray);
             Color iconBg = CatBgColor.GetValueOrDefault(category, Color.WhiteSmoke);
 
-            // ── Unread = maroon background; read = white ──────────────────────
             bool useMaroonBg = !isRead;
             Color cardBg = useMaroonBg ? Color.FromArgb(139, 0, 0) : Color.White;
             Color textColor = useMaroonBg ? Color.White : Color.FromArgb(20, 20, 20);
@@ -470,23 +422,19 @@ namespace PUPAcadPortal
             int descWidth = Math.Max(100, cardWidth - textX - rightColW - 10);
 
             this.Width = cardWidth;
-            this.Height = 10; // finalised below
+            this.Height = 10;
             this.BackColor = cardBg;
-            this.Margin = new Padding(4, 4, 4, 4);
+            this.Margin = new Padding(4);
             this.Cursor = Cursors.Hand;
 
-            // ── Left indicator ───────────────────────────────────────────────
             var indicator = new Panel
             {
                 Size = new Size(indicatorW, 10),
                 Location = new Point(0, 0),
-                BackColor = useMaroonBg
-                    ? Color.FromArgb(180, 0, 0)
-                    : (isUrgent ? Color.FromArgb(200, 0, 0) : iconCol),
+                BackColor = useMaroonBg ? Color.FromArgb(180, 0, 0) : (isUrgent ? Color.FromArgb(200, 0, 0) : iconCol),
             };
             this.Controls.Add(indicator);
 
-            // ── Icon circle ──────────────────────────────────────────────────
             var iconCircle = new Panel
             {
                 Size = new Size(iconSize, iconSize),
@@ -498,33 +446,25 @@ namespace PUPAcadPortal
                 pe.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
                 using var bgBrush = new SolidBrush(iconBg);
                 pe.Graphics.FillEllipse(bgBrush, 1, 1, iconCircle.Width - 3, iconCircle.Height - 3);
-                Image catImg = GetCategoryImage(category);
+                Image? catImg = GetCategoryImage(category);
                 if (catImg != null)
                 {
                     int pad = 10;
-                    pe.Graphics.DrawImage(catImg,
-                        new Rectangle(pad, pad, iconCircle.Width - pad * 2, iconCircle.Height - pad * 2));
+                    pe.Graphics.DrawImage(catImg, new Rectangle(pad, pad, iconCircle.Width - pad * 2, iconCircle.Height - pad * 2));
                 }
                 else
                 {
-                    // Fallback: first letter
                     string letter = category.Length > 0 ? category[..1] : "?";
                     using var fnt = new Font("Segoe UI", 14f, FontStyle.Bold);
                     using var tb = new SolidBrush(iconCol);
-                    var sf = new StringFormat
-                    {
-                        Alignment = StringAlignment.Center,
-                        LineAlignment = StringAlignment.Center,
-                    };
-                    pe.Graphics.DrawString(letter, fnt, tb,
-                        new RectangleF(0, 0, iconCircle.Width, iconCircle.Height), sf);
+                    var sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
+                    pe.Graphics.DrawString(letter, fnt, tb, new RectangleF(0, 0, iconCircle.Width, iconCircle.Height), sf);
                 }
             };
             this.Controls.Add(iconCircle);
 
             int currentY = 14;
 
-            // ── URGENT badge ─────────────────────────────────────────────────
             if (isUrgent)
             {
                 var urgIconBox = new Panel
@@ -536,12 +476,7 @@ namespace PUPAcadPortal
                 urgIconBox.Paint += (s, pe) =>
                 {
                     pe.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                    try
-                    {
-                        pe.Graphics.DrawImage(Properties.Resources.urgent1,
-                            new Rectangle(0, 0, urgIconBox.Width, urgIconBox.Height));
-                    }
-                    catch { }
+                    try { pe.Graphics.DrawImage(Properties.Resources.urgent1, new Rectangle(0, 0, urgIconBox.Width, urgIconBox.Height)); } catch { }
                 };
                 this.Controls.Add(urgIconBox);
 
@@ -576,20 +511,18 @@ namespace PUPAcadPortal
                 titleOffsetX = 22;
             }
 
-            // ── Unread dot ───────────────────────────────────────────────────
             if (!isRead)
             {
                 var dot = new Panel
                 {
                     Size = new Size(8, 8),
                     Location = new Point(textX - 14, currentY + 7),
-                    BackColor = Color.White,   // white dot is visible on maroon bg
+                    BackColor = Color.White,
                 };
                 MakeCircle(dot);
                 this.Controls.Add(dot);
             }
 
-            // ── Title ────────────────────────────────────────────────────────
             int titleWidth = Math.Max(60, descWidth - titleOffsetX);
             var lblTitle = new Label
             {
@@ -604,7 +537,6 @@ namespace PUPAcadPortal
             this.Controls.Add(lblTitle);
             currentY = lblTitle.Bottom + 5;
 
-            // ── Category pill ─────────────────────────────────────────────────
             var pillFont = new Font("Segoe UI", 7.5f, FontStyle.Bold);
             int pillW = TextRenderer.MeasureText(category, pillFont).Width + 14;
             var catPill = new Label
@@ -622,12 +554,8 @@ namespace PUPAcadPortal
             this.Controls.Add(catPill);
             currentY = catPill.Bottom + 8;
 
-            // ── Description ───────────────────────────────────────────────────
             var descFont = new Font("Segoe UI", 8.5f);
-            Size measured = TextRenderer.MeasureText(
-                description, descFont,
-                new Size(descWidth, 0),
-                TextFormatFlags.WordBreak | TextFormatFlags.TextBoxControl);
+            Size measured = TextRenderer.MeasureText(description, descFont, new Size(descWidth, 0), TextFormatFlags.WordBreak | TextFormatFlags.TextBoxControl);
             int descH = Math.Max(18, measured.Height + 4);
             var lblDesc = new Label
             {
@@ -643,12 +571,10 @@ namespace PUPAcadPortal
             this.Controls.Add(lblDesc);
             currentY = lblDesc.Bottom + cardPadB;
 
-            // ── Set final height ──────────────────────────────────────────────
             int cardHeight = Math.Max(90, currentY);
             this.Height = cardHeight;
             indicator.Size = new Size(indicatorW, cardHeight);
 
-            // ── Right column ──────────────────────────────────────────────────
             int rightX = cardWidth - rightColW;
             this.Controls.Add(new Label
             {
@@ -681,7 +607,6 @@ namespace PUPAcadPortal
                 });
             }
 
-            // ── Pin toggle button ─────────────────────────────────────────────
             var pinBtn = new Button
             {
                 Size = new Size(36, 36),
@@ -689,9 +614,7 @@ namespace PUPAcadPortal
                 Text = isPinned ? "📌" : "📍",
                 Font = new Font("Segoe UI Symbol", 11f),
                 FlatStyle = FlatStyle.Flat,
-                ForeColor = isPinned
-                    ? (useMaroonBg ? Color.White : Color.DarkRed)
-                    : (useMaroonBg ? Color.FromArgb(255, 180, 180) : Color.Silver),
+                ForeColor = isPinned ? (useMaroonBg ? Color.White : Color.DarkRed) : (useMaroonBg ? Color.FromArgb(255, 180, 180) : Color.Silver),
                 BackColor = Color.Transparent,
                 Cursor = Cursors.Hand,
                 TabStop = false,
@@ -701,25 +624,22 @@ namespace PUPAcadPortal
             pinBtn.Click += (s, ev) => PinToggled?.Invoke(this, id);
             this.Controls.Add(pinBtn);
 
-            // ── Card border ───────────────────────────────────────────────────
             this.Paint += (s, pe) =>
             {
                 pe.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                Color borderColor = useMaroonBg
-                    ? Color.FromArgb(160, 0, 0)
-                    : Color.FromArgb(210, 210, 210);
+                Color borderColor = useMaroonBg ? Color.FromArgb(160, 0, 0) : Color.FromArgb(210, 210, 210);
                 using var pen = new Pen(borderColor, 1f);
                 pe.Graphics.DrawRectangle(pen, 0, 0, this.Width - 1, this.Height - 1);
             };
 
-            // ── Click → open detail ───────────────────────────────────────────
             EventHandler openDetail = (s, ev) => CardClicked?.Invoke(this, id);
             this.Click += openDetail;
             lblTitle.Click += openDetail;
             lblDesc.Click += openDetail;
             iconCircle.Click += openDetail;
         }
-        private static Image GetCategoryImage(string category)
+
+        private static Image? GetCategoryImage(string category)
         {
             try
             {
@@ -737,7 +657,7 @@ namespace PUPAcadPortal
             }
             catch
             {
-                return null; // Graceful fallback if resource is missing
+                return null;
             }
         }
 
@@ -767,6 +687,7 @@ namespace PUPAcadPortal
         {
             var path = new GraphicsPath();
             var r = new Rectangle(0, 0, c.Width, c.Height);
+            if (c.Width <= 0 || c.Height <= 0) return;
             path.AddArc(r.X, r.Y, radius, radius, 180, 90);
             path.AddArc(r.Right - radius, r.Y, radius, radius, 270, 90);
             path.AddArc(r.Right - radius, r.Bottom - radius, radius, radius, 0, 90);

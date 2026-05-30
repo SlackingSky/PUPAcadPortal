@@ -8,19 +8,33 @@ using System.Windows.Forms;
 
 namespace PUPAcadPortal
 {
+    /// <summary>
+    /// Shows all activities inside a chosen course.
+    /// Navigates to ActivityFormPage (create/edit), SubmissionList (check), CopyActivityDialog.
+    /// All navigation resolves the live container at click-time — no stale closures.
+    /// </summary>
     public partial class AssignmentManagement : UserControl
     {
+        // ── Events ────────────────────────────────────────────────────────────
         public event Action OnBack;
 
+        // ── State ─────────────────────────────────────────────────────────────
         private readonly CourseActivity _course;
         private string _searchTerm = "";
         private string _filterType = "All";
         private System.Windows.Forms.Timer _searchTimer;
 
+        // Suppress combo events fired during InitializeComponent
+        private bool _initializing = true;
+
+        // ── Constructor ───────────────────────────────────────────────────────
         public AssignmentManagement(CourseActivity course)
         {
             _course = course;
-            InitializeComponent();
+            InitializeComponent();       // cmbFilterType fires here; guard suppresses it
+
+            _initializing = false;       // safe to react from here on
+
             SetupDebounce();
             PopulateHeader();
             RefreshList();
@@ -29,6 +43,7 @@ namespace PUPAcadPortal
             this.Load += (s, e) => RefreshList();
         }
 
+        // ── Header ────────────────────────────────────────────────────────────
         private void PopulateHeader()
         {
             lblCourseName.Text = _course.CourseName;
@@ -36,26 +51,32 @@ namespace PUPAcadPortal
             btnSave.Text = "+ Create Activity";
         }
 
+        // ── Debounce ─────────────────────────────────────────────────────────
         private void SetupDebounce()
         {
             _searchTimer = new System.Windows.Forms.Timer { Interval = 200 };
             _searchTimer.Tick += (s, e) => { _searchTimer.Stop(); RefreshList(); };
         }
 
+        // ── Refresh activity cards ────────────────────────────────────────────
         private void RefreshList()
         {
+            if (_initializing) return;
+
             flpActivities.SuspendLayout();
             flpActivities.Controls.Clear();
 
             var filtered = _course.Activities.FindAll(a =>
             {
-                bool typeMatch = _filterType == "All" || a.TypeString == _filterType;
-                bool searchMatch = string.IsNullOrEmpty(_searchTerm)
+                bool typeOk = _filterType == "All" ||
+                              string.Equals(a.TypeString, _filterType,
+                                            StringComparison.OrdinalIgnoreCase);
+                bool searchOk = string.IsNullOrEmpty(_searchTerm)
                     || a.Title.IndexOf(_searchTerm, StringComparison.OrdinalIgnoreCase) >= 0;
-                return typeMatch && searchMatch;
+                return typeOk && searchOk;
             });
 
-            // Sort: overdue first, then by deadline asc
+            // Sort: overdue first, then deadline asc
             filtered.Sort((a, b) =>
             {
                 if (a.IsOverdue && !b.IsOverdue) return -1;
@@ -64,14 +85,10 @@ namespace PUPAcadPortal
             });
 
             if (filtered.Count == 0)
-            {
                 flpActivities.Controls.Add(BuildEmptyState());
-            }
             else
-            {
                 foreach (var act in filtered)
                     flpActivities.Controls.Add(BuildActivityCard(act));
-            }
 
             UpdateSummaryBar(filtered);
             flpActivities.ResumeLayout();
@@ -81,17 +98,25 @@ namespace PUPAcadPortal
         {
             int total = list.Count;
             int pending = list.Sum(a => a.PendingCount);
-            int checked_ = list.Sum(a => a.CheckedCount);
-            lblSummaryBar.Text = $"Showing {total} of {_course.Activities.Count} activities  ·  {pending} pending checks  ·  {checked_} checked";
+            int chk = list.Sum(a => a.CheckedCount);
+            lblSummaryBar.Text =
+                $"Showing {total} of {_course.Activities.Count} activities  " +
+                $"·  {pending} pending checks  ·  {chk} checked";
         }
 
+        // ── Empty state ───────────────────────────────────────────────────────
         private Panel BuildEmptyState()
         {
             int w = Math.Max(700, flpActivities.ClientSize.Width - 40);
-            var pnl = new Panel { Width = w, Height = 180, BackColor = Color.FromArgb(252, 252, 255) };
+            var pnl = new Panel
+            {
+                Width = w,
+                Height = 180,
+                BackColor = Color.FromArgb(252, 252, 255)
+            };
             pnl.Paint += (s, e) =>
             {
-                using var pen = new Pen(Color.FromArgb(220, 220, 230), 1.5f);
+                using var pen = new Pen(Color.FromArgb(218, 218, 228), 1.5f);
                 e.Graphics.DrawRectangle(pen, 1, 1, pnl.Width - 3, pnl.Height - 3);
             };
             pnl.Controls.Add(new Label
@@ -119,7 +144,7 @@ namespace PUPAcadPortal
             return pnl;
         }
 
-        //  Activity card builder 
+        // ── Activity card builder ─────────────────────────────────────────────
         private Panel BuildActivityCard(ActivityItem act)
         {
             int w = Math.Max(700, flpActivities.ClientSize.Width - 40);
@@ -131,7 +156,6 @@ namespace PUPAcadPortal
                 Margin = new Padding(0, 0, 0, 10)
             };
 
-            // Left accent bar colour by type
             Color typeColor = act.Type switch
             {
                 ActivityType.Quiz => Color.FromArgb(63, 81, 181),
@@ -142,13 +166,12 @@ namespace PUPAcadPortal
 
             card.Paint += (s, e) =>
             {
-                using var accentBrush = new SolidBrush(typeColor);
-                e.Graphics.FillRectangle(accentBrush, 0, 0, 6, card.Height);
+                e.Graphics.FillRectangle(new SolidBrush(typeColor), 0, 0, 6, card.Height);
                 using var pen = new Pen(Color.FromArgb(225, 225, 232));
                 e.Graphics.DrawRectangle(pen, 0, 0, card.Width - 1, card.Height - 1);
             };
 
-            // ── Type badge ──
+            // Type badge
             string typeIcon = act.Type switch
             {
                 ActivityType.Quiz => "❓ Quiz",
@@ -156,7 +179,7 @@ namespace PUPAcadPortal
                 ActivityType.FileUpload => "📎 File Upload",
                 _ => "📋 Assignment"
             };
-            var lblType = new Label
+            card.Controls.Add(new Label
             {
                 Text = typeIcon,
                 Font = new Font("Segoe UI", 7.5F, FontStyle.Bold),
@@ -166,11 +189,10 @@ namespace PUPAcadPortal
                 AutoSize = false,
                 Size = new Size(92, 18),
                 TextAlign = ContentAlignment.MiddleCenter
-            };
-            card.Controls.Add(lblType);
+            });
 
-            // ── Title ──
-            var lblTitle = new Label
+            // Title
+            card.Controls.Add(new Label
             {
                 Text = act.Title,
                 Font = new Font("Segoe UI", 11F, FontStyle.Bold),
@@ -179,81 +201,84 @@ namespace PUPAcadPortal
                 Width = w - 400,
                 Height = 24,
                 AutoEllipsis = true
-            };
-            card.Controls.Add(lblTitle);
+            });
 
-            // ── Deadline ──
+            // Deadline
             TimeSpan left = act.Deadline - DateTime.Now;
-            string dlText = act.IsOverdue ? "⚠ Overdue" : left.Days == 0 ? "⏰ Due Today" : $"📅 {act.Deadline:MMM dd, yyyy}";
-            Color dlColor = act.IsOverdue ? Color.Red : left.Days <= 1 ? Color.OrangeRed : Color.FromArgb(80, 80, 90);
-            var lblDeadline = new Label
+            string dlText = act.IsOverdue ? "⚠ Overdue"
+                             : left.Days == 0 ? "⏰ Due Today"
+                             : $"📅 {act.Deadline:MMM dd, yyyy}";
+            Color dlColor = act.IsOverdue ? Color.Red
+                             : left.Days <= 1 ? Color.OrangeRed
+                             : Color.FromArgb(80, 80, 90);
+            card.Controls.Add(new Label
             {
                 Text = dlText,
-                Font = new Font("Segoe UI", 8.5F, act.IsOverdue ? FontStyle.Bold : FontStyle.Regular),
+                Font = new Font("Segoe UI", 8.5F,
+                               act.IsOverdue ? FontStyle.Bold : FontStyle.Regular),
                 ForeColor = dlColor,
                 Location = new Point(16, 58),
                 AutoSize = true
-            };
-            card.Controls.Add(lblDeadline);
+            });
 
-            // ── Points ──
-            var lblPts = new Label
+            // Points
+            card.Controls.Add(new Label
             {
                 Text = $"🏆 {act.Points} pts",
                 Font = new Font("Segoe UI", 8.5F),
                 ForeColor = Color.FromArgb(100, 100, 110),
                 Location = new Point(180, 58),
                 AutoSize = true
-            };
-            card.Controls.Add(lblPts);
+            });
 
-            // ── Submission counts ──
-            var lblSub = new Label
+            // Submission counts
+            card.Controls.Add(new Label
             {
-                Text = $"✅ {act.SubmittedCount}/{act.TotalStudents} submitted  ·  🔍 {act.CheckedCount} checked  ·  ⏳ {act.PendingCount} pending",
+                Text = $"✅ {act.SubmittedCount}/{act.TotalStudents} submitted  " +
+                       $"·  🔍 {act.CheckedCount} checked  " +
+                       $"·  ⏳ {act.PendingCount} pending",
                 Font = new Font("Segoe UI", 8F),
                 ForeColor = Color.FromArgb(100, 100, 110),
                 Location = new Point(16, 78),
                 AutoSize = true
-            };
-            card.Controls.Add(lblSub);
+            });
 
-            // ── Action buttons (right-side) ──
+            // ── Action buttons ──
             int btnY = 32;
             int right = w - 14;
             const int btnH = 28, gap = 6;
 
-            var btnCheck = BuildCardBtn("Check", Color.FromArgb(63, 81, 181), 80, btnH);
+            var btnCheck = CardBtn("Check", Color.FromArgb(63, 81, 181), 80, btnH);
             right -= btnCheck.Width;
             btnCheck.Location = new Point(right, btnY);
             btnCheck.Click += (s, e) => OpenSubmissions(act);
             card.Controls.Add(btnCheck);
 
             right -= gap;
-            var btnEdit = BuildCardBtn("Edit", Color.FromArgb(0, 130, 115), 60, btnH);
+            var btnEdit = CardBtn("Edit", Color.FromArgb(0, 130, 115), 60, btnH);
             right -= btnEdit.Width;
             btnEdit.Location = new Point(right, btnY);
             btnEdit.Click += (s, e) => OpenActivityForm(act);
             card.Controls.Add(btnEdit);
 
             right -= gap;
-            var btnCopy = BuildCardBtn("Copy", Color.FromArgb(90, 90, 100), 60, btnH);
+            var btnCopy = CardBtn("Copy", Color.FromArgb(90, 90, 100), 60, btnH);
             right -= btnCopy.Width;
             btnCopy.Location = new Point(right, btnY);
             btnCopy.Click += (s, e) => ShowCopyDialog(act);
             card.Controls.Add(btnCopy);
 
             right -= gap;
-            var btnDelete = BuildCardBtn("Delete", Color.FromArgb(185, 50, 50), 68, btnH);
-            right -= btnDelete.Width;
-            btnDelete.Location = new Point(right, btnY);
-            btnDelete.Click += (s, e) => DeleteActivity(act);
-            card.Controls.Add(btnDelete);
+            var btnDel = CardBtn("Delete", Color.FromArgb(185, 50, 50), 68, btnH);
+            right -= btnDel.Width;
+            btnDel.Location = new Point(right, btnY);
+            btnDel.Click += (s, e) => DeleteActivity(act);
+            card.Controls.Add(btnDel);
 
             return card;
         }
 
-        private static buttonRounded BuildCardBtn(string text, Color bg, int w, int h)
+        private static buttonRounded CardBtn(string text, Color bg, int w, int h)
             => new buttonRounded
             {
                 Text = text,
@@ -265,69 +290,85 @@ namespace PUPAcadPortal
                 Cursor = Cursors.Hand
             };
 
-        //  Navigation to sub-pages 
-        private void OpenActivityForm(ActivityItem? existingActivity)
-        {
-            var parent = this.Parent; if (parent == null) return;
+        // ── Navigation helpers ────────────────────────────────────────────────
+        // All methods use the same pattern:
+        //   openContainer  = resolved NOW (at open-time) for the first swap
+        //   closeContainer = resolved at close-time via child.Parent (live reference)
+        // This eliminates stale-closure bugs entirely.
 
-            var form = new ActivityFormPage(_course, existingActivity);
+        private void OpenActivityForm(ActivityItem? existing)
+        {
+            Control openContainer = this.Parent;
+            if (openContainer == null) return;
+
+            var form = new ActivityFormPage(_course, existing);
             form.Dock = DockStyle.Fill;
+
             form.OnSave += saved =>
             {
-                if (existingActivity == null)
+                if (existing == null)           // new activity
                     _course.Activities.Add(saved);
-                // if editing, object ref already updated
-                parent.Controls.Remove(form);
-                parent.Controls.Add(this);
+                // edited activity: reference already updated in-place
+
+                Control c = form.Parent ?? openContainer;
+                c.Controls.Remove(form);
+                form.Dispose();
+                c.Controls.Add(this);
                 this.BringToFront();
                 RefreshList();
             };
+
             form.OnCancel += () =>
             {
-                parent.Controls.Remove(form);
-                parent.Controls.Add(this);
+                Control c = form.Parent ?? openContainer;
+                c.Controls.Remove(form);
+                form.Dispose();
+                c.Controls.Add(this);
                 this.BringToFront();
             };
 
-            parent.Controls.Remove(this);
-            parent.Controls.Add(form);
+            openContainer.Controls.Remove(this);
+            openContainer.Controls.Add(form);
             form.BringToFront();
         }
 
         private void OpenSubmissions(ActivityItem act)
         {
-            var parent = this.Parent; if (parent == null) return;
+            Control openContainer = this.Parent;
+            if (openContainer == null) return;
 
             var subList = new SubmissionList(act, _course);
             subList.Dock = DockStyle.Fill;
+
             subList.OnBack += () =>
             {
-                parent.Controls.Remove(subList);
-                parent.Controls.Add(this);
+                Control c = subList.Parent ?? openContainer;
+                c.Controls.Remove(subList);
+                subList.Dispose();
+                c.Controls.Add(this);
                 this.BringToFront();
                 RefreshList();
             };
 
-            parent.Controls.Remove(this);
-            parent.Controls.Add(subList);
+            openContainer.Controls.Remove(this);
+            openContainer.Controls.Add(subList);
             subList.BringToFront();
         }
 
         private void ShowCopyDialog(ActivityItem act)
         {
-            // All courses available to copy into – in a real app you'd fetch from DB.
-            var allCourses = new List<CourseActivity> { _course }; // extend as needed
+            var allCourses = new List<CourseActivity> { _course };
             using var dlg = new CopyActivityDialog(act, allCourses);
-            if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                MessageBox.Show($"Activity \"{act.Title}\" copied successfully.", "Copy Activity",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            if (dlg.ShowDialog() == DialogResult.OK)
+                MessageBox.Show(
+                    $"Activity \"{act.Title}\" copied successfully.",
+                    "Copy Activity", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void DeleteActivity(ActivityItem act)
         {
-            var res = MessageBox.Show($"Delete activity \"{act.Title}\"?\nThis cannot be undone.",
+            var res = MessageBox.Show(
+                $"Delete \"{act.Title}\"?\nThis cannot be undone.",
                 "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (res == DialogResult.Yes)
             {
@@ -336,23 +377,25 @@ namespace PUPAcadPortal
             }
         }
 
-        private void pnlHeader_SizeChanged(object sender, System.EventArgs e)
+        // ── Back ──────────────────────────────────────────────────────────────
+        private void btnBack_Click(object sender, EventArgs e)
         {
-            if (this.btnSave != null && this.pnlHeader != null)
-            {
-                this.btnSave.Location = new System.Drawing.Point(this.pnlHeader.Width - this.btnSave.Width - 12, 17);
-            }
+            // Mode 1: subscriber exists (e.g. LMSActivityHost)
+            if (OnBack != null) { OnBack.Invoke(); return; }
+
+            // Mode 2: self-contained — resolve live parent at click-time
+            Control container = this.Parent;
+            if (container == null) return;
+            container.Controls.Remove(this);
         }
 
-        //  Toolbar events 
+        // ── Toolbar events ────────────────────────────────────────────────────
         private void btnSave_Click(object sender, EventArgs e)
             => OpenActivityForm(null);
 
-        private void btnBack_Click(object sender, EventArgs e)
-            => OnBack?.Invoke();
-
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
+            if (_initializing) return;
             _searchTerm = txtSearch.Text;
             _searchTimer.Stop();
             _searchTimer.Start();
@@ -360,6 +403,7 @@ namespace PUPAcadPortal
 
         private void cmbFilterType_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (_initializing) return;
             _filterType = cmbFilterType.SelectedItem?.ToString() ?? "All";
             RefreshList();
         }

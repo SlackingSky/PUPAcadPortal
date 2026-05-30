@@ -46,7 +46,6 @@
             this.pnlHeader.Name = "pnlHeader";
             this.pnlHeader.Size = new System.Drawing.Size(1680, 68);
             this.pnlHeader.TabIndex = 0;
-            this.pnlHeader.SizeChanged += new System.EventHandler(this.pnlHeader_SizeChanged);
 
             this.btnBack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnBack.BorderRadius = 10;

@@ -226,7 +226,7 @@ namespace PUPAcadPortal
                 btnRemoveAttach.Visible = true;
             }
 
-            lblFormTitle.Text = "Edit Announcement";
+            lblFormTitle.Text = "Announcement";
             btnPost.Text = "Save Changes";
         }
         private static void ShowError(string message) =>

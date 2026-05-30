@@ -2,391 +2,676 @@
 {
     partial class GradesContentInst
     {
-        /// <summary> 
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
-            {
                 components.Dispose();
-            }
             base.Dispose(disposing);
         }
 
         #region Component Designer generated code
 
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GradesContentInst));
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            pnlGrades = new Panel();
-            panel61 = new Panel();
-            pnlBottomControls = new Panel();
-            panelBottomRow = new TableLayoutPanel();
-            panelQuickActions = new Panel();
-            pictureBox87 = new PictureBox();
-            btnPrintGrades = new Button();
-            btnExportExcel = new Button();
-            btnSaveChanges = new Button();
-            lblQuickActionsTitle = new Label();
-            btnReleaseGrades = new Button();
-            panelLegend = new Panel();
-            pictureBox88 = new PictureBox();
-            lblLegendTitle = new Label();
-            panelGradingScale = new Panel();
-            pictureBox89 = new PictureBox();
-            gridGradingScale = new DataGridView();
-            colRange = new DataGridViewTextBoxColumn();
-            colDesc = new DataGridViewTextBoxColumn();
-            lblGradingScaleTitle = new Label();
-            pnlGradeRecords = new Panel();
-            tabControl1 = new TabControl();
-            tabPage1 = new TabPage();
+            pnlRoot = new Panel();
+            pnlMidWrapper = new Panel();
+            tabTerms = new TabControl();
+            tabMidterm = new TabPage();
             gridStudents = new DataGridView();
-            colID = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
-            colCourse = new DataGridViewTextBoxColumn();
-            colQuiz = new DataGridViewTextBoxColumn();
-            colMidterm = new DataGridViewTextBoxColumn();
-            colFinals = new DataGridViewTextBoxColumn();
-            colAssignments = new DataGridViewTextBoxColumn();
-            colFinalGrade = new DataGridViewTextBoxColumn();
-            colStatus = new DataGridViewTextBoxColumn();
-            colRemarks = new DataGridViewTextBoxColumn();
-            colActions = new DataGridViewButtonColumn();
-            lblPaginationInfo = new Label();
-            tabPage2 = new TabPage();
+            tabFinalTerm = new TabPage();
             dataGridView1 = new DataGridView();
-            Column1 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn5 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn6 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn7 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn8 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn9 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn11 = new DataGridViewTextBoxColumn();
-            pnlGradeToolbar = new Panel();
-            txtSearch = new TextBox();
-            btnEditGradePercentage = new Button();
-            btnColumnOptions = new Button();
-            panelCardsContainer = new TableLayoutPanel();
-            cardHighest = new Panel();
-            picHighestGrade = new PictureBox();
-            lblHighestVal = new Label();
-            lblHighestTitle = new Label();
-            cardAverage = new Panel();
-            picAverageGrade = new PictureBox();
-            lblAvgVal = new Label();
-            lblAvgTitle = new Label();
-            cardPending = new Panel();
-            picPending = new PictureBox();
-            lblPendingVal = new Label();
-            lblPendingTitle = new Label();
-            cardSubmitted = new Panel();
-            picGradesSummitted = new PictureBox();
-            lblSubmittedVal = new Label();
-            lblSubmittedTitle = new Label();
-            cardTotalStudents = new Panel();
-            picTotalStudent = new PictureBox();
-            lblTotalVal = new Label();
+            pnlToolbar = new Panel();
+            btnEditWeights = new Button();
+            pnlCards = new TableLayoutPanel();
+            cardTotal = new Panel();
             lblTotalTitle = new Label();
-            panelFilters = new Panel();
+            lblTotalVal = new Label();
+            lblTotalSub = new Label();
+            cardSubmitted = new Panel();
+            lblSubmittedTitle = new Label();
+            lblSubmittedVal = new Label();
+            lblSubmittedSub = new Label();
+            cardPending = new Panel();
+            lblPendingTitle = new Label();
+            lblPendingVal = new Label();
+            lblPendingSub = new Label();
+            cardAverage = new Panel();
+            lblAvgTitle = new Label();
+            lblAvgVal = new Label();
+            lblAvgSub = new Label();
+            cardHighest = new Panel();
+            lblHighestTitle = new Label();
+            lblHighestVal = new Label();
+            lblHighestSub = new Label();
+            pnlFilters = new Panel();
+            lblRecordCount = new Label();
+            txtSearch = new TextBox();
+            cmbStatusFilter = new ComboBox();
+            lblStatusFilter = new Label();
             cmbCourseSection = new ComboBox();
             lblCourseSection = new Label();
-            panel168 = new Panel();
-            btnImportExcel1 = new Button();
-            label304 = new Label();
-            label305 = new Label();
-            pnlGrades.SuspendLayout();
-            panel61.SuspendLayout();
-            pnlBottomControls.SuspendLayout();
-            panelBottomRow.SuspendLayout();
-            panelQuickActions.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox87).BeginInit();
-            panelLegend.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox88).BeginInit();
-            panelGradingScale.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox89).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)gridGradingScale).BeginInit();
-            pnlGradeRecords.SuspendLayout();
-            tabControl1.SuspendLayout();
-            tabPage1.SuspendLayout();
+            pnlHeader = new Panel();
+            btnImportCSV = new Button();
+            btnReleaseGrades = new Button();
+            lblPageSubtitle = new Label();
+            lblPageTitle = new Label();
+            pnlBottom = new TableLayoutPanel();
+            pnlGradingScale = new Panel();
+            gridGradingScale = new DataGridView();
+            colRange = new DataGridViewTextBoxColumn();
+            colEquiv = new DataGridViewTextBoxColumn();
+            colDesc = new DataGridViewTextBoxColumn();
+            lblGradingScaleTitle = new Label();
+            pnlLegend = new Panel();
+            pnlLegendItems = new Panel();
+            lblLegendTitle = new Label();
+            pnlQuickActions = new Panel();
+            btnSaveChanges = new Button();
+            btnExportCSV = new Button();
+            btnPrintGrades = new Button();
+            btnQuickReleaseGrades = new Button();
+            lblQuickActionsTitle = new Label();
+            pnlRoot.SuspendLayout();
+            pnlMidWrapper.SuspendLayout();
+            tabTerms.SuspendLayout();
+            tabMidterm.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gridStudents).BeginInit();
-            tabPage2.SuspendLayout();
+            tabFinalTerm.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
-            pnlGradeToolbar.SuspendLayout();
-            panelCardsContainer.SuspendLayout();
-            cardHighest.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picHighestGrade).BeginInit();
-            cardAverage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picAverageGrade).BeginInit();
-            cardPending.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picPending).BeginInit();
+            pnlToolbar.SuspendLayout();
+            pnlCards.SuspendLayout();
+            cardTotal.SuspendLayout();
             cardSubmitted.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picGradesSummitted).BeginInit();
-            cardTotalStudents.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picTotalStudent).BeginInit();
-            panelFilters.SuspendLayout();
-            panel168.SuspendLayout();
+            cardPending.SuspendLayout();
+            cardAverage.SuspendLayout();
+            cardHighest.SuspendLayout();
+            pnlFilters.SuspendLayout();
+            pnlHeader.SuspendLayout();
+            pnlBottom.SuspendLayout();
+            pnlGradingScale.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)gridGradingScale).BeginInit();
+            pnlLegend.SuspendLayout();
+            pnlQuickActions.SuspendLayout();
             SuspendLayout();
             // 
-            // pnlGrades
+            // pnlRoot
             // 
-            pnlGrades.AutoSize = true;
-            pnlGrades.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            pnlGrades.BackColor = SystemColors.Control;
-            pnlGrades.CausesValidation = false;
-            pnlGrades.Controls.Add(panel61);
-            pnlGrades.Dock = DockStyle.Fill;
-            pnlGrades.Location = new Point(0, 0);
-            pnlGrades.Margin = new Padding(0);
-            pnlGrades.Name = "pnlGrades";
-            pnlGrades.Size = new Size(1648, 969);
-            pnlGrades.TabIndex = 53;
+            pnlRoot.BackColor = Color.FromArgb(248, 246, 246);
+            pnlRoot.Controls.Add(pnlMidWrapper);
+            pnlRoot.Controls.Add(pnlToolbar);
+            pnlRoot.Controls.Add(pnlCards);
+            pnlRoot.Controls.Add(pnlFilters);
+            pnlRoot.Controls.Add(pnlHeader);
+            pnlRoot.Controls.Add(pnlBottom);
+            pnlRoot.Dock = DockStyle.Fill;
+            pnlRoot.Location = new Point(0, 0);
+            pnlRoot.Name = "pnlRoot";
+            pnlRoot.Size = new Size(1648, 969);
+            pnlRoot.TabIndex = 0;
             // 
-            // panel61
+            // pnlMidWrapper
             // 
-            panel61.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            panel61.BackColor = SystemColors.Control;
-            panel61.BorderStyle = BorderStyle.FixedSingle;
-            panel61.Controls.Add(pnlBottomControls);
-            panel61.Controls.Add(pnlGradeRecords);
-            panel61.Controls.Add(pnlGradeToolbar);
-            panel61.Controls.Add(panelCardsContainer);
-            panel61.Controls.Add(panelFilters);
-            panel61.Controls.Add(panel168);
-            panel61.Dock = DockStyle.Fill;
-            panel61.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            panel61.ForeColor = Color.Black;
-            panel61.Location = new Point(0, 0);
-            panel61.Margin = new Padding(0, 0, 9, 0);
-            panel61.Name = "panel61";
-            panel61.Padding = new Padding(9, 7, 9, 7);
-            panel61.Size = new Size(1648, 969);
-            panel61.TabIndex = 55;
+            pnlMidWrapper.BackColor = Color.White;
+            pnlMidWrapper.Controls.Add(tabTerms);
+            pnlMidWrapper.Dock = DockStyle.Fill;
+            pnlMidWrapper.Location = new Point(0, 240);
+            pnlMidWrapper.Name = "pnlMidWrapper";
+            pnlMidWrapper.Size = new Size(1648, 537);
+            pnlMidWrapper.TabIndex = 4;
             // 
-            // pnlBottomControls
+            // tabTerms
             // 
-            pnlBottomControls.BackColor = Color.White;
-            pnlBottomControls.Controls.Add(panelBottomRow);
-            pnlBottomControls.Dock = DockStyle.Fill;
-            pnlBottomControls.Location = new Point(9, 770);
-            pnlBottomControls.Name = "pnlBottomControls";
-            pnlBottomControls.Padding = new Padding(4);
-            pnlBottomControls.Size = new Size(1628, 190);
-            pnlBottomControls.TabIndex = 16;
+            tabTerms.Controls.Add(tabMidterm);
+            tabTerms.Controls.Add(tabFinalTerm);
+            tabTerms.Dock = DockStyle.Fill;
+            tabTerms.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            tabTerms.Location = new Point(0, 0);
+            tabTerms.Name = "tabTerms";
+            tabTerms.SelectedIndex = 0;
+            tabTerms.Size = new Size(1648, 537);
+            tabTerms.TabIndex = 0;
             // 
-            // panelBottomRow
+            // tabMidterm
             // 
-            panelBottomRow.ColumnCount = 3;
-            panelBottomRow.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33333F));
-            panelBottomRow.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33333F));
-            panelBottomRow.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33333F));
-            panelBottomRow.Controls.Add(panelQuickActions, 2, 0);
-            panelBottomRow.Controls.Add(panelLegend, 1, 0);
-            panelBottomRow.Controls.Add(panelGradingScale, 0, 0);
-            panelBottomRow.Dock = DockStyle.Fill;
-            panelBottomRow.Location = new Point(4, 4);
-            panelBottomRow.Margin = new Padding(4, 3, 4, 3);
-            panelBottomRow.Name = "panelBottomRow";
-            panelBottomRow.RowCount = 1;
-            panelBottomRow.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            panelBottomRow.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            panelBottomRow.Size = new Size(1620, 182);
-            panelBottomRow.TabIndex = 12;
+            tabMidterm.BackColor = Color.White;
+            tabMidterm.Controls.Add(gridStudents);
+            tabMidterm.Location = new Point(4, 26);
+            tabMidterm.Margin = new Padding(0);
+            tabMidterm.Name = "tabMidterm";
+            tabMidterm.Size = new Size(1640, 507);
+            tabMidterm.TabIndex = 0;
+            tabMidterm.Text = "  Midterm  ";
             // 
-            // panelQuickActions
+            // gridStudents
             // 
-            panelQuickActions.BackColor = Color.White;
-            panelQuickActions.Controls.Add(pictureBox87);
-            panelQuickActions.Controls.Add(btnPrintGrades);
-            panelQuickActions.Controls.Add(btnExportExcel);
-            panelQuickActions.Controls.Add(btnSaveChanges);
-            panelQuickActions.Controls.Add(lblQuickActionsTitle);
-            panelQuickActions.Controls.Add(btnReleaseGrades);
-            panelQuickActions.Dock = DockStyle.Fill;
-            panelQuickActions.Location = new Point(1084, 3);
-            panelQuickActions.Margin = new Padding(4, 3, 4, 3);
-            panelQuickActions.Name = "panelQuickActions";
-            panelQuickActions.Size = new Size(532, 176);
-            panelQuickActions.TabIndex = 2;
+            gridStudents.AllowUserToAddRows = false;
+            gridStudents.AllowUserToDeleteRows = false;
+            gridStudents.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            gridStudents.Dock = DockStyle.Fill;
+            gridStudents.Location = new Point(0, 0);
+            gridStudents.Name = "gridStudents";
+            gridStudents.ScrollBars = ScrollBars.Vertical;
+            gridStudents.Size = new Size(1640, 507);
+            gridStudents.TabIndex = 0;
             // 
-            // pictureBox87
+            // tabFinalTerm
             // 
-            pictureBox87.Image = (Image)resources.GetObject("pictureBox87.Image");
-            pictureBox87.Location = new Point(30, 54);
-            pictureBox87.Name = "pictureBox87";
-            pictureBox87.Size = new Size(81, 79);
-            pictureBox87.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox87.TabIndex = 7;
-            pictureBox87.TabStop = false;
+            tabFinalTerm.BackColor = Color.White;
+            tabFinalTerm.Controls.Add(dataGridView1);
+            tabFinalTerm.Location = new Point(4, 26);
+            tabFinalTerm.Margin = new Padding(0);
+            tabFinalTerm.Name = "tabFinalTerm";
+            tabFinalTerm.Size = new Size(1640, 507);
+            tabFinalTerm.TabIndex = 1;
+            tabFinalTerm.Text = "  Final Term  ";
             // 
-            // btnPrintGrades
+            // dataGridView1
             // 
-            btnPrintGrades.BackColor = Color.White;
-            btnPrintGrades.FlatAppearance.BorderColor = Color.LightGray;
-            btnPrintGrades.FlatStyle = FlatStyle.Flat;
-            btnPrintGrades.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnPrintGrades.ForeColor = Color.FromArgb(64, 64, 64);
-            btnPrintGrades.Location = new Point(134, 136);
-            btnPrintGrades.Margin = new Padding(4, 3, 4, 3);
-            btnPrintGrades.Name = "btnPrintGrades";
-            btnPrintGrades.Size = new Size(341, 28);
-            btnPrintGrades.TabIndex = 4;
-            btnPrintGrades.Text = "Print Grades";
-            btnPrintGrades.UseVisualStyleBackColor = false;
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Dock = DockStyle.Fill;
+            dataGridView1.Location = new Point(0, 0);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.ScrollBars = ScrollBars.Vertical;
+            dataGridView1.Size = new Size(1640, 507);
+            dataGridView1.TabIndex = 0;
             // 
-            // btnExportExcel
+            // pnlToolbar
             // 
-            btnExportExcel.BackColor = Color.FromArgb(241, 196, 15);
-            btnExportExcel.FlatAppearance.BorderSize = 0;
-            btnExportExcel.FlatStyle = FlatStyle.Flat;
-            btnExportExcel.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnExportExcel.ForeColor = Color.Black;
-            btnExportExcel.ImageAlign = ContentAlignment.TopLeft;
-            btnExportExcel.Location = new Point(134, 98);
-            btnExportExcel.Margin = new Padding(4, 3, 4, 3);
-            btnExportExcel.Name = "btnExportExcel";
-            btnExportExcel.Size = new Size(341, 28);
-            btnExportExcel.TabIndex = 3;
-            btnExportExcel.Text = "Export to Excel";
-            btnExportExcel.UseVisualStyleBackColor = false;
+            pnlToolbar.BackColor = Color.FromArgb(252, 249, 249);
+            pnlToolbar.Controls.Add(btnEditWeights);
+            pnlToolbar.Dock = DockStyle.Top;
+            pnlToolbar.Location = new Point(0, 206);
+            pnlToolbar.Name = "pnlToolbar";
+            pnlToolbar.Padding = new Padding(12, 4, 12, 4);
+            pnlToolbar.Size = new Size(1648, 34);
+            pnlToolbar.TabIndex = 3;
             // 
-            // btnSaveChanges
+            // btnEditWeights
             // 
-            btnSaveChanges.BackColor = Color.FromArgb(16, 124, 65);
-            btnSaveChanges.FlatAppearance.BorderSize = 0;
-            btnSaveChanges.FlatStyle = FlatStyle.Flat;
-            btnSaveChanges.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnSaveChanges.ForeColor = Color.White;
-            btnSaveChanges.Location = new Point(134, 62);
-            btnSaveChanges.Margin = new Padding(4, 3, 4, 3);
-            btnSaveChanges.Name = "btnSaveChanges";
-            btnSaveChanges.Size = new Size(341, 28);
-            btnSaveChanges.TabIndex = 2;
-            btnSaveChanges.Text = "Save Changes";
-            btnSaveChanges.UseVisualStyleBackColor = false;
+            btnEditWeights.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnEditWeights.BackColor = Color.FromArgb(106, 0, 0);
+            btnEditWeights.FlatAppearance.BorderSize = 0;
+            btnEditWeights.FlatStyle = FlatStyle.Flat;
+            btnEditWeights.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnEditWeights.ForeColor = Color.White;
+            btnEditWeights.Location = new Point(1468, 3);
+            btnEditWeights.Name = "btnEditWeights";
+            btnEditWeights.Size = new Size(162, 26);
+            btnEditWeights.TabIndex = 0;
+            btnEditWeights.Text = "⚙  Edit Grade Weights";
+            btnEditWeights.UseVisualStyleBackColor = false;
             // 
-            // lblQuickActionsTitle
+            // pnlCards
             // 
-            lblQuickActionsTitle.AutoSize = true;
-            lblQuickActionsTitle.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblQuickActionsTitle.Location = new Point(18, 3);
-            lblQuickActionsTitle.Margin = new Padding(4, 0, 4, 0);
-            lblQuickActionsTitle.Name = "lblQuickActionsTitle";
-            lblQuickActionsTitle.Size = new Size(93, 17);
-            lblQuickActionsTitle.TabIndex = 1;
-            lblQuickActionsTitle.Text = "Quick Actions";
+            pnlCards.BackColor = Color.FromArgb(245, 241, 241);
+            pnlCards.ColumnCount = 5;
+            pnlCards.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            pnlCards.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            pnlCards.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            pnlCards.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            pnlCards.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            pnlCards.Controls.Add(cardTotal, 0, 0);
+            pnlCards.Controls.Add(cardSubmitted, 1, 0);
+            pnlCards.Controls.Add(cardPending, 2, 0);
+            pnlCards.Controls.Add(cardAverage, 3, 0);
+            pnlCards.Controls.Add(cardHighest, 4, 0);
+            pnlCards.Dock = DockStyle.Top;
+            pnlCards.Location = new Point(0, 122);
+            pnlCards.Margin = new Padding(0);
+            pnlCards.Name = "pnlCards";
+            pnlCards.Padding = new Padding(10, 5, 10, 5);
+            pnlCards.RowCount = 1;
+            pnlCards.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            pnlCards.Size = new Size(1648, 84);
+            pnlCards.TabIndex = 2;
+            // 
+            // cardTotal
+            // 
+            cardTotal.BackColor = Color.White;
+            cardTotal.Controls.Add(lblTotalSub);
+            cardTotal.Controls.Add(lblTotalTitle);
+            cardTotal.Controls.Add(lblTotalVal);
+            cardTotal.Dock = DockStyle.Fill;
+            cardTotal.Location = new Point(14, 7);
+            cardTotal.Margin = new Padding(4, 2, 4, 2);
+            cardTotal.Name = "cardTotal";
+            cardTotal.Size = new Size(317, 70);
+            cardTotal.TabIndex = 0;
+            // 
+            // lblTotalTitle
+            // 
+            lblTotalTitle.AutoSize = true;
+            lblTotalTitle.Font = new Font("Segoe UI", 7.5F, FontStyle.Bold);
+            lblTotalTitle.ForeColor = Color.FromArgb(120, 90, 90);
+            lblTotalTitle.Location = new Point(12, 7);
+            lblTotalTitle.Name = "lblTotalTitle";
+            lblTotalTitle.Size = new Size(90, 12);
+            lblTotalTitle.TabIndex = 0;
+            lblTotalTitle.Text = "TOTAL STUDENTS";
+            // 
+            // lblTotalVal
+            // 
+            lblTotalVal.AutoSize = true;
+            lblTotalVal.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
+            lblTotalVal.ForeColor = Color.FromArgb(106, 0, 0);
+            lblTotalVal.Location = new Point(12, 20);
+            lblTotalVal.Name = "lblTotalVal";
+            lblTotalVal.Size = new Size(35, 41);
+            lblTotalVal.TabIndex = 1;
+            lblTotalVal.Text = "0";
+            // 
+            // lblTotalSub
+            // 
+            lblTotalSub.AutoSize = true;
+            lblTotalSub.Font = new Font("Segoe UI", 8F);
+            lblTotalSub.ForeColor = Color.FromArgb(160, 140, 140);
+            lblTotalSub.Location = new Point(13, 57);
+            lblTotalSub.Name = "lblTotalSub";
+            lblTotalSub.Size = new Size(64, 13);
+            lblTotalSub.TabIndex = 2;
+            lblTotalSub.Text = "all sections";
+            // 
+            // cardSubmitted
+            // 
+            cardSubmitted.BackColor = Color.White;
+            cardSubmitted.Controls.Add(lblSubmittedSub);
+            cardSubmitted.Controls.Add(lblSubmittedTitle);
+            cardSubmitted.Controls.Add(lblSubmittedVal);
+            cardSubmitted.Dock = DockStyle.Fill;
+            cardSubmitted.Location = new Point(339, 7);
+            cardSubmitted.Margin = new Padding(4, 2, 4, 2);
+            cardSubmitted.Name = "cardSubmitted";
+            cardSubmitted.Size = new Size(317, 70);
+            cardSubmitted.TabIndex = 1;
+            // 
+            // lblSubmittedTitle
+            // 
+            lblSubmittedTitle.AutoSize = true;
+            lblSubmittedTitle.Font = new Font("Segoe UI", 7.5F, FontStyle.Bold);
+            lblSubmittedTitle.ForeColor = Color.FromArgb(120, 90, 90);
+            lblSubmittedTitle.Location = new Point(12, 7);
+            lblSubmittedTitle.Name = "lblSubmittedTitle";
+            lblSubmittedTitle.Size = new Size(61, 12);
+            lblSubmittedTitle.TabIndex = 0;
+            lblSubmittedTitle.Text = "SUBMITTED";
+            // 
+            // lblSubmittedVal
+            // 
+            lblSubmittedVal.AutoSize = true;
+            lblSubmittedVal.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
+            lblSubmittedVal.ForeColor = Color.FromArgb(16, 124, 65);
+            lblSubmittedVal.Location = new Point(12, 20);
+            lblSubmittedVal.Name = "lblSubmittedVal";
+            lblSubmittedVal.Size = new Size(35, 41);
+            lblSubmittedVal.TabIndex = 1;
+            lblSubmittedVal.Text = "0";
+            // 
+            // lblSubmittedSub
+            // 
+            lblSubmittedSub.AutoSize = true;
+            lblSubmittedSub.Font = new Font("Segoe UI", 8F);
+            lblSubmittedSub.ForeColor = Color.FromArgb(160, 140, 140);
+            lblSubmittedSub.Location = new Point(13, 56);
+            lblSubmittedSub.Name = "lblSubmittedSub";
+            lblSubmittedSub.Size = new Size(63, 13);
+            lblSubmittedSub.TabIndex = 2;
+            lblSubmittedSub.Text = "0% of class";
+            // 
+            // cardPending
+            // 
+            cardPending.BackColor = Color.White;
+            cardPending.Controls.Add(lblPendingSub);
+            cardPending.Controls.Add(lblPendingTitle);
+            cardPending.Controls.Add(lblPendingVal);
+            cardPending.Dock = DockStyle.Fill;
+            cardPending.Location = new Point(664, 7);
+            cardPending.Margin = new Padding(4, 2, 4, 2);
+            cardPending.Name = "cardPending";
+            cardPending.Size = new Size(317, 70);
+            cardPending.TabIndex = 2;
+            // 
+            // lblPendingTitle
+            // 
+            lblPendingTitle.AutoSize = true;
+            lblPendingTitle.Font = new Font("Segoe UI", 7.5F, FontStyle.Bold);
+            lblPendingTitle.ForeColor = Color.FromArgb(120, 90, 90);
+            lblPendingTitle.Location = new Point(12, 7);
+            lblPendingTitle.Name = "lblPendingTitle";
+            lblPendingTitle.Size = new Size(49, 12);
+            lblPendingTitle.TabIndex = 0;
+            lblPendingTitle.Text = "PENDING";
+            // 
+            // lblPendingVal
+            // 
+            lblPendingVal.AutoSize = true;
+            lblPendingVal.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
+            lblPendingVal.ForeColor = Color.FromArgb(200, 100, 0);
+            lblPendingVal.Location = new Point(12, 20);
+            lblPendingVal.Name = "lblPendingVal";
+            lblPendingVal.Size = new Size(35, 41);
+            lblPendingVal.TabIndex = 1;
+            lblPendingVal.Text = "0";
+            // 
+            // lblPendingSub
+            // 
+            lblPendingSub.AutoSize = true;
+            lblPendingSub.Font = new Font("Segoe UI", 8F);
+            lblPendingSub.ForeColor = Color.FromArgb(160, 140, 140);
+            lblPendingSub.Location = new Point(13, 56);
+            lblPendingSub.Name = "lblPendingSub";
+            lblPendingSub.Size = new Size(63, 13);
+            lblPendingSub.TabIndex = 2;
+            lblPendingSub.Text = "0% of class";
+            // 
+            // cardAverage
+            // 
+            cardAverage.BackColor = Color.White;
+            cardAverage.Controls.Add(lblAvgSub);
+            cardAverage.Controls.Add(lblAvgTitle);
+            cardAverage.Controls.Add(lblAvgVal);
+            cardAverage.Dock = DockStyle.Fill;
+            cardAverage.Location = new Point(989, 7);
+            cardAverage.Margin = new Padding(4, 2, 4, 2);
+            cardAverage.Name = "cardAverage";
+            cardAverage.Size = new Size(317, 70);
+            cardAverage.TabIndex = 3;
+            // 
+            // lblAvgTitle
+            // 
+            lblAvgTitle.AutoSize = true;
+            lblAvgTitle.Font = new Font("Segoe UI", 7.5F, FontStyle.Bold);
+            lblAvgTitle.ForeColor = Color.FromArgb(120, 90, 90);
+            lblAvgTitle.Location = new Point(12, 7);
+            lblAvgTitle.Name = "lblAvgTitle";
+            lblAvgTitle.Size = new Size(85, 12);
+            lblAvgTitle.TabIndex = 0;
+            lblAvgTitle.Text = "AVERAGE GRADE";
+            // 
+            // lblAvgVal
+            // 
+            lblAvgVal.AutoSize = true;
+            lblAvgVal.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
+            lblAvgVal.ForeColor = Color.FromArgb(0, 112, 192);
+            lblAvgVal.Location = new Point(12, 20);
+            lblAvgVal.Name = "lblAvgVal";
+            lblAvgVal.Size = new Size(48, 41);
+            lblAvgVal.TabIndex = 1;
+            lblAvgVal.Text = "—";
+            // 
+            // lblAvgSub
+            // 
+            lblAvgSub.AutoSize = true;
+            lblAvgSub.Font = new Font("Segoe UI", 8F);
+            lblAvgSub.ForeColor = Color.FromArgb(160, 140, 140);
+            lblAvgSub.Location = new Point(13, 56);
+            lblAvgSub.Name = "lblAvgSub";
+            lblAvgSub.Size = new Size(65, 13);
+            lblAvgSub.TabIndex = 2;
+            lblAvgSub.Text = "no data yet";
+            // 
+            // cardHighest
+            // 
+            cardHighest.BackColor = Color.White;
+            cardHighest.Controls.Add(lblHighestSub);
+            cardHighest.Controls.Add(lblHighestTitle);
+            cardHighest.Controls.Add(lblHighestVal);
+            cardHighest.Dock = DockStyle.Fill;
+            cardHighest.Location = new Point(1314, 7);
+            cardHighest.Margin = new Padding(4, 2, 4, 2);
+            cardHighest.Name = "cardHighest";
+            cardHighest.Size = new Size(320, 70);
+            cardHighest.TabIndex = 4;
+            // 
+            // lblHighestTitle
+            // 
+            lblHighestTitle.AutoSize = true;
+            lblHighestTitle.Font = new Font("Segoe UI", 7.5F, FontStyle.Bold);
+            lblHighestTitle.ForeColor = Color.FromArgb(120, 90, 90);
+            lblHighestTitle.Location = new Point(12, 7);
+            lblHighestTitle.Name = "lblHighestTitle";
+            lblHighestTitle.Size = new Size(84, 12);
+            lblHighestTitle.TabIndex = 0;
+            lblHighestTitle.Text = "HIGHEST GRADE";
+            // 
+            // lblHighestVal
+            // 
+            lblHighestVal.AutoSize = true;
+            lblHighestVal.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
+            lblHighestVal.ForeColor = Color.FromArgb(16, 124, 65);
+            lblHighestVal.Location = new Point(12, 20);
+            lblHighestVal.Name = "lblHighestVal";
+            lblHighestVal.Size = new Size(48, 41);
+            lblHighestVal.TabIndex = 1;
+            lblHighestVal.Text = "—";
+            // 
+            // lblHighestSub
+            // 
+            lblHighestSub.AutoSize = true;
+            lblHighestSub.Font = new Font("Segoe UI", 8F);
+            lblHighestSub.ForeColor = Color.FromArgb(160, 140, 140);
+            lblHighestSub.Location = new Point(13, 56);
+            lblHighestSub.Name = "lblHighestSub";
+            lblHighestSub.Size = new Size(65, 13);
+            lblHighestSub.TabIndex = 2;
+            lblHighestSub.Text = "no data yet";
+            // 
+            // pnlFilters
+            // 
+            pnlFilters.BackColor = Color.White;
+            pnlFilters.Controls.Add(lblRecordCount);
+            pnlFilters.Controls.Add(txtSearch);
+            pnlFilters.Controls.Add(cmbStatusFilter);
+            pnlFilters.Controls.Add(lblStatusFilter);
+            pnlFilters.Controls.Add(cmbCourseSection);
+            pnlFilters.Controls.Add(lblCourseSection);
+            pnlFilters.Dock = DockStyle.Top;
+            pnlFilters.Location = new Point(0, 68);
+            pnlFilters.Name = "pnlFilters";
+            pnlFilters.Padding = new Padding(14, 6, 14, 6);
+            pnlFilters.Size = new Size(1648, 54);
+            pnlFilters.TabIndex = 1;
+            // 
+            // lblRecordCount
+            // 
+            lblRecordCount.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lblRecordCount.AutoSize = true;
+            lblRecordCount.Font = new Font("Segoe UI", 8.5F);
+            lblRecordCount.ForeColor = Color.FromArgb(140, 120, 120);
+            lblRecordCount.Location = new Point(1490, 28);
+            lblRecordCount.Name = "lblRecordCount";
+            lblRecordCount.Size = new Size(61, 15);
+            lblRecordCount.TabIndex = 0;
+            lblRecordCount.Text = "0 students";
+            // 
+            // txtSearch
+            // 
+            txtSearch.BorderStyle = BorderStyle.FixedSingle;
+            txtSearch.Font = new Font("Segoe UI", 9F);
+            txtSearch.Location = new Point(484, 24);
+            txtSearch.Name = "txtSearch";
+            txtSearch.PlaceholderText = "🔍  Search name or student ID…";
+            txtSearch.Size = new Size(272, 23);
+            txtSearch.TabIndex = 2;
+            // 
+            // cmbStatusFilter
+            // 
+            cmbStatusFilter.BackColor = Color.White;
+            cmbStatusFilter.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbStatusFilter.FlatStyle = FlatStyle.Flat;
+            cmbStatusFilter.Font = new Font("Segoe UI", 9F);
+            cmbStatusFilter.Location = new Point(334, 24);
+            cmbStatusFilter.Name = "cmbStatusFilter";
+            cmbStatusFilter.Size = new Size(140, 23);
+            cmbStatusFilter.TabIndex = 1;
+            // 
+            // lblStatusFilter
+            // 
+            lblStatusFilter.AutoSize = true;
+            lblStatusFilter.Font = new Font("Segoe UI", 7.5F, FontStyle.Bold);
+            lblStatusFilter.ForeColor = Color.FromArgb(90, 90, 90);
+            lblStatusFilter.Location = new Point(334, 7);
+            lblStatusFilter.Name = "lblStatusFilter";
+            lblStatusFilter.Size = new Size(41, 12);
+            lblStatusFilter.TabIndex = 3;
+            lblStatusFilter.Text = "STATUS";
+            // 
+            // cmbCourseSection
+            // 
+            cmbCourseSection.BackColor = Color.White;
+            cmbCourseSection.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbCourseSection.FlatStyle = FlatStyle.Flat;
+            cmbCourseSection.Font = new Font("Segoe UI", 9F);
+            cmbCourseSection.Location = new Point(14, 24);
+            cmbCourseSection.Name = "cmbCourseSection";
+            cmbCourseSection.Size = new Size(310, 23);
+            cmbCourseSection.TabIndex = 0;
+            // 
+            // lblCourseSection
+            // 
+            lblCourseSection.AutoSize = true;
+            lblCourseSection.Font = new Font("Segoe UI", 7.5F, FontStyle.Bold);
+            lblCourseSection.ForeColor = Color.FromArgb(90, 90, 90);
+            lblCourseSection.Location = new Point(14, 7);
+            lblCourseSection.Name = "lblCourseSection";
+            lblCourseSection.Size = new Size(47, 12);
+            lblCourseSection.TabIndex = 4;
+            lblCourseSection.Text = "SECTION";
+            // 
+            // pnlHeader
+            // 
+            pnlHeader.BackColor = Color.FromArgb(106, 0, 0);
+            pnlHeader.Controls.Add(btnImportCSV);
+            pnlHeader.Controls.Add(btnReleaseGrades);
+            pnlHeader.Controls.Add(lblPageSubtitle);
+            pnlHeader.Controls.Add(lblPageTitle);
+            pnlHeader.Dock = DockStyle.Top;
+            pnlHeader.Location = new Point(0, 0);
+            pnlHeader.Name = "pnlHeader";
+            pnlHeader.Padding = new Padding(18, 0, 18, 0);
+            pnlHeader.Size = new Size(1648, 68);
+            pnlHeader.TabIndex = 0;
+            // 
+            // btnImportCSV
+            // 
+            btnImportCSV.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnImportCSV.BackColor = Color.FromArgb(70, 0, 0);
+            btnImportCSV.FlatAppearance.BorderColor = Color.FromArgb(130, 55, 55);
+            btnImportCSV.FlatStyle = FlatStyle.Flat;
+            btnImportCSV.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnImportCSV.ForeColor = Color.White;
+            btnImportCSV.Location = new Point(1510, 18);
+            btnImportCSV.Name = "btnImportCSV";
+            btnImportCSV.Size = new Size(120, 32);
+            btnImportCSV.TabIndex = 2;
+            btnImportCSV.Text = "⬆  Import CSV";
+            btnImportCSV.UseVisualStyleBackColor = false;
             // 
             // btnReleaseGrades
             // 
-            btnReleaseGrades.BackColor = Color.Maroon;
+            btnReleaseGrades.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnReleaseGrades.BackColor = Color.FromArgb(70, 0, 0);
+            btnReleaseGrades.FlatAppearance.BorderColor = Color.FromArgb(130, 55, 55);
             btnReleaseGrades.FlatStyle = FlatStyle.Flat;
+            btnReleaseGrades.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnReleaseGrades.ForeColor = Color.White;
-            btnReleaseGrades.Location = new Point(133, 29);
-            btnReleaseGrades.Margin = new Padding(3, 2, 3, 2);
+            btnReleaseGrades.Location = new Point(1366, 18);
             btnReleaseGrades.Name = "btnReleaseGrades";
-            btnReleaseGrades.Size = new Size(341, 28);
-            btnReleaseGrades.TabIndex = 0;
-            btnReleaseGrades.Text = "Release Grades";
+            btnReleaseGrades.Size = new Size(136, 32);
+            btnReleaseGrades.TabIndex = 1;
+            btnReleaseGrades.Text = "▶  Release Grades";
             btnReleaseGrades.UseVisualStyleBackColor = false;
             // 
-            // panelLegend
+            // lblPageSubtitle
             // 
-            panelLegend.BackColor = Color.White;
-            panelLegend.Controls.Add(pictureBox88);
-            panelLegend.Controls.Add(lblLegendTitle);
-            panelLegend.Dock = DockStyle.Fill;
-            panelLegend.Location = new Point(544, 3);
-            panelLegend.Margin = new Padding(4, 3, 4, 3);
-            panelLegend.Name = "panelLegend";
-            panelLegend.Size = new Size(532, 176);
-            panelLegend.TabIndex = 1;
+            lblPageSubtitle.AutoSize = true;
+            lblPageSubtitle.BackColor = Color.Transparent;
+            lblPageSubtitle.Font = new Font("Segoe UI", 8.5F);
+            lblPageSubtitle.ForeColor = Color.FromArgb(210, 185, 185);
+            lblPageSubtitle.Location = new Point(20, 44);
+            lblPageSubtitle.Name = "lblPageSubtitle";
+            lblPageSubtitle.Size = new Size(250, 15);
+            lblPageSubtitle.TabIndex = 3;
+            lblPageSubtitle.Text = "Manage, compute, and release student grades";
             // 
-            // pictureBox88
+            // lblPageTitle
             // 
-            pictureBox88.BackColor = Color.Maroon;
-            pictureBox88.Image = (Image)resources.GetObject("pictureBox88.Image");
-            pictureBox88.Location = new Point(14, 54);
-            pictureBox88.Name = "pictureBox88";
-            pictureBox88.Size = new Size(81, 79);
-            pictureBox88.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox88.TabIndex = 8;
-            pictureBox88.TabStop = false;
+            lblPageTitle.AutoSize = true;
+            lblPageTitle.BackColor = Color.Transparent;
+            lblPageTitle.Font = new Font("Segoe UI", 17F, FontStyle.Bold);
+            lblPageTitle.ForeColor = Color.White;
+            lblPageTitle.Location = new Point(18, 8);
+            lblPageTitle.Name = "lblPageTitle";
+            lblPageTitle.Size = new Size(225, 31);
+            lblPageTitle.TabIndex = 4;
+            lblPageTitle.Text = "Grade Management";
             // 
-            // lblLegendTitle
+            // pnlBottom
             // 
-            lblLegendTitle.AutoSize = true;
-            lblLegendTitle.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblLegendTitle.Location = new Point(14, 3);
-            lblLegendTitle.Margin = new Padding(4, 0, 4, 0);
-            lblLegendTitle.Name = "lblLegendTitle";
-            lblLegendTitle.Size = new Size(53, 17);
-            lblLegendTitle.TabIndex = 1;
-            lblLegendTitle.Text = "Legend";
+            pnlBottom.BackColor = Color.White;
+            pnlBottom.ColumnCount = 3;
+            pnlBottom.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37F));
+            pnlBottom.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 31F));
+            pnlBottom.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 32F));
+            pnlBottom.Controls.Add(pnlGradingScale, 0, 0);
+            pnlBottom.Controls.Add(pnlLegend, 1, 0);
+            pnlBottom.Controls.Add(pnlQuickActions, 2, 0);
+            pnlBottom.Dock = DockStyle.Bottom;
+            pnlBottom.Location = new Point(0, 777);
+            pnlBottom.Name = "pnlBottom";
+            pnlBottom.Padding = new Padding(10, 6, 10, 6);
+            pnlBottom.RowCount = 1;
+            pnlBottom.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            pnlBottom.Size = new Size(1648, 192);
+            pnlBottom.TabIndex = 5;
             // 
-            // panelGradingScale
+            // pnlGradingScale
             // 
-            panelGradingScale.BackColor = Color.White;
-            panelGradingScale.Controls.Add(pictureBox89);
-            panelGradingScale.Controls.Add(gridGradingScale);
-            panelGradingScale.Controls.Add(lblGradingScaleTitle);
-            panelGradingScale.Dock = DockStyle.Fill;
-            panelGradingScale.Location = new Point(4, 3);
-            panelGradingScale.Margin = new Padding(4, 3, 4, 3);
-            panelGradingScale.Name = "panelGradingScale";
-            panelGradingScale.Size = new Size(532, 176);
-            panelGradingScale.TabIndex = 0;
-            // 
-            // pictureBox89
-            // 
-            pictureBox89.BackColor = Color.Firebrick;
-            pictureBox89.Image = (Image)resources.GetObject("pictureBox89.Image");
-            pictureBox89.Location = new Point(6, 54);
-            pictureBox89.Name = "pictureBox89";
-            pictureBox89.Size = new Size(81, 86);
-            pictureBox89.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox89.TabIndex = 9;
-            pictureBox89.TabStop = false;
+            pnlGradingScale.BackColor = Color.White;
+            pnlGradingScale.Controls.Add(gridGradingScale);
+            pnlGradingScale.Controls.Add(lblGradingScaleTitle);
+            pnlGradingScale.Dock = DockStyle.Fill;
+            pnlGradingScale.Location = new Point(10, 6);
+            pnlGradingScale.Margin = new Padding(0, 0, 5, 0);
+            pnlGradingScale.Name = "pnlGradingScale";
+            pnlGradingScale.Size = new Size(597, 180);
+            pnlGradingScale.TabIndex = 0;
             // 
             // gridGradingScale
             // 
             gridGradingScale.AllowUserToAddRows = false;
             gridGradingScale.AllowUserToDeleteRows = false;
-            gridGradingScale.BackgroundColor = Color.White;
-            gridGradingScale.BorderStyle = BorderStyle.None;
+            gridGradingScale.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             gridGradingScale.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            gridGradingScale.Columns.AddRange(new DataGridViewColumn[] { colRange, colDesc });
-            gridGradingScale.Location = new Point(94, 32);
-            gridGradingScale.Margin = new Padding(4, 3, 4, 3);
+            gridGradingScale.Columns.AddRange(new DataGridViewColumn[] { colRange, colEquiv, colDesc });
+            gridGradingScale.Location = new Point(2, 20);
             gridGradingScale.Name = "gridGradingScale";
             gridGradingScale.ReadOnly = true;
             gridGradingScale.RowHeadersVisible = false;
-            gridGradingScale.Size = new Size(430, 135);
-            gridGradingScale.TabIndex = 1;
+            gridGradingScale.ScrollBars = ScrollBars.None;
+            gridGradingScale.Size = new Size(593, 158);
+            gridGradingScale.TabIndex = 0;
             // 
             // colRange
             // 
-            colRange.HeaderText = "Grade Range";
+            colRange.HeaderText = "Range";
             colRange.Name = "colRange";
             colRange.ReadOnly = true;
+            colRange.Width = 66;
+            // 
+            // colEquiv
+            // 
+            colEquiv.HeaderText = "Equiv.";
+            colEquiv.Name = "colEquiv";
+            colEquiv.ReadOnly = true;
+            colEquiv.Width = 58;
             // 
             // colDesc
             // 
+            colDesc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             colDesc.HeaderText = "Description";
             colDesc.Name = "colDesc";
             colDesc.ReadOnly = true;
@@ -394,776 +679,239 @@
             // lblGradingScaleTitle
             // 
             lblGradingScaleTitle.AutoSize = true;
-            lblGradingScaleTitle.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblGradingScaleTitle.Location = new Point(3, 3);
-            lblGradingScaleTitle.Margin = new Padding(4, 0, 4, 0);
+            lblGradingScaleTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblGradingScaleTitle.ForeColor = Color.FromArgb(106, 0, 0);
+            lblGradingScaleTitle.Location = new Point(2, 2);
             lblGradingScaleTitle.Name = "lblGradingScaleTitle";
-            lblGradingScaleTitle.Size = new Size(92, 17);
-            lblGradingScaleTitle.TabIndex = 0;
+            lblGradingScaleTitle.Size = new Size(83, 15);
+            lblGradingScaleTitle.TabIndex = 1;
             lblGradingScaleTitle.Text = "Grading Scale";
             // 
-            // pnlGradeRecords
-            // 
-            pnlGradeRecords.Controls.Add(tabControl1);
-            pnlGradeRecords.Dock = DockStyle.Top;
-            pnlGradeRecords.Location = new Point(9, 262);
-            pnlGradeRecords.Name = "pnlGradeRecords";
-            pnlGradeRecords.Size = new Size(1628, 508);
-            pnlGradeRecords.TabIndex = 15;
-            // 
-            // tabControl1
-            // 
-            tabControl1.Controls.Add(tabPage1);
-            tabControl1.Controls.Add(tabPage2);
-            tabControl1.Dock = DockStyle.Fill;
-            tabControl1.Location = new Point(0, 0);
-            tabControl1.Margin = new Padding(3, 2, 3, 2);
-            tabControl1.Name = "tabControl1";
-            tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(1628, 508);
-            tabControl1.TabIndex = 9;
-            // 
-            // tabPage1
-            // 
-            tabPage1.Controls.Add(gridStudents);
-            tabPage1.Controls.Add(lblPaginationInfo);
-            tabPage1.Location = new Point(4, 24);
-            tabPage1.Margin = new Padding(3, 2, 3, 2);
-            tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(3, 2, 3, 2);
-            tabPage1.Size = new Size(1620, 480);
-            tabPage1.TabIndex = 0;
-            tabPage1.Text = "Midterm";
-            tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // gridStudents
-            // 
-            gridStudents.AllowUserToAddRows = false;
-            gridStudents.AllowUserToDeleteRows = false;
-            gridStudents.BackgroundColor = Color.White;
-            gridStudents.BorderStyle = BorderStyle.None;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(106, 0, 0);
-            dataGridViewCellStyle5.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle5.ForeColor = Color.White;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            gridStudents.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            gridStudents.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            gridStudents.Columns.AddRange(new DataGridViewColumn[] { colID, dataGridViewTextBoxColumn1, colCourse, colQuiz, colMidterm, colFinals, colAssignments, colFinalGrade, colStatus, colRemarks, colActions });
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = SystemColors.Window;
-            dataGridViewCellStyle6.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle6.ForeColor = Color.Black;
-            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(245, 246, 248);
-            dataGridViewCellStyle6.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
-            gridStudents.DefaultCellStyle = dataGridViewCellStyle6;
-            gridStudents.Dock = DockStyle.Fill;
-            gridStudents.EnableHeadersVisualStyles = false;
-            gridStudents.Location = new Point(3, 2);
-            gridStudents.Margin = new Padding(4, 3, 4, 3);
-            gridStudents.Name = "gridStudents";
-            gridStudents.RowHeadersVisible = false;
-            gridStudents.Size = new Size(1614, 476);
-            gridStudents.TabIndex = 8;
-            // 
-            // colID
-            // 
-            colID.HeaderText = "Student ID";
-            colID.Name = "colID";
-            colID.Width = 80;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            dataGridViewTextBoxColumn1.HeaderText = "Student Name";
-            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            dataGridViewTextBoxColumn1.Width = 150;
-            // 
-            // colCourse
-            // 
-            colCourse.HeaderText = "Course";
-            colCourse.Name = "colCourse";
-            colCourse.Width = 180;
-            // 
-            // colQuiz
-            // 
-            colQuiz.HeaderText = "Quiz (20%)";
-            colQuiz.Name = "colQuiz";
-            colQuiz.Width = 80;
-            // 
-            // colMidterm
-            // 
-            colMidterm.HeaderText = "Midterm (30%)";
-            colMidterm.Name = "colMidterm";
-            colMidterm.Width = 90;
-            // 
-            // colFinals
-            // 
-            colFinals.HeaderText = "Final Exam (40%)";
-            colFinals.Name = "colFinals";
-            colFinals.Width = 110;
-            // 
-            // colAssignments
-            // 
-            colAssignments.HeaderText = "Assignments (10%)";
-            colAssignments.Name = "colAssignments";
-            colAssignments.Width = 110;
-            // 
-            // colFinalGrade
-            // 
-            colFinalGrade.HeaderText = "Final Grade";
-            colFinalGrade.Name = "colFinalGrade";
-            colFinalGrade.Width = 80;
-            // 
-            // colStatus
-            // 
-            colStatus.HeaderText = "Status";
-            colStatus.Name = "colStatus";
-            colStatus.Width = 80;
-            // 
-            // colRemarks
-            // 
-            colRemarks.HeaderText = "Remarks";
-            colRemarks.Name = "colRemarks";
-            // 
-            // colActions
-            // 
-            colActions.HeaderText = "Actions";
-            colActions.Name = "colActions";
-            colActions.Width = 80;
-            // 
-            // lblPaginationInfo
-            // 
-            lblPaginationInfo.AutoSize = true;
-            lblPaginationInfo.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblPaginationInfo.ForeColor = Color.Gray;
-            lblPaginationInfo.Location = new Point(12, -21);
-            lblPaginationInfo.Margin = new Padding(4, 0, 4, 0);
-            lblPaginationInfo.Name = "lblPaginationInfo";
-            lblPaginationInfo.Size = new Size(162, 15);
-            lblPaginationInfo.TabIndex = 5;
-            lblPaginationInfo.Text = "Showing 1 to 5 of 45 students";
-            // 
-            // tabPage2
-            // 
-            tabPage2.Controls.Add(dataGridView1);
-            tabPage2.Location = new Point(4, 24);
-            tabPage2.Margin = new Padding(3, 2, 3, 2);
-            tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(3, 2, 3, 2);
-            tabPage2.Size = new Size(1620, 480);
-            tabPage2.TabIndex = 1;
-            tabPage2.Text = "Finalterm";
-            tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // dataGridView1
-            // 
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.AllowUserToDeleteRows = false;
-            dataGridView1.BackgroundColor = Color.White;
-            dataGridView1.BorderStyle = BorderStyle.None;
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = Color.FromArgb(106, 0, 0);
-            dataGridViewCellStyle7.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle7.ForeColor = Color.White;
-            dataGridViewCellStyle7.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
-            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Column1, dataGridViewTextBoxColumn3, dataGridViewTextBoxColumn5, dataGridViewTextBoxColumn6, dataGridViewTextBoxColumn7, dataGridViewTextBoxColumn8, dataGridViewTextBoxColumn9, dataGridViewTextBoxColumn11 });
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = SystemColors.Window;
-            dataGridViewCellStyle8.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle8.ForeColor = Color.Black;
-            dataGridViewCellStyle8.SelectionBackColor = Color.FromArgb(245, 246, 248);
-            dataGridViewCellStyle8.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
-            dataGridView1.DefaultCellStyle = dataGridViewCellStyle8;
-            dataGridView1.EnableHeadersVisualStyles = false;
-            dataGridView1.Location = new Point(3, 2);
-            dataGridView1.Margin = new Padding(4, 3, 4, 3);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersVisible = false;
-            dataGridView1.Size = new Size(1624, 479);
-            dataGridView1.TabIndex = 9;
-            // 
-            // Column1
-            // 
-            Column1.HeaderText = "Student Id";
-            Column1.Name = "Column1";
-            Column1.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            dataGridViewTextBoxColumn3.HeaderText = "Student Name";
-            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            dataGridViewTextBoxColumn3.Width = 150;
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            dataGridViewTextBoxColumn5.HeaderText = "Quiz (20%)";
-            dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            dataGridViewTextBoxColumn5.Width = 80;
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            dataGridViewTextBoxColumn6.HeaderText = "Midterm (30%)";
-            dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            dataGridViewTextBoxColumn6.Width = 90;
-            // 
-            // dataGridViewTextBoxColumn7
-            // 
-            dataGridViewTextBoxColumn7.HeaderText = "Final Exam (40%)";
-            dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-            dataGridViewTextBoxColumn7.Width = 110;
-            // 
-            // dataGridViewTextBoxColumn8
-            // 
-            dataGridViewTextBoxColumn8.HeaderText = "Assignments (10%)";
-            dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
-            dataGridViewTextBoxColumn8.Width = 110;
-            // 
-            // dataGridViewTextBoxColumn9
-            // 
-            dataGridViewTextBoxColumn9.HeaderText = "Final Grade";
-            dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
-            dataGridViewTextBoxColumn9.Width = 80;
-            // 
-            // dataGridViewTextBoxColumn11
-            // 
-            dataGridViewTextBoxColumn11.HeaderText = "Remarks";
-            dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
-            // 
-            // pnlGradeToolbar
-            // 
-            pnlGradeToolbar.BackColor = Color.White;
-            pnlGradeToolbar.Controls.Add(txtSearch);
-            pnlGradeToolbar.Controls.Add(btnEditGradePercentage);
-            pnlGradeToolbar.Controls.Add(btnColumnOptions);
-            pnlGradeToolbar.Dock = DockStyle.Top;
-            pnlGradeToolbar.Location = new Point(9, 235);
-            pnlGradeToolbar.Margin = new Padding(4, 3, 4, 3);
-            pnlGradeToolbar.Name = "pnlGradeToolbar";
-            pnlGradeToolbar.Size = new Size(1628, 27);
-            pnlGradeToolbar.TabIndex = 3;
-            // 
-            // txtSearch
-            // 
-            txtSearch.BorderStyle = BorderStyle.FixedSingle;
-            txtSearch.Location = new Point(7, 2);
-            txtSearch.Margin = new Padding(3, 2, 3, 2);
-            txtSearch.Name = "txtSearch";
-            txtSearch.PlaceholderText = "           Search by Name or Student ID..";
-            txtSearch.Size = new Size(312, 23);
-            txtSearch.TabIndex = 0;
-            // 
-            // btnEditGradePercentage
-            // 
-            btnEditGradePercentage.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnEditGradePercentage.BackColor = Color.Green;
-            btnEditGradePercentage.FlatStyle = FlatStyle.Flat;
-            btnEditGradePercentage.ForeColor = Color.White;
-            btnEditGradePercentage.Location = new Point(1329, -2);
-            btnEditGradePercentage.Margin = new Padding(3, 2, 3, 2);
-            btnEditGradePercentage.Name = "btnEditGradePercentage";
-            btnEditGradePercentage.Size = new Size(154, 27);
-            btnEditGradePercentage.TabIndex = 13;
-            btnEditGradePercentage.Text = "Edit Grades Pecentage";
-            btnEditGradePercentage.UseVisualStyleBackColor = false;
-            // 
-            // btnColumnOptions
-            // 
-            btnColumnOptions.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnColumnOptions.BackColor = Color.White;
-            btnColumnOptions.BackgroundImageLayout = ImageLayout.None;
-            btnColumnOptions.FlatStyle = FlatStyle.Flat;
-            btnColumnOptions.ForeColor = Color.Black;
-            btnColumnOptions.Location = new Point(1492, 0);
-            btnColumnOptions.Margin = new Padding(3, 2, 3, 2);
-            btnColumnOptions.Name = "btnColumnOptions";
-            btnColumnOptions.Size = new Size(110, 27);
-            btnColumnOptions.TabIndex = 14;
-            btnColumnOptions.Text = "Column Options";
-            btnColumnOptions.UseVisualStyleBackColor = false;
-            // 
-            // panelCardsContainer
-            // 
-            panelCardsContainer.ColumnCount = 5;
-            panelCardsContainer.ColumnStyles.Add(new ColumnStyle());
-            panelCardsContainer.ColumnStyles.Add(new ColumnStyle());
-            panelCardsContainer.ColumnStyles.Add(new ColumnStyle());
-            panelCardsContainer.ColumnStyles.Add(new ColumnStyle());
-            panelCardsContainer.ColumnStyles.Add(new ColumnStyle());
-            panelCardsContainer.Controls.Add(cardHighest, 4, 0);
-            panelCardsContainer.Controls.Add(cardAverage, 3, 0);
-            panelCardsContainer.Controls.Add(cardPending, 2, 0);
-            panelCardsContainer.Controls.Add(cardSubmitted, 1, 0);
-            panelCardsContainer.Controls.Add(cardTotalStudents, 0, 0);
-            panelCardsContainer.Dock = DockStyle.Top;
-            panelCardsContainer.Location = new Point(9, 143);
-            panelCardsContainer.Margin = new Padding(4, 3, 4, 3);
-            panelCardsContainer.Name = "panelCardsContainer";
-            panelCardsContainer.RowCount = 1;
-            panelCardsContainer.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            panelCardsContainer.Size = new Size(1628, 92);
-            panelCardsContainer.TabIndex = 11;
-            // 
-            // cardHighest
-            // 
-            cardHighest.BackColor = Color.White;
-            cardHighest.Controls.Add(picHighestGrade);
-            cardHighest.Controls.Add(lblHighestVal);
-            cardHighest.Controls.Add(lblHighestTitle);
-            cardHighest.Dock = DockStyle.Fill;
-            cardHighest.Location = new Point(1316, 3);
-            cardHighest.Margin = new Padding(4, 3, 4, 3);
-            cardHighest.Name = "cardHighest";
-            cardHighest.Size = new Size(321, 86);
-            cardHighest.TabIndex = 4;
-            // 
-            // picHighestGrade
-            // 
-            picHighestGrade.Image = (Image)resources.GetObject("picHighestGrade.Image");
-            picHighestGrade.Location = new Point(15, 19);
-            picHighestGrade.Name = "picHighestGrade";
-            picHighestGrade.Size = new Size(50, 59);
-            picHighestGrade.SizeMode = PictureBoxSizeMode.StretchImage;
-            picHighestGrade.TabIndex = 6;
-            picHighestGrade.TabStop = false;
-            // 
-            // lblHighestVal
-            // 
-            lblHighestVal.AutoSize = true;
-            lblHighestVal.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblHighestVal.Location = new Point(64, 46);
-            lblHighestVal.Margin = new Padding(4, 0, 4, 0);
-            lblHighestVal.Name = "lblHighestVal";
-            lblHighestVal.Size = new Size(61, 25);
-            lblHighestVal.TabIndex = 2;
-            lblHighestVal.Text = "98.00";
-            // 
-            // lblHighestTitle
-            // 
-            lblHighestTitle.AutoSize = true;
-            lblHighestTitle.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblHighestTitle.ForeColor = Color.Gray;
-            lblHighestTitle.Location = new Point(64, 17);
-            lblHighestTitle.Margin = new Padding(4, 0, 4, 0);
-            lblHighestTitle.Name = "lblHighestTitle";
-            lblHighestTitle.Size = new Size(81, 13);
-            lblHighestTitle.TabIndex = 1;
-            lblHighestTitle.Text = "Highest Grade";
-            // 
-            // cardAverage
-            // 
-            cardAverage.BackColor = Color.White;
-            cardAverage.Controls.Add(picAverageGrade);
-            cardAverage.Controls.Add(lblAvgVal);
-            cardAverage.Controls.Add(lblAvgTitle);
-            cardAverage.Dock = DockStyle.Fill;
-            cardAverage.Location = new Point(988, 3);
-            cardAverage.Margin = new Padding(4, 3, 4, 3);
-            cardAverage.Name = "cardAverage";
-            cardAverage.Size = new Size(320, 86);
-            cardAverage.TabIndex = 3;
-            // 
-            // picAverageGrade
-            // 
-            picAverageGrade.Image = (Image)resources.GetObject("picAverageGrade.Image");
-            picAverageGrade.Location = new Point(9, 18);
-            picAverageGrade.Name = "picAverageGrade";
-            picAverageGrade.Size = new Size(50, 50);
-            picAverageGrade.SizeMode = PictureBoxSizeMode.StretchImage;
-            picAverageGrade.TabIndex = 5;
-            picAverageGrade.TabStop = false;
-            // 
-            // lblAvgVal
-            // 
-            lblAvgVal.AutoSize = true;
-            lblAvgVal.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblAvgVal.Location = new Point(64, 46);
-            lblAvgVal.Margin = new Padding(4, 0, 4, 0);
-            lblAvgVal.Name = "lblAvgVal";
-            lblAvgVal.Size = new Size(61, 25);
-            lblAvgVal.TabIndex = 2;
-            lblAvgVal.Text = "82.45";
-            // 
-            // lblAvgTitle
-            // 
-            lblAvgTitle.AutoSize = true;
-            lblAvgTitle.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblAvgTitle.ForeColor = Color.Gray;
-            lblAvgTitle.Location = new Point(64, 17);
-            lblAvgTitle.Margin = new Padding(4, 0, 4, 0);
-            lblAvgTitle.Name = "lblAvgTitle";
-            lblAvgTitle.Size = new Size(82, 13);
-            lblAvgTitle.TabIndex = 1;
-            lblAvgTitle.Text = "Average Grade";
-            // 
-            // cardPending
-            // 
-            cardPending.BackColor = Color.White;
-            cardPending.Controls.Add(picPending);
-            cardPending.Controls.Add(lblPendingVal);
-            cardPending.Controls.Add(lblPendingTitle);
-            cardPending.Dock = DockStyle.Fill;
-            cardPending.Location = new Point(660, 3);
-            cardPending.Margin = new Padding(4, 3, 4, 3);
-            cardPending.Name = "cardPending";
-            cardPending.Size = new Size(320, 86);
-            cardPending.TabIndex = 2;
-            // 
-            // picPending
-            // 
-            picPending.Image = (Image)resources.GetObject("picPending.Image");
-            picPending.Location = new Point(13, 18);
-            picPending.Name = "picPending";
-            picPending.Size = new Size(50, 50);
-            picPending.SizeMode = PictureBoxSizeMode.StretchImage;
-            picPending.TabIndex = 4;
-            picPending.TabStop = false;
-            // 
-            // lblPendingVal
-            // 
-            lblPendingVal.AutoSize = true;
-            lblPendingVal.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblPendingVal.Location = new Point(64, 46);
-            lblPendingVal.Margin = new Padding(4, 0, 4, 0);
-            lblPendingVal.Name = "lblPendingVal";
-            lblPendingVal.Size = new Size(118, 25);
-            lblPendingVal.TabIndex = 2;
-            lblPendingVal.Text = "15 (33.33%)";
-            // 
-            // lblPendingTitle
-            // 
-            lblPendingTitle.AutoSize = true;
-            lblPendingTitle.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblPendingTitle.ForeColor = Color.Gray;
-            lblPendingTitle.Location = new Point(64, 17);
-            lblPendingTitle.Margin = new Padding(4, 0, 4, 0);
-            lblPendingTitle.Name = "lblPendingTitle";
-            lblPendingTitle.Size = new Size(50, 13);
-            lblPendingTitle.TabIndex = 1;
-            lblPendingTitle.Text = "Pending";
-            // 
-            // cardSubmitted
-            // 
-            cardSubmitted.BackColor = Color.White;
-            cardSubmitted.Controls.Add(picGradesSummitted);
-            cardSubmitted.Controls.Add(lblSubmittedVal);
-            cardSubmitted.Controls.Add(lblSubmittedTitle);
-            cardSubmitted.Dock = DockStyle.Fill;
-            cardSubmitted.Location = new Point(332, 3);
-            cardSubmitted.Margin = new Padding(4, 3, 4, 3);
-            cardSubmitted.Name = "cardSubmitted";
-            cardSubmitted.Size = new Size(320, 86);
-            cardSubmitted.TabIndex = 1;
-            // 
-            // picGradesSummitted
-            // 
-            picGradesSummitted.Image = (Image)resources.GetObject("picGradesSummitted.Image");
-            picGradesSummitted.Location = new Point(13, 19);
-            picGradesSummitted.Name = "picGradesSummitted";
-            picGradesSummitted.Size = new Size(50, 50);
-            picGradesSummitted.SizeMode = PictureBoxSizeMode.StretchImage;
-            picGradesSummitted.TabIndex = 3;
-            picGradesSummitted.TabStop = false;
-            // 
-            // lblSubmittedVal
-            // 
-            lblSubmittedVal.AutoSize = true;
-            lblSubmittedVal.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblSubmittedVal.Location = new Point(64, 46);
-            lblSubmittedVal.Margin = new Padding(4, 0, 4, 0);
-            lblSubmittedVal.Name = "lblSubmittedVal";
-            lblSubmittedVal.Size = new Size(118, 25);
-            lblSubmittedVal.TabIndex = 2;
-            lblSubmittedVal.Text = "30 (66.67%)";
-            // 
-            // lblSubmittedTitle
-            // 
-            lblSubmittedTitle.AutoSize = true;
-            lblSubmittedTitle.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblSubmittedTitle.ForeColor = Color.Gray;
-            lblSubmittedTitle.Location = new Point(64, 17);
-            lblSubmittedTitle.Margin = new Padding(4, 0, 4, 0);
-            lblSubmittedTitle.Name = "lblSubmittedTitle";
-            lblSubmittedTitle.Size = new Size(99, 13);
-            lblSubmittedTitle.TabIndex = 1;
-            lblSubmittedTitle.Text = "Grades Submitted";
-            // 
-            // cardTotalStudents
-            // 
-            cardTotalStudents.BackColor = Color.White;
-            cardTotalStudents.Controls.Add(picTotalStudent);
-            cardTotalStudents.Controls.Add(lblTotalVal);
-            cardTotalStudents.Controls.Add(lblTotalTitle);
-            cardTotalStudents.Dock = DockStyle.Fill;
-            cardTotalStudents.Location = new Point(4, 3);
-            cardTotalStudents.Margin = new Padding(4, 3, 4, 3);
-            cardTotalStudents.Name = "cardTotalStudents";
-            cardTotalStudents.Size = new Size(320, 86);
-            cardTotalStudents.TabIndex = 0;
-            // 
-            // picTotalStudent
-            // 
-            picTotalStudent.BackColor = Color.Maroon;
-            picTotalStudent.Image = (Image)resources.GetObject("picTotalStudent.Image");
-            picTotalStudent.Location = new Point(12, 20);
-            picTotalStudent.Name = "picTotalStudent";
-            picTotalStudent.Size = new Size(50, 50);
-            picTotalStudent.SizeMode = PictureBoxSizeMode.StretchImage;
-            picTotalStudent.TabIndex = 2;
-            picTotalStudent.TabStop = false;
-            // 
-            // lblTotalVal
-            // 
-            lblTotalVal.AutoSize = true;
-            lblTotalVal.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTotalVal.Location = new Point(64, 46);
-            lblTotalVal.Margin = new Padding(4, 0, 4, 0);
-            lblTotalVal.Name = "lblTotalVal";
-            lblTotalVal.Size = new Size(34, 25);
-            lblTotalVal.TabIndex = 1;
-            lblTotalVal.Text = "45";
-            // 
-            // lblTotalTitle
-            // 
-            lblTotalTitle.AutoSize = true;
-            lblTotalTitle.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblTotalTitle.ForeColor = Color.Gray;
-            lblTotalTitle.Location = new Point(64, 17);
-            lblTotalTitle.Margin = new Padding(4, 0, 4, 0);
-            lblTotalTitle.Name = "lblTotalTitle";
-            lblTotalTitle.Size = new Size(81, 13);
-            lblTotalTitle.TabIndex = 0;
-            lblTotalTitle.Text = "Total Students";
-            // 
-            // panelFilters
-            // 
-            panelFilters.BackColor = Color.White;
-            panelFilters.Controls.Add(cmbCourseSection);
-            panelFilters.Controls.Add(lblCourseSection);
-            panelFilters.Dock = DockStyle.Top;
-            panelFilters.Location = new Point(9, 77);
-            panelFilters.Margin = new Padding(4, 3, 4, 3);
-            panelFilters.Name = "panelFilters";
-            panelFilters.Size = new Size(1628, 66);
-            panelFilters.TabIndex = 2;
-            // 
-            // cmbCourseSection
-            // 
-            cmbCourseSection.BackColor = Color.White;
-            cmbCourseSection.FormattingEnabled = true;
-            cmbCourseSection.Location = new Point(11, 30);
-            cmbCourseSection.Margin = new Padding(3, 2, 3, 2);
-            cmbCourseSection.Name = "cmbCourseSection";
-            cmbCourseSection.Size = new Size(341, 23);
-            cmbCourseSection.Sorted = true;
-            cmbCourseSection.TabIndex = 2;
-            // 
-            // lblCourseSection
-            // 
-            lblCourseSection.AutoSize = true;
-            lblCourseSection.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblCourseSection.ForeColor = Color.DimGray;
-            lblCourseSection.Location = new Point(14, 13);
-            lblCourseSection.Margin = new Padding(4, 0, 4, 0);
-            lblCourseSection.Name = "lblCourseSection";
-            lblCourseSection.Size = new Size(107, 13);
-            lblCourseSection.TabIndex = 0;
-            lblCourseSection.Text = "Course and Section";
-            // 
-            // panel168
-            // 
-            panel168.BackColor = Color.White;
-            panel168.Controls.Add(btnImportExcel1);
-            panel168.Controls.Add(label304);
-            panel168.Controls.Add(label305);
-            panel168.Dock = DockStyle.Top;
-            panel168.Font = new Font("Arial Narrow", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            panel168.Location = new Point(9, 7);
-            panel168.Margin = new Padding(3, 2, 3, 2);
-            panel168.Name = "panel168";
-            panel168.Size = new Size(1628, 70);
-            panel168.TabIndex = 0;
-            // 
-            // btnImportExcel1
-            // 
-            btnImportExcel1.BackColor = Color.Maroon;
-            btnImportExcel1.FlatAppearance.BorderSize = 0;
-            btnImportExcel1.FlatStyle = FlatStyle.Flat;
-            btnImportExcel1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnImportExcel1.ForeColor = Color.White;
-            btnImportExcel1.Location = new Point(1498, 11);
-            btnImportExcel1.Margin = new Padding(4, 3, 4, 3);
-            btnImportExcel1.Name = "btnImportExcel1";
-            btnImportExcel1.Size = new Size(122, 35);
-            btnImportExcel1.TabIndex = 7;
-            btnImportExcel1.Text = "Import from CSV";
-            btnImportExcel1.UseVisualStyleBackColor = false;
-            // 
-            // label304
-            // 
-            label304.AutoSize = true;
-            label304.BackColor = Color.White;
-            label304.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label304.ForeColor = Color.Black;
-            label304.Location = new Point(14, 44);
-            label304.Name = "label304";
-            label304.Size = new Size(207, 15);
-            label304.TabIndex = 1;
-            label304.Text = "Manage and Release Student Grade";
-            // 
-            // label305
-            // 
-            label305.AutoSize = true;
-            label305.BackColor = Color.White;
-            label305.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label305.ForeColor = Color.Maroon;
-            label305.Location = new Point(6, 4);
-            label305.Name = "label305";
-            label305.Size = new Size(272, 37);
-            label305.TabIndex = 0;
-            label305.Text = "Grade Management";
+            // pnlLegend
+            // 
+            pnlLegend.BackColor = Color.White;
+            pnlLegend.Controls.Add(pnlLegendItems);
+            pnlLegend.Controls.Add(lblLegendTitle);
+            pnlLegend.Dock = DockStyle.Fill;
+            pnlLegend.Location = new Point(615, 6);
+            pnlLegend.Margin = new Padding(3, 0, 3, 0);
+            pnlLegend.Name = "pnlLegend";
+            pnlLegend.Size = new Size(498, 180);
+            pnlLegend.TabIndex = 1;
+            // 
+            // pnlLegendItems
+            // 
+            pnlLegendItems.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pnlLegendItems.Location = new Point(2, 20);
+            pnlLegendItems.Name = "pnlLegendItems";
+            pnlLegendItems.Size = new Size(494, 158);
+            pnlLegendItems.TabIndex = 0;
+            // 
+            // lblLegendTitle
+            // 
+            lblLegendTitle.AutoSize = true;
+            lblLegendTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblLegendTitle.ForeColor = Color.FromArgb(106, 0, 0);
+            lblLegendTitle.Location = new Point(2, 2);
+            lblLegendTitle.Name = "lblLegendTitle";
+            lblLegendTitle.Size = new Size(48, 15);
+            lblLegendTitle.TabIndex = 1;
+            lblLegendTitle.Text = "Legend";
+            // 
+            // pnlQuickActions
+            // 
+            pnlQuickActions.BackColor = Color.White;
+            pnlQuickActions.Controls.Add(btnSaveChanges);
+            pnlQuickActions.Controls.Add(btnExportCSV);
+            pnlQuickActions.Controls.Add(btnPrintGrades);
+            pnlQuickActions.Controls.Add(btnQuickReleaseGrades);
+            pnlQuickActions.Controls.Add(lblQuickActionsTitle);
+            pnlQuickActions.Dock = DockStyle.Fill;
+            pnlQuickActions.Location = new Point(1121, 6);
+            pnlQuickActions.Margin = new Padding(5, 0, 0, 0);
+            pnlQuickActions.Name = "pnlQuickActions";
+            pnlQuickActions.Size = new Size(517, 180);
+            pnlQuickActions.TabIndex = 2;
+            // 
+            // btnSaveChanges
+            // 
+            btnSaveChanges.BackColor = Color.FromArgb(16, 124, 65);
+            btnSaveChanges.FlatAppearance.BorderSize = 0;
+            btnSaveChanges.FlatStyle = FlatStyle.Flat;
+            btnSaveChanges.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnSaveChanges.ForeColor = Color.White;
+            btnSaveChanges.Location = new Point(2, 22);
+            btnSaveChanges.Name = "btnSaveChanges";
+            btnSaveChanges.Size = new Size(430, 28);
+            btnSaveChanges.TabIndex = 1;
+            btnSaveChanges.Text = "💾  Save Changes";
+            btnSaveChanges.UseVisualStyleBackColor = false;
+            // 
+            // btnExportCSV
+            // 
+            btnExportCSV.BackColor = Color.FromArgb(241, 196, 15);
+            btnExportCSV.FlatAppearance.BorderSize = 0;
+            btnExportCSV.FlatStyle = FlatStyle.Flat;
+            btnExportCSV.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnExportCSV.ForeColor = Color.Black;
+            btnExportCSV.Location = new Point(2, 56);
+            btnExportCSV.Name = "btnExportCSV";
+            btnExportCSV.Size = new Size(430, 28);
+            btnExportCSV.TabIndex = 2;
+            btnExportCSV.Text = "📥  Export to CSV";
+            btnExportCSV.UseVisualStyleBackColor = false;
+            btnExportCSV.Click += BtnExportCSV_Click;
+            // 
+            // btnPrintGrades
+            // 
+            btnPrintGrades.BackColor = Color.White;
+            btnPrintGrades.FlatAppearance.BorderColor = Color.FromArgb(190, 175, 175);
+            btnPrintGrades.FlatStyle = FlatStyle.Flat;
+            btnPrintGrades.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnPrintGrades.ForeColor = Color.FromArgb(50, 50, 50);
+            btnPrintGrades.Location = new Point(2, 90);
+            btnPrintGrades.Name = "btnPrintGrades";
+            btnPrintGrades.Size = new Size(430, 28);
+            btnPrintGrades.TabIndex = 3;
+            btnPrintGrades.Text = "🖨  Print Grades";
+            btnPrintGrades.UseVisualStyleBackColor = false;
+            btnPrintGrades.Click += BtnPrintGrades_Click;
+            // 
+            // btnQuickReleaseGrades
+            // 
+            btnQuickReleaseGrades.BackColor = Color.FromArgb(106, 0, 0);
+            btnQuickReleaseGrades.FlatAppearance.BorderSize = 0;
+            btnQuickReleaseGrades.FlatStyle = FlatStyle.Flat;
+            btnQuickReleaseGrades.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnQuickReleaseGrades.ForeColor = Color.White;
+            btnQuickReleaseGrades.Location = new Point(2, 124);
+            btnQuickReleaseGrades.Name = "btnQuickReleaseGrades";
+            btnQuickReleaseGrades.Size = new Size(430, 28);
+            btnQuickReleaseGrades.TabIndex = 4;
+            btnQuickReleaseGrades.Text = "▶  Release Grades";
+            btnQuickReleaseGrades.UseVisualStyleBackColor = false;
+            btnQuickReleaseGrades.Click += BtnReleaseGrades_Click;
+            // 
+            // lblQuickActionsTitle
+            // 
+            lblQuickActionsTitle.AutoSize = true;
+            lblQuickActionsTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblQuickActionsTitle.ForeColor = Color.FromArgb(106, 0, 0);
+            lblQuickActionsTitle.Location = new Point(2, 2);
+            lblQuickActionsTitle.Name = "lblQuickActionsTitle";
+            lblQuickActionsTitle.Size = new Size(83, 15);
+            lblQuickActionsTitle.TabIndex = 5;
+            lblQuickActionsTitle.Text = "Quick Actions";
             // 
             // GradesContentInst
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(pnlGrades);
+            BackColor = Color.FromArgb(248, 246, 246);
+            Controls.Add(pnlRoot);
             Name = "GradesContentInst";
             Size = new Size(1648, 969);
             Load += GradesContentInst_Load;
-            pnlGrades.ResumeLayout(false);
-            panel61.ResumeLayout(false);
-            pnlBottomControls.ResumeLayout(false);
-            panelBottomRow.ResumeLayout(false);
-            panelQuickActions.ResumeLayout(false);
-            panelQuickActions.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox87).EndInit();
-            panelLegend.ResumeLayout(false);
-            panelLegend.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox88).EndInit();
-            panelGradingScale.ResumeLayout(false);
-            panelGradingScale.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox89).EndInit();
-            ((System.ComponentModel.ISupportInitialize)gridGradingScale).EndInit();
-            pnlGradeRecords.ResumeLayout(false);
-            tabControl1.ResumeLayout(false);
-            tabPage1.ResumeLayout(false);
-            tabPage1.PerformLayout();
+            pnlRoot.ResumeLayout(false);
+            pnlMidWrapper.ResumeLayout(false);
+            tabTerms.ResumeLayout(false);
+            tabMidterm.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)gridStudents).EndInit();
-            tabPage2.ResumeLayout(false);
+            tabFinalTerm.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
-            pnlGradeToolbar.ResumeLayout(false);
-            pnlGradeToolbar.PerformLayout();
-            panelCardsContainer.ResumeLayout(false);
-            cardHighest.ResumeLayout(false);
-            cardHighest.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)picHighestGrade).EndInit();
-            cardAverage.ResumeLayout(false);
-            cardAverage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)picAverageGrade).EndInit();
-            cardPending.ResumeLayout(false);
-            cardPending.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)picPending).EndInit();
+            pnlToolbar.ResumeLayout(false);
+            pnlCards.ResumeLayout(false);
+            cardTotal.ResumeLayout(false);
+            cardTotal.PerformLayout();
             cardSubmitted.ResumeLayout(false);
             cardSubmitted.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)picGradesSummitted).EndInit();
-            cardTotalStudents.ResumeLayout(false);
-            cardTotalStudents.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)picTotalStudent).EndInit();
-            panelFilters.ResumeLayout(false);
-            panelFilters.PerformLayout();
-            panel168.ResumeLayout(false);
-            panel168.PerformLayout();
+            cardPending.ResumeLayout(false);
+            cardPending.PerformLayout();
+            cardAverage.ResumeLayout(false);
+            cardAverage.PerformLayout();
+            cardHighest.ResumeLayout(false);
+            cardHighest.PerformLayout();
+            pnlFilters.ResumeLayout(false);
+            pnlFilters.PerformLayout();
+            pnlHeader.ResumeLayout(false);
+            pnlHeader.PerformLayout();
+            pnlBottom.ResumeLayout(false);
+            pnlGradingScale.ResumeLayout(false);
+            pnlGradingScale.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)gridGradingScale).EndInit();
+            pnlLegend.ResumeLayout(false);
+            pnlLegend.PerformLayout();
+            pnlQuickActions.ResumeLayout(false);
+            pnlQuickActions.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
+
         }
 
         #endregion
 
-        private Panel pnlGrades;
-        private Panel panel61;
-        private Panel pnlBottomControls;
-        private TableLayoutPanel panelBottomRow;
-        private Panel panelQuickActions;
-        private PictureBox pictureBox87;
-        private Button btnPrintGrades;
-        private Button btnExportExcel;
-        private Button btnSaveChanges;
-        private Label lblQuickActionsTitle;
-        private Button btnReleaseGrades;
-        private Panel panelLegend;
-        private PictureBox pictureBox88;
-        private Label lblLegendTitle;
-        private Panel panelGradingScale;
-        private PictureBox pictureBox89;
-        private DataGridView gridGradingScale;
-        private DataGridViewTextBoxColumn colRange;
-        private DataGridViewTextBoxColumn colDesc;
-        private Label lblGradingScaleTitle;
-        private Panel pnlGradeRecords;
-        private TabControl tabControl1;
-        private TabPage tabPage1;
-        private DataGridView gridStudents;
-        private DataGridViewTextBoxColumn colID;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private DataGridViewTextBoxColumn colCourse;
-        private DataGridViewTextBoxColumn colQuiz;
-        private DataGridViewTextBoxColumn colMidterm;
-        private DataGridViewTextBoxColumn colFinals;
-        private DataGridViewTextBoxColumn colAssignments;
-        private DataGridViewTextBoxColumn colFinalGrade;
-        private DataGridViewTextBoxColumn colStatus;
-        private DataGridViewTextBoxColumn colRemarks;
-        private DataGridViewButtonColumn colActions;
-        private Label lblPaginationInfo;
-        private TabPage tabPage2;
-        private DataGridView dataGridView1;
-        private DataGridViewTextBoxColumn Column1;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
-        private Panel pnlGradeToolbar;
-        private TextBox txtSearch;
-        private Button btnEditGradePercentage;
-        private Button btnColumnOptions;
-        private TableLayoutPanel panelCardsContainer;
-        private Panel cardHighest;
-        private PictureBox picHighestGrade;
-        private Label lblHighestVal;
-        private Label lblHighestTitle;
-        private Panel cardAverage;
-        private PictureBox picAverageGrade;
-        private Label lblAvgVal;
-        private Label lblAvgTitle;
-        private Panel cardPending;
-        private PictureBox picPending;
-        private Label lblPendingVal;
-        private Label lblPendingTitle;
-        private Panel cardSubmitted;
-        private PictureBox picGradesSummitted;
-        private Label lblSubmittedVal;
-        private Label lblSubmittedTitle;
-        private Panel cardTotalStudents;
-        private PictureBox picTotalStudent;
-        private Label lblTotalVal;
-        private Label lblTotalTitle;
-        private Panel panelFilters;
-        private ComboBox cmbCourseSection;
-        private Label lblCourseSection;
-        private Panel panel168;
-        private Button btnImportExcel1;
-        private Label label304;
-        private Label label305;
+        private System.Windows.Forms.Panel pnlRoot;
+        private System.Windows.Forms.Panel pnlHeader;
+        private System.Windows.Forms.Label lblPageTitle;
+        private System.Windows.Forms.Label lblPageSubtitle;
+        private System.Windows.Forms.Button btnReleaseGrades;
+        private System.Windows.Forms.Button btnImportCSV;
+
+        private System.Windows.Forms.Panel pnlFilters;
+        private System.Windows.Forms.Label lblCourseSection;
+        private System.Windows.Forms.ComboBox cmbCourseSection;
+        private System.Windows.Forms.Label lblStatusFilter;
+        private System.Windows.Forms.ComboBox cmbStatusFilter;
+        private System.Windows.Forms.TextBox txtSearch;
+        private System.Windows.Forms.Label lblRecordCount;
+
+        private System.Windows.Forms.TableLayoutPanel pnlCards;
+        private System.Windows.Forms.Panel cardTotal;
+        private System.Windows.Forms.Label lblTotalTitle;
+        private System.Windows.Forms.Label lblTotalVal;
+        private System.Windows.Forms.Label lblTotalSub;
+        private System.Windows.Forms.Panel cardSubmitted;
+        private System.Windows.Forms.Label lblSubmittedTitle;
+        private System.Windows.Forms.Label lblSubmittedVal;
+        private System.Windows.Forms.Label lblSubmittedSub;
+        private System.Windows.Forms.Panel cardPending;
+        private System.Windows.Forms.Label lblPendingTitle;
+        private System.Windows.Forms.Label lblPendingVal;
+        private System.Windows.Forms.Label lblPendingSub;
+        private System.Windows.Forms.Panel cardAverage;
+        private System.Windows.Forms.Label lblAvgTitle;
+        private System.Windows.Forms.Label lblAvgVal;
+        private System.Windows.Forms.Label lblAvgSub;
+        private System.Windows.Forms.Panel cardHighest;
+        private System.Windows.Forms.Label lblHighestTitle;
+        private System.Windows.Forms.Label lblHighestVal;
+        private System.Windows.Forms.Label lblHighestSub;
+
+        private System.Windows.Forms.Panel pnlToolbar;
+        private System.Windows.Forms.Button btnEditWeights;
+
+        private System.Windows.Forms.Button btnSaveChanges;
+        private System.Windows.Forms.Button btnExportCSV;
+        private System.Windows.Forms.Button btnPrintGrades;
+        private System.Windows.Forms.Button btnQuickReleaseGrades;
+
+        private System.Windows.Forms.Panel pnlMidWrapper;
+        private System.Windows.Forms.TabControl tabTerms;
+        private System.Windows.Forms.TabPage tabMidterm;
+        private System.Windows.Forms.DataGridView gridStudents;
+        private System.Windows.Forms.TabPage tabFinalTerm;
+        private System.Windows.Forms.DataGridView dataGridView1;
+
+        private System.Windows.Forms.TableLayoutPanel pnlBottom;
+        private System.Windows.Forms.Panel pnlGradingScale;
+        private System.Windows.Forms.Label lblGradingScaleTitle;
+        private System.Windows.Forms.DataGridView gridGradingScale;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colRange;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colEquiv;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDesc;
+        private System.Windows.Forms.Panel pnlLegend;
+        private System.Windows.Forms.Label lblLegendTitle;
+        private System.Windows.Forms.Panel pnlLegendItems;
+        private System.Windows.Forms.Panel pnlQuickActions;
+        private System.Windows.Forms.Label lblQuickActionsTitle;
     }
 }

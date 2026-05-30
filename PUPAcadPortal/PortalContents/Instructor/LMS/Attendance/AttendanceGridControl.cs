@@ -1,45 +1,86 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
 using System.ComponentModel;
-using PUPAcadPortal.PortalContents.Instructor.LMS;
 
-namespace PUPAcadPortal
+namespace PUPAcadPortal.PortalContents.Instructor.LMS
 {
+    /// <summary>
+    /// Paginated, filterable attendance grid with Present / Late / Absent / Excused,
+    /// bulk-mark toolbar, and a clean maroon-accented header.
+    /// </summary>
     public partial class AttendanceGridControl : UserControl
     {
+        // ── Constants ────────────────────────────────────────────────────────
         private const int PAGE_SIZE = 15;
+        private const int ROW_H = 46;
+        private const int HEADER_H = 40;
+        private const int BOTTOM_BAR_H = 48;
+
+        // ── Palette ──────────────────────────────────────────────────────────
+        private static readonly Color Maroon = Color.FromArgb(106, 0, 0);
+        private static readonly Color MaroonDark = Color.FromArgb(80, 0, 0);
+        private static readonly Color RowAlt = Color.FromArgb(252, 252, 252);
+        private static readonly Color BorderGray = Color.FromArgb(230, 230, 230);
+        private static readonly Color PresentGreen = Color.FromArgb(0, 140, 0);
+        private static readonly Color LateOrange = Color.FromArgb(200, 110, 0);
+        private static readonly Color AbsentRed = Color.Firebrick;
+        private static readonly Color ExcusedGold = Color.DarkGoldenrod;
+
+        // ── Data ─────────────────────────────────────────────────────────────
         private List<StudentAttendanceRecord> _source = new();
         private List<StudentAttendanceRecord> _filtered = new();
         private int _currentPage = 1;
         private int _totalPages = 1;
-        private DataGridView _dgv;
-        private Label _lblShowing;
-        private Panel _pnlPagination;
-        private Button _btnFirst, _btnPrev, _btnNext, _btnLast;
-        private Button[] _pageButtons;
+
+        // ── Controls ─────────────────────────────────────────────────────────
+       
+
         public event EventHandler? AttendanceChanged;
+
         public AttendanceGridControl()
         {
-            DoubleBuffered = true;
-            BackColor = Color.White;
+            InitializeComponent();
 
-            BuildLayout();
-            SetupGridColumns();
-            WireGridEvents();
+            // Rebuild your array reference based on the explicitly named designer variables
+            _pageButtons = new[] { btnPage1, btnPage2, btnPage3 };
+
+            // Set default column forecolors that the standard Designer style builder cannot directly map natively
+            _dgv.Columns["colRemarks"].DefaultCellStyle.ForeColor = Color.Gray;
+
+            // Attach explicit click events that were previously in loops
+            btnMarkPresent.Click += (_, __) => BulkMark(AttendanceStatus.Present);
+            btnMarkLate.Click += (_, __) => BulkMark(AttendanceStatus.Late);
+            btnMarkAbsent.Click += (_, __) => BulkMark(AttendanceStatus.Absent);
+            btnMarkExcused.Click += (_, __) => BulkMark(AttendanceStatus.Excused);
+
+            // Standard nav bindings
+            _btnFirst.Click += (_, __) => GoToPage(1);
+            _btnPrev.Click += (_, __) => GoToPage(_currentPage - 1);
+            _btnNext.Click += (_, __) => GoToPage(_currentPage + 1);
+            _btnLast.Click += (_, __) => GoToPage(_totalPages);
+
+            foreach (var btn in _pageButtons)
+            {
+                btn.Click += (s, __) =>
+                { if (int.TryParse(((Button)s!).Text, out int p)) GoToPage(p); };
+            }
+
+            SizeChanged += (_, __) => PositionAll();
+
+            WireEvents();
             RefreshView();
         }
 
-        //  Public API 
+        // ── Public API ───────────────────────────────────────────────────────
+        public DataGridView Grid => _dgv;
 
         public void LoadStudents(IEnumerable<StudentAttendanceRecord> students)
         {
-            _source = students
-                .OrderBy(s => s.LastName)
-                .ThenBy(s => s.FirstName)
-                .ToList();
+            _source = students.OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
             _filtered = _source.ToList();
             _currentPage = 1;
             RefreshView();
@@ -57,192 +98,39 @@ namespace PUPAcadPortal
             _currentPage = 1;
             RefreshView();
         }
-        public DataGridView Grid => _dgv;
 
-        //  Layout 
+        // ── Layout ───────────────────────────────────────────────────────────
+       
 
-        private void BuildLayout()
+        private void PositionAll()
         {
-            _dgv = new DataGridView
-            {
-                Anchor = AnchorStyles.Top | AnchorStyles.Bottom |
-                         AnchorStyles.Left | AnchorStyles.Right,
-                Location = new Point(0, 0),
-                BackgroundColor = Color.White,
-                BorderStyle = BorderStyle.None,
-                CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal,
-                GridColor = Color.FromArgb(230, 230, 230),
-                RowHeadersVisible = false,
-                SelectionMode = DataGridViewSelectionMode.FullRowSelect,
-                ScrollBars = ScrollBars.None,
-                AllowUserToAddRows = false,
-                AllowUserToDeleteRows = false,
-                ReadOnly = false,
-                AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None,
-            };
-            _dgv.RowTemplate.Height = 44;
+            const int BULK_H = 38;
+            int gridH = Math.Max(0, Height - BULK_H - BOTTOM_BAR_H);
 
-            // Header style
-            _dgv.EnableHeadersVisualStyles = false;
-            _dgv.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(106, 0, 0);
-            _dgv.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            _dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 9f, FontStyle.Bold);
-            _dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            _dgv.ColumnHeadersHeight = 38;
-            _dgv.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            _pnlBulk.Size = new Size(Width, BULK_H);
+            _pnlBulk.Location = new Point(0, 0);
 
-            // Row style
-            _dgv.DefaultCellStyle.Font = new Font("Segoe UI", 9f);
-            _dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(245, 240, 240);
-            _dgv.DefaultCellStyle.SelectionForeColor = Color.Black;
-
-            Controls.Add(_dgv);
-
-            // Bottom bar
-            _lblShowing = new Label
-            {
-                AutoSize = true,
-                Font = new Font("Segoe UI", 8.5f),
-                ForeColor = Color.FromArgb(80, 80, 80),
-                Text = "Loading...",
-                Anchor = AnchorStyles.Bottom | AnchorStyles.Left,
-            };
-
-            _pnlPagination = new Panel
-            {
-                Height = 30,
-                Anchor = AnchorStyles.Bottom | AnchorStyles.Right,
-                BackColor = Color.Transparent,
-            };
-
-            _btnFirst = MakeNavButton("«");
-            _btnPrev = MakeNavButton("‹");
-            _pageButtons = new[] { MakePageButton("1"), MakePageButton("2"), MakePageButton("3") };
-            _btnNext = MakeNavButton("›");
-            _btnLast = MakeNavButton("»");
-
-            int bx = 0;
-            void AddBtn(Button b)
-            {
-                b.Location = new Point(bx, 0);
-                _pnlPagination.Controls.Add(b);
-                bx += b.Width + 2;
-            }
-            AddBtn(_btnFirst);
-            AddBtn(_btnPrev);
-            foreach (var pb in _pageButtons) AddBtn(pb);
-            AddBtn(_btnNext);
-            AddBtn(_btnLast);
-            _pnlPagination.Width = bx;
-
-            Controls.Add(_lblShowing);
-            Controls.Add(_pnlPagination);
-
-            _btnFirst.Click += (_, __) => GoToPage(1);
-            _btnPrev.Click += (_, __) => GoToPage(_currentPage - 1);
-            _btnNext.Click += (_, __) => GoToPage(_currentPage + 1);
-            _btnLast.Click += (_, __) => GoToPage(_totalPages);
-            foreach (var btn in _pageButtons)
-            {
-                var b = btn;
-                b.Click += (s, __) =>
-                {
-                    if (int.TryParse(((Button)s!).Text, out int p)) GoToPage(p);
-                };
-            }
-
-            SizeChanged += (_, __) => PositionBottomBar();
-            PositionBottomBar();
-        }
-
-        private void PositionBottomBar()
-        {
-            const int BOTTOM_H = 44;
-            int gridH = Math.Max(0, Height - BOTTOM_H);
             _dgv.Size = new Size(Width, gridH);
+            _dgv.Location = new Point(0, BULK_H);
 
             if (_dgv.RowTemplate.Height > 0)
             {
-                int available = gridH - _dgv.ColumnHeadersHeight;
-                _dgv.RowTemplate.Height = Math.Max(30, available / PAGE_SIZE);
+                int avail = gridH - HEADER_H;
+                _dgv.RowTemplate.Height = Math.Max(32, avail / PAGE_SIZE);
                 foreach (DataGridViewRow row in _dgv.Rows)
                     row.Height = _dgv.RowTemplate.Height;
             }
 
-            int barY = Height - BOTTOM_H + 7;
+            int barY = Height - BOTTOM_BAR_H + 8;
             _lblShowing.Location = new Point(10, barY);
-            _pnlPagination.Location = new Point(Width - _pnlPagination.Width - 5, barY);
+            _pnlPagination.Location = new Point(Width - _pnlPagination.Width - 6, barY);
         }
 
-        //  Grid columns 
+        // ── Columns ──────────────────────────────────────────────────────────
+        
 
-        private void SetupGridColumns()
-        {
-            _dgv.Columns.Clear();
-
-            //  name columns
-            _dgv.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "colLastName",
-                HeaderText = "Last Name",
-                Width = 140,
-                ReadOnly = true,
-                DefaultCellStyle = { Alignment = DataGridViewContentAlignment.MiddleLeft },
-            });
-
-            _dgv.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "colFirstName",
-                HeaderText = "First Name",
-                Width = 140,
-                ReadOnly = true,
-                DefaultCellStyle = { Alignment = DataGridViewContentAlignment.MiddleLeft },
-            });
-
-            _dgv.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "colMI",
-                HeaderText = "MI",
-                Width = 46,
-                ReadOnly = true,
-                DefaultCellStyle = { Alignment = DataGridViewContentAlignment.MiddleCenter },
-            });
-
-            _dgv.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "colId",
-                HeaderText = "ID Number",
-                Width = 175,
-                ReadOnly = true,
-                DefaultCellStyle = { Alignment = DataGridViewContentAlignment.MiddleCenter },
-            });
-
-            var statusCol = new DataGridViewComboBoxColumn
-            {
-                Name = "colStatus",
-                HeaderText = "Status",
-                Width = 145,
-                FlatStyle = FlatStyle.Flat,
-                DisplayStyle = DataGridViewComboBoxDisplayStyle.DropDownButton,
-            };
-            statusCol.Items.AddRange("Present", "Absent", "Excused");
-            statusCol.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            statusCol.DefaultCellStyle.ForeColor = Color.Black;
-            _dgv.Columns.Add(statusCol);
-
-            //Remarks
-            _dgv.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "colRemarks",
-                HeaderText = "Remarks",
-                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
-                DefaultCellStyle = { ForeColor = Color.Gray },
-            });
-        }
-
-        //  Grid events 
-
-        private void WireGridEvents()
+        // ── Events ───────────────────────────────────────────────────────────
+        private void WireEvents()
         {
             _dgv.CurrentCellDirtyStateChanged += (s, e) =>
             {
@@ -259,14 +147,9 @@ namespace PUPAcadPortal
                 if (e.ColumnIndex == _dgv.Columns["colStatus"]?.Index)
                 {
                     string val = row.Cells["colStatus"].Value?.ToString() ?? "Present";
-                    rec.Status = val switch
-                    {
-                        "Absent" => AttendanceStatus.Absent,
-                        "Excused" => AttendanceStatus.Excused,
-                        _ => AttendanceStatus.Present,
-                    };
+                    rec.Status = ParseStatus(val);
                     ApplyRemarksLock(row, rec.Status);
-
+                    ApplyRowColor(row, rec.Status);
                     _dgv.InvalidateRow(e.RowIndex);
                     AttendanceChanged?.Invoke(this, EventArgs.Empty);
                 }
@@ -284,46 +167,30 @@ namespace PUPAcadPortal
                 var row = _dgv.Rows[e.RowIndex];
                 if (row.Tag is not StudentAttendanceRecord rec) return;
 
-                // Row background tint
-                Color bg = rec.Status switch
-                {
-                    AttendanceStatus.Absent => Color.FromArgb(255, 245, 245),
-                    AttendanceStatus.Excused => Color.FromArgb(255, 253, 235),
-                    _ => Color.White,
-                };
-                if (!row.Selected)
-                {
-                    row.DefaultCellStyle.BackColor = bg;
-                    row.DefaultCellStyle.SelectionBackColor = bg;
-                }
-
                 int statusIdx = _dgv.Columns["colStatus"]?.Index ?? -1;
                 if (e.ColumnIndex == statusIdx && e.Value != null)
                 {
-                    e.CellStyle.ForeColor = rec.Status switch
-                    {
-                        AttendanceStatus.Absent => Color.Firebrick,
-                        AttendanceStatus.Excused => Color.DarkGoldenrod,
-                        AttendanceStatus.Present => Color.FromArgb(0, 140, 0),
-                        _ => Color.Black,
-                    };
-                    e.CellStyle.Font = new Font("Segoe UI", 9f, FontStyle.Bold);
+                    e.CellStyle.ForeColor = StatusForeColor(rec.Status);
+                    e.CellStyle.Font = new Font("Segoe UI", 8.75f, FontStyle.Bold);
                 }
 
                 int remarksIdx = _dgv.Columns["colRemarks"]?.Index ?? -1;
-                if (e.ColumnIndex == remarksIdx)
+                if (e.ColumnIndex == remarksIdx && rec.Status != AttendanceStatus.Excused)
                 {
-                    if (rec.Status != AttendanceStatus.Excused)
-                    {
-                        e.CellStyle.BackColor = Color.FromArgb(245, 245, 245);
-                        e.CellStyle.ForeColor = Color.FromArgb(160, 160, 160);
-                        e.CellStyle.SelectionBackColor = Color.FromArgb(235, 235, 235);
-                    }
-                    else if (e.Value?.ToString() == "Optional remarks")
-                    {
-                        e.CellStyle.ForeColor = Color.LightGray;
-                    }
+                    e.CellStyle.BackColor = Color.FromArgb(245, 245, 245);
+                    e.CellStyle.ForeColor = Color.FromArgb(160, 160, 160);
+                    e.CellStyle.SelectionBackColor = Color.FromArgb(235, 235, 235);
                 }
+            };
+
+            _dgv.RowPrePaint += (s, e) =>
+            {
+                if (e.RowIndex < 0 || e.RowIndex >= _dgv.Rows.Count) return;
+                var row = _dgv.Rows[e.RowIndex];
+                if (row.Tag is StudentAttendanceRecord rec)
+                    ApplyRowColor(row, rec.Status);
+                else
+                    row.DefaultCellStyle.BackColor = (e.RowIndex % 2 == 0) ? Color.White : RowAlt;
             };
 
             _dgv.EditingControlShowing += (s, e) =>
@@ -331,15 +198,13 @@ namespace PUPAcadPortal
                 int remarksIdx = _dgv.Columns["colRemarks"]?.Index ?? -1;
                 if (_dgv.CurrentCell?.ColumnIndex == remarksIdx && e.Control is TextBox tb)
                     if (tb.Text == "Optional remarks") { tb.Text = ""; tb.ForeColor = Color.Black; }
+
                 int statusIdx = _dgv.Columns["colStatus"]?.Index ?? -1;
                 if (_dgv.CurrentCell?.ColumnIndex == statusIdx && e.Control is ComboBox cb)
                 {
                     cb.DrawMode = DrawMode.OwnerDrawFixed;
                     cb.DrawItem -= StatusCombo_DrawItem;
                     cb.DrawItem += StatusCombo_DrawItem;
-                    cb.ForeColor = StatusColor(cb.Text);
-                    cb.SelectedIndexChanged -= StatusCombo_SelectedIndexChanged;
-                    cb.SelectedIndexChanged += StatusCombo_SelectedIndexChanged;
                 }
             };
 
@@ -348,66 +213,76 @@ namespace PUPAcadPortal
                 if (e.RowIndex < 0) return;
                 var row = _dgv.Rows[e.RowIndex];
                 if (row.Tag is not StudentAttendanceRecord rec) return;
-
                 int remarksIdx = _dgv.Columns["colRemarks"]?.Index ?? -1;
                 if (e.ColumnIndex == remarksIdx && rec.Status != AttendanceStatus.Excused)
-                    e.Cancel = true;   
+                    e.Cancel = true;
             };
         }
 
         private void ApplyRemarksLock(DataGridViewRow row, AttendanceStatus status)
         {
-            int remarksIdx = _dgv.Columns["colRemarks"]?.Index ?? -1;
-            if (remarksIdx < 0) return;
-
-            var cell = row.Cells[remarksIdx];
-            if (status != AttendanceStatus.Excused)
-            {
-                cell.ReadOnly = true;
-                cell.Style.BackColor = Color.FromArgb(245, 245, 245);
-                cell.Style.ForeColor = Color.FromArgb(160, 160, 160);
-                cell.Style.SelectionBackColor = Color.FromArgb(235, 235, 235);
-            }
-            else
-            {
-                cell.ReadOnly = false;
-                cell.Style.BackColor = Color.Empty;   
-                cell.Style.ForeColor = Color.Empty;
-                cell.Style.SelectionBackColor = Color.Empty;
-            }
+            int ri = _dgv.Columns["colRemarks"]?.Index ?? -1;
+            if (ri < 0) return;
+            var cell = row.Cells[ri];
+            bool editable = status == AttendanceStatus.Excused;
+            cell.ReadOnly = !editable;
+            cell.Style.BackColor = editable ? Color.Empty : Color.FromArgb(245, 245, 245);
+            cell.Style.ForeColor = editable ? Color.Empty : Color.FromArgb(160, 160, 160);
+            cell.Style.SelectionBackColor = editable ? Color.Empty : Color.FromArgb(235, 235, 235);
         }
 
-        // Status 
+        private static void ApplyRowColor(DataGridViewRow row, AttendanceStatus status)
+        {
+            Color bg = status switch
+            {
+                AttendanceStatus.Absent => Color.FromArgb(255, 244, 244),
+                AttendanceStatus.Late => Color.FromArgb(255, 250, 235),
+                AttendanceStatus.Excused => Color.FromArgb(255, 253, 230),
+                _ => Color.White,
+            };
+            row.DefaultCellStyle.BackColor = bg;
+            row.DefaultCellStyle.SelectionBackColor = bg;
+        }
+
         private void StatusCombo_DrawItem(object? sender, DrawItemEventArgs e)
         {
             if (e.Index < 0 || sender is not ComboBox cb) return;
             e.DrawBackground();
             string item = cb.Items[e.Index]?.ToString() ?? "";
-            Color fore = (e.State & DrawItemState.Selected) != 0 ? Color.White : StatusColor(item);
-            Color back = (e.State & DrawItemState.Selected) != 0 ? Color.FromArgb(106, 0, 0) : Color.White;
-            using var brush = new SolidBrush(back);
-            e.Graphics.FillRectangle(brush, e.Bounds);
-            using var foreBrush = new SolidBrush(fore);
-            using var font = new Font("Segoe UI", 9f, FontStyle.Bold);
-            e.Graphics.DrawString(item, font, foreBrush,
-                e.Bounds.X + 4, e.Bounds.Y + (e.Bounds.Height - font.Height) / 2);
+            var st = ParseStatus(item);
+            bool sel = (e.State & DrawItemState.Selected) != 0;
+            Color back = sel ? Maroon : Color.White;
+            Color fore = sel ? Color.White : StatusForeColor(st);
+            using var bb = new SolidBrush(back); e.Graphics.FillRectangle(bb, e.Bounds);
+            using var fb = new SolidBrush(fore);
+            using var f = new Font("Segoe UI", 8.75f, FontStyle.Bold);
+            e.Graphics.DrawString(item, f, fb, e.Bounds.X + 4,
+                e.Bounds.Y + (e.Bounds.Height - f.Height) / 2);
         }
 
-        private void StatusCombo_SelectedIndexChanged(object? sender, EventArgs e)
+        // ── Bulk mark ────────────────────────────────────────────────────────
+        private void BulkMark(AttendanceStatus status)
         {
-            if (sender is ComboBox cb) cb.ForeColor = StatusColor(cb.Text);
+            foreach (var rec in _allOnPage)
+                rec.Status = status;
+
+            _dgv.SuspendLayout();
+            foreach (DataGridViewRow row in _dgv.Rows)
+            {
+                if (row.Tag is not StudentAttendanceRecord rec) continue;
+                row.Cells["colStatus"].Value = StatusString(status);
+                ApplyRemarksLock(row, status);
+                ApplyRowColor(row, status);
+            }
+            _dgv.ResumeLayout();
+            _dgv.Invalidate();
+            AttendanceChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        private static Color StatusColor(string? status) => status switch
-        {
-            "Absent" => Color.Firebrick,
-            "Excused" => Color.DarkGoldenrod,
-            "Present" => Color.FromArgb(0, 140, 0),
-            _ => Color.Black,
-        };
+        private List<StudentAttendanceRecord> _allOnPage = new();
+        private Button[] _pageButtons;
 
-        //  Core refresh 
-
+        // ── Core refresh ─────────────────────────────────────────────────────
         private void RefreshView()
         {
             _totalPages = Math.Max(1, (int)Math.Ceiling(_filtered.Count / (double)PAGE_SIZE));
@@ -418,6 +293,8 @@ namespace PUPAcadPortal
                 .Take(PAGE_SIZE)
                 .ToList();
 
+            _allOnPage = page;
+
             _dgv.SuspendLayout();
             _dgv.Rows.Clear();
 
@@ -427,47 +304,50 @@ namespace PUPAcadPortal
                 {
                     var s = page[i];
                     int idx = _dgv.Rows.Add(
+                        s.RowNumber,
                         s.LastName,
                         s.FirstName,
                         s.MiddleInitial,
                         s.IdNumber,
-                        s.Status.ToString(),
+                        StatusString(s.Status),
                         string.IsNullOrWhiteSpace(s.Remarks) ? "Optional remarks" : s.Remarks);
-                    _dgv.Rows[idx].Tag = s;
 
-                    ApplyRemarksLock(_dgv.Rows[idx], s.Status);
+                    var row = _dgv.Rows[idx];
+                    row.Tag = s;
+                    ApplyRemarksLock(row, s.Status);
+                    ApplyRowColor(row, s.Status);
                 }
                 else
                 {
-                    int idx = _dgv.Rows.Add("", "", "", "", "Present", "");
-                    _dgv.Rows[idx].Tag = null;
-                    _dgv.Rows[idx].ReadOnly = true;
-                    _dgv.Rows[idx].DefaultCellStyle.BackColor = Color.FromArgb(252, 252, 252);
-                    _dgv.Rows[idx].DefaultCellStyle.ForeColor = Color.Transparent;
+                    int idx = _dgv.Rows.Add("", "", "", "", "", "Present", "");
+                    var row = _dgv.Rows[idx];
+                    row.Tag = null;
+                    row.ReadOnly = true;
+                    row.DefaultCellStyle.BackColor = (i % 2 == 0) ? Color.White : RowAlt;
+                    row.DefaultCellStyle.ForeColor = Color.Transparent;
                 }
             }
 
             _dgv.ResumeLayout();
             UpdatePagination();
             UpdateShowingLabel();
-            PositionBottomBar();
+            PositionAll();
         }
 
-        //  Pagination 
-
+        // ── Pagination ───────────────────────────────────────────────────────
         private void UpdatePagination()
         {
-            int[] visible = GetVisiblePages();
+            int[] vis = GetVisiblePages();
             for (int i = 0; i < _pageButtons.Length; i++)
             {
-                if (i < visible.Length)
+                if (i < vis.Length)
                 {
-                    _pageButtons[i].Text = visible[i].ToString();
+                    _pageButtons[i].Text = vis[i].ToString();
                     _pageButtons[i].Visible = true;
-                    bool active = visible[i] == _currentPage;
-                    _pageButtons[i].BackColor = active ? Color.FromArgb(128, 0, 0) : Color.White;
+                    bool active = vis[i] == _currentPage;
+                    _pageButtons[i].BackColor = active ? Maroon : Color.White;
                     _pageButtons[i].ForeColor = active ? Color.White : Color.Black;
-                    _pageButtons[i].Font = new Font("Segoe UI", 9f,
+                    _pageButtons[i].Font = new Font("Segoe UI", 8.75f,
                         active ? FontStyle.Bold : FontStyle.Regular);
                 }
                 else _pageButtons[i].Visible = false;
@@ -488,10 +368,9 @@ namespace PUPAcadPortal
         {
             int start = (_currentPage - 1) * PAGE_SIZE + 1;
             int end = Math.Min(_currentPage * PAGE_SIZE, _filtered.Count);
-            int tot = _filtered.Count;
-            _lblShowing.Text = tot == 0
+            _lblShowing.Text = _filtered.Count == 0
                 ? "No students found"
-                : $"Showing {start} to {end} of {tot} students";
+                : $"Showing {start}–{end} of {_filtered.Count} students";
         }
 
         private void GoToPage(int page)
@@ -501,29 +380,39 @@ namespace PUPAcadPortal
             RefreshView();
         }
 
-        //  Button factories 
-
-        private static Button MakeNavButton(string text)
+        // ── Helpers ──────────────────────────────────────────────────────────
+        private static AttendanceStatus ParseStatus(string? s) => s switch
         {
-            var b = new Button
-            {
-                Text = text,
-                Size = new Size(32, 30),
-                FlatStyle = FlatStyle.Flat,
-                Font = new Font("Segoe UI", 9f),
-                BackColor = Color.White,
-                ForeColor = Color.Black,
-                Cursor = Cursors.Hand,
-            };
-            b.FlatAppearance.BorderColor = Color.FromArgb(200, 200, 200);
-            return b;
-        }
+            "Absent" => AttendanceStatus.Absent,
+            "Late" => AttendanceStatus.Late,
+            "Excused" => AttendanceStatus.Excused,
+            _ => AttendanceStatus.Present,
+        };
 
-        private static Button MakePageButton(string text)
+        private static string StatusString(AttendanceStatus s) => s switch
         {
-            var b = MakeNavButton(text);
-            b.Size = new Size(35, 30);
-            return b;
-        }
+            AttendanceStatus.Absent => "Absent",
+            AttendanceStatus.Late => "Late",
+            AttendanceStatus.Excused => "Excused",
+            _ => "Present",
+        };
+
+        private static Color StatusForeColor(AttendanceStatus s) => s switch
+        {
+            AttendanceStatus.Absent => AbsentRed,
+            AttendanceStatus.Late => LateOrange,
+            AttendanceStatus.Excused => ExcusedGold,
+            _ => PresentGreen,
+        };
+
+        private static Color StatusBgColor(AttendanceStatus s) => s switch
+        {
+            AttendanceStatus.Absent => Color.FromArgb(252, 228, 228),
+            AttendanceStatus.Late => Color.FromArgb(255, 243, 210),
+            AttendanceStatus.Excused => Color.FromArgb(255, 250, 210),
+            _ => Color.FromArgb(220, 248, 220),
+        };
+
+        
     }
 }

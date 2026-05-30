@@ -88,7 +88,6 @@
             pnlHeader.Name = "pnlHeader";
             pnlHeader.Size = new Size(1680, 90);
             pnlHeader.TabIndex = 1;
-            pnlHeader.SizeChanged += pnlHeader_SizeChanged;
             // 
             // btnBack
             // 

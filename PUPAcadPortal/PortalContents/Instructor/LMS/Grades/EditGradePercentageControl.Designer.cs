@@ -2,15 +2,8 @@
 {
     partial class EditGradePercentageControl
     {
-        /// <summary> 
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,407 +15,366 @@
 
         #region Component Designer generated code
 
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            pnlHeader = new Panel();
-            lblHeaderSubtitle = new Label();
-            lblHeaderTitle = new Label();
-            lblCSSection = new Label();
-            csPanel = new Panel();
-            lblCSTotal = new Label();
-            lblPct5 = new Label();
-            nudLongTests = new NumericUpDown();
-            lblLongTests = new Label();
-            lblPct4 = new Label();
-            nudAssignment = new NumericUpDown();
-            lblAssignment = new Label();
-            lblPct3 = new Label();
-            nudSeatwork = new NumericUpDown();
-            lblSeatwork = new Label();
-            lblPct2 = new Label();
-            nudRecitation = new NumericUpDown();
-            lblRecitation = new Label();
-            lblPct1 = new Label();
-            nudAttendance = new NumericUpDown();
-            lblAttendance = new Label();
-            lblMESection = new Label();
-            mePanel = new Panel();
-            lblPct6 = new Label();
-            nudMajorExam = new NumericUpDown();
-            lblMajorExam = new Label();
-            lblGrandTotal = new Label();
-            btnReset = new Button();
-            btnCancel = new Button();
-            btnApply = new Button();
-            pnlHeader.SuspendLayout();
-            csPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)nudLongTests).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)nudAssignment).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)nudSeatwork).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)nudRecitation).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)nudAttendance).BeginInit();
-            mePanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)nudMajorExam).BeginInit();
-            SuspendLayout();
-            // 
-            // pnlHeader
-            // 
-            pnlHeader.BackColor = Color.FromArgb(106, 0, 0);
-            pnlHeader.Controls.Add(lblHeaderSubtitle);
-            pnlHeader.Controls.Add(lblHeaderTitle);
-            pnlHeader.Dock = DockStyle.Top;
-            pnlHeader.Location = new Point(0, 0);
-            pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(504, 70);
-            pnlHeader.TabIndex = 0;
-            // 
-            // lblHeaderSubtitle
-            // 
-            lblHeaderSubtitle.AutoSize = true;
-            lblHeaderSubtitle.Font = new Font("Segoe UI", 9F);
-            lblHeaderSubtitle.ForeColor = Color.FromArgb(220, 220, 220);
-            lblHeaderSubtitle.Location = new Point(16, 38);
-            lblHeaderSubtitle.Name = "lblHeaderSubtitle";
-            lblHeaderSubtitle.Size = new Size(307, 15);
-            lblHeaderSubtitle.TabIndex = 1;
-            lblHeaderSubtitle.Text = "Set weights for each grade component (must total 100%)";
-            // 
-            // lblHeaderTitle
-            // 
-            lblHeaderTitle.AutoSize = true;
-            lblHeaderTitle.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            lblHeaderTitle.ForeColor = Color.White;
-            lblHeaderTitle.Location = new Point(16, 10);
-            lblHeaderTitle.Name = "lblHeaderTitle";
-            lblHeaderTitle.Size = new Size(217, 25);
-            lblHeaderTitle.TabIndex = 0;
-            lblHeaderTitle.Text = "Edit Grade Percentages";
-            // 
-            // lblCSSection
-            // 
-            lblCSSection.AutoSize = true;
-            lblCSSection.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblCSSection.ForeColor = Color.FromArgb(106, 0, 0);
-            lblCSSection.Location = new Point(14, 85);
-            lblCSSection.Name = "lblCSSection";
-            lblCSSection.Size = new Size(260, 17);
-            lblCSSection.TabIndex = 1;
-            lblCSSection.Text = "Class Standing Components (target 70%)";
-            // 
-            // csPanel
-            // 
-            csPanel.BackColor = Color.FromArgb(253, 245, 245);
-            csPanel.BorderStyle = BorderStyle.FixedSingle;
-            csPanel.Controls.Add(lblCSTotal);
-            csPanel.Controls.Add(lblPct5);
-            csPanel.Controls.Add(nudLongTests);
-            csPanel.Controls.Add(lblLongTests);
-            csPanel.Controls.Add(lblPct4);
-            csPanel.Controls.Add(nudAssignment);
-            csPanel.Controls.Add(lblAssignment);
-            csPanel.Controls.Add(lblPct3);
-            csPanel.Controls.Add(nudSeatwork);
-            csPanel.Controls.Add(lblSeatwork);
-            csPanel.Controls.Add(lblPct2);
-            csPanel.Controls.Add(nudRecitation);
-            csPanel.Controls.Add(lblRecitation);
-            csPanel.Controls.Add(lblPct1);
-            csPanel.Controls.Add(nudAttendance);
-            csPanel.Controls.Add(lblAttendance);
-            csPanel.Location = new Point(10, 107);
-            csPanel.Name = "csPanel";
-            csPanel.Size = new Size(475, 215);
-            csPanel.TabIndex = 2;
-            // 
-            // lblCSTotal
-            // 
-            lblCSTotal.AutoSize = true;
-            lblCSTotal.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblCSTotal.ForeColor = Color.FromArgb(16, 124, 65);
-            lblCSTotal.Location = new Point(14, 196);
-            lblCSTotal.Name = "lblCSTotal";
-            lblCSTotal.Size = new Size(176, 17);
-            lblCSTotal.TabIndex = 15;
-            lblCSTotal.Text = "Class Standing Total: 0 / 70";
-            // 
-            // lblPct5
-            // 
-            lblPct5.AutoSize = true;
-            lblPct5.Font = new Font("Segoe UI", 9.5F);
-            lblPct5.Location = new Point(385, 159);
-            lblPct5.Name = "lblPct5";
-            lblPct5.Size = new Size(19, 17);
-            lblPct5.TabIndex = 14;
-            lblPct5.Text = "%";
-            // 
-            // nudLongTests
-            // 
-            nudLongTests.Font = new Font("Segoe UI", 9.5F);
-            nudLongTests.Location = new Point(320, 156);
-            nudLongTests.Name = "nudLongTests";
-            nudLongTests.Size = new Size(60, 24);
-            nudLongTests.TabIndex = 13;
-            // 
-            // lblLongTests
-            // 
-            lblLongTests.Font = new Font("Segoe UI", 9.5F);
-            lblLongTests.Location = new Point(14, 158);
-            lblLongTests.Name = "lblLongTests";
-            lblLongTests.Size = new Size(260, 22);
-            lblLongTests.TabIndex = 12;
-            lblLongTests.Text = "Long Tests";
-            // 
-            // lblPct4
-            // 
-            lblPct4.AutoSize = true;
-            lblPct4.Font = new Font("Segoe UI", 9.5F);
-            lblPct4.Location = new Point(385, 123);
-            lblPct4.Name = "lblPct4";
-            lblPct4.Size = new Size(19, 17);
-            lblPct4.TabIndex = 11;
-            lblPct4.Text = "%";
-            // 
-            // nudAssignment
-            // 
-            nudAssignment.Font = new Font("Segoe UI", 9.5F);
-            nudAssignment.Location = new Point(320, 120);
-            nudAssignment.Name = "nudAssignment";
-            nudAssignment.Size = new Size(60, 24);
-            nudAssignment.TabIndex = 10;
-            // 
-            // lblAssignment
-            // 
-            lblAssignment.Font = new Font("Segoe UI", 9.5F);
-            lblAssignment.Location = new Point(14, 122);
-            lblAssignment.Name = "lblAssignment";
-            lblAssignment.Size = new Size(260, 22);
-            lblAssignment.TabIndex = 9;
-            lblAssignment.Text = "Assignment / Project";
-            // 
-            // lblPct3
-            // 
-            lblPct3.AutoSize = true;
-            lblPct3.Font = new Font("Segoe UI", 9.5F);
-            lblPct3.Location = new Point(385, 87);
-            lblPct3.Name = "lblPct3";
-            lblPct3.Size = new Size(19, 17);
-            lblPct3.TabIndex = 8;
-            lblPct3.Text = "%";
-            // 
-            // nudSeatwork
-            // 
-            nudSeatwork.Font = new Font("Segoe UI", 9.5F);
-            nudSeatwork.Location = new Point(320, 84);
-            nudSeatwork.Name = "nudSeatwork";
-            nudSeatwork.Size = new Size(60, 24);
-            nudSeatwork.TabIndex = 7;
-            // 
-            // lblSeatwork
-            // 
-            lblSeatwork.Font = new Font("Segoe UI", 9.5F);
-            lblSeatwork.Location = new Point(14, 86);
-            lblSeatwork.Name = "lblSeatwork";
-            lblSeatwork.Size = new Size(260, 22);
-            lblSeatwork.TabIndex = 6;
-            lblSeatwork.Text = "Seatwork / Short Quiz";
-            // 
-            // lblPct2
-            // 
-            lblPct2.AutoSize = true;
-            lblPct2.Font = new Font("Segoe UI", 9.5F);
-            lblPct2.Location = new Point(385, 51);
-            lblPct2.Name = "lblPct2";
-            lblPct2.Size = new Size(19, 17);
-            lblPct2.TabIndex = 5;
-            lblPct2.Text = "%";
-            // 
-            // nudRecitation
-            // 
-            nudRecitation.Font = new Font("Segoe UI", 9.5F);
-            nudRecitation.Location = new Point(320, 48);
-            nudRecitation.Name = "nudRecitation";
-            nudRecitation.Size = new Size(60, 24);
-            nudRecitation.TabIndex = 4;
-            // 
-            // lblRecitation
-            // 
-            lblRecitation.Font = new Font("Segoe UI", 9.5F);
-            lblRecitation.Location = new Point(14, 50);
-            lblRecitation.Name = "lblRecitation";
-            lblRecitation.Size = new Size(260, 22);
-            lblRecitation.TabIndex = 3;
-            lblRecitation.Text = "Recitation / Class Participation";
-            // 
-            // lblPct1
-            // 
-            lblPct1.AutoSize = true;
-            lblPct1.Font = new Font("Segoe UI", 9.5F);
-            lblPct1.Location = new Point(385, 15);
-            lblPct1.Name = "lblPct1";
-            lblPct1.Size = new Size(19, 17);
-            lblPct1.TabIndex = 2;
-            lblPct1.Text = "%";
-            // 
-            // nudAttendance
-            // 
-            nudAttendance.Font = new Font("Segoe UI", 9.5F);
-            nudAttendance.Location = new Point(320, 12);
-            nudAttendance.Name = "nudAttendance";
-            nudAttendance.Size = new Size(60, 24);
-            nudAttendance.TabIndex = 1;
-            // 
-            // lblAttendance
-            // 
-            lblAttendance.Font = new Font("Segoe UI", 9.5F);
-            lblAttendance.Location = new Point(14, 14);
-            lblAttendance.Name = "lblAttendance";
-            lblAttendance.Size = new Size(260, 22);
-            lblAttendance.TabIndex = 0;
-            lblAttendance.Text = "Attendance";
-            // 
-            // lblMESection
-            // 
-            lblMESection.AutoSize = true;
-            lblMESection.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblMESection.ForeColor = Color.FromArgb(106, 0, 0);
-            lblMESection.Location = new Point(14, 332);
-            lblMESection.Name = "lblMESection";
-            lblMESection.Size = new Size(237, 17);
-            lblMESection.TabIndex = 3;
-            lblMESection.Text = "Major Exam Component (target 30%)";
-            // 
-            // mePanel
-            // 
-            mePanel.BackColor = Color.FromArgb(253, 245, 245);
-            mePanel.BorderStyle = BorderStyle.FixedSingle;
-            mePanel.Controls.Add(lblPct6);
-            mePanel.Controls.Add(nudMajorExam);
-            mePanel.Controls.Add(lblMajorExam);
-            mePanel.Location = new Point(10, 354);
-            mePanel.Name = "mePanel";
-            mePanel.Size = new Size(475, 60);
-            mePanel.TabIndex = 4;
-            // 
-            // lblPct6
-            // 
-            lblPct6.AutoSize = true;
-            lblPct6.Font = new Font("Segoe UI", 9.5F);
-            lblPct6.Location = new Point(385, 15);
-            lblPct6.Name = "lblPct6";
-            lblPct6.Size = new Size(19, 17);
-            lblPct6.TabIndex = 17;
-            lblPct6.Text = "%";
-            // 
-            // nudMajorExam
-            // 
-            nudMajorExam.Font = new Font("Segoe UI", 9.5F);
-            nudMajorExam.Location = new Point(320, 12);
-            nudMajorExam.Name = "nudMajorExam";
-            nudMajorExam.Size = new Size(60, 24);
-            nudMajorExam.TabIndex = 16;
-            // 
-            // lblMajorExam
-            // 
-            lblMajorExam.Font = new Font("Segoe UI", 9.5F);
-            lblMajorExam.Location = new Point(14, 14);
-            lblMajorExam.Name = "lblMajorExam";
-            lblMajorExam.Size = new Size(260, 22);
-            lblMajorExam.TabIndex = 15;
-            lblMajorExam.Text = "Major Exams (Midterm / Final)";
-            // 
-            // lblGrandTotal
-            // 
-            lblGrandTotal.AutoSize = true;
-            lblGrandTotal.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblGrandTotal.ForeColor = Color.FromArgb(16, 124, 65);
-            lblGrandTotal.Location = new Point(16, 428);
-            lblGrandTotal.Name = "lblGrandTotal";
-            lblGrandTotal.Size = new Size(161, 19);
-            lblGrandTotal.TabIndex = 5;
-            lblGrandTotal.Text = "Grand Total: 100 / 100 ";
-            // 
-            // btnReset
-            // 
-            btnReset.BackColor = Color.White;
-            btnReset.FlatAppearance.BorderColor = Color.LightGray;
-            btnReset.FlatStyle = FlatStyle.Flat;
-            btnReset.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnReset.ForeColor = Color.Black;
-            btnReset.Location = new Point(10, 466);
-            btnReset.Name = "btnReset";
-            btnReset.Size = new Size(130, 32);
-            btnReset.TabIndex = 7;
-            btnReset.Text = "Reset to Default";
-            btnReset.UseVisualStyleBackColor = false;
-            btnReset.Click += btnReset_Click;
-            // 
-            // btnCancel
-            // 
-            btnCancel.BackColor = Color.White;
-            btnCancel.FlatAppearance.BorderColor = Color.LightGray;
-            btnCancel.FlatStyle = FlatStyle.Flat;
-            btnCancel.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnCancel.ForeColor = Color.Black;
-            btnCancel.Location = new Point(151, 466);
-            btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(100, 32);
-            btnCancel.TabIndex = 8;
-            btnCancel.Text = "Cancel";
-            btnCancel.UseVisualStyleBackColor = false;
-            btnCancel.Click += btnCancel_Click;
-            // 
-            // btnApply
-            // 
-            btnApply.BackColor = Color.FromArgb(106, 0, 0);
-            btnApply.FlatAppearance.BorderColor = Color.LightGray;
-            btnApply.FlatStyle = FlatStyle.Flat;
-            btnApply.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnApply.ForeColor = Color.White;
-            btnApply.Location = new Point(271, 466);
-            btnApply.Name = "btnApply";
-            btnApply.Size = new Size(200, 32);
-            btnApply.TabIndex = 9;
-            btnApply.Text = "Apply Changes";
-            btnApply.UseVisualStyleBackColor = false;
-            btnApply.Click += btnApply_Click;
-            // 
-            // EditGradePercentageControl
-            // 
-            BackColor = Color.White;
-            ClientSize = new Size(504, 508);
-            Controls.Add(btnApply);
-            Controls.Add(btnCancel);
-            Controls.Add(btnReset);
-            Controls.Add(lblGrandTotal);
-            Controls.Add(mePanel);
-            Controls.Add(lblMESection);
-            Controls.Add(csPanel);
-            Controls.Add(lblCSSection);
-            Controls.Add(pnlHeader);
-            FormBorderStyle = FormBorderStyle.FixedDialog;
-            MaximizeBox = false;
-            MinimizeBox = false;
-            Name = "EditGradePercentageControl";
-            StartPosition = FormStartPosition.CenterParent;
-            Text = "Edit Grade Percentage";
-            pnlHeader.ResumeLayout(false);
-            pnlHeader.PerformLayout();
-            csPanel.ResumeLayout(false);
-            csPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)nudLongTests).EndInit();
-            ((System.ComponentModel.ISupportInitialize)nudAssignment).EndInit();
-            ((System.ComponentModel.ISupportInitialize)nudSeatwork).EndInit();
-            ((System.ComponentModel.ISupportInitialize)nudRecitation).EndInit();
-            ((System.ComponentModel.ISupportInitialize)nudAttendance).EndInit();
-            mePanel.ResumeLayout(false);
-            mePanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)nudMajorExam).EndInit();
-            ResumeLayout(false);
-            PerformLayout();
+            this.pnlHeader = new System.Windows.Forms.Panel();
+            this.lblHeaderSubtitle = new System.Windows.Forms.Label();
+            this.lblHeaderTitle = new System.Windows.Forms.Label();
+            this.lblCSSection = new System.Windows.Forms.Label();
+            this.csPanel = new System.Windows.Forms.Panel();
+            this.lblCSTotal = new System.Windows.Forms.Label();
+            this.lblLongTests = new System.Windows.Forms.Label();
+            this.nudLongTests = new System.Windows.Forms.NumericUpDown();
+            this.lblPct5 = new System.Windows.Forms.Label();
+            this.lblAssignment = new System.Windows.Forms.Label();
+            this.nudAssignment = new System.Windows.Forms.NumericUpDown();
+            this.lblPct4 = new System.Windows.Forms.Label();
+            this.lblSeatwork = new System.Windows.Forms.Label();
+            this.nudSeatwork = new System.Windows.Forms.NumericUpDown();
+            this.lblPct3 = new System.Windows.Forms.Label();
+            this.lblRecitation = new System.Windows.Forms.Label();
+            this.nudRecitation = new System.Windows.Forms.NumericUpDown();
+            this.lblPct2 = new System.Windows.Forms.Label();
+            this.lblAttendance = new System.Windows.Forms.Label();
+            this.nudAttendance = new System.Windows.Forms.NumericUpDown();
+            this.lblPct1 = new System.Windows.Forms.Label();
+            this.lblMESection = new System.Windows.Forms.Label();
+            this.mePanel = new System.Windows.Forms.Panel();
+            this.lblMajorExam = new System.Windows.Forms.Label();
+            this.nudMajorExam = new System.Windows.Forms.NumericUpDown();
+            this.lblPct6 = new System.Windows.Forms.Label();
+            this.lblGrandTotal = new System.Windows.Forms.Label();
+            this.btnReset = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnApply = new System.Windows.Forms.Button();
+
+            this.pnlHeader.SuspendLayout();
+            this.csPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudLongTests)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudAssignment)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSeatwork)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudRecitation)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudAttendance)).BeginInit();
+            this.mePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMajorExam)).BeginInit();
+            this.SuspendLayout();
+
+            // ── pnlHeader ─────────────────────────────────────────────────────
+            this.pnlHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.pnlHeader.Controls.Add(this.lblHeaderSubtitle);
+            this.pnlHeader.Controls.Add(this.lblHeaderTitle);
+            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
+            this.pnlHeader.Name = "pnlHeader";
+            this.pnlHeader.Size = new System.Drawing.Size(504, 72);
+            this.pnlHeader.TabIndex = 0;
+
+            // ── lblHeaderSubtitle ─────────────────────────────────────────────
+            this.lblHeaderSubtitle.AutoSize = true;
+            this.lblHeaderSubtitle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHeaderSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.lblHeaderSubtitle.Location = new System.Drawing.Point(17, 42);
+            this.lblHeaderSubtitle.Name = "lblHeaderSubtitle";
+            this.lblHeaderSubtitle.Size = new System.Drawing.Size(277, 15);
+            this.lblHeaderSubtitle.TabIndex = 1;
+            this.lblHeaderSubtitle.Text = "Set component weights — must total exactly 100%";
+
+            // ── lblHeaderTitle ────────────────────────────────────────────────
+            this.lblHeaderTitle.AutoSize = true;
+            this.lblHeaderTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHeaderTitle.ForeColor = System.Drawing.Color.White;
+            this.lblHeaderTitle.Location = new System.Drawing.Point(16, 10);
+            this.lblHeaderTitle.Name = "lblHeaderTitle";
+            this.lblHeaderTitle.Size = new System.Drawing.Size(217, 25);
+            this.lblHeaderTitle.TabIndex = 0;
+            this.lblHeaderTitle.Text = "Edit Grade Percentages";
+
+            // ── lblCSSection ──────────────────────────────────────────────────
+            this.lblCSSection.AutoSize = true;
+            this.lblCSSection.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCSSection.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblCSSection.Location = new System.Drawing.Point(14, 86);
+            this.lblCSSection.Name = "lblCSSection";
+            this.lblCSSection.Size = new System.Drawing.Size(262, 17);
+            this.lblCSSection.TabIndex = 1;
+            this.lblCSSection.Text = "Class Standing Components  (target: 70%)";
+
+            // ── csPanel ───────────────────────────────────────────────────────
+            this.csPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(247)))), ((int)(((byte)(247)))));
+            this.csPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.csPanel.Controls.Add(this.lblCSTotal);
+            this.csPanel.Controls.Add(this.lblLongTests);
+            this.csPanel.Controls.Add(this.nudLongTests);
+            this.csPanel.Controls.Add(this.lblPct5);
+            this.csPanel.Controls.Add(this.lblAssignment);
+            this.csPanel.Controls.Add(this.nudAssignment);
+            this.csPanel.Controls.Add(this.lblPct4);
+            this.csPanel.Controls.Add(this.lblSeatwork);
+            this.csPanel.Controls.Add(this.nudSeatwork);
+            this.csPanel.Controls.Add(this.lblPct3);
+            this.csPanel.Controls.Add(this.lblRecitation);
+            this.csPanel.Controls.Add(this.nudRecitation);
+            this.csPanel.Controls.Add(this.lblPct2);
+            this.csPanel.Controls.Add(this.lblAttendance);
+            this.csPanel.Controls.Add(this.nudAttendance);
+            this.csPanel.Controls.Add(this.lblPct1);
+            this.csPanel.Location = new System.Drawing.Point(10, 108);
+            this.csPanel.Name = "csPanel";
+            this.csPanel.Size = new System.Drawing.Size(476, 225);
+            this.csPanel.TabIndex = 2;
+
+            // ── Attendance Row (Y=12) ──
+            this.lblAttendance.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAttendance.Location = new System.Drawing.Point(14, 15);
+            this.lblAttendance.Name = "lblAttendance";
+            this.lblAttendance.Size = new System.Drawing.Size(250, 22);
+            this.lblAttendance.TabIndex = 0;
+            this.lblAttendance.Text = "Attendance";
+
+            this.nudAttendance.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nudAttendance.Location = new System.Drawing.Point(320, 12);
+            this.nudAttendance.Name = "nudAttendance";
+            this.nudAttendance.Size = new System.Drawing.Size(62, 24);
+            this.nudAttendance.TabIndex = 1;
+
+            this.lblPct1.AutoSize = true;
+            this.lblPct1.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPct1.Location = new System.Drawing.Point(388, 15);
+            this.lblPct1.Name = "lblPct1";
+            this.lblPct1.Size = new System.Drawing.Size(19, 17);
+            this.lblPct1.TabIndex = 2;
+            this.lblPct1.Text = "%";
+
+            // ── Recitation Row (Y=52) ──
+            this.lblRecitation.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRecitation.Location = new System.Drawing.Point(14, 55);
+            this.lblRecitation.Name = "lblRecitation";
+            this.lblRecitation.Size = new System.Drawing.Size(250, 22);
+            this.lblRecitation.TabIndex = 3;
+            this.lblRecitation.Text = "Recitation / Class Participation";
+
+            this.nudRecitation.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nudRecitation.Location = new System.Drawing.Point(320, 52);
+            this.nudRecitation.Name = "nudRecitation";
+            this.nudRecitation.Size = new System.Drawing.Size(62, 24);
+            this.nudRecitation.TabIndex = 4;
+
+            this.lblPct2.AutoSize = true;
+            this.lblPct2.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPct2.Location = new System.Drawing.Point(388, 55);
+            this.lblPct2.Name = "lblPct2";
+            this.lblPct2.Size = new System.Drawing.Size(19, 17);
+            this.lblPct2.TabIndex = 5;
+            this.lblPct2.Text = "%";
+
+            // ── Seatwork Row (Y=92) ──
+            this.lblSeatwork.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSeatwork.Location = new System.Drawing.Point(14, 95);
+            this.lblSeatwork.Name = "lblSeatwork";
+            this.lblSeatwork.Size = new System.Drawing.Size(250, 22);
+            this.lblSeatwork.TabIndex = 6;
+            this.lblSeatwork.Text = "Seatwork / Short Quiz";
+
+            this.nudSeatwork.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nudSeatwork.Location = new System.Drawing.Point(320, 92);
+            this.nudSeatwork.Name = "nudSeatwork";
+            this.nudSeatwork.Size = new System.Drawing.Size(62, 24);
+            this.nudSeatwork.TabIndex = 7;
+
+            this.lblPct3.AutoSize = true;
+            this.lblPct3.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPct3.Location = new System.Drawing.Point(388, 95);
+            this.lblPct3.Name = "lblPct3";
+            this.lblPct3.Size = new System.Drawing.Size(19, 17);
+            this.lblPct3.TabIndex = 8;
+            this.lblPct3.Text = "%";
+
+            // ── Assignment Row (Y=132) ──
+            this.lblAssignment.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAssignment.Location = new System.Drawing.Point(14, 135);
+            this.lblAssignment.Name = "lblAssignment";
+            this.lblAssignment.Size = new System.Drawing.Size(250, 22);
+            this.lblAssignment.TabIndex = 9;
+            this.lblAssignment.Text = "Assignment / Project";
+
+            this.nudAssignment.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nudAssignment.Location = new System.Drawing.Point(320, 132);
+            this.nudAssignment.Name = "nudAssignment";
+            this.nudAssignment.Size = new System.Drawing.Size(62, 24);
+            this.nudAssignment.TabIndex = 10;
+
+            this.lblPct4.AutoSize = true;
+            this.lblPct4.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPct4.Location = new System.Drawing.Point(388, 135);
+            this.lblPct4.Name = "lblPct4";
+            this.lblPct4.Size = new System.Drawing.Size(19, 17);
+            this.lblPct4.TabIndex = 11;
+            this.lblPct4.Text = "%";
+
+            // ── Long Tests Row (Y=172) ──
+            this.lblLongTests.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLongTests.Location = new System.Drawing.Point(14, 175);
+            this.lblLongTests.Name = "lblLongTests";
+            this.lblLongTests.Size = new System.Drawing.Size(250, 22);
+            this.lblLongTests.TabIndex = 12;
+            this.lblLongTests.Text = "Long Tests";
+
+            this.nudLongTests.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nudLongTests.Location = new System.Drawing.Point(320, 172);
+            this.nudLongTests.Name = "nudLongTests";
+            this.nudLongTests.Size = new System.Drawing.Size(62, 24);
+            this.nudLongTests.TabIndex = 13;
+
+            this.lblPct5.AutoSize = true;
+            this.lblPct5.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPct5.Location = new System.Drawing.Point(388, 175);
+            this.lblPct5.Name = "lblPct5";
+            this.lblPct5.Size = new System.Drawing.Size(19, 17);
+            this.lblPct5.TabIndex = 14;
+            this.lblPct5.Text = "%";
+
+            // ── lblCSTotal ──
+            this.lblCSTotal.AutoSize = true;
+            this.lblCSTotal.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCSTotal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(124)))), ((int)(((byte)(65)))));
+            this.lblCSTotal.Location = new System.Drawing.Point(14, 203);
+            this.lblCSTotal.Name = "lblCSTotal";
+            this.lblCSTotal.Size = new System.Drawing.Size(175, 17);
+            this.lblCSTotal.TabIndex = 15;
+            this.lblCSTotal.Text = "Class Standing Total: 0 / 70";
+
+            // ── lblMESection ──────────────────────────────────────────────────
+            this.lblMESection.AutoSize = true;
+            this.lblMESection.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMESection.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblMESection.Location = new System.Drawing.Point(14, 344);
+            this.lblMESection.Name = "lblMESection";
+            this.lblMESection.Size = new System.Drawing.Size(256, 17);
+            this.lblMESection.TabIndex = 3;
+            this.lblMESection.Text = "Major Exam Component  (target: 30%)";
+
+            // ── mePanel ───────────────────────────────────────────────────────
+            this.mePanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(247)))), ((int)(((byte)(247)))));
+            this.mePanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.mePanel.Controls.Add(this.lblMajorExam);
+            this.mePanel.Controls.Add(this.nudMajorExam);
+            this.mePanel.Controls.Add(this.lblPct6);
+            this.mePanel.Location = new System.Drawing.Point(10, 366);
+            this.mePanel.Name = "mePanel";
+            this.mePanel.Size = new System.Drawing.Size(476, 52);
+            this.mePanel.TabIndex = 4;
+
+            // ── Major Exam Row (Y=12) ──
+            this.lblMajorExam.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMajorExam.Location = new System.Drawing.Point(14, 15);
+            this.lblMajorExam.Name = "lblMajorExam";
+            this.lblMajorExam.Size = new System.Drawing.Size(250, 22);
+            this.lblMajorExam.TabIndex = 0;
+            this.lblMajorExam.Text = "Major Exams  (Midterm / Final)";
+
+            this.nudMajorExam.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nudMajorExam.Location = new System.Drawing.Point(320, 12);
+            this.nudMajorExam.Name = "nudMajorExam";
+            this.nudMajorExam.Size = new System.Drawing.Size(62, 24);
+            this.nudMajorExam.TabIndex = 1;
+
+            this.lblPct6.AutoSize = true;
+            this.lblPct6.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPct6.Location = new System.Drawing.Point(388, 15);
+            this.lblPct6.Name = "lblPct6";
+            this.lblPct6.Size = new System.Drawing.Size(19, 17);
+            this.lblPct6.TabIndex = 2;
+            this.lblPct6.Text = "%";
+
+            // ── lblGrandTotal ─────────────────────────────────────────────────
+            this.lblGrandTotal.AutoSize = true;
+            this.lblGrandTotal.Font = new System.Drawing.Font("Segoe UI", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGrandTotal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(124)))), ((int)(((byte)(65)))));
+            this.lblGrandTotal.Location = new System.Drawing.Point(16, 432);
+            this.lblGrandTotal.Name = "lblGrandTotal";
+            this.lblGrandTotal.Size = new System.Drawing.Size(163, 19);
+            this.lblGrandTotal.TabIndex = 5;
+            this.lblGrandTotal.Text = "Grand Total: 100 / 100";
+
+            // ── btnReset ──────────────────────────────────────────────────────
+            this.btnReset.BackColor = System.Drawing.Color.White;
+            this.btnReset.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.btnReset.FlatAppearance.BorderSize = 1;
+            this.btnReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReset.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReset.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.btnReset.Location = new System.Drawing.Point(10, 466);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(130, 32);
+            this.btnReset.TabIndex = 7;
+            this.btnReset.Text = "↺  Reset Default";
+            this.btnReset.UseVisualStyleBackColor = false;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+
+            // ── btnCancel ─────────────────────────────────────────────────────
+            this.btnCancel.BackColor = System.Drawing.Color.White;
+            this.btnCancel.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.btnCancel.FlatAppearance.BorderSize = 1;
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.btnCancel.Location = new System.Drawing.Point(150, 466);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(100, 32);
+            this.btnCancel.TabIndex = 8;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = false;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+
+            // ── btnApply ──────────────────────────────────────────────────────
+            this.btnApply.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnApply.FlatAppearance.BorderSize = 0;
+            this.btnApply.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnApply.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnApply.ForeColor = System.Drawing.Color.White;
+            this.btnApply.Location = new System.Drawing.Point(262, 466);
+            this.btnApply.Name = "btnApply";
+            this.btnApply.Size = new System.Drawing.Size(224, 32);
+            this.btnApply.TabIndex = 9;
+            this.btnApply.Text = "✔  Apply Changes";
+            this.btnApply.UseVisualStyleBackColor = false;
+            this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
+
+            // ── EditGradePercentageControl ────────────────────────────────────
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(504, 512);
+            this.Controls.Add(this.btnApply);
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnReset);
+            this.Controls.Add(this.lblGrandTotal);
+            this.Controls.Add(this.mePanel);
+            this.Controls.Add(this.lblMESection);
+            this.Controls.Add(this.csPanel);
+            this.Controls.Add(this.lblCSSection);
+            this.Controls.Add(this.pnlHeader);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "EditGradePercentageControl";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Edit Grade Percentages";
+
+            this.pnlHeader.ResumeLayout(false);
+            this.pnlHeader.PerformLayout();
+            this.csPanel.ResumeLayout(false);
+            this.csPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudLongTests)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudAssignment)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSeatwork)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudRecitation)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudAttendance)).EndInit();
+            this.mePanel.ResumeLayout(false);
+            this.mePanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMajorExam)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
         }
 
         #endregion
@@ -430,30 +382,34 @@
         private System.Windows.Forms.Panel pnlHeader;
         private System.Windows.Forms.Label lblHeaderTitle;
         private System.Windows.Forms.Label lblHeaderSubtitle;
+
         private System.Windows.Forms.Label lblCSSection;
         private System.Windows.Forms.Panel csPanel;
         private System.Windows.Forms.Label lblAttendance;
         private System.Windows.Forms.NumericUpDown nudAttendance;
         private System.Windows.Forms.Label lblPct1;
-        private System.Windows.Forms.Label lblPct2;
-        private System.Windows.Forms.NumericUpDown nudRecitation;
         private System.Windows.Forms.Label lblRecitation;
-        private System.Windows.Forms.Label lblPct3;
-        private System.Windows.Forms.NumericUpDown nudSeatwork;
+        private System.Windows.Forms.NumericUpDown nudRecitation;
+        private System.Windows.Forms.Label lblPct2;
         private System.Windows.Forms.Label lblSeatwork;
-        private System.Windows.Forms.Label lblPct4;
-        private System.Windows.Forms.NumericUpDown nudAssignment;
+        private System.Windows.Forms.NumericUpDown nudSeatwork;
+        private System.Windows.Forms.Label lblPct3;
         private System.Windows.Forms.Label lblAssignment;
-        private System.Windows.Forms.Label lblPct5;
-        private System.Windows.Forms.NumericUpDown nudLongTests;
+        private System.Windows.Forms.NumericUpDown nudAssignment;
+        private System.Windows.Forms.Label lblPct4;
         private System.Windows.Forms.Label lblLongTests;
+        private System.Windows.Forms.NumericUpDown nudLongTests;
+        private System.Windows.Forms.Label lblPct5;
         private System.Windows.Forms.Label lblCSTotal;
+
         private System.Windows.Forms.Label lblMESection;
         private System.Windows.Forms.Panel mePanel;
-        private System.Windows.Forms.Label lblPct6;
-        private System.Windows.Forms.NumericUpDown nudMajorExam;
         private System.Windows.Forms.Label lblMajorExam;
+        private System.Windows.Forms.NumericUpDown nudMajorExam;
+        private System.Windows.Forms.Label lblPct6;
+
         private System.Windows.Forms.Label lblGrandTotal;
+
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnApply;

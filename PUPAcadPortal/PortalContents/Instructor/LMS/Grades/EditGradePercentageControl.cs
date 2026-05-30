@@ -5,33 +5,30 @@ using static PUPAcadPortal.PortalContents.Instructor.LMS.GradesContentInst;
 
 namespace PUPAcadPortal.Dialogs
 {
+    /// <summary>
+    /// Dialog that lets the instructor edit the weighted percentages
+    /// for each grade component. Class Standing must total ≤ 70%;
+    /// grand total must equal exactly 100% before Apply is enabled.
+    /// </summary>
     public partial class EditGradePercentageControl : Form
     {
         public GradeWeights UpdatedWeights { get; private set; }
-        private GradeWeights _original;
-        private bool _isAdjusting = false; 
+        private readonly GradeWeights _original;
+        private bool _isAdjusting = false;
 
         public EditGradePercentageControl(GradeWeights current)
         {
             InitializeComponent();
 
             _original = current;
-            UpdatedWeights = new GradeWeights
-            {
-                AttendancePct = current.AttendancePct,
-                RecitationPct = current.RecitationPct,
-                SeatworkPct = current.SeatworkPct,
-                AssignmentPct = current.AssignmentPct,
-                LongTestsPct = current.LongTestsPct,
-                MajorExamsPct = current.MajorExamsPct,
-            };
 
-            nudAttendance.Value = (decimal)_original.AttendancePct;
-            nudRecitation.Value = (decimal)_original.RecitationPct;
-            nudSeatwork.Value = (decimal)_original.SeatworkPct;
-            nudAssignment.Value = (decimal)_original.AssignmentPct;
-            nudLongTests.Value = (decimal)_original.LongTestsPct;
-            nudMajorExam.Value = (decimal)_original.MajorExamsPct;
+            // Seed spinners from the current weights
+            nudAttendance.Value = (decimal)current.AttendancePct;
+            nudRecitation.Value = (decimal)current.RecitationPct;
+            nudSeatwork.Value = (decimal)current.SeatworkPct;
+            nudAssignment.Value = (decimal)current.AssignmentPct;
+            nudLongTests.Value = (decimal)current.LongTestsPct;
+            nudMajorExam.Value = (decimal)current.MajorExamsPct;
 
             nudAttendance.ValueChanged += NudOnValueChanged;
             nudRecitation.ValueChanged += NudOnValueChanged;
@@ -40,49 +37,36 @@ namespace PUPAcadPortal.Dialogs
             nudLongTests.ValueChanged += NudOnValueChanged;
             nudMajorExam.ValueChanged += NudOnValueChanged;
 
+            UpdatedWeights = CloneWeights(current);
             RefreshTotals();
         }
 
+        // ── Value changed handler ────────────────────────────────────────────
         private void NudOnValueChanged(object sender, EventArgs e)
         {
             if (_isAdjusting) return;
             _isAdjusting = true;
-
             try
             {
-                var changedNud = (NumericUpDown)sender;
-                bool isMajor = changedNud == nudMajorExam;
+                decimal csTotal = nudAttendance.Value + nudRecitation.Value +
+                                  nudSeatwork.Value + nudAssignment.Value + nudLongTests.Value;
 
-                if (!isMajor)
+                // Clamp class standing to 70
+                if (csTotal > 70)
                 {
-                    decimal csTotal = nudAttendance.Value + nudRecitation.Value +
-                                      nudSeatwork.Value + nudAssignment.Value +
-                                      nudLongTests.Value;
-
-                    if (csTotal > 70)
+                    var changed = (NumericUpDown)sender;
+                    if (changed != nudMajorExam)
                     {
                         decimal over = csTotal - 70;
-                        changedNud.Value = Math.Max(0, changedNud.Value - over);
+                        changed.Value = Math.Max(0, changed.Value - over);
+                        csTotal = 70;
                     }
-
-                    csTotal = nudAttendance.Value + nudRecitation.Value +
-                              nudSeatwork.Value + nudAssignment.Value +
-                              nudLongTests.Value;
-
-                    decimal grand = csTotal + nudMajorExam.Value;
-                    if (grand > 100)
-                        nudMajorExam.Value = Math.Max(0, 100 - csTotal);
                 }
-                else
-                {
-                    decimal csTotal = nudAttendance.Value + nudRecitation.Value +
-                                      nudSeatwork.Value + nudAssignment.Value +
-                                      nudLongTests.Value;
 
-                    decimal grand = csTotal + nudMajorExam.Value;
-                    if (grand > 100)
-                        nudMajorExam.Value = Math.Max(0, 100 - csTotal);
-                }
+                // Clamp grand total to 100
+                decimal grand = csTotal + nudMajorExam.Value;
+                if (grand > 100)
+                    nudMajorExam.Value = Math.Max(0, 100 - csTotal);
 
                 RefreshTotals();
             }
@@ -92,53 +76,36 @@ namespace PUPAcadPortal.Dialogs
             }
         }
 
+        // ── Refresh totals display ───────────────────────────────────────────
         private void RefreshTotals()
         {
             decimal cs = nudAttendance.Value + nudRecitation.Value +
-                            nudSeatwork.Value + nudAssignment.Value +
-                            nudLongTests.Value;
+                            nudSeatwork.Value + nudAssignment.Value + nudLongTests.Value;
             decimal grand = cs + nudMajorExam.Value;
 
             lblCSTotal.Text = $"Class Standing Total: {cs} / 70";
             lblCSTotal.ForeColor = cs == 70
-                ? Color.FromArgb(16, 124, 65)
-                : Color.Firebrick;
+                ? Color.FromArgb(16, 124, 65) : Color.Firebrick;
 
-            bool perfect = grand == 100;
-            lblGrandTotal.Text = perfect
-                ? $"Grand Total: {grand} / 100"
-                : $"Grand Total: {grand} / 100";
-            lblGrandTotal.ForeColor = perfect
-                ? Color.FromArgb(16, 124, 65)
-                : Color.Firebrick;
+            lblGrandTotal.Text = $"Grand Total: {grand} / 100";
+            lblGrandTotal.ForeColor = grand == 100
+                ? Color.FromArgb(16, 124, 65) : Color.Firebrick;
 
             if (btnApply != null)
-                btnApply.Enabled = perfect;
+                btnApply.Enabled = (grand == 100);
         }
 
+        // ── Reset to PUP defaults ────────────────────────────────────────────
         private void btnReset_Click(object sender, EventArgs e)
         {
-            nudAttendance.ValueChanged -= NudOnValueChanged;
-            nudRecitation.ValueChanged -= NudOnValueChanged;
-            nudSeatwork.ValueChanged -= NudOnValueChanged;
-            nudAssignment.ValueChanged -= NudOnValueChanged;
-            nudLongTests.ValueChanged -= NudOnValueChanged;
-            nudMajorExam.ValueChanged -= NudOnValueChanged;
-
+            DetachHandlers();
             nudAttendance.Value = 10;
             nudRecitation.Value = 10;
             nudSeatwork.Value = 15;
             nudAssignment.Value = 10;
             nudLongTests.Value = 25;
             nudMajorExam.Value = 30;
-
-            nudAttendance.ValueChanged += NudOnValueChanged;
-            nudRecitation.ValueChanged += NudOnValueChanged;
-            nudSeatwork.ValueChanged += NudOnValueChanged;
-            nudAssignment.ValueChanged += NudOnValueChanged;
-            nudLongTests.ValueChanged += NudOnValueChanged;
-            nudMajorExam.ValueChanged += NudOnValueChanged;
-
+            AttachHandlers();
             RefreshTotals();
         }
 
@@ -156,7 +123,7 @@ namespace PUPAcadPortal.Dialogs
 
             if (grand != 100)
             {
-                MessageBox.Show("Total must equal 100%. Please adjust the values.",
+                MessageBox.Show("Total must equal 100%. Adjust the values.",
                     "Invalid Total", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -174,5 +141,36 @@ namespace PUPAcadPortal.Dialogs
             DialogResult = DialogResult.OK;
             Close();
         }
+
+        // ── Handler attach/detach helpers ────────────────────────────────────
+        private void DetachHandlers()
+        {
+            nudAttendance.ValueChanged -= NudOnValueChanged;
+            nudRecitation.ValueChanged -= NudOnValueChanged;
+            nudSeatwork.ValueChanged -= NudOnValueChanged;
+            nudAssignment.ValueChanged -= NudOnValueChanged;
+            nudLongTests.ValueChanged -= NudOnValueChanged;
+            nudMajorExam.ValueChanged -= NudOnValueChanged;
+        }
+
+        private void AttachHandlers()
+        {
+            nudAttendance.ValueChanged += NudOnValueChanged;
+            nudRecitation.ValueChanged += NudOnValueChanged;
+            nudSeatwork.ValueChanged += NudOnValueChanged;
+            nudAssignment.ValueChanged += NudOnValueChanged;
+            nudLongTests.ValueChanged += NudOnValueChanged;
+            nudMajorExam.ValueChanged += NudOnValueChanged;
+        }
+
+        private static GradeWeights CloneWeights(GradeWeights src) => new()
+        {
+            AttendancePct = src.AttendancePct,
+            RecitationPct = src.RecitationPct,
+            SeatworkPct = src.SeatworkPct,
+            AssignmentPct = src.AssignmentPct,
+            LongTestsPct = src.LongTestsPct,
+            MajorExamsPct = src.MajorExamsPct,
+        };
     }
 }

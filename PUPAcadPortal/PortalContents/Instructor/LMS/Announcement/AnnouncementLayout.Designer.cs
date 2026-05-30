@@ -1,6 +1,6 @@
 ﻿namespace PUPAcadPortal
 {
-    partial class SessionAttendanceControl
+    partial class AnnouncementLayout
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,8 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.SuspendLayout();
+            // 
+            // AnnouncementLayout
+            // 
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackColor = System.Drawing.Color.White;
+            this.DoubleBuffered = true;
+            this.Margin = new System.Windows.Forms.Padding(0);
+            this.Name = "AnnouncementLayout";
+            this.Size = new System.Drawing.Size(600, 100);
+            this.ResumeLayout(false);
         }
 
         #endregion
