@@ -8,19 +8,12 @@ using System.ComponentModel;
 
 namespace PUPAcadPortal.PortalContents.Instructor.LMS
 {
-    /// <summary>
-    /// Paginated, filterable attendance grid with Present / Late / Absent / Excused,
-    /// bulk-mark toolbar, and a clean maroon-accented header.
-    /// </summary>
     public partial class AttendanceGridControl : UserControl
     {
-        // ── Constants ────────────────────────────────────────────────────────
         private const int PAGE_SIZE = 15;
         private const int ROW_H = 46;
         private const int HEADER_H = 40;
         private const int BOTTOM_BAR_H = 48;
-
-        // ── Palette ──────────────────────────────────────────────────────────
         private static readonly Color Maroon = Color.FromArgb(106, 0, 0);
         private static readonly Color MaroonDark = Color.FromArgb(80, 0, 0);
         private static readonly Color RowAlt = Color.FromArgb(252, 252, 252);
@@ -29,35 +22,23 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         private static readonly Color LateOrange = Color.FromArgb(200, 110, 0);
         private static readonly Color AbsentRed = Color.Firebrick;
         private static readonly Color ExcusedGold = Color.DarkGoldenrod;
-
-        // ── Data ─────────────────────────────────────────────────────────────
         private List<StudentAttendanceRecord> _source = new();
         private List<StudentAttendanceRecord> _filtered = new();
         private int _currentPage = 1;
         private int _totalPages = 1;
-
-        // ── Controls ─────────────────────────────────────────────────────────
-       
-
         public event EventHandler? AttendanceChanged;
 
         public AttendanceGridControl()
         {
             InitializeComponent();
 
-            // Rebuild your array reference based on the explicitly named designer variables
             _pageButtons = new[] { btnPage1, btnPage2, btnPage3 };
-
-            // Set default column forecolors that the standard Designer style builder cannot directly map natively
             _dgv.Columns["colRemarks"].DefaultCellStyle.ForeColor = Color.Gray;
 
-            // Attach explicit click events that were previously in loops
             btnMarkPresent.Click += (_, __) => BulkMark(AttendanceStatus.Present);
             btnMarkLate.Click += (_, __) => BulkMark(AttendanceStatus.Late);
             btnMarkAbsent.Click += (_, __) => BulkMark(AttendanceStatus.Absent);
             btnMarkExcused.Click += (_, __) => BulkMark(AttendanceStatus.Excused);
-
-            // Standard nav bindings
             _btnFirst.Click += (_, __) => GoToPage(1);
             _btnPrev.Click += (_, __) => GoToPage(_currentPage - 1);
             _btnNext.Click += (_, __) => GoToPage(_currentPage + 1);
@@ -75,7 +56,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             RefreshView();
         }
 
-        // ── Public API ───────────────────────────────────────────────────────
         public DataGridView Grid => _dgv;
 
         public void LoadStudents(IEnumerable<StudentAttendanceRecord> students)
@@ -98,10 +78,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             _currentPage = 1;
             RefreshView();
         }
-
-        // ── Layout ───────────────────────────────────────────────────────────
-       
-
         private void PositionAll()
         {
             const int BULK_H = 38;
@@ -126,10 +102,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             _pnlPagination.Location = new Point(Width - _pnlPagination.Width - 6, barY);
         }
 
-        // ── Columns ──────────────────────────────────────────────────────────
-        
-
-        // ── Events ───────────────────────────────────────────────────────────
         private void WireEvents()
         {
             _dgv.CurrentCellDirtyStateChanged += (s, e) =>
@@ -259,8 +231,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             e.Graphics.DrawString(item, f, fb, e.Bounds.X + 4,
                 e.Bounds.Y + (e.Bounds.Height - f.Height) / 2);
         }
-
-        // ── Bulk mark ────────────────────────────────────────────────────────
         private void BulkMark(AttendanceStatus status)
         {
             foreach (var rec in _allOnPage)
@@ -281,8 +251,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
         private List<StudentAttendanceRecord> _allOnPage = new();
         private Button[] _pageButtons;
-
-        // ── Core refresh ─────────────────────────────────────────────────────
         private void RefreshView()
         {
             _totalPages = Math.Max(1, (int)Math.Ceiling(_filtered.Count / (double)PAGE_SIZE));
@@ -333,8 +301,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             UpdateShowingLabel();
             PositionAll();
         }
-
-        // ── Pagination ───────────────────────────────────────────────────────
         private void UpdatePagination()
         {
             int[] vis = GetVisiblePages();
@@ -379,8 +345,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             _currentPage = page;
             RefreshView();
         }
-
-        // ── Helpers ──────────────────────────────────────────────────────────
         private static AttendanceStatus ParseStatus(string? s) => s switch
         {
             "Absent" => AttendanceStatus.Absent,

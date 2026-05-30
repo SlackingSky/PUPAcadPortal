@@ -28,185 +28,185 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this._donut = new PUPAcadPortal.PortalContents.Instructor.LMS.DonutPanel();
-            this.lblPresentKey = new System.Windows.Forms.Label();
-            this._lblPresent = new System.Windows.Forms.Label();
-            this._lblPPct = new System.Windows.Forms.Label();
-            this.lblLateKey = new System.Windows.Forms.Label();
-            this._lblLate = new System.Windows.Forms.Label();
-            this._lblLPct = new System.Windows.Forms.Label();
-            this.lblAbsentKey = new System.Windows.Forms.Label();
-            this._lblAbsent = new System.Windows.Forms.Label();
-            this._lblAPct = new System.Windows.Forms.Label();
-            this.lblExcusedKey = new System.Windows.Forms.Label();
-            this._lblExcused = new System.Windows.Forms.Label();
-            this._lblEPct = new System.Windows.Forms.Label();
-            this.SuspendLayout();
+            _donut = new DonutPanel();
+            lblPresentKey = new Label();
+            _lblPresent = new Label();
+            _lblPPct = new Label();
+            lblLateKey = new Label();
+            _lblLate = new Label();
+            _lblLPct = new Label();
+            lblAbsentKey = new Label();
+            _lblAbsent = new Label();
+            _lblAPct = new Label();
+            lblExcusedKey = new Label();
+            _lblExcused = new Label();
+            _lblEPct = new Label();
+            SuspendLayout();
             // 
             // _donut
             // 
-            this._donut.BackColor = System.Drawing.Color.White;
-            this._donut.Location = new System.Drawing.Point(8, 8);
-            this._donut.Name = "_donut";
-            this._donut.Size = new System.Drawing.Size(86, 86);
-            this._donut.TabIndex = 0;
+            _donut.BackColor = Color.White;
+            _donut.Location = new Point(8, 8);
+            _donut.Name = "_donut";
+            _donut.Size = new Size(70, 70);
+            _donut.TabIndex = 0;
             // 
             // lblPresentKey
             // 
-            this.lblPresentKey.AutoSize = true;
-            this.lblPresentKey.Font = new System.Drawing.Font("Segoe UI", 7.5F, System.Drawing.FontStyle.Bold);
-            this.lblPresentKey.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(139)))), ((int)(((byte)(34)))));
-            this.lblPresentKey.Location = new System.Drawing.Point(102, 4);
-            this.lblPresentKey.Name = "lblPresentKey";
-            this.lblPresentKey.Size = new System.Drawing.Size(46, 12);
-            this.lblPresentKey.TabIndex = 1;
-            this.lblPresentKey.Text = "Present";
+            lblPresentKey.AutoSize = true;
+            lblPresentKey.Font = new Font("Segoe UI", 7.5F, FontStyle.Bold);
+            lblPresentKey.ForeColor = Color.FromArgb(34, 139, 34);
+            lblPresentKey.Location = new Point(102, 4);
+            lblPresentKey.Name = "lblPresentKey";
+            lblPresentKey.Size = new Size(39, 12);
+            lblPresentKey.TabIndex = 1;
+            lblPresentKey.Text = "Present";
             // 
             // _lblPresent
             // 
-            this._lblPresent.AutoSize = true;
-            this._lblPresent.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this._lblPresent.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(139)))), ((int)(((byte)(34)))));
-            this._lblPresent.Location = new System.Drawing.Point(102, 18);
-            this._lblPresent.Name = "_lblPresent";
-            this._lblPresent.Size = new System.Drawing.Size(23, 25);
-            this._lblPresent.TabIndex = 2;
-            this._lblPresent.Text = "0";
+            _lblPresent.AutoSize = true;
+            _lblPresent.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            _lblPresent.ForeColor = Color.FromArgb(34, 139, 34);
+            _lblPresent.Location = new Point(102, 18);
+            _lblPresent.Name = "_lblPresent";
+            _lblPresent.Size = new Size(23, 25);
+            _lblPresent.TabIndex = 2;
+            _lblPresent.Text = "0";
             // 
             // _lblPPct
             // 
-            this._lblPPct.AutoSize = true;
-            this._lblPPct.Font = new System.Drawing.Font("Segoe UI", 7.5F);
-            this._lblPPct.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
-            this._lblPPct.Location = new System.Drawing.Point(142, 22);
-            this._lblPPct.Name = "_lblPPct";
-            this._lblPPct.Size = new System.Drawing.Size(21, 12);
-            this._lblPPct.TabIndex = 3;
-            this._lblPPct.Text = "0%";
+            _lblPPct.AutoSize = true;
+            _lblPPct.Font = new Font("Segoe UI", 7.5F);
+            _lblPPct.ForeColor = Color.FromArgb(110, 110, 110);
+            _lblPPct.Location = new Point(142, 22);
+            _lblPPct.Name = "_lblPPct";
+            _lblPPct.Size = new Size(18, 12);
+            _lblPPct.TabIndex = 3;
+            _lblPPct.Text = "0%";
             // 
             // lblLateKey
             // 
-            this.lblLateKey.AutoSize = true;
-            this.lblLateKey.Font = new System.Drawing.Font("Segoe UI", 7.5F, System.Drawing.FontStyle.Bold);
-            this.lblLateKey.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(110)))), ((int)(((byte)(0)))));
-            this.lblLateKey.Location = new System.Drawing.Point(220, 4);
-            this.lblLateKey.Name = "lblLateKey";
-            this.lblLateKey.Size = new System.Drawing.Size(28, 12);
-            this.lblLateKey.TabIndex = 4;
-            this.lblLateKey.Text = "Late";
+            lblLateKey.AutoSize = true;
+            lblLateKey.Font = new Font("Segoe UI", 7.5F, FontStyle.Bold);
+            lblLateKey.ForeColor = Color.FromArgb(200, 110, 0);
+            lblLateKey.Location = new Point(197, 4);
+            lblLateKey.Name = "lblLateKey";
+            lblLateKey.Size = new Size(24, 12);
+            lblLateKey.TabIndex = 4;
+            lblLateKey.Text = "Late";
             // 
             // _lblLate
             // 
-            this._lblLate.AutoSize = true;
-            this._lblLate.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this._lblLate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(110)))), ((int)(((byte)(0)))));
-            this._lblLate.Location = new System.Drawing.Point(220, 18);
-            this._lblLate.Name = "_lblLate";
-            this._lblLate.Size = new System.Drawing.Size(23, 25);
-            this._lblLate.TabIndex = 5;
-            this._lblLate.Text = "0";
+            _lblLate.AutoSize = true;
+            _lblLate.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            _lblLate.ForeColor = Color.FromArgb(200, 110, 0);
+            _lblLate.Location = new Point(197, 18);
+            _lblLate.Name = "_lblLate";
+            _lblLate.Size = new Size(23, 25);
+            _lblLate.TabIndex = 5;
+            _lblLate.Text = "0";
             // 
             // _lblLPct
             // 
-            this._lblLPct.AutoSize = true;
-            this._lblLPct.Font = new System.Drawing.Font("Segoe UI", 7.5F);
-            this._lblLPct.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
-            this._lblLPct.Location = new System.Drawing.Point(258, 22);
-            this._lblLPct.Name = "_lblLPct";
-            this._lblLPct.Size = new System.Drawing.Size(21, 12);
-            this._lblLPct.TabIndex = 6;
-            this._lblLPct.Text = "0%";
+            _lblLPct.AutoSize = true;
+            _lblLPct.Font = new Font("Segoe UI", 7.5F);
+            _lblLPct.ForeColor = Color.FromArgb(110, 110, 110);
+            _lblLPct.Location = new Point(235, 22);
+            _lblLPct.Name = "_lblLPct";
+            _lblLPct.Size = new Size(18, 12);
+            _lblLPct.TabIndex = 6;
+            _lblLPct.Text = "0%";
             // 
             // lblAbsentKey
             // 
-            this.lblAbsentKey.AutoSize = true;
-            this.lblAbsentKey.Font = new System.Drawing.Font("Segoe UI", 7.5F, System.Drawing.FontStyle.Bold);
-            this.lblAbsentKey.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.lblAbsentKey.Location = new System.Drawing.Point(102, 52);
-            this.lblAbsentKey.Name = "lblAbsentKey";
-            this.lblAbsentKey.Size = new System.Drawing.Size(42, 12);
-            this.lblAbsentKey.TabIndex = 7;
-            this.lblAbsentKey.Text = "Absent";
+            lblAbsentKey.AutoSize = true;
+            lblAbsentKey.Font = new Font("Segoe UI", 7.5F, FontStyle.Bold);
+            lblAbsentKey.ForeColor = Color.FromArgb(210, 40, 40);
+            lblAbsentKey.Location = new Point(102, 42);
+            lblAbsentKey.Name = "lblAbsentKey";
+            lblAbsentKey.Size = new Size(37, 12);
+            lblAbsentKey.TabIndex = 7;
+            lblAbsentKey.Text = "Absent";
             // 
             // _lblAbsent
             // 
-            this._lblAbsent.AutoSize = true;
-            this._lblAbsent.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this._lblAbsent.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this._lblAbsent.Location = new System.Drawing.Point(102, 66);
-            this._lblAbsent.Name = "_lblAbsent";
-            this._lblAbsent.Size = new System.Drawing.Size(23, 25);
-            this._lblAbsent.TabIndex = 8;
-            this._lblAbsent.Text = "0";
+            _lblAbsent.AutoSize = true;
+            _lblAbsent.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            _lblAbsent.ForeColor = Color.FromArgb(210, 40, 40);
+            _lblAbsent.Location = new Point(102, 56);
+            _lblAbsent.Name = "_lblAbsent";
+            _lblAbsent.Size = new Size(23, 25);
+            _lblAbsent.TabIndex = 8;
+            _lblAbsent.Text = "0";
             // 
             // _lblAPct
             // 
-            this._lblAPct.AutoSize = true;
-            this._lblAPct.Font = new System.Drawing.Font("Segoe UI", 7.5F);
-            this._lblAPct.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
-            this._lblAPct.Location = new System.Drawing.Point(142, 70);
-            this._lblAPct.Name = "_lblAPct";
-            this._lblAPct.Size = new System.Drawing.Size(21, 12);
-            this._lblAPct.TabIndex = 9;
-            this._lblAPct.Text = "0%";
+            _lblAPct.AutoSize = true;
+            _lblAPct.Font = new Font("Segoe UI", 7.5F);
+            _lblAPct.ForeColor = Color.FromArgb(110, 110, 110);
+            _lblAPct.Location = new Point(142, 60);
+            _lblAPct.Name = "_lblAPct";
+            _lblAPct.Size = new Size(18, 12);
+            _lblAPct.TabIndex = 9;
+            _lblAPct.Text = "0%";
             // 
             // lblExcusedKey
             // 
-            this.lblExcusedKey.AutoSize = true;
-            this.lblExcusedKey.Font = new System.Drawing.Font("Segoe UI", 7.5F, System.Drawing.FontStyle.Bold);
-            this.lblExcusedKey.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(140)))), ((int)(((byte)(0)))));
-            this.lblExcusedKey.Location = new System.Drawing.Point(220, 52);
-            this.lblExcusedKey.Name = "lblExcusedKey";
-            this.lblExcusedKey.Size = new System.Drawing.Size(46, 12);
-            this.lblExcusedKey.TabIndex = 10;
-            this.lblExcusedKey.Text = "Excused";
+            lblExcusedKey.AutoSize = true;
+            lblExcusedKey.Font = new Font("Segoe UI", 7.5F, FontStyle.Bold);
+            lblExcusedKey.ForeColor = Color.FromArgb(180, 140, 0);
+            lblExcusedKey.Location = new Point(197, 42);
+            lblExcusedKey.Name = "lblExcusedKey";
+            lblExcusedKey.Size = new Size(42, 12);
+            lblExcusedKey.TabIndex = 10;
+            lblExcusedKey.Text = "Excused";
             // 
             // _lblExcused
             // 
-            this._lblExcused.AutoSize = true;
-            this._lblExcused.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this._lblExcused.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(140)))), ((int)(((byte)(0)))));
-            this._lblExcused.Location = new System.Drawing.Point(220, 66);
-            this._lblExcused.Name = "_lblExcused";
-            this._lblExcused.Size = new System.Drawing.Size(23, 25);
-            this._lblExcused.TabIndex = 11;
-            this._lblExcused.Text = "0";
+            _lblExcused.AutoSize = true;
+            _lblExcused.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            _lblExcused.ForeColor = Color.FromArgb(180, 140, 0);
+            _lblExcused.Location = new Point(197, 56);
+            _lblExcused.Name = "_lblExcused";
+            _lblExcused.Size = new Size(23, 25);
+            _lblExcused.TabIndex = 11;
+            _lblExcused.Text = "0";
             // 
             // _lblEPct
             // 
-            this._lblEPct.AutoSize = true;
-            this._lblEPct.Font = new System.Drawing.Font("Segoe UI", 7.5F);
-            this._lblEPct.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
-            this._lblEPct.Location = new System.Drawing.Point(258, 70);
-            this._lblEPct.Name = "_lblEPct";
-            this._lblEPct.Size = new System.Drawing.Size(21, 12);
-            this._lblEPct.TabIndex = 12;
-            this._lblEPct.Text = "0%";
+            _lblEPct.AutoSize = true;
+            _lblEPct.Font = new Font("Segoe UI", 7.5F);
+            _lblEPct.ForeColor = Color.FromArgb(110, 110, 110);
+            _lblEPct.Location = new Point(235, 60);
+            _lblEPct.Name = "_lblEPct";
+            _lblEPct.Size = new Size(18, 12);
+            _lblEPct.TabIndex = 12;
+            _lblEPct.Text = "0%";
             // 
             // SessionAttendanceControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this._lblEPct);
-            this.Controls.Add(this._lblExcused);
-            this.Controls.Add(this.lblExcusedKey);
-            this.Controls.Add(this._lblAPct);
-            this.Controls.Add(this._lblAbsent);
-            this.Controls.Add(this.lblAbsentKey);
-            this.Controls.Add(this._lblLPct);
-            this.Controls.Add(this._lblLate);
-            this.Controls.Add(this.lblLateKey);
-            this.Controls.Add(this._lblPPct);
-            this.Controls.Add(this._lblPresent);
-            this.Controls.Add(this.lblPresentKey);
-            this.Controls.Add(this._donut);
-            this.DoubleBuffered = true;
-            this.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Name = "SessionAttendanceControl";
-            this.Size = new System.Drawing.Size(320, 102);
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
+            Controls.Add(_lblEPct);
+            Controls.Add(_lblExcused);
+            Controls.Add(lblExcusedKey);
+            Controls.Add(_lblAPct);
+            Controls.Add(_lblAbsent);
+            Controls.Add(lblAbsentKey);
+            Controls.Add(_lblLPct);
+            Controls.Add(_lblLate);
+            Controls.Add(lblLateKey);
+            Controls.Add(_lblPPct);
+            Controls.Add(_lblPresent);
+            Controls.Add(lblPresentKey);
+            Controls.Add(_donut);
+            DoubleBuffered = true;
+            Font = new Font("Segoe UI", 9F);
+            Name = "SessionAttendanceControl";
+            Size = new Size(283, 92);
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 

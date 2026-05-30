@@ -12,13 +12,11 @@ namespace PUPAcadPortal
 
         public CopyActivityDialog(ActivityItem activity, List<CourseActivity> allCourses)
         {
-            // Call the Designer-generated setup method
             InitializeComponent();
 
             _activity = activity;
             _courses = allCourses;
 
-            // Setup dynamic UI data
             lblSub.Text = $"From: {_activity.Title} ({_activity.TypeString})";
             PopulateCourses();
         }

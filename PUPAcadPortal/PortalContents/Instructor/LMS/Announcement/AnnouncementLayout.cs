@@ -8,14 +8,12 @@ namespace PUPAcadPortal
 {
     public partial class AnnouncementLayout : UserControl
     {
-        // ── Public events ────────────────────────────────────────────────────
         public event EventHandler<int>? CardClicked;
         public event EventHandler<int>? PinToggled;          // student portal
         public event EventHandler<int>? MenuEditClicked;     // instructor portal
         public event EventHandler<int>? MenuToggleClicked;   // instructor portal
         public event EventHandler<int>? MenuDeleteClicked;   // instructor portal
 
-        // ── Per-category colours (shared palette) ────────────────────────────
         private static readonly Dictionary<string, Color> CatIconColor = new()
         {
             ["General"] = Color.FromArgb(0x37, 0x8a, 0xdd),
@@ -38,7 +36,6 @@ namespace PUPAcadPortal
             ["Urgent"] = Color.FromArgb(255, 235, 235),
         };
 
-        // ── Stored id for event routing ──────────────────────────────────────
         private int _announcementId;
         private bool _isStudent;
 
@@ -47,11 +44,6 @@ namespace PUPAcadPortal
             InitializeComponent();
         }
 
-        // ════════════════════════════════════════════════════════════════════
-        //  PUBLIC LOAD METHODS
-        // ════════════════════════════════════════════════════════════════════
-
-        /// <summary>Load card in Instructor mode.</summary>
         public void LoadInstructor(
             int id,
             string title,
@@ -76,7 +68,6 @@ namespace PUPAcadPortal
                 viewedCount, totalStudents, cardWidth);
         }
 
-        /// <summary>Load card in Student mode.</summary>
         public void LoadStudent(
             int id,
             string title,
@@ -99,9 +90,6 @@ namespace PUPAcadPortal
                 officeName, date, isUrgent, isPinned, isRead, cardWidth, instructorName);
         }
 
-        // ════════════════════════════════════════════════════════════════════
-        //  INSTRUCTOR CARD BUILDER
-        // ════════════════════════════════════════════════════════════════════
         private void BuildInstructorCard(
             int id, string title, string description, string category,
             string status, string instructorName, DateTime date,
@@ -393,9 +381,6 @@ namespace PUPAcadPortal
             lblDesc.Click += viewHandler;
         }
 
-        // ════════════════════════════════════════════════════════════════════
-        //  STUDENT CARD BUILDER
-        // ════════════════════════════════════════════════════════════════════
         private void BuildStudentCard(
             int id, string title, string description, string category,
             string officeName, DateTime date, bool isUrgent,
@@ -661,9 +646,6 @@ namespace PUPAcadPortal
             }
         }
 
-        // ════════════════════════════════════════════════════════════════════
-        //  SHARED DRAWING HELPERS
-        // ════════════════════════════════════════════════════════════════════
         private static void DrawCardBorder(Graphics g, Control card)
         {
             g.SmoothingMode = SmoothingMode.AntiAlias;

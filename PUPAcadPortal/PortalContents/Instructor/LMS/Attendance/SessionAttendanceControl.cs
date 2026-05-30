@@ -6,13 +6,8 @@ using System.ComponentModel;
 
 namespace PUPAcadPortal.PortalContents.Instructor.LMS
 {
-    /// <summary>
-    /// Compact summary card showing Present/Late/Absent/Excused counts
-    /// with a mini donut chart and live percentage labels.
-    /// </summary>
     public partial class SessionAttendanceControl : UserControl
     {
-        // ── State ────────────────────────────────────────────────────────────
         private int _present, _late, _absent, _excused;
 
         public SessionAttendanceControl()
@@ -45,12 +40,10 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             _lblEPct.Text = total > 0 ? $"{excused * 100.0 / total:F1}%" : "–";
         }
 
-        // Back-compat overload (no Late parameter)
         public void SetData(int present, int absent, int excused)
             => SetData(present, 0, absent, excused);
     }
 
-    // ── Donut chart panel ─────────────────────────────────────────────────────
     public class DonutPanel : Panel
     {
         private float _presentPct = 1f;

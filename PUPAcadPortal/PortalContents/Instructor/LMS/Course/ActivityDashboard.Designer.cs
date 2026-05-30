@@ -17,260 +17,282 @@
 
         private void InitializeComponent()
         {
-            this.pnlTopBar = new System.Windows.Forms.Panel();
-            this.lblDashboardTitle = new System.Windows.Forms.Label();
-            this.txtSearchCourse = new System.Windows.Forms.TextBox();
-            this.cmbFilterCourse = new System.Windows.Forms.ComboBox();
-            this.pnlStats = new System.Windows.Forms.Panel();
-            this.pnlStatCourses = new System.Windows.Forms.Panel();
-            this.pnlBarCourses = new System.Windows.Forms.Panel();
-            this.lblTotalCourses = new System.Windows.Forms.Label();
-            this.lblCoursesLbl = new System.Windows.Forms.Label();
-            this.pnlStatActivities = new System.Windows.Forms.Panel();
-            this.pnlBarActivities = new System.Windows.Forms.Panel();
-            this.lblTotalActivities = new System.Windows.Forms.Label();
-            this.lblActivitiesLbl = new System.Windows.Forms.Label();
-            this.pnlStatPending = new System.Windows.Forms.Panel();
-            this.pnlBarPending = new System.Windows.Forms.Panel();
-            this.lblTotalPending = new System.Windows.Forms.Label();
-            this.lblPendingLbl = new System.Windows.Forms.Label();
-            this.pnlStatChecked = new System.Windows.Forms.Panel();
-            this.pnlBarChecked = new System.Windows.Forms.Panel();
-            this.lblTotalChecked = new System.Windows.Forms.Label();
-            this.lblCheckedLbl = new System.Windows.Forms.Label();
-            this.flpCourseCards = new System.Windows.Forms.FlowLayoutPanel();
-
-            this.pnlTopBar.SuspendLayout();
-            this.pnlStats.SuspendLayout();
-            this.pnlStatCourses.SuspendLayout();
-            this.pnlStatActivities.SuspendLayout();
-            this.pnlStatPending.SuspendLayout();
-            this.pnlStatChecked.SuspendLayout();
-            this.SuspendLayout();
-
-            // ── pnlTopBar ─────────────────────────────────────────────────────
-            this.pnlTopBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.pnlTopBar.Controls.Add(this.lblDashboardTitle);
-            this.pnlTopBar.Controls.Add(this.txtSearchCourse);
-            this.pnlTopBar.Controls.Add(this.cmbFilterCourse);
-            this.pnlTopBar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlTopBar.Location = new System.Drawing.Point(0, 0);
-            this.pnlTopBar.Name = "pnlTopBar";
-            this.pnlTopBar.Size = new System.Drawing.Size(1680, 62);
-            this.pnlTopBar.TabIndex = 3;
-
-            // ── lblDashboardTitle ─────────────────────────────────────────────
-            this.lblDashboardTitle.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
-            this.lblDashboardTitle.ForeColor = System.Drawing.Color.White;
-            this.lblDashboardTitle.Location = new System.Drawing.Point(18, 14);
-            this.lblDashboardTitle.Name = "lblDashboardTitle";
-            this.lblDashboardTitle.Size = new System.Drawing.Size(320, 32);
-            this.lblDashboardTitle.TabIndex = 0;
-            this.lblDashboardTitle.Text = "📚  Activity Dashboard";
-
-            // ── txtSearchCourse ───────────────────────────────────────────────
-            this.txtSearchCourse.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtSearchCourse.Location = new System.Drawing.Point(1260, 18);
-            this.txtSearchCourse.Name = "txtSearchCourse";
-            this.txtSearchCourse.PlaceholderText = "🔍  Search course...";
-            this.txtSearchCourse.Size = new System.Drawing.Size(220, 25);
-            this.txtSearchCourse.TabIndex = 1;
-            this.txtSearchCourse.TextChanged += new System.EventHandler(this.txtSearchCourse_TextChanged);
-
-            // ── cmbFilterCourse ───────────────────────────────────────────────
-            this.cmbFilterCourse.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbFilterCourse.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.cmbFilterCourse.FormattingEnabled = true;
-            this.cmbFilterCourse.Items.AddRange(new object[] {
-            "All",
-            "Active",
-            "Ongoing",
-            "Completed"});
-            this.cmbFilterCourse.Location = new System.Drawing.Point(1492, 18);
-            this.cmbFilterCourse.Name = "cmbFilterCourse";
-            this.cmbFilterCourse.Size = new System.Drawing.Size(150, 25);
-            this.cmbFilterCourse.TabIndex = 2;
-            this.cmbFilterCourse.SelectedIndexChanged += new System.EventHandler(this.cmbFilterCourse_SelectedIndexChanged);
-
-            // ── pnlStats ──────────────────────────────────────────────────────
-            this.pnlStats.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(248)))));
-            this.pnlStats.Controls.Add(this.pnlStatCourses);
-            this.pnlStats.Controls.Add(this.pnlStatActivities);
-            this.pnlStats.Controls.Add(this.pnlStatPending);
-            this.pnlStats.Controls.Add(this.pnlStatChecked);
-            this.pnlStats.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlStats.Location = new System.Drawing.Point(0, 62);
-            this.pnlStats.Name = "pnlStats";
-            this.pnlStats.Padding = new System.Windows.Forms.Padding(18, 12, 18, 12);
-            this.pnlStats.Size = new System.Drawing.Size(1680, 92);
-            this.pnlStats.TabIndex = 2;
-
-            // ── pnlStatCourses ────────────────────────────────────────────────
-            this.pnlStatCourses.BackColor = System.Drawing.Color.White;
-            this.pnlStatCourses.Controls.Add(this.pnlBarCourses);
-            this.pnlStatCourses.Controls.Add(this.lblTotalCourses);
-            this.pnlStatCourses.Controls.Add(this.lblCoursesLbl);
-            this.pnlStatCourses.Location = new System.Drawing.Point(36, 12);
-            this.pnlStatCourses.Name = "pnlStatCourses";
-            this.pnlStatCourses.Size = new System.Drawing.Size(178, 68);
-            this.pnlStatCourses.TabIndex = 0;
-
+            pnlTopBar = new Panel();
+            lblDashboardTitle = new Label();
+            txtSearchCourse = new TextBox();
+            cmbFilterCourse = new ComboBox();
+            pnlStats = new Panel();
+            pnlStatCourses = new Panel();
+            pnlBarCourses = new Panel();
+            lblTotalCourses = new Label();
+            lblCoursesLbl = new Label();
+            pnlStatActivities = new Panel();
+            pnlBarActivities = new Panel();
+            lblTotalActivities = new Label();
+            lblActivitiesLbl = new Label();
+            pnlStatPending = new Panel();
+            pnlBarPending = new Panel();
+            lblTotalPending = new Label();
+            lblPendingLbl = new Label();
+            pnlStatChecked = new Panel();
+            pnlBarChecked = new Panel();
+            lblTotalChecked = new Label();
+            lblCheckedLbl = new Label();
+            flpCourseCards = new FlowLayoutPanel();
+            pnlTopBar.SuspendLayout();
+            pnlStats.SuspendLayout();
+            pnlStatCourses.SuspendLayout();
+            pnlStatActivities.SuspendLayout();
+            pnlStatPending.SuspendLayout();
+            pnlStatChecked.SuspendLayout();
+            SuspendLayout();
+            // 
+            // pnlTopBar
+            // 
+            pnlTopBar.BackColor = Color.FromArgb(128, 0, 0);
+            pnlTopBar.Controls.Add(lblDashboardTitle);
+            pnlTopBar.Controls.Add(txtSearchCourse);
+            pnlTopBar.Controls.Add(cmbFilterCourse);
+            pnlTopBar.Dock = DockStyle.Top;
+            pnlTopBar.Location = new Point(0, 0);
+            pnlTopBar.Name = "pnlTopBar";
+            pnlTopBar.Size = new Size(1680, 62);
+            pnlTopBar.TabIndex = 3;
+            // 
+            // lblDashboardTitle
+            // 
+            lblDashboardTitle.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            lblDashboardTitle.ForeColor = Color.White;
+            lblDashboardTitle.Location = new Point(18, 14);
+            lblDashboardTitle.Name = "lblDashboardTitle";
+            lblDashboardTitle.Size = new Size(320, 32);
+            lblDashboardTitle.TabIndex = 0;
+            lblDashboardTitle.Text = "📚  Activity Dashboard";
+            // 
+            // txtSearchCourse
+            // 
+            txtSearchCourse.Font = new Font("Segoe UI", 10F);
+            txtSearchCourse.Location = new Point(1260, 18);
+            txtSearchCourse.Name = "txtSearchCourse";
+            txtSearchCourse.PlaceholderText = "🔍  Search course...";
+            txtSearchCourse.Size = new Size(220, 25);
+            txtSearchCourse.TabIndex = 1;
+            txtSearchCourse.TextChanged += txtSearchCourse_TextChanged;
+            // 
+            // cmbFilterCourse
+            // 
+            cmbFilterCourse.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbFilterCourse.Font = new Font("Segoe UI", 10F);
+            cmbFilterCourse.FormattingEnabled = true;
+            cmbFilterCourse.Items.AddRange(new object[] { "All", "Active", "Ongoing", "Completed" });
+            cmbFilterCourse.Location = new Point(1492, 18);
+            cmbFilterCourse.Name = "cmbFilterCourse";
+            cmbFilterCourse.Size = new Size(150, 25);
+            cmbFilterCourse.TabIndex = 2;
+            cmbFilterCourse.SelectedIndexChanged += cmbFilterCourse_SelectedIndexChanged;
+            // 
+            // pnlStats
+            // 
+            pnlStats.BackColor = Color.FromArgb(245, 245, 248);
+            pnlStats.Controls.Add(pnlStatCourses);
+            pnlStats.Controls.Add(pnlStatActivities);
+            pnlStats.Controls.Add(pnlStatPending);
+            pnlStats.Controls.Add(pnlStatChecked);
+            pnlStats.Dock = DockStyle.Top;
+            pnlStats.Location = new Point(0, 62);
+            pnlStats.Name = "pnlStats";
+            pnlStats.Padding = new Padding(18, 12, 18, 12);
+            pnlStats.Size = new Size(1680, 92);
+            pnlStats.TabIndex = 2;
+            // 
+            // pnlStatCourses
+            // 
+            pnlStatCourses.BackColor = Color.White;
+            pnlStatCourses.Controls.Add(pnlBarCourses);
+            pnlStatCourses.Controls.Add(lblTotalCourses);
+            pnlStatCourses.Controls.Add(lblCoursesLbl);
+            pnlStatCourses.Location = new Point(36, 12);
+            pnlStatCourses.Name = "pnlStatCourses";
+            pnlStatCourses.Size = new Size(178, 68);
+            pnlStatCourses.TabIndex = 0;
+            // 
             // pnlBarCourses
-            this.pnlBarCourses.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.pnlBarCourses.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pnlBarCourses.Location = new System.Drawing.Point(0, 0);
-            this.pnlBarCourses.Name = "pnlBarCourses";
-            this.pnlBarCourses.Size = new System.Drawing.Size(5, 68);
-            this.pnlBarCourses.TabIndex = 0;
-
+            // 
+            pnlBarCourses.BackColor = Color.FromArgb(128, 0, 0);
+            pnlBarCourses.Dock = DockStyle.Left;
+            pnlBarCourses.Location = new Point(0, 0);
+            pnlBarCourses.Name = "pnlBarCourses";
+            pnlBarCourses.Size = new Size(5, 68);
+            pnlBarCourses.TabIndex = 0;
+            // 
             // lblTotalCourses
-            this.lblTotalCourses.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold);
-            this.lblTotalCourses.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblTotalCourses.Location = new System.Drawing.Point(14, 6);
-            this.lblTotalCourses.Name = "lblTotalCourses";
-            this.lblTotalCourses.Size = new System.Drawing.Size(100, 38);
-            this.lblTotalCourses.TabIndex = 1;
-            this.lblTotalCourses.Text = "0";
-
+            // 
+            lblTotalCourses.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
+            lblTotalCourses.ForeColor = Color.FromArgb(128, 0, 0);
+            lblTotalCourses.Location = new Point(14, 6);
+            lblTotalCourses.Name = "lblTotalCourses";
+            lblTotalCourses.Size = new Size(100, 38);
+            lblTotalCourses.TabIndex = 1;
+            lblTotalCourses.Text = "0";
+            // 
             // lblCoursesLbl
-            this.lblCoursesLbl.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblCoursesLbl.ForeColor = System.Drawing.Color.Gray;
-            this.lblCoursesLbl.Location = new System.Drawing.Point(14, 46);
-            this.lblCoursesLbl.Name = "lblCoursesLbl";
-            this.lblCoursesLbl.Size = new System.Drawing.Size(155, 18);
-            this.lblCoursesLbl.TabIndex = 2;
-            this.lblCoursesLbl.Text = "Courses";
-
-            // ── pnlStatActivities ─────────────────────────────────────────────
-            this.pnlStatActivities.BackColor = System.Drawing.Color.White;
-            this.pnlStatActivities.Controls.Add(this.pnlBarActivities);
-            this.pnlStatActivities.Controls.Add(this.lblTotalActivities);
-            this.pnlStatActivities.Controls.Add(this.lblActivitiesLbl);
-            this.pnlStatActivities.Location = new System.Drawing.Point(228, 12);
-            this.pnlStatActivities.Name = "pnlStatActivities";
-            this.pnlStatActivities.Size = new System.Drawing.Size(178, 68);
-            this.pnlStatActivities.TabIndex = 1;
-
+            // 
+            lblCoursesLbl.Font = new Font("Segoe UI", 9F);
+            lblCoursesLbl.ForeColor = Color.Gray;
+            lblCoursesLbl.Location = new Point(14, 46);
+            lblCoursesLbl.Name = "lblCoursesLbl";
+            lblCoursesLbl.Size = new Size(155, 18);
+            lblCoursesLbl.TabIndex = 2;
+            lblCoursesLbl.Text = "Courses";
+            // 
+            // pnlStatActivities
+            // 
+            pnlStatActivities.BackColor = Color.White;
+            pnlStatActivities.Controls.Add(pnlBarActivities);
+            pnlStatActivities.Controls.Add(lblTotalActivities);
+            pnlStatActivities.Controls.Add(lblActivitiesLbl);
+            pnlStatActivities.Location = new Point(228, 12);
+            pnlStatActivities.Name = "pnlStatActivities";
+            pnlStatActivities.Size = new Size(178, 68);
+            pnlStatActivities.TabIndex = 1;
+            // 
             // pnlBarActivities
-            this.pnlBarActivities.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(81)))), ((int)(((byte)(181)))));
-            this.pnlBarActivities.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pnlBarActivities.Location = new System.Drawing.Point(0, 0);
-            this.pnlBarActivities.Name = "pnlBarActivities";
-            this.pnlBarActivities.Size = new System.Drawing.Size(5, 68);
-            this.pnlBarActivities.TabIndex = 0;
-
+            // 
+            pnlBarActivities.BackColor = Color.FromArgb(63, 81, 181);
+            pnlBarActivities.Dock = DockStyle.Left;
+            pnlBarActivities.Location = new Point(0, 0);
+            pnlBarActivities.Name = "pnlBarActivities";
+            pnlBarActivities.Size = new Size(5, 68);
+            pnlBarActivities.TabIndex = 0;
+            // 
             // lblTotalActivities
-            this.lblTotalActivities.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold);
-            this.lblTotalActivities.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(81)))), ((int)(((byte)(181)))));
-            this.lblTotalActivities.Location = new System.Drawing.Point(14, 6);
-            this.lblTotalActivities.Name = "lblTotalActivities";
-            this.lblTotalActivities.Size = new System.Drawing.Size(100, 38);
-            this.lblTotalActivities.TabIndex = 1;
-            this.lblTotalActivities.Text = "0";
-
+            // 
+            lblTotalActivities.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
+            lblTotalActivities.ForeColor = Color.FromArgb(63, 81, 181);
+            lblTotalActivities.Location = new Point(14, 6);
+            lblTotalActivities.Name = "lblTotalActivities";
+            lblTotalActivities.Size = new Size(100, 38);
+            lblTotalActivities.TabIndex = 1;
+            lblTotalActivities.Text = "0";
+            // 
             // lblActivitiesLbl
-            this.lblActivitiesLbl.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblActivitiesLbl.ForeColor = System.Drawing.Color.Gray;
-            this.lblActivitiesLbl.Location = new System.Drawing.Point(14, 46);
-            this.lblActivitiesLbl.Name = "lblActivitiesLbl";
-            this.lblActivitiesLbl.Size = new System.Drawing.Size(155, 18);
-            this.lblActivitiesLbl.TabIndex = 2;
-            this.lblActivitiesLbl.Text = "Activities";
-
-            // ── pnlStatPending ────────────────────────────────────────────────
-            this.pnlStatPending.BackColor = System.Drawing.Color.White;
-            this.pnlStatPending.Controls.Add(this.pnlBarPending);
-            this.pnlStatPending.Controls.Add(this.lblTotalPending);
-            this.pnlStatPending.Controls.Add(this.lblPendingLbl);
-            this.pnlStatPending.Location = new System.Drawing.Point(420, 12);
-            this.pnlStatPending.Name = "pnlStatPending";
-            this.pnlStatPending.Size = new System.Drawing.Size(178, 68);
-            this.pnlStatPending.TabIndex = 2;
-
+            // 
+            lblActivitiesLbl.Font = new Font("Segoe UI", 9F);
+            lblActivitiesLbl.ForeColor = Color.Gray;
+            lblActivitiesLbl.Location = new Point(14, 46);
+            lblActivitiesLbl.Name = "lblActivitiesLbl";
+            lblActivitiesLbl.Size = new Size(155, 18);
+            lblActivitiesLbl.TabIndex = 2;
+            lblActivitiesLbl.Text = "Activities";
+            // 
+            // pnlStatPending
+            // 
+            pnlStatPending.BackColor = Color.White;
+            pnlStatPending.Controls.Add(pnlBarPending);
+            pnlStatPending.Controls.Add(lblTotalPending);
+            pnlStatPending.Controls.Add(lblPendingLbl);
+            pnlStatPending.Location = new Point(420, 12);
+            pnlStatPending.Name = "pnlStatPending";
+            pnlStatPending.Size = new Size(178, 68);
+            pnlStatPending.TabIndex = 2;
+            // 
             // pnlBarPending
-            this.pnlBarPending.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(84)))), ((int)(((byte)(0)))));
-            this.pnlBarPending.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pnlBarPending.Location = new System.Drawing.Point(0, 0);
-            this.pnlBarPending.Name = "pnlBarPending";
-            this.pnlBarPending.Size = new System.Drawing.Size(5, 68);
-            this.pnlBarPending.TabIndex = 0;
-
+            // 
+            pnlBarPending.BackColor = Color.FromArgb(211, 84, 0);
+            pnlBarPending.Dock = DockStyle.Left;
+            pnlBarPending.Location = new Point(0, 0);
+            pnlBarPending.Name = "pnlBarPending";
+            pnlBarPending.Size = new Size(5, 68);
+            pnlBarPending.TabIndex = 0;
+            // 
             // lblTotalPending
-            this.lblTotalPending.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold);
-            this.lblTotalPending.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(84)))), ((int)(((byte)(0)))));
-            this.lblTotalPending.Location = new System.Drawing.Point(14, 6);
-            this.lblTotalPending.Name = "lblTotalPending";
-            this.lblTotalPending.Size = new System.Drawing.Size(100, 38);
-            this.lblTotalPending.TabIndex = 1;
-            this.lblTotalPending.Text = "0";
-
+            // 
+            lblTotalPending.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
+            lblTotalPending.ForeColor = Color.FromArgb(211, 84, 0);
+            lblTotalPending.Location = new Point(14, 6);
+            lblTotalPending.Name = "lblTotalPending";
+            lblTotalPending.Size = new Size(100, 38);
+            lblTotalPending.TabIndex = 1;
+            lblTotalPending.Text = "0";
+            // 
             // lblPendingLbl
-            this.lblPendingLbl.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblPendingLbl.ForeColor = System.Drawing.Color.Gray;
-            this.lblPendingLbl.Location = new System.Drawing.Point(14, 46);
-            this.lblPendingLbl.Name = "lblPendingLbl";
-            this.lblPendingLbl.Size = new System.Drawing.Size(155, 18);
-            this.lblPendingLbl.TabIndex = 2;
-            this.lblPendingLbl.Text = "Pending";
-
-            this.pnlStatChecked.BackColor = System.Drawing.Color.White;
-            this.pnlStatChecked.Controls.Add(this.pnlBarChecked);
-            this.pnlStatChecked.Controls.Add(this.lblTotalChecked);
-            this.pnlStatChecked.Controls.Add(this.lblCheckedLbl);
-            this.pnlStatChecked.Location = new System.Drawing.Point(612, 12);
-            this.pnlStatChecked.Name = "pnlStatChecked";
-            this.pnlStatChecked.Size = new System.Drawing.Size(178, 68);
-            this.pnlStatChecked.TabIndex = 3;
-
-            this.pnlBarChecked.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(160)))), ((int)(((byte)(67)))));
-            this.pnlBarChecked.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pnlBarChecked.Location = new System.Drawing.Point(0, 0);
-            this.pnlBarChecked.Name = "pnlBarChecked";
-            this.pnlBarChecked.Size = new System.Drawing.Size(5, 68);
-            this.pnlBarChecked.TabIndex = 0;
-
-            this.lblTotalChecked.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold);
-            this.lblTotalChecked.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(160)))), ((int)(((byte)(67)))));
-            this.lblTotalChecked.Location = new System.Drawing.Point(14, 6);
-            this.lblTotalChecked.Name = "lblTotalChecked";
-            this.lblTotalChecked.Size = new System.Drawing.Size(100, 38);
-            this.lblTotalChecked.TabIndex = 1;
-            this.lblTotalChecked.Text = "0";
-
-            this.lblCheckedLbl.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblCheckedLbl.ForeColor = System.Drawing.Color.Gray;
-            this.lblCheckedLbl.Location = new System.Drawing.Point(14, 46);
-            this.lblCheckedLbl.Name = "lblCheckedLbl";
-            this.lblCheckedLbl.Size = new System.Drawing.Size(155, 18);
-            this.lblCheckedLbl.TabIndex = 2;
-            this.lblCheckedLbl.Text = "Checked";
-
-            this.flpCourseCards.AutoScroll = true;
-            this.flpCourseCards.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(237)))), ((int)(((byte)(237)))), ((int)(((byte)(242)))));
-            this.flpCourseCards.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flpCourseCards.FlowDirection = System.Windows.Forms.FlowDirection.LeftToRight;
-            this.flpCourseCards.Location = new System.Drawing.Point(0, 154);
-            this.flpCourseCards.Name = "flpCourseCards";
-            this.flpCourseCards.Padding = new System.Windows.Forms.Padding(10);
-            this.flpCourseCards.Size = new System.Drawing.Size(1680, 835);
-            this.flpCourseCards.TabIndex = 0;
-
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.flpCourseCards);
-            this.Controls.Add(this.pnlStats);
-            this.Controls.Add(this.pnlTopBar);
-            this.Name = "ActivityDashboard";
-            this.Size = new System.Drawing.Size(1680, 989);
-
-            this.pnlTopBar.ResumeLayout(false);
-            this.pnlTopBar.PerformLayout();
-            this.pnlStats.ResumeLayout(false);
-            this.pnlStatCourses.ResumeLayout(false);
-            this.pnlStatActivities.ResumeLayout(false);
-            this.pnlStatPending.ResumeLayout(false);
-            this.pnlStatChecked.ResumeLayout(false);
-            this.ResumeLayout(false);
+            // 
+            lblPendingLbl.Font = new Font("Segoe UI", 9F);
+            lblPendingLbl.ForeColor = Color.Gray;
+            lblPendingLbl.Location = new Point(14, 46);
+            lblPendingLbl.Name = "lblPendingLbl";
+            lblPendingLbl.Size = new Size(155, 18);
+            lblPendingLbl.TabIndex = 2;
+            lblPendingLbl.Text = "Pending";
+            // 
+            // pnlStatChecked
+            // 
+            pnlStatChecked.BackColor = Color.White;
+            pnlStatChecked.Controls.Add(pnlBarChecked);
+            pnlStatChecked.Controls.Add(lblTotalChecked);
+            pnlStatChecked.Controls.Add(lblCheckedLbl);
+            pnlStatChecked.Location = new Point(612, 12);
+            pnlStatChecked.Name = "pnlStatChecked";
+            pnlStatChecked.Size = new Size(178, 68);
+            pnlStatChecked.TabIndex = 3;
+            // 
+            // pnlBarChecked
+            // 
+            pnlBarChecked.BackColor = Color.FromArgb(46, 160, 67);
+            pnlBarChecked.Dock = DockStyle.Left;
+            pnlBarChecked.Location = new Point(0, 0);
+            pnlBarChecked.Name = "pnlBarChecked";
+            pnlBarChecked.Size = new Size(5, 68);
+            pnlBarChecked.TabIndex = 0;
+            // 
+            // lblTotalChecked
+            // 
+            lblTotalChecked.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
+            lblTotalChecked.ForeColor = Color.FromArgb(46, 160, 67);
+            lblTotalChecked.Location = new Point(14, 6);
+            lblTotalChecked.Name = "lblTotalChecked";
+            lblTotalChecked.Size = new Size(100, 38);
+            lblTotalChecked.TabIndex = 1;
+            lblTotalChecked.Text = "0";
+            // 
+            // lblCheckedLbl
+            // 
+            lblCheckedLbl.Font = new Font("Segoe UI", 9F);
+            lblCheckedLbl.ForeColor = Color.Gray;
+            lblCheckedLbl.Location = new Point(14, 46);
+            lblCheckedLbl.Name = "lblCheckedLbl";
+            lblCheckedLbl.Size = new Size(155, 18);
+            lblCheckedLbl.TabIndex = 2;
+            lblCheckedLbl.Text = "Checked";
+            // 
+            // flpCourseCards
+            // 
+            flpCourseCards.AutoScroll = true;
+            flpCourseCards.BackColor = Color.FromArgb(237, 237, 242);
+            flpCourseCards.Dock = DockStyle.Fill;
+            flpCourseCards.Location = new Point(0, 154);
+            flpCourseCards.Name = "flpCourseCards";
+            flpCourseCards.Padding = new Padding(10);
+            flpCourseCards.Size = new Size(1680, 835);
+            flpCourseCards.TabIndex = 0;
+            // 
+            // ActivityDashboard
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(flpCourseCards);
+            Controls.Add(pnlStats);
+            Controls.Add(pnlTopBar);
+            Name = "ActivityDashboard";
+            Size = new Size(1680, 989);
+            pnlTopBar.ResumeLayout(false);
+            pnlTopBar.PerformLayout();
+            pnlStats.ResumeLayout(false);
+            pnlStatCourses.ResumeLayout(false);
+            pnlStatActivities.ResumeLayout(false);
+            pnlStatPending.ResumeLayout(false);
+            pnlStatChecked.ResumeLayout(false);
+            ResumeLayout(false);
         }
 
         #endregion

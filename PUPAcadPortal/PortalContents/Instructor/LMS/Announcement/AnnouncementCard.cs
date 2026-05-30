@@ -36,8 +36,6 @@ namespace PUPAcadPortal
 
         private AnnouncementCardData _data;
         private bool _expanded = false;
-
-        // Visual Studio Designer requires a parameterless constructor
         public AnnouncementCard()
         {
             InitializeComponent();
@@ -79,7 +77,6 @@ namespace PUPAcadPortal
             _lblCatPill.BackColor = iconBg;
             _lblCatPill.ForeColor = iconColor;
 
-            // Context Menu dynamic text
             if (_ctxMenu.Items.Count > 1)
             {
                 _ctxMenu.Items[1].Text = _data.Status == "active" ? "Set inactive" : "Set active";
@@ -157,7 +154,6 @@ namespace PUPAcadPortal
             ResumeLayout();
         }
 
-        // Standardized event handlers mapped from the Designer
         private void ToggleExpand_Event(object sender, EventArgs e)
         {
             _expanded = !_expanded;
@@ -212,7 +208,6 @@ namespace PUPAcadPortal
             _ctxMenu.Show(_btnMenu, new Point(0, _btnMenu.Height));
         }
 
-        // Drawing Helper Methods
         private static void DrawRoundedRect(Graphics g, Pen pen, Rectangle rect, int radius)
         {
             using GraphicsPath path = RoundedRectPath(rect, radius);
@@ -238,7 +233,6 @@ namespace PUPAcadPortal
         }
     }
 
-    // Retain your data class model exactly as it was
     public class AnnouncementCardData
     {
         public int Id { get; set; }

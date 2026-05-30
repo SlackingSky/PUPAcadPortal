@@ -9,77 +9,68 @@ using System.ComponentModel;
 
 namespace PUPAcadPortal.PortalContents.Instructor.LMS
 {
-    /// <summary>
-    /// Main attendance module for instructor view.
-    /// Wires the Designer-generated UI to live data, grids, QR code, and summary cards.
-    /// </summary>
     public partial class AttendanceContentInst : UserControl
     {
-        // ── State ─────────────────────────────────────────────────────────────
         private List<StudentAttendanceRecord> _allStudents = new();
         private List<CourseSection> _courseCatalogue = new();
         private List<SessionSlot> _sessionSlots = new();
         private Dictionary<SessionKey, List<StudentAttendanceRecord>> _snapshots = new();
-
-        // ── Injected controls ─────────────────────────────────────────────────
         private SessionAttendanceControl _sessionCard = null!;
         private AttendanceGridControl _grid = null!;
-
-        // ── QR overlay ────────────────────────────────────────────────────────
         private Panel? _qrOverlay = null;
         private QrCodeAttendanceControl? _qrCard = null;
-
-        // ── Debounce timer for search ─────────────────────────────────────────
         private System.Windows.Forms.Timer _searchTimer = null!;
         private string _pendingSearch = "";
+        public AttendanceContentInst()
+        {
+            InitializeComponent();
+        }
 
-        // ─────────────────────────────────────────────────────────────────────
-        //  ENTRY POINT
-        // ─────────────────────────────────────────────────────────────────────
 
         private void AttendanceContentInst_Load(object sender, EventArgs e)
         {
-            // Position the cards correctly upon control load
-            LayoutSummaryCards();
-            InitAttendance();
+            try
+            {
+                LayoutSummaryCards();
+                InitAttendance();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Attendance failed to load:\n\n{ex.Message}\n\n{ex.StackTrace}",
+                    "Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
-
 
         private void PnlSummaryRow_SizeChanged(object sender, EventArgs e)
         {
             LayoutSummaryCards();
         }
 
-        // Custom styling logic extracted from your internal function
         private void Card_Paint(object sender, PaintEventArgs e)
         {
             if (sender is Panel p && p.Tag is Color accentColor)
             {
                 using (var b = new SolidBrush(accentColor))
-                {
                     e.Graphics.FillRectangle(b, 0, 0, 4, p.Height);
-                }
                 using (var bp = new Pen(Color.FromArgb(230, 230, 230)))
-                {
                     e.Graphics.DrawRectangle(bp, 0, 0, p.Width - 1, p.Height - 1);
-                }
             }
         }
 
-        // Handles the calculation and positioning of the internal cards
         private void LayoutSummaryCards()
         {
             const int PAD = 6;
             const int H = 104;
             int totalW = pnlSummaryRow.ClientSize.Width - PAD * 2;
 
-            // Session card gets ~28%, rest split equally among 5
             int sessionW = (int)(totalW * 0.28);
             int remaining = totalW - sessionW - PAD * 5;
             int cardW = remaining / 5;
 
             int x = PAD;
             int y = (pnlSummaryRow.ClientSize.Height - H) / 2;
+            if (y < 0) y = 0;
 
             void Place(Panel p, int w)
             {
@@ -87,7 +78,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 p.Size = new Size(w, H);
                 x += w + PAD;
 
-                // Keep panel21 (SessionAttendanceControl host) filling the card
                 if (p == pnlCardSession)
                 {
                     panel21.Location = new Point(4, 22);
@@ -110,12 +100,10 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             PopulateDropdowns();
             SeedAllSnapshots();
 
-            // ── Inject SessionAttendanceControl into panel21 ──────────────────
             _sessionCard = new SessionAttendanceControl { Dock = DockStyle.Fill };
             panel21.Controls.Clear();
             panel21.Controls.Add(_sessionCard);
 
-            // ── Inject AttendanceGridControl into pnlGrid ─────────────────────
             _grid = new AttendanceGridControl { Dock = DockStyle.Fill };
             pnlGrid.Controls.Clear();
             pnlGrid.Controls.Add(_grid);
@@ -125,7 +113,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 UpdateLastUpdated();
             };
 
-            // ── Debounce search timer ─────────────────────────────────────────
             _searchTimer = new System.Windows.Forms.Timer { Interval = 160 };
             _searchTimer.Tick += (s, e) =>
             {
@@ -142,9 +129,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             UpdateLastUpdated();
         }
 
-        // ─────────────────────────────────────────────────────────────────────
-        //  DATA SEEDING
-        // ─────────────────────────────────────────────────────────────────────
         private void BuildCourseCatalogue()
         {
             _courseCatalogue = new List<CourseSection>
@@ -164,28 +148,26 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         {
             _sessionSlots = new List<SessionSlot>
             {
-                new() { Label = "Morning (7:30 AM - 9:00 AM)"   },
-                new() { Label = "Morning (8:00 AM - 10:00 AM)"  },
-                new() { Label = "Morning (9:00 AM - 10:30 AM)"  },
-                new() { Label = "Midday  (10:30 AM - 12:00 PM)" },
-                new() { Label = "Midday  (11:00 AM - 12:30 PM)" },
-                new() { Label = "Afternoon (1:00 PM - 2:30 PM)" },
-                new() { Label = "Afternoon (2:30 PM - 4:00 PM)" },
-                new() { Label = "Evening  (5:00 PM - 7:00 PM)"  },
-                new() { Label = "Saturday (8:00 AM - 12:00 PM)" },
+                new() { Label = "Morning (7:30 AM - 9:00 AM)"    },
+                new() { Label = "Morning (8:00 AM - 10:00 AM)"   },
+                new() { Label = "Morning (9:00 AM - 10:30 AM)"   },
+                new() { Label = "Midday  (10:30 AM - 12:00 PM)"  },
+                new() { Label = "Midday  (11:00 AM - 12:30 PM)"  },
+                new() { Label = "Afternoon (1:00 PM - 2:30 PM)"  },
+                new() { Label = "Afternoon (2:30 PM - 4:00 PM)"  },
+                new() { Label = "Evening  (5:00 PM - 7:00 PM)"   },
+                new() { Label = "Saturday (8:00 AM - 12:00 PM)"  },
             };
         }
 
         private void PopulateDropdowns()
         {
-            // Course — DropDownList only
             cmbCourse.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbCourse.Items.Clear();
             foreach (var c in _courseCatalogue)
                 cmbCourse.Items.Add(c.DisplayName);
             if (cmbCourse.Items.Count > 0) cmbCourse.SelectedIndex = 0;
 
-            // Session — DropDownList only
             cmbSession.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbSession.Items.Clear();
             foreach (var s in _sessionSlots)
@@ -267,9 +249,9 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
         private static readonly string[] _excuseRemarks =
         {
-            "Medical Certificate","Family Emergency","Hospital Admission",
-            "Approved Leave of Absence","OJT Duty","University Event",
-            "Athletic Competition","Approved Field Trip",
+            "Medical Certificate", "Family Emergency", "Hospital Admission",
+            "Approved Leave of Absence", "OJT Duty", "University Event",
+            "Athletic Competition", "Approved Field Trip",
         };
 
         private void LoadCurrentSession()
@@ -277,7 +259,8 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             var key = CurrentKey();
             if (!_snapshots.TryGetValue(key, out var snap))
             {
-                snap = BuildRoster(_courseCatalogue.First(), new Random(key.GetHashCode()));
+                snap = BuildRoster(_courseCatalogue.First(),
+                           new Random(key.GetHashCode()));
                 _snapshots[key] = snap;
             }
             _allStudents = snap;
@@ -290,16 +273,12 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             Date = dtpDate.Value.Date,
         };
 
-        // ─────────────────────────────────────────────────────────────────────
-        //  FILTER BAR WIRING
-        // ─────────────────────────────────────────────────────────────────────
         private void WireFilterBar()
         {
             cmbCourse.SelectedIndexChanged += (s, e) => ReloadAndRefresh();
             cmbSession.SelectedIndexChanged += (s, e) => ReloadAndRefresh();
             dtpDate.ValueChanged += (s, e) => ReloadAndRefresh();
 
-            // Search box — debounced
             txtSearch.ForeColor = Color.Gray;
             txtSearch.GotFocus += (s, e) =>
             {
@@ -329,9 +308,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             UpdateLastUpdated();
         }
 
-        // ─────────────────────────────────────────────────────────────────────
-        //  BUTTON WIRING
-        // ─────────────────────────────────────────────────────────────────────
         private void WireButtons()
         {
             btnSaveAttendance.Click -= BtnSave_Click;
@@ -351,12 +327,8 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             btnImportCSV.Click += (s, e) => ImportCsv();
         }
 
-        // ─────────────────────────────────────────────────────────────────────
-        //  QR OVERLAY
-        // ─────────────────────────────────────────────────────────────────────
         private void BtnQrCode_Click(object? sender, EventArgs e)
         {
-            // Re-use existing overlay if already visible
             if (_qrOverlay != null && !_qrOverlay.IsDisposed && _qrOverlay.Visible)
             {
                 _qrCard?.GenerateNew();
@@ -364,14 +336,10 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 return;
             }
 
-            // Open as a proper modal dialog instead of overlay for reliability
             using var dlg = new QrCodePopupForm(cmbCourse.Text, cmbSession.Text, dtpDate.Value);
             dlg.ShowDialog(this);
         }
 
-        // ─────────────────────────────────────────────────────────────────────
-        //  SUMMARY CARDS
-        // ─────────────────────────────────────────────────────────────────────
         private void UpdateSummaryCards()
         {
             int total = _allStudents.Count;
@@ -398,10 +366,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             lblDateTime.Text = DateTime.Now.ToString("MMMM dd, yyyy hh:mm tt");
             lblByInstructor.Text = "by Instructor";
         }
-
-        // ─────────────────────────────────────────────────────────────────────
-        //  SAVE
-        // ─────────────────────────────────────────────────────────────────────
         private void BtnSave_Click(object? sender, EventArgs e)
         {
             int present = _allStudents.Count(x => x.Status == AttendanceStatus.Present);
@@ -425,9 +389,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 "Attendance Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        // ─────────────────────────────────────────────────────────────────────
-        //  EXPORT / IMPORT
-        // ─────────────────────────────────────────────────────────────────────
         private void ExportCsv()
         {
             using var sfd = new SaveFileDialog

@@ -6,24 +6,15 @@ using System.ComponentModel;
 
 namespace PUPAcadPortal.PortalContents.Instructor.LMS
 {
-    /// <summary>
-    /// Compact embedded QR panel used inside the overlay.
-    /// Exposes GenerateNew(), Session, and AttendanceDate properties.
-    /// </summary>
     public partial class QrCodeAttendanceControl : UserControl
     {
-        // ── Palette ──────────────────────────────────────────────────────────
         private static readonly Color ActiveGreen = Color.FromArgb(34, 139, 34);
         private static readonly Color ExpiredRed = Color.FromArgb(200, 30, 30);
         private static readonly Color OrangeAnim = Color.FromArgb(220, 120, 0);
         private static readonly Color BorderGray = Color.FromArgb(220, 220, 220);
         private static readonly Color LabelGray = Color.FromArgb(90, 90, 90);
-
-        // ── Config ───────────────────────────────────────────────────────────
         private const int DEFAULT_EXPIRY = 10;
         private const int QR_MODULES = 25;
-
-        // ── Properties ───────────────────────────────────────────────────────
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string Session
         {
@@ -46,8 +37,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         }
 
         public event EventHandler? QrExpired;
-
-        // ── State ────────────────────────────────────────────────────────────
         private string _session = "Morning";
         private DateTime _attendanceDate = DateTime.Today;
         private int _expiryMinutes = DEFAULT_EXPIRY;
@@ -55,8 +44,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         private DateTime _generatedAt;
         private bool _isExpired;
         private int _animStep;
-
-        // ── Constructor ──────────────────────────────────────────────────────
         public QrCodeAttendanceControl()
         {
             InitializeComponent();
@@ -67,8 +54,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             GenerateNew();
             _countdownTimer.Start();
         }
-
-        // ── Public API ───────────────────────────────────────────────────────
         public void GenerateNew()
         {
             _seed = unchecked((int)(DateTime.Now.Ticks & 0x7FFFFFFF));
@@ -79,8 +64,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             UpdateCountdown();
             RestartExpiry();
         }
-
-        // ── Layout (Dynamic Resizing) ────────────────────────────────────────
         private void QrCodeAttendanceControl_SizeChanged(object sender, EventArgs e)
         {
             Reposition();
@@ -123,8 +106,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             using var p = new Pen(BorderGray);
             e.Graphics.DrawLine(p, 0, 0, ((Panel)sender).Width, 0);
         }
-
-        // ── QR Drawing ───────────────────────────────────────────────────────
         private void DrawQr()
         {
             if (_picQr == null || _picQr.Width == 0) return;
@@ -181,8 +162,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             var sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
             g.DrawString("EXPIRED", fnt, rb, new RectangleF(0, 0, sz, sz), sf);
         }
-
-        // ── Status helpers ────────────────────────────────────────────────────
         private void SetStatus(bool expired, bool refreshing)
         {
             if (refreshing) { _lblStatus.Text = "● Refreshing…"; _lblStatus.ForeColor = OrangeAnim; }
@@ -209,8 +188,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             _countdownTimer?.Stop();
             QrExpired?.Invoke(this, EventArgs.Empty);
         }
-
-        // ── Timers Events ────────────────────────────────────────────────────
         private void CountdownTimer_Tick(object sender, EventArgs e)
         {
             UpdateCountdown();
@@ -234,8 +211,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             }
             _countdownTimer?.Start();
         }
-
-        // ── Refresh anim ─────────────────────────────────────────────────────
         private void BtnRefresh_Click(object sender, EventArgs e)
         {
             _btnRefresh.Enabled = false;
@@ -250,8 +225,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             _lblStatus.Text = _animStep % 2 == 0 ? "● Refreshing…" : "○ Refreshing…";
             if (_animStep >= 3) { _animTimer.Stop(); _btnRefresh.Enabled = true; GenerateNew(); }
         }
-
-        // ── Download ─────────────────────────────────────────────────────────
         private void BtnDownload_Click(object sender, EventArgs e)
         {
             if (_picQr?.Image == null) return;
@@ -290,8 +263,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                         new RectangleF(0, SZ - 28, SZ, 26), sf);
                 }
                 bmp.Save(sfd.FileName, ImageFormat.Png);
-
-                // Flash button
                 string orig = _btnDownload.Text;
                 _btnDownload.Text = "✓  Saved!";
                 _btnDownload.BackColor = Color.FromArgb(34, 139, 34);

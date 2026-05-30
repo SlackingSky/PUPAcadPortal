@@ -36,7 +36,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Course
     {
         public int QuestionId { get; set; }
         public string QuestionText { get; set; } = "";
-        public string QuestionType { get; set; } = "MultipleChoice"; // MultipleChoice | Identification | TrueFalse | Essay
+        public string QuestionType { get; set; } = "MultipleChoice"; 
         public List<string> Choices { get; set; } = new();
         public string CorrectAnswer { get; set; } = "";
         public int Points { get; set; } = 1;
@@ -68,7 +68,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Course
         public string Section { get; set; } = "";
         public string GradeLevel { get; set; } = "";
         public DateTime SubmissionTime { get; set; }
-        public string Status { get; set; } = "Missing"; // Submitted | Late | Missing | Returned
+        public string Status { get; set; } = "Missing"; 
         public int Score { get; set; } = -1;
         public bool IsChecked { get; set; } = false;
         public string Remarks { get; set; } = "";

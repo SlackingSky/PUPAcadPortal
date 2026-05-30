@@ -8,32 +8,20 @@ using System.Windows.Forms;
 
 namespace PUPAcadPortal
 {
-    /// <summary>
-    /// Shows all activities inside a chosen course.
-    /// Navigates to ActivityFormPage (create/edit), SubmissionList (check), CopyActivityDialog.
-    /// All navigation resolves the live container at click-time — no stale closures.
-    /// </summary>
     public partial class AssignmentManagement : UserControl
     {
-        // ── Events ────────────────────────────────────────────────────────────
         public event Action OnBack;
-
-        // ── State ─────────────────────────────────────────────────────────────
         private readonly CourseActivity _course;
         private string _searchTerm = "";
         private string _filterType = "All";
         private System.Windows.Forms.Timer _searchTimer;
-
-        // Suppress combo events fired during InitializeComponent
         private bool _initializing = true;
-
-        // ── Constructor ───────────────────────────────────────────────────────
         public AssignmentManagement(CourseActivity course)
         {
             _course = course;
-            InitializeComponent();       // cmbFilterType fires here; guard suppresses it
+            InitializeComponent();       
 
-            _initializing = false;       // safe to react from here on
+            _initializing = false;       
 
             SetupDebounce();
             PopulateHeader();
@@ -43,7 +31,6 @@ namespace PUPAcadPortal
             this.Load += (s, e) => RefreshList();
         }
 
-        // ── Header ────────────────────────────────────────────────────────────
         private void PopulateHeader()
         {
             lblCourseName.Text = _course.CourseName;
@@ -51,14 +38,12 @@ namespace PUPAcadPortal
             btnSave.Text = "+ Create Activity";
         }
 
-        // ── Debounce ─────────────────────────────────────────────────────────
         private void SetupDebounce()
         {
             _searchTimer = new System.Windows.Forms.Timer { Interval = 200 };
             _searchTimer.Tick += (s, e) => { _searchTimer.Stop(); RefreshList(); };
         }
 
-        // ── Refresh activity cards ────────────────────────────────────────────
         private void RefreshList()
         {
             if (_initializing) return;
@@ -76,7 +61,6 @@ namespace PUPAcadPortal
                 return typeOk && searchOk;
             });
 
-            // Sort: overdue first, then deadline asc
             filtered.Sort((a, b) =>
             {
                 if (a.IsOverdue && !b.IsOverdue) return -1;
@@ -104,7 +88,6 @@ namespace PUPAcadPortal
                 $"·  {pending} pending checks  ·  {chk} checked";
         }
 
-        // ── Empty state ───────────────────────────────────────────────────────
         private Panel BuildEmptyState()
         {
             int w = Math.Max(700, flpActivities.ClientSize.Width - 40);
@@ -144,7 +127,6 @@ namespace PUPAcadPortal
             return pnl;
         }
 
-        // ── Activity card builder ─────────────────────────────────────────────
         private Panel BuildActivityCard(ActivityItem act)
         {
             int w = Math.Max(700, flpActivities.ClientSize.Width - 40);
@@ -171,7 +153,6 @@ namespace PUPAcadPortal
                 e.Graphics.DrawRectangle(pen, 0, 0, card.Width - 1, card.Height - 1);
             };
 
-            // Type badge
             string typeIcon = act.Type switch
             {
                 ActivityType.Quiz => "❓ Quiz",
@@ -191,7 +172,6 @@ namespace PUPAcadPortal
                 TextAlign = ContentAlignment.MiddleCenter
             });
 
-            // Title
             card.Controls.Add(new Label
             {
                 Text = act.Title,
@@ -203,7 +183,6 @@ namespace PUPAcadPortal
                 AutoEllipsis = true
             });
 
-            // Deadline
             TimeSpan left = act.Deadline - DateTime.Now;
             string dlText = act.IsOverdue ? "⚠ Overdue"
                              : left.Days == 0 ? "⏰ Due Today"
@@ -221,7 +200,6 @@ namespace PUPAcadPortal
                 AutoSize = true
             });
 
-            // Points
             card.Controls.Add(new Label
             {
                 Text = $"🏆 {act.Points} pts",
@@ -231,7 +209,6 @@ namespace PUPAcadPortal
                 AutoSize = true
             });
 
-            // Submission counts
             card.Controls.Add(new Label
             {
                 Text = $"✅ {act.SubmittedCount}/{act.TotalStudents} submitted  " +
@@ -243,7 +220,6 @@ namespace PUPAcadPortal
                 AutoSize = true
             });
 
-            // ── Action buttons ──
             int btnY = 32;
             int right = w - 14;
             const int btnH = 28, gap = 6;
@@ -290,11 +266,6 @@ namespace PUPAcadPortal
                 Cursor = Cursors.Hand
             };
 
-        // ── Navigation helpers ────────────────────────────────────────────────
-        // All methods use the same pattern:
-        //   openContainer  = resolved NOW (at open-time) for the first swap
-        //   closeContainer = resolved at close-time via child.Parent (live reference)
-        // This eliminates stale-closure bugs entirely.
 
         private void OpenActivityForm(ActivityItem? existing)
         {
@@ -306,9 +277,8 @@ namespace PUPAcadPortal
 
             form.OnSave += saved =>
             {
-                if (existing == null)           // new activity
+                if (existing == null)           
                     _course.Activities.Add(saved);
-                // edited activity: reference already updated in-place
 
                 Control c = form.Parent ?? openContainer;
                 c.Controls.Remove(form);
@@ -377,19 +347,15 @@ namespace PUPAcadPortal
             }
         }
 
-        // ── Back ──────────────────────────────────────────────────────────────
         private void btnBack_Click(object sender, EventArgs e)
         {
-            // Mode 1: subscriber exists (e.g. LMSActivityHost)
             if (OnBack != null) { OnBack.Invoke(); return; }
 
-            // Mode 2: self-contained — resolve live parent at click-time
             Control container = this.Parent;
             if (container == null) return;
             container.Controls.Remove(this);
         }
 
-        // ── Toolbar events ────────────────────────────────────────────────────
         private void btnSave_Click(object sender, EventArgs e)
             => OpenActivityForm(null);
 

@@ -20,569 +20,588 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
         private void InitializeComponent()
         {
-            this.pnlRoot = new System.Windows.Forms.Panel();
-            this.pnlGrid = new System.Windows.Forms.Panel();
-            this.pnlActionBar = new System.Windows.Forms.Panel();
-            this.btnSaveAttendance = new System.Windows.Forms.Button();
-            this.btnRefresh = new System.Windows.Forms.Button();
-            this.pnlSummaryRow = new System.Windows.Forms.Panel();
-            this.pnlCardSession = new System.Windows.Forms.Panel();
-            this.lblSessionAttLabel = new System.Windows.Forms.Label();
-            this.panel21 = new System.Windows.Forms.Panel();
-            this.pnlCardPresent = new System.Windows.Forms.Panel();
-            this.lblPresentTitle = new System.Windows.Forms.Label();
-            this.lblPresentNum = new System.Windows.Forms.Label();
-            this.lblPresentPct = new System.Windows.Forms.Label();
-            this.pnlCardLate = new System.Windows.Forms.Panel();
-            this.lblLateTitle = new System.Windows.Forms.Label();
-            this.lblLateNum = new System.Windows.Forms.Label();
-            this.lblLatePct = new System.Windows.Forms.Label();
-            this.pnlCardAbsent = new System.Windows.Forms.Panel();
-            this.lblAbsentTitle = new System.Windows.Forms.Label();
-            this.lblAbsentNum = new System.Windows.Forms.Label();
-            this.lblAbsentPct = new System.Windows.Forms.Label();
-            this.pnlCardExcused = new System.Windows.Forms.Panel();
-            this.lblExcusedTitle = new System.Windows.Forms.Label();
-            this.lblExcusedNum = new System.Windows.Forms.Label();
-            this.lblExcusedPct = new System.Windows.Forms.Label();
-            this.pnlCardLastUpdate = new System.Windows.Forms.Panel();
-            this.lblLastUpdate = new System.Windows.Forms.Label();
-            this.lblDateTime = new System.Windows.Forms.Label();
-            this.lblByInstructor = new System.Windows.Forms.Label();
-            this.pnlFilterBar = new System.Windows.Forms.Panel();
-            this.lblCourseLabel = new System.Windows.Forms.Label();
-            this.cmbCourse = new System.Windows.Forms.ComboBox();
-            this.lblDateLabel = new System.Windows.Forms.Label();
-            this.dtpDate = new System.Windows.Forms.DateTimePicker();
-            this.lblSessionLabel = new System.Windows.Forms.Label();
-            this.cmbSession = new System.Windows.Forms.ComboBox();
-            this.txtSearch = new System.Windows.Forms.TextBox();
-            this.btnQRCode = new System.Windows.Forms.Button();
-            this.btnImportCSV = new System.Windows.Forms.Button();
-            this.btnExport = new System.Windows.Forms.Button();
-            this.pnlTitleBar = new System.Windows.Forms.Panel();
-            this.lblAttendanceTitle = new System.Windows.Forms.Label();
-
-            this.pnlRoot.SuspendLayout();
-            this.pnlActionBar.SuspendLayout();
-            this.pnlSummaryRow.SuspendLayout();
-            this.pnlCardSession.SuspendLayout();
-            this.pnlCardPresent.SuspendLayout();
-            this.pnlCardLate.SuspendLayout();
-            this.pnlCardAbsent.SuspendLayout();
-            this.pnlCardExcused.SuspendLayout();
-            this.pnlCardLastUpdate.SuspendLayout();
-            this.pnlFilterBar.SuspendLayout();
-            this.pnlTitleBar.SuspendLayout();
-            this.SuspendLayout();
-
+            pnlRoot = new Panel();
+            pnlGrid = new Panel();
+            pnlActionBar = new Panel();
+            btnSaveAttendance = new Button();
+            btnRefresh = new Button();
+            pnlSummaryRow = new Panel();
+            pnlCardSession = new Panel();
+            lblSessionAttLabel = new Label();
+            panel21 = new Panel();
+            pnlCardPresent = new Panel();
+            lblPresentTitle = new Label();
+            lblPresentNum = new Label();
+            lblPresentPct = new Label();
+            pnlCardLate = new Panel();
+            lblLateTitle = new Label();
+            lblLateNum = new Label();
+            lblLatePct = new Label();
+            pnlCardAbsent = new Panel();
+            lblAbsentTitle = new Label();
+            lblAbsentNum = new Label();
+            lblAbsentPct = new Label();
+            pnlCardExcused = new Panel();
+            lblExcusedTitle = new Label();
+            lblExcusedNum = new Label();
+            lblExcusedPct = new Label();
+            pnlCardLastUpdate = new Panel();
+            lblLastUpdate = new Label();
+            lblDateTime = new Label();
+            lblByInstructor = new Label();
+            pnlFilterBar = new Panel();
+            lblCourseLabel = new Label();
+            cmbCourse = new ComboBox();
+            lblDateLabel = new Label();
+            dtpDate = new DateTimePicker();
+            lblSessionLabel = new Label();
+            cmbSession = new ComboBox();
+            txtSearch = new TextBox();
+            btnQRCode = new Button();
+            btnImportCSV = new Button();
+            btnExport = new Button();
+            pnlTitleBar = new Panel();
+            lblAttendanceTitle = new Label();
+            pnlRoot.SuspendLayout();
+            pnlActionBar.SuspendLayout();
+            pnlSummaryRow.SuspendLayout();
+            pnlCardSession.SuspendLayout();
+            pnlCardPresent.SuspendLayout();
+            pnlCardLate.SuspendLayout();
+            pnlCardAbsent.SuspendLayout();
+            pnlCardExcused.SuspendLayout();
+            pnlCardLastUpdate.SuspendLayout();
+            pnlFilterBar.SuspendLayout();
+            pnlTitleBar.SuspendLayout();
+            SuspendLayout();
             // 
             // pnlRoot
             // 
-            this.pnlRoot.BackColor = System.Drawing.Color.FromArgb(245, 245, 248);
-            this.pnlRoot.Controls.Add(this.pnlGrid);
-            this.pnlRoot.Controls.Add(this.pnlActionBar);
-            this.pnlRoot.Controls.Add(this.pnlSummaryRow);
-            this.pnlRoot.Controls.Add(this.pnlFilterBar);
-            this.pnlRoot.Controls.Add(this.pnlTitleBar);
-            this.pnlRoot.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlRoot.Location = new System.Drawing.Point(0, 0);
-            this.pnlRoot.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlRoot.Name = "pnlRoot";
-            this.pnlRoot.Size = new System.Drawing.Size(1400, 900);
-
-            // 
-            // pnlTitleBar
-            // 
-            this.pnlTitleBar.BackColor = System.Drawing.Color.FromArgb(106, 0, 0);
-            this.pnlTitleBar.Controls.Add(this.lblAttendanceTitle);
-            this.pnlTitleBar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlTitleBar.Location = new System.Drawing.Point(0, 0);
-            this.pnlTitleBar.Name = "pnlTitleBar";
-            this.pnlTitleBar.Padding = new System.Windows.Forms.Padding(16, 0, 0, 0);
-            this.pnlTitleBar.Size = new System.Drawing.Size(1400, 48);
-
-            // 
-            // lblAttendanceTitle
-            // 
-            this.lblAttendanceTitle.AutoSize = true;
-            this.lblAttendanceTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblAttendanceTitle.ForeColor = System.Drawing.Color.White;
-            this.lblAttendanceTitle.Location = new System.Drawing.Point(16, 11);
-            this.lblAttendanceTitle.Name = "lblAttendanceTitle";
-            this.lblAttendanceTitle.Text = "Class Attendance";
-
-            // 
-            // pnlFilterBar
-            // 
-            this.pnlFilterBar.BackColor = System.Drawing.Color.White;
-            this.pnlFilterBar.Controls.Add(this.lblCourseLabel);
-            this.pnlFilterBar.Controls.Add(this.cmbCourse);
-            this.pnlFilterBar.Controls.Add(this.lblDateLabel);
-            this.pnlFilterBar.Controls.Add(this.dtpDate);
-            this.pnlFilterBar.Controls.Add(this.lblSessionLabel);
-            this.pnlFilterBar.Controls.Add(this.cmbSession);
-            this.pnlFilterBar.Controls.Add(this.txtSearch);
-            this.pnlFilterBar.Controls.Add(this.btnQRCode);
-            this.pnlFilterBar.Controls.Add(this.btnImportCSV);
-            this.pnlFilterBar.Controls.Add(this.btnExport);
-            this.pnlFilterBar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlFilterBar.Location = new System.Drawing.Point(0, 48);
-            this.pnlFilterBar.Name = "pnlFilterBar";
-            this.pnlFilterBar.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
-            this.pnlFilterBar.Size = new System.Drawing.Size(1400, 52);
-
-            // 
-            // lblCourseLabel
-            // 
-            this.lblCourseLabel.AutoSize = true;
-            this.lblCourseLabel.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
-            this.lblCourseLabel.ForeColor = System.Drawing.Color.FromArgb(80, 80, 80);
-            this.lblCourseLabel.Location = new System.Drawing.Point(14, 8);
-            this.lblCourseLabel.Name = "lblCourseLabel";
-            this.lblCourseLabel.Text = "Course && Section:";
-
-            // 
-            // cmbCourse
-            // 
-            this.cmbCourse.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbCourse.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.cmbCourse.Location = new System.Drawing.Point(14, 24);
-            this.cmbCourse.Name = "cmbCourse";
-            this.cmbCourse.Size = new System.Drawing.Size(290, 23);
-            this.cmbCourse.TabIndex = 0;
-
-            // 
-            // lblDateLabel
-            // 
-            this.lblDateLabel.AutoSize = true;
-            this.lblDateLabel.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
-            this.lblDateLabel.ForeColor = System.Drawing.Color.FromArgb(80, 80, 80);
-            this.lblDateLabel.Location = new System.Drawing.Point(316, 8);
-            this.lblDateLabel.Name = "lblDateLabel";
-            this.lblDateLabel.Text = "Date:";
-
-            // 
-            // dtpDate
-            // 
-            this.dtpDate.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.dtpDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpDate.Location = new System.Drawing.Point(316, 24);
-            this.dtpDate.Name = "dtpDate";
-            this.dtpDate.Size = new System.Drawing.Size(130, 23);
-            this.dtpDate.TabIndex = 1;
-
-            // 
-            // lblSessionLabel
-            // 
-            this.lblSessionLabel.AutoSize = true;
-            this.lblSessionLabel.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
-            this.lblSessionLabel.ForeColor = System.Drawing.Color.FromArgb(80, 80, 80);
-            this.lblSessionLabel.Location = new System.Drawing.Point(458, 8);
-            this.lblSessionLabel.Name = "lblSessionLabel";
-            this.lblSessionLabel.Text = "Session:";
-
-            // 
-            // cmbSession
-            // 
-            this.cmbSession.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbSession.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.cmbSession.Location = new System.Drawing.Point(458, 24);
-            this.cmbSession.Name = "cmbSession";
-            this.cmbSession.Size = new System.Drawing.Size(240, 23);
-            this.cmbSession.TabIndex = 2;
-
-            // 
-            // txtSearch
-            // 
-            this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtSearch.ForeColor = System.Drawing.Color.Gray;
-            this.txtSearch.Location = new System.Drawing.Point(712, 24);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(200, 23);
-            this.txtSearch.TabIndex = 3;
-            this.txtSearch.Text = "Search student…";
-
-            // 
-            // btnQRCode
-            // 
-            this.btnQRCode.BackColor = System.Drawing.Color.FromArgb(106, 0, 0);
-            this.btnQRCode.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnQRCode.FlatAppearance.BorderSize = 0;
-            this.btnQRCode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnQRCode.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
-            this.btnQRCode.ForeColor = System.Drawing.Color.White;
-            this.btnQRCode.Location = new System.Drawing.Point(924, 19);
-            this.btnQRCode.Name = "btnQRCode";
-            this.btnQRCode.Size = new System.Drawing.Size(140, 28);
-            this.btnQRCode.TabIndex = 4;
-            this.btnQRCode.Text = "⊞  QR Attendance";
-            this.btnQRCode.UseVisualStyleBackColor = false;
-
-            // 
-            // btnImportCSV
-            // 
-            this.btnImportCSV.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnImportCSV.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(200, 200, 200);
-            this.btnImportCSV.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnImportCSV.Font = new System.Drawing.Font("Segoe UI", 8.5F);
-            this.btnImportCSV.Location = new System.Drawing.Point(1076, 19);
-            this.btnImportCSV.Name = "btnImportCSV";
-            this.btnImportCSV.Size = new System.Drawing.Size(100, 28);
-            this.btnImportCSV.TabIndex = 5;
-            this.btnImportCSV.Text = "Import CSV";
-
-            // 
-            // btnExport
-            // 
-            this.btnExport.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnExport.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(200, 200, 200);
-            this.btnExport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnExport.Font = new System.Drawing.Font("Segoe UI", 8.5F);
-            this.btnExport.Location = new System.Drawing.Point(1184, 19);
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(100, 28);
-            this.btnExport.TabIndex = 6;
-            this.btnExport.Text = "Export CSV";
-
-            // 
-            // pnlSummaryRow
-            // 
-            this.pnlSummaryRow.BackColor = System.Drawing.Color.FromArgb(245, 245, 248);
-            this.pnlSummaryRow.Controls.Add(this.pnlCardSession);
-            this.pnlSummaryRow.Controls.Add(this.pnlCardPresent);
-            this.pnlSummaryRow.Controls.Add(this.pnlCardLate);
-            this.pnlSummaryRow.Controls.Add(this.pnlCardAbsent);
-            this.pnlSummaryRow.Controls.Add(this.pnlCardExcused);
-            this.pnlSummaryRow.Controls.Add(this.pnlCardLastUpdate);
-            this.pnlSummaryRow.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlSummaryRow.Location = new System.Drawing.Point(0, 100);
-            this.pnlSummaryRow.Name = "pnlSummaryRow";
-            this.pnlSummaryRow.Padding = new System.Windows.Forms.Padding(10, 8, 10, 4);
-            this.pnlSummaryRow.Size = new System.Drawing.Size(1400, 120);
-            this.pnlSummaryRow.SizeChanged += new System.EventHandler(this.PnlSummaryRow_SizeChanged);
-
-            // 
-            // pnlCardSession
-            // 
-            this.pnlCardSession.BackColor = System.Drawing.Color.White;
-            this.pnlCardSession.Controls.Add(this.lblSessionAttLabel);
-            this.pnlCardSession.Controls.Add(this.panel21);
-            this.pnlCardSession.Margin = new System.Windows.Forms.Padding(4);
-            this.pnlCardSession.Name = "pnlCardSession";
-            this.pnlCardSession.Tag = System.Drawing.Color.FromArgb(106, 0, 0);
-            this.pnlCardSession.Paint += new System.Windows.Forms.PaintEventHandler(this.Card_Paint);
-
-            // 
-            // lblSessionAttLabel
-            // 
-            this.lblSessionAttLabel.AutoSize = true;
-            this.lblSessionAttLabel.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
-            this.lblSessionAttLabel.ForeColor = System.Drawing.Color.FromArgb(106, 0, 0);
-            this.lblSessionAttLabel.Location = new System.Drawing.Point(10, 6);
-            this.lblSessionAttLabel.Name = "lblSessionAttLabel";
-            this.lblSessionAttLabel.Text = "Session Summary";
-
-            // 
-            // panel21
-            // 
-            this.panel21.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel21.BackColor = System.Drawing.Color.Transparent;
-            this.panel21.Location = new System.Drawing.Point(4, 22);
-            this.panel21.Name = "panel21";
-            this.panel21.Size = new System.Drawing.Size(320, 78);
-
-            // 
-            // pnlCardPresent
-            // 
-            this.pnlCardPresent.BackColor = System.Drawing.Color.White;
-            this.pnlCardPresent.Controls.Add(this.lblPresentTitle);
-            this.pnlCardPresent.Controls.Add(this.lblPresentNum);
-            this.pnlCardPresent.Controls.Add(this.lblPresentPct);
-            this.pnlCardPresent.Margin = new System.Windows.Forms.Padding(4);
-            this.pnlCardPresent.Name = "pnlCardPresent";
-            this.pnlCardPresent.Tag = System.Drawing.Color.FromArgb(34, 139, 34);
-            this.pnlCardPresent.Paint += new System.Windows.Forms.PaintEventHandler(this.Card_Paint);
-
-            // 
-            // lblPresentTitle
-            // 
-            this.lblPresentTitle.AutoSize = true;
-            this.lblPresentTitle.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
-            this.lblPresentTitle.ForeColor = System.Drawing.Color.FromArgb(34, 139, 34);
-            this.lblPresentTitle.Location = new System.Drawing.Point(10, 12);
-            this.lblPresentTitle.Name = "lblPresentTitle";
-            this.lblPresentTitle.Text = "Present";
-
-            // 
-            // lblPresentNum
-            // 
-            this.lblPresentNum.AutoSize = true;
-            this.lblPresentNum.Font = new System.Drawing.Font("Segoe UI", 26F, System.Drawing.FontStyle.Bold);
-            this.lblPresentNum.ForeColor = System.Drawing.Color.FromArgb(34, 139, 34);
-            this.lblPresentNum.Location = new System.Drawing.Point(10, 30);
-            this.lblPresentNum.Name = "lblPresentNum";
-            this.lblPresentNum.Text = "0";
-
-            // 
-            // lblPresentPct
-            // 
-            this.lblPresentPct.AutoSize = true;
-            this.lblPresentPct.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.lblPresentPct.ForeColor = System.Drawing.Color.FromArgb(120, 120, 120);
-            this.lblPresentPct.Location = new System.Drawing.Point(10, 84);
-            this.lblPresentPct.Name = "lblPresentPct";
-            this.lblPresentPct.Text = "0%";
-
-            // 
-            // pnlCardLate
-            // 
-            this.pnlCardLate.BackColor = System.Drawing.Color.White;
-            this.pnlCardLate.Controls.Add(this.lblLateTitle);
-            this.pnlCardLate.Controls.Add(this.lblLateNum);
-            this.pnlCardLate.Controls.Add(this.lblLatePct);
-            this.pnlCardLate.Margin = new System.Windows.Forms.Padding(4);
-            this.pnlCardLate.Name = "pnlCardLate";
-            this.pnlCardLate.Tag = System.Drawing.Color.FromArgb(200, 110, 0);
-            this.pnlCardLate.Paint += new System.Windows.Forms.PaintEventHandler(this.Card_Paint);
-
-            // 
-            // lblLateTitle
-            // 
-            this.lblLateTitle.AutoSize = true;
-            this.lblLateTitle.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
-            this.lblLateTitle.ForeColor = System.Drawing.Color.FromArgb(200, 110, 0);
-            this.lblLateTitle.Location = new System.Drawing.Point(10, 12);
-            this.lblLateTitle.Name = "lblLateTitle";
-            this.lblLateTitle.Text = "Late";
-
-            // 
-            // lblLateNum
-            // 
-            this.lblLateNum.AutoSize = true;
-            this.lblLateNum.Font = new System.Drawing.Font("Segoe UI", 26F, System.Drawing.FontStyle.Bold);
-            this.lblLateNum.ForeColor = System.Drawing.Color.FromArgb(200, 110, 0);
-            this.lblLateNum.Location = new System.Drawing.Point(10, 30);
-            this.lblLateNum.Name = "lblLateNum";
-            this.lblLateNum.Text = "0";
-
-            // 
-            // lblLatePct
-            // 
-            this.lblLatePct.AutoSize = true;
-            this.lblLatePct.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.lblLatePct.ForeColor = System.Drawing.Color.FromArgb(120, 120, 120);
-            this.lblLatePct.Location = new System.Drawing.Point(10, 84);
-            this.lblLatePct.Name = "lblLatePct";
-            this.lblLatePct.Text = "0%";
-
-            // 
-            // pnlCardAbsent
-            // 
-            this.pnlCardAbsent.BackColor = System.Drawing.Color.White;
-            this.pnlCardAbsent.Controls.Add(this.lblAbsentTitle);
-            this.pnlCardAbsent.Controls.Add(this.lblAbsentNum);
-            this.pnlCardAbsent.Controls.Add(this.lblAbsentPct);
-            this.pnlCardAbsent.Margin = new System.Windows.Forms.Padding(4);
-            this.pnlCardAbsent.Name = "pnlCardAbsent";
-            this.pnlCardAbsent.Tag = System.Drawing.Color.FromArgb(210, 40, 40);
-            this.pnlCardAbsent.Paint += new System.Windows.Forms.PaintEventHandler(this.Card_Paint);
-
-            // 
-            // lblAbsentTitle
-            // 
-            this.lblAbsentTitle.AutoSize = true;
-            this.lblAbsentTitle.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
-            this.lblAbsentTitle.ForeColor = System.Drawing.Color.FromArgb(210, 40, 40);
-            this.lblAbsentTitle.Location = new System.Drawing.Point(10, 12);
-            this.lblAbsentTitle.Name = "lblAbsentTitle";
-            this.lblAbsentTitle.Text = "Absent";
-
-            // 
-            // lblAbsentNum
-            // 
-            this.lblAbsentNum.AutoSize = true;
-            this.lblAbsentNum.Font = new System.Drawing.Font("Segoe UI", 26F, System.Drawing.FontStyle.Bold);
-            this.lblAbsentNum.ForeColor = System.Drawing.Color.FromArgb(210, 40, 40);
-            this.lblAbsentNum.Location = new System.Drawing.Point(10, 30);
-            this.lblAbsentNum.Name = "lblAbsentNum";
-            this.lblAbsentNum.Text = "0";
-
-            // 
-            // lblAbsentPct
-            // 
-            this.lblAbsentPct.AutoSize = true;
-            this.lblAbsentPct.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.lblAbsentPct.ForeColor = System.Drawing.Color.FromArgb(120, 120, 120);
-            this.lblAbsentPct.Location = new System.Drawing.Point(10, 84);
-            this.lblAbsentPct.Name = "lblAbsentPct";
-            this.lblAbsentPct.Text = "0%";
-
-            // 
-            // pnlCardExcused
-            // 
-            this.pnlCardExcused.BackColor = System.Drawing.Color.White;
-            this.pnlCardExcused.Controls.Add(this.lblExcusedTitle);
-            this.pnlCardExcused.Controls.Add(this.lblExcusedNum);
-            this.pnlCardExcused.Controls.Add(this.lblExcusedPct);
-            this.pnlCardExcused.Margin = new System.Windows.Forms.Padding(4);
-            this.pnlCardExcused.Name = "pnlCardExcused";
-            this.pnlCardExcused.Tag = System.Drawing.Color.FromArgb(180, 140, 0);
-            this.pnlCardExcused.Paint += new System.Windows.Forms.PaintEventHandler(this.Card_Paint);
-
-            // 
-            // lblExcusedTitle
-            // 
-            this.lblExcusedTitle.AutoSize = true;
-            this.lblExcusedTitle.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
-            this.lblExcusedTitle.ForeColor = System.Drawing.Color.FromArgb(180, 140, 0);
-            this.lblExcusedTitle.Location = new System.Drawing.Point(10, 12);
-            this.lblExcusedTitle.Name = "lblExcusedTitle";
-            this.lblExcusedTitle.Text = "Excused";
-
-            // 
-            // lblExcusedNum
-            // 
-            this.lblExcusedNum.AutoSize = true;
-            this.lblExcusedNum.Font = new System.Drawing.Font("Segoe UI", 26F, System.Drawing.FontStyle.Bold);
-            this.lblExcusedNum.ForeColor = System.Drawing.Color.FromArgb(180, 140, 0);
-            this.lblExcusedNum.Location = new System.Drawing.Point(10, 30);
-            this.lblExcusedNum.Name = "lblExcusedNum";
-            this.lblExcusedNum.Text = "0";
-
-            // 
-            // lblExcusedPct
-            // 
-            this.lblExcusedPct.AutoSize = true;
-            this.lblExcusedPct.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.lblExcusedPct.ForeColor = System.Drawing.Color.FromArgb(120, 120, 120);
-            this.lblExcusedPct.Location = new System.Drawing.Point(10, 84);
-            this.lblExcusedPct.Name = "lblExcusedPct";
-            this.lblExcusedPct.Text = "0%";
-
-            // 
-            // pnlCardLastUpdate
-            // 
-            this.pnlCardLastUpdate.BackColor = System.Drawing.Color.White;
-            this.pnlCardLastUpdate.Controls.Add(this.lblLastUpdate);
-            this.pnlCardLastUpdate.Controls.Add(this.lblDateTime);
-            this.pnlCardLastUpdate.Controls.Add(this.lblByInstructor);
-            this.pnlCardLastUpdate.Margin = new System.Windows.Forms.Padding(4);
-            this.pnlCardLastUpdate.Name = "pnlCardLastUpdate";
-            this.pnlCardLastUpdate.Tag = System.Drawing.Color.FromArgb(106, 0, 0);
-            this.pnlCardLastUpdate.Paint += new System.Windows.Forms.PaintEventHandler(this.Card_Paint);
-
-            // 
-            // lblLastUpdate
-            // 
-            this.lblLastUpdate.AutoSize = true;
-            this.lblLastUpdate.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
-            this.lblLastUpdate.ForeColor = System.Drawing.Color.FromArgb(106, 0, 0);
-            this.lblLastUpdate.Location = new System.Drawing.Point(10, 12);
-            this.lblLastUpdate.Name = "lblLastUpdate";
-            this.lblLastUpdate.Text = "Last Updated";
-
-            // 
-            // lblDateTime
-            // 
-            this.lblDateTime.AutoSize = true;
-            this.lblDateTime.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.lblDateTime.ForeColor = System.Drawing.Color.FromArgb(70, 70, 70);
-            this.lblDateTime.Location = new System.Drawing.Point(10, 32);
-            this.lblDateTime.Name = "lblDateTime";
-            this.lblDateTime.Text = "—";
-
-            // 
-            // lblByInstructor
-            // 
-            this.lblByInstructor.AutoSize = true;
-            this.lblByInstructor.Font = new System.Drawing.Font("Segoe UI", 7.5F);
-            this.lblByInstructor.ForeColor = System.Drawing.Color.Gray;
-            this.lblByInstructor.Location = new System.Drawing.Point(10, 68);
-            this.lblByInstructor.Name = "lblByInstructor";
-            this.lblByInstructor.Text = "by Instructor";
-
-            // 
-            // pnlActionBar
-            // 
-            this.pnlActionBar.BackColor = System.Drawing.Color.White;
-            this.pnlActionBar.Controls.Add(this.btnSaveAttendance);
-            this.pnlActionBar.Controls.Add(this.btnRefresh);
-            this.pnlActionBar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlActionBar.Location = new System.Drawing.Point(0, 220);
-            this.pnlActionBar.Name = "pnlActionBar";
-            this.pnlActionBar.Size = new System.Drawing.Size(1400, 52);
-
-            // 
-            // btnSaveAttendance
-            // 
-            this.btnSaveAttendance.BackColor = System.Drawing.Color.FromArgb(106, 0, 0);
-            this.btnSaveAttendance.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSaveAttendance.FlatAppearance.BorderSize = 0;
-            this.btnSaveAttendance.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSaveAttendance.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnSaveAttendance.ForeColor = System.Drawing.Color.White;
-            this.btnSaveAttendance.Location = new System.Drawing.Point(14, 11);
-            this.btnSaveAttendance.Name = "btnSaveAttendance";
-            this.btnSaveAttendance.Size = new System.Drawing.Size(160, 30);
-            this.btnSaveAttendance.TabIndex = 0;
-            this.btnSaveAttendance.Text = "✓  Save Attendance";
-            this.btnSaveAttendance.UseVisualStyleBackColor = false;
-
-            // 
-            // btnRefresh
-            // 
-            this.btnRefresh.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnRefresh.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(200, 200, 200);
-            this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRefresh.Font = new System.Drawing.Font("Segoe UI", 8.5F);
-            this.btnRefresh.Location = new System.Drawing.Point(184, 11);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(100, 30);
-            this.btnRefresh.TabIndex = 1;
-            this.btnRefresh.Text = "⟳  Refresh";
-            this.btnRefresh.UseVisualStyleBackColor = true;
-
+            pnlRoot.BackColor = Color.FromArgb(245, 245, 248);
+            pnlRoot.Controls.Add(pnlGrid);
+            pnlRoot.Controls.Add(pnlActionBar);
+            pnlRoot.Controls.Add(pnlSummaryRow);
+            pnlRoot.Controls.Add(pnlFilterBar);
+            pnlRoot.Controls.Add(pnlTitleBar);
+            pnlRoot.Dock = DockStyle.Fill;
+            pnlRoot.Location = new Point(0, 0);
+            pnlRoot.Margin = new Padding(0);
+            pnlRoot.Name = "pnlRoot";
+            pnlRoot.Size = new Size(1649, 989);
+            pnlRoot.TabIndex = 0;
             // 
             // pnlGrid
             // 
-            this.pnlGrid.BackColor = System.Drawing.Color.White;
-            this.pnlGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlGrid.Location = new System.Drawing.Point(0, 272);
-            this.pnlGrid.Name = "pnlGrid";
-            this.pnlGrid.Size = new System.Drawing.Size(1400, 628);
-
+            pnlGrid.BackColor = Color.White;
+            pnlGrid.Dock = DockStyle.Fill;
+            pnlGrid.Location = new Point(0, 282);
+            pnlGrid.Name = "pnlGrid";
+            pnlGrid.Size = new Size(1649, 707);
+            pnlGrid.TabIndex = 0;
+            // 
+            // pnlActionBar
+            // 
+            pnlActionBar.BackColor = Color.White;
+            pnlActionBar.Controls.Add(btnSaveAttendance);
+            pnlActionBar.Controls.Add(btnRefresh);
+            pnlActionBar.Dock = DockStyle.Top;
+            pnlActionBar.Location = new Point(0, 230);
+            pnlActionBar.Name = "pnlActionBar";
+            pnlActionBar.Size = new Size(1649, 52);
+            pnlActionBar.TabIndex = 1;
+            // 
+            // btnSaveAttendance
+            // 
+            btnSaveAttendance.BackColor = Color.FromArgb(106, 0, 0);
+            btnSaveAttendance.Cursor = Cursors.Hand;
+            btnSaveAttendance.FlatAppearance.BorderSize = 0;
+            btnSaveAttendance.FlatStyle = FlatStyle.Flat;
+            btnSaveAttendance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnSaveAttendance.ForeColor = Color.White;
+            btnSaveAttendance.Location = new Point(14, 11);
+            btnSaveAttendance.Name = "btnSaveAttendance";
+            btnSaveAttendance.Size = new Size(160, 30);
+            btnSaveAttendance.TabIndex = 0;
+            btnSaveAttendance.Text = "✓  Save Attendance";
+            btnSaveAttendance.UseVisualStyleBackColor = false;
+            // 
+            // btnRefresh
+            // 
+            btnRefresh.Cursor = Cursors.Hand;
+            btnRefresh.FlatAppearance.BorderColor = Color.FromArgb(200, 200, 200);
+            btnRefresh.FlatStyle = FlatStyle.Flat;
+            btnRefresh.Font = new Font("Segoe UI", 8.5F);
+            btnRefresh.Location = new Point(184, 11);
+            btnRefresh.Name = "btnRefresh";
+            btnRefresh.Size = new Size(100, 30);
+            btnRefresh.TabIndex = 1;
+            btnRefresh.Text = "⟳  Refresh";
+            btnRefresh.UseVisualStyleBackColor = true;
+            // 
+            // pnlSummaryRow
+            // 
+            pnlSummaryRow.BackColor = Color.FromArgb(245, 245, 248);
+            pnlSummaryRow.Controls.Add(pnlCardSession);
+            pnlSummaryRow.Controls.Add(pnlCardPresent);
+            pnlSummaryRow.Controls.Add(pnlCardLate);
+            pnlSummaryRow.Controls.Add(pnlCardAbsent);
+            pnlSummaryRow.Controls.Add(pnlCardExcused);
+            pnlSummaryRow.Controls.Add(pnlCardLastUpdate);
+            pnlSummaryRow.Dock = DockStyle.Top;
+            pnlSummaryRow.Location = new Point(0, 100);
+            pnlSummaryRow.Name = "pnlSummaryRow";
+            pnlSummaryRow.Padding = new Padding(10, 8, 10, 4);
+            pnlSummaryRow.Size = new Size(1649, 130);
+            pnlSummaryRow.TabIndex = 2;
+            pnlSummaryRow.SizeChanged += PnlSummaryRow_SizeChanged;
+            // 
+            // pnlCardSession
+            // 
+            pnlCardSession.BackColor = Color.White;
+            pnlCardSession.Controls.Add(lblSessionAttLabel);
+            pnlCardSession.Controls.Add(panel21);
+            pnlCardSession.Location = new Point(0, 0);
+            pnlCardSession.Margin = new Padding(4);
+            pnlCardSession.Name = "pnlCardSession";
+            pnlCardSession.Size = new Size(1649, 129);
+            pnlCardSession.TabIndex = 0;
+            pnlCardSession.Tag = Color.FromArgb(106, 0, 0);
+            pnlCardSession.Paint += Card_Paint;
+            // 
+            // lblSessionAttLabel
+            // 
+            lblSessionAttLabel.AutoSize = true;
+            lblSessionAttLabel.Font = new Font("Segoe UI", 8F, FontStyle.Bold);
+            lblSessionAttLabel.ForeColor = Color.FromArgb(106, 0, 0);
+            lblSessionAttLabel.Location = new Point(10, 6);
+            lblSessionAttLabel.Name = "lblSessionAttLabel";
+            lblSessionAttLabel.Size = new Size(98, 13);
+            lblSessionAttLabel.TabIndex = 0;
+            lblSessionAttLabel.Text = "Session Summary";
+            // 
+            // panel21
+            // 
+            panel21.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panel21.BackColor = Color.Transparent;
+            panel21.Location = new Point(4, 22);
+            panel21.Name = "panel21";
+            panel21.Size = new Size(1769, 104);
+            panel21.TabIndex = 1;
+            // 
+            // pnlCardPresent
+            // 
+            pnlCardPresent.BackColor = Color.White;
+            pnlCardPresent.Controls.Add(lblPresentTitle);
+            pnlCardPresent.Controls.Add(lblPresentNum);
+            pnlCardPresent.Controls.Add(lblPresentPct);
+            pnlCardPresent.Location = new Point(0, 0);
+            pnlCardPresent.Margin = new Padding(4);
+            pnlCardPresent.Name = "pnlCardPresent";
+            pnlCardPresent.Size = new Size(200, 100);
+            pnlCardPresent.TabIndex = 1;
+            pnlCardPresent.Tag = Color.FromArgb(34, 139, 34);
+            pnlCardPresent.Paint += Card_Paint;
+            // 
+            // lblPresentTitle
+            // 
+            lblPresentTitle.AutoSize = true;
+            lblPresentTitle.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+            lblPresentTitle.ForeColor = Color.FromArgb(34, 139, 34);
+            lblPresentTitle.Location = new Point(10, 12);
+            lblPresentTitle.Name = "lblPresentTitle";
+            lblPresentTitle.Size = new Size(50, 15);
+            lblPresentTitle.TabIndex = 0;
+            lblPresentTitle.Text = "Present";
+            // 
+            // lblPresentNum
+            // 
+            lblPresentNum.AutoSize = true;
+            lblPresentNum.Font = new Font("Segoe UI", 26F, FontStyle.Bold);
+            lblPresentNum.ForeColor = Color.FromArgb(34, 139, 34);
+            lblPresentNum.Location = new Point(10, 30);
+            lblPresentNum.Name = "lblPresentNum";
+            lblPresentNum.Size = new Size(40, 47);
+            lblPresentNum.TabIndex = 1;
+            lblPresentNum.Text = "0";
+            // 
+            // lblPresentPct
+            // 
+            lblPresentPct.AutoSize = true;
+            lblPresentPct.Font = new Font("Segoe UI", 8F);
+            lblPresentPct.ForeColor = Color.FromArgb(120, 120, 120);
+            lblPresentPct.Location = new Point(10, 84);
+            lblPresentPct.Name = "lblPresentPct";
+            lblPresentPct.Size = new Size(22, 13);
+            lblPresentPct.TabIndex = 2;
+            lblPresentPct.Text = "0%";
+            // 
+            // pnlCardLate
+            // 
+            pnlCardLate.BackColor = Color.White;
+            pnlCardLate.Controls.Add(lblLateTitle);
+            pnlCardLate.Controls.Add(lblLateNum);
+            pnlCardLate.Controls.Add(lblLatePct);
+            pnlCardLate.Location = new Point(0, 0);
+            pnlCardLate.Margin = new Padding(4);
+            pnlCardLate.Name = "pnlCardLate";
+            pnlCardLate.Size = new Size(200, 100);
+            pnlCardLate.TabIndex = 2;
+            pnlCardLate.Tag = Color.FromArgb(200, 110, 0);
+            pnlCardLate.Paint += Card_Paint;
+            // 
+            // lblLateTitle
+            // 
+            lblLateTitle.AutoSize = true;
+            lblLateTitle.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+            lblLateTitle.ForeColor = Color.FromArgb(200, 110, 0);
+            lblLateTitle.Location = new Point(10, 12);
+            lblLateTitle.Name = "lblLateTitle";
+            lblLateTitle.Size = new Size(31, 15);
+            lblLateTitle.TabIndex = 0;
+            lblLateTitle.Text = "Late";
+            // 
+            // lblLateNum
+            // 
+            lblLateNum.AutoSize = true;
+            lblLateNum.Font = new Font("Segoe UI", 26F, FontStyle.Bold);
+            lblLateNum.ForeColor = Color.FromArgb(200, 110, 0);
+            lblLateNum.Location = new Point(10, 30);
+            lblLateNum.Name = "lblLateNum";
+            lblLateNum.Size = new Size(40, 47);
+            lblLateNum.TabIndex = 1;
+            lblLateNum.Text = "0";
+            // 
+            // lblLatePct
+            // 
+            lblLatePct.AutoSize = true;
+            lblLatePct.Font = new Font("Segoe UI", 8F);
+            lblLatePct.ForeColor = Color.FromArgb(120, 120, 120);
+            lblLatePct.Location = new Point(10, 84);
+            lblLatePct.Name = "lblLatePct";
+            lblLatePct.Size = new Size(22, 13);
+            lblLatePct.TabIndex = 2;
+            lblLatePct.Text = "0%";
+            // 
+            // pnlCardAbsent
+            // 
+            pnlCardAbsent.BackColor = Color.White;
+            pnlCardAbsent.Controls.Add(lblAbsentTitle);
+            pnlCardAbsent.Controls.Add(lblAbsentNum);
+            pnlCardAbsent.Controls.Add(lblAbsentPct);
+            pnlCardAbsent.Location = new Point(0, 0);
+            pnlCardAbsent.Margin = new Padding(4);
+            pnlCardAbsent.Name = "pnlCardAbsent";
+            pnlCardAbsent.Size = new Size(200, 100);
+            pnlCardAbsent.TabIndex = 3;
+            pnlCardAbsent.Tag = Color.FromArgb(210, 40, 40);
+            pnlCardAbsent.Paint += Card_Paint;
+            // 
+            // lblAbsentTitle
+            // 
+            lblAbsentTitle.AutoSize = true;
+            lblAbsentTitle.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+            lblAbsentTitle.ForeColor = Color.FromArgb(210, 40, 40);
+            lblAbsentTitle.Location = new Point(10, 12);
+            lblAbsentTitle.Name = "lblAbsentTitle";
+            lblAbsentTitle.Size = new Size(46, 15);
+            lblAbsentTitle.TabIndex = 0;
+            lblAbsentTitle.Text = "Absent";
+            // 
+            // lblAbsentNum
+            // 
+            lblAbsentNum.AutoSize = true;
+            lblAbsentNum.Font = new Font("Segoe UI", 26F, FontStyle.Bold);
+            lblAbsentNum.ForeColor = Color.FromArgb(210, 40, 40);
+            lblAbsentNum.Location = new Point(10, 30);
+            lblAbsentNum.Name = "lblAbsentNum";
+            lblAbsentNum.Size = new Size(40, 47);
+            lblAbsentNum.TabIndex = 1;
+            lblAbsentNum.Text = "0";
+            // 
+            // lblAbsentPct
+            // 
+            lblAbsentPct.AutoSize = true;
+            lblAbsentPct.Font = new Font("Segoe UI", 8F);
+            lblAbsentPct.ForeColor = Color.FromArgb(120, 120, 120);
+            lblAbsentPct.Location = new Point(10, 84);
+            lblAbsentPct.Name = "lblAbsentPct";
+            lblAbsentPct.Size = new Size(22, 13);
+            lblAbsentPct.TabIndex = 2;
+            lblAbsentPct.Text = "0%";
+            // 
+            // pnlCardExcused
+            // 
+            pnlCardExcused.BackColor = Color.White;
+            pnlCardExcused.Controls.Add(lblExcusedTitle);
+            pnlCardExcused.Controls.Add(lblExcusedNum);
+            pnlCardExcused.Controls.Add(lblExcusedPct);
+            pnlCardExcused.Location = new Point(0, 0);
+            pnlCardExcused.Margin = new Padding(4);
+            pnlCardExcused.Name = "pnlCardExcused";
+            pnlCardExcused.Size = new Size(200, 100);
+            pnlCardExcused.TabIndex = 4;
+            pnlCardExcused.Tag = Color.FromArgb(180, 140, 0);
+            pnlCardExcused.Paint += Card_Paint;
+            // 
+            // lblExcusedTitle
+            // 
+            lblExcusedTitle.AutoSize = true;
+            lblExcusedTitle.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+            lblExcusedTitle.ForeColor = Color.FromArgb(180, 140, 0);
+            lblExcusedTitle.Location = new Point(10, 12);
+            lblExcusedTitle.Name = "lblExcusedTitle";
+            lblExcusedTitle.Size = new Size(52, 15);
+            lblExcusedTitle.TabIndex = 0;
+            lblExcusedTitle.Text = "Excused";
+            // 
+            // lblExcusedNum
+            // 
+            lblExcusedNum.AutoSize = true;
+            lblExcusedNum.Font = new Font("Segoe UI", 26F, FontStyle.Bold);
+            lblExcusedNum.ForeColor = Color.FromArgb(180, 140, 0);
+            lblExcusedNum.Location = new Point(10, 30);
+            lblExcusedNum.Name = "lblExcusedNum";
+            lblExcusedNum.Size = new Size(40, 47);
+            lblExcusedNum.TabIndex = 1;
+            lblExcusedNum.Text = "0";
+            // 
+            // lblExcusedPct
+            // 
+            lblExcusedPct.AutoSize = true;
+            lblExcusedPct.Font = new Font("Segoe UI", 8F);
+            lblExcusedPct.ForeColor = Color.FromArgb(120, 120, 120);
+            lblExcusedPct.Location = new Point(10, 84);
+            lblExcusedPct.Name = "lblExcusedPct";
+            lblExcusedPct.Size = new Size(22, 13);
+            lblExcusedPct.TabIndex = 2;
+            lblExcusedPct.Text = "0%";
+            // 
+            // pnlCardLastUpdate
+            // 
+            pnlCardLastUpdate.BackColor = Color.White;
+            pnlCardLastUpdate.Controls.Add(lblLastUpdate);
+            pnlCardLastUpdate.Controls.Add(lblDateTime);
+            pnlCardLastUpdate.Controls.Add(lblByInstructor);
+            pnlCardLastUpdate.Location = new Point(0, 0);
+            pnlCardLastUpdate.Margin = new Padding(4);
+            pnlCardLastUpdate.Name = "pnlCardLastUpdate";
+            pnlCardLastUpdate.Size = new Size(200, 100);
+            pnlCardLastUpdate.TabIndex = 5;
+            pnlCardLastUpdate.Tag = Color.FromArgb(106, 0, 0);
+            pnlCardLastUpdate.Paint += Card_Paint;
+            // 
+            // lblLastUpdate
+            // 
+            lblLastUpdate.AutoSize = true;
+            lblLastUpdate.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+            lblLastUpdate.ForeColor = Color.FromArgb(106, 0, 0);
+            lblLastUpdate.Location = new Point(10, 12);
+            lblLastUpdate.Name = "lblLastUpdate";
+            lblLastUpdate.Size = new Size(80, 15);
+            lblLastUpdate.TabIndex = 0;
+            lblLastUpdate.Text = "Last Updated";
+            // 
+            // lblDateTime
+            // 
+            lblDateTime.AutoSize = true;
+            lblDateTime.Font = new Font("Segoe UI", 8F);
+            lblDateTime.ForeColor = Color.FromArgb(70, 70, 70);
+            lblDateTime.Location = new Point(10, 32);
+            lblDateTime.Name = "lblDateTime";
+            lblDateTime.Size = new Size(18, 13);
+            lblDateTime.TabIndex = 1;
+            lblDateTime.Text = "—";
+            // 
+            // lblByInstructor
+            // 
+            lblByInstructor.AutoSize = true;
+            lblByInstructor.Font = new Font("Segoe UI", 7.5F);
+            lblByInstructor.ForeColor = Color.Gray;
+            lblByInstructor.Location = new Point(10, 68);
+            lblByInstructor.Name = "lblByInstructor";
+            lblByInstructor.Size = new Size(61, 12);
+            lblByInstructor.TabIndex = 2;
+            lblByInstructor.Text = "by Instructor";
+            // 
+            // pnlFilterBar
+            // 
+            pnlFilterBar.BackColor = Color.White;
+            pnlFilterBar.Controls.Add(lblCourseLabel);
+            pnlFilterBar.Controls.Add(cmbCourse);
+            pnlFilterBar.Controls.Add(lblDateLabel);
+            pnlFilterBar.Controls.Add(dtpDate);
+            pnlFilterBar.Controls.Add(lblSessionLabel);
+            pnlFilterBar.Controls.Add(cmbSession);
+            pnlFilterBar.Controls.Add(txtSearch);
+            pnlFilterBar.Controls.Add(btnQRCode);
+            pnlFilterBar.Controls.Add(btnImportCSV);
+            pnlFilterBar.Controls.Add(btnExport);
+            pnlFilterBar.Dock = DockStyle.Top;
+            pnlFilterBar.Location = new Point(0, 48);
+            pnlFilterBar.Name = "pnlFilterBar";
+            pnlFilterBar.Padding = new Padding(14, 0, 14, 0);
+            pnlFilterBar.Size = new Size(1649, 52);
+            pnlFilterBar.TabIndex = 3;
+            // 
+            // lblCourseLabel
+            // 
+            lblCourseLabel.AutoSize = true;
+            lblCourseLabel.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+            lblCourseLabel.ForeColor = Color.FromArgb(80, 80, 80);
+            lblCourseLabel.Location = new Point(14, 8);
+            lblCourseLabel.Name = "lblCourseLabel";
+            lblCourseLabel.Size = new Size(106, 15);
+            lblCourseLabel.TabIndex = 0;
+            lblCourseLabel.Text = "Course && Section:";
+            // 
+            // cmbCourse
+            // 
+            cmbCourse.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbCourse.Font = new Font("Segoe UI", 9F);
+            cmbCourse.Location = new Point(14, 24);
+            cmbCourse.Name = "cmbCourse";
+            cmbCourse.Size = new Size(290, 23);
+            cmbCourse.TabIndex = 0;
+            // 
+            // lblDateLabel
+            // 
+            lblDateLabel.AutoSize = true;
+            lblDateLabel.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+            lblDateLabel.ForeColor = Color.FromArgb(80, 80, 80);
+            lblDateLabel.Location = new Point(316, 8);
+            lblDateLabel.Name = "lblDateLabel";
+            lblDateLabel.Size = new Size(37, 15);
+            lblDateLabel.TabIndex = 1;
+            lblDateLabel.Text = "Date:";
+            // 
+            // dtpDate
+            // 
+            dtpDate.Font = new Font("Segoe UI", 9F);
+            dtpDate.Format = DateTimePickerFormat.Short;
+            dtpDate.Location = new Point(316, 24);
+            dtpDate.Name = "dtpDate";
+            dtpDate.Size = new Size(130, 23);
+            dtpDate.TabIndex = 1;
+            // 
+            // lblSessionLabel
+            // 
+            lblSessionLabel.AutoSize = true;
+            lblSessionLabel.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+            lblSessionLabel.ForeColor = Color.FromArgb(80, 80, 80);
+            lblSessionLabel.Location = new Point(458, 8);
+            lblSessionLabel.Name = "lblSessionLabel";
+            lblSessionLabel.Size = new Size(51, 15);
+            lblSessionLabel.TabIndex = 2;
+            lblSessionLabel.Text = "Session:";
+            // 
+            // cmbSession
+            // 
+            cmbSession.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbSession.Font = new Font("Segoe UI", 9F);
+            cmbSession.Location = new Point(458, 24);
+            cmbSession.Name = "cmbSession";
+            cmbSession.Size = new Size(240, 23);
+            cmbSession.TabIndex = 2;
+            // 
+            // txtSearch
+            // 
+            txtSearch.Font = new Font("Segoe UI", 9F);
+            txtSearch.ForeColor = Color.Gray;
+            txtSearch.Location = new Point(712, 24);
+            txtSearch.Name = "txtSearch";
+            txtSearch.Size = new Size(200, 23);
+            txtSearch.TabIndex = 3;
+            txtSearch.Text = "Search student…";
+            // 
+            // btnQRCode
+            // 
+            btnQRCode.BackColor = Color.FromArgb(106, 0, 0);
+            btnQRCode.Cursor = Cursors.Hand;
+            btnQRCode.FlatAppearance.BorderSize = 0;
+            btnQRCode.FlatStyle = FlatStyle.Flat;
+            btnQRCode.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+            btnQRCode.ForeColor = Color.White;
+            btnQRCode.Location = new Point(924, 19);
+            btnQRCode.Name = "btnQRCode";
+            btnQRCode.Size = new Size(140, 28);
+            btnQRCode.TabIndex = 4;
+            btnQRCode.Text = "⊞  QR Attendance";
+            btnQRCode.UseVisualStyleBackColor = false;
+            // 
+            // btnImportCSV
+            // 
+            btnImportCSV.Cursor = Cursors.Hand;
+            btnImportCSV.FlatAppearance.BorderColor = Color.FromArgb(200, 200, 200);
+            btnImportCSV.FlatStyle = FlatStyle.Flat;
+            btnImportCSV.Font = new Font("Segoe UI", 8.5F);
+            btnImportCSV.Location = new Point(1426, 21);
+            btnImportCSV.Name = "btnImportCSV";
+            btnImportCSV.Size = new Size(100, 28);
+            btnImportCSV.TabIndex = 5;
+            btnImportCSV.Text = "Import CSV";
+            // 
+            // btnExport
+            // 
+            btnExport.Cursor = Cursors.Hand;
+            btnExport.FlatAppearance.BorderColor = Color.FromArgb(200, 200, 200);
+            btnExport.FlatStyle = FlatStyle.Flat;
+            btnExport.Font = new Font("Segoe UI", 8.5F);
+            btnExport.Location = new Point(1532, 20);
+            btnExport.Name = "btnExport";
+            btnExport.Size = new Size(100, 28);
+            btnExport.TabIndex = 6;
+            btnExport.Text = "Export CSV";
+            // 
+            // pnlTitleBar
+            // 
+            pnlTitleBar.BackColor = Color.FromArgb(106, 0, 0);
+            pnlTitleBar.Controls.Add(lblAttendanceTitle);
+            pnlTitleBar.Dock = DockStyle.Top;
+            pnlTitleBar.Location = new Point(0, 0);
+            pnlTitleBar.Name = "pnlTitleBar";
+            pnlTitleBar.Padding = new Padding(16, 0, 0, 0);
+            pnlTitleBar.Size = new Size(1649, 48);
+            pnlTitleBar.TabIndex = 4;
+            // 
+            // lblAttendanceTitle
+            // 
+            lblAttendanceTitle.AutoSize = true;
+            lblAttendanceTitle.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            lblAttendanceTitle.ForeColor = Color.White;
+            lblAttendanceTitle.Location = new Point(16, 11);
+            lblAttendanceTitle.Name = "lblAttendanceTitle";
+            lblAttendanceTitle.Size = new Size(162, 25);
+            lblAttendanceTitle.TabIndex = 0;
+            lblAttendanceTitle.Text = "Class Attendance";
             // 
             // AttendanceContentInst
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.pnlRoot);
-            this.Name = "AttendanceContentInst";
-            this.Size = new System.Drawing.Size(1400, 900);
-            this.Load += new System.EventHandler(this.AttendanceContentInst_Load);
-            this.pnlTitleBar.ResumeLayout(false);
-            this.pnlTitleBar.PerformLayout();
-            this.pnlFilterBar.ResumeLayout(false);
-            this.pnlFilterBar.PerformLayout();
-            this.pnlSummaryRow.ResumeLayout(false);
-            this.pnlCardSession.ResumeLayout(false);
-            this.pnlCardSession.PerformLayout();
-            this.pnlCardPresent.ResumeLayout(false);
-            this.pnlCardPresent.PerformLayout();
-            this.pnlCardLate.ResumeLayout(false);
-            this.pnlCardLate.PerformLayout();
-            this.pnlCardAbsent.ResumeLayout(false);
-            this.pnlCardAbsent.PerformLayout();
-            this.pnlCardExcused.ResumeLayout(false);
-            this.pnlCardExcused.PerformLayout();
-            this.pnlCardLastUpdate.ResumeLayout(false);
-            this.pnlCardLastUpdate.PerformLayout();
-            this.pnlActionBar.ResumeLayout(false);
-            this.pnlRoot.ResumeLayout(false);
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(pnlRoot);
+            Name = "AttendanceContentInst";
+            Size = new Size(1649, 989);
+            Load += AttendanceContentInst_Load;
+            pnlRoot.ResumeLayout(false);
+            pnlActionBar.ResumeLayout(false);
+            pnlSummaryRow.ResumeLayout(false);
+            pnlCardSession.ResumeLayout(false);
+            pnlCardSession.PerformLayout();
+            pnlCardPresent.ResumeLayout(false);
+            pnlCardPresent.PerformLayout();
+            pnlCardLate.ResumeLayout(false);
+            pnlCardLate.PerformLayout();
+            pnlCardAbsent.ResumeLayout(false);
+            pnlCardAbsent.PerformLayout();
+            pnlCardExcused.ResumeLayout(false);
+            pnlCardExcused.PerformLayout();
+            pnlCardLastUpdate.ResumeLayout(false);
+            pnlCardLastUpdate.PerformLayout();
+            pnlFilterBar.ResumeLayout(false);
+            pnlFilterBar.PerformLayout();
+            pnlTitleBar.ResumeLayout(false);
+            pnlTitleBar.PerformLayout();
+            ResumeLayout(false);
         }
 
         #endregion

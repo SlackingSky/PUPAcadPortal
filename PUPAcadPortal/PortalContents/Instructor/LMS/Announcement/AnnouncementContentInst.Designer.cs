@@ -146,6 +146,7 @@
             // cmbSortBy
             // 
             cmbSortBy.Cursor = Cursors.IBeam;
+            cmbSortBy.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbSortBy.Items.AddRange(new object[] { "Newest First" });
             cmbSortBy.Location = new Point(680, 77);
             cmbSortBy.Margin = new Padding(3, 4, 3, 4);
@@ -166,6 +167,7 @@
             // cmbFilter
             // 
             cmbFilter.Cursor = Cursors.IBeam;
+            cmbFilter.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbFilter.Items.AddRange(new object[] { "All Announcements" });
             cmbFilter.Location = new Point(403, 77);
             cmbFilter.Margin = new Padding(3, 4, 3, 4);

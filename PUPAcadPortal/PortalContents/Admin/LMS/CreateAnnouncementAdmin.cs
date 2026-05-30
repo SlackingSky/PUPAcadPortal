@@ -28,13 +28,10 @@ namespace PUPAcadPortal.PortalContents.Misc.LMS
 
         private void SetupPlaceholders()
         {
-            // Title logic
             _txtTitle.Text = _titlePlaceholder;
             _txtTitle.ForeColor = PlaceholderGray;
             _txtTitle.GotFocus += (s, e) => { if (_txtTitle.ForeColor == PlaceholderGray) { _txtTitle.Text = ""; _txtTitle.ForeColor = Color.Black; } };
             _txtTitle.LostFocus += (s, e) => { if (string.IsNullOrWhiteSpace(_txtTitle.Text)) { _txtTitle.Text = _titlePlaceholder; _txtTitle.ForeColor = PlaceholderGray; } };
-
-            // Description logic
             _txtDesc.Text = _descPlaceholder;
             _txtDesc.ForeColor = PlaceholderGray;
             _txtDesc.GotFocus += (s, e) => { if (_txtDesc.ForeColor == PlaceholderGray) { _txtDesc.Text = ""; _txtDesc.ForeColor = Color.Black; } };

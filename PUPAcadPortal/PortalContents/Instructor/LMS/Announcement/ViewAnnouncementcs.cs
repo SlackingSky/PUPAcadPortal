@@ -56,6 +56,7 @@ namespace PUPAcadPortal
             btnEdit.Click += (s, e) => { if (_currentId >= 0) EditRequested?.Invoke(this, _currentId); };
             btnDelete.Click += (s, e) => ConfirmDelete();
             btnOpenFile.Click += (s, e) => OpenAttachment();
+            btnEditFile.Click += (s, e) => EditAttachment();
             Paint += (s, e) => DrawBorder(e.Graphics);
         }
 
@@ -113,6 +114,7 @@ namespace PUPAcadPortal
 
             bool hasFile = !string.IsNullOrWhiteSpace(a.AttachedFile);
             btnOpenFile.Tag = a.AttachedFile ?? string.Empty;
+            btnEditFile.Tag = a.AttachedFile ?? string.Empty;
             pnlAttachment.Visible = hasFile;
 
             if (hasFile)
@@ -203,6 +205,37 @@ namespace PUPAcadPortal
             catch (Exception ex)
             {
                 MessageBox.Show("Could not open the file:\n" + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void EditAttachment()
+        {
+            string path = btnOpenFile.Tag as string;
+            if (string.IsNullOrWhiteSpace(path)) return;
+
+            // For editable formats, open with the default associated editor.
+            // Process.Start with UseShellExecute=true already opens in the default app
+            // (e.g. Word for .docx, PowerPoint for .pptx), which allows editing.
+            // For read-only formats like PDF we warn the user.
+            string ext = System.IO.Path.GetExtension(path).ToLower();
+            if (ext == ".pdf")
+            {
+                var res = MessageBox.Show(
+                    "PDF files are typically read-only.\nDo you still want to open it for viewing?",
+                    "Edit File",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Information);
+                if (res != DialogResult.Yes) return;
+            }
+
+            try
+            {
+                Process.Start(new ProcessStartInfo { FileName = path, UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not open the file for editing:\n" + ex.Message,
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

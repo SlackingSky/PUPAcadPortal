@@ -17,164 +17,182 @@
 
         private void InitializeComponent()
         {
-            this.pnlHeader = new System.Windows.Forms.Panel();
-            this.btnBack = new buttonRounded();
-            this.lblCourseName = new System.Windows.Forms.Label();
-            this.lblCourseCode = new System.Windows.Forms.Label();
-            this.btnSave = new buttonRounded();
-            this.pnlToolbar = new System.Windows.Forms.Panel();
-            this.txtSearch = new System.Windows.Forms.TextBox();
-            this.cmbFilterType = new System.Windows.Forms.ComboBox();
-            this.pnlSummaryBar = new System.Windows.Forms.Panel();
-            this.lblSummaryBar = new System.Windows.Forms.Label();
-            this.pnlScroll = new System.Windows.Forms.Panel();
-            this.flpActivities = new System.Windows.Forms.FlowLayoutPanel();
-
-            this.pnlHeader.SuspendLayout();
-            this.pnlToolbar.SuspendLayout();
-            this.pnlSummaryBar.SuspendLayout();
-            this.pnlScroll.SuspendLayout();
-            this.SuspendLayout();
-
-            this.pnlHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.pnlHeader.Controls.Add(this.btnBack);
-            this.pnlHeader.Controls.Add(this.lblCourseName);
-            this.pnlHeader.Controls.Add(this.lblCourseCode);
-            this.pnlHeader.Controls.Add(this.btnSave);
-            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
-            this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(1680, 68);
-            this.pnlHeader.TabIndex = 0;
-
-            this.btnBack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnBack.BorderRadius = 10;
-            this.btnBack.FlatAppearance.BorderSize = 0;
-            this.btnBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBack.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnBack.ForeColor = System.Drawing.Color.White;
-            this.btnBack.Location = new System.Drawing.Point(12, 18);
-            this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(80, 32);
-            this.btnBack.TabIndex = 0;
-            this.btnBack.Text = "← Back";
-            this.btnBack.UseVisualStyleBackColor = false;
-            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
-
-            this.lblCourseName.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold);
-            this.lblCourseName.ForeColor = System.Drawing.Color.White;
-            this.lblCourseName.Location = new System.Drawing.Point(106, 10);
-            this.lblCourseName.Name = "lblCourseName";
-            this.lblCourseName.Size = new System.Drawing.Size(700, 28);
-            this.lblCourseName.TabIndex = 1;
-            this.lblCourseName.Text = "Course Name";
-
-            this.lblCourseCode.Font = new System.Drawing.Font("Segoe UI", 8.5F);
-            this.lblCourseCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(185)))), ((int)(((byte)(185)))));
-            this.lblCourseCode.Location = new System.Drawing.Point(106, 40);
-            this.lblCourseCode.Name = "lblCourseCode";
-            this.lblCourseCode.Size = new System.Drawing.Size(500, 18);
-            this.lblCourseCode.TabIndex = 2;
-            this.lblCourseCode.Text = "Course Code";
-
-            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(196)))), ((int)(((byte)(0)))));
-            this.btnSave.BorderRadius = 10;
-            this.btnSave.FlatAppearance.BorderSize = 0;
-            this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSave.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
-            this.btnSave.ForeColor = System.Drawing.Color.Black;
-            this.btnSave.Location = new System.Drawing.Point(1510, 17);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(158, 34);
-            this.btnSave.TabIndex = 3;
-            this.btnSave.Text = "+ Create Activity";
-            this.btnSave.UseVisualStyleBackColor = false;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            this.pnlToolbar.BackColor = System.Drawing.Color.White;
-            this.pnlToolbar.Controls.Add(this.txtSearch);
-            this.pnlToolbar.Controls.Add(this.cmbFilterType);
-            this.pnlToolbar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlToolbar.Location = new System.Drawing.Point(0, 68);
-            this.pnlToolbar.Name = "pnlToolbar";
-            this.pnlToolbar.Padding = new System.Windows.Forms.Padding(14, 10, 14, 10);
-            this.pnlToolbar.Size = new System.Drawing.Size(1680, 50);
-            this.pnlToolbar.TabIndex = 1;
-
-            this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtSearch.Location = new System.Drawing.Point(14, 12);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.PlaceholderText = "🔍  Search activities...";
-            this.txtSearch.Size = new System.Drawing.Size(240, 25);
-            this.txtSearch.TabIndex = 0;
-            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
-
-            this.cmbFilterType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbFilterType.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.cmbFilterType.FormattingEnabled = true;
-            this.cmbFilterType.Items.AddRange(new object[] {
-            "All",
-            "Assignment",
-            "Quiz",
-            "Essay",
-            "FileUpload"});
-            this.cmbFilterType.Location = new System.Drawing.Point(268, 12);
-            this.cmbFilterType.Name = "cmbFilterType";
-            this.cmbFilterType.Size = new System.Drawing.Size(150, 25);
-            this.cmbFilterType.TabIndex = 1;
-            this.cmbFilterType.SelectedIndexChanged += new System.EventHandler(this.cmbFilterType_SelectedIndexChanged);
-
-            this.pnlSummaryBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(246)))));
-            this.pnlSummaryBar.Controls.Add(this.lblSummaryBar);
-            this.pnlSummaryBar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlSummaryBar.Location = new System.Drawing.Point(0, 118);
-            this.pnlSummaryBar.Name = "pnlSummaryBar";
-            this.pnlSummaryBar.Size = new System.Drawing.Size(1680, 30);
-            this.pnlSummaryBar.TabIndex = 2;
-
-            this.lblSummaryBar.Font = new System.Drawing.Font("Segoe UI", 8.5F);
-            this.lblSummaryBar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(100)))));
-            this.lblSummaryBar.Location = new System.Drawing.Point(18, 7);
-            this.lblSummaryBar.Name = "lblSummaryBar";
-            this.lblSummaryBar.Size = new System.Drawing.Size(900, 18);
-            this.lblSummaryBar.TabIndex = 0;
-
-            this.pnlScroll.AutoScroll = true;
-            this.pnlScroll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(248)))));
-            this.pnlScroll.Controls.Add(this.flpActivities);
-            this.pnlScroll.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlScroll.Location = new System.Drawing.Point(0, 148);
-            this.pnlScroll.Name = "pnlScroll";
-            this.pnlScroll.Size = new System.Drawing.Size(1680, 841);
-            this.pnlScroll.TabIndex = 3;
-
-            this.flpActivities.AutoSize = true;
-            this.flpActivities.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.flpActivities.Dock = System.Windows.Forms.DockStyle.Top;
-            this.flpActivities.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpActivities.Location = new System.Drawing.Point(0, 0);
-            this.flpActivities.Name = "flpActivities";
-            this.flpActivities.Padding = new System.Windows.Forms.Padding(20, 16, 20, 20);
-            this.flpActivities.Size = new System.Drawing.Size(1680, 36);
-            this.flpActivities.TabIndex = 0;
-            this.flpActivities.WrapContents = false;
-
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.pnlScroll);
-            this.Controls.Add(this.pnlSummaryBar);
-            this.Controls.Add(this.pnlToolbar);
-            this.Controls.Add(this.pnlHeader);
-            this.Name = "AssignmentManagement";
-            this.Size = new System.Drawing.Size(1680, 989);
-
-            this.pnlHeader.ResumeLayout(false);
-            this.pnlToolbar.ResumeLayout(false);
-            this.pnlToolbar.PerformLayout();
-            this.pnlSummaryBar.ResumeLayout(false);
-            this.pnlScroll.ResumeLayout(false);
-            this.pnlScroll.PerformLayout();
-            this.ResumeLayout(false);
+            pnlHeader = new Panel();
+            btnBack = new buttonRounded();
+            lblCourseName = new Label();
+            lblCourseCode = new Label();
+            btnSave = new buttonRounded();
+            pnlToolbar = new Panel();
+            txtSearch = new TextBox();
+            cmbFilterType = new ComboBox();
+            pnlSummaryBar = new Panel();
+            lblSummaryBar = new Label();
+            pnlScroll = new Panel();
+            flpActivities = new FlowLayoutPanel();
+            pnlHeader.SuspendLayout();
+            pnlToolbar.SuspendLayout();
+            pnlSummaryBar.SuspendLayout();
+            pnlScroll.SuspendLayout();
+            SuspendLayout();
+            // 
+            // pnlHeader
+            // 
+            pnlHeader.BackColor = Color.FromArgb(128, 0, 0);
+            pnlHeader.Controls.Add(btnBack);
+            pnlHeader.Controls.Add(lblCourseName);
+            pnlHeader.Controls.Add(lblCourseCode);
+            pnlHeader.Controls.Add(btnSave);
+            pnlHeader.Dock = DockStyle.Top;
+            pnlHeader.Location = new Point(0, 0);
+            pnlHeader.Name = "pnlHeader";
+            pnlHeader.Size = new Size(1680, 68);
+            pnlHeader.TabIndex = 0;
+            // 
+            // btnBack
+            // 
+            btnBack.BackColor = Color.FromArgb(100, 0, 0);
+            btnBack.FlatAppearance.BorderSize = 0;
+            btnBack.FlatStyle = FlatStyle.Flat;
+            btnBack.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnBack.ForeColor = Color.White;
+            btnBack.Location = new Point(12, 18);
+            btnBack.Name = "btnBack";
+            btnBack.Size = new Size(80, 32);
+            btnBack.TabIndex = 0;
+            btnBack.Text = "← Back";
+            btnBack.UseVisualStyleBackColor = false;
+            btnBack.Click += btnBack_Click;
+            // 
+            // lblCourseName
+            // 
+            lblCourseName.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            lblCourseName.ForeColor = Color.White;
+            lblCourseName.Location = new Point(106, 10);
+            lblCourseName.Name = "lblCourseName";
+            lblCourseName.Size = new Size(700, 28);
+            lblCourseName.TabIndex = 1;
+            lblCourseName.Text = "Course Name";
+            // 
+            // lblCourseCode
+            // 
+            lblCourseCode.Font = new Font("Segoe UI", 8.5F);
+            lblCourseCode.ForeColor = Color.FromArgb(230, 185, 185);
+            lblCourseCode.Location = new Point(106, 40);
+            lblCourseCode.Name = "lblCourseCode";
+            lblCourseCode.Size = new Size(500, 18);
+            lblCourseCode.TabIndex = 2;
+            lblCourseCode.Text = "Course Code";
+            // 
+            // btnSave
+            // 
+            btnSave.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnSave.BackColor = Color.FromArgb(255, 196, 0);
+            btnSave.FlatAppearance.BorderSize = 0;
+            btnSave.FlatStyle = FlatStyle.Flat;
+            btnSave.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            btnSave.ForeColor = Color.Black;
+            btnSave.Location = new Point(1510, 17);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(158, 34);
+            btnSave.TabIndex = 3;
+            btnSave.Text = "+ Create Activity";
+            btnSave.UseVisualStyleBackColor = false;
+            btnSave.Click += btnSave_Click;
+            // 
+            // pnlToolbar
+            // 
+            pnlToolbar.BackColor = Color.White;
+            pnlToolbar.Controls.Add(txtSearch);
+            pnlToolbar.Controls.Add(cmbFilterType);
+            pnlToolbar.Dock = DockStyle.Top;
+            pnlToolbar.Location = new Point(0, 68);
+            pnlToolbar.Name = "pnlToolbar";
+            pnlToolbar.Padding = new Padding(14, 10, 14, 10);
+            pnlToolbar.Size = new Size(1680, 50);
+            pnlToolbar.TabIndex = 1;
+            // 
+            // txtSearch
+            // 
+            txtSearch.Font = new Font("Segoe UI", 10F);
+            txtSearch.Location = new Point(14, 12);
+            txtSearch.Name = "txtSearch";
+            txtSearch.PlaceholderText = "🔍  Search activities...";
+            txtSearch.Size = new Size(240, 25);
+            txtSearch.TabIndex = 0;
+            txtSearch.TextChanged += txtSearch_TextChanged;
+            // 
+            // cmbFilterType
+            // 
+            cmbFilterType.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbFilterType.Font = new Font("Segoe UI", 10F);
+            cmbFilterType.FormattingEnabled = true;
+            cmbFilterType.Items.AddRange(new object[] { "All", "Assignment", "Quiz", "Essay", "FileUpload" });
+            cmbFilterType.Location = new Point(268, 12);
+            cmbFilterType.Name = "cmbFilterType";
+            cmbFilterType.Size = new Size(150, 25);
+            cmbFilterType.TabIndex = 1;
+            cmbFilterType.SelectedIndexChanged += cmbFilterType_SelectedIndexChanged;
+            // 
+            // pnlSummaryBar
+            // 
+            pnlSummaryBar.BackColor = Color.FromArgb(241, 241, 246);
+            pnlSummaryBar.Controls.Add(lblSummaryBar);
+            pnlSummaryBar.Dock = DockStyle.Top;
+            pnlSummaryBar.Location = new Point(0, 118);
+            pnlSummaryBar.Name = "pnlSummaryBar";
+            pnlSummaryBar.Size = new Size(1680, 30);
+            pnlSummaryBar.TabIndex = 2;
+            // 
+            // lblSummaryBar
+            // 
+            lblSummaryBar.Font = new Font("Segoe UI", 8.5F);
+            lblSummaryBar.ForeColor = Color.FromArgb(90, 90, 100);
+            lblSummaryBar.Location = new Point(18, 7);
+            lblSummaryBar.Name = "lblSummaryBar";
+            lblSummaryBar.Size = new Size(900, 18);
+            lblSummaryBar.TabIndex = 0;
+            // 
+            // pnlScroll
+            // 
+            pnlScroll.AutoScroll = true;
+            pnlScroll.BackColor = Color.FromArgb(245, 245, 248);
+            pnlScroll.Controls.Add(flpActivities);
+            pnlScroll.Dock = DockStyle.Fill;
+            pnlScroll.Location = new Point(0, 148);
+            pnlScroll.Name = "pnlScroll";
+            pnlScroll.Size = new Size(1680, 841);
+            pnlScroll.TabIndex = 3;
+            // 
+            // flpActivities
+            // 
+            flpActivities.AutoSize = true;
+            flpActivities.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            flpActivities.Dock = DockStyle.Top;
+            flpActivities.FlowDirection = FlowDirection.TopDown;
+            flpActivities.Location = new Point(0, 0);
+            flpActivities.Name = "flpActivities";
+            flpActivities.Padding = new Padding(20, 16, 20, 20);
+            flpActivities.Size = new Size(1680, 36);
+            flpActivities.TabIndex = 0;
+            flpActivities.WrapContents = false;
+            // 
+            // AssignmentManagement
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(pnlScroll);
+            Controls.Add(pnlSummaryBar);
+            Controls.Add(pnlToolbar);
+            Controls.Add(pnlHeader);
+            Name = "AssignmentManagement";
+            Size = new Size(1680, 989);
+            pnlHeader.ResumeLayout(false);
+            pnlToolbar.ResumeLayout(false);
+            pnlToolbar.PerformLayout();
+            pnlSummaryBar.ResumeLayout(false);
+            pnlScroll.ResumeLayout(false);
+            pnlScroll.PerformLayout();
+            ResumeLayout(false);
         }
 
         #endregion

@@ -7,11 +7,6 @@ using System.Windows.Forms;
 
 namespace PUPAcadPortal
 {
-    /// <summary>
-    /// Full-screen grading view for a single student submission.
-    /// Supports rubric-based grading with score locking after save,
-    /// remarks panel, prev/next student navigation, and auto-save.
-    /// </summary>
     public partial class GradingInterface : UserControl
     {
         public event Action OnBack;
@@ -20,10 +15,7 @@ namespace PUPAcadPortal
         private readonly ActivityItem _activity;
         private readonly List<StudentSubmission> _students;
         private int _index;
-
         private System.Windows.Forms.Timer _autoSaveTimer;
-
-        // Dynamic rubric rows (built at runtime from activity.RubricItems)
         private readonly List<(RubricCriteria criteria, NumericUpDown nud)> _rubricRows = new();
 
         public GradingInterface(
@@ -43,14 +35,10 @@ namespace PUPAcadPortal
             LoadStudent();
             UpdateNavButtons();
         }
-
-        // ── Rubric rows (dynamic) ─────────────────────────────────────────────
         private void BuildRubricRows()
         {
             _rubricRows.Clear();
             flpRubricRows.Controls.Clear();
-
-            // Use activity's rubric items if defined; fallback to defaults
             var items = _activity.RubricItems.Count > 0
                 ? _activity.RubricItems
                 : new List<RubricCriteria>
@@ -104,7 +92,6 @@ namespace PUPAcadPortal
                 Size = new Size(50, 18)
             };
 
-            // Mini progress bar
             var bar = new Panel
             {
                 Location = new Point(240, 12),
@@ -125,7 +112,6 @@ namespace PUPAcadPortal
             return row;
         }
 
-        // ── Auto-save ─────────────────────────────────────────────────────────
         private void SetupAutoSave()
         {
             _autoSaveTimer = new System.Windows.Forms.Timer { Interval = 30_000 };
@@ -142,7 +128,6 @@ namespace PUPAcadPortal
             _autoSaveTimer.Start();
         }
 
-        // ── Load student data ─────────────────────────────────────────────────
         private void LoadStudent()
         {
             lblActivityTitle.Text = _activity.Title;
@@ -158,13 +143,10 @@ namespace PUPAcadPortal
             txtScore.Text = _current.Score >= 0 ? _current.Score.ToString() : "";
             lblScoreOf.Text = $"/ {_activity.Points}";
 
-            // Lock inputs if already checked
             bool locked = _current.IsChecked;
             txtScore.ReadOnly = locked;
             btnSaveScore.Enabled = !locked;
             txtRemarks.ReadOnly = locked;
-
-            // Reset rubric nudges
             foreach (var (crit, nud) in _rubricRows)
             {
                 nud.Value = _current.RubricScores.TryGetValue(crit.CriteriaId, out int v) ? Math.Min(v, crit.MaxPoints) : 0;
@@ -179,7 +161,6 @@ namespace PUPAcadPortal
             UpdateRubricTotal();
         }
 
-        // ── Rubric total ──────────────────────────────────────────────────────
         private void UpdateRubricTotal()
         {
             int rubricMax = _rubricRows.Sum(r => (int)r.criteria.MaxPoints);
@@ -197,7 +178,6 @@ namespace PUPAcadPortal
 
         private void nudRubric_ValueChanged(object sender, EventArgs e) => UpdateRubricTotal();
 
-        // ── Word count ────────────────────────────────────────────────────────
         private void UpdateWordCount()
         {
             string text = txtEssayContent.Text.Trim();
@@ -209,14 +189,12 @@ namespace PUPAcadPortal
 
         private void txtEssayContent_TextChanged(object sender, EventArgs e) => UpdateWordCount();
 
-        // ── Auto-score toggle ─────────────────────────────────────────────────
         private void chkAutoScore_CheckedChanged(object sender, EventArgs e)
         {
             txtScore.ReadOnly = chkAutoScore.Checked || _current.IsChecked;
             UpdateRubricTotal();
         }
 
-        // ── Save score ────────────────────────────────────────────────────────
         private void btnSaveScore_Click(object sender, EventArgs e)
         {
             if (!int.TryParse(txtScore.Text, out int score))
@@ -230,15 +208,12 @@ namespace PUPAcadPortal
                 return;
             }
 
-            // Persist rubric scores
             foreach (var (crit, nud) in _rubricRows)
                 _current.RubricScores[crit.CriteriaId] = (int)nud.Value;
 
             _current.Score = score;
             _current.IsChecked = true;
             _current.Remarks = txtRemarks.Text;
-
-            // Lock UI
             txtScore.ReadOnly = true;
             btnSaveScore.Enabled = false;
             txtRemarks.ReadOnly = true;
@@ -251,7 +226,6 @@ namespace PUPAcadPortal
             MessageBox.Show($"Score saved: {score}/{_activity.Points}", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        // ── Navigation ────────────────────────────────────────────────────────
         private void btnNextStudent_Click(object sender, EventArgs e)
         {
             if (_index >= _students.Count - 1) return;
@@ -275,23 +249,17 @@ namespace PUPAcadPortal
             lblNavCounter.Text = $"{_index + 1} / {_students.Count}";
         }
 
-        // ── Back ──────────────────────────────────────────────────────────────
         private void btnBack_Click(object sender, EventArgs e)
         {
-            // Stop auto-save first
             _autoSaveTimer?.Stop();
             _autoSaveTimer?.Dispose();
             _autoSaveTimer = null;
-
-            // If a subscriber is wired (e.g. SubmissionList.OpenGrading), let it handle
-            // the container swap — it will remove us and re-add the caller.
             if (OnBack != null)
             {
                 OnBack.Invoke();
                 return;
             }
 
-            // Fallback: self-remove from live parent at click-time (no stale closure)
             Control container = this.Parent;
             if (container != null)
             {

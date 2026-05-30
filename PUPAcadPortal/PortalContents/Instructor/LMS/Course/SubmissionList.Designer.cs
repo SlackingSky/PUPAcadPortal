@@ -79,6 +79,7 @@
             this.btnBack.TabIndex = 0;
             this.btnBack.Text = "← Back";
             this.btnBack.UseVisualStyleBackColor = false;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
 
             // 
             // btnReturnAll
@@ -96,6 +97,7 @@
             this.btnReturnAll.TabIndex = 4;
             this.btnReturnAll.Text = "Return All";
             this.btnReturnAll.UseVisualStyleBackColor = false;
+            this.btnReturnAll.Click += new System.EventHandler(this.btnReturnAll_Click);
 
             // 
             // lblActivityTitle
@@ -175,6 +177,7 @@
             this.txtSearchStudent.PlaceholderText = "🔍  Search student...";
             this.txtSearchStudent.Size = new System.Drawing.Size(230, 25);
             this.txtSearchStudent.TabIndex = 0;
+            this.txtSearchStudent.TextChanged += new System.EventHandler(this.txtSearchStudent_TextChanged);
 
             // 
             // lblSortLbl
@@ -196,6 +199,8 @@
             this.cmbSortBy.Name = "cmbSortBy";
             this.cmbSortBy.Size = new System.Drawing.Size(130, 25);
             this.cmbSortBy.TabIndex = 2;
+            this.cmbSortBy.SelectedIndex = 0;
+            this.cmbSortBy.SelectedIndexChanged += new System.EventHandler(this.cmbSortBy_SelectedIndexChanged);
 
             // 
             // lblFilterLbl
@@ -217,6 +222,8 @@
             this.cmbFilterStatus.Name = "cmbFilterStatus";
             this.cmbFilterStatus.Size = new System.Drawing.Size(140, 25);
             this.cmbFilterStatus.TabIndex = 4;
+            this.cmbFilterStatus.SelectedIndex = 0;
+            this.cmbFilterStatus.SelectedIndexChanged += new System.EventHandler(this.cmbFilterStatus_SelectedIndexChanged);
 
             // 
             // flpSubmissions

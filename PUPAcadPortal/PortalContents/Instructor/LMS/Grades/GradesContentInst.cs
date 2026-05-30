@@ -14,15 +14,12 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 {
     public partial class GradesContentInst : UserControl
     {
-        // ── State ────────────────────────────────────────────────────────────
         private bool _gradesLoaded = false;
         private List<StudentGradeRecord> _gradeRecords = new();
         private List<StudentGradeRecord> _filteredRecords = new();
         private bool _showingMidterm = true;
         private readonly List<CustomGradeColumn> _customMTColumns = new();
         private readonly List<CustomGradeColumn> _customFTColumns = new();
-
-        // ── Color palette ────────────────────────────────────────────────────
         private static readonly Color Maroon = Color.FromArgb(106, 0, 0);
         private static readonly Color MaroonDark = Color.FromArgb(80, 0, 0);
         private static readonly Color MaroonLight = Color.FromArgb(240, 220, 220);
@@ -36,8 +33,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         private static readonly Color TextPrimary = Color.FromArgb(30, 30, 30);
         private static readonly Color TextSecondary = Color.FromArgb(100, 100, 100);
         private static readonly Color PendingOrange = Color.FromArgb(200, 100, 0);
-
-        // ── Grade weights (PUP grading system) ───────────────────────────────
         public static GradeWeights CurrentWeights = new();
 
         public class GradeWeights
@@ -52,7 +47,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             public double MajorExamsPct { get; set; } = 30;
         }
 
-        // ── Student grade record ──────────────────────────────────────────────
         public class StudentGradeRecord
         {
             public string StudentID { get; set; } = "";
@@ -60,8 +54,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             public string Course { get; set; } = "";
             public string Status { get; set; } = "Pending";
             public bool Released { get; set; } = false;
-
-            // Midterm scores
             public double? MT_Attendance { get; set; }
             public double? MT_Recitation { get; set; }
             public double? MT_Seatwork { get; set; }
@@ -69,7 +61,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             public double? MT_LongTests { get; set; }
             public double? MT_MajorExam { get; set; }
 
-            // Final term scores
             public double? FT_Attendance { get; set; }
             public double? FT_Recitation { get; set; }
             public double? FT_Seatwork { get; set; }
@@ -160,7 +151,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             }
         }
 
-        // ── Custom column ─────────────────────────────────────────────────────
         public class CustomGradeColumn
         {
             public string ColName { get; set; } = "";
@@ -170,9 +160,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             public Dictionary<string, double?> Scores { get; } = new();
         }
 
-        // ═════════════════════════════════════════════════════════════════════
-        //  CONSTRUCTOR
-        // ═════════════════════════════════════════════════════════════════════
         public GradesContentInst()
         {
             InitializeComponent();
@@ -181,46 +168,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                      ControlStyles.UserPaint, true);
         }
 
-        private void PopulateLegend()
-        {
-            var legendEntries = new (System.Drawing.Color dot, string label)[]
-            {
-        (System.Drawing.Color.FromArgb(16,  124,  65), "1.00 – 1.50  Excellent / Very Good"),
-        (System.Drawing.Color.FromArgb(0,   112, 192), "1.75 – 2.25  Good"),
-        (System.Drawing.Color.FromArgb(180, 120,   0), "2.50 – 3.00  Satisfactory / Passing"),
-        (System.Drawing.Color.Firebrick,               "5.00  Failed"),
-        (System.Drawing.Color.Gray,                    "INC   Incomplete"),
-        (System.Drawing.Color.FromArgb(16,  124,  65), "Passed"),
-        (System.Drawing.Color.FromArgb(200, 100,   0), "Pending"),
-            };
-
-            int ley = 0;
-            foreach (var entry in legendEntries)
-            {
-                pnlLegendItems.Controls.Add(new Panel
-                {
-                    Width = 12,
-                    Height = 12,
-                    BackColor = entry.dot,
-                    Location = new System.Drawing.Point(4, ley + 3),
-                });
-
-                pnlLegendItems.Controls.Add(new Label
-                {
-                    Text = entry.label,
-                    Location = new System.Drawing.Point(22, ley),
-                    AutoSize = true,
-                    Font = new System.Drawing.Font("Segoe UI", 8.5f),
-                    ForeColor = System.Drawing.Color.FromArgb(45, 45, 45),
-                });
-
-                ley += 22;
-            }
-        }
-
-        // ═════════════════════════════════════════════════════════════════════
-        //  LOAD EVENT
-        // ═════════════════════════════════════════════════════════════════════
         private void GradesContentInst_Load(object sender, EventArgs e)
         {
             ApplyDoubleBuffer(this);
@@ -228,16 +175,12 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             SetupGrid();
             SetupFinalTermGrid();
             SetupGradingScaleGrid();
+            SetupLegend();
             WireEvents();
 
-            // Defer the initial data load until after the first paint cycle so
-            // the Fill-docked TabControl has finished its layout pass and the
-            // DataGridViews have a non-zero ClientSize. Without this, the grids
-            // render as gray (zero-width columns) on first display.
             BeginInvoke(new Action(LoadGradeData));
         }
 
-        // ── Double-buffer all nested controls ────────────────────────────────
         private static void ApplyDoubleBuffer(Control root)
         {
             foreach (Control c in root.Controls)
@@ -255,12 +198,8 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             }
         }
 
-        // ═════════════════════════════════════════════════════════════════════
-        //  SETUP: COMBOBOXES
-        // ═════════════════════════════════════════════════════════════════════
         private void SetupComboBoxes()
         {
-            // Course / section
             cmbCourseSection.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbCourseSection.Items.Clear();
             cmbCourseSection.Items.Add("All Sections");
@@ -268,8 +207,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             cmbCourseSection.Items.Add("CS 102 – Data Structures  |  BSCS 2-2");
             cmbCourseSection.Items.Add("IS 103 – Database Mgmt  |  BSIS 3-1");
             cmbCourseSection.SelectedIndex = 0;
-
-            // Status filter
             cmbStatusFilter.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbStatusFilter.Items.Clear();
             cmbStatusFilter.Items.Add("All Status");
@@ -278,9 +215,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             cmbStatusFilter.SelectedIndex = 0;
         }
 
-        // ═════════════════════════════════════════════════════════════════════
-        //  SETUP: MIDTERM GRID
-        // ═════════════════════════════════════════════════════════════════════
         private void SetupGrid()
         {
             gridStudents.Columns.Clear();
@@ -316,9 +250,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             Col("colRemarks", "Equiv.", 58, false);
         }
 
-        // ═════════════════════════════════════════════════════════════════════
-        //  SETUP: FINAL TERM GRID
-        // ═════════════════════════════════════════════════════════════════════
         private void SetupFinalTermGrid()
         {
             dataGridView1.Columns.Clear();
@@ -354,7 +285,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             Col("ftColRemarks", "Equiv.", 58, false);
         }
 
-        // ── Common grid styling ───────────────────────────────────────────────
         private static void StyleGrid(DataGridView dgv)
         {
             dgv.AutoGenerateColumns = false;
@@ -391,9 +321,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             dgv.RowTemplate.Height = 32;
         }
 
-        // ═════════════════════════════════════════════════════════════════════
-        //  SETUP: GRADING SCALE GRID
-        // ═════════════════════════════════════════════════════════════════════
         private void SetupGradingScaleGrid()
         {
             if (gridGradingScale == null) return;
@@ -441,24 +368,52 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             }
         }
 
-        // ═════════════════════════════════════════════════════════════════════
-        //  WIRE EVENTS
-        // ═════════════════════════════════════════════════════════════════════
+        private void SetupLegend()
+        {
+            if (pnlLegendItems == null) return;
+            pnlLegendItems.Controls.Clear();
+
+            var entries = new (Color dot, string text)[]
+            {
+                (GreenPass,  "1.00 – 1.50  Excellent / Very Good"),
+                (BlueGood,   "1.75 – 2.25  Good"),
+                (AmberWarn,  "2.50 – 3.00  Satisfactory / Passing"),
+                (RedFail,    "5.00  Failed"),
+                (Color.Gray, "INC   Incomplete"),
+                (GreenPass,  "Passed"),
+                (PendingOrange, "Pending"),
+            };
+
+            int y = 2;
+            foreach (var (dot, text) in entries)
+            {
+                pnlLegendItems.Controls.Add(new Panel
+                {
+                    Width = 12,
+                    Height = 12,
+                    BackColor = dot,
+                    Location = new Point(4, y + 3),
+                });
+                pnlLegendItems.Controls.Add(new Label
+                {
+                    Text = text,
+                    Location = new Point(22, y),
+                    AutoSize = true,
+                    Font = new Font("Segoe UI", 8.5f),
+                    ForeColor = Color.FromArgb(45, 45, 45),
+                });
+                y += 22;
+            }
+        }
+
         private void WireEvents()
         {
             cmbCourseSection.SelectedIndexChanged += (s, e) => ApplyFilters();
             cmbStatusFilter.SelectedIndexChanged += (s, e) => ApplyFilters();
             txtSearch.TextChanged += (s, e) => ApplyFilters();
-
-            // Header bar
             btnReleaseGrades.Click += BtnReleaseGrades_Click;
             btnImportCSV.Click += BtnImportCSV_Click;
-
-            // Toolbar (right side): weights + add column
             btnEditWeights.Click += (s, e) => ShowEditGradePercentageDialog();
-            // Note: Save / Export / Print / Release are wired via Quick Actions
-            //       buttons built directly in InitializeComponent's qaHandlers loop.
-
             tabTerms.SelectedIndexChanged += (s, e) =>
             {
                 _showingMidterm = (tabTerms.SelectedIndex == 0);
@@ -466,7 +421,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 else RefreshFinalTermGrid();
             };
 
-            // Midterm grid
             gridStudents.CellValueChanged += GridStudents_CellValueChanged;
             gridStudents.EditingControlShowing += Grid_EditingControlShowing;
             gridStudents.DataError += (s, e) => e.Cancel = true;
@@ -479,8 +433,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             };
             gridStudents.CellEnter += (s, e) => HighlightEditableCell(gridStudents, e,
                 new[] { "colAttendance", "colRecitation", "colSeatwork", "colAssignment", "colLongTests", "colMajorExam" });
-
-            // Final term grid
             dataGridView1.CellValueChanged += FinalTermGrid_CellValueChanged;
             dataGridView1.EditingControlShowing += Grid_EditingControlShowing;
             dataGridView1.DataError += (s, e) => e.Cancel = true;
@@ -533,10 +485,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 tb.SelectionStart = tb.Text.Length;
             }
         }
-
-        // ═════════════════════════════════════════════════════════════════════
-        //  SEED DATA
-        // ═════════════════════════════════════════════════════════════════════
         private static List<StudentGradeRecord> BuildSeedData() => new()
         {
             new() { StudentID="2024-00001-SM-0", Name="Ablong, Adrian P.",       Course="IT 101",
@@ -613,9 +561,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             new() { StudentID="2024-00035-SM-0", Name="Tan, Melissa Grace C.",  Course="IS 103", Status="Pending" },
         };
 
-        // ═════════════════════════════════════════════════════════════════════
-        //  LOAD & FILTER
-        // ═════════════════════════════════════════════════════════════════════
         private void LoadGradeData()
         {
             _gradeRecords = BuildSeedData();
@@ -663,9 +608,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             UpdateStatCards(_filteredRecords);
         }
 
-        // ═════════════════════════════════════════════════════════════════════
-        //  REFRESH GRIDS
-        // ═════════════════════════════════════════════════════════════════════
         private void RefreshMidtermGrid()
         {
             if (gridStudents == null) return;
@@ -718,7 +660,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         private static void ApplyRowStyles(DataGridView dgv, DataGridViewRow row,
             StudentGradeRecord r, bool isMidterm)
         {
-            // Reset
             foreach (DataGridViewCell cell in row.Cells)
             {
                 cell.Style.ForeColor = TextPrimary;
@@ -726,7 +667,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 cell.Style.Font = null;
             }
 
-            // Individual score coloring (only color, no bold)
             string[] scoreCols = isMidterm
                 ? new[] { "colAttendance", "colRecitation", "colSeatwork", "colAssignment", "colLongTests", "colMajorExam" }
                 : new[] { "ftColAttendance", "ftColRecitation", "ftColSeatwork", "ftColAssignment", "ftColLongTests", "ftColMajorExam" };
@@ -738,8 +678,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 if (double.TryParse(cell.Value?.ToString(), out double cv))
                     cell.Style.ForeColor = cv < 75 ? RedFail : TextPrimary;
             }
-
-            // Term grade status badge (colored)
             string termCol = isMidterm ? "colStatus" : "ftColStatus";
             double? tg = isMidterm ? r.MidtermGrade : r.FinalTermGrade;
             if (dgv.Columns.Contains(termCol))
@@ -763,7 +701,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 }
             }
 
-            // Term grade value (black, bold)
             string tgCol = isMidterm ? "colTermGrade" : "ftColTermGrade";
             if (dgv.Columns.Contains(tgCol) && tg.HasValue)
             {
@@ -771,12 +708,10 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 row.Cells[tgCol].Style.ForeColor = TextPrimary;
             }
 
-            // Final grade (black, bold)
             string fgCol = isMidterm ? "colFinalGrade" : "ftColFinalGrade";
             if (dgv.Columns.Contains(fgCol) && r.FinalGrade.HasValue)
                 row.Cells[fgCol].Style.Font = new Font("Segoe UI", 9f, FontStyle.Bold);
 
-            // Remarks (grade equivalent)
             string remCol = isMidterm ? "colRemarks" : "ftColRemarks";
             if (dgv.Columns.Contains(remCol))
             {
@@ -795,9 +730,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             _ => Color.Gray
         };
 
-        // ═════════════════════════════════════════════════════════════════════
-        //  STAT CARDS
-        // ═════════════════════════════════════════════════════════════════════
         private void UpdateStatCards(List<StudentGradeRecord> records)
         {
             int total = records.Count;
@@ -814,7 +746,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             lblAvgVal.Text = total > 0 ? avg.ToString("F2") : "—";
             lblHighestVal.Text = total > 0 ? highest.ToString("F2") : "—";
 
-            // Subtitle counts
             double subPct = total > 0 ? submitted * 100.0 / total : 0;
             double penPct = total > 0 ? pending * 100.0 / total : 0;
             lblSubmittedSub.Text = $"{subPct:F0}% of class";
@@ -823,10 +754,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             lblHighestSub.Text = records.Any(r => r.FinalGrade.HasValue) ? "top score" : "no data yet";
             lblTotalSub.Text = $"{(cmbCourseSection.SelectedIndex == 0 ? "all sections" : "this section")}";
         }
-
-        // ═════════════════════════════════════════════════════════════════════
-        //  CELL VALUE CHANGED – MIDTERM
-        // ═════════════════════════════════════════════════════════════════════
         private static readonly string[] _mtEditable =
             { "colAttendance","colRecitation","colSeatwork","colAssignment","colLongTests","colMajorExam" };
         private static readonly string[] _ftEditable =
@@ -927,9 +854,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             return Math.Max(0, Math.Min(100, d));
         }
 
-        // ═════════════════════════════════════════════════════════════════════
-        //  SAVE CHANGES
-        // ═════════════════════════════════════════════════════════════════════
         private void SaveGradeChanges()
         {
             if (!_gradesLoaded)
@@ -952,9 +876,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             dataGridView1?.EndEdit();
         }
 
-        // ═════════════════════════════════════════════════════════════════════
-        //  RELEASE GRADES
-        // ═════════════════════════════════════════════════════════════════════
         private void BtnReleaseGrades_Click(object sender, EventArgs e)
         {
             if (!_gradesLoaded) { ShowWarning("Load students first.", "Release Grades"); return; }
@@ -971,9 +892,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             }
         }
 
-        // ═════════════════════════════════════════════════════════════════════
-        //  EDIT GRADE PERCENTAGES DIALOG
-        // ═════════════════════════════════════════════════════════════════════
         private void ShowEditGradePercentageDialog()
         {
             using var dlg = new EditGradePercentageControl(CurrentWeights);
@@ -989,9 +907,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             }
         }
 
-        // ═════════════════════════════════════════════════════════════════════
-        //  ADD CUSTOM COLUMN DIALOG
-        // ═════════════════════════════════════════════════════════════════════
         private void ShowAddCustomColumnDialog()
         {
             using var dlg = new Form
@@ -1144,9 +1059,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             }
         }
 
-        // ═════════════════════════════════════════════════════════════════════
-        //  STUDENT DETAIL PANEL (popup)
-        // ═════════════════════════════════════════════════════════════════════
         private void ShowStudentDetailPanel(StudentGradeRecord rec)
         {
             using var dlg = new Form
@@ -1160,7 +1072,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 BackColor = Background,
             };
 
-            // Header
             var hdr = new Panel { Dock = DockStyle.Top, Height = 60, BackColor = Maroon };
             hdr.Paint += (s, pe) =>
             {
@@ -1301,7 +1212,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 y += 36;
             }
 
-            // Header row for scores
             var hdrRow = new Panel { Left = 0, Top = y, Width = 500, Height = 22, BackColor = Color.FromArgb(230, 215, 215) };
             hdrRow.Controls.Add(new Label
             {
@@ -1350,7 +1260,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             GradeRow("Final Term Grade", rec.FinalTermGrade, true);
             GradeRow("Final Grade  (Average)", rec.FinalGrade, true);
 
-            // Grade equivalent badge
             if (rec.FinalGrade.HasValue)
             {
                 var eqPnl = new Panel { Left = 0, Top = y, Width = 500, Height = 40, BackColor = Surface };
@@ -1382,9 +1291,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             dlg.ShowDialog(this);
         }
 
-        // ═════════════════════════════════════════════════════════════════════
-        //  EXPORT CSV
-        // ═════════════════════════════════════════════════════════════════════
         private void BtnExportCSV_Click(object sender, EventArgs e)
         {
             if (!_gradesLoaded || _filteredRecords.Count == 0)
@@ -1428,9 +1334,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         private static string CE(string s) => s.Contains(',') || s.Contains('"')
             ? $"\"{s.Replace("\"", "\"\"")}\"" : s;
 
-        // ═════════════════════════════════════════════════════════════════════
-        //  IMPORT CSV
-        // ═════════════════════════════════════════════════════════════════════
         private void BtnImportCSV_Click(object sender, EventArgs e)
         {
             using var ofd = new OpenFileDialog { Filter = "CSV (*.csv)|*.csv", Title = "Import Grades" };
@@ -1524,9 +1427,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             return fields.ToArray();
         }
 
-        // ═════════════════════════════════════════════════════════════════════
-        //  PRINT GRADES
-        // ═════════════════════════════════════════════════════════════════════
         private void BtnPrintGrades_Click(object sender, EventArgs e)
         {
             if (!_gradesLoaded || _filteredRecords.Count == 0)
@@ -1620,7 +1520,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             ppd.ShowDialog(this);
         }
 
-        // ── Message helpers ───────────────────────────────────────────────────
         private static void ShowInfo(string msg, string title) =>
             MessageBox.Show(msg, title, MessageBoxButtons.OK, MessageBoxIcon.Information);
         private static void ShowWarning(string msg, string title) =>

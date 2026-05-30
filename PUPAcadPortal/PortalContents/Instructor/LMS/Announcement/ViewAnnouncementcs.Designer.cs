@@ -41,6 +41,7 @@
             lblAttachName = new Label();
             lblAttachType = new Label();
             btnOpenFile = new Button();
+            btnEditFile = new Button();
             pnlHeader.SuspendLayout();
             pnlBody.SuspendLayout();
             pnlProgressRow.SuspendLayout();
@@ -309,6 +310,7 @@
             pnlAttachment.Controls.Add(picFileIcon);
             pnlAttachment.Controls.Add(lblAttachName);
             pnlAttachment.Controls.Add(lblAttachType);
+            pnlAttachment.Controls.Add(btnEditFile);
             pnlAttachment.Controls.Add(btnOpenFile);
             pnlAttachment.Location = new Point(23, 275);
             pnlAttachment.Name = "pnlAttachment";
@@ -355,12 +357,28 @@
             btnOpenFile.FlatStyle = FlatStyle.Flat;
             btnOpenFile.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
             btnOpenFile.ForeColor = Color.White;
-            btnOpenFile.Location = new Point(679, 12);
+            btnOpenFile.Location = new Point(569, 12);
             btnOpenFile.Name = "btnOpenFile";
             btnOpenFile.Size = new Size(100, 30);
             btnOpenFile.TabIndex = 3;
             btnOpenFile.Text = "Open File";
             btnOpenFile.UseVisualStyleBackColor = false;
+            // 
+            // btnEditFile
+            // 
+            btnEditFile.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnEditFile.BackColor = Color.White;
+            btnEditFile.Cursor = Cursors.Hand;
+            btnEditFile.FlatAppearance.BorderColor = Color.FromArgb(139, 0, 0);
+            btnEditFile.FlatStyle = FlatStyle.Flat;
+            btnEditFile.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+            btnEditFile.ForeColor = Color.FromArgb(139, 0, 0);
+            btnEditFile.Location = new Point(675, 12);
+            btnEditFile.Name = "btnEditFile";
+            btnEditFile.Size = new Size(100, 30);
+            btnEditFile.TabIndex = 4;
+            btnEditFile.Text = "✏  Edit File";
+            btnEditFile.UseVisualStyleBackColor = false;
             // 
             // ViewAnnouncement
             // 
@@ -409,6 +427,7 @@
         private System.Windows.Forms.Label lblAttachName;
         private System.Windows.Forms.Label lblAttachType;
         private System.Windows.Forms.Button btnOpenFile;
+        private System.Windows.Forms.Button btnEditFile;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnEdit;
     }

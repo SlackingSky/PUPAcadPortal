@@ -28,247 +28,247 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this._lblStatus = new System.Windows.Forms.Label();
-            this._lblCountdown = new System.Windows.Forms.Label();
-            this._picQr = new System.Windows.Forms.PictureBox();
-            this.infoBar = new System.Windows.Forms.Panel();
-            this.tbl = new System.Windows.Forms.TableLayoutPanel();
-            this.lblSessionKey = new System.Windows.Forms.Label();
-            this._lblSessionVal = new System.Windows.Forms.Label();
-            this.lblDateKey = new System.Windows.Forms.Label();
-            this._lblDateVal = new System.Windows.Forms.Label();
-            this.lblTimeKey = new System.Windows.Forms.Label();
-            this._lblClockVal = new System.Windows.Forms.Label();
-            this.pnlBtns = new System.Windows.Forms.Panel();
-            this._btnRefresh = new System.Windows.Forms.Button();
-            this._btnDownload = new System.Windows.Forms.Button();
-            this._countdownTimer = new System.Windows.Forms.Timer(this.components);
-            this._expiryTimer = new System.Windows.Forms.Timer(this.components);
-            this._animTimer = new System.Windows.Forms.Timer(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this._picQr)).BeginInit();
-            this.infoBar.SuspendLayout();
-            this.tbl.SuspendLayout();
-            this.pnlBtns.SuspendLayout();
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            _lblStatus = new Label();
+            _lblCountdown = new Label();
+            _picQr = new PictureBox();
+            infoBar = new Panel();
+            tbl = new TableLayoutPanel();
+            lblSessionKey = new Label();
+            _lblSessionVal = new Label();
+            lblDateKey = new Label();
+            _lblDateVal = new Label();
+            lblTimeKey = new Label();
+            _lblClockVal = new Label();
+            pnlBtns = new Panel();
+            _btnRefresh = new Button();
+            _btnDownload = new Button();
+            _countdownTimer = new System.Windows.Forms.Timer(components);
+            _expiryTimer = new System.Windows.Forms.Timer(components);
+            _animTimer = new System.Windows.Forms.Timer(components);
+            ((System.ComponentModel.ISupportInitialize)_picQr).BeginInit();
+            infoBar.SuspendLayout();
+            tbl.SuspendLayout();
+            pnlBtns.SuspendLayout();
+            SuspendLayout();
             // 
             // _lblStatus
             // 
-            this._lblStatus.AutoSize = true;
-            this._lblStatus.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
-            this._lblStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(139)))), ((int)(((byte)(34)))));
-            this._lblStatus.Location = new System.Drawing.Point(12, 8);
-            this._lblStatus.Name = "_lblStatus";
-            this._lblStatus.Size = new System.Drawing.Size(55, 15);
-            this._lblStatus.TabIndex = 0;
-            this._lblStatus.Text = "● Active";
+            _lblStatus.AutoSize = true;
+            _lblStatus.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+            _lblStatus.ForeColor = Color.FromArgb(34, 139, 34);
+            _lblStatus.Location = new Point(12, 8);
+            _lblStatus.Name = "_lblStatus";
+            _lblStatus.Size = new Size(53, 15);
+            _lblStatus.TabIndex = 0;
+            _lblStatus.Text = "● Active";
             // 
             // _lblCountdown
             // 
-            this._lblCountdown.AutoSize = true;
-            this._lblCountdown.Font = new System.Drawing.Font("Segoe UI", 7.5F);
-            this._lblCountdown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this._lblCountdown.Location = new System.Drawing.Point(12, 26);
-            this._lblCountdown.Name = "_lblCountdown";
-            this._lblCountdown.Size = new System.Drawing.Size(0, 12);
-            this._lblCountdown.TabIndex = 1;
+            _lblCountdown.AutoSize = true;
+            _lblCountdown.Font = new Font("Segoe UI", 7.5F);
+            _lblCountdown.ForeColor = Color.FromArgb(90, 90, 90);
+            _lblCountdown.Location = new Point(12, 26);
+            _lblCountdown.Name = "_lblCountdown";
+            _lblCountdown.Size = new Size(0, 12);
+            _lblCountdown.TabIndex = 1;
             // 
             // _picQr
             // 
-            this._picQr.BackColor = System.Drawing.Color.White;
-            this._picQr.Location = new System.Drawing.Point(20, 46);
-            this._picQr.Name = "_picQr";
-            this._picQr.Size = new System.Drawing.Size(80, 80);
-            this._picQr.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this._picQr.TabIndex = 2;
-            this._picQr.TabStop = false;
+            _picQr.BackColor = Color.White;
+            _picQr.Location = new Point(20, 46);
+            _picQr.Name = "_picQr";
+            _picQr.Size = new Size(80, 80);
+            _picQr.SizeMode = PictureBoxSizeMode.Zoom;
+            _picQr.TabIndex = 2;
+            _picQr.TabStop = false;
             // 
             // infoBar
             // 
-            this.infoBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
-            this.infoBar.Controls.Add(this.tbl);
-            this.infoBar.Location = new System.Drawing.Point(8, 130);
-            this.infoBar.Name = "infoBar";
-            this.infoBar.Size = new System.Drawing.Size(200, 80);
-            this.infoBar.TabIndex = 3;
-            this.infoBar.Paint += new System.Windows.Forms.PaintEventHandler(this.infoBar_Paint);
+            infoBar.BackColor = Color.FromArgb(248, 248, 248);
+            infoBar.Controls.Add(tbl);
+            infoBar.Location = new Point(8, 130);
+            infoBar.Name = "infoBar";
+            infoBar.Size = new Size(200, 80);
+            infoBar.TabIndex = 3;
+            infoBar.Paint += infoBar_Paint;
             // 
             // tbl
             // 
-            this.tbl.BackColor = System.Drawing.Color.Transparent;
-            this.tbl.ColumnCount = 2;
-            this.tbl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 56F));
-            this.tbl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tbl.Controls.Add(this.lblSessionKey, 0, 0);
-            this.tbl.Controls.Add(this._lblSessionVal, 1, 0);
-            this.tbl.Controls.Add(this.lblDateKey, 0, 1);
-            this.tbl.Controls.Add(this._lblDateVal, 1, 1);
-            this.tbl.Controls.Add(this.lblTimeKey, 0, 2);
-            this.tbl.Controls.Add(this._lblClockVal, 1, 2);
-            this.tbl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbl.Location = new System.Drawing.Point(0, 0);
-            this.tbl.Name = "tbl";
-            this.tbl.Padding = new System.Windows.Forms.Padding(8, 6, 8, 4);
-            this.tbl.RowCount = 3;
-            this.tbl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tbl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tbl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tbl.Size = new System.Drawing.Size(200, 80);
-            this.tbl.TabIndex = 0;
+            tbl.BackColor = Color.Transparent;
+            tbl.ColumnCount = 2;
+            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 56F));
+            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tbl.Controls.Add(lblSessionKey, 0, 0);
+            tbl.Controls.Add(_lblSessionVal, 1, 0);
+            tbl.Controls.Add(lblDateKey, 0, 1);
+            tbl.Controls.Add(_lblDateVal, 1, 1);
+            tbl.Controls.Add(lblTimeKey, 0, 2);
+            tbl.Controls.Add(_lblClockVal, 1, 2);
+            tbl.Dock = DockStyle.Fill;
+            tbl.Location = new Point(0, 0);
+            tbl.Name = "tbl";
+            tbl.Padding = new Padding(8, 6, 8, 4);
+            tbl.RowCount = 3;
+            tbl.RowStyles.Add(new RowStyle(SizeType.Percent, 33.33333F));
+            tbl.RowStyles.Add(new RowStyle(SizeType.Percent, 33.33333F));
+            tbl.RowStyles.Add(new RowStyle(SizeType.Percent, 33.33333F));
+            tbl.Size = new Size(200, 80);
+            tbl.TabIndex = 0;
             // 
             // lblSessionKey
             // 
-            this.lblSessionKey.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblSessionKey.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
-            this.lblSessionKey.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblSessionKey.Location = new System.Drawing.Point(8, 6);
-            this.lblSessionKey.Margin = new System.Windows.Forms.Padding(0);
-            this.lblSessionKey.Name = "lblSessionKey";
-            this.lblSessionKey.Size = new System.Drawing.Size(56, 23);
-            this.lblSessionKey.TabIndex = 0;
-            this.lblSessionKey.Text = "Session";
-            this.lblSessionKey.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            lblSessionKey.Dock = DockStyle.Fill;
+            lblSessionKey.Font = new Font("Segoe UI", 8F, FontStyle.Bold);
+            lblSessionKey.ForeColor = Color.FromArgb(106, 0, 0);
+            lblSessionKey.Location = new Point(8, 6);
+            lblSessionKey.Margin = new Padding(0);
+            lblSessionKey.Name = "lblSessionKey";
+            lblSessionKey.Size = new Size(56, 23);
+            lblSessionKey.TabIndex = 0;
+            lblSessionKey.Text = "Session";
+            lblSessionKey.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // _lblSessionVal
             // 
-            this._lblSessionVal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._lblSessionVal.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this._lblSessionVal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this._lblSessionVal.Location = new System.Drawing.Point(64, 6);
-            this._lblSessionVal.Margin = new System.Windows.Forms.Padding(0);
-            this._lblSessionVal.Name = "_lblSessionVal";
-            this._lblSessionVal.Size = new System.Drawing.Size(128, 23);
-            this._lblSessionVal.TabIndex = 1;
-            this._lblSessionVal.Text = "Morning";
-            this._lblSessionVal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            _lblSessionVal.Dock = DockStyle.Fill;
+            _lblSessionVal.Font = new Font("Segoe UI", 8F);
+            _lblSessionVal.ForeColor = Color.FromArgb(90, 90, 90);
+            _lblSessionVal.Location = new Point(64, 6);
+            _lblSessionVal.Margin = new Padding(0);
+            _lblSessionVal.Name = "_lblSessionVal";
+            _lblSessionVal.Size = new Size(128, 23);
+            _lblSessionVal.TabIndex = 1;
+            _lblSessionVal.Text = "Morning";
+            _lblSessionVal.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblDateKey
             // 
-            this.lblDateKey.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblDateKey.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
-            this.lblDateKey.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblDateKey.Location = new System.Drawing.Point(8, 29);
-            this.lblDateKey.Margin = new System.Windows.Forms.Padding(0);
-            this.lblDateKey.Name = "lblDateKey";
-            this.lblDateKey.Size = new System.Drawing.Size(56, 23);
-            this.lblDateKey.TabIndex = 2;
-            this.lblDateKey.Text = "Date";
-            this.lblDateKey.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            lblDateKey.Dock = DockStyle.Fill;
+            lblDateKey.Font = new Font("Segoe UI", 8F, FontStyle.Bold);
+            lblDateKey.ForeColor = Color.FromArgb(106, 0, 0);
+            lblDateKey.Location = new Point(8, 29);
+            lblDateKey.Margin = new Padding(0);
+            lblDateKey.Name = "lblDateKey";
+            lblDateKey.Size = new Size(56, 23);
+            lblDateKey.TabIndex = 2;
+            lblDateKey.Text = "Date";
+            lblDateKey.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // _lblDateVal
             // 
-            this._lblDateVal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._lblDateVal.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this._lblDateVal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this._lblDateVal.Location = new System.Drawing.Point(64, 29);
-            this._lblDateVal.Margin = new System.Windows.Forms.Padding(0);
-            this._lblDateVal.Name = "_lblDateVal";
-            this._lblDateVal.Size = new System.Drawing.Size(128, 23);
-            this._lblDateVal.TabIndex = 3;
-            this._lblDateVal.Text = "DateVal";
-            this._lblDateVal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            _lblDateVal.Dock = DockStyle.Fill;
+            _lblDateVal.Font = new Font("Segoe UI", 8F);
+            _lblDateVal.ForeColor = Color.FromArgb(90, 90, 90);
+            _lblDateVal.Location = new Point(64, 29);
+            _lblDateVal.Margin = new Padding(0);
+            _lblDateVal.Name = "_lblDateVal";
+            _lblDateVal.Size = new Size(128, 23);
+            _lblDateVal.TabIndex = 3;
+            _lblDateVal.Text = "DateVal";
+            _lblDateVal.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblTimeKey
             // 
-            this.lblTimeKey.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblTimeKey.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
-            this.lblTimeKey.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblTimeKey.Location = new System.Drawing.Point(8, 52);
-            this.lblTimeKey.Margin = new System.Windows.Forms.Padding(0);
-            this.lblTimeKey.Name = "lblTimeKey";
-            this.lblTimeKey.Size = new System.Drawing.Size(56, 24);
-            this.lblTimeKey.TabIndex = 4;
-            this.lblTimeKey.Text = "Time";
-            this.lblTimeKey.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            lblTimeKey.Dock = DockStyle.Fill;
+            lblTimeKey.Font = new Font("Segoe UI", 8F, FontStyle.Bold);
+            lblTimeKey.ForeColor = Color.FromArgb(106, 0, 0);
+            lblTimeKey.Location = new Point(8, 52);
+            lblTimeKey.Margin = new Padding(0);
+            lblTimeKey.Name = "lblTimeKey";
+            lblTimeKey.Size = new Size(56, 24);
+            lblTimeKey.TabIndex = 4;
+            lblTimeKey.Text = "Time";
+            lblTimeKey.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // _lblClockVal
             // 
-            this._lblClockVal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._lblClockVal.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this._lblClockVal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this._lblClockVal.Location = new System.Drawing.Point(64, 52);
-            this._lblClockVal.Margin = new System.Windows.Forms.Padding(0);
-            this._lblClockVal.Name = "_lblClockVal";
-            this._lblClockVal.Size = new System.Drawing.Size(128, 24);
-            this._lblClockVal.TabIndex = 5;
-            this._lblClockVal.Text = "ClockVal";
-            this._lblClockVal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            _lblClockVal.Dock = DockStyle.Fill;
+            _lblClockVal.Font = new Font("Segoe UI", 8F);
+            _lblClockVal.ForeColor = Color.FromArgb(90, 90, 90);
+            _lblClockVal.Location = new Point(64, 52);
+            _lblClockVal.Margin = new Padding(0);
+            _lblClockVal.Name = "_lblClockVal";
+            _lblClockVal.Size = new Size(128, 24);
+            _lblClockVal.TabIndex = 5;
+            _lblClockVal.Text = "ClockVal";
+            _lblClockVal.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // pnlBtns
             // 
-            this.pnlBtns.BackColor = System.Drawing.Color.White;
-            this.pnlBtns.Controls.Add(this._btnRefresh);
-            this.pnlBtns.Controls.Add(this._btnDownload);
-            this.pnlBtns.Location = new System.Drawing.Point(0, 220);
-            this.pnlBtns.Name = "pnlBtns";
-            this.pnlBtns.Size = new System.Drawing.Size(220, 44);
-            this.pnlBtns.TabIndex = 4;
+            pnlBtns.BackColor = Color.White;
+            pnlBtns.Controls.Add(_btnRefresh);
+            pnlBtns.Controls.Add(_btnDownload);
+            pnlBtns.Location = new Point(0, 220);
+            pnlBtns.Name = "pnlBtns";
+            pnlBtns.Size = new Size(220, 44);
+            pnlBtns.TabIndex = 4;
             // 
             // _btnRefresh
             // 
-            this._btnRefresh.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this._btnRefresh.Cursor = System.Windows.Forms.Cursors.Hand;
-            this._btnRefresh.FlatAppearance.BorderSize = 0;
-            this._btnRefresh.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this._btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this._btnRefresh.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
-            this._btnRefresh.ForeColor = System.Drawing.Color.White;
-            this._btnRefresh.Location = new System.Drawing.Point(10, 5);
-            this._btnRefresh.Name = "_btnRefresh";
-            this._btnRefresh.Size = new System.Drawing.Size(95, 34);
-            this._btnRefresh.TabIndex = 0;
-            this._btnRefresh.Text = "↺  Refresh QR";
-            this._btnRefresh.UseVisualStyleBackColor = false;
-            this._btnRefresh.Click += new System.EventHandler(this.BtnRefresh_Click);
+            _btnRefresh.BackColor = Color.FromArgb(106, 0, 0);
+            _btnRefresh.Cursor = Cursors.Hand;
+            _btnRefresh.FlatAppearance.BorderSize = 0;
+            _btnRefresh.FlatAppearance.MouseOverBackColor = Color.FromArgb(160, 30, 30);
+            _btnRefresh.FlatStyle = FlatStyle.Flat;
+            _btnRefresh.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+            _btnRefresh.ForeColor = Color.White;
+            _btnRefresh.Location = new Point(10, 5);
+            _btnRefresh.Name = "_btnRefresh";
+            _btnRefresh.Size = new Size(95, 34);
+            _btnRefresh.TabIndex = 0;
+            _btnRefresh.Text = "↺  Refresh QR";
+            _btnRefresh.UseVisualStyleBackColor = false;
+            _btnRefresh.Click += BtnRefresh_Click;
             // 
             // _btnDownload
             // 
-            this._btnDownload.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(100)))), ((int)(((byte)(180)))));
-            this._btnDownload.Cursor = System.Windows.Forms.Cursors.Hand;
-            this._btnDownload.FlatAppearance.BorderSize = 0;
-            this._btnDownload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this._btnDownload.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
-            this._btnDownload.ForeColor = System.Drawing.Color.White;
-            this._btnDownload.Location = new System.Drawing.Point(111, 5);
-            this._btnDownload.Name = "_btnDownload";
-            this._btnDownload.Size = new System.Drawing.Size(100, 34);
-            this._btnDownload.TabIndex = 1;
-            this._btnDownload.Text = "⬇  Download QR";
-            this._btnDownload.UseVisualStyleBackColor = false;
-            this._btnDownload.Click += new System.EventHandler(this.BtnDownload_Click);
+            _btnDownload.BackColor = Color.FromArgb(40, 100, 180);
+            _btnDownload.Cursor = Cursors.Hand;
+            _btnDownload.FlatAppearance.BorderSize = 0;
+            _btnDownload.FlatStyle = FlatStyle.Flat;
+            _btnDownload.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+            _btnDownload.ForeColor = Color.White;
+            _btnDownload.Location = new Point(111, 5);
+            _btnDownload.Name = "_btnDownload";
+            _btnDownload.Size = new Size(100, 34);
+            _btnDownload.TabIndex = 1;
+            _btnDownload.Text = "⬇  Download QR";
+            _btnDownload.UseVisualStyleBackColor = false;
+            _btnDownload.Click += BtnDownload_Click;
             // 
             // _countdownTimer
             // 
-            this._countdownTimer.Interval = 1000;
-            this._countdownTimer.Tick += new System.EventHandler(this.CountdownTimer_Tick);
+            _countdownTimer.Interval = 1000;
+            _countdownTimer.Tick += CountdownTimer_Tick;
             // 
             // _expiryTimer
             // 
-            this._expiryTimer.Tick += new System.EventHandler(this.ExpiryTimer_Tick);
+            _expiryTimer.Tick += ExpiryTimer_Tick;
             // 
             // _animTimer
             // 
-            this._animTimer.Interval = 250;
-            this._animTimer.Tick += new System.EventHandler(this.AnimTick);
+            _animTimer.Interval = 250;
+            _animTimer.Tick += AnimTick;
             // 
             // QrCodeAttendanceControl
             // 
-            this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.pnlBtns);
-            this.Controls.Add(this.infoBar);
-            this.Controls.Add(this._picQr);
-            this.Controls.Add(this._lblCountdown);
-            this.Controls.Add(this._lblStatus);
-            this.DoubleBuffered = true;
-            this.Name = "QrCodeAttendanceControl";
-            this.Size = new System.Drawing.Size(220, 270);
-            this.SizeChanged += new System.EventHandler(this.QrCodeAttendanceControl_SizeChanged);
-            ((System.ComponentModel.ISupportInitialize)(this._picQr)).EndInit();
-            this.infoBar.ResumeLayout(false);
-            this.tbl.ResumeLayout(false);
-            this.pnlBtns.ResumeLayout(false);
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            BackColor = Color.White;
+            Controls.Add(pnlBtns);
+            Controls.Add(infoBar);
+            Controls.Add(_picQr);
+            Controls.Add(_lblCountdown);
+            Controls.Add(_lblStatus);
+            DoubleBuffered = true;
+            Name = "QrCodeAttendanceControl";
+            Size = new Size(220, 270);
+            SizeChanged += QrCodeAttendanceControl_SizeChanged;
+            ((System.ComponentModel.ISupportInitialize)_picQr).EndInit();
+            infoBar.ResumeLayout(false);
+            tbl.ResumeLayout(false);
+            pnlBtns.ResumeLayout(false);
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

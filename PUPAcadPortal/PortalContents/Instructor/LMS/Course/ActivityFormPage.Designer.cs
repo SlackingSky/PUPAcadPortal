@@ -74,7 +74,7 @@
             pnlHeader.Dock = DockStyle.Top;
             pnlHeader.Location = new Point(0, 0);
             pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(1200, 68);
+            pnlHeader.Size = new Size(1680, 68);
             pnlHeader.TabIndex = 0;
             pnlHeader.SizeChanged += pnlHeader_SizeChanged;
             // 
@@ -120,7 +120,7 @@
             btnSave.FlatStyle = FlatStyle.Flat;
             btnSave.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
             btnSave.ForeColor = Color.Black;
-            btnSave.Location = new Point(1030, 17);
+            btnSave.Location = new Point(1510, 17);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(160, 34);
             btnSave.TabIndex = 3;
@@ -136,7 +136,7 @@
             pnlScroll.Location = new Point(0, 68);
             pnlScroll.Name = "pnlScroll";
             pnlScroll.Padding = new Padding(22, 18, 22, 18);
-            pnlScroll.Size = new Size(1200, 832);
+            pnlScroll.Size = new Size(1680, 921);
             pnlScroll.TabIndex = 1;
             pnlScroll.SizeChanged += pnlScroll_SizeChanged;
             // 
@@ -153,7 +153,7 @@
             stackPanel.FlowDirection = FlowDirection.TopDown;
             stackPanel.Location = new Point(22, 18);
             stackPanel.Name = "stackPanel";
-            stackPanel.Size = new Size(1156, 631);
+            stackPanel.Size = new Size(1636, 631);
             stackPanel.TabIndex = 0;
             stackPanel.WrapContents = false;
             // 
@@ -394,6 +394,7 @@
             // 
             // btnAddCriteria
             // 
+            btnAddCriteria.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnAddCriteria.BackColor = Color.DarkSlateBlue;
             btnAddCriteria.FlatAppearance.BorderSize = 0;
             btnAddCriteria.FlatStyle = FlatStyle.Flat;
@@ -457,6 +458,7 @@
             // 
             // btnAttachFile
             // 
+            btnAttachFile.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnAttachFile.BackColor = Color.DarkCyan;
             btnAttachFile.FlatAppearance.BorderSize = 0;
             btnAttachFile.FlatStyle = FlatStyle.Flat;
@@ -495,7 +497,7 @@
             Controls.Add(pnlScroll);
             Controls.Add(pnlHeader);
             Name = "ActivityFormPage";
-            Size = new Size(1200, 900);
+            Size = new Size(1680, 989);
             pnlHeader.ResumeLayout(false);
             pnlScroll.ResumeLayout(false);
             pnlScroll.PerformLayout();

@@ -57,15 +57,17 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
     // ── Session key (dictionary key for snapshots) ───────────────────────────
     public class SessionKey
     {
-        public string   CourseDisplay { get; set; } = "";
-        public string   SessionLabel  { get; set; } = "";
-        public DateTime Date          { get; set; }
+        public string CourseDisplay { get; set; } = "";
+        public string SessionLabel { get; set; } = "";
+        public DateTime Date { get; set; }
 
-        public override bool Equals(object? obj) =>
-            obj is SessionKey k &&
-            k.CourseDisplay == CourseDisplay &&
-            k.SessionLabel  == SessionLabel  &&
-            k.Date.Date     == Date.Date;
+        public bool Equals(SessionKey? other) =>
+            other != null &&
+            CourseDisplay == other.CourseDisplay &&
+            SessionLabel == other.SessionLabel &&
+            Date.Date == other.Date.Date;
+
+        public override bool Equals(object? obj) => Equals(obj as SessionKey);
 
         public override int GetHashCode() =>
             HashCode.Combine(CourseDisplay, SessionLabel, Date.Date);

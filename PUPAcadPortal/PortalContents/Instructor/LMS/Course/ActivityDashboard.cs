@@ -156,10 +156,9 @@ namespace PUPAcadPortal
                 foreach (Control c in card.Controls)
                 {
                     if (c.Tag?.ToString() == "HEADER") { c.Width = cardW; UpdateHeaderChildren(c, cardW); }
-                    else if (c.Tag?.ToString() == "INSTRUCTOR") c.Width = cardW - 20;
-                    else if (c.Tag?.ToString() == "STATS") c.Width = cardW - 20;
+                    else if (c.Tag?.ToString() == "STATS") c.Width = cardW - 24;
                     else if (c is buttonRounded b && b.Tag?.ToString() == "OPEN_BTN")
-                        b.Location = new Point(cardW - b.Width - 15, b.Location.Y);
+                        b.Location = new Point(cardW - 140, b.Location.Y);
                 }
                 card.Invalidate();
             }
@@ -169,19 +168,21 @@ namespace PUPAcadPortal
         {
             foreach (Control h in header.Controls)
             {
-                if (h.Tag?.ToString() == "STATUS") h.Location = new Point(cardW - h.Width - 12, h.Location.Y);
-                else if (h.Tag?.ToString() == "COURSE") h.Width = cardW - 100;
+                if (h.Tag?.ToString() == "COURSE") h.Width = cardW - 24;
             }
         }
 
         private Panel CreateCourseCard(CourseActivity course)
         {
             const int cardW = 430;
+            const int cardH = 175;
+            const int statsY = 74;   
+            const int bottomY = 138;  
 
             var card = new Panel
             {
                 Width = cardW,
-                Height = 228,
+                Height = cardH,
                 BackColor = Color.White,
                 Margin = new Padding(10)
             };
@@ -206,7 +207,7 @@ namespace PUPAcadPortal
                 ForeColor = Color.White,
                 Font = new Font("Segoe UI", 10.5F, FontStyle.Bold),
                 Location = new Point(12, 8),
-                Width = cardW - 100,
+                Width = cardW - 24,   
                 Height = 26,
                 AutoEllipsis = true,
                 Tag = "COURSE"
@@ -217,43 +218,16 @@ namespace PUPAcadPortal
                 ForeColor = Color.FromArgb(230, 185, 185),
                 Font = new Font("Segoe UI", 8.5F),
                 Location = new Point(12, 36),
-                Width = 180,
+                Width = 260,
                 Height = 18
             };
 
-            Color statusBg = course.Status == "Active" ? Color.FromArgb(46, 160, 67)
-                           : course.Status == "Completed" ? Color.FromArgb(58, 130, 200)
-                           : Color.FromArgb(200, 165, 0);
-            var lblStatus = new Label
-            {
-                Text = course.Status,
-                BackColor = statusBg,
-                ForeColor = Color.White,
-                Font = new Font("Segoe UI", 7.5F, FontStyle.Bold),
-                Size = new Size(62, 20),
-                Location = new Point(cardW - 77, 22),
-                TextAlign = ContentAlignment.MiddleCenter,
-                Tag = "STATUS"
-            };
-
-            hdr.Controls.AddRange(new Control[] { lblName, lblCode, lblStatus });
+            hdr.Controls.AddRange(new Control[] { lblName, lblCode });
             card.Controls.Add(hdr);
-
-            var lblInst = new Label
-            {
-                Text = "👤 " + course.InstructorName,
-                Font = new Font("Segoe UI", 8.5F),
-                ForeColor = Color.FromArgb(75, 75, 80),
-                Location = new Point(12, 74),
-                Width = cardW - 24,
-                Height = 18,
-                Tag = "INSTRUCTOR"
-            };
-            card.Controls.Add(lblInst);
 
             var pnlStats = new Panel
             {
-                Location = new Point(12, 98),
+                Location = new Point(12, statsY),
                 Size = new Size(cardW - 24, 54),
                 BackColor = Color.FromArgb(248, 248, 251),
                 Tag = "STATS"
@@ -265,10 +239,10 @@ namespace PUPAcadPortal
             };
 
             string[] statVals = { course.TotalAssignments.ToString(), course.TotalQuizzes.ToString(),
-                                  course.PendingSubmissions.ToString(), course.CheckedSubmissions.ToString() };
+                                    course.PendingSubmissions.ToString(), course.CheckedSubmissions.ToString() };
             string[] statLbls = { "Assign.", "Quizzes", "Pending", "Checked" };
             Color[] statColors = { Color.FromArgb(63, 81, 181), Color.FromArgb(0, 150, 136),
-                                   Color.FromArgb(211, 84, 0),  Color.FromArgb(46, 160, 67) };
+                                    Color.FromArgb(211, 84, 0),  Color.FromArgb(46, 160, 67) };
             for (int i = 0; i < 4; i++)
             {
                 int colW = (cardW - 24) / 4;
@@ -296,25 +270,21 @@ namespace PUPAcadPortal
             }
             card.Controls.Add(pnlStats);
 
-            TimeSpan left = course.NearestDeadline - DateTime.Now;
-            string deadlineTxt = left.TotalDays <= 0 ? "⚠ Due Today!" : left.Days == 1 ? "⏰ Due Tomorrow" : $"📅 Due in {left.Days} days";
-            Color deadlineClr = left.TotalDays <= 0 ? Color.Red : left.Days <= 1 ? Color.OrangeRed : left.Days <= 3 ? Color.DarkOrange : Color.FromArgb(34, 139, 34);
-            var lblDeadline = new Label
+            var lblCount = new Label
             {
-                Text = deadlineTxt,
-                Font = new Font("Segoe UI", 8.5F, FontStyle.Bold),
-                ForeColor = deadlineClr,
-                Location = new Point(12, 162),
-                Width = 200,
-                Height = 20
+                Text = $"{course.ActivityCount} Activities",
+                Font = new Font("Segoe UI", 7.5F),
+                ForeColor = Color.FromArgb(120, 120, 130),
+                Location = new Point(14, bottomY + 6),
+                AutoSize = true
             };
-            card.Controls.Add(lblDeadline);
+            card.Controls.Add(lblCount);
 
             var btnOpen = new buttonRounded
             {
                 Text = "Open Course →",
-                Size = new Size(120, 30),
-                Location = new Point(cardW - 135, 158),
+                Size = new Size(126, 30),
+                Location = new Point(cardW - 140, bottomY),
                 BackColor = Color.FromArgb(128, 0, 0),
                 ForeColor = Color.White,
                 BorderRadius = 14,
@@ -324,16 +294,6 @@ namespace PUPAcadPortal
             };
             btnOpen.Click += (s, e) => OpenCourseView(course);
             card.Controls.Add(btnOpen);
-
-            var lblCount = new Label
-            {
-                Text = $"{course.ActivityCount} Activities",
-                Font = new Font("Segoe UI", 7.5F),
-                ForeColor = Color.FromArgb(120, 120, 130),
-                Location = new Point(12, 198),
-                AutoSize = true
-            };
-            card.Controls.Add(lblCount);
 
             return card;
         }

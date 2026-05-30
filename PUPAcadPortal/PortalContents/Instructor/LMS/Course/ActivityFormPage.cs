@@ -31,7 +31,6 @@ namespace PUPAcadPortal
             PopulateForm();
         }
 
-        //  Populate 
         private void PopulateForm()
         {
             lblPageTitle.Text = _isNew ? "Create Activity" : "Edit Activity";
@@ -59,7 +58,6 @@ namespace PUPAcadPortal
             RefreshFilesPanel();
         }
 
-        //  Type toggle 
         private void cmbType_SelectedIndexChanged(object sender, EventArgs e) => RefreshTypePanel();
 
         private void RefreshTypePanel()
@@ -70,7 +68,6 @@ namespace PUPAcadPortal
             lblPointsNote.Text = t == "Quiz" ? "ℹ Points calculated from questions." : "";
         }
 
-        //  Quiz builder 
         private void btnAddQuestion_Click(object sender, EventArgs e)
         {
             _questions.Add(new QuizQuestion { QuestionId = _nextQId++, QuestionType = "MultipleChoice", Points = 1 });
@@ -89,13 +86,19 @@ namespace PUPAcadPortal
                 nudPoints.Value = _questions.Sum(q => q.Points);
         }
 
+        private static readonly string[] ChoiceLetters = { "A", "B", "C", "D", "E", "F", "G", "H" };
+
         private Panel BuildQuestionRow(QuizQuestion q, int num)
         {
-            int rowW = Math.Max(600, flpQuestions.ClientSize.Width - 16);
+            if (q.QuestionType == "MultipleChoice" && q.Choices.Count < 4)
+            {
+                while (q.Choices.Count < 4) q.Choices.Add("");
+            }
+
+            int rowW = Math.Max(700, flpQuestions.ClientSize.Width - 16);
             var row = new Panel
             {
                 Width = rowW,
-                Height = 134,
                 BackColor = Color.White,
                 Margin = new Padding(0, 0, 0, 8)
             };
@@ -114,7 +117,7 @@ namespace PUPAcadPortal
                 ForeColor = Color.White,
                 BackColor = Color.FromArgb(63, 81, 181),
                 TextAlign = ContentAlignment.MiddleCenter,
-                Location = new Point(12, 8),
+                Location = new Point(12, 10),
                 Size = new Size(28, 28)
             };
 
@@ -122,19 +125,19 @@ namespace PUPAcadPortal
             {
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 Font = new Font("Segoe UI", 9F),
-                Location = new Point(48, 8),
+                Location = new Point(48, 10),
                 Size = new Size(160, 25)
             };
             cmbQType.Items.AddRange(new object[] { "MultipleChoice", "Identification", "TrueFalse", "Essay" });
             SetCombo(cmbQType, q.QuestionType);
 
-            var lblPts = new Label { Text = "pts:", Location = new Point(220, 12), AutoSize = true, Font = new Font("Segoe UI", 9F) };
+            var lblPts = new Label { Text = "pts:", Location = new Point(220, 14), AutoSize = true, Font = new Font("Segoe UI", 9F) };
             var nudPts = new NumericUpDown
             {
                 Minimum = 1,
                 Maximum = 1000,
                 Value = q.Points,
-                Location = new Point(250, 8),
+                Location = new Point(250, 10),
                 Size = new Size(60, 25),
                 Font = new Font("Segoe UI", 9F)
             };
@@ -149,7 +152,7 @@ namespace PUPAcadPortal
             {
                 Text = "✕",
                 Size = new Size(28, 26),
-                Location = new Point(rowW - 36, 8),
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
                 BackColor = Color.FromArgb(195, 55, 55),
                 ForeColor = Color.White,
                 BorderRadius = 6,
@@ -162,47 +165,257 @@ namespace PUPAcadPortal
                 Text = q.QuestionText,
                 PlaceholderText = "Enter question text...",
                 Font = new Font("Segoe UI", 10F),
-                Location = new Point(12, 44),
+                Location = new Point(12, 46),
                 Size = new Size(rowW - 20, 26)
             };
             txtQ.TextChanged += (s, e) => q.QuestionText = txtQ.Text;
+            int splitX = (int)(rowW * 0.55);
+            int rightW = rowW - splitX - 12;
 
-            var txtAns = new TextBox
+            var pnlChoices = new Panel
             {
-                Text = q.CorrectAnswer,
-                PlaceholderText = GetAnswerHint(q.QuestionType),
-                Font = new Font("Segoe UI", 9.5F),
-                ForeColor = Color.DimGray,
                 Location = new Point(12, 80),
-                Size = new Size(rowW - 20, 26)
+                BackColor = Color.Transparent
             };
-            txtAns.TextChanged += (s, e) => q.CorrectAnswer = txtAns.Text;
+            var pnlRight = new Panel
+            {
+                Location = new Point(splitX, 80),
+                Width = rightW,
+                BackColor = Color.FromArgb(248, 248, 252)
+            };
+            pnlRight.Paint += (s, e) =>
+            {
+                using var pen = new Pen(Color.FromArgb(210, 210, 230));
+                e.Graphics.DrawRectangle(pen, 0, 0, pnlRight.Width - 1, pnlRight.Height - 1);
+            };
+            var lblCorrect = new Label
+            {
+                Text = "✔  Correct Answer:",
+                Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                ForeColor = Color.FromArgb(30, 130, 80),
+                Location = new Point(10, 10),
+                AutoSize = true
+            };
+
+            var cmbCorrect = new ComboBox
+            {
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+                ForeColor = Color.FromArgb(30, 130, 80),
+                Location = new Point(10, 34),
+                Size = new Size(rightW - 20, 28)
+            };
+
+            var cmbTF = new ComboBox
+            {
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+                ForeColor = Color.FromArgb(30, 130, 80),
+                Location = new Point(10, 34),
+                Size = new Size(rightW - 20, 28),
+                Visible = false
+            };
+            cmbTF.Items.AddRange(new object[] { "True", "False" });
+            var txtOpenAns = new TextBox
+            {
+                PlaceholderText = "Model answer / key phrase...",
+                Font = new Font("Segoe UI", 9.5F),
+                Location = new Point(10, 34),
+                Size = new Size(rightW - 20, 26),
+                Visible = false
+            };
+            txtOpenAns.TextChanged += (s, e) => q.CorrectAnswer = txtOpenAns.Text;
+
+            pnlRight.Controls.AddRange(new Control[] { lblCorrect, cmbCorrect, cmbTF, txtOpenAns });
+            cmbCorrect.SelectedIndexChanged += (s, e) =>
+                q.CorrectAnswer = cmbCorrect.SelectedItem?.ToString() ?? "";
+            void SelectSavedAnswer()
+            {
+                if (cmbCorrect.Items.Contains(q.CorrectAnswer))
+                    cmbCorrect.SelectedItem = q.CorrectAnswer;
+                else if (cmbCorrect.Items.Count > 0)
+                    cmbCorrect.SelectedIndex = 0;
+            }
+
+            void RebuildChoices()
+            {
+                pnlChoices.SuspendLayout();
+                pnlChoices.Controls.Clear();
+                int choiceW = splitX - 20;
+                int y = 0;
+
+                for (int ci = 0; ci < q.Choices.Count; ci++)
+                {
+                    int idx = ci; 
+                    string letter = idx < ChoiceLetters.Length ? ChoiceLetters[idx] : $"#{idx + 1}";
+
+                    var lblLetter = new Label
+                    {
+                        Text = letter + ".",
+                        Font = new Font("Segoe UI", 9.5F, FontStyle.Bold),
+                        ForeColor = Color.FromArgb(63, 81, 181),
+                        Location = new Point(0, y + 4),
+                        Size = new Size(24, 22)
+                    };
+
+                    var txtChoice = new TextBox
+                    {
+                        Text = q.Choices[idx],
+                        PlaceholderText = $"Choice {letter}...",
+                        Font = new Font("Segoe UI", 9.5F),
+                        Location = new Point(28, y),
+                        Size = new Size(choiceW - 66, 26)
+                    };
+                    int capturedIdx = idx;
+                    txtChoice.TextChanged += (s, e) =>
+                    {
+                        if (capturedIdx < q.Choices.Count)
+                            q.Choices[capturedIdx] = txtChoice.Text;
+                        RefreshCorrectAnswerCombo(q, cmbCorrect);
+                        SelectSavedAnswer();
+                    };
+
+                    var btnRemChoice = new buttonRounded
+                    {
+                        Text = "−",
+                        Size = new Size(26, 26),
+                        Location = new Point(choiceW - 34, y),
+                        BackColor = idx >= 4
+                            ? Color.FromArgb(195, 55, 55)
+                            : Color.FromArgb(200, 200, 210),
+                        ForeColor = Color.White,
+                        BorderRadius = 5,
+                        Enabled = idx >= 4,   // A–D are permanent
+                        Font = new Font("Segoe UI", 9F, FontStyle.Bold)
+                    };
+                    btnRemChoice.Click += (s, e) =>
+                    {
+                        if (q.Choices.Count > 4)
+                        {
+                            q.Choices.RemoveAt(idx);
+                            RebuildChoices();
+                        }
+                    };
+
+                    pnlChoices.Controls.AddRange(new Control[] { lblLetter, txtChoice, btnRemChoice });
+                    y += 32;
+                }
+
+                if (q.Choices.Count < ChoiceLetters.Length)
+                {
+                    var btnAddChoice = new buttonRounded
+                    {
+                        Text = $"+ Add {(q.Choices.Count < ChoiceLetters.Length ? ChoiceLetters[q.Choices.Count] : "?")} Choice",
+                        Size = new Size(130, 26),
+                        Location = new Point(28, y),
+                        BackColor = Color.FromArgb(63, 81, 181),
+                        ForeColor = Color.White,
+                        BorderRadius = 6,
+                        Font = new Font("Segoe UI", 8.5F, FontStyle.Bold)
+                    };
+                    btnAddChoice.Click += (s, e) =>
+                    {
+                        q.Choices.Add("");
+                        RebuildChoices();
+                    };
+                    pnlChoices.Controls.Add(btnAddChoice);
+                    y += 32;
+                }
+
+                pnlChoices.Height = y + 4;
+                pnlChoices.Width = choiceW;
+
+                RefreshCorrectAnswerCombo(q, cmbCorrect);
+                SelectSavedAnswer();
+
+                pnlChoices.ResumeLayout();
+                pnlRight.Location = new Point(splitX, 80);
+                pnlRight.Height = Math.Max(pnlChoices.Height, 80);
+
+                row.Height = 80 + Math.Max(pnlChoices.Height, pnlRight.Height) + 12;
+                row.Invalidate();
+            }
+
+            void ApplyQuestionType(string qt)
+            {
+                q.QuestionType = qt;
+                bool isMC = qt == "MultipleChoice";
+                bool isTF = qt == "TrueFalse";
+                bool isOpen = qt is "Identification" or "Essay";
+
+                pnlChoices.Visible = isMC;
+                cmbCorrect.Visible = isMC;
+                cmbTF.Visible = isTF;
+                txtOpenAns.Visible = isOpen;
+
+                if (isTF)
+                {
+                    string saved = q.CorrectAnswer;
+                    if (!string.IsNullOrEmpty(saved) && cmbTF.Items.Contains(saved))
+                        cmbTF.SelectedItem = saved;
+                    else cmbTF.SelectedIndex = 0;
+                }
+
+                if (isOpen) txtOpenAns.Text = q.CorrectAnswer;
+
+                if (isMC) RebuildChoices();
+                else
+                {
+                    pnlRight.Height = 72;
+                    row.Height = 80 + pnlRight.Height + 12;
+                    row.Invalidate();
+                }
+            }
+
+            cmbTF.SelectedIndexChanged += (s, e) => q.CorrectAnswer = cmbTF.SelectedItem?.ToString() ?? "True";
 
             cmbQType.SelectedIndexChanged += (s, e) =>
             {
-                q.QuestionType = cmbQType.SelectedItem?.ToString() ?? "MultipleChoice";
-                txtAns.PlaceholderText = GetAnswerHint(q.QuestionType);
+                string qt = cmbQType.SelectedItem?.ToString() ?? "MultipleChoice";
+                ApplyQuestionType(qt);
             };
 
-            row.Controls.AddRange(new Control[] { lblNum, cmbQType, lblPts, nudPts, btnDel, txtQ, txtAns });
+            row.Controls.AddRange(new Control[] { lblNum, cmbQType, lblPts, nudPts, btnDel, txtQ, pnlChoices, pnlRight });
 
+            void PositionDeleteBtn() => btnDel.Location = new Point(row.Width - 36, 10);
+            PositionDeleteBtn();
             row.SizeChanged += (s, e) =>
             {
-                btnDel.Left = row.Width - 36;
+                PositionDeleteBtn();
                 txtQ.Width = row.Width - 20;
-                txtAns.Width = row.Width - 20;
             };
+
+            ApplyQuestionType(q.QuestionType);
+
             return row;
+        }
+
+        private static void RefreshCorrectAnswerCombo(QuizQuestion q, ComboBox cmb)
+        {
+            string saved = cmb.SelectedItem?.ToString() ?? q.CorrectAnswer;
+            cmb.Items.Clear();
+            for (int i = 0; i < q.Choices.Count; i++)
+            {
+                string letter = i < ChoiceLetters.Length ? ChoiceLetters[i] : $"#{i + 1}";
+                string text = q.Choices[i].Trim();
+                string display = string.IsNullOrEmpty(text) ? $"{letter}. (empty)" : $"{letter}. {text}";
+                cmb.Items.Add(display);
+            }
+            // Restore selection by letter prefix
+            for (int i = 0; i < cmb.Items.Count; i++)
+            {
+                if (cmb.Items[i].ToString()!.StartsWith(saved))
+                { cmb.SelectedIndex = i; return; }
+            }
+            if (cmb.Items.Count > 0) cmb.SelectedIndex = 0;
         }
 
         private static string GetAnswerHint(string type) => type switch
         {
-            "MultipleChoice" => "Choices: A|B|C|D   Answer key: B",
             "TrueFalse" => "Answer key: True or False",
             _ => "Answer key / model answer"
         };
 
-        //  Rubric builder 
         private void chkRubric_CheckedChanged(object sender, EventArgs e)
         {
             pnlRubricRows.Visible = chkRubric.Checked;
@@ -271,7 +484,6 @@ namespace PUPAcadPortal
             return row;
         }
 
-        //  File attach panel 
         private void btnAttachFile_Click(object sender, EventArgs e)
         {
             using var ofd = new OpenFileDialog
@@ -335,7 +547,6 @@ namespace PUPAcadPortal
             return chip;
         }
 
-        //  Save 
         private void btnSave_Click(object sender, EventArgs e)
         {
             lblError.Text = "";
@@ -365,7 +576,6 @@ namespace PUPAcadPortal
             OnSave?.Invoke(act);
         }
 
-        //  Designer-side responsive helpers 
         private void pnlHeader_SizeChanged(object sender, System.EventArgs e)
         {
             if (this.btnSave != null && this.pnlHeader != null)
@@ -374,29 +584,9 @@ namespace PUPAcadPortal
             }
         }
 
-        private void pnlQuizSection_SizeChanged(object sender, System.EventArgs e)
-        {
-            if (this.btnAddQuestion != null && this.pnlQuizSection != null)
-            {
-                this.btnAddQuestion.Location = new System.Drawing.Point(this.pnlQuizSection.Width - 148, 12);
-            }
-        }
-
-        private void pnlRubricSection_SizeChanged(object sender, System.EventArgs e)
-        {
-            if (this.btnAddCriteria != null && this.pnlRubricSection != null)
-            {
-                this.btnAddCriteria.Location = new System.Drawing.Point(this.pnlRubricSection.Width - 143, 12);
-            }
-        }
-
-        private void pnlFilesSection_SizeChanged(object sender, System.EventArgs e)
-        {
-            if (this.btnAttachFile != null && this.pnlFilesSection != null)
-            {
-                this.btnAttachFile.Location = new System.Drawing.Point(this.pnlFilesSection.Width - 138, 12);
-            }
-        }
+        private void pnlQuizSection_SizeChanged(object sender, System.EventArgs e) { }
+        private void pnlRubricSection_SizeChanged(object sender, System.EventArgs e) { }
+        private void pnlFilesSection_SizeChanged(object sender, System.EventArgs e) { }
 
         private void pnlScroll_SizeChanged(object sender, System.EventArgs e)
         {
@@ -438,7 +628,6 @@ namespace PUPAcadPortal
 
         private void btnCancel_Click(object sender, EventArgs e) => OnCancel?.Invoke();
 
-        //  Helpers 
         private static void SetCombo(ComboBox c, string val)
         { int i = c.FindStringExact(val); c.SelectedIndex = i >= 0 ? i : 0; }
 

@@ -5,11 +5,6 @@ using static PUPAcadPortal.PortalContents.Instructor.LMS.GradesContentInst;
 
 namespace PUPAcadPortal.Dialogs
 {
-    /// <summary>
-    /// Dialog that lets the instructor edit the weighted percentages
-    /// for each grade component. Class Standing must total ≤ 70%;
-    /// grand total must equal exactly 100% before Apply is enabled.
-    /// </summary>
     public partial class EditGradePercentageControl : Form
     {
         public GradeWeights UpdatedWeights { get; private set; }
@@ -22,7 +17,6 @@ namespace PUPAcadPortal.Dialogs
 
             _original = current;
 
-            // Seed spinners from the current weights
             nudAttendance.Value = (decimal)current.AttendancePct;
             nudRecitation.Value = (decimal)current.RecitationPct;
             nudSeatwork.Value = (decimal)current.SeatworkPct;
@@ -41,7 +35,6 @@ namespace PUPAcadPortal.Dialogs
             RefreshTotals();
         }
 
-        // ── Value changed handler ────────────────────────────────────────────
         private void NudOnValueChanged(object sender, EventArgs e)
         {
             if (_isAdjusting) return;
@@ -51,7 +44,6 @@ namespace PUPAcadPortal.Dialogs
                 decimal csTotal = nudAttendance.Value + nudRecitation.Value +
                                   nudSeatwork.Value + nudAssignment.Value + nudLongTests.Value;
 
-                // Clamp class standing to 70
                 if (csTotal > 70)
                 {
                     var changed = (NumericUpDown)sender;
@@ -63,7 +55,6 @@ namespace PUPAcadPortal.Dialogs
                     }
                 }
 
-                // Clamp grand total to 100
                 decimal grand = csTotal + nudMajorExam.Value;
                 if (grand > 100)
                     nudMajorExam.Value = Math.Max(0, 100 - csTotal);
@@ -76,7 +67,6 @@ namespace PUPAcadPortal.Dialogs
             }
         }
 
-        // ── Refresh totals display ───────────────────────────────────────────
         private void RefreshTotals()
         {
             decimal cs = nudAttendance.Value + nudRecitation.Value +
@@ -95,7 +85,6 @@ namespace PUPAcadPortal.Dialogs
                 btnApply.Enabled = (grand == 100);
         }
 
-        // ── Reset to PUP defaults ────────────────────────────────────────────
         private void btnReset_Click(object sender, EventArgs e)
         {
             DetachHandlers();
@@ -142,7 +131,6 @@ namespace PUPAcadPortal.Dialogs
             Close();
         }
 
-        // ── Handler attach/detach helpers ────────────────────────────────────
         private void DetachHandlers()
         {
             nudAttendance.ValueChanged -= NudOnValueChanged;
