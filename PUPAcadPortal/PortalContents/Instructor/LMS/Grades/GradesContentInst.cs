@@ -344,16 +344,16 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
             var rows = new[]
             {
-                ("97–100","1.00","Excellent",      GreenPass, Color.FromArgb(235,255,240)),
-                ("94–96", "1.25","Excellent",      GreenPass, Color.FromArgb(235,255,240)),
-                ("91–93", "1.50","Very Good",      GreenPass, Color.FromArgb(235,255,240)),
-                ("88–90", "1.75","Very Good",      BlueGood,  Color.FromArgb(228,240,255)),
-                ("85–87", "2.00","Good",           BlueGood,  Color.FromArgb(228,240,255)),
-                ("82–84", "2.25","Good",           BlueGood,  Color.FromArgb(228,240,255)),
-                ("79–81", "2.50","Satisfactory",   AmberWarn, Color.FromArgb(255,248,220)),
-                ("76–78", "2.75","Satisfactory",   AmberWarn, Color.FromArgb(255,248,220)),
-                ("75",    "3.00","Passing",        AmberWarn, Color.FromArgb(255,248,220)),
-                ("<75",   "5.00","Failed",         RedFail,   Color.FromArgb(255,232,232)),
+                ("97–100","1.00","Excellent",      GreenPass, Color.White),
+                ("94–96", "1.25","Excellent",      GreenPass, Color.White),
+                ("91–93", "1.50","Very Good",      GreenPass, Color.White),
+                ("88–90", "1.75","Very Good",      BlueGood,  Color.White),
+                ("85–87", "2.00","Good",           BlueGood,  Color.White),
+                ("82–84", "2.25","Good",           BlueGood,  Color.White),
+                ("79–81", "2.50","Satisfactory",   AmberWarn, Color.White),
+                ("76–78", "2.75","Satisfactory",   AmberWarn, Color.White),
+                ("75",    "3.00","Passing",        AmberWarn, Color.White),
+                ("<75",   "5.00","Failed",         RedFail,   Color.White),
             };
 
             foreach (var (range, equiv, desc, fore, back) in rows)
