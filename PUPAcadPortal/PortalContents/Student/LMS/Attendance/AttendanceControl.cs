@@ -19,11 +19,13 @@ namespace PUPAcadPortal
         private double _pct;
         private const double REQUIRED_PCT = 80.0;
         private const int LATE_PER_ABS = 3;
+
         // Constructor
         public AttendanceControl()
         {
             InitializeComponent();
         }
+
         // BUILD UI
         private void BuildUI()
         {
@@ -37,6 +39,7 @@ namespace PUPAcadPortal
                 BackColor = SystemColors.Control
             };
             this.Controls.Add(wrapper);
+
             //  Header bar 
             pnlHeader = new Panel
             {
@@ -72,6 +75,7 @@ namespace PUPAcadPortal
             });
             cmbSemester.SelectedIndex = 0;
             cmbSemester.SelectedIndexChanged += (s, e) => RefreshAll();
+
             //  Month | Year | Refresh 
             lblMonthLbl = MakeLabel("Month:", 9, FontStyle.Bold);
             lblMonthLbl.AutoSize = true;
@@ -129,6 +133,7 @@ namespace PUPAcadPortal
             for (int i = 0; i < 5; i++)
                 tlpCards.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
             tlpCards.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+
             // Overall
             pnlCardOverall = MakeCard();
             lblOverallTitle = MakeCentredLabel("Overall Attendance", 9f, FontStyle.Bold);
@@ -139,6 +144,7 @@ namespace PUPAcadPortal
             lblOverallPct.Dock = DockStyle.Fill;
             pnlCardOverall.Controls.Add(lblOverallPct);
             pnlCardOverall.Controls.Add(lblOverallTitle);
+
             // Total
             pnlCardTotal = MakeCard();
             lblTotalTitle = MakeCentredLabel("Total Sessions", 9f, FontStyle.Bold);
@@ -148,6 +154,7 @@ namespace PUPAcadPortal
             lblTotalValue.Dock = DockStyle.Fill;
             pnlCardTotal.Controls.Add(lblTotalValue);
             pnlCardTotal.Controls.Add(lblTotalTitle);
+
             // Status
             pnlCardStatus = MakeCard();
             lblStatusTitle = MakeCentredLabel("Attendance Status", 9f, FontStyle.Bold);
@@ -158,6 +165,7 @@ namespace PUPAcadPortal
             lblStatusText.Dock = DockStyle.Fill;
             pnlCardStatus.Controls.Add(lblStatusText);
             pnlCardStatus.Controls.Add(lblStatusTitle);
+
             // Required
             pnlCardRequired = MakeCard();
             lblRequiredTitle = MakeCentredLabel("Required Attendance", 9f, FontStyle.Bold);
@@ -210,6 +218,7 @@ namespace PUPAcadPortal
             tlpCards.Controls.Add(pnlCardStatus, 2, 0);
             tlpCards.Controls.Add(pnlCardRequired, 3, 0);
             tlpCards.Controls.Add(pnlCardAlerts, 4, 0);
+
             //  Mini-stats strip 
             pnlMiniStats = new Panel
             {
@@ -337,6 +346,7 @@ namespace PUPAcadPortal
             dgvLogs.CellFormatting += DgvLogs_CellFormatting;
             dgvLogs.SelectionChanged += (s, e) => dgvLogs.ClearSelection();
             dgvLogs.DataBindingComplete += (s, e) => AutoSizeLogsGrid();
+
             // Bottom spacer 
             var spacer = new Panel { Dock = DockStyle.Top, Height = 32, BackColor = SystemColors.Control };
 
@@ -472,8 +482,6 @@ namespace PUPAcadPortal
         }
 
         // COMPUTE TOTALS
-        // Attendance % = (present + late that didn't convert) / total  — simplified:
-        //  count each Late as 1/3 of an absence, so effective present = total - effective_absences - excused
         private void ComputeTotals()
         {
             _total = _present = _absent = _late = _excused = 0;
@@ -487,8 +495,7 @@ namespace PUPAcadPortal
                 _excused += recs.Count(r => r.Status == "Excused");
             }
             int lateAbsences = _late / LATE_PER_ABS;
-            int effectivePresent = _present + (_late - lateAbsences * LATE_PER_ABS); // remaining lates still count
-            // Simpler correct formula: sessions attended = present + late that are NOT converted
+            int effectivePresent = _present + (_late - lateAbsences * LATE_PER_ABS);
             int effectiveAbsent = _absent + (_late / LATE_PER_ABS);
             _pct = _total > 0
                 ? Math.Round(Math.Max(0, (_total - effectiveAbsent) * 100.0 / _total), 1)
@@ -501,14 +508,12 @@ namespace PUPAcadPortal
             lblOverallPct.Text = $"{_pct}%";
             lblTotalValue.Text = _total.ToString();
 
-            // Status thresholds aligned to 80 % rule
             string status = _pct >= 90 ? "Excellent" : _pct >= 80 ? "Good" : _pct >= 65 ? "At Risk" : "Poor";
             Color sc = _pct >= 80 ? Color.ForestGreen : _pct >= 65 ? Color.DarkOrange : Color.Crimson;
             lblStatusText.Text = status;
             lblStatusText.ForeColor = sc;
             lblOverallPct.ForeColor = sc;
 
-            //  at-risk = below 80 % (= absent ≥ 20 % of total class hours)
             int atRisk = _subjects.Count(meta =>
             {
                 var r = FilteredRecords(meta.Code);
@@ -567,11 +572,9 @@ namespace PUPAcadPortal
                 int lt = r.Count(x => x.Status == "Late");
                 int ex = r.Count(x => x.Status == "Excused");
 
-                // every 3 lates = 1 effective absence
                 int effAbs = ab + (lt / LATE_PER_ABS);
                 double p = n > 0 ? Math.Round(Math.Max(0, (n - effAbs) * 100.0 / n), 1) : 0;
 
-                // below 80 % → at risk / dropped
                 string st = p >= 90 ? "Excellent" : p >= 80 ? "Good" : p >= 65 ? "At Risk" : "Dropped";
                 _subjectsDT.Rows.Add(meta.Code, meta.Name, meta.Schedule, n, pr, ab, lt, ex, $"{p}%", st);
             }
@@ -685,9 +688,10 @@ namespace PUPAcadPortal
             };
         }
 
-        // VIEW DETAILS  –  opens the styled AtRiskPopup
+        // VIEW DETAILS 
         private void OnViewDetailsClick(object sender, EventArgs e)
         {
+            // Requires AtRiskPopup.cs and AtRiskSubjectInfo in your project.
             var atRiskList = new List<AtRiskSubjectInfo>();
 
             foreach (var meta in _subjects)
@@ -700,7 +704,7 @@ namespace PUPAcadPortal
                 int effAbs = absent + (late / LATE_PER_ABS);
                 double p = Math.Max(0, (r.Count - effAbs) * 100.0 / r.Count);
 
-                if (p < REQUIRED_PCT)   // below 80 % threshold
+                if (p < REQUIRED_PCT)
                 {
                     atRiskList.Add(new AtRiskSubjectInfo
                     {
@@ -834,6 +838,7 @@ namespace PUPAcadPortal
             public string Schedule { get; set; }
         }
 
+        // Now correctly triggered by the designer
         private void AttendanceControl_Load(object sender, EventArgs e)
         {
             BuildUI();

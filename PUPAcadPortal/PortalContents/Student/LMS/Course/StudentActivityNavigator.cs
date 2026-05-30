@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace PUPAcadPortal
 {
-    public class StudentActivityNavigator : UserControl
+    public partial class StudentActivityNavigator : UserControl
     {
         private StudentActivityDashboard _dashboard;
         private StudentActivityList _list;
@@ -14,6 +14,9 @@ namespace PUPAcadPortal
 
         public StudentActivityNavigator()
         {
+            // This is required to link with the Designer.cs file
+            InitializeComponent();
+
             Dock = DockStyle.Fill;
             BackColor = Color.FromArgb(245, 245, 245);
 
@@ -37,7 +40,7 @@ namespace PUPAcadPortal
 
         private void ShowSubmit(StudentActivityItem activity)
         {
-            StudentCourse course = (_list != null)? new StudentCourse{ Id = 0,Name = "", Code = "",Instructor = ""}: null;
+            StudentCourse course = (_list != null) ? new StudentCourse { Id = 0, Name = "", Code = "", Instructor = "" } : null;
 
             _submit = new StudentActivitySubmit(activity, course) { Dock = DockStyle.Fill };
             _submit.OnBack += () => ShowList(GetCurrentCourse());
@@ -58,7 +61,7 @@ namespace PUPAcadPortal
             if (_current != null)
             {
                 Controls.Remove(_current);
-                _current.Dispose();
+                _current.Dispose(); // Memory management is critical here
             }
 
             _current = next;
