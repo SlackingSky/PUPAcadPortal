@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Org.BouncyCastle.Asn1.Cmp;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using static System.Net.WebRequestMethods;
 
 namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 {
@@ -27,6 +29,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             _searchTimer = new System.Windows.Forms.Timer { Interval = 180 };
             _searchTimer.Tick += (s, e) => { _searchTimer.Stop(); RenderRows(); };
 
+            // Initialise dropdowns to index 0 silently
             cmbFilter.SelectedIndex = 0;
             cmbStatus.SelectedIndex = 0;
 
@@ -37,6 +40,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             flp.SizeChanged += flp_SizeChanged;
         }
 
+        // ── Sample data ──────────────────────────────────────────────────────
 
         private void LoadSampleActivities()
         {
@@ -134,6 +138,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             };
         }
 
+        // ── Summary pills ─────────────────────────────────────────────────────
 
         private void RebuildSummaryPills()
         {
@@ -173,6 +178,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             }
         }
 
+        // ── Render ────────────────────────────────────────────────────────────
 
         private void RenderRows()
         {
@@ -211,6 +217,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             flp.ResumeLayout(true);
         }
 
+        // ── Row builder ───────────────────────────────────────────────────────
 
         private Panel BuildRow(StudentActivityItem act)
         {
@@ -230,12 +237,14 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 Margin = new Padding(4, 4, 4, 0)
             };
 
+            // Bottom border paint
             row.Paint += (s, e) =>
             {
                 using var p = new Pen(Color.FromArgb(232, 232, 232));
                 e.Graphics.DrawLine(p, 6, row.Height - 1, row.Width - 1, row.Height - 1);
             };
 
+            // ── Left accent bar ───────────────────────────────────────────────
             Color typeColor = act.Type switch
             {
                 "Quiz" => Color.FromArgb(63, 81, 181),
@@ -252,6 +261,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 BackColor = typeColor
             });
 
+            // ── Type badge ────────────────────────────────────────────────────
             string typeDisplay = act.Type switch
             {
                 "FileUpload" => "File Upload",
@@ -269,6 +279,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 TextAlign = ContentAlignment.MiddleCenter
             });
 
+            // ── Title ─────────────────────────────────────────────────────────
             row.Controls.Add(new Label
             {
                 Text = act.Title,
@@ -279,6 +290,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 AutoEllipsis = true
             });
 
+            // ── Deadline ──────────────────────────────────────────────────────
             TimeSpan ts = act.Deadline - DateTime.Now;
             string dueText = ts.TotalDays < 0 ? "(Overdue)" :
                                 ts.Days == 0 ? "(Due Today!)" :
@@ -296,6 +308,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 Size = new Size(360, 18)
             });
 
+            // ── Points / score ────────────────────────────────────────────────
             string ptsText = $"🏆  {act.Points} pts";
             if (act.Score.HasValue)
                 ptsText += $"     Score: {act.Score} / {act.Points}";
@@ -308,6 +321,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 Size = new Size(380, 18)
             });
 
+            // ── Status badge ──────────────────────────────────────────────────
             (Color bg, Color fg, string icon) st = effStatus switch
             {
                 "Submitted" => (Color.FromArgb(215, 245, 215), Color.FromArgb(27, 110, 27), "✔  Submitted"),
@@ -327,6 +341,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 TextAlign = ContentAlignment.MiddleCenter
             });
 
+            // ── Returned: remarks preview ─────────────────────────────────────
             if (isReturned && !string.IsNullOrEmpty(act.Remarks))
             {
                 row.Controls.Add(new Label
@@ -349,6 +364,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                     });
             }
 
+            // ── Action buttons ────────────────────────────────────────────────
             bool locked = act.LockAfterDeadline && act.Deadline < DateTime.Now
                             && act.SubmissionStatus == "Pending";
             string btnLbl = locked ? "Locked 🔒" :
@@ -377,6 +393,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             };
             row.Controls.Add(btn);
 
+            // Remarks button (returned only)
             if (isReturned)
             {
                 var btnRmk = new buttonRounded
@@ -400,13 +417,14 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             return row;
         }
 
+        // ── Remarks dialog  (matches Image 1) ────────────────────────────────
 
         private void ShowRemarksDialog(StudentActivityItem act)
         {
             using var dlg = new Form
             {
                 Text = "Instructor Remarks",
-                Size = new Size(560, 440),
+                Size = new Size(600, 500),
                 StartPosition = FormStartPosition.CenterParent,
                 BackColor = Color.White,
                 FormBorderStyle = FormBorderStyle.FixedDialog,
@@ -414,7 +432,13 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 MinimizeBox = false
             };
 
-            var pnlH = new Panel { Dock = DockStyle.Top, Height = 54, BackColor = Color.Maroon };
+            // ── Maroon header ─────────────────────────────────────────────────
+            var pnlH = new Panel
+            {
+                Dock = DockStyle.Top,
+                Height = 52,
+                BackColor = Color.Maroon
+            };
             pnlH.Controls.Add(new Label
             {
                 Text = act.Title,
@@ -422,95 +446,115 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 ForeColor = Color.White,
                 Dock = DockStyle.Fill,
                 TextAlign = ContentAlignment.MiddleLeft,
-                Padding = new Padding(14, 0, 0, 0)
+                Padding = new Padding(16, 0, 0, 0)
             });
             dlg.Controls.Add(pnlH);
 
-            var body = new Panel { Dock = DockStyle.Fill, Padding = new Padding(20), AutoScroll = true };
-            int y = 16;
-
-            body.Controls.Add(new Label
+            // ── Scrollable body ───────────────────────────────────────────────
+            var body = new Panel
             {
-                Text = $"Score:  {act.Score} / {act.Points} pts",
-                Font = new Font("Segoe UI", 13F, FontStyle.Bold),
-                ForeColor = Color.Maroon,
-                Location = new Point(16, y),
-                AutoSize = true
-            }); y += 32;
+                Dock = DockStyle.Fill,
+                AutoScroll = true,
+                Padding = new Padding(20)
+            };
+            int y = 16;
+            int bodyW = 530;   // effective content width inside the 600px dialog
 
+            // Score Breakdown: (bold label, then plain text on same line pattern from Image 1)
             if (!string.IsNullOrEmpty(act.ScoreBreakdown))
             {
                 body.Controls.Add(new Label
                 {
                     Text = "Score Breakdown:",
-                    Font = new Font("Segoe UI", 9F, FontStyle.Bold),
-                    ForeColor = Color.FromArgb(60, 60, 60),
+                    Font = new Font("Segoe UI", 9.5F, FontStyle.Bold),
+                    ForeColor = Color.FromArgb(30, 30, 30),
                     Location = new Point(16, y),
                     AutoSize = true
-                }); y += 20;
+                }); y += 22;
+
                 body.Controls.Add(new Label
                 {
                     Text = act.ScoreBreakdown,
                     Font = new Font("Segoe UI", 9F),
-                    ForeColor = Color.FromArgb(80, 80, 80),
+                    ForeColor = Color.FromArgb(70, 70, 70),
                     Location = new Point(16, y),
-                    Size = new Size(500, 18)
-                }); y += 28;
+                    Size = new Size(bodyW, 18)
+                }); y += 30;
             }
 
+            // Instructor Feedback: (blue bold label matching Image 1)
             body.Controls.Add(new Label
             {
                 Text = "Instructor Feedback:",
                 Font = new Font("Segoe UI", 9.5F, FontStyle.Bold),
-                ForeColor = Color.FromArgb(30, 50, 150),
+                ForeColor = Color.FromArgb(30, 50, 160),
                 Location = new Point(16, y),
                 AutoSize = true
             }); y += 22;
 
-            var pnlR = new Panel
+            // Blue feedback card (Image 1)
+            int feedbackH = Math.Max(70, MeasureTextHeight(act.Remarks, new Font("Segoe UI", 9.5F), bodyW - 24) + 24);
+            var pnlFeed = new Panel
             {
-                BackColor = Color.FromArgb(235, 240, 255),
+                BackColor = Color.FromArgb(232, 238, 255),
                 Location = new Point(16, y),
-                Size = new Size(500, 80),
-                Padding = new Padding(10)
+                Size = new Size(bodyW, feedbackH),
+                Padding = new Padding(12)
             };
-            pnlR.Controls.Add(new Label
+            pnlFeed.Paint += (s, e) =>
+            {
+                using var pen = new Pen(Color.FromArgb(190, 205, 240));
+                e.Graphics.DrawRectangle(pen, 0, 0, pnlFeed.Width - 1, pnlFeed.Height - 1);
+            };
+            pnlFeed.Controls.Add(new Label
             {
                 Text = act.Remarks,
                 Font = new Font("Segoe UI", 9.5F),
                 ForeColor = Color.FromArgb(30, 30, 80),
-                Dock = DockStyle.Fill
+                Location = new Point(12, 10),
+                Size = new Size(bodyW - 28, feedbackH - 20)
             });
-            body.Controls.Add(pnlR); y += 90;
+            body.Controls.Add(pnlFeed);
+            y += feedbackH + 16;
 
+            // Suggestions for Improvement (amber card - Image 1)
             if (!string.IsNullOrEmpty(act.Suggestions))
             {
                 body.Controls.Add(new Label
                 {
                     Text = "Suggestions for Improvement:",
                     Font = new Font("Segoe UI", 9.5F, FontStyle.Bold),
-                    ForeColor = Color.FromArgb(60, 60, 60),
+                    ForeColor = Color.FromArgb(50, 50, 50),
                     Location = new Point(16, y),
                     AutoSize = true
                 }); y += 22;
 
-                var pnlS = new Panel
+                int suggH = Math.Max(60, MeasureTextHeight(act.Suggestions, new Font("Segoe UI", 9F), bodyW - 24) + 24);
+                var pnlSugg = new Panel
                 {
-                    BackColor = Color.FromArgb(255, 248, 225),
+                    BackColor = Color.FromArgb(255, 248, 220),
                     Location = new Point(16, y),
-                    Size = new Size(500, 60),
-                    Padding = new Padding(10)
+                    Size = new Size(bodyW, suggH),
+                    Padding = new Padding(12)
                 };
-                pnlS.Controls.Add(new Label
+                pnlSugg.Paint += (s, e) =>
+                {
+                    using var pen = new Pen(Color.FromArgb(240, 210, 140));
+                    e.Graphics.DrawRectangle(pen, 0, 0, pnlSugg.Width - 1, pnlSugg.Height - 1);
+                };
+                pnlSugg.Controls.Add(new Label
                 {
                     Text = act.Suggestions,
                     Font = new Font("Segoe UI", 9F),
-                    ForeColor = Color.FromArgb(80, 60, 0),
-                    Dock = DockStyle.Fill
+                    ForeColor = Color.FromArgb(100, 70, 0),
+                    Location = new Point(12, 10),
+                    Size = new Size(bodyW - 28, suggH - 20)
                 });
-                body.Controls.Add(pnlS); y += 70;
+                body.Controls.Add(pnlSugg);
+                y += suggH + 16;
             }
 
+            // Returned date (italic, gray — Image 1 bottom)
             if (act.ReturnedAt.HasValue)
             {
                 body.Controls.Add(new Label
@@ -520,28 +564,41 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                     ForeColor = Color.Gray,
                     Location = new Point(16, y),
                     AutoSize = true
-                });
+                }); y += 28;
             }
 
+            // Close button — bottom-right, inside body (matches Image 1)
             var btnClose = new buttonRounded
             {
                 Text = "Close",
-                Size = new Size(110, 36),
+                Size = new Size(100, 36),
                 BackColor = Color.Maroon,
                 ForeColor = Color.White,
                 BorderRadius = 18,
+                Font = new Font("Segoe UI", 9.5F, FontStyle.Bold),
                 FlatStyle = FlatStyle.Flat,
+                Location = new Point(bodyW - 84, y + 4),
                 DialogResult = DialogResult.OK
             };
             btnClose.FlatAppearance.BorderSize = 0;
-            btnClose.Location = new Point(430, dlg.ClientSize.Height - 60);
-            dlg.Controls.Add(btnClose);
-            dlg.Controls.Add(body);
+            body.Controls.Add(btnClose);
 
+            dlg.Controls.Add(body);
             dlg.AcceptButton = btnClose;
             dlg.ShowDialog(this);
         }
 
+        // Measure multi-line label height given a max width
+        private static int MeasureTextHeight(string text, Font font, int maxWidth)
+        {
+            if (string.IsNullOrEmpty(text)) return 0;
+            var sz = TextRenderer.MeasureText(text, font,
+                new Size(maxWidth, int.MaxValue),
+                TextFormatFlags.WordBreak);
+            return sz.Height;
+        }
+
+        // ── Events ────────────────────────────────────────────────────────────
 
         private void btnBack_Click(object sender, EventArgs e) => OnBack?.Invoke();
         private void txtSearch_TextChanged(object sender, EventArgs e) { _searchTimer.Stop(); _searchTimer.Start(); }

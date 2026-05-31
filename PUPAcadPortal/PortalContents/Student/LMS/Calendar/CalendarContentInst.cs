@@ -8,9 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using PUPAcadPortal.Utils;
 using PUPAcadPortal.PortalForms;
-using PUPAcadPortal.PortalContents.Student.LMS.Calendar;
 
-namespace PUPAcadPortal.PortalContents.Instructor.LMS
+namespace PUPAcadPortal.PortalContents.Student.LMS.Calendar
 {
     public partial class CalendarContentInst : UserControl
     {

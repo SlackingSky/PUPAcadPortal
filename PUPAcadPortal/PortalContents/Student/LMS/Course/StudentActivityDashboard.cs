@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PUPAcadPortal.PortalContents.Student.LMS.Course;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -32,6 +33,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             flpCards.SizeChanged += flpCards_SizeChanged;
         }
 
+        // ── Sample data ──────────────────────────────────────────────────────
 
         private void LoadSampleData()
         {
@@ -70,6 +72,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             lblNotifCount.Text = _notifications.Count.ToString();
         }
 
+        // ── Stats ─────────────────────────────────────────────────────────────
 
         private void UpdateStats()
         {
@@ -87,6 +90,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             lblOverdueValue.Text = over.ToString();
         }
 
+        // ── Card rendering ────────────────────────────────────────────────────
 
         private void RenderCards()
         {
@@ -130,6 +134,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 Cursor = Cursors.Hand
             };
 
+            // Rounded border paint
             card.Paint += (s, e) =>
             {
                 var g = e.Graphics;
@@ -138,6 +143,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 g.DrawRectangle(pen, 0, 0, card.Width - 1, card.Height - 1);
             };
 
+            // ── Maroon header strip ──────────────────────────────────────────
             var pnlTop = new Panel
             {
                 Location = new Point(0, 0),
@@ -145,6 +151,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 BackColor = Color.Maroon
             };
 
+            // Gradient paint on header
             pnlTop.Paint += (s, e) =>
             {
                 using var brush = new LinearGradientBrush(
@@ -153,6 +160,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 e.Graphics.FillRectangle(brush, 0, 0, pnlTop.Width, pnlTop.Height);
             };
 
+            // Overdue badge
             if (course.OverdueCount > 0)
             {
                 pnlTop.Controls.Add(new Label
@@ -193,6 +201,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 AutoSize = true
             });
 
+            // ── Instructor ────────────────────────────────────────────────────
             var lblInstr = new Label
             {
                 Text = "👤  " + course.Instructor,
@@ -202,6 +211,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 Size = new Size(cardW - 24, 18)
             };
 
+            // ── Stats row ─────────────────────────────────────────────────────
             var statsData = new (string val, string label, Color clr)[]
             {
                 (course.ActivityCount.ToString(),  "Activities", Color.FromArgb(128, 0,   0)),
@@ -233,6 +243,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 });
             }
 
+            // ── Divider ───────────────────────────────────────────────────────
             var divider = new Panel
             {
                 Location = new Point(12, 160),
@@ -240,6 +251,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 BackColor = Color.FromArgb(232, 232, 232)
             };
 
+            // ── View Activities button ────────────────────────────────────────
             int btnW = Math.Min(164, cardW - 24);
             var btnView = new buttonRounded
             {
@@ -257,6 +269,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             btnView.FlatAppearance.BorderSize = 0;
             btnView.Click += (s, e) => OnOpenCourse?.Invoke(course);
 
+            // Hover effect on card
             card.MouseEnter += (s, e) => { card.BackColor = Color.FromArgb(252, 248, 248); };
             card.MouseLeave += (s, e) => { card.BackColor = Color.White; };
 
@@ -264,6 +277,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             return card;
         }
 
+        // ── Notification panel ────────────────────────────────────────────────
 
         private void pnlNotifBadge_Click(object sender, EventArgs e)
         {
@@ -283,9 +297,11 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 TopMost = true
             };
 
+            // Position below bell icon
             var bellScreenPos = pnlNotifBadge.PointToScreen(Point.Empty);
             flyout.Location = new Point(bellScreenPos.X - 350, bellScreenPos.Y + 36);
 
+            // Header
             var pnlH = new Panel { Dock = DockStyle.Top, Height = 44, BackColor = Color.Maroon };
             pnlH.Controls.Add(new Label
             {
@@ -298,6 +314,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             });
             flyout.Controls.Add(pnlH);
 
+            // Notification list
             var flp = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -380,6 +397,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             lblNotifCount.Visible = false;
             flyout.Controls.Add(flp);
 
+            // Close on click-away
             flyout.Deactivate += (s, e) => flyout.Close();
             flyout.Show(this);
         }
@@ -393,6 +411,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             return t.ToString("MMM dd");
         }
 
+        // ── Events ────────────────────────────────────────────────────────────
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {

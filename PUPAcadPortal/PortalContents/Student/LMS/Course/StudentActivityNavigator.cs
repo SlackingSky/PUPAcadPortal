@@ -1,11 +1,17 @@
-﻿using System;
+﻿using PUPAcadPortal.PortalContents.Student.LMS.Course;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 {
+    /// <summary>
+    /// Top-level host that swaps between Dashboard → List → Submit views.
+    /// Drop this single UserControl into any Form.
+    /// </summary>
     public partial class StudentActivityNavigator : UserControl
     {
+        // Keep references so we can pass state back on nav
         private StudentActivityDashboard _dashboard;
         private StudentActivityList _list;
         private StudentActivitySubmit _submit;
@@ -21,6 +27,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             ShowDashboard();
         }
 
+        // ── Navigation ───────────────────────────────────────────────────────
 
         private void ShowDashboard()
         {
@@ -47,6 +54,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             SwapView(_submit);
         }
 
+        // ── View swap ────────────────────────────────────────────────────────
 
         private void SwapView(Control next)
         {

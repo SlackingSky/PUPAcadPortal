@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace PUPAcadPortal.Data
+namespace PUPAcadPortal.PortalContents.Student.LMS.Calendar
 {
     public enum EventType
     {

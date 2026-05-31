@@ -33,10 +33,12 @@
             this.pnlHeader.Controls.Add(this.lblActivityTitle);
             this.pnlHeader.Controls.Add(this.lblMeta);
             this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
             this.pnlHeader.Name = "pnlHeader";
             this.pnlHeader.Size = new System.Drawing.Size(1640, 62);
             this.pnlHeader.TabIndex = 2;
 
+            // btnBack
             this.btnBack.BackColor = System.Drawing.Color.FromArgb(110, 0, 0);
             this.btnBack.BorderRadius = 10;
             this.btnBack.FlatAppearance.BorderSize = 0;
@@ -46,28 +48,39 @@
             this.btnBack.Location = new System.Drawing.Point(12, 15);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(80, 32);
+            this.btnBack.TabIndex = 0;
             this.btnBack.Text = "← Back";
             this.btnBack.UseVisualStyleBackColor = false;
             this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
 
+            // lblActivityTitle
             this.lblActivityTitle.AutoSize = true;
             this.lblActivityTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.lblActivityTitle.ForeColor = System.Drawing.Color.White;
             this.lblActivityTitle.Location = new System.Drawing.Point(106, 8);
+            this.lblActivityTitle.Name = "lblActivityTitle";
+            this.lblActivityTitle.Size = new System.Drawing.Size(126, 25);
+            this.lblActivityTitle.TabIndex = 1;
             this.lblActivityTitle.Text = "Activity Title";
 
+            // lblMeta
             this.lblMeta.AutoSize = true;
             this.lblMeta.Font = new System.Drawing.Font("Segoe UI", 8.5F);
             this.lblMeta.ForeColor = System.Drawing.Color.FromArgb(215, 175, 175);
             this.lblMeta.Location = new System.Drawing.Point(108, 38);
+            this.lblMeta.Name = "lblMeta";
+            this.lblMeta.Size = new System.Drawing.Size(130, 15);
+            this.lblMeta.TabIndex = 2;
             this.lblMeta.Text = "Type  ·  0 pts  ·  Due —";
 
-            // ── pnlBody ────────────────────────────────────────────────────
+            // pnlBody
             this.pnlBody.AutoScroll = true;
             this.pnlBody.BackColor = System.Drawing.Color.FromArgb(246, 246, 248);
             this.pnlBody.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlBody.Location = new System.Drawing.Point(0, 62);
             this.pnlBody.Name = "pnlBody";
             this.pnlBody.Padding = new System.Windows.Forms.Padding(10);
+            this.pnlBody.Size = new System.Drawing.Size(1640, 927);
             this.pnlBody.TabIndex = 0;
 
             // ── root ───────────────────────────────────────────────────────
@@ -85,6 +98,8 @@
         }
         #endregion
 
+        // Fields declared here so Dispose() above can reach timers,
+        // and partial class in StudentActivitySubmit.cs can use them.
         private System.Windows.Forms.Panel pnlHeader;
         private buttonRounded btnBack;
         private System.Windows.Forms.Label lblActivityTitle;

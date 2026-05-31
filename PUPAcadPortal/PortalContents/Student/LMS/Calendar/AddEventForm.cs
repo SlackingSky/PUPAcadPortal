@@ -1,4 +1,5 @@
 ﻿using PUPAcadPortal.Data;
+using PUPAcadPortal.PortalContents.Student.LMS.Calendar;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -31,15 +32,24 @@ namespace PUPAcadPortal.PortalForms
         public AddEventForm(DateTime date) : this(date, EventType.Class) { }
 
         /// <summary>Opens the dialog for <paramref name="date"/> with a pre-selected event type.</summary>
-        public AddEventForm(DateTime date, EventType preselect)
+        public AddEventForm(DateTime date, EventType preselect) : this(date, preselect, "") { }
+
+        /// <summary>
+        /// Opens the dialog for <paramref name="date"/> with a pre-selected event type
+        /// and a pre-filled start time (e.g. from a click on the weekly/daily timeline).
+        /// </summary>
+        public AddEventForm(DateTime date, EventType preselect, string startTime)
         {
             _date = date;
             InitializeComponent();
             PopulateTypeCombo(preselect);
             UpdateHeaderColor();
 
-            this.Text = "Add Event — " + date.ToString("MMMM dd, yyyy");
+            this.Text = "Add Event \u2014 " + date.ToString("MMMM dd, yyyy");
             lblDate.Text = date.ToString("dddd, MMMM dd, yyyy");
+
+            if (!string.IsNullOrWhiteSpace(startTime))
+                txtStartTime.Text = startTime;
 
             cmbType.SelectedIndexChanged += (s, e) => UpdateHeaderColor();
             btnSave.Click += BtnSave_Click;
