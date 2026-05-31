@@ -1,89 +1,79 @@
-﻿namespace PUPAcadPortal.PortalContents.Instructor.LMS
+﻿namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
 {
     partial class CalendarContentInst
     {
-        /// <summary> 
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing)
             {
-                components.Dispose();
+                components?.Dispose();
+                FacultyCalendarDragDropBridge.Detach();
+                UrDay.DaySelected -= OnDaySelected;
             }
             base.Dispose(disposing);
         }
 
         #region Component Designer generated code
 
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            pnlCalendar = new Panel();
-            lblMonthYear = new Label();
-            FPLmonth = new FlowLayoutPanel();
+            pnlCalendar = new System.Windows.Forms.Panel();
+            lblMonthYear = new System.Windows.Forms.Label();
+            FPLmonth = new System.Windows.Forms.FlowLayoutPanel();
+
             pnlCalendar.SuspendLayout();
             SuspendLayout();
-            // 
+
             // pnlCalendar
-            // 
-            pnlCalendar.AutoScroll = true;
-            pnlCalendar.BackColor = SystemColors.Control;
+            pnlCalendar.AutoScroll = false;
+            pnlCalendar.BackColor = System.Drawing.SystemColors.Control;
             pnlCalendar.CausesValidation = false;
-            pnlCalendar.Controls.Add(lblMonthYear);
-            pnlCalendar.Controls.Add(FPLmonth);
-            pnlCalendar.Dock = DockStyle.Fill;
-            pnlCalendar.Location = new Point(0, 0);
-            pnlCalendar.Margin = new Padding(0);
+            pnlCalendar.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlCalendar.Location = new System.Drawing.Point(0, 0);
+            pnlCalendar.Margin = new System.Windows.Forms.Padding(0);
             pnlCalendar.Name = "pnlCalendar";
-            pnlCalendar.Size = new Size(1272, 719);
+            pnlCalendar.Size = new System.Drawing.Size(1272, 719);
             pnlCalendar.TabIndex = 52;
-            // 
-            // lblMonthYear
-            // 
-            lblMonthYear.AutoSize = true;
-            lblMonthYear.Font = new Font("Maiandra GD", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblMonthYear.Location = new Point(540, 5);
+
+            // lblMonthYear  (hidden – replaced by toolbar label, kept for compat)
+            lblMonthYear.AutoSize = false;
+            lblMonthYear.Font = new System.Drawing.Font("Maiandra GD", 22F,
+                                         System.Drawing.FontStyle.Bold,
+                                         System.Drawing.GraphicsUnit.Point, 0);
+            lblMonthYear.Location = new System.Drawing.Point(0, 0);
             lblMonthYear.Name = "lblMonthYear";
-            lblMonthYear.Size = new Size(208, 39);
+            lblMonthYear.Size = new System.Drawing.Size(0, 0);
             lblMonthYear.TabIndex = 8;
-            lblMonthYear.Text = "Month 0000";
-            lblMonthYear.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // FPLmonth
-            // 
+            lblMonthYear.Text = "";
+            lblMonthYear.Visible = false;
+
+            // FPLmonth  (placeholder – real instance created in BuildViewArea)
             FPLmonth.AutoScroll = true;
-            FPLmonth.Location = new Point(24, 72);
+            FPLmonth.Location = new System.Drawing.Point(0, 0);
             FPLmonth.Name = "FPLmonth";
-            FPLmonth.Size = new Size(1239, 635);
+            FPLmonth.Size = new System.Drawing.Size(1, 1);
             FPLmonth.TabIndex = 0;
-            // 
-            // CalendarContentInst
-            // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            FPLmonth.Visible = false;
+
+            // UserControl
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             Controls.Add(pnlCalendar);
             Name = "CalendarContentInst";
-            Size = new Size(1272, 719);
+            Size = new System.Drawing.Size(1272, 719);
             Load += CalendarContentInst_Load;
+
             pnlCalendar.ResumeLayout(false);
-            pnlCalendar.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private Panel pnlCalendar;
-        private Label lblMonthYear;
-        private FlowLayoutPanel FPLmonth;
+        // ── Designer fields ───────────────────────────────────────────────────
+        private System.Windows.Forms.Panel pnlCalendar;
+        private System.Windows.Forms.Label lblMonthYear;
+        private System.Windows.Forms.FlowLayoutPanel FPLmonth;
     }
 }

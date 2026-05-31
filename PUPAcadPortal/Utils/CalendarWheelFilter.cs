@@ -1,47 +1,50 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace PUPAcadPortal.Utils
 {
+    /// <summary>
+    /// Global message filter that intercepts WM_MOUSEWHEEL when the cursor
+    /// is inside a target control (or any of its children), then fires the
+    /// provided callback with the scroll delta.
+    /// Used by CalendarContentInst to scroll months/weeks/days.
+    /// </summary>
     public class CalendarWheelFilter : IMessageFilter
     {
         private const int WM_MOUSEWHEEL = 0x020A;
-        private const int WHEEL_DELTA = 120;   
 
         private readonly Control _target;
-        private readonly Action<int> _onScroll;
-        private int _accumulated = 0;
+        private readonly Action<int> _onScroll;   // positive = scroll up/prev, negative = next
 
         public CalendarWheelFilter(Control target, Action<int> onScroll)
         {
-            if (target.IsDisposed) return;
-            _target = target;
-            _onScroll = onScroll;
+            _target = target ?? throw new ArgumentNullException(nameof(target));
+            _onScroll = onScroll ?? throw new ArgumentNullException(nameof(onScroll));
         }
 
         public bool PreFilterMessage(ref Message m)
         {
-            if (_target.IsDisposed) return false;
-            if (m.Msg != WM_MOUSEWHEEL) return false;
+            if (m.Msg != WM_MOUSEWHEEL)
+                return false;
 
-            var cursorPos = Control.MousePosition;
-            var targetRect = new System.Drawing.Rectangle(
-                _target.PointToScreen(System.Drawing.Point.Empty),
-                _target.Size);
+            // Only intercept when cursor is inside the target control tree
+            var cursor = Control.MousePosition;
+            if (!IsOverControl(_target, cursor))
+                return false;
 
-            if (!targetRect.Contains(cursorPos)) return false;
+            // High word of wParam = delta (positive = forward/up)
+            // Use ToInt64() to avoid OverflowException on .NET 10 x64
+            int delta = (short)((long)m.WParam.ToInt64() >> 16);
+            _onScroll(delta);
+            return true;   // swallow – prevents accidental scrolling of nested panels
+        }
 
-            int delta = (short)(((int)m.WParam >> 16) & 0xFFFF);
-            _accumulated += delta;
-
-            if (Math.Abs(_accumulated) >= WHEEL_DELTA)
-            {
-                int direction = _accumulated > 0 ? WHEEL_DELTA : -WHEEL_DELTA;
-                _accumulated = 0;
-                _onScroll?.Invoke(direction);
-            }
-
-            return true;   
+        private static bool IsOverControl(Control root, Point screenPt)
+        {
+            if (!root.IsHandleCreated || !root.Visible) return false;
+            var clientPt = root.PointToClient(screenPt);
+            return root.ClientRectangle.Contains(clientPt);
         }
     }
 }

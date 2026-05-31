@@ -1,360 +1,921 @@
-﻿using PUPAcadPortal.Data;
+﻿
+using PUPAcadPortal.Data;
+using PUPAcadPortal.Utils;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Globalization;
-using System.Text;
+using System.Linq;
 using System.Windows.Forms;
-using PUPAcadPortal.Utils;
 
-namespace PUPAcadPortal.PortalContents.Instructor.LMS
+namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
 {
     public partial class CalendarContentInst : UserControl
     {
+        // ── Shared state (kept for backward compat with UrDay) ────────────────
         public static int _year, _month;
-        public static Dictionary<DateTime, string> notesDict = new Dictionary<DateTime, string>();
-        private FlowLayoutPanel pnlDayHeaders;
-        private Panel pnlBottom;
-        private Label lblSelectedDate;
-        private FlowLayoutPanel flpDayEvents;
-        private FlowLayoutPanel flpUpcoming;
-        private Label lblNoEvents;
-        private Label lblNoUpcoming;
-        private DateTime _lastSelectedDate = DateTime.Now.Date;
-        private EventType? _activeFilter = null;
+        public static Dictionary<DateTime, string> notesDict = new();
 
+        // ── View state ────────────────────────────────────────────────────────
+        private enum CalendarView { Monthly, Weekly, Daily }
+        private CalendarView _currentView = CalendarView.Monthly;
+        private DateTime _selectedDate = DateTime.Now.Date;
+        private DateTime _navDate = DateTime.Now.Date;   // controls which month/week/day is shown
+        private EventType? _activeFilter = null;                // kept for UrDay compat
+
+        // ── Layout panels ─────────────────────────────────────────────────────
+        private Panel _pnlTopBar;      // toolbar above calendar
+        private Panel _pnlViewArea;    // holds the active view
+        private Panel _pnlSidebar;     // right sidebar (upcoming + legend)
+        private Panel _pnlBottomDetail;// selected-day detail strip
+        private FlowLayoutPanel _pnlDayHeaders;
+        private FacultyWeekView _weekView = null!;
+        private FacultyDayView _dayView = null!;
+        private FacultyNotificationsPanel _notifPanel = null!;
+        private FacultySearchPanel _searchPanel = null!;
+
+        // Monthly view
+        private FlowLayoutPanel _flpMonth = null!;
+
+        // Toolbar controls
+        private Label _lblMonthYear;
+        private Button _btnPrev, _btnNext, _btnToday;
+        private Button _btnMonthly, _btnWeekly, _btnDaily;
+        private Button _btnNotif;
+        private Button _btnSearch;
+        private Button _btnAddEvent;
+        private Button _btnSync;
+        private Label _lblNotifBadge;
+
+        // Bottom detail
+        private Label _lblSelDate;
+        private FlowLayoutPanel _flpDayEvents;
+        private FlowLayoutPanel _flpUpcoming;
+        private Label _lblNoEvents;
+        private Label _lblNoUpcoming;
+
+        // Active filter buttons
+        private readonly List<Button> _filterBtns = new();
+
+        // Constants
+        private static readonly Color Maroon = Color.FromArgb(136, 14, 79);
+        private static readonly Color MaroonLight = Color.FromArgb(252, 240, 248);
+        private static readonly Color MaroonDark = Color.FromArgb(100, 8, 55);
+        private static readonly Color GridLine = Color.FromArgb(225, 225, 225);
+        private static readonly Font UIFont = new Font("Segoe UI", 9f);
+        private static readonly Font BoldFont = new Font("Segoe UI", 9f, FontStyle.Bold);
+        private static readonly Font HeaderFont = new Font("Maiandra GD", 22f, FontStyle.Bold);
+        private static readonly Font SmallFont = new Font("Segoe UI", 7.5f);
+
+        // ── Constructor ───────────────────────────────────────────────────────
         public CalendarContentInst()
         {
             InitializeComponent();
-
         }
 
+        // ── Load ─────────────────────────────────────────────────────────────
         private void CalendarContentInst_Load(object sender, EventArgs e)
         {
-            BuildDayHeaders();
-            BuildBottomPanel();
-            FPLmonth.Resize += (s, ev) => { ResizeCalendarCells(); AlignDayHeaders(); };
-            SharedCalendarData.LoadData();
-            this.Resize += OnFormResized;
+            FacultyCalendarData.LoadData();
 
-            showDays(DateTime.Now.Month, DateTime.Now.Year);
+            BuildTopBar();
+            BuildViewArea();
+            BuildSidebar();
+            BuildBottomDetail();
+            BuildNotifPanel();
+            BuildSearchPanel();
 
-            UrDay.DaySelected += OnDaySelected;
-            OnDaySelected(DateTime.Now.Date);
-
-            var wheelFilter = new CalendarWheelFilter(FPLmonth, delta =>
+            // Wire drag-drop bridge: when an event is dropped onto a new cell,
+            // move it and refresh every view automatically.
+            FacultyCalendarDragDropBridge.Attach(() =>
             {
-                if (delta > 0) picPrev_Click(this, EventArgs.Empty);
-                else picNext_Click(this, EventArgs.Empty);
+                RefreshMonthCells();
+                RefreshCurrentView();
+                RefreshDayDetail(_selectedDate, null);
+                RefreshUpcoming();
+                RefreshNotifBadge();
             });
-            System.Windows.Forms.Application.AddMessageFilter(wheelFilter);
 
+            this.Resize += (s, ev) => LayoutAll();
+
+            // Scroll wheel → navigate months/weeks
+            var wheelFilter = new CalendarWheelFilter(pnlCalendar, delta =>
+            {
+                if (delta > 0) NavigatePrev();
+                else NavigateNext();
+            });
+            Application.AddMessageFilter(wheelFilter);
+
+            // UrDay integration
+            UrDay.DaySelected += OnDaySelected;
 
             this.BeginInvoke((Action)(() =>
             {
-                FitCalendarPanel();
-                ResizeCalendarCells();
-                CenterMonthLabel();
-                PositionBottomPanel();
+                LayoutAll();
+                ShowMonthlyView(_navDate);
+                OnDaySelected(_selectedDate);
+                RefreshNotifBadge();
             }));
         }
 
-        private void BuildBottomPanel()
+        // ══════════════════════════════════════════════════════════════════════
+        //  TOP BAR
+        // ══════════════════════════════════════════════════════════════════════
+        private void BuildTopBar()
         {
-            const int BOTTOM_H = 220;
-
-            pnlBottom = new Panel
+            _pnlTopBar = new Panel
             {
+                Height = 52,
+                Dock = DockStyle.Top,
                 BackColor = Color.White,
-                Height = BOTTOM_H,
-                Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom,
             };
-            pnlBottom.Parent = pnlCalendar;
-            pnlBottom.BringToFront();
-
-            var sep = new Panel { Height = 1, Dock = DockStyle.Top, BackColor = Color.FromArgb(220, 220, 220) };
-            pnlBottom.Controls.Add(sep);
-
-            var pnlLeft = new Panel { Left = 0, Top = 4, Width = 520, Height = BOTTOM_H - 8, Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom };
-            pnlBottom.Controls.Add(pnlLeft);
-
-            lblSelectedDate = new Label
+            _pnlTopBar.Paint += (s, e) =>
             {
-                Text = "Select a day to manage events",
-                Font = new Font("Segoe UI", 10f, FontStyle.Bold),
-                ForeColor = Color.Maroon,
-                Left = 12,
-                Top = 6,
-                AutoSize = true,
+                using var p = new Pen(Color.FromArgb(220, 220, 220));
+                e.Graphics.DrawLine(p, 0, _pnlTopBar.Height - 1, _pnlTopBar.Width, _pnlTopBar.Height - 1);
             };
-            pnlLeft.Controls.Add(lblSelectedDate);
+            pnlCalendar.Controls.Add(_pnlTopBar);
+            _pnlTopBar.BringToFront();
 
-            var btnAddEvent = new Button
+            int x = 10;
+
+            // ── Prev / Next / Today ─────────────────────────────────────────
+            _btnPrev = MakeToolBtn("‹", x, 11, 32, 30); _btnPrev.Font = new Font("Segoe UI", 13f); x += 36;
+            _btnToday = MakeToolBtn("Today", x, 11, 58, 30); x += 62;
+            _btnNext = MakeToolBtn("›", x, 11, 32, 30); _btnNext.Font = new Font("Segoe UI", 13f); x += 44;
+
+            _btnPrev.Click += (s, e) => NavigatePrev();
+            _btnNext.Click += (s, e) => NavigateNext();
+            _btnToday.Click += (s, e) => { _navDate = DateTime.Now.Date; _selectedDate = _navDate; RefreshCurrentView(); OnDaySelected(_selectedDate); };
+
+            // ── Month/Year label ─────────────────────────────────────────────
+            _lblMonthYear = new Label
+            {
+                Left = x,
+                Top = 8,
+                Width = 240,
+                Height = 36,
+                Font = HeaderFont,
+                ForeColor = Maroon,
+                TextAlign = ContentAlignment.MiddleLeft,
+                AutoSize = false,
+            };
+            _pnlTopBar.Controls.Add(_lblMonthYear);
+            x += 248;
+
+            // ── View toggle buttons ──────────────────────────────────────────
+            _btnMonthly = MakeViewToggle("Monthly", x, 14, 72); x += 75;
+            _btnWeekly = MakeViewToggle("Weekly", x, 14, 64); x += 67;
+            _btnDaily = MakeViewToggle("Daily", x, 14, 56); x += 62;
+
+            _btnMonthly.Click += (s, e) => SwitchView(CalendarView.Monthly);
+            _btnWeekly.Click += (s, e) => SwitchView(CalendarView.Weekly);
+            _btnDaily.Click += (s, e) => SwitchView(CalendarView.Daily);
+            UpdateViewToggleVisual();
+
+            // ── Right-side actions ───────────────────────────────────────────
+            _btnAddEvent = new Button
             {
                 Text = "+ Add Event",
-                Left = 12,
-                Top = 28,
-                Width = 95,
-                Height = 26,
-                BackColor = Color.Maroon,
+                Width = 100,
+                Height = 30,
+                BackColor = Maroon,
                 ForeColor = Color.White,
                 FlatStyle = FlatStyle.Flat,
-                Font = new Font("Segoe UI", 8.5f),
+                Font = UIFont,
                 Cursor = Cursors.Hand,
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
             };
-            btnAddEvent.FlatAppearance.BorderSize = 0;
-            btnAddEvent.Click += (s, e) => QuickAddEventForSelected();
-            pnlLeft.Controls.Add(btnAddEvent);
+            _btnAddEvent.FlatAppearance.BorderSize = 0;
+            _btnAddEvent.Click += (s, e) => QuickAddEvent(_selectedDate);
+            _pnlTopBar.Controls.Add(_btnAddEvent);
 
-            int bx = 118;
-            var filters = new[] {
-                ("All",      (EventType?)null),
-                ("Class",    (EventType?)EventType.Class),
-                ("Exam",     (EventType?)EventType.Exam),
-                ("Deadline", (EventType?)EventType.Deadline),
-                ("Consult",  (EventType?)EventType.Consultation),
-            };
-            foreach (var (label, ft) in filters)
+            _btnSearch = new Button
             {
-                var captured = ft;
-                Color accent = ft == null ? Color.FromArgb(90, 90, 90) : new CalendarEvent { Type = ft.Value }.GetColor();
-                var btn = MakeFilterButton(label, accent);
-                btn.Left = bx; btn.Top = 30;
-                btn.Click += (s, e) =>
-                {
-                    _activeFilter = captured;
-                    RefreshDayDetail(_lastSelectedDate);
-                };
-                pnlLeft.Controls.Add(btn);
-                bx += btn.Width + 5;
-            }
-
-            flpDayEvents = new FlowLayoutPanel
-            {
-                Left = 0,
-                Top = 62,
-                Width = 510,
-                Height = BOTTOM_H - 70,
-                FlowDirection = FlowDirection.TopDown,
-                WrapContents = false,
-                AutoScroll = true,
-                Anchor = AnchorStyles.Top | AnchorStyles.Bottom,
-            };
-            flpDayEvents.HorizontalScroll.Maximum = 0;
-            flpDayEvents.HorizontalScroll.Enabled = false;
-            flpDayEvents.HorizontalScroll.Visible = false;
-            flpDayEvents.AutoScroll = true;
-
-            lblNoEvents = new Label { Text = "No events for this day. Use '+ Add Event' to create one.", ForeColor = Color.Gray, AutoSize = true, Padding = new Padding(8) };
-            flpDayEvents.Controls.Add(lblNoEvents);
-            pnlLeft.Controls.Add(flpDayEvents);
-
-            var div = new Panel { Left = 530, Top = 8, Width = 1, Height = BOTTOM_H - 16, BackColor = Color.FromArgb(220, 220, 220), Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left };
-            pnlBottom.Controls.Add(div);
-            var pnlRight = new Panel
-            {
-                Name = "pnlRight",
-                Left = 538,
-                Top = 4,
-                Width = 400,
-                Height = BOTTOM_H - 8,
-                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom,
-                AutoScroll = false,
-            }; 
-            pnlBottom.Controls.Add(pnlRight);
-
-            var lblUpTitle = new Label { Text = "Upcoming", Font = new Font("Segoe UI", 10f, FontStyle.Bold), ForeColor = Color.FromArgb(60, 60, 60), Left = 8, Top = 6, AutoSize = true };
-            pnlRight.Controls.Add(lblUpTitle);
-
-            BuildLegend(pnlRight, 8, 28);
-
-            flpUpcoming = new FlowLayoutPanel
-            {
-                Left = 0,
-                Top = 80,
-                Width = 400,
-                Height = BOTTOM_H - 64,
-                FlowDirection = FlowDirection.TopDown,
-                WrapContents = false,
-                AutoScroll = true,
-                Anchor = AnchorStyles.Top | AnchorStyles.Bottom,
-            };
-            flpUpcoming.HorizontalScroll.Maximum = 0;
-            flpUpcoming.HorizontalScroll.Enabled = false;
-            flpUpcoming.HorizontalScroll.Visible = false;
-            flpUpcoming.AutoScroll = true;
-
-            lblNoUpcoming = new Label { Text = "No upcoming events.", ForeColor = Color.Gray, AutoSize = true, Padding = new Padding(8) };
-            flpUpcoming.Controls.Add(lblNoUpcoming);
-            pnlRight.Controls.Add(flpUpcoming);
-
-            RefreshUpcoming();
-            PositionBottomPanel();
-        }
-
-        private Button MakeFilterButton(string label, Color accent)
-        {
-            var btn = new Button
-            {
-                Text = label,
-                Width = 70,
-                Height = 24,
+                Text = "🔍",
+                Width = 32,
+                Height = 30,
                 FlatStyle = FlatStyle.Flat,
-                Font = new Font("Segoe UI", 8f),
+                Font = new Font("Segoe UI", 11f),
                 BackColor = Color.White,
-                ForeColor = accent,
+                ForeColor = Color.FromArgb(80, 80, 80),
+                Cursor = Cursors.Hand,
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
             };
-            btn.FlatAppearance.BorderColor = accent;
-            return btn;
+            _btnSearch.Click += (s, e) => ToggleSearch();
+            _pnlTopBar.Controls.Add(_btnSearch);
+
+            _btnSync = new Button
+            {
+                Text = "⟳ Sync",
+                Width = 68,
+                Height = 30,
+                FlatStyle = FlatStyle.Flat,
+                Font = UIFont,
+                BackColor = Color.White,
+                ForeColor = Color.FromArgb(21, 101, 192),
+                Cursor = Cursors.Hand,
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
+            };
+            _btnSync.FlatAppearance.BorderColor = Color.FromArgb(21, 101, 192);
+            _btnSync.Click += (s, e) => SyncLMS();
+            _pnlTopBar.Controls.Add(_btnSync);
+
+            // Notification bell
+            var pnlNotifWrap = new Panel { Width = 36, Height = 30, Anchor = AnchorStyles.Top | AnchorStyles.Right, BackColor = Color.Transparent };
+            _btnNotif = new Button
+            {
+                Text = "🔔",
+                Width = 32,
+                Height = 30,
+                FlatStyle = FlatStyle.Flat,
+                Font = new Font("Segoe UI", 11f),
+                BackColor = Color.White,
+                ForeColor = Color.FromArgb(80, 80, 80),
+                Cursor = Cursors.Hand,
+                Left = 0,
+                Top = 0,
+            };
+            _btnNotif.FlatAppearance.BorderSize = 0;
+            _lblNotifBadge = new Label
+            {
+                Width = 16,
+                Height = 16,
+                Left = 18,
+                Top = 0,
+                BackColor = Color.Red,
+                ForeColor = Color.White,
+                Font = new Font("Segoe UI", 6.5f, FontStyle.Bold),
+                TextAlign = ContentAlignment.MiddleCenter,
+                Visible = false,
+            };
+            pnlNotifWrap.Controls.Add(_btnNotif);
+            pnlNotifWrap.Controls.Add(_lblNotifBadge);
+            _btnNotif.Click += (s, e) => ToggleNotifications();
+            _pnlTopBar.Controls.Add(pnlNotifWrap);
+
+            // Position right-side buttons on resize
+            _pnlTopBar.Resize += (s, e) => PositionRightButtons();
+            PositionRightButtons();
+
+            // Add all to toolbar
+            foreach (Control c in new Control[]
+                { _btnPrev, _btnToday, _btnNext, _btnMonthly, _btnWeekly, _btnDaily })
+                _pnlTopBar.Controls.Add(c);
         }
 
-        private void BuildLegend(Panel parent, int x, int y)
+        private void PositionRightButtons()
         {
-            var types = new[] {
-                (EventType.Class,        "Class"),
-                (EventType.Exam,         "Exam"),
-                (EventType.Deadline,     "Deadline"),
-                (EventType.Consultation, "Consult"),
-                (EventType.Cancelled,    "Cancelled"),
+            int right = _pnlTopBar.ClientSize.Width - 8;
+            _btnAddEvent.Left = right - _btnAddEvent.Width;
+            _btnAddEvent.Top = 11;
+            right -= _btnAddEvent.Width + 6;
+
+            _btnSearch.Left = right - _btnSearch.Width;
+            _btnSearch.Top = 11;
+            right -= _btnSearch.Width + 4;
+
+            _btnSync.Left = right - _btnSync.Width;
+            _btnSync.Top = 11;
+            right -= _btnSync.Width + 6;
+
+            // Notification wrap
+            foreach (Control c in _pnlTopBar.Controls)
+            {
+                if (c is Panel pnl && pnl.Controls.Contains(_btnNotif))
+                {
+                    pnl.Left = right - pnl.Width;
+                    pnl.Top = 11;
+                    break;
+                }
+            }
+        }
+
+        // ══════════════════════════════════════════════════════════════════════
+        //  VIEW AREA
+        // ══════════════════════════════════════════════════════════════════════
+        private void BuildViewArea()
+        {
+            _pnlViewArea = new Panel
+            {
+                BackColor = Color.White,
+                Parent = pnlCalendar,
+            };
+
+            // Day-of-week headers for monthly view
+            _pnlDayHeaders = new FlowLayoutPanel
+            {
+                FlowDirection = FlowDirection.LeftToRight,
+                WrapContents = false,
+                Height = 28,
+                BackColor = Color.FromArgb(245, 245, 245),
+                Parent = _pnlViewArea,
+            };
+            string[] days = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
+            foreach (var d in days)
+                _pnlDayHeaders.Controls.Add(new Label
+                {
+                    Text = d,
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    AutoSize = false,
+                    Font = SmallFont,
+                    ForeColor = d == "Sun" ? Color.Crimson : Color.FromArgb(80, 80, 80),
+                    BackColor = Color.Transparent,
+                    Margin = new Padding(1, 0, 1, 0),
+                    Height = 28,
+                });
+
+            // Monthly FlowLayoutPanel (mirrors FPLmonth for UrDay compat)
+            _flpMonth = new FlowLayoutPanel
+            {
+                BackColor = Color.White,
+                Parent = _pnlViewArea,
+            };
+            // Alias to the designer-declared FPLmonth so existing UrDay code works
+            FPLmonth = _flpMonth;
+
+            // Weekly view
+            _weekView = new FacultyWeekView { Parent = _pnlViewArea, Visible = false };
+            _weekView.EventClicked += ShowEventDetail;
+            _weekView.DayHeaderClicked += d => { _selectedDate = d; OnDaySelected(d); };
+            _weekView.SlotDoubleClicked += d => QuickAddEventAtTime(d);
+
+            // Daily view
+            _dayView = new FacultyDayView { Parent = _pnlViewArea, Visible = false };
+            _dayView.EventClicked += ShowEventDetail;
+            _dayView.SlotDoubleClicked += d => QuickAddEventAtTime(d);
+        }
+
+        // ══════════════════════════════════════════════════════════════════════
+        //  SIDEBAR
+        // ══════════════════════════════════════════════════════════════════════
+        private void BuildSidebar()
+        {
+            _pnlSidebar = new Panel
+            {
+                Width = 260,
+                BackColor = Color.White,
+                Parent = pnlCalendar,
+                Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom,
+            };
+            _pnlSidebar.Paint += (s, e) =>
+            {
+                using var p = new Pen(Color.FromArgb(220, 220, 220));
+                e.Graphics.DrawLine(p, 0, 0, 0, _pnlSidebar.Height);
+            };
+
+            // Upcoming events
+            var lblUp = new Label
+            {
+                Text = "Upcoming",
+                Left = 12,
+                Top = 8,
+                AutoSize = true,
+                Font = BoldFont,
+                ForeColor = Maroon,
+            };
+            _pnlSidebar.Controls.Add(lblUp);
+
+            // Legend
+            BuildLegend();
+
+            _flpUpcoming = new FlowLayoutPanel
+            {
+                Left = 0,
+                Top = 132,
+                FlowDirection = FlowDirection.TopDown,
+                WrapContents = false,
+                AutoScroll = true,
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom,
+            };
+            _flpUpcoming.HorizontalScroll.Enabled = false;
+            _flpUpcoming.HorizontalScroll.Visible = false;
+            _lblNoUpcoming = new Label { Text = "No upcoming events.", ForeColor = Color.Gray, AutoSize = true, Padding = new Padding(8) };
+            _flpUpcoming.Controls.Add(_lblNoUpcoming);
+            _pnlSidebar.Controls.Add(_flpUpcoming);
+        }
+
+        private void BuildLegend()
+        {
+            var types = new[]
+            {
+                (FacultyEventType.Class,        "Class"),
+                (FacultyEventType.Activity,     "Activity"),
+                (FacultyEventType.Quiz,         "Quiz"),
+                (FacultyEventType.LongQuiz,     "Long Quiz"),
+                (FacultyEventType.Deadline,     "Deadline"),
+                (FacultyEventType.Exam,         "Exam"),
+                (FacultyEventType.Consultation, "Consult"),
+                (FacultyEventType.PersonalNote, "Note"),
             };
 
             var flp = new FlowLayoutPanel
             {
-                Left = x,
-                Top = y,
-                Height = 48,
+                Left = 4,
+                Top = 28,
+                Width = _pnlSidebar.Width - 8,
+                Height = 96,
                 FlowDirection = FlowDirection.LeftToRight,
                 WrapContents = true,
-                AutoSize = false,
                 BackColor = Color.Transparent,
                 Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
             };
-            flp.Width = Math.Max(10, parent.Width - x - 4);
-            parent.Resize += (s, e) => flp.Width = Math.Max(10, parent.Width - x - 4);
 
-            int cx = x;
             foreach (var (t, name) in types)
             {
-                Color c = new CalendarEvent { Type = t }.GetColor();
-
-                var chip = new Panel
-                {
-                    Height = 20,
-                    BackColor = Color.Transparent,
-                    Margin = new Padding(0, 2, 12, 2),
-                };
-
-                var dot = new Panel { Width = 10, Height = 10, Left = 0, Top = 5, BackColor = c };
-                var lbl = new Label
-                {
-                    Text = name,
-                    Left = 14,
-                    Top = 0,
-                    AutoSize = true,
-                    Font = new Font("Segoe UI", 8.5f),
-                    ForeColor = Color.FromArgb(50, 50, 50),
-                    Height = 20,
-                };
-                chip.Width = 14 + TextRenderer.MeasureText(name, lbl.Font).Width + 6;
+                var ev = new FacultyCalendarEvent { Type = t };
+                var chip = new Panel { Height = 20, BackColor = Color.Transparent, Margin = new Padding(0, 2, 10, 2) };
+                var dot = new Panel { Width = 10, Height = 10, Left = 0, Top = 5, BackColor = ev.GetColor() };
+                var lbl = new Label { Text = name, Left = 14, Top = 0, AutoSize = true, Font = SmallFont, ForeColor = Color.FromArgb(50, 50, 50), Height = 20 };
+                chip.Width = 14 + TextRenderer.MeasureText(name, SmallFont).Width + 6;
                 chip.Controls.Add(dot);
                 chip.Controls.Add(lbl);
                 flp.Controls.Add(chip);
             }
-
-            parent.Controls.Add(flp);
+            _pnlSidebar.Controls.Add(flp);
         }
 
-        private void QuickAddEventForSelected()
+        // ══════════════════════════════════════════════════════════════════════
+        //  BOTTOM DETAIL STRIP
+        // ══════════════════════════════════════════════════════════════════════
+        private void BuildBottomDetail()
         {
-            using var dlg = new AddEventForm(_lastSelectedDate);
-            if (dlg.ShowDialog() == DialogResult.OK && dlg.CreatedEvent != null)
+            const int H = 210;
+
+            _pnlBottomDetail = new Panel
             {
-                SharedCalendarData.AddEvent(_lastSelectedDate, dlg.CreatedEvent);
-                foreach (Control ctrl in FPLmonth.Controls)
-                    if (ctrl is UrDay ud) ud.RefreshEventPills();
-
-                RefreshDayDetail(_lastSelectedDate);
-                RefreshUpcoming();
-            }
-        }
-
-        private void OnDaySelected(DateTime date)
-        {
-            _lastSelectedDate = date;
-            foreach (Control ctrl in FPLmonth.Controls)
-                if (ctrl is UrDay ud) ud.IsSelected = (ud.CellDate == date);
-            RefreshDayDetail(date);
-            RefreshUpcoming();
-        }
-
-        private void RefreshDayDetail(DateTime date)
-        {
-            _lastSelectedDate = date;
-            if (lblSelectedDate != null)
-                lblSelectedDate.Text = date.ToString("dddd, MMMM dd, yyyy");
-
-            if (flpDayEvents == null) return;
-            flpDayEvents.Controls.Clear();
-
-            var events = SharedCalendarData.GetEventsForDate(date)
-                .Where(ev => _activeFilter == null || ev.Type == _activeFilter)
-                .ToList();
-
-            if (notesDict.ContainsKey(date.Date) && !string.IsNullOrWhiteSpace(notesDict[date.Date]))
+                Height = H,
+                BackColor = Color.White,
+                Parent = pnlCalendar,
+                Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom,
+            };
+            _pnlBottomDetail.Paint += (s, e) =>
             {
-                flpDayEvents.Controls.Add(MakeEventCard(
-                    "🗒 Note", notesDict[date.Date],
-                    Color.FromArgb(100, 100, 100), date, null));
-            }
+                using var p = new Pen(Color.FromArgb(220, 220, 220));
+                e.Graphics.DrawLine(p, 0, 0, _pnlBottomDetail.Width, 0);
+            };
 
-            if (events.Count == 0 && flpDayEvents.Controls.Count == 0)
+            // Selected date label
+            _lblSelDate = new Label
             {
-                flpDayEvents.Controls.Add(lblNoEvents);
-                return;
-            }
-            else
+                Text = "Select a day to manage events",
+                Left = 12,
+                Top = 8,
+                AutoSize = true,
+                Font = BoldFont,
+                ForeColor = Maroon,
+            };
+            _pnlBottomDetail.Controls.Add(_lblSelDate);
+
+            // Add event button
+            var btnAdd = new Button
             {
-                foreach (var ev in events)
+                Text = "+ Add Event",
+                Left = 12,
+                Top = 30,
+                Width = 100,
+                Height = 26,
+                BackColor = Maroon,
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Font = UIFont,
+                Cursor = Cursors.Hand,
+            };
+            btnAdd.FlatAppearance.BorderSize = 0;
+            btnAdd.Click += (s, e) => QuickAddEvent(_selectedDate);
+            _pnlBottomDetail.Controls.Add(btnAdd);
+
+            // Filter buttons
+            var filters = new[]
+            {
+                ("All",       (FacultyEventType?)null),
+                ("Class",     (FacultyEventType?)FacultyEventType.Class),
+                ("Activity",  (FacultyEventType?)FacultyEventType.Activity),
+                ("Quiz",      (FacultyEventType?)FacultyEventType.Quiz),
+                ("Deadline",  (FacultyEventType?)FacultyEventType.Deadline),
+                ("Exam",      (FacultyEventType?)FacultyEventType.Exam),
+            };
+            int fx = 120;
+            foreach (var (label, ft) in filters)
+            {
+                var cap = ft;
+                Color acc = ft == null ? Color.FromArgb(90, 90, 90) : new FacultyCalendarEvent { Type = ft.Value }.GetColor();
+                var btn = MakeFilterButton(label, acc);
+                btn.Left = fx; btn.Top = 32;
+                btn.Click += (s, e) =>
                 {
-                    string body = "";
-                    if (!string.IsNullOrEmpty(ev.StartTime)) body += ev.StartTime + (string.IsNullOrEmpty(ev.EndTime) ? "" : " – " + ev.EndTime) + "\n";
-                    if (!string.IsNullOrEmpty(ev.Room)) body += "Room: " + ev.Room + "\n";
-                    body += ev.Description;
-                    flpDayEvents.Controls.Add(MakeEventCard($"[{ev.GetTypeLabel()}]  {ev.Title}", body.Trim(), ev.GetColor(), date, ev));
+                    _activeFilter = null;   // for UrDay compat
+                    RefreshDayDetail(_selectedDate, cap);
+                    HighlightFilterBtn(btn);
+                };
+                _filterBtns.Add(btn);
+                _pnlBottomDetail.Controls.Add(btn);
+                fx += btn.Width + 5;
+            }
+
+            // Day events list
+            _flpDayEvents = new FlowLayoutPanel
+            {
+                Left = 0,
+                Top = 62,
+                FlowDirection = FlowDirection.TopDown,
+                WrapContents = false,
+                AutoScroll = true,
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom,
+            };
+            _flpDayEvents.HorizontalScroll.Enabled = false;
+            _flpDayEvents.HorizontalScroll.Visible = false;
+            _lblNoEvents = new Label { Text = "No events for this day.", ForeColor = Color.Gray, AutoSize = true, Padding = new Padding(8) };
+            _flpDayEvents.Controls.Add(_lblNoEvents);
+            _pnlBottomDetail.Controls.Add(_flpDayEvents);
+        }
+
+        // ══════════════════════════════════════════════════════════════════════
+        //  NOTIFICATIONS PANEL
+        // ══════════════════════════════════════════════════════════════════════
+        private void BuildNotifPanel()
+        {
+            _notifPanel = new FacultyNotificationsPanel
+            {
+                Parent = pnlCalendar,
+                Visible = false,
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
+            };
+        }
+
+        // ══════════════════════════════════════════════════════════════════════
+        //  SEARCH PANEL
+        // ══════════════════════════════════════════════════════════════════════
+        private void BuildSearchPanel()
+        {
+            _searchPanel = new FacultySearchPanel
+            {
+                Parent = pnlCalendar,
+                Visible = false,
+                Height = 290,
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
+            };
+            _searchPanel.EventSelected += ev =>
+            {
+                _navDate = ev.Date;
+                _selectedDate = ev.Date;
+                SwitchView(CalendarView.Monthly);
+                OnDaySelected(ev.Date);
+                _searchPanel.Visible = false;
+            };
+        }
+
+        // ══════════════════════════════════════════════════════════════════════
+        //  LAYOUT
+        // ══════════════════════════════════════════════════════════════════════
+        private void LayoutAll()
+        {
+            if (pnlCalendar == null) return;
+            const int SIDEBAR_W = 262;
+            const int BOTTOM_H = 210;
+            const int TOPBAR_H = 52;
+            const int SEARCH_H = 290;
+
+            int cw = pnlCalendar.ClientSize.Width;
+            int ch = pnlCalendar.ClientSize.Height;
+
+            // Top bar already docked
+
+            // Search panel (below topbar, full width)
+            int searchTop = TOPBAR_H;
+            if (_searchPanel != null)
+            {
+                _searchPanel.Top = searchTop;
+                _searchPanel.Left = 0;
+                _searchPanel.Width = cw;
+                _searchPanel.Height = SEARCH_H;
+            }
+
+            // View area
+            int viewTop = TOPBAR_H + (_searchPanel?.Visible == true ? SEARCH_H : 0);
+            int viewLeft = 0;
+            int viewW = cw - SIDEBAR_W - 1;
+            int viewH = ch - viewTop - BOTTOM_H;
+
+            if (_pnlViewArea != null)
+            {
+                _pnlViewArea.Left = viewLeft;
+                _pnlViewArea.Top = viewTop;
+                _pnlViewArea.Width = viewW;
+                _pnlViewArea.Height = viewH;
+                LayoutViewContents(viewW, viewH);
+            }
+
+            // Sidebar
+            if (_pnlSidebar != null)
+            {
+                _pnlSidebar.Left = cw - SIDEBAR_W;
+                _pnlSidebar.Top = TOPBAR_H;
+                _pnlSidebar.Width = SIDEBAR_W;
+                _pnlSidebar.Height = ch - TOPBAR_H;
+            }
+
+            // Bottom detail
+            if (_pnlBottomDetail != null)
+            {
+                _pnlBottomDetail.Left = 0;
+                _pnlBottomDetail.Top = ch - BOTTOM_H;
+                _pnlBottomDetail.Width = cw - SIDEBAR_W - 1;
+                _pnlBottomDetail.Height = BOTTOM_H;
+                _flpDayEvents.Width = _pnlBottomDetail.Width / 2;
+                _flpDayEvents.Height = BOTTOM_H - 68;
+            }
+
+            // Notifications popup
+            if (_notifPanel != null)
+            {
+                _notifPanel.Left = cw - _notifPanel.Width - 8;
+                _notifPanel.Top = TOPBAR_H + 4;
+                _notifPanel.Height = Math.Min(400, ch - TOPBAR_H - 16);
+            }
+
+            // Upcoming list in sidebar
+            if (_flpUpcoming != null)
+            {
+                _flpUpcoming.Width = SIDEBAR_W - 8;
+                _flpUpcoming.Height = ch - TOPBAR_H - 132;
+            }
+        }
+
+        private void LayoutViewContents(int w, int h)
+        {
+            const int DAY_HDR_H = 28;
+
+            if (_pnlDayHeaders != null)
+            {
+                _pnlDayHeaders.Left = 0;
+                _pnlDayHeaders.Top = 0;
+                _pnlDayHeaders.Width = w;
+                int cellW = Math.Max(1, (w - SystemInformation.VerticalScrollBarWidth - 2) / 7);
+                foreach (Control c in _pnlDayHeaders.Controls) c.Width = cellW;
+            }
+
+            if (_flpMonth != null)
+            {
+                _flpMonth.Left = 0;
+                _flpMonth.Top = DAY_HDR_H;
+                _flpMonth.Width = w;
+                _flpMonth.Height = h - DAY_HDR_H;
+                ResizeCalendarCells();
+            }
+
+            if (_weekView != null)
+            {
+                _weekView.Left = 0;
+                _weekView.Top = 0;
+                _weekView.Width = w;
+                _weekView.Height = h;
+            }
+
+            if (_dayView != null)
+            {
+                _dayView.Left = 0;
+                _dayView.Top = 0;
+                _dayView.Width = w;
+                _dayView.Height = h;
+            }
+        }
+
+        // ══════════════════════════════════════════════════════════════════════
+        //  NAVIGATION
+        // ══════════════════════════════════════════════════════════════════════
+        private void NavigatePrev()
+        {
+            _navDate = _currentView switch
+            {
+                CalendarView.Monthly => _navDate.AddMonths(-1),
+                CalendarView.Weekly => _navDate.AddDays(-7),
+                CalendarView.Daily => _navDate.AddDays(-1),
+                _ => _navDate,
+            };
+            RefreshCurrentView();
+        }
+
+        private void NavigateNext()
+        {
+            _navDate = _currentView switch
+            {
+                CalendarView.Monthly => _navDate.AddMonths(1),
+                CalendarView.Weekly => _navDate.AddDays(7),
+                CalendarView.Daily => _navDate.AddDays(1),
+                _ => _navDate,
+            };
+            RefreshCurrentView();
+        }
+
+        private void SwitchView(CalendarView view)
+        {
+            _currentView = view;
+            UpdateViewToggleVisual();
+
+            bool monthly = view == CalendarView.Monthly;
+            bool weekly = view == CalendarView.Weekly;
+            bool daily = view == CalendarView.Daily;
+
+            _pnlDayHeaders.Visible = monthly;
+            _flpMonth.Visible = monthly;
+            _weekView.Visible = weekly;
+            _dayView.Visible = daily;
+
+            RefreshCurrentView();
+        }
+
+        private void RefreshCurrentView()
+        {
+            switch (_currentView)
+            {
+                case CalendarView.Monthly: ShowMonthlyView(_navDate); break;
+                case CalendarView.Weekly: ShowWeeklyView(_navDate); break;
+                case CalendarView.Daily: ShowDailyView(_navDate); break;
+            }
+        }
+
+        private void UpdateNavLabel()
+        {
+            _lblMonthYear.Text = _currentView switch
+            {
+                CalendarView.Monthly => new DateTimeFormatInfo().GetMonthName(_navDate.Month).ToUpper() + "  " + _navDate.Year,
+                CalendarView.Weekly => $"Week of {GetWeekStart(_navDate):MMM dd}",
+                CalendarView.Daily => _navDate.ToString("dddd, MMMM dd, yyyy"),
+                _ => "",
+            };
+        }
+
+        // ══════════════════════════════════════════════════════════════════════
+        //  MONTHLY VIEW
+        // ══════════════════════════════════════════════════════════════════════
+        private void ShowMonthlyView(DateTime dt)
+        {
+            _year = dt.Year; _month = dt.Month;
+            FacultyCalendarData.CurrentYear = dt.Year;
+            FacultyCalendarData.CurrentMonth = dt.Month;
+            SharedCalendarData.CurrentYear = dt.Year;
+            SharedCalendarData.CurrentMonth = dt.Month;
+
+            UpdateNavLabel();
+            _flpMonth.Controls.Clear();
+
+            DateTime first = new DateTime(dt.Year, dt.Month, 1);
+            int startDOW = (int)first.DayOfWeek;
+            int daysInMonth = DateTime.DaysInMonth(dt.Year, dt.Month);
+
+            // Leading days from previous month
+            if (startDOW > 0)
+            {
+                DateTime prev = first.AddMonths(-1);
+                int prevDays = DateTime.DaysInMonth(prev.Year, prev.Month);
+                for (int i = startDOW - 1; i >= 0; i--)
+                {
+                    int d = prevDays - i;
+                    _flpMonth.Controls.Add(new UrDay(d.ToString(), prev.Year, prev.Month, false,
+                        GetHoliday(prev.Year, prev.Month, d), isStudent: false));
                 }
             }
 
-            flpDayEvents.HorizontalScroll.Maximum = 0;
-            flpDayEvents.HorizontalScroll.Enabled = false;
-            flpDayEvents.HorizontalScroll.Visible = false;
+            // Current month days
+            for (int i = 1; i <= daysInMonth; i++)
+                _flpMonth.Controls.Add(new UrDay(i.ToString(), dt.Year, dt.Month, true,
+                    GetHoliday(dt.Year, dt.Month, i), isStudent: false));
+
+            // Trailing days
+            int total = _flpMonth.Controls.Count;
+            int rem = total % 7;
+            if (rem > 0)
+            {
+                DateTime next = first.AddMonths(1);
+                for (int i = 1; i <= 7 - rem; i++)
+                    _flpMonth.Controls.Add(new UrDay(i.ToString(), next.Year, next.Month, false,
+                        GetHoliday(next.Year, next.Month, i), isStudent: false));
+            }
+
+            ResizeCalendarCells();
+
+            // Highlight selected
+            foreach (Control c in _flpMonth.Controls)
+                if (c is UrDay ud) ud.IsSelected = ud.CellDate == _selectedDate;
+        }
+
+        private void ResizeCalendarCells()
+        {
+            if (_flpMonth == null || _flpMonth.Controls.Count == 0) return;
+            int avail = _flpMonth.ClientSize.Width - SystemInformation.VerticalScrollBarWidth - 2;
+            int cellW = Math.Max(60, avail / 7);
+            foreach (Control c in _flpMonth.Controls)
+            {
+                c.Width = cellW;
+                c.Height = 110;
+                c.Margin = new Padding(1);
+            }
+
+            // Sync headers
+            if (_pnlDayHeaders != null)
+                foreach (Control c in _pnlDayHeaders.Controls)
+                    c.Width = cellW;
+        }
+
+        // ══════════════════════════════════════════════════════════════════════
+        //  WEEKLY / DAILY VIEW DELEGATES
+        // ══════════════════════════════════════════════════════════════════════
+        private void ShowWeeklyView(DateTime dt)
+        {
+            UpdateNavLabel();
+            _weekView.LoadWeek(dt);
+        }
+
+        private void ShowDailyView(DateTime dt)
+        {
+            _navDate = dt;
+            UpdateNavLabel();
+            _dayView.LoadDay(dt);
+        }
+
+        // ══════════════════════════════════════════════════════════════════════
+        //  DAY DETAIL (bottom strip)
+        // ══════════════════════════════════════════════════════════════════════
+        private void OnDaySelected(DateTime date)
+        {
+            _selectedDate = date;
+
+            foreach (Control c in _flpMonth.Controls)
+                if (c is UrDay ud) ud.IsSelected = ud.CellDate == date;
+
+            RefreshDayDetail(date, null);
+            RefreshUpcoming();
+        }
+
+        private void RefreshDayDetail(DateTime date, FacultyEventType? typeFilter)
+        {
+            _lblSelDate.Text = date.ToString("dddd, MMMM dd, yyyy");
+            _flpDayEvents.Controls.Clear();
+
+            var events = FacultyCalendarData.GetEventsForDate(date)
+                .Where(ev => typeFilter == null || ev.Type == typeFilter)
+                .ToList();
+
+            // Notes
+            if (notesDict.ContainsKey(date.Date) && !string.IsNullOrWhiteSpace(notesDict[date.Date]))
+                _flpDayEvents.Controls.Add(MakeEventCard(
+                    "🗒 Note", notesDict[date.Date],
+                    Color.FromArgb(100, 100, 100), date, null));
+
+            if (events.Count == 0 && _flpDayEvents.Controls.Count == 0)
+            {
+                _flpDayEvents.Controls.Add(_lblNoEvents);
+                return;
+            }
+
+            foreach (var ev in events)
+            {
+                string body = "";
+                if (!string.IsNullOrEmpty(ev.StartTime))
+                    body += ev.StartTime + (string.IsNullOrEmpty(ev.EndTime) ? "" : " – " + ev.EndTime) + "\n";
+                if (!string.IsNullOrEmpty(ev.Room)) body += "Room: " + ev.Room + "\n";
+                if (!string.IsNullOrEmpty(ev.Course)) body += ev.Course + "\n";
+                body += ev.Description;
+
+                string title = $"{ev.GetTypeIcon()}  [{ev.GetTypeLabel()}]  {ev.Title}";
+                if (ev.IsAutoSynced) title += "  🔄";
+                _flpDayEvents.Controls.Add(MakeEventCard(title, body.Trim(), ev.GetColor(), date, ev));
+            }
+
+            _flpDayEvents.HorizontalScroll.Enabled = false;
+            _flpDayEvents.HorizontalScroll.Visible = false;
         }
 
         private void RefreshUpcoming()
         {
-            if (flpUpcoming == null) return;
-            flpUpcoming.Controls.Clear();
-            var upcoming = SharedCalendarData.GetUpcoming(6);
-            if (upcoming.Count == 0) { flpUpcoming.Controls.Add(lblNoUpcoming); }
+            if (_flpUpcoming == null) return;
+            _flpUpcoming.Controls.Clear();
+            var upcoming = FacultyCalendarData.GetUpcoming(8);
+
+            if (upcoming.Count == 0) { _flpUpcoming.Controls.Add(_lblNoUpcoming); }
             else
             {
-                foreach (var (d, ev) in upcoming)
+                foreach (var item in upcoming)
                 {
-                    int daysLeft = (d.Date - DateTime.Now.Date).Days;
+                    int daysLeft = (item.Date.Date - DateTime.Now.Date).Days;
                     string when = daysLeft == 0 ? "Today" : daysLeft == 1 ? "Tomorrow" : $"In {daysLeft} days";
-                    flpUpcoming.Controls.Add(MakeUpcomingStrip(ev, d, when));
+                    _flpUpcoming.Controls.Add(MakeUpcomingStrip(item.Ev, item.Date, when));
                 }
             }
-            flpUpcoming.HorizontalScroll.Maximum = 0;
-            flpUpcoming.HorizontalScroll.Enabled = false;
-            flpUpcoming.HorizontalScroll.Visible = false;
+            _flpUpcoming.HorizontalScroll.Enabled = false;
+            _flpUpcoming.HorizontalScroll.Visible = false;
         }
 
-        private Panel MakeEventCard(string title, string body, Color accent, DateTime date, CalendarEvent ev)
+        // ══════════════════════════════════════════════════════════════════════
+        //  EVENT CARDS (bottom strip)
+        // ══════════════════════════════════════════════════════════════════════
+        private Panel MakeEventCard(string title, string body, Color accent,
+                                    DateTime date, FacultyCalendarEvent? ev)
         {
-            int flpW = flpDayEvents.ClientSize.Width - SystemInformation.VerticalScrollBarWidth;
-            int cardW = Math.Max(80, flpW > 20 ? flpW : 440);
+            int flpW = _flpDayEvents.ClientSize.Width - SystemInformation.VerticalScrollBarWidth;
+            int cardW = Math.Max(80, flpW > 20 ? flpW : 420);
             const int HDR_H = 32;
             const int BDY_H = 44;
 
@@ -362,7 +923,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             {
                 Width = cardW,
                 Height = HDR_H,
-                BackColor = Color.FromArgb(245, 248, 255),
+                BackColor = Color.FromArgb(250, 250, 255),
                 Margin = new Padding(0, 2, 0, 0),
                 Tag = false,
             };
@@ -373,13 +934,14 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             var lblT = new Label
             {
                 Text = title,
-                Left = 12,
+                Left = 10,
                 Top = 7,
-                Width = cardW - 58,
-                Font = new Font("Segoe UI", 8.5f, FontStyle.Bold),
+                Width = cardW - 60,
+                Font = BoldFont,
                 ForeColor = Color.FromArgb(40, 40, 40),
                 AutoSize = false,
                 Height = 18,
+                AutoEllipsis = true,
                 Cursor = Cursors.Hand,
             };
             card.Controls.Add(lblT);
@@ -387,13 +949,13 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             var btnToggle = new Button
             {
                 Text = "▾",
-                Left = cardW - 46,
+                Left = cardW - 48,
                 Top = 6,
                 Width = 22,
                 Height = 20,
                 FlatStyle = FlatStyle.Flat,
                 Font = new Font("Segoe UI", 9f),
-                ForeColor = Color.FromArgb(100, 100, 100),
+                ForeColor = Color.Gray,
                 BackColor = Color.Transparent,
                 Cursor = Cursors.Hand,
             };
@@ -403,10 +965,10 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             var lblB = new Label
             {
                 Text = string.IsNullOrWhiteSpace(body) ? "(no details)" : body,
-                Left = 12,
+                Left = 10,
                 Top = HDR_H + 4,
-                Width = cardW - (ev != null ? 64 : 24),
-                Font = new Font("Segoe UI", 8f),
+                Width = cardW - (ev != null ? 68 : 24),
+                Font = UIFont,
                 ForeColor = Color.FromArgb(90, 90, 90),
                 AutoSize = false,
                 Height = BDY_H - 8,
@@ -417,31 +979,52 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
             if (ev != null)
             {
+                // Edit button
+                var btnEdit = new Button
+                {
+                    Text = "✏",
+                    Left = cardW - 26,
+                    Top = 6,
+                    Width = 20,
+                    Height = 20,
+                    FlatStyle = FlatStyle.Flat,
+                    ForeColor = Color.FromArgb(21, 101, 192),
+                    BackColor = Color.Transparent,
+                    Font = UIFont,
+                    Cursor = Cursors.Hand,
+                };
+                btnEdit.FlatAppearance.BorderSize = 0;
+                var capturedEv = ev;
+                btnEdit.Click += (s, e) => EditEvent(capturedEv, date);
+                card.Controls.Add(btnEdit);
+
+                // Delete button
                 var btnDel = new Button
                 {
                     Text = "✕",
-                    Left = cardW - 24,
+                    Left = cardW - 48,
                     Top = 6,
                     Width = 20,
                     Height = 20,
                     FlatStyle = FlatStyle.Flat,
                     ForeColor = Color.Gray,
                     BackColor = Color.Transparent,
-                    Font = new Font("Segoe UI", 8f),
+                    Font = UIFont,
                     Cursor = Cursors.Hand,
                 };
                 btnDel.FlatAppearance.BorderSize = 0;
-                var capturedEv = ev;
+                btnDel.Left = cardW - 48;
+                btnToggle.Left = cardW - 72;
                 btnDel.Click += (s, e) =>
                 {
                     if (MessageBox.Show($"Remove '{capturedEv.Title}'?", "Confirm",
                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        SharedCalendarData.RemoveEvent(date, capturedEv);
-                        foreach (Control ctrl in FPLmonth.Controls)
-                            if (ctrl is UrDay ud) ud.RefreshEventPills();
-                        RefreshDayDetail(date);
+                        FacultyCalendarData.RemoveEvent(capturedEv.Id);
+                        RefreshMonthCells();
+                        RefreshDayDetail(date, null);
                         RefreshUpcoming();
+                        RefreshNotifBadge();
                     }
                 };
                 card.Controls.Add(btnDel);
@@ -449,239 +1032,246 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
             void Toggle()
             {
-                bool expanded = (bool)card.Tag;
-                expanded = !expanded;
-                card.Tag = expanded;
-                card.Height = expanded ? HDR_H + BDY_H : HDR_H;
+                bool exp = (bool)card.Tag;
+                exp = !exp;
+                card.Tag = exp;
+                card.Height = exp ? HDR_H + BDY_H : HDR_H;
                 bar.Height = card.Height;
-                lblB.Visible = expanded;
-                btnToggle.Text = expanded ? "▴" : "▾";
-                flpDayEvents.HorizontalScroll.Maximum = 0;
-                flpDayEvents.HorizontalScroll.Enabled = false;
-                flpDayEvents.HorizontalScroll.Visible = false;
+                lblB.Visible = exp;
+                btnToggle.Text = exp ? "▴" : "▾";
             }
-
             btnToggle.Click += (s, e) => Toggle();
             lblT.Click += (s, e) => Toggle();
 
             return card;
         }
 
-        private Panel MakeUpcomingStrip(CalendarEvent ev, DateTime date, string when)
+        private Panel MakeUpcomingStrip(FacultyCalendarEvent ev, DateTime date, string when)
         {
-            int w = Math.Max(80, flpUpcoming.ClientSize.Width - SystemInformation.VerticalScrollBarWidth);
-            var strip = new Panel
+            int w = Math.Max(80, _flpUpcoming.ClientSize.Width - SystemInformation.VerticalScrollBarWidth - 2);
+            var strip = new Panel { Width = w, Height = 38, BackColor = Color.White, Margin = new Padding(0, 2, 0, 0) };
+            var dot = new Panel { Width = 8, Height = 8, Top = 15, Left = 8, BackColor = ev.GetColor() };
+            var lT = new Label { Text = ev.Title, Left = 22, Top = 3, Width = w - 80, Font = BoldFont, ForeColor = Color.FromArgb(40, 40, 40), AutoSize = false, Height = 18, AutoEllipsis = true };
+            var lW = new Label { Text = when, Left = 22, Top = 22, Width = w - 80, Font = SmallFont, ForeColor = Color.Gray, AutoSize = false, Height = 14 };
+            var lD = new Label { Text = date.ToString("MMM dd"), Left = w - 56, Top = 10, Width = 52, Font = SmallFont, ForeColor = Color.FromArgb(90, 90, 90), AutoSize = false, TextAlign = ContentAlignment.MiddleRight };
+            strip.Controls.AddRange(new Control[] { dot, lT, lW, lD });
+            strip.Paint += (s, pe) =>
             {
-                Width = w,
-                Height = 36,
-                BackColor = Color.White,
-                Margin = new Padding(0, 2, 0, 0),
-                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
+                using var p = new Pen(Color.FromArgb(235, 235, 235));
+                pe.Graphics.DrawLine(p, 0, strip.Height - 1, strip.Width, strip.Height - 1);
             };
-            var dot = new Panel { Width = 8, Height = 8, Top = 14, Left = 4, BackColor = ev.GetColor() };
-            var lblT = new Label { Text = ev.Title, Left = 18, Top = 2, Width = w - 76, Font = new Font("Segoe UI", 8.5f, FontStyle.Bold), ForeColor = Color.FromArgb(40, 40, 40), AutoSize = false, Height = 18, AutoEllipsis = true };
-            var lblW = new Label { Text = when, Left = 18, Top = 20, Width = w - 76, Font = new Font("Segoe UI", 7.5f), ForeColor = Color.Gray, AutoSize = false, Height = 14 };
-            var lblD = new Label { Text = date.ToString("MMM dd"), Left = w - 56, Top = 10, Width = 52, Font = new Font("Segoe UI", 8f), ForeColor = Color.FromArgb(90, 90, 90), AutoSize = false, TextAlign = ContentAlignment.MiddleRight };
-            strip.Controls.AddRange(new Control[] { dot, lblT, lblW, lblD });
+            strip.Click += (s, e) => { _selectedDate = date; _navDate = date; SwitchView(CalendarView.Monthly); OnDaySelected(date); };
             return strip;
         }
 
-        private void PositionBottomPanel()
+        // ══════════════════════════════════════════════════════════════════════
+        //  EVENT MANAGEMENT
+        // ══════════════════════════════════════════════════════════════════════
+        private void QuickAddEvent(DateTime date)
         {
-            if (pnlBottom == null || pnlCalendar == null) return;
-            pnlBottom.Width = pnlCalendar.ClientSize.Width;
-            pnlBottom.Top = pnlCalendar.ClientSize.Height - pnlBottom.Height;
-            pnlBottom.Left = 0;
-
-            foreach (Control c in pnlBottom.Controls)
-                if (c is Panel rp && rp.Left > 530)
-                    rp.Width = pnlBottom.Width - rp.Left - 8;
-
-            if (flpDayEvents != null)
+            using var dlg = new AddEditFacultyEventForm(date);
+            if (dlg.ShowDialog() == DialogResult.OK && dlg.ResultEvent != null)
             {
-                var parent = flpDayEvents.Parent;
-                if (parent != null)
-                    flpDayEvents.Width = parent.ClientSize.Width;
-                flpDayEvents.HorizontalScroll.Maximum = 0;
-                flpDayEvents.HorizontalScroll.Enabled = false;
-                flpDayEvents.HorizontalScroll.Visible = false;
-            }
-
-            if (flpUpcoming != null)
-            {
-                var parent = flpUpcoming.Parent;
-                if (parent != null)
-                    flpUpcoming.Width = parent.ClientSize.Width;
-
-                int stripW = Math.Max(80, flpUpcoming.ClientSize.Width - SystemInformation.VerticalScrollBarWidth);
-                foreach (Control c in flpUpcoming.Controls)
-                {
-                    c.Width = stripW;
-
-                    if (c is Panel strip)
-                    {
-                        foreach (Control child in strip.Controls)
-                        {
-                            if (child is Label lbl && lbl.TextAlign == ContentAlignment.MiddleRight)
-                            {
-                                lbl.Left = stripW - 56;
-                                lbl.Width = 52;
-                            }
-                            else if (child is Label lblBody && lblBody.Left == 18)
-                            {
-                                child.Width = stripW - 76;
-                            }
-                        }
-                    }
-                }
-
-                flpUpcoming.HorizontalScroll.Maximum = 0;
-                flpUpcoming.HorizontalScroll.Enabled = false;
-                flpUpcoming.HorizontalScroll.Visible = false;
+                FacultyCalendarData.AddEvent(date, dlg.ResultEvent);
+                RefreshMonthCells();
+                RefreshDayDetail(date, null);
+                RefreshUpcoming();
+                RefreshNotifBadge();
+                _searchPanel.RefreshCourses();
             }
         }
 
-        private void BuildDayHeaders()
+        private void QuickAddEventAtTime(DateTime dateTime)
         {
-            string[] days = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
-            pnlDayHeaders = new FlowLayoutPanel
+            using var dlg = new AddEditFacultyEventForm(dateTime);
+            if (dlg.ShowDialog() == DialogResult.OK && dlg.ResultEvent != null)
             {
-                FlowDirection = FlowDirection.LeftToRight,
-                WrapContents = false,
-                Height = 32,
-                Padding = new Padding(0),
-                Margin = new Padding(0),
-                BackColor = Color.FromArgb(245, 245, 245),
+                FacultyCalendarData.AddEvent(dateTime.Date, dlg.ResultEvent);
+                RefreshCurrentView();
+                RefreshDayDetail(dateTime.Date, null);
+                RefreshUpcoming();
+                RefreshNotifBadge();
+            }
+        }
+
+        private void EditEvent(FacultyCalendarEvent ev, DateTime date)
+        {
+            using var dlg = new AddEditFacultyEventForm(date, ev);
+            if (dlg.ShowDialog() == DialogResult.OK && dlg.ResultEvent != null)
+            {
+                FacultyCalendarData.UpdateEvent(dlg.ResultEvent);
+                RefreshMonthCells();
+                RefreshCurrentView();
+                RefreshDayDetail(date, null);
+                RefreshUpcoming();
+                RefreshNotifBadge();
+            }
+        }
+
+        private void ShowEventDetail(FacultyCalendarEvent ev)
+        {
+            using var popup = new EventDetailPopup(ev);
+            popup.ShowDialog();
+
+            switch (popup.Action)
+            {
+                case EventDetailPopup.ResultAction.Edit:
+                    EditEvent(ev, ev.Date);
+                    break;
+
+                case EventDetailPopup.ResultAction.Delete:
+                    FacultyCalendarData.RemoveEvent(ev.Id);
+                    RefreshMonthCells();
+                    RefreshCurrentView();
+                    RefreshDayDetail(ev.Date, null);
+                    RefreshUpcoming();
+                    RefreshNotifBadge();
+                    break;
+            }
+        }
+
+        private void RefreshMonthCells()
+        {
+            foreach (Control c in _flpMonth.Controls)
+                if (c is UrDay ud) ud.RefreshEventPills();
+        }
+
+        // ══════════════════════════════════════════════════════════════════════
+        //  NOTIFICATIONS
+        // ══════════════════════════════════════════════════════════════════════
+        private void ToggleNotifications()
+        {
+            _notifPanel.Visible = !_notifPanel.Visible;
+            if (_notifPanel.Visible)
+            {
+                _notifPanel.Refresh();
+                _notifPanel.BringToFront();
+            }
+        }
+
+        private void RefreshNotifBadge()
+        {
+            int count = FacultyCalendarData.Notifications.Count;
+            _lblNotifBadge.Visible = count > 0;
+            _lblNotifBadge.Text = count > 9 ? "9+" : count.ToString();
+        }
+
+        // ══════════════════════════════════════════════════════════════════════
+        //  SEARCH
+        // ══════════════════════════════════════════════════════════════════════
+        private void ToggleSearch()
+        {
+            _searchPanel.Visible = !_searchPanel.Visible;
+            LayoutAll();
+        }
+
+        // ══════════════════════════════════════════════════════════════════════
+        //  LMS SYNC
+        // ══════════════════════════════════════════════════════════════════════
+        private void SyncLMS()
+        {
+            _btnSync.Text = "Syncing…";
+            _btnSync.Enabled = false;
+
+            // Run sync on background thread, marshal back
+            var timer = new System.Windows.Forms.Timer { Interval = 800 };
+            timer.Tick += (s, e) =>
+            {
+                timer.Stop();
+                FacultyCalendarData.SyncFromLMS();
+                RefreshMonthCells();
+                RefreshCurrentView();
+                RefreshDayDetail(_selectedDate, null);
+                RefreshUpcoming();
+                RefreshNotifBadge();
+                _btnSync.Text = "⟳ Sync";
+                _btnSync.Enabled = true;
+                MessageBox.Show("LMS activities and deadlines synced successfully.",
+                    "Sync Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
             };
-            pnlDayHeaders.Parent = FPLmonth.Parent;
-            pnlDayHeaders.Left = FPLmonth.Left;
-            pnlDayHeaders.Width = FPLmonth.Width;
-            pnlDayHeaders.Top = FPLmonth.Top - 32;
-            pnlDayHeaders.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            foreach (string d in days)
-                pnlDayHeaders.Controls.Add(new Label
-                {
-                    Text = d,
-                    TextAlign = ContentAlignment.MiddleCenter,
-                    AutoSize = false,
-                    Font = new Font("Segoe UI", 9f, FontStyle.Regular),
-                    ForeColor = d == "Sunday" ? Color.Crimson : Color.FromArgb(80, 80, 80),
-                    BackColor = Color.Transparent,
-                    Margin = new Padding(1, 0, 1, 0),
-                    Height = 32,
-                });
-            pnlDayHeaders.BringToFront();
+            timer.Start();
         }
 
-        private void AlignDayHeaders()
-        {
-            if (pnlDayHeaders == null) return;
-            pnlDayHeaders.Left = FPLmonth.Left;
-            pnlDayHeaders.Width = FPLmonth.Width;
-            pnlDayHeaders.Top = FPLmonth.Top - pnlDayHeaders.Height;
-            int available = FPLmonth.ClientSize.Width - SystemInformation.VerticalScrollBarWidth - 2;
-            int cellWidth = available / 7;
-            foreach (Control ctrl in pnlDayHeaders.Controls)
-            {
-                ctrl.Width = cellWidth;
-            }
-        }
-
-        private void showDays(int month, int year)
-        {
-            FPLmonth.Controls.Clear();
-            _year = year; _month = month;
-            SharedCalendarData.CurrentYear = year;
-            SharedCalendarData.CurrentMonth = month;
-
-            string monthName = new DateTimeFormatInfo().GetMonthName(month);
-            lblMonthYear.Text = monthName.ToUpper() + " " + year;
-            CenterMonthLabel();
-
-            DateTime firstDay = new DateTime(year, month, 1);
-            int startDOW = (int)firstDay.DayOfWeek;
-            int daysInMonth = DateTime.DaysInMonth(year, month);
-
-            if (startDOW > 0)
-            {
-                DateTime prev = firstDay.AddMonths(-1);
-                int prevDays = DateTime.DaysInMonth(prev.Year, prev.Month);
-                for (int i = startDOW - 1; i >= 0; i--)
-                {
-                    int d = prevDays - i;
-                    FPLmonth.Controls.Add(new UrDay(d.ToString(), prev.Year, prev.Month, false, GetHoliday(prev.Year, prev.Month, d), isStudent: false));
-                }
-            }
-
-            for (int i = 1; i <= daysInMonth; i++)
-                FPLmonth.Controls.Add(new UrDay(i.ToString(), year, month, true, GetHoliday(year, month, i), isStudent: false));
-
-            int total = FPLmonth.Controls.Count;
-            int remainder = total % 7;
-            if (remainder > 0)
-            {
-                DateTime next = firstDay.AddMonths(1);
-                for (int i = 1; i <= 7 - remainder; i++)
-                    FPLmonth.Controls.Add(new UrDay(i.ToString(), next.Year, next.Month, false, GetHoliday(next.Year, next.Month, i), isStudent: false));
-            }
-
-            ResizeCalendarCells();
-        }
-
+        // ══════════════════════════════════════════════════════════════════════
+        //  HELPERS
+        // ══════════════════════════════════════════════════════════════════════
         private string GetHoliday(int year, int month, int day)
         {
-            var date = new DateTime(year, month, day);
-            return SharedCalendarData.Holidays.ContainsKey(date) ? SharedCalendarData.Holidays[date] : "";
+            var d = new DateTime(year, month, day);
+            return FacultyCalendarData.Holidays.ContainsKey(d) ? FacultyCalendarData.Holidays[d] : "";
         }
 
-        private void ResizeCalendarCells()
+        private static DateTime GetWeekStart(DateTime dt) =>
+            dt.Date.AddDays(-(int)dt.DayOfWeek);
+
+        private Button MakeToolBtn(string text, int x, int y, int w, int h) => new Button
         {
-            if (FPLmonth.Controls.Count == 0) return;
-            int available = FPLmonth.ClientSize.Width - SystemInformation.VerticalScrollBarWidth - 2;
-            int cellWidth = available / 7;
-            foreach (Control ctrl in FPLmonth.Controls)
+            Text = text,
+            Left = x,
+            Top = y,
+            Width = w,
+            Height = h,
+            FlatStyle = FlatStyle.Flat,
+            Font = UIFont,
+            BackColor = Color.White,
+            ForeColor = Color.FromArgb(50, 50, 50),
+            Cursor = Cursors.Hand,
+        };
+
+        private Button MakeViewToggle(string text, int x, int y, int w) => new Button
+        {
+            Text = text,
+            Left = x,
+            Top = y,
+            Width = w,
+            Height = 24,
+            FlatStyle = FlatStyle.Flat,
+            Font = SmallFont,
+            BackColor = Color.White,
+            ForeColor = Color.FromArgb(50, 50, 50),
+            Cursor = Cursors.Hand,
+        };
+
+        private void UpdateViewToggleVisual()
+        {
+            if (_btnMonthly == null) return;
+            foreach (var btn in new[] { _btnMonthly, _btnWeekly, _btnDaily })
             {
-                ctrl.Width = cellWidth;
-                ctrl.Height = 110;
-                ctrl.Margin = new Padding(1);
+                btn.BackColor = Color.White;
+                btn.ForeColor = Color.FromArgb(50, 50, 50);
             }
-            AlignDayHeaders();
+            var active = _currentView switch
+            {
+                CalendarView.Monthly => _btnMonthly,
+                CalendarView.Weekly => _btnWeekly,
+                _ => _btnDaily,
+            };
+            active.BackColor = Maroon;
+            active.ForeColor = Color.White;
         }
 
-        private void OnFormResized(object sender, EventArgs e)
+        private Button MakeFilterButton(string label, Color accent) => new Button
         {
-            if (!this.IsHandleCreated || this.IsDisposed) return;
-            this.BeginInvoke((Action)(() =>
-            {
-                try { FitCalendarPanel(); ResizeCalendarCells(); CenterMonthLabel(); PositionBottomPanel(); }
-                catch { }
-            }));
-        }
+            Text = label,
+            Width = label.Length > 6 ? 78 : 56,
+            Height = 22,
+            FlatStyle = FlatStyle.Flat,
+            Font = SmallFont,
+            BackColor = Color.White,
+            ForeColor = accent,
+            FlatAppearance = { BorderColor = accent },
+            Cursor = Cursors.Hand,
+        };
 
-        private void FitCalendarPanel()
+        private void HighlightFilterBtn(Button active)
         {
-            const int BOTTOM_H = 220;
-            if (FPLmonth != null)
+            foreach (var b in _filterBtns)
             {
-                int headerBottom = pnlDayHeaders != null
-                    ? pnlDayHeaders.Top + pnlDayHeaders.Height : FPLmonth.Top;
-                FPLmonth.Width = pnlCalendar.ClientSize.Width - FPLmonth.Left - 4;
-                FPLmonth.Top = headerBottom;
-                FPLmonth.Height = pnlCalendar.ClientSize.Height - FPLmonth.Top - BOTTOM_H - 4;
+                b.BackColor = Color.White;
+                b.ForeColor = (Color)b.Tag == Color.Empty ? Color.FromArgb(90, 90, 90) : b.FlatAppearance.BorderColor;
             }
+            active.BackColor = active.FlatAppearance.BorderColor;
+            active.ForeColor = Color.White;
         }
-
-        private void CenterMonthLabel()
-        {
-            if (lblMonthYear == null || pnlCalendar == null) return;
-            lblMonthYear.AutoSize = false;
-            lblMonthYear.TextAlign = ContentAlignment.MiddleCenter;
-            lblMonthYear.Width = pnlCalendar.ClientSize.Width;
-            lblMonthYear.Left = 0;
-        }
-
-        private void picNext_Click(object sender, EventArgs e) { _month++; if (_month > 12) { _month = 1; _year++; } showDays(_month, _year); }
-        private void picPrev_Click(object sender, EventArgs e) { _month--; if (_month < 1) { _month = 12; _year--; } showDays(_month, _year); }
-
     }
 }

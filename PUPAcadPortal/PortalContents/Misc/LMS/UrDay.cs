@@ -1,7 +1,15 @@
-﻿using System;
+﻿/*
+ *  UrDay.cs  –  Calendar Day Cell (Faculty Edition)
+ *  Extends the original UrDay to support FacultyCalendarData alongside
+ *  the legacy SharedCalendarData, and adds drag-drop source capability
+ *  so events can be dragged to other cells on the monthly grid.
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
 using System.ComponentModel;
 using PUPAcadPortal.PortalForms;
@@ -11,7 +19,13 @@ namespace PUPAcadPortal
 {
     public partial class UrDay : UserControl
     {
-        public static event Action<DateTime> DaySelected;
+        // ── Static events ────────────────────────────────────────────────────
+        public static event Action<DateTime>? DaySelected;
+
+        // ── Drag-drop: fired when user drags an event onto another cell ──────
+        public static event Action<Guid, DateTime>? EventDropped;
+
+        // ── Fields ────────────────────────────────────────────────────────────
         private string _day;
         private DateTime _fullDate;
         private Label _lblHoliday;
@@ -19,22 +33,25 @@ namespace PUPAcadPortal
         private bool _isCurrentMonth;
         private bool _isStudent;
         private bool _isSelected;
-        private bool _isHovered = false;
-        private readonly List<Button> _eventPills = new List<Button>();
-        private Button _btnEventsDropdown;
-        private Button _btnNoteDropdown;
-        private ContextMenuStrip _ctxMenu;
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        private bool _isHovered;
+        private bool _isDragOver;       // highlight when an event hovers over this cell
 
+        private readonly List<Button> _eventPills = new();
+        private Button? _btnEventsDropdown;
+        private Button? _btnFacultyDrop;  // second dropdown for faculty events
+        private Button? _btnNoteDropdown;
+        private ContextMenuStrip _ctxMenu;
+
+        // Drag state
+        private FacultyCalendarEvent? _dragSourceEvent;
+        private bool _isDraggingEvent;
+        private Point _dragStartPt;
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string AnnouncementText
         {
             get => lblAnnouncement.Text;
-            set
-            {
-                lblAnnouncement.Text = value ?? "";
-                lblAnnouncement.Visible = !string.IsNullOrWhiteSpace(value);
-                RepositionPills();
-            }
+            set { lblAnnouncement.Text = value ?? ""; lblAnnouncement.Visible = !string.IsNullOrWhiteSpace(value); RepositionPills(); }
         }
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -44,19 +61,12 @@ namespace PUPAcadPortal
         public bool IsSelected
         {
             get => _isSelected;
-            set
-            {
-                _isSelected = value;
-                this.BackColor = value ? Color.FromArgb(255, 245, 245) : Color.White;
-                Invalidate();
-            }
+            set { _isSelected = value; BackColor = value ? Color.FromArgb(255, 245, 245) : Color.White; Invalidate(); }
         }
 
-        public UrDay(string day,
-                     int year = 0,
-                     int month = 0,
-                     bool isCurrentMonth = true,
-                     string holiday = "",
+        // ── Constructor ───────────────────────────────────────────────────────
+        public UrDay(string day, int year = 0, int month = 0,
+                     bool isCurrentMonth = true, string holiday = "",
                      bool isStudent = false)
         {
             InitializeComponent();
@@ -66,10 +76,12 @@ namespace PUPAcadPortal
             _isStudent = isStudent;
             chkSelect.Hide();
 
-            this.Margin = new Padding(0);
-            this.Dock = DockStyle.None;
-            this.BackColor = Color.White;
-            this.Cursor = Cursors.Hand;
+            Margin = new Padding(0);
+            Dock = DockStyle.None;
+            BackColor = Color.White;
+            Cursor = Cursors.Hand;
+
+            AllowDrop = true;   // accept drops from other cells
 
             if (year == 0) year = SharedCalendarData.CurrentYear;
             if (month == 0) month = SharedCalendarData.CurrentMonth;
@@ -82,15 +94,12 @@ namespace PUPAcadPortal
             lblDay.BackColor = Color.Transparent;
             lblDay.Text = day;
 
-            if (string.IsNullOrEmpty(day))
-            {
-                this.BackColor = Color.FromArgb(248, 248, 248);
-                return;
-            }
+            if (string.IsNullOrEmpty(day)) { BackColor = Color.FromArgb(248, 248, 248); return; }
 
             int dayInt = int.Parse(day);
             _fullDate = new DateTime(year, month, dayInt);
 
+            // Day number colour
             if (!isCurrentMonth)
                 lblDay.ForeColor = Color.FromArgb(200, 200, 200);
             else if (_fullDate.DayOfWeek == DayOfWeek.Sunday)
@@ -98,6 +107,7 @@ namespace PUPAcadPortal
             else
                 lblDay.ForeColor = Color.FromArgb(40, 40, 40);
 
+            // Today circle
             if (DateTime.Now.Date == _fullDate.Date)
             {
                 var gp = new GraphicsPath();
@@ -107,6 +117,7 @@ namespace PUPAcadPortal
                 lblDay.ForeColor = Color.White;
             }
 
+            // Holiday badge
             if (!string.IsNullOrEmpty(holiday))
             {
                 _lblHolidayInline = new Label
@@ -123,171 +134,303 @@ namespace PUPAcadPortal
                     Padding = new Padding(2, 0, 2, 0),
                     Cursor = Cursors.Help,
                     Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
+                    Width = Width - 38,
                 };
-                _lblHolidayInline.Width = this.Width - 38;
-
                 _lblHolidayInline.Click += (s, e) =>
-                    MessageBox.Show(holiday,
-                        "Holiday — " + _fullDate.ToString("MMMM dd, yyyy"),
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                var tip = new ToolTip();
-                tip.SetToolTip(_lblHolidayInline, "Philippine Holiday — " + holiday);
-                this.Controls.Add(_lblHolidayInline);
+                    MessageBox.Show(holiday, "Holiday — " + _fullDate.ToString("MMMM dd, yyyy"),
+                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                new ToolTip().SetToolTip(_lblHolidayInline, "Philippine Holiday — " + holiday);
+                Controls.Add(_lblHolidayInline);
                 _lblHolidayInline.BringToFront();
             }
 
+            // Wire events
             lblNote.Click += (s, e) => OpenNotesDialog();
             lblAnnouncement.Click += (s, e) => OpenAnnouncementInfo();
-            this.Click += Cell_Click;
-            this.MouseEnter += (s, e) => { if (_isCurrentMonth && !string.IsNullOrEmpty(_day)) { _isHovered = true; Invalidate(); } };
-            this.MouseLeave += (s, e) => { _isHovered = false; Invalidate(); };
+            Click += Cell_Click;
+            lblDay.Click += Cell_Click;
+            MouseEnter += (s, e) => { if (_isCurrentMonth && !string.IsNullOrEmpty(_day)) { _isHovered = true; Invalidate(); } };
+            MouseLeave += (s, e) => { _isHovered = false; Invalidate(); };
             lblDay.MouseEnter += (s, e) => { if (_isCurrentMonth && !string.IsNullOrEmpty(_day)) { _isHovered = true; Invalidate(); } };
             lblDay.MouseLeave += (s, e) => { _isHovered = false; Invalidate(); };
-            lblDay.Click += Cell_Click;
-            BuildContextMenu();
-            this.MouseClick += Cell_MouseClick;
+            MouseClick += Cell_MouseClick;
 
-            this.Resize += (s, e) =>
+            // Drag-drop receive
+            DragEnter += (s, e) =>
             {
-                if (_lblHolidayInline != null) _lblHolidayInline.Width = this.Width - 38;
-                if (_btnEventsDropdown != null) _btnEventsDropdown.Width = Math.Max(10, this.Width - 4);
-                if (_btnNoteDropdown != null) _btnNoteDropdown.Width = Math.Max(10, this.Width - 4);
-                foreach (var btn in _eventPills) btn.Width = Math.Max(10, this.Width - 4);
+                if (e.Data?.GetDataPresent(typeof(Guid)) == true && _isCurrentMonth)
+                {
+                    e.Effect = DragDropEffects.Move;
+                    _isDragOver = true;
+                    Invalidate();
+                }
+            };
+            DragLeave += (s, e) => { _isDragOver = false; Invalidate(); };
+            DragDrop += (s, e) =>
+            {
+                _isDragOver = false;
+                Invalidate();
+                if (e.Data?.GetData(typeof(Guid)) is Guid id)
+                    EventDropped?.Invoke(id, _fullDate);
             };
 
+            Resize += (s, e) =>
+            {
+                if (_lblHolidayInline != null) _lblHolidayInline.Width = Width - 38;
+                if (_btnEventsDropdown != null) _btnEventsDropdown.Width = Math.Max(10, Width - 4);
+                if (_btnFacultyDrop != null) _btnFacultyDrop.Width = Math.Max(10, Width - 4);
+                if (_btnNoteDropdown != null) _btnNoteDropdown.Width = Math.Max(10, Width - 4);
+                foreach (var btn in _eventPills) btn.Width = Math.Max(10, Width - 4);
+            };
+
+            BuildContextMenu();
             RepositionPills();
             LoadNote();
             LoadAnnouncement();
             RefreshEventPills();
         }
 
+        // ══════════════════════════════════════════════════════════════════════
+        //  CONTEXT MENU
+        // ══════════════════════════════════════════════════════════════════════
         private void BuildContextMenu()
         {
             _ctxMenu = new ContextMenuStrip();
 
-            if (!_isStudent)
+            // ── Faculty event types ──────────────────────────────────────────
+            var addEvent = new ToolStripMenuItem(_isStudent ? "🗓  Add My Event" : "🗓  Add Event");
+            addEvent.DropDownItems.Add(new ToolStripMenuItem("📘 Class", null, (s, e) => QuickAddFacultyEvent(FacultyEventType.Class)));
+            addEvent.DropDownItems.Add(new ToolStripMenuItem("📋 Activity", null, (s, e) => QuickAddFacultyEvent(FacultyEventType.Activity)));
+            addEvent.DropDownItems.Add(new ToolStripMenuItem("📝 Quiz", null, (s, e) => QuickAddFacultyEvent(FacultyEventType.Quiz)));
+            addEvent.DropDownItems.Add(new ToolStripMenuItem("📄 Long Quiz", null, (s, e) => QuickAddFacultyEvent(FacultyEventType.LongQuiz)));
+            addEvent.DropDownItems.Add(new ToolStripMenuItem("🎓 Exam", null, (s, e) => QuickAddFacultyEvent(FacultyEventType.Exam)));
+            addEvent.DropDownItems.Add(new ToolStripMenuItem("📌 Deadline", null, (s, e) => QuickAddFacultyEvent(FacultyEventType.Deadline)));
+            addEvent.DropDownItems.Add(new ToolStripMenuItem("🩺 Consultation", null, (s, e) => QuickAddFacultyEvent(FacultyEventType.Consultation)));
+            addEvent.DropDownItems.Add(new ToolStripSeparator());
+            addEvent.DropDownItems.Add(new ToolStripMenuItem("🗒 Personal Note", null, (s, e) => QuickAddFacultyEvent(FacultyEventType.PersonalNote)));
+
+            var addNote = new ToolStripMenuItem("🗒  Add / Edit Note", null, (s, e) => OpenNotesDialog());
+            var mnuRemove = new ToolStripMenuItem("🗑  Remove Event");
+
+            _ctxMenu.Items.AddRange(new ToolStripItem[]
             {
-                var addEvent = new ToolStripMenuItem("🗓  Add Event");
-                addEvent.DropDownItems.Add(new ToolStripMenuItem("📘 Class", null, (s, e) => QuickAddEvent(EventType.Class)));
-                addEvent.DropDownItems.Add(new ToolStripMenuItem("📝 Exam", null, (s, e) => QuickAddEvent(EventType.Exam)));
-                addEvent.DropDownItems.Add(new ToolStripMenuItem("📌 Deadline", null, (s, e) => QuickAddEvent(EventType.Deadline)));
-                addEvent.DropDownItems.Add(new ToolStripMenuItem("🩺 Consultation", null, (s, e) => QuickAddEvent(EventType.Consultation)));
+                addEvent,
+                new ToolStripSeparator(),
+                addNote,
+                new ToolStripSeparator(),
+                mnuRemove,
+            });
 
-                var addNote = new ToolStripMenuItem("🗒  Add Note", null, (s, e) => OpenNotesDialog());
-
-                _ctxMenu.Items.AddRange(new ToolStripItem[]
-                {
-                    addEvent,
-                    new ToolStripSeparator(),
-                    addNote,
-                    new ToolStripSeparator(),
-                });
-
-                var mnuRemove = new ToolStripMenuItem("🗑  Remove Event");
-                _ctxMenu.Items.Add(mnuRemove);
-
-                _ctxMenu.Opening += (s, e) =>
-                {
-                    mnuRemove.DropDownItems.Clear();
-                    var events = SharedCalendarData.GetEventsForDate(_fullDate);
-                    mnuRemove.Enabled = _isCurrentMonth && events.Count > 0;
-
-                    foreach (var ev in events)
-                    {
-                        var capturedEv = ev;
-                        string prefix = capturedEv.Type switch
-                        {
-                            EventType.Class => "📘",
-                            EventType.Exam => "📝",
-                            EventType.Deadline => "📌",
-                            EventType.Consultation => "🩺",
-                            EventType.Cancelled => "🚫",
-                            _ => "📅",
-                        };
-                        var item = new ToolStripMenuItem($"{prefix} [{capturedEv.GetTypeLabel()}]  {capturedEv.Title}");
-                        item.Click += (ss, ee) =>
-                        {
-                            if (MessageBox.Show(
-                                    $"Remove \"{capturedEv.Title}\" from {_fullDate:MMMM dd, yyyy}?",
-                                    "Confirm Remove",
-                                    MessageBoxButtons.YesNo,
-                                    MessageBoxIcon.Question) == DialogResult.Yes)
-                            {
-                                SharedCalendarData.RemoveEvent(_fullDate, capturedEv);
-                                RefreshEventPills();
-                                DaySelected?.Invoke(_fullDate);
-                            }
-                        };
-                        mnuRemove.DropDownItems.Add(item);
-                    }
-                };
-            }
-            else
+            _ctxMenu.Opening += (s, e) =>
             {
-                var addEvent = new ToolStripMenuItem("🗓  Add My Event");
-                addEvent.DropDownItems.Add(new ToolStripMenuItem("📘 Class", null, (s, e) => QuickAddEvent(EventType.Class)));
-                addEvent.DropDownItems.Add(new ToolStripMenuItem("📝 Exam", null, (s, e) => QuickAddEvent(EventType.Exam)));
-                addEvent.DropDownItems.Add(new ToolStripMenuItem("📌 Deadline", null, (s, e) => QuickAddEvent(EventType.Deadline)));
-                addEvent.DropDownItems.Add(new ToolStripMenuItem("🩺 Consultation", null, (s, e) => QuickAddEvent(EventType.Consultation)));
+                mnuRemove.DropDownItems.Clear();
 
-                var addNote = new ToolStripMenuItem("🗒  Add / Edit Note", null, (s, e) => OpenNotesDialog());
+                // Legacy events
+                var legacy = _isStudent
+                    ? SharedCalendarData.GetStudentEventsForDate(_fullDate)
+                    : SharedCalendarData.GetEventsForDate(_fullDate);
 
-                _ctxMenu.Items.AddRange(new ToolStripItem[]
+                // Faculty events
+                var faculty = FacultyCalendarData.GetEventsForDate(_fullDate)
+                    .Where(ev => !ev.IsAutoSynced)
+                    .ToList();
+
+                mnuRemove.Enabled = _isCurrentMonth && (legacy.Count + faculty.Count) > 0;
+
+                foreach (var ev in legacy)
                 {
-                    addEvent,
-                    new ToolStripSeparator(),
-                    addNote,
-                    new ToolStripSeparator(),
-                });
-
-                var mnuRemove = new ToolStripMenuItem("🗑  Remove My Event");
-                _ctxMenu.Items.Add(mnuRemove);
-
-                _ctxMenu.Opening += (s, e) =>
-                {
-                    mnuRemove.DropDownItems.Clear();
-                    var personalEvents = SharedCalendarData.GetStudentEventsForDate(_fullDate);
-                    mnuRemove.Enabled = _isCurrentMonth && personalEvents.Count > 0;
-
-                    foreach (var ev in personalEvents)
+                    var cap = ev;
+                    var item = new ToolStripMenuItem($"{GetLegacyIcon(cap.Type)} [{cap.GetTypeLabel()}]  {cap.Title}");
+                    item.Click += (ss, ee) =>
                     {
-                        var capturedEv = ev;
-                        string prefix = capturedEv.Type switch
+                        if (MessageBox.Show($"Remove \"{cap.Title}\" from {_fullDate:MMMM dd, yyyy}?",
+                                            "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
-                            EventType.Class => "📘",
-                            EventType.Exam => "📝",
-                            EventType.Deadline => "📌",
-                            EventType.Consultation => "🩺",
-                            EventType.Cancelled => "🚫",
-                            _ => "📅",
-                        };
-                        var item = new ToolStripMenuItem($"{prefix} [{capturedEv.GetTypeLabel()}]  {capturedEv.Title}");
-                        item.Click += (ss, ee) =>
-                        {
-                            if (MessageBox.Show(
-                                    $"Remove \"{capturedEv.Title}\" from {_fullDate:MMMM dd, yyyy}?",
-                                    "Confirm Remove",
-                                    MessageBoxButtons.YesNo,
-                                    MessageBoxIcon.Question) == DialogResult.Yes)
-                            {
-                                SharedCalendarData.RemoveStudentEvent(_fullDate, capturedEv);
-                                RefreshEventPills();
-                                DaySelected?.Invoke(_fullDate);
-                            }
-                        };
-                        mnuRemove.DropDownItems.Add(item);
-                    }
-                };
-            }
+                            if (_isStudent) SharedCalendarData.RemoveStudentEvent(_fullDate, cap);
+                            else SharedCalendarData.RemoveEvent(_fullDate, cap);
+                            RefreshEventPills();
+                            DaySelected?.Invoke(_fullDate);
+                        }
+                    };
+                    mnuRemove.DropDownItems.Add(item);
+                }
 
-            this.ContextMenuStrip = _ctxMenu;
+                foreach (var ev in faculty)
+                {
+                    var cap = ev;
+                    var item = new ToolStripMenuItem($"{cap.GetTypeIcon()} [{cap.GetTypeLabel()}]  {cap.Title}");
+                    item.Click += (ss, ee) =>
+                    {
+                        if (MessageBox.Show($"Remove \"{cap.Title}\" from {_fullDate:MMMM dd, yyyy}?",
+                                            "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            FacultyCalendarData.RemoveEvent(cap.Id);
+                            RefreshEventPills();
+                            DaySelected?.Invoke(_fullDate);
+                        }
+                    };
+                    mnuRemove.DropDownItems.Add(item);
+                }
+            };
+
+            ContextMenuStrip = _ctxMenu;
         }
 
+        private static string GetLegacyIcon(EventType t) => t switch
+        {
+            EventType.Class => "📘",
+            EventType.Exam => "📝",
+            EventType.Deadline => "📌",
+            EventType.Consultation => "🩺",
+            EventType.Cancelled => "🚫",
+            _ => "📅",
+        };
+
+        // ══════════════════════════════════════════════════════════════════════
+        //  EVENT PILLS
+        // ══════════════════════════════════════════════════════════════════════
+        public void RefreshEventPills()
+        {
+            // Remove old
+            foreach (var b in _eventPills) Controls.Remove(b);
+            _eventPills.Clear();
+            if (_btnEventsDropdown != null) { Controls.Remove(_btnEventsDropdown); _btnEventsDropdown = null; }
+            if (_btnFacultyDrop != null) { Controls.Remove(_btnFacultyDrop); _btnFacultyDrop = null; }
+
+            // ── Legacy (SharedCalendarData) events ───────────────────────────
+            var legacyEvents = SharedCalendarData.GetEventsForDate(_fullDate);
+            var personalEvents = _isStudent ? SharedCalendarData.GetStudentEventsForDate(_fullDate)
+                                            : new List<CalendarEvent>();
+            int legacyCount = legacyEvents.Count + personalEvents.Count;
+
+            if (legacyCount > 0)
+            {
+                _btnEventsDropdown = MakeGroupedDropdown($"📅 Events ({legacyCount})  ▾", Color.Maroon);
+                var capShared = new List<CalendarEvent>(legacyEvents);
+                var capPersonal = new List<CalendarEvent>(personalEvents);
+
+                _btnEventsDropdown.Click += (s, e) =>
+                {
+                    var cms = new ContextMenuStrip { Font = new Font("Segoe UI", 8.5f) };
+                    foreach (var ev in capShared)
+                    {
+                        string line = BuildEventLine(ev.GetTypeLabel(), ev.Title, ev.StartTime, ev.EndTime, ev.Room);
+                        var item = new ToolStripMenuItem(line) { ForeColor = ev.GetColor(), Enabled = false };
+                        cms.Items.Add(item);
+                    }
+                    if (capPersonal.Count > 0)
+                    {
+                        if (capShared.Count > 0) cms.Items.Add(new ToolStripSeparator());
+                        foreach (var ev in capPersonal)
+                        {
+                            string line = BuildEventLine("MY " + ev.GetTypeLabel(), ev.Title, ev.StartTime, ev.EndTime, "");
+                            cms.Items.Add(new ToolStripMenuItem(line) { ForeColor = Color.FromArgb(80, 80, 80), Enabled = false });
+                        }
+                    }
+                    cms.Show(_btnEventsDropdown, 0, _btnEventsDropdown!.Height);
+                };
+                Controls.Add(_btnEventsDropdown);
+                _btnEventsDropdown.BringToFront();
+            }
+
+            // ── Faculty (FacultyCalendarData) events ─────────────────────────
+            var facultyEvents = FacultyCalendarData.GetEventsForDate(_fullDate);
+            if (facultyEvents.Count > 0)
+            {
+                // Group by first type for colour
+                Color baseColor = facultyEvents[0].GetColor();
+
+                // Use a distinct colour per type if all same, else maroon-dark
+                bool mixed = facultyEvents.Select(ev => ev.Type).Distinct().Count() > 1;
+                Color btnColor = mixed ? Color.FromArgb(100, 8, 55) : baseColor;
+
+                string label = facultyEvents.Count == 1
+                    ? $"{facultyEvents[0].GetTypeIcon()} {TruncateStr(facultyEvents[0].Title, 18)}  ▾"
+                    : $"📅 +{facultyEvents.Count} events  ▾";
+
+                _btnFacultyDrop = MakeGroupedDropdown(label, btnColor);
+
+                // Enable drag FROM this button
+                _btnFacultyDrop.MouseDown += FacultyDrop_MouseDown;
+                _btnFacultyDrop.MouseMove += FacultyDrop_MouseMove;
+                _btnFacultyDrop.MouseUp += FacultyDrop_MouseUp;
+
+                var capFaculty = new List<FacultyCalendarEvent>(facultyEvents);
+                _btnFacultyDrop.Click += (s, e) =>
+                {
+                    var cms = new ContextMenuStrip { Font = new Font("Segoe UI", 8.5f) };
+                    foreach (var ev in capFaculty)
+                    {
+                        string line = BuildEventLine(ev.GetTypeLabel(), ev.Title, ev.StartTime, ev.EndTime, ev.Room);
+                        if (ev.IsAutoSynced) line += "  🔄";
+                        var item = new ToolStripMenuItem(line) { ForeColor = ev.GetColor(), Enabled = false };
+                        cms.Items.Add(item);
+                    }
+                    cms.Show(_btnFacultyDrop, 0, _btnFacultyDrop!.Height);
+                };
+
+                Controls.Add(_btnFacultyDrop);
+                _btnFacultyDrop.BringToFront();
+            }
+
+            RepositionPills();
+        }
+
+        // ── Drag source from faculty pill ────────────────────────────────────
+        private Point _mouseDownPt;
+
+        private void FacultyDrop_MouseDown(object? s, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left) return;
+            _mouseDownPt = e.Location;
+        }
+
+        private void FacultyDrop_MouseMove(object? s, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left) return;
+            var dist = Math.Abs(e.X - _mouseDownPt.X) + Math.Abs(e.Y - _mouseDownPt.Y);
+            if (dist < 8) return;
+
+            var events = FacultyCalendarData.GetEventsForDate(_fullDate);
+            if (events.Count == 0) return;
+
+            // If single event, drag it; otherwise show a menu to pick
+            FacultyCalendarEvent? toDrag = events.Count == 1 ? events[0] : null;
+
+            if (toDrag == null)
+            {
+                // Let user pick from context; we just capture first non-synced one
+                toDrag = events.FirstOrDefault(ev => !ev.IsAutoSynced) ?? events[0];
+            }
+
+            _dragSourceEvent = toDrag;
+            DoDragDrop(toDrag.Id, DragDropEffects.Move);
+        }
+
+        private void FacultyDrop_MouseUp(object? s, MouseEventArgs e)
+        {
+            _dragSourceEvent = null;
+        }
+
+        // ══════════════════════════════════════════════════════════════════════
+        //  QUICK ADD (Faculty types)
+        // ══════════════════════════════════════════════════════════════════════
+        private void QuickAddFacultyEvent(FacultyEventType type)
+        {
+            if (!_isCurrentMonth) return;
+            using var dlg = new PortalContents.Instructor.LMS.Calendar.AddEditFacultyEventForm(_fullDate, null, type);
+            if (dlg.ShowDialog() != DialogResult.OK || dlg.ResultEvent == null) return;
+            FacultyCalendarData.AddEvent(_fullDate, dlg.ResultEvent);
+            RefreshEventPills();
+            DaySelected?.Invoke(_fullDate);
+        }
+
+        // ══════════════════════════════════════════════════════════════════════
+        //  NOTES / ANNOUNCEMENTS (unchanged logic, kept for compat)
+        // ══════════════════════════════════════════════════════════════════════
         private void OpenAnnouncementDialog()
         {
             if (string.IsNullOrEmpty(_day) || !_isCurrentMonth) return;
-
             string existing = SharedCalendarData.InstructorAnnouncements.ContainsKey(_fullDate)
                 ? SharedCalendarData.InstructorAnnouncements[_fullDate] : "";
 
@@ -299,28 +442,18 @@ namespace PUPAcadPortal
                 FormBorderStyle = FormBorderStyle.FixedDialog,
                 MaximizeBox = false,
                 MinimizeBox = false,
-                BackColor = Color.White
+                BackColor = Color.White,
             };
             var pnlH = new Panel { Dock = DockStyle.Top, Height = 42, BackColor = Color.Maroon };
-            var lH = new Label
-            {
-                Text = "Add Announcement",
-                Dock = DockStyle.Fill,
-                Font = new Font("Segoe UI", 11f, FontStyle.Bold),
-                ForeColor = Color.White,
-                TextAlign = ContentAlignment.MiddleLeft,
-                Padding = new Padding(10, 0, 0, 0)
-            };
+            var lH = new Label { Text = "Add Announcement", Dock = DockStyle.Fill, Font = new Font("Segoe UI", 11f, FontStyle.Bold), ForeColor = Color.White, TextAlign = ContentAlignment.MiddleLeft, Padding = new Padding(10, 0, 0, 0) };
             pnlH.Controls.Add(lH);
-
-            var lbl = new Label { Text = "Announcement text:", Left = 12, Top = 54, AutoSize = true, Font = new Font("Segoe UI", 9f), ForeColor = Color.FromArgb(60, 60, 60) };
+            var lbl = new Label { Text = "Announcement text:", Left = 12, Top = 54, AutoSize = true, Font = new Font("Segoe UI", 9f) };
             var txt = new TextBox { Left = 12, Top = 73, Width = 360, Height = 56, Multiline = true, ScrollBars = ScrollBars.Vertical, Text = existing, Font = new Font("Segoe UI", 9f) };
             var btnOk = new Button { Text = "Save", Left = 188, Top = 138, Width = 90, Height = 30, BackColor = Color.Maroon, ForeColor = Color.White, FlatStyle = FlatStyle.Flat, DialogResult = DialogResult.OK };
+            var btnCn = new Button { Text = "Cancel", Left = 286, Top = 138, Width = 90, Height = 30, FlatStyle = FlatStyle.Flat, DialogResult = DialogResult.Cancel };
             btnOk.FlatAppearance.BorderSize = 0;
-            var btnCnl = new Button { Text = "Cancel", Left = 286, Top = 138, Width = 90, Height = 30, FlatStyle = FlatStyle.Flat, DialogResult = DialogResult.Cancel };
-            frm.Controls.AddRange(new Control[] { pnlH, lbl, txt, btnOk, btnCnl });
-            frm.AcceptButton = btnOk;
-            frm.CancelButton = btnCnl;
+            frm.Controls.AddRange(new Control[] { pnlH, lbl, txt, btnOk, btnCn });
+            frm.AcceptButton = btnOk; frm.CancelButton = btnCn;
 
             if (frm.ShowDialog() == DialogResult.OK)
             {
@@ -338,12 +471,8 @@ namespace PUPAcadPortal
         {
             string title = SharedCalendarData.InstructorAnnouncements.ContainsKey(_fullDate)
                 ? SharedCalendarData.InstructorAnnouncements[_fullDate] : "";
-
-            if (MessageBox.Show(
-                    $"Remove the announcement for {_fullDate:MMMM dd, yyyy}?\n\n\"{title}\"",
-                    "Confirm Remove",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show($"Remove the announcement for {_fullDate:MMMM dd, yyyy}?\n\n\"{title}\"",
+                    "Confirm Remove", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 SharedCalendarData.InstructorAnnouncements.Remove(_fullDate);
                 SharedCalendarData.SaveData();
@@ -352,198 +481,30 @@ namespace PUPAcadPortal
             }
         }
 
+        // Legacy QuickAddEvent (kept so existing references don't break)
         private void QuickAddEvent(EventType type)
         {
             if (!_isCurrentMonth) return;
-
             using var dlg = new AddEventForm(_fullDate, type);
             if (dlg.ShowDialog() != DialogResult.OK || dlg.CreatedEvent == null) return;
-
-            if (_isStudent)
-                SharedCalendarData.AddStudentEvent(_fullDate, dlg.CreatedEvent);
-            else
-                SharedCalendarData.AddEvent(_fullDate, dlg.CreatedEvent);
-
+            if (_isStudent) SharedCalendarData.AddStudentEvent(_fullDate, dlg.CreatedEvent);
+            else SharedCalendarData.AddEvent(_fullDate, dlg.CreatedEvent);
             RefreshEventPills();
             DaySelected?.Invoke(_fullDate);
         }
 
-        public void RefreshEventPills()
-        {
-            foreach (var btn in _eventPills) this.Controls.Remove(btn);
-            _eventPills.Clear();
-
-            if (_btnEventsDropdown != null) { this.Controls.Remove(_btnEventsDropdown); _btnEventsDropdown = null; }
-
-            var sharedEvents = SharedCalendarData.GetEventsForDate(_fullDate);
-            var personalEvents = _isStudent
-                ? SharedCalendarData.GetStudentEventsForDate(_fullDate)
-                : new System.Collections.Generic.List<CalendarEvent>();
-
-            int totalCount = sharedEvents.Count + personalEvents.Count;
-
-            if (totalCount > 0)
-            {
-                _btnEventsDropdown = MakeGroupedDropdown(
-                    $"📅 Events ({totalCount})  ▾",
-                    Color.Maroon);
-
-                var capturedShared = new System.Collections.Generic.List<CalendarEvent>(sharedEvents);
-                var capturedPersonal = new System.Collections.Generic.List<CalendarEvent>(personalEvents);
-
-                _btnEventsDropdown.Click += (s, e) =>
-                {
-                    var cms = new ContextMenuStrip();
-                    cms.Font = new Font("Segoe UI", 8.5f);
-
-                    foreach (var ev in capturedShared)
-                    {
-                        string line = $"[{ev.GetTypeLabel()}]  {ev.Title}";
-                        if (!string.IsNullOrEmpty(ev.StartTime))
-                            line += $"  •  {ev.StartTime}" + (string.IsNullOrEmpty(ev.EndTime) ? "" : "–" + ev.EndTime);
-                        if (!string.IsNullOrEmpty(ev.Room))
-                            line += $"  •  Rm {ev.Room}";
-                        var item = new ToolStripMenuItem(line);
-                        item.ForeColor = ev.GetColor();
-                        item.Enabled = false;
-                        cms.Items.Add(item);
-                    }
-
-                    if (capturedPersonal.Count > 0)
-                    {
-                        if (capturedShared.Count > 0)
-                            cms.Items.Add(new ToolStripSeparator());
-                        foreach (var ev in capturedPersonal)
-                        {
-                            string line = $" [MY {ev.GetTypeLabel()}]  {ev.Title}";
-                            if (!string.IsNullOrEmpty(ev.StartTime))
-                                line += $"  •  {ev.StartTime}" + (string.IsNullOrEmpty(ev.EndTime) ? "" : "–" + ev.EndTime);
-                            var item = new ToolStripMenuItem(line);
-                            item.ForeColor = Color.FromArgb(80, 80, 80);
-                            item.Enabled = false;
-                            cms.Items.Add(item);
-                        }
-                    }
-
-                    cms.Show(_btnEventsDropdown, 0, _btnEventsDropdown.Height);
-                };
-
-                this.Controls.Add(_btnEventsDropdown);
-                _btnEventsDropdown.BringToFront();
-            }
-
-            RepositionPills();
-        }
-
-        private void ShowEventDetails(CalendarEvent ev, bool isPersonal)
-        {
-            string header = isPersonal ? "[MY EVENT]" : $"[{ev.GetTypeLabel()}]";
-            string msg = $"{header}  {ev.Title}\n";
-            if (!string.IsNullOrEmpty(ev.StartTime))
-                msg += $"Time: {ev.StartTime}" + (string.IsNullOrEmpty(ev.EndTime) ? "" : $" – {ev.EndTime}") + "\n";
-            if (!string.IsNullOrEmpty(ev.Room))
-                msg += $"Room: {ev.Room}\n";
-            if (!string.IsNullOrEmpty(ev.Description))
-                msg += $"\n{ev.Description}";
-
-            MessageBox.Show(msg.Trim(),
-                _fullDate.ToString("MMMM dd, yyyy"),
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private static Color BlendWithWhite(Color c, float ratio)
-        {
-            ratio = Math.Max(0f, Math.Min(1f, ratio));
-            return Color.FromArgb(
-                (int)(c.R + (255 - c.R) * (1f - ratio)),
-                (int)(c.G + (255 - c.G) * (1f - ratio)),
-                (int)(c.B + (255 - c.B) * (1f - ratio)));
-        }
-
-        private Button MakeGroupedDropdown(string label, Color backColor)
-        {
-            float brightness = (backColor.R * 299 + backColor.G * 587 + backColor.B * 114) / 1000f;
-            Color fg = brightness < 128 ? Color.White : Color.FromArgb(30, 30, 30);
-
-            var btn = new Button
-            {
-                AutoSize = false,
-                Text = label,
-                Font = new Font("Segoe UI", 7.5f, FontStyle.Regular),
-                ForeColor = fg,
-                BackColor = backColor,
-                Size = new Size(Math.Max(10, this.Width - 4), 20),
-                TextAlign = ContentAlignment.MiddleLeft,
-                Padding = new Padding(5, 0, 4, 0),
-                Cursor = Cursors.Hand,
-                FlatStyle = FlatStyle.Flat,
-                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
-                UseVisualStyleBackColor = false,
-            };
-            btn.FlatAppearance.BorderSize = 0;
-            btn.FlatAppearance.MouseOverBackColor = ControlPaint.Dark(backColor, 0.10f);
-            return btn;
-        }
-
-        private Button MakePill(string text, Color back, bool isPersonal = false)
-        {
-            float brightness = (back.R * 299 + back.G * 587 + back.B * 114) / 1000f;
-            Color fg = isPersonal
-                ? Color.FromArgb(40, 40, 40)
-                : (brightness < 128 ? Color.White : Color.FromArgb(30, 30, 30));
-
-            var btn = new Button
-            {
-                AutoSize = false,
-                AutoEllipsis = true,
-                Text = text + "  ▾",
-                Font = new Font("Segoe UI", 6.8f, isPersonal ? FontStyle.Italic : FontStyle.Regular),
-                ForeColor = fg,
-                BackColor = back,
-                Size = new Size(this.Width - 4, 17),
-                TextAlign = ContentAlignment.MiddleLeft,
-                Padding = new Padding(3, 0, 0, 0),
-                Cursor = Cursors.Hand,
-                FlatStyle = FlatStyle.Flat,
-                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
-                UseVisualStyleBackColor = false,
-            };
-            btn.FlatAppearance.BorderSize = 0;
-            btn.FlatAppearance.MouseOverBackColor = ControlPaint.Dark(back, 0.12f);
-            return btn;
-        }
-
-        private void RepositionPills()
-        {
-            // Day number row ends at y=34 (top=4, height=28, gap=2)
-            int y = 34;
-
-            if (_btnEventsDropdown != null)
-            {
-                _btnEventsDropdown.Location = new Point(2, y);
-                _btnEventsDropdown.Width = Math.Max(10, this.Width - 4);
-                y += 22;
-            }
-
-            if (_btnNoteDropdown != null)
-            {
-                _btnNoteDropdown.Location = new Point(2, y);
-                _btnNoteDropdown.Width = Math.Max(10, this.Width - 4);
-                y += 22;
-            }
-
-            if (lblNote != null) lblNote.Visible = false;
-            if (lblAnnouncement != null) lblAnnouncement.Visible = false;
-        }
-
+        // ══════════════════════════════════════════════════════════════════════
+        //  NOTES
+        // ══════════════════════════════════════════════════════════════════════
         private void LoadNote()
         {
             if (lblNote == null) return;
             lblNote.Visible = false;
+            if (_btnNoteDropdown != null) { Controls.Remove(_btnNoteDropdown); _btnNoteDropdown = null; }
 
-            if (_btnNoteDropdown != null) { this.Controls.Remove(_btnNoteDropdown); _btnNoteDropdown = null; }
-
-            var dict = _isStudent ? SharedCalendarData.StudentNotes : PUPAcadPortal.PortalContents.Instructor.LMS.CalendarContentInst.notesDict;
+            var dict = _isStudent
+                ? SharedCalendarData.StudentNotes
+                : PortalContents.Instructor.LMS.Calendar.CalendarContentInst.notesDict;
             bool has = dict.ContainsKey(_fullDate) && !string.IsNullOrWhiteSpace(dict[_fullDate]);
 
             if (has)
@@ -552,18 +513,16 @@ namespace PUPAcadPortal
                 _btnNoteDropdown = MakeGroupedDropdown("🗒 Note  ▾", Color.FromArgb(80, 80, 80));
                 _btnNoteDropdown.Click += (s, e) =>
                 {
-                    var cms = new ContextMenuStrip();
-                    cms.Font = new Font("Segoe UI", 8.5f);
-                    string preview = noteText.Length > 60 ? noteText.Substring(0, 57) + "…" : noteText;
-                    cms.Items.Add(new ToolStripMenuItem(preview) { Enabled = false, ForeColor = Color.FromArgb(50, 50, 50) });
+                    var cms = new ContextMenuStrip { Font = new Font("Segoe UI", 8.5f) };
+                    string p = noteText.Length > 60 ? noteText[..57] + "…" : noteText;
+                    cms.Items.Add(new ToolStripMenuItem(p) { Enabled = false, ForeColor = Color.FromArgb(50, 50, 50) });
                     cms.Items.Add(new ToolStripSeparator());
                     cms.Items.Add(new ToolStripMenuItem("✏  Edit Note", null, (ss, ee) => OpenNotesDialog()));
-                    cms.Show(_btnNoteDropdown, 0, _btnNoteDropdown.Height);
+                    cms.Show(_btnNoteDropdown, 0, _btnNoteDropdown!.Height);
                 };
-                this.Controls.Add(_btnNoteDropdown);
+                Controls.Add(_btnNoteDropdown);
                 _btnNoteDropdown.BringToFront();
             }
-
             RepositionPills();
         }
 
@@ -577,7 +536,9 @@ namespace PUPAcadPortal
         private void OpenNotesDialog()
         {
             if (string.IsNullOrEmpty(_day) || !_isCurrentMonth) return;
-            var dict = _isStudent ? SharedCalendarData.StudentNotes : PUPAcadPortal.PortalContents.Instructor.LMS.CalendarContentInst.notesDict;
+            var dict = _isStudent
+                ? SharedCalendarData.StudentNotes
+                : PortalContents.Instructor.LMS.Calendar.CalendarContentInst.notesDict;
             string existing = dict.ContainsKey(_fullDate) ? dict[_fullDate] : "";
 
             using var form = new AddNotesForm(_fullDate, existing);
@@ -599,6 +560,64 @@ namespace PUPAcadPortal
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        // ══════════════════════════════════════════════════════════════════════
+        //  LAYOUT HELPERS
+        // ══════════════════════════════════════════════════════════════════════
+        private void RepositionPills()
+        {
+            int y = 34; // below the day-number circle
+
+            if (_btnEventsDropdown != null)
+            {
+                _btnEventsDropdown.Location = new Point(2, y);
+                _btnEventsDropdown.Width = Math.Max(10, Width - 4);
+                y += 22;
+            }
+
+            if (_btnFacultyDrop != null)
+            {
+                _btnFacultyDrop.Location = new Point(2, y);
+                _btnFacultyDrop.Width = Math.Max(10, Width - 4);
+                y += 22;
+            }
+
+            if (_btnNoteDropdown != null)
+            {
+                _btnNoteDropdown.Location = new Point(2, y);
+                _btnNoteDropdown.Width = Math.Max(10, Width - 4);
+            }
+
+            if (lblNote != null) lblNote.Visible = false;
+            if (lblAnnouncement != null) lblAnnouncement.Visible = false;
+        }
+
+        private Button MakeGroupedDropdown(string label, Color backColor)
+        {
+            float brightness = (backColor.R * 299f + backColor.G * 587f + backColor.B * 114f) / 1000f;
+            Color fg = brightness < 128 ? Color.White : Color.FromArgb(30, 30, 30);
+            var btn = new Button
+            {
+                AutoSize = false,
+                Text = label,
+                Font = new Font("Segoe UI", 7.5f),
+                ForeColor = fg,
+                BackColor = backColor,
+                Size = new Size(Math.Max(10, Width - 4), 20),
+                TextAlign = ContentAlignment.MiddleLeft,
+                Padding = new Padding(5, 0, 4, 0),
+                Cursor = Cursors.Hand,
+                FlatStyle = FlatStyle.Flat,
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
+                UseVisualStyleBackColor = false,
+            };
+            btn.FlatAppearance.BorderSize = 0;
+            btn.FlatAppearance.MouseOverBackColor = ControlPaint.Dark(backColor, 0.10f);
+            return btn;
+        }
+
+        // ══════════════════════════════════════════════════════════════════════
+        //  MOUSE / PAINT
+        // ══════════════════════════════════════════════════════════════════════
         private void Cell_Click(object sender, EventArgs e)
         {
             if (!_isCurrentMonth) return;
@@ -614,14 +633,69 @@ namespace PUPAcadPortal
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            Color borderColor = (_isSelected || (_isHovered && _isCurrentMonth))
-                ? Color.Maroon
-                : Color.FromArgb(210, 210, 210);
-            int penWidth = (_isSelected || (_isHovered && _isCurrentMonth)) ? 2 : 1;
-            using (var pen = new Pen(borderColor, penWidth))
-                e.Graphics.DrawRectangle(pen, 0, 0, this.Width - 1, this.Height - 1);
+
+            Color borderColor;
+            int penWidth;
+
+            if (_isDragOver)
+            {
+                borderColor = Color.FromArgb(21, 101, 192);
+                penWidth = 2;
+                e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(15, 21, 101, 192)),
+                    ClientRectangle);
+            }
+            else if (_isSelected || (_isHovered && _isCurrentMonth))
+            {
+                borderColor = Color.Maroon;
+                penWidth = 2;
+            }
+            else
+            {
+                borderColor = Color.FromArgb(210, 210, 210);
+                penWidth = 1;
+            }
+
+            using var pen = new Pen(borderColor, penWidth);
+            e.Graphics.DrawRectangle(pen, 0, 0, Width - 1, Height - 1);
         }
 
+        // ── Utilities ─────────────────────────────────────────────────────────
+        private static string BuildEventLine(string typeLabel, string title,
+                                             string start, string end, string room)
+        {
+            string line = $"[{typeLabel}]  {title}";
+            if (!string.IsNullOrEmpty(start))
+                line += $"  •  {start}" + (string.IsNullOrEmpty(end) ? "" : "–" + end);
+            if (!string.IsNullOrEmpty(room))
+                line += $"  •  Rm {room}";
+            return line;
+        }
+
+        private static string TruncateStr(string s, int max) =>
+            s.Length <= max ? s : s[..max] + "…";
+
+        private static Color BlendWithWhite(Color c, float ratio)
+        {
+            ratio = Math.Clamp(ratio, 0f, 1f);
+            return Color.FromArgb(
+                (int)(c.R + (255 - c.R) * (1f - ratio)),
+                (int)(c.G + (255 - c.G) * (1f - ratio)),
+                (int)(c.B + (255 - c.B) * (1f - ratio)));
+        }
+
+        private void ShowEventDetails(CalendarEvent ev, bool isPersonal)
+        {
+            string header = isPersonal ? "[MY EVENT]" : $"[{ev.GetTypeLabel()}]";
+            string msg = $"{header}  {ev.Title}\n";
+            if (!string.IsNullOrEmpty(ev.StartTime))
+                msg += $"Time: {ev.StartTime}" + (string.IsNullOrEmpty(ev.EndTime) ? "" : $" – {ev.EndTime}") + "\n";
+            if (!string.IsNullOrEmpty(ev.Room)) msg += $"Room: {ev.Room}\n";
+            if (!string.IsNullOrEmpty(ev.Description)) msg += $"\n{ev.Description}";
+            MessageBox.Show(msg.Trim(), _fullDate.ToString("MMMM dd, yyyy"),
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        // ── Designer stubs ────────────────────────────────────────────────────
         private void UrDay_Load(object sender, EventArgs e) { }
         private void panel1_Click(object sender, EventArgs e) => Cell_Click(sender, e);
         private void panel1_Paint(object sender, PaintEventArgs e) { }
