@@ -4,13 +4,14 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace PUPAcadPortal
+namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 {
     public partial class StudentActivityDashboard : UserControl
     {
         public event Action<StudentCourse> OnOpenCourse;
 
-        private List<StudentCourse> _courses;
+        private List<StudentCourse> _courses = new();
+        private List<StudentNotification> _notifications = new();
         private System.Windows.Forms.Timer _searchTimer;
 
         public StudentActivityDashboard()
@@ -18,40 +19,58 @@ namespace PUPAcadPortal
             InitializeComponent();
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
 
-            // Debounced search to prevent lag
             _searchTimer = new System.Windows.Forms.Timer { Interval = 180 };
             _searchTimer.Tick += (s, e) => { _searchTimer.Stop(); RenderCards(); };
 
             LoadSampleData();
+            LoadSampleNotifications();
             UpdateStats();
 
+            lblStudentName.Text = "Juan Dela Cruz";
+
             this.Load += (s, e) => RenderCards();
-            flpCards.SizeChanged += (s, e) => RenderCards();
+            flpCards.SizeChanged += flpCards_SizeChanged;
         }
 
-        
 
-        //  Sample data 
         private void LoadSampleData()
         {
             _courses = new List<StudentCourse>
             {
                 new StudentCourse { Id=1, Name="Introduction to Programming 1", Code="ITP 101",
-                    Instructor="Prof. Juan dela Cruz",
+                    Instructor="Prof. Juan dela Cruz", Schedule="MWF 7:30–9:00 AM",
                     ActivityCount=8, PendingCount=2, SubmittedCount=5, OverdueCount=1 },
                 new StudentCourse { Id=2, Name="Principles of Accounting", Code="ACC 201",
-                    Instructor="Prof. Maria Santos",
+                    Instructor="Prof. Maria Santos", Schedule="TTH 10:00–11:30 AM",
                     ActivityCount=5, PendingCount=1, SubmittedCount=4, OverdueCount=0 },
                 new StudentCourse { Id=3, Name="Human Computer Interactions", Code="HCI 301",
-                    Instructor="Prof. Ana Reyes",
+                    Instructor="Prof. Ana Reyes", Schedule="MWF 1:00–2:30 PM",
                     ActivityCount=5, PendingCount=1, SubmittedCount=4, OverdueCount=0 },
                 new StudentCourse { Id=4, Name="Programming and Technologies 1", Code="PT 101",
-                    Instructor="Prof. Carlos Bautista",
+                    Instructor="Prof. Carlos Bautista", Schedule="TTH 1:00–2:30 PM",
                     ActivityCount=10, PendingCount=1, SubmittedCount=8, OverdueCount=1 },
+                new StudentCourse { Id=5, Name="Data Structures and Algorithms", Code="DSA 201",
+                    Instructor="Prof. Leo Pascual", Schedule="MWF 3:00–4:30 PM",
+                    ActivityCount=6, PendingCount=3, SubmittedCount=3, OverdueCount=0 },
             };
         }
 
-        //  Stats bar 
+        private void LoadSampleNotifications()
+        {
+            _notifications = new List<StudentNotification>
+            {
+                new StudentNotification { Kind="returned",     Title="Activity Returned",
+                    Body="Prof. Santos returned 'Integrating Methodologies' with remarks.",
+                    Time=DateTime.Now.AddMinutes(-12) },
+                new StudentNotification { Kind="deadline",     Title="Deadline Reminder",
+                    Body="'Programming Lab Activity 1' is due tomorrow.", Time=DateTime.Now.AddHours(-2) },
+                new StudentNotification { Kind="new_activity", Title="New Activity Posted",
+                    Body="Prof. Pascual posted 'Sorting Algorithms Quiz'.", Time=DateTime.Now.AddHours(-5) },
+            };
+            lblNotifCount.Text = _notifications.Count.ToString();
+        }
+
+
         private void UpdateStats()
         {
             int tot = 0, pend = 0, sub = 0, over = 0;
@@ -68,7 +87,7 @@ namespace PUPAcadPortal
             lblOverdueValue.Text = over.ToString();
         }
 
-        //  Card rendering 
+
         private void RenderCards()
         {
             if (flpCards.ClientSize.Width < 100) return;
@@ -77,13 +96,14 @@ namespace PUPAcadPortal
             flpCards.Controls.Clear();
 
             string search = txtSearch?.Text?.Trim().ToLower() ?? "";
-            int padding = flpCards.Padding.Left + flpCards.Padding.Right;
-            int cols = flpCards.ClientSize.Width >= 1200 ? 3 :
-                             flpCards.ClientSize.Width >= 700 ? 2 : 1;
-            int gap = 12;
-            int avail = flpCards.ClientSize.Width - padding - (gap * 2 * cols) - 4;
-            int cardW = Math.Max(280, avail / cols);
-            int cardH = 228;
+
+            int pad = flpCards.Padding.Left + flpCards.Padding.Right;
+            int cols = flpCards.ClientSize.Width >= 1300 ? 3
+                      : flpCards.ClientSize.Width >= 800 ? 2 : 1;
+            int gap = 14;
+            int avail = flpCards.ClientSize.Width - pad - (gap * 2 * cols) - 4;
+            int cardW = Math.Max(300, avail / cols);
+            int cardH = 240;
 
             foreach (var c in _courses)
             {
@@ -101,44 +121,48 @@ namespace PUPAcadPortal
 
         private Panel BuildCourseCard(StudentCourse course, int cardW, int cardH)
         {
-            //  Outer card shell 
             var card = new Panel
             {
                 Width = cardW,
                 Height = cardH,
                 BackColor = Color.White,
-                Margin = new Padding(8),
+                Margin = new Padding(10),
                 Cursor = Cursors.Hand
             };
 
-            // Subtle border via Paint
             card.Paint += (s, e) =>
             {
                 var g = e.Graphics;
                 g.SmoothingMode = SmoothingMode.AntiAlias;
-                using var pen = new Pen(Color.FromArgb(220, 220, 220));
+                using var pen = new Pen(Color.FromArgb(215, 215, 215));
                 g.DrawRectangle(pen, 0, 0, card.Width - 1, card.Height - 1);
             };
 
-            //  Maroon header strip 
             var pnlTop = new Panel
             {
                 Location = new Point(0, 0),
-                Size = new Size(cardW, 70),
+                Size = new Size(cardW, 76),
                 BackColor = Color.Maroon
             };
 
-            // Overdue badge (top-right)
+            pnlTop.Paint += (s, e) =>
+            {
+                using var brush = new LinearGradientBrush(
+                    new Rectangle(0, 0, pnlTop.Width, pnlTop.Height),
+                    Color.Maroon, Color.FromArgb(100, 0, 0), 135F);
+                e.Graphics.FillRectangle(brush, 0, 0, pnlTop.Width, pnlTop.Height);
+            };
+
             if (course.OverdueCount > 0)
             {
                 pnlTop.Controls.Add(new Label
                 {
-                    Text = $"⚠ {course.OverdueCount} Overdue",
+                    Text = $"⚠  {course.OverdueCount} Overdue",
                     BackColor = Color.FromArgb(200, 30, 30),
                     ForeColor = Color.White,
                     Font = new Font("Segoe UI", 7.5F, FontStyle.Bold),
-                    Location = new Point(cardW - 88, 9),
-                    Size = new Size(82, 18),
+                    Location = new Point(cardW - 94, 8),
+                    Size = new Size(88, 20),
                     TextAlign = ContentAlignment.MiddleCenter
                 });
             }
@@ -146,36 +170,41 @@ namespace PUPAcadPortal
             pnlTop.Controls.Add(new Label
             {
                 Text = course.Name,
-                Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+                Font = new Font("Segoe UI", 10.5F, FontStyle.Bold),
                 ForeColor = Color.White,
                 Location = new Point(12, 8),
-                Size = new Size(course.OverdueCount > 0 ? cardW - 106 : cardW - 24, 22),
+                Size = new Size(course.OverdueCount > 0 ? cardW - 114 : cardW - 24, 24),
                 AutoEllipsis = true
             });
-
             pnlTop.Controls.Add(new Label
             {
                 Text = course.Code,
                 Font = new Font("Segoe UI", 8F),
-                ForeColor = Color.FromArgb(220, 180, 180),
-                Location = new Point(12, 38),
+                ForeColor = Color.FromArgb(215, 175, 175),
+                Location = new Point(12, 36),
+                AutoSize = true
+            });
+            pnlTop.Controls.Add(new Label
+            {
+                Text = "🕐  " + course.Schedule,
+                Font = new Font("Segoe UI", 7.5F),
+                ForeColor = Color.FromArgb(200, 160, 160),
+                Location = new Point(12, 54),
                 AutoSize = true
             });
 
-            //  Instructor line 
             var lblInstr = new Label
             {
-                Text = "👤 " + course.Instructor,
-                Font = new Font("Segoe UI", 8F),
-                ForeColor = Color.FromArgb(85, 85, 85),
-                Location = new Point(12, 78),
-                Size = new Size(cardW - 24, 16)
+                Text = "👤  " + course.Instructor,
+                Font = new Font("Segoe UI", 8.5F),
+                ForeColor = Color.FromArgb(75, 75, 75),
+                Location = new Point(12, 84),
+                Size = new Size(cardW - 24, 18)
             };
 
-            //  Stats row 
             var statsData = new (string val, string label, Color clr)[]
             {
-                (course.ActivityCount.ToString(),  "Activities", Color.FromArgb(128, 0, 0)),
+                (course.ActivityCount.ToString(),  "Activities", Color.FromArgb(128, 0,   0)),
                 (course.PendingCount.ToString(),   "Pending",    Color.OrangeRed),
                 (course.SubmittedCount.ToString(), "Submitted",  Color.ForestGreen),
             };
@@ -187,9 +216,9 @@ namespace PUPAcadPortal
                 card.Controls.Add(new Label
                 {
                     Text = statsData[i].val,
-                    Font = new Font("Segoe UI", 18F, FontStyle.Bold),
+                    Font = new Font("Segoe UI", 20F, FontStyle.Bold),
                     ForeColor = statsData[i].clr,
-                    Location = new Point(x, 100),
+                    Location = new Point(x, 108),
                     Size = new Size(colW, 30),
                     TextAlign = ContentAlignment.MiddleCenter
                 });
@@ -198,30 +227,28 @@ namespace PUPAcadPortal
                     Text = statsData[i].label,
                     Font = new Font("Segoe UI", 7.5F),
                     ForeColor = Color.Gray,
-                    Location = new Point(x, 130),
+                    Location = new Point(x, 138),
                     Size = new Size(colW, 14),
                     TextAlign = ContentAlignment.MiddleCenter
                 });
             }
 
-            //  Divider 
             var divider = new Panel
             {
-                Location = new Point(12, 150),
+                Location = new Point(12, 160),
                 Size = new Size(cardW - 24, 1),
-                BackColor = Color.FromArgb(230, 230, 230)
+                BackColor = Color.FromArgb(232, 232, 232)
             };
 
-            //  View Activities button 
-            int btnW = Math.Min(160, cardW - 24);
+            int btnW = Math.Min(164, cardW - 24);
             var btnView = new buttonRounded
             {
-                Text = "View Activities",
-                Location = new Point(cardW - btnW - 12, 160),
-                Size = new Size(btnW, 34),
+                Text = "View Activities  →",
+                Location = new Point(cardW - btnW - 12, 168),
+                Size = new Size(btnW, 36),
                 BackColor = Color.Maroon,
                 ForeColor = Color.White,
-                BorderRadius = 17,
+                BorderRadius = 18,
                 Tag = course,
                 FlatStyle = FlatStyle.Flat,
                 Font = new Font("Segoe UI", 9F, FontStyle.Bold),
@@ -230,15 +257,149 @@ namespace PUPAcadPortal
             btnView.FlatAppearance.BorderSize = 0;
             btnView.Click += (s, e) => OnOpenCourse?.Invoke(course);
 
+            card.MouseEnter += (s, e) => { card.BackColor = Color.FromArgb(252, 248, 248); };
+            card.MouseLeave += (s, e) => { card.BackColor = Color.White; };
+
             card.Controls.AddRange(new Control[] { pnlTop, lblInstr, divider, btnView });
             return card;
         }
 
-        //  Search (debounced) 
+
+        private void pnlNotifBadge_Click(object sender, EventArgs e)
+        {
+            ShowNotificationFlyout();
+        }
+
+        private void ShowNotificationFlyout()
+        {
+            var flyout = new Form
+            {
+                Text = "",
+                Size = new Size(400, 360),
+                FormBorderStyle = FormBorderStyle.None,
+                StartPosition = FormStartPosition.Manual,
+                BackColor = Color.White,
+                ShowInTaskbar = false,
+                TopMost = true
+            };
+
+            var bellScreenPos = pnlNotifBadge.PointToScreen(Point.Empty);
+            flyout.Location = new Point(bellScreenPos.X - 350, bellScreenPos.Y + 36);
+
+            var pnlH = new Panel { Dock = DockStyle.Top, Height = 44, BackColor = Color.Maroon };
+            pnlH.Controls.Add(new Label
+            {
+                Text = "🔔  Notifications",
+                Font = new Font("Segoe UI", 11F, FontStyle.Bold),
+                ForeColor = Color.White,
+                Dock = DockStyle.Fill,
+                TextAlign = ContentAlignment.MiddleLeft,
+                Padding = new Padding(14, 0, 0, 0)
+            });
+            flyout.Controls.Add(pnlH);
+
+            var flp = new FlowLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                FlowDirection = FlowDirection.TopDown,
+                WrapContents = false,
+                AutoScroll = true,
+                Padding = new Padding(8)
+            };
+
+            foreach (var n in _notifications)
+            {
+                var row = new Panel
+                {
+                    Width = 368,
+                    Height = 68,
+                    BackColor = n.IsRead ? Color.White : Color.FromArgb(254, 248, 248),
+                    Margin = new Padding(0, 0, 0, 4),
+                    Padding = new Padding(10, 8, 10, 8)
+                };
+                row.Paint += (s, e) =>
+                {
+                    using var pen = new Pen(Color.FromArgb(230, 230, 230));
+                    e.Graphics.DrawRectangle(pen, 0, 0, row.Width - 1, row.Height - 1);
+                };
+
+                string icon = n.Kind switch
+                {
+                    "returned" => "↩",
+                    "deadline" => "⏰",
+                    "feedback" => "📝",
+                    _ => "📋"
+                };
+                Color iconColor = n.Kind switch
+                {
+                    "returned" => Color.FromArgb(30, 60, 180),
+                    "deadline" => Color.OrangeRed,
+                    "feedback" => Color.Purple,
+                    _ => Color.Maroon
+                };
+
+                row.Controls.Add(new Label
+                {
+                    Text = icon,
+                    Font = new Font("Segoe UI", 14F),
+                    ForeColor = iconColor,
+                    Location = new Point(8, 12),
+                    Size = new Size(28, 28),
+                    TextAlign = ContentAlignment.MiddleCenter
+                });
+                row.Controls.Add(new Label
+                {
+                    Text = n.Title,
+                    Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                    ForeColor = Color.FromArgb(30, 30, 30),
+                    Location = new Point(42, 8),
+                    Size = new Size(300, 18)
+                });
+                row.Controls.Add(new Label
+                {
+                    Text = n.Body,
+                    Font = new Font("Segoe UI", 8F),
+                    ForeColor = Color.FromArgb(80, 80, 80),
+                    Location = new Point(42, 26),
+                    Size = new Size(300, 28),
+                    AutoEllipsis = true
+                });
+                row.Controls.Add(new Label
+                {
+                    Text = FormatTimeAgo(n.Time),
+                    Font = new Font("Segoe UI", 7.5F, FontStyle.Italic),
+                    ForeColor = Color.Gray,
+                    Location = new Point(42, 50),
+                    AutoSize = true
+                });
+
+                flp.Controls.Add(row);
+                n.IsRead = true;
+            }
+
+            lblNotifCount.Visible = false;
+            flyout.Controls.Add(flp);
+
+            flyout.Deactivate += (s, e) => flyout.Close();
+            flyout.Show(this);
+        }
+
+        private static string FormatTimeAgo(DateTime t)
+        {
+            var span = DateTime.Now - t;
+            if (span.TotalMinutes < 1) return "Just now";
+            if (span.TotalMinutes < 60) return $"{(int)span.TotalMinutes}m ago";
+            if (span.TotalHours < 24) return $"{(int)span.TotalHours}h ago";
+            return t.ToString("MMM dd");
+        }
+
+
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
             _searchTimer.Stop();
             _searchTimer.Start();
         }
+
+        private void flpCards_SizeChanged(object sender, EventArgs e) => RenderCards();
     }
 }

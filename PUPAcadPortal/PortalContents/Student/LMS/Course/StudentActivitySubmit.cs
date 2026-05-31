@@ -5,7 +5,7 @@ using System.Drawing.Drawing2D;
 using System.IO;
 using System.Windows.Forms;
 
-namespace PUPAcadPortal
+namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 {
     public partial class StudentActivitySubmit : UserControl
     {
@@ -13,24 +13,31 @@ namespace PUPAcadPortal
 
         private readonly StudentActivityItem _activity;
         private readonly StudentCourse _course;
-        // Quiz state
+
         private int _currentQ = 0;
         private Dictionary<int, string> _answers = new();
-        // Timer / deadline
+
         private System.Windows.Forms.Timer _countdownTimer;
         private System.Windows.Forms.Timer _autosaveTimer;
-        // File upload
+
         private string _uploadedFilePath = "";
         private string _uploadedFileName = "";
-        // Controls built in code (no Designer involvement for dynamic sections)
+        private long _uploadedFileSize = 0;
+
         private Panel _pnlContent;
         private Label _lblDeadlineTimer;
+        private TextBox _txtEssay;
+        private Label _lblWordCount;
+        private Label _lblAutosave;
+        private Label _lblFileName;
+        private Label _lblFileSize;
+        private buttonRounded _btnRemoveFile;
 
         public StudentActivitySubmit(StudentActivityItem activity, StudentCourse course)
         {
             _activity = activity;
             _course = course;
-            _answers = new Dictionary<int, string>(_activity.Answers ?? new());
+            _answers = new Dictionary<int, string>(activity.Answers ?? new());
 
             InitializeComponent();
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
@@ -39,7 +46,6 @@ namespace PUPAcadPortal
             BuildDeadlineBar();
             BuildContentArea();
 
-            // Autosave for essay (every 30 s)
             if (_activity.Type == "Essay")
             {
                 _autosaveTimer = new System.Windows.Forms.Timer { Interval = 30_000 };
@@ -49,11 +55,10 @@ namespace PUPAcadPortal
 
             StartCountdown();
         }
-        
-        // HEADER
+
+
         private void BuildHeader()
         {
-            // pnlHeader already exists from Designer; populate labels
             lblActivityTitle.Text = _activity.Title;
 
             string typeDisplay = _activity.Type switch
@@ -63,17 +68,16 @@ namespace PUPAcadPortal
                 _ => _activity.Type
             };
 
-            lblMeta.Text = $"{typeDisplay}  ·  {_activity.Points} pts  ·  Due {_activity.Deadline:MMM dd, yyyy}";
+            lblMeta.Text = $"{typeDisplay}  ·  {_activity.Points} pts  ·  Due {_activity.Deadline:MMM dd, yyyy  h:mm tt}";
 
-            // Show score + returned info in header if graded
             if (_activity.Score.HasValue)
             {
-                lblMeta.Text += $"  ·  Score: {_activity.Score}/{_activity.Points}";
+                lblMeta.Text += $"  ·  Score: {_activity.Score} / {_activity.Points}";
                 lblMeta.ForeColor = Color.FromArgb(255, 210, 210);
             }
         }
 
-        // DEADLINE COUNTDOWN BAR
+
         private void BuildDeadlineBar()
         {
             TimeSpan remaining = _activity.Deadline - DateTime.Now;
@@ -82,8 +86,8 @@ namespace PUPAcadPortal
             var pnlBar = new Panel
             {
                 Dock = DockStyle.Top,
-                Height = 32,
-                BackColor = isLate ? Color.FromArgb(180, 20, 20) : Color.FromArgb(50, 50, 50)
+                Height = 34,
+                BackColor = isLate ? Color.FromArgb(175, 20, 20) : Color.FromArgb(45, 45, 45)
             };
 
             _lblDeadlineTimer = new Label
@@ -96,12 +100,8 @@ namespace PUPAcadPortal
             };
 
             pnlBar.Controls.Add(_lblDeadlineTimer);
-
-            // Insert below pnlHeader (pnlHeader is Dock Top, so just add another Dock Top)
             Controls.Add(pnlBar);
-            pnlBar.BringToFront();
 
-            // Re-order: header on top, then deadline bar, then body
             pnlHeader.BringToFront();
             pnlBar.SendToBack();
             pnlBody.SendToBack();
@@ -112,20 +112,20 @@ namespace PUPAcadPortal
             _countdownTimer = new System.Windows.Forms.Timer { Interval = 1000 };
             _countdownTimer.Tick += (s, e) =>
             {
+                if (_lblDeadlineTimer == null || _lblDeadlineTimer.IsDisposed) return;
                 TimeSpan rem = _activity.Deadline - DateTime.Now;
-                if (_lblDeadlineTimer == null) return;
 
                 if (rem.TotalSeconds <= 0)
                 {
                     _lblDeadlineTimer.Text = "⚠  Deadline has passed — late submission";
-                    if (_lblDeadlineTimer.Parent is Panel p) p.BackColor = Color.FromArgb(180, 20, 20);
+                    if (_lblDeadlineTimer.Parent is Panel p) p.BackColor = Color.FromArgb(175, 20, 20);
                     _countdownTimer.Stop();
                 }
                 else
                 {
                     _lblDeadlineTimer.Text = FormatCountdown(rem);
                     if (_lblDeadlineTimer.Parent is Panel p)
-                        p.BackColor = rem.TotalHours < 1 ? Color.FromArgb(180, 80, 0) : Color.FromArgb(50, 50, 50);
+                        p.BackColor = rem.TotalHours < 1 ? Color.FromArgb(175, 80, 0) : Color.FromArgb(45, 45, 45);
                 }
             };
             _countdownTimer.Start();
@@ -133,129 +133,174 @@ namespace PUPAcadPortal
 
         private static string FormatCountdown(TimeSpan ts)
         {
-            if (ts.TotalDays >= 1)
-                return $"⏱  {(int)ts.TotalDays}d {ts.Hours}h {ts.Minutes}m remaining";
-            if (ts.TotalHours >= 1)
-                return $"⏱  {ts.Hours}h {ts.Minutes}m {ts.Seconds}s remaining";
-            return $"⚠  {ts.Minutes}m {ts.Seconds}s remaining";
+            if (ts.TotalDays >= 1) return $"⏱  {(int)ts.TotalDays}d {ts.Hours}h {ts.Minutes}m remaining";
+            if (ts.TotalHours >= 1) return $"⏱  {ts.Hours}h {ts.Minutes}m {ts.Seconds}s remaining";
+            return $"⚠  {ts.Minutes}m {ts.Seconds}s remaining — hurry!";
         }
 
-        // CONTENT AREA ROUTER
+
         private void BuildContentArea()
         {
             pnlBody.Controls.Clear();
-
             switch (_activity.Type)
             {
-                case "Essay":
-                    BuildEssayView();
-                    break;
-                case "Quiz":
-                case "LongQuiz":
-                    BuildQuizView();
-                    break;
-                case "FileUpload":
-                    BuildFileUploadView();
-                    break;
-                case "Recitation":
-                    BuildRecitationView();
-                    break;
-                default:
-                    BuildEssayView();
-                    break;
+                case "Essay": BuildEssayView(); break;
+                case "Quiz": case "LongQuiz": BuildQuizView(); break;
+                case "FileUpload": BuildFileUploadView(); break;
+                case "Recitation": BuildRecitationView(); break;
+                default: BuildEssayView(); break;
             }
         }
 
-        // SHARED: INSTRUCTIONS PANEL
+
         private Panel BuildInstructionsPanel(int width)
         {
             var pnl = new Panel
             {
-                BackColor = Color.FromArgb(255, 248, 225),
-                BorderStyle = BorderStyle.None,
+                BackColor = Color.FromArgb(255, 248, 224),
                 Width = width,
                 AutoSize = true,
                 MinimumSize = new Size(width, 80),
-                Padding = new Padding(14, 10, 14, 10)
+                Padding = new Padding(18, 12, 14, 12)
             };
-
             pnl.Paint += (s, e) =>
-            {
-                e.Graphics.DrawLine(new Pen(Color.FromArgb(255, 160, 0), 4), 0, 0, 0, pnl.Height);
-            };
+                e.Graphics.DrawLine(new Pen(Color.FromArgb(255, 165, 0), 5), 0, 0, 0, pnl.Height);
 
             pnl.Controls.Add(new Label
             {
                 Text = "📋  Instructions",
                 Font = new Font("Segoe UI", 9.5F, FontStyle.Bold),
-                ForeColor = Color.FromArgb(128, 80, 0),
-                Location = new Point(18, 10),
+                ForeColor = Color.FromArgb(120, 75, 0),
+                Location = new Point(22, 12),
                 AutoSize = true
             });
             pnl.Controls.Add(new Label
             {
                 Text = _activity.Instructions,
                 Font = new Font("Segoe UI", 9F),
-                ForeColor = Color.FromArgb(60, 60, 60),
-                Location = new Point(18, 34),
-                Size = new Size(width - 36, 0),
-                AutoSize = false,
-                MaximumSize = new Size(width - 36, 200)
+                ForeColor = Color.FromArgb(55, 55, 55),
+                Location = new Point(22, 34),
+                MaximumSize = new Size(width - 38, 0),
+                AutoSize = true
             });
-
             return pnl;
         }
 
-        // ESSAY VIEW
-        private TextBox _txtEssay;
-        private Label _lblWordCount;
-        private Label _lblAutosave;
+
+        private int BuildAttachmentList(int startY, int w)
+        {
+            if (_activity.Attachments == null || _activity.Attachments.Count == 0)
+                return startY;
+
+            int y = startY;
+            pnlBody.Controls.Add(new Label
+            {
+                Text = "📎  Attached Files",
+                Font = new Font("Segoe UI", 9.5F, FontStyle.Bold),
+                ForeColor = Color.FromArgb(40, 40, 40),
+                Location = new Point(20, y),
+                AutoSize = true
+            }); y += 24;
+
+            foreach (var att in _activity.Attachments)
+            {
+                string icon = att.FileType switch
+                {
+                    "pdf" => "📄",
+                    "docx" => "📝",
+                    "pptx" => "📊",
+                    "image" => "🖼",
+                    _ => "📁"
+                };
+
+                var pnlAtt = new Panel
+                {
+                    BackColor = Color.FromArgb(248, 248, 255),
+                    Location = new Point(20, y),
+                    Size = new Size(Math.Min(420, w - 20), 44),
+                    Cursor = Cursors.Hand
+                };
+                pnlAtt.Paint += (s, e) =>
+                {
+                    using var pen = new Pen(Color.FromArgb(220, 224, 245));
+                    e.Graphics.DrawRectangle(pen, 0, 0, pnlAtt.Width - 1, pnlAtt.Height - 1);
+                };
+
+                pnlAtt.Controls.Add(new Label
+                {
+                    Text = icon,
+                    Font = new Font("Segoe UI", 14F),
+                    Location = new Point(8, 6),
+                    Size = new Size(28, 28),
+                    TextAlign = ContentAlignment.MiddleCenter
+                });
+                pnlAtt.Controls.Add(new Label
+                {
+                    Text = att.FileName,
+                    Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                    ForeColor = Color.FromArgb(30, 60, 160),
+                    Location = new Point(40, 6),
+                    Size = new Size(280, 18),
+                    AutoEllipsis = true
+                });
+                pnlAtt.Controls.Add(new Label
+                {
+                    Text = att.FormattedSize + "  —  Click to download",
+                    Font = new Font("Segoe UI", 7.5F),
+                    ForeColor = Color.Gray,
+                    Location = new Point(40, 24),
+                    AutoSize = true
+                });
+
+                pnlAtt.Click += (s, e) =>
+                    MessageBox.Show($"Downloading: {att.FileName}\nPath: {(string.IsNullOrEmpty(att.FilePath) ? "(sample)" : att.FilePath)}",
+                        "Download", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                pnlBody.Controls.Add(pnlAtt);
+                y += 50;
+            }
+            return y + 8;
+        }
+
 
         private void BuildEssayView()
         {
-            bool alreadySubmitted = _activity.SubmissionStatus is "Submitted" or "Returned";
-            int w = Math.Max(600, pnlBody.ClientSize.Width - 60);
-
+            bool submitted = _activity.SubmissionStatus is "Submitted" or "Returned";
+            int w = Math.Max(620, pnlBody.ClientSize.Width - 60);
             int y = 20;
 
-            // Instructions
             var instrPnl = BuildInstructionsPanel(w);
             instrPnl.Location = new Point(20, y);
             pnlBody.Controls.Add(instrPnl);
             y += instrPnl.MinimumSize.Height + 20;
 
-            // Prompt
-            var lblPrompt = new Label
+            pnlBody.Controls.Add(new Label
             {
-                Text = "Your Essay Response:",
+                Text = submitted ? "Your Submitted Response:" : "Your Essay Response:",
                 Font = new Font("Segoe UI", 10.5F, FontStyle.Bold),
-                ForeColor = Color.FromArgb(40, 40, 40),
+                ForeColor = Color.FromArgb(35, 35, 35),
                 Location = new Point(20, y),
                 AutoSize = true
-            };
-            pnlBody.Controls.Add(lblPrompt);
-            y += 28;
+            }); y += 28;
 
-            // Essay text area
             _txtEssay = new TextBox
             {
                 Multiline = true,
                 ScrollBars = ScrollBars.Vertical,
-                Font = new Font("Segoe UI", 10F),
+                Font = new Font("Segoe UI", 10.5F),
                 Location = new Point(20, y),
-                Size = new Size(w, 300),
-                BackColor = alreadySubmitted ? Color.FromArgb(248, 248, 248) : Color.White,
-                ReadOnly = alreadySubmitted,
-                Text = _activity.EssayDraft
+                Size = new Size(w, 320),
+                BackColor = submitted ? Color.FromArgb(248, 248, 248) : Color.White,
+                ReadOnly = submitted,
+                Text = _activity.EssayDraft,
+                BorderStyle = BorderStyle.FixedSingle
             };
             _txtEssay.TextChanged += (s, e) => UpdateWordCount();
             pnlBody.Controls.Add(_txtEssay);
             y += _txtEssay.Height + 6;
 
-            // Word / char count
             _lblWordCount = new Label
             {
-                Text = "Words: 0  |  Characters: 0",
                 Font = new Font("Segoe UI", 8.5F),
                 ForeColor = Color.Gray,
                 Location = new Point(20, y),
@@ -265,82 +310,76 @@ namespace PUPAcadPortal
             UpdateWordCount();
             y += 22;
 
-            // Autosave indicator
             _lblAutosave = new Label
             {
-                Text = "Draft autosaved every 30 seconds.",
+                Text = submitted ? "" : "💾  Draft autosaved every 30 seconds.",
                 Font = new Font("Segoe UI", 8F, FontStyle.Italic),
-                ForeColor = Color.FromArgb(0, 140, 0),
+                ForeColor = Color.FromArgb(0, 135, 0),
                 Location = new Point(20, y),
                 AutoSize = true
             };
             pnlBody.Controls.Add(_lblAutosave);
             y += 26;
 
-            if (!alreadySubmitted)
+            if (!submitted)
             {
-                var btnSubmit = new buttonRounded
+                var btnSub = new buttonRounded
                 {
-                    Text = "Submit Essay",
-                    Size = new Size(148, 38),
+                    Text = "Submit Essay  ✔",
+                    Size = new Size(164, 40),
                     Location = new Point(20, y),
                     BackColor = Color.Maroon,
                     ForeColor = Color.White,
-                    BorderRadius = 19,
+                    BorderRadius = 20,
                     Font = new Font("Segoe UI", 10F, FontStyle.Bold),
                     FlatStyle = FlatStyle.Flat
                 };
-                btnSubmit.FlatAppearance.BorderSize = 0;
-                btnSubmit.Click += SubmitEssay_Click;
-                pnlBody.Controls.Add(btnSubmit);
+                btnSub.FlatAppearance.BorderSize = 0;
+                btnSub.Click += SubmitEssay_Click;
+                pnlBody.Controls.Add(btnSub);
             }
             else
             {
-                // Show returned feedback
                 if (_activity.Score.HasValue)
                 {
                     pnlBody.Controls.Add(new Label
                     {
-                        Text = $"✔  Submitted  ·  Score: {_activity.Score}/{_activity.Points} pts",
-                        Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+                        Text = $"✔  Submitted  ·  Score: {_activity.Score} / {_activity.Points} pts",
+                        Font = new Font("Segoe UI", 10.5F, FontStyle.Bold),
                         ForeColor = Color.FromArgb(27, 110, 27),
                         Location = new Point(20, y),
                         AutoSize = true
-                    });
-                    y += 28;
+                    }); y += 30;
                 }
 
                 if (!string.IsNullOrEmpty(_activity.Remarks))
                 {
-                    var pnlRemarks = new Panel
+                    var pnlR = new Panel
                     {
-                        BackColor = Color.FromArgb(230, 235, 255),
+                        BackColor = Color.FromArgb(228, 234, 255),
                         Location = new Point(20, y),
-                        Size = new Size(w, 0),
-                        AutoSize = true,
-                        Padding = new Padding(12)
+                        Size = new Size(w, 100),
+                        Padding = new Padding(14)
                     };
-                    pnlRemarks.Controls.Add(new Label
+                    pnlR.Controls.Add(new Label
                     {
                         Text = "📝  Instructor Remarks",
                         Font = new Font("Segoe UI", 9.5F, FontStyle.Bold),
                         ForeColor = Color.FromArgb(30, 50, 180),
-                        Location = new Point(12, 10),
+                        Location = new Point(14, 10),
                         AutoSize = true
                     });
-                    pnlRemarks.Controls.Add(new Label
+                    pnlR.Controls.Add(new Label
                     {
                         Text = _activity.Remarks,
                         Font = new Font("Segoe UI", 9.5F),
-                        ForeColor = Color.FromArgb(40, 40, 80),
-                        Location = new Point(12, 34),
-                        Size = new Size(w - 28, 60)
+                        ForeColor = Color.FromArgb(35, 35, 80),
+                        Location = new Point(14, 34),
+                        Size = new Size(w - 28, 56)
                     });
-                    pnlBody.Controls.Add(pnlRemarks);
+                    pnlBody.Controls.Add(pnlR);
                 }
             }
-
-            StretchBodyControls(w);
         }
 
         private void UpdateWordCount()
@@ -354,10 +393,10 @@ namespace PUPAcadPortal
 
         private void AutosaveDraft()
         {
-            if (_txtEssay == null) return;
+            if (_txtEssay == null || _txtEssay.IsDisposed) return;
             _activity.EssayDraft = _txtEssay.Text;
-            if (_lblAutosave != null)
-                _lblAutosave.Text = $"Draft autosaved at {DateTime.Now:h:mm:ss tt}";
+            if (_lblAutosave != null && !_lblAutosave.IsDisposed)
+                _lblAutosave.Text = $"💾  Draft autosaved at {DateTime.Now:h:mm:ss tt}";
         }
 
         private void SubmitEssay_Click(object sender, EventArgs e)
@@ -368,24 +407,21 @@ namespace PUPAcadPortal
                     "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
-            var result = MessageBox.Show(
-                "Are you sure you want to submit your essay?\nThis action cannot be undone.",
+            var r = MessageBox.Show(
+                "Submit your essay now? This action cannot be undone.",
                 "Confirm Submission", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result != DialogResult.Yes) return;
+            if (r != DialogResult.Yes) return;
 
             _activity.EssayDraft = _txtEssay.Text;
             _activity.SubmissionStatus = "Submitted";
             _activity.SubmittedAt = DateTime.Now;
 
-            MessageBox.Show("Essay submitted successfully!", "Submitted",
+            MessageBox.Show("Essay submitted successfully! ✔", "Submitted",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
-
             OnBack?.Invoke();
         }
 
-        // QUIZ / LONG QUIZ VIEW
+
         private void BuildQuizView()
         {
             pnlBody.Controls.Clear();
@@ -394,7 +430,7 @@ namespace PUPAcadPortal
             {
                 pnlBody.Controls.Add(new Label
                 {
-                    Text = "No questions available for this activity.",
+                    Text = "No questions available.",
                     Font = new Font("Segoe UI", 11F),
                     ForeColor = Color.Gray,
                     AutoSize = true,
@@ -403,75 +439,68 @@ namespace PUPAcadPortal
                 return;
             }
 
-            int w = Math.Max(600, pnlBody.ClientSize.Width - 60);
+            int w = Math.Max(620, pnlBody.ClientSize.Width - 60);
             int y = 20;
+            int totalQ = _activity.Questions.Count;
 
-            //  Progress bar strip 
-            var pnlProgress = new Panel
+            var pnlProg = new Panel
             {
                 Location = new Point(20, y),
-                Size = new Size(w, 44),
-                BackColor = Color.FromArgb(245, 245, 245)
+                Size = new Size(w, 50),
+                BackColor = Color.FromArgb(248, 248, 248)
             };
-
-            int totalQ = _activity.Questions.Count;
-            int answered = _answers.Count;
-
-            pnlProgress.Controls.Add(new Label
+            pnlProg.Controls.Add(new Label
             {
                 Text = $"Question  {_currentQ + 1}  of  {totalQ}",
-                Font = new Font("Segoe UI", 10F, FontStyle.Bold),
-                ForeColor = Color.FromArgb(40, 40, 40),
+                Font = new Font("Segoe UI", 10.5F, FontStyle.Bold),
+                ForeColor = Color.FromArgb(35, 35, 35),
                 Location = new Point(0, 0),
                 AutoSize = true
             });
-            pnlProgress.Controls.Add(new Label
+            pnlProg.Controls.Add(new Label
             {
-                Text = $"{answered}/{totalQ} answered",
+                Text = $"{_answers.Count}/{totalQ} answered",
                 Font = new Font("Segoe UI", 8.5F),
                 ForeColor = Color.Gray,
-                Location = new Point(0, 22),
+                Location = new Point(0, 24),
                 AutoSize = true
             });
 
-            // Answered navigation dots
-            int dotX = w - (totalQ * 24) - 4;
+            int dotX = w - (totalQ * 26) - 4;
             for (int i = 0; i < totalQ; i++)
             {
                 bool ans = _answers.ContainsKey(i + 1);
                 bool cur = i == _currentQ;
-                pnlProgress.Controls.Add(new Label
+                pnlProg.Controls.Add(new Label
                 {
                     Text = (i + 1).ToString(),
-                    BackColor = cur ? Color.Maroon : ans ? Color.ForestGreen : Color.FromArgb(210, 210, 210),
+                    BackColor = cur ? Color.Maroon : ans ? Color.ForestGreen : Color.FromArgb(205, 205, 205),
                     ForeColor = Color.White,
-                    Font = new Font("Segoe UI", 7F, FontStyle.Bold),
-                    Location = new Point(dotX + i * 24, 8),
-                    Size = new Size(20, 20),
-                    TextAlign = ContentAlignment.MiddleCenter
+                    Font = new Font("Segoe UI", 7.5F, FontStyle.Bold),
+                    Location = new Point(dotX + i * 26, 10),
+                    Size = new Size(22, 22),
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Cursor = Cursors.Hand
                 });
             }
 
-            pnlBody.Controls.Add(pnlProgress);
-            y += pnlProgress.Height + 14;
+            pnlBody.Controls.Add(pnlProg);
+            y += pnlProg.Height + 14;
 
-            //  Current question card 
             var q = _activity.Questions[_currentQ];
             var pnlQ = new Panel
             {
                 BackColor = Color.White,
                 Location = new Point(20, y),
                 Width = w,
-                Height = 0,
                 AutoSize = true,
                 BorderStyle = BorderStyle.FixedSingle,
-                Padding = new Padding(16)
+                Padding = new Padding(18)
             };
 
-            int qy = 14;
+            int qy = 16;
 
-            // Question type badge
-            string qTypeBadge = q.QuestionType switch
+            string typeBadge = q.QuestionType switch
             {
                 "MultipleChoice" => "Multiple Choice",
                 "TrueFalse" => "True or False",
@@ -479,7 +508,7 @@ namespace PUPAcadPortal
                 "Essay" => "Essay",
                 _ => q.QuestionType
             };
-            Color badgeColor = q.QuestionType switch
+            Color badgeClr = q.QuestionType switch
             {
                 "MultipleChoice" => Color.FromArgb(63, 81, 181),
                 "TrueFalse" => Color.FromArgb(0, 150, 136),
@@ -488,42 +517,38 @@ namespace PUPAcadPortal
             };
             pnlQ.Controls.Add(new Label
             {
-                Text = qTypeBadge,
-                BackColor = badgeColor,
+                Text = typeBadge,
+                BackColor = badgeClr,
                 ForeColor = Color.White,
                 Font = new Font("Segoe UI", 8F, FontStyle.Bold),
-                Location = new Point(16, qy),
-                Size = new Size(130, 20),
+                Location = new Point(18, qy),
+                Size = new Size(136, 22),
                 TextAlign = ContentAlignment.MiddleCenter
             });
-
             pnlQ.Controls.Add(new Label
             {
                 Text = $"{q.Points} pt{(q.Points != 1 ? "s" : "")}",
-                Font = new Font("Segoe UI", 8F, FontStyle.Bold),
+                Font = new Font("Segoe UI", 8.5F, FontStyle.Bold),
                 ForeColor = Color.Maroon,
-                Location = new Point(w - 70, qy),
-                Size = new Size(54, 20),
+                Location = new Point(w - 74, qy),
+                Size = new Size(54, 22),
                 TextAlign = ContentAlignment.MiddleRight
-            });
-            qy += 28;
+            }); qy += 32;
 
-            // Question text
-            pnlQ.Controls.Add(new Label
+            var lblQ = new Label
             {
                 Text = $"{_currentQ + 1}.  {q.Text}",
                 Font = new Font("Segoe UI", 11F),
-                ForeColor = Color.FromArgb(25, 25, 25),
-                Location = new Point(16, qy),
-                Size = new Size(w - 36, 0),
-                AutoSize = false,
-                MaximumSize = new Size(w - 36, 300)
-            });
-            qy += 60;
+                ForeColor = Color.FromArgb(22, 22, 22),
+                Location = new Point(18, qy),
+                MaximumSize = new Size(w - 38, 0),
+                AutoSize = true
+            };
+            pnlQ.Controls.Add(lblQ);
+            qy += 66;
 
-            //  Answer area 
-            string savedAnswer = _answers.ContainsKey(q.Number) ? _answers[q.Number] : "";
-            bool isSubmitted = _activity.SubmissionStatus is "Submitted" or "Returned";
+            string saved = _answers.ContainsKey(q.Number) ? _answers[q.Number] : "";
+            bool isSubm = _activity.SubmissionStatus is "Submitted" or "Returned";
 
             if (q.QuestionType is "MultipleChoice" or "TrueFalse")
             {
@@ -532,20 +557,17 @@ namespace PUPAcadPortal
                     var rb = new RadioButton
                     {
                         Text = choice,
-                        Font = new Font("Segoe UI", 10F),
-                        ForeColor = Color.FromArgb(40, 40, 40),
-                        Location = new Point(20, qy),
+                        Font = new Font("Segoe UI", 10.5F),
+                        ForeColor = Color.FromArgb(35, 35, 35),
+                        Location = new Point(22, qy),
                         AutoSize = true,
-                        Checked = (savedAnswer == choice),
-                        Enabled = !isSubmitted,
+                        Checked = saved == choice,
+                        Enabled = !isSubm,
                         Tag = choice
                     };
-                    rb.CheckedChanged += (s, e) =>
-                    {
-                        if (rb.Checked) _answers[q.Number] = rb.Tag.ToString();
-                    };
+                    rb.CheckedChanged += (s, e) => { if (rb.Checked) _answers[q.Number] = rb.Tag.ToString(); };
                     pnlQ.Controls.Add(rb);
-                    qy += 32;
+                    qy += 34;
                 }
             }
             else if (q.QuestionType == "Identification")
@@ -554,117 +576,92 @@ namespace PUPAcadPortal
                 {
                     Text = "Answer:",
                     Font = new Font("Segoe UI", 9F, FontStyle.Bold),
-                    ForeColor = Color.FromArgb(60, 60, 60),
-                    Location = new Point(20, qy),
+                    ForeColor = Color.FromArgb(55, 55, 55),
+                    Location = new Point(22, qy),
                     AutoSize = true
-                });
-                qy += 22;
+                }); qy += 22;
 
-                var txtIdent = new TextBox
+                var txt = new TextBox
                 {
-                    Font = new Font("Segoe UI", 10F),
-                    Location = new Point(20, qy),
-                    Size = new Size(Math.Min(400, w - 36), 28),
-                    Text = savedAnswer,
-                    ReadOnly = isSubmitted,
+                    Font = new Font("Segoe UI", 10.5F),
+                    Location = new Point(22, qy),
+                    Size = new Size(Math.Min(420, w - 40), 30),
+                    Text = saved,
+                    ReadOnly = isSubm,
                     PlaceholderText = "Type your answer here..."
                 };
-                txtIdent.TextChanged += (s, e) => _answers[q.Number] = txtIdent.Text;
-                pnlQ.Controls.Add(txtIdent);
-                qy += 38;
+                txt.TextChanged += (s, e) => _answers[q.Number] = txt.Text;
+                pnlQ.Controls.Add(txt); qy += 42;
             }
-            else // Essay-type question
+            else 
             {
                 pnlQ.Controls.Add(new Label
                 {
                     Text = "Your Answer:",
                     Font = new Font("Segoe UI", 9F, FontStyle.Bold),
-                    ForeColor = Color.FromArgb(60, 60, 60),
-                    Location = new Point(20, qy),
+                    ForeColor = Color.FromArgb(55, 55, 55),
+                    Location = new Point(22, qy),
                     AutoSize = true
-                });
-                qy += 22;
+                }); qy += 22;
 
-                var txtEssQ = new TextBox
+                var txtE = new TextBox
                 {
                     Multiline = true,
                     ScrollBars = ScrollBars.Vertical,
                     Font = new Font("Segoe UI", 10F),
-                    Location = new Point(20, qy),
-                    Size = new Size(w - 36, 150),
-                    Text = savedAnswer,
-                    ReadOnly = isSubmitted
+                    Location = new Point(22, qy),
+                    Size = new Size(w - 40, 160),
+                    Text = saved,
+                    ReadOnly = isSubm
                 };
-                txtEssQ.TextChanged += (s, e) => _answers[q.Number] = txtEssQ.Text;
-                pnlQ.Controls.Add(txtEssQ);
-                qy += 160;
+                txtE.TextChanged += (s, e) => _answers[q.Number] = txtE.Text;
+                pnlQ.Controls.Add(txtE); qy += 170;
             }
 
-            pnlQ.Height = qy + 10;
+            pnlQ.Height = qy + 12;
             pnlBody.Controls.Add(pnlQ);
-            y += pnlQ.Height + 20;
+            y += pnlQ.Height + 18;
 
-            //  Navigation buttons 
-            var pnlNav = new Panel
-            {
-                Location = new Point(20, y),
-                Size = new Size(w, 48)
-            };
+            var pnlNav = new Panel { Location = new Point(20, y), Size = new Size(w, 50) };
 
             if (_currentQ > 0)
             {
-                var btnPrev = new buttonRounded
-                {
-                    Text = "← Previous",
-                    Size = new Size(120, 36),
-                    Location = new Point(0, 6),
-                    BackColor = Color.FromArgb(70, 70, 70),
-                    ForeColor = Color.White,
-                    BorderRadius = 18,
-                    Font = new Font("Segoe UI", 9F, FontStyle.Bold),
-                    FlatStyle = FlatStyle.Flat
-                };
-                btnPrev.FlatAppearance.BorderSize = 0;
+                var btnPrev = MakeNavBtn("← Previous", Color.FromArgb(65, 65, 65), 0);
                 btnPrev.Click += (s, e) => { _currentQ--; BuildQuizView(); };
                 pnlNav.Controls.Add(btnPrev);
             }
 
             if (_currentQ < totalQ - 1)
             {
-                var btnNext = new buttonRounded
-                {
-                    Text = "Next →",
-                    Size = new Size(120, 36),
-                    Location = new Point(130, 6),
-                    BackColor = Color.Maroon,
-                    ForeColor = Color.White,
-                    BorderRadius = 18,
-                    Font = new Font("Segoe UI", 9F, FontStyle.Bold),
-                    FlatStyle = FlatStyle.Flat
-                };
-                btnNext.FlatAppearance.BorderSize = 0;
+                var btnNext = MakeNavBtn("Next →", Color.Maroon, 136);
                 btnNext.Click += (s, e) => { _currentQ++; BuildQuizView(); };
                 pnlNav.Controls.Add(btnNext);
             }
-            else if (!isSubmitted)
+            else if (!isSubm)
             {
-                var btnSubmit = new buttonRounded
-                {
-                    Text = "Submit Quiz",
-                    Size = new Size(140, 36),
-                    Location = new Point(130, 6),
-                    BackColor = Color.FromArgb(27, 110, 27),
-                    ForeColor = Color.White,
-                    BorderRadius = 18,
-                    Font = new Font("Segoe UI", 10F, FontStyle.Bold),
-                    FlatStyle = FlatStyle.Flat
-                };
-                btnSubmit.FlatAppearance.BorderSize = 0;
+                var btnSubmit = MakeNavBtn("Submit Quiz  ✔", Color.FromArgb(25, 105, 25), 136);
                 btnSubmit.Click += SubmitQuiz_Click;
                 pnlNav.Controls.Add(btnSubmit);
             }
 
             pnlBody.Controls.Add(pnlNav);
+        }
+
+        private buttonRounded MakeNavBtn(string text, Color back, int x)
+        {
+            var btn = new buttonRounded
+            {
+                Text = text,
+                Size = new Size(130, 38),
+                Location = new Point(x, 6),
+                BackColor = back,
+                ForeColor = Color.White,
+                BorderRadius = 19,
+                Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                FlatStyle = FlatStyle.Flat
+            };
+            btn.FlatAppearance.BorderSize = 0;
+            return btn;
         }
 
         private void SubmitQuiz_Click(object sender, EventArgs e)
@@ -674,173 +671,132 @@ namespace PUPAcadPortal
                 if (!_answers.ContainsKey(q.Number) || string.IsNullOrWhiteSpace(_answers[q.Number]))
                     unanswered++;
 
-            string warnMsg = unanswered > 0
-                ? $"You have {unanswered} unanswered question(s).\n\n"
-                : "";
-
-            var result = MessageBox.Show(
-                warnMsg + "Submit your quiz now? This cannot be undone.",
+            string warn = unanswered > 0 ? $"You have {unanswered} unanswered question(s).\n\n" : "";
+            var r = MessageBox.Show(
+                warn + "Submit your quiz now? This cannot be undone.",
                 "Confirm Submission", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result != DialogResult.Yes) return;
+            if (r != DialogResult.Yes) return;
 
             _activity.Answers = new Dictionary<int, string>(_answers);
             _activity.SubmissionStatus = "Submitted";
             _activity.SubmittedAt = DateTime.Now;
 
-            MessageBox.Show("Quiz submitted successfully!", "Submitted",
+            MessageBox.Show("Quiz submitted successfully! ✔", "Submitted",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
-
             OnBack?.Invoke();
         }
 
-        // FILE UPLOAD VIEW
-        private Label _lblFileName;
 
         private void BuildFileUploadView()
         {
-            bool isSubmitted = _activity.SubmissionStatus is "Submitted" or "Returned";
-            int w = Math.Max(600, pnlBody.ClientSize.Width - 60);
+            bool isSubm = _activity.SubmissionStatus is "Submitted" or "Returned";
+            int w = Math.Max(620, pnlBody.ClientSize.Width - 60);
             int y = 20;
 
-            // Instructions
             var instrPnl = BuildInstructionsPanel(w);
             instrPnl.Location = new Point(20, y);
             pnlBody.Controls.Add(instrPnl);
             y += instrPnl.MinimumSize.Height + 20;
+            y = BuildAttachmentList(y, w);
 
-            // Attachment references (downloadable)
-            if (_activity.Attachments?.Count > 0)
+            if (!isSubm)
             {
                 pnlBody.Controls.Add(new Label
                 {
-                    Text = "📎  Reference Files:",
-                    Font = new Font("Segoe UI", 9.5F, FontStyle.Bold),
-                    ForeColor = Color.FromArgb(40, 40, 40),
-                    Location = new Point(20, y),
-                    AutoSize = true
-                });
-                y += 22;
-
-                foreach (var att in _activity.Attachments)
-                {
-                    var lnk = new LinkLabel
-                    {
-                        Text = $"📄  {att.FileName}",
-                        Font = new Font("Segoe UI", 9.5F),
-                        Location = new Point(30, y),
-                        AutoSize = true,
-                        Tag = att.FilePath
-                    };
-                    lnk.Click += (s, e) => MessageBox.Show($"Opening: {att.FileName}", "File",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    pnlBody.Controls.Add(lnk);
-                    y += 24;
-                }
-                y += 10;
-            }
-
-            if (!isSubmitted)
-            {
-                pnlBody.Controls.Add(new Label
-                {
-                    Text = "Attach Your File:",
+                    Text = "Attach Your Submission:",
                     Font = new Font("Segoe UI", 10.5F, FontStyle.Bold),
-                    ForeColor = Color.FromArgb(40, 40, 40),
+                    ForeColor = Color.FromArgb(35, 35, 35),
                     Location = new Point(20, y),
                     AutoSize = true
-                });
-                y += 28;
+                }); y += 28;
 
-                // Drop zone
                 var pnlDrop = new Panel
                 {
-                    BackColor = Color.FromArgb(245, 248, 255),
+                    BackColor = Color.FromArgb(244, 248, 255),
                     BorderStyle = BorderStyle.FixedSingle,
                     Location = new Point(20, y),
-                    Size = new Size(w, 90)
+                    Size = new Size(w, 100)
                 };
-
                 var lblHint = new Label
                 {
-                    Text = "Drag & drop your file here  —  or  —  click Browse",
+                    Text = "Drag & drop your file here  —  or  —  click  Browse",
                     Font = new Font("Segoe UI", 10F),
-                    ForeColor = Color.Gray,
+                    ForeColor = Color.FromArgb(130, 130, 155),
                     Dock = DockStyle.Fill,
                     TextAlign = ContentAlignment.MiddleCenter
                 };
-
                 var btnBrowse = new buttonRounded
                 {
                     Text = "Browse",
-                    Size = new Size(90, 30),
-                    Location = new Point(w - 100, 28),
+                    Size = new Size(96, 32),
+                    Location = new Point(w - 106, 32),
                     BackColor = Color.Maroon,
                     ForeColor = Color.White,
-                    BorderRadius = 15,
+                    BorderRadius = 16,
                     Font = new Font("Segoe UI", 9F, FontStyle.Bold),
                     FlatStyle = FlatStyle.Flat
                 };
                 btnBrowse.FlatAppearance.BorderSize = 0;
                 btnBrowse.Click += BrowseFile_Click;
+
                 pnlDrop.Controls.Add(lblHint);
                 pnlDrop.Controls.Add(btnBrowse);
                 btnBrowse.BringToFront();
                 pnlBody.Controls.Add(pnlDrop);
-                y += 100;
+                y += 110;
 
-                // Selected file name
                 _lblFileName = new Label
                 {
-                    Text = string.IsNullOrEmpty(_uploadedFileName)
-                                ? "No file selected." : $"📎  {_uploadedFileName}",
+                    Text = string.IsNullOrEmpty(_uploadedFileName) ? "No file selected." : $"📎  {_uploadedFileName}",
                     Font = new Font("Segoe UI", 9F, FontStyle.Italic),
-                    ForeColor = string.IsNullOrEmpty(_uploadedFileName)
-                                ? Color.Gray : Color.FromArgb(0, 100, 0),
+                    ForeColor = string.IsNullOrEmpty(_uploadedFileName) ? Color.Gray : Color.FromArgb(0, 105, 0),
                     Location = new Point(20, y),
                     AutoSize = true
                 };
                 pnlBody.Controls.Add(_lblFileName);
+
+                _lblFileSize = new Label
+                {
+                    Text = _uploadedFileSize > 0 ? $"  ({FormatFileSize(_uploadedFileSize)})" : "",
+                    Font = new Font("Segoe UI", 8.5F),
+                    ForeColor = Color.Gray,
+                    Location = new Point(220, y),
+                    AutoSize = true
+                };
+                pnlBody.Controls.Add(_lblFileSize);
                 y += 26;
 
-                // Remove file button
-                var btnRemove = new buttonRounded
+                _btnRemoveFile = new buttonRounded
                 {
-                    Text = "✕  Remove File",
-                    Size = new Size(120, 28),
+                    Text = "✕  Remove",
+                    Size = new Size(104, 28),
                     Location = new Point(20, y),
-                    BackColor = Color.FromArgb(180, 30, 30),
+                    BackColor = Color.FromArgb(175, 30, 30),
                     ForeColor = Color.White,
                     BorderRadius = 14,
                     Font = new Font("Segoe UI", 8F, FontStyle.Bold),
                     FlatStyle = FlatStyle.Flat,
                     Visible = !string.IsNullOrEmpty(_uploadedFileName)
                 };
-                btnRemove.FlatAppearance.BorderSize = 0;
-                btnRemove.Click += (s, e) =>
+                _btnRemoveFile.FlatAppearance.BorderSize = 0;
+                _btnRemoveFile.Click += (s, e) =>
                 {
-                    _uploadedFilePath = "";
-                    _uploadedFileName = "";
-                    if (_lblFileName != null)
-                    {
-                        _lblFileName.Text = "No file selected.";
-                        _lblFileName.ForeColor = Color.Gray;
-                    }
-                    btnRemove.Visible = false;
+                    _uploadedFilePath = ""; _uploadedFileName = ""; _uploadedFileSize = 0;
+                    if (_lblFileName != null) { _lblFileName.Text = "No file selected."; _lblFileName.ForeColor = Color.Gray; }
+                    if (_lblFileSize != null) _lblFileSize.Text = "";
+                    _btnRemoveFile.Visible = false;
                 };
-                pnlBody.Controls.Add(btnRemove);
+                pnlBody.Controls.Add(_btnRemoveFile);
                 y += 40;
 
-                // Notes
                 pnlBody.Controls.Add(new Label
                 {
-                    Text = "Submission Notes (optional):",
+                    Text = "Submission Notes  (optional):",
                     Font = new Font("Segoe UI", 9.5F, FontStyle.Bold),
                     ForeColor = Color.FromArgb(40, 40, 40),
                     Location = new Point(20, y),
                     AutoSize = true
-                });
-                y += 24;
+                }); y += 24;
 
                 var txtNotes = new TextBox
                 {
@@ -849,7 +805,8 @@ namespace PUPAcadPortal
                     Font = new Font("Segoe UI", 10F),
                     Location = new Point(20, y),
                     Size = new Size(w, 90),
-                    PlaceholderText = "Add a note to your instructor (optional)..."
+                    PlaceholderText = "Add a note to your instructor (optional)...",
+                    Text = _activity.SubmissionNote
                 };
                 txtNotes.TextChanged += (s, e) => _activity.SubmissionNote = txtNotes.Text;
                 pnlBody.Controls.Add(txtNotes);
@@ -857,12 +814,12 @@ namespace PUPAcadPortal
 
                 var btnUpload = new buttonRounded
                 {
-                    Text = "Upload & Submit",
-                    Size = new Size(160, 38),
+                    Text = "Upload & Submit  ✔",
+                    Size = new Size(180, 40),
                     Location = new Point(20, y),
                     BackColor = Color.Maroon,
                     ForeColor = Color.White,
-                    BorderRadius = 19,
+                    BorderRadius = 20,
                     Font = new Font("Segoe UI", 10F, FontStyle.Bold),
                     FlatStyle = FlatStyle.Flat
                 };
@@ -872,16 +829,14 @@ namespace PUPAcadPortal
             }
             else
             {
-                // Already submitted
                 pnlBody.Controls.Add(new Label
                 {
                     Text = $"✔  File Submitted  ·  {_activity.SubmittedAt:MMM dd, yyyy  h:mm tt}",
-                    Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+                    Font = new Font("Segoe UI", 10.5F, FontStyle.Bold),
                     ForeColor = Color.FromArgb(27, 110, 27),
                     Location = new Point(20, y),
                     AutoSize = true
-                });
-                y += 30;
+                }); y += 30;
 
                 if (!string.IsNullOrEmpty(_activity.UploadedFileName))
                 {
@@ -892,8 +847,7 @@ namespace PUPAcadPortal
                         ForeColor = Color.FromArgb(0, 100, 160),
                         Location = new Point(20, y),
                         AutoSize = true
-                    });
-                    y += 26;
+                    }); y += 26;
                 }
 
                 if (_activity.Score.HasValue)
@@ -901,38 +855,37 @@ namespace PUPAcadPortal
                     pnlBody.Controls.Add(new Label
                     {
                         Text = $"Score:  {_activity.Score} / {_activity.Points} pts",
-                        Font = new Font("Segoe UI", 10.5F, FontStyle.Bold),
-                        ForeColor = Color.FromArgb(128, 0, 0),
+                        Font = new Font("Segoe UI", 11F, FontStyle.Bold),
+                        ForeColor = Color.Maroon,
                         Location = new Point(20, y),
                         AutoSize = true
-                    });
-                    y += 28;
+                    }); y += 30;
                 }
 
                 if (!string.IsNullOrEmpty(_activity.Remarks))
                 {
                     var pnlR = new Panel
                     {
-                        BackColor = Color.FromArgb(230, 235, 255),
+                        BackColor = Color.FromArgb(228, 234, 255),
                         Location = new Point(20, y),
-                        Size = new Size(w, 90),
-                        Padding = new Padding(12)
+                        Size = new Size(w, 100),
+                        Padding = new Padding(14)
                     };
                     pnlR.Controls.Add(new Label
                     {
                         Text = "📝  Instructor Remarks:",
                         Font = new Font("Segoe UI", 9.5F, FontStyle.Bold),
                         ForeColor = Color.FromArgb(30, 50, 180),
-                        Location = new Point(12, 10),
+                        Location = new Point(14, 10),
                         AutoSize = true
                     });
                     pnlR.Controls.Add(new Label
                     {
                         Text = _activity.Remarks,
                         Font = new Font("Segoe UI", 9.5F),
-                        ForeColor = Color.FromArgb(40, 40, 80),
-                        Location = new Point(12, 34),
-                        Size = new Size(w - 28, 50)
+                        ForeColor = Color.FromArgb(35, 35, 80),
+                        Location = new Point(14, 34),
+                        Size = new Size(w - 30, 56)
                     });
                     pnlBody.Controls.Add(pnlR);
                 }
@@ -943,20 +896,19 @@ namespace PUPAcadPortal
         {
             using var dlg = new OpenFileDialog
             {
-                Filter = "All Files (*.*)|*.*|PDF Files (*.pdf)|*.pdf|Word Documents (*.docx)|*.docx|ZIP Files (*.zip)|*.zip",
+                Filter = "All Files (*.*)|*.*|PDF (*.pdf)|*.pdf|Word (*.docx)|*.docx|PowerPoint (*.pptx)|*.pptx|ZIP (*.zip)|*.zip|Images (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg",
                 Title = "Select File to Upload"
             };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 _uploadedFilePath = dlg.FileName;
                 _uploadedFileName = Path.GetFileName(dlg.FileName);
+                _uploadedFileSize = new FileInfo(dlg.FileName).Length;
                 _activity.UploadedFileName = _uploadedFileName;
 
-                if (_lblFileName != null)
-                {
-                    _lblFileName.Text = $"📎  {_uploadedFileName}";
-                    _lblFileName.ForeColor = Color.FromArgb(0, 100, 0);
-                }
+                if (_lblFileName != null) { _lblFileName.Text = $"📎  {_uploadedFileName}"; _lblFileName.ForeColor = Color.FromArgb(0, 105, 0); }
+                if (_lblFileSize != null) _lblFileSize.Text = $"  ({FormatFileSize(_uploadedFileSize)})";
+                if (_btnRemoveFile != null) _btnRemoveFile.Visible = true;
             }
         }
 
@@ -968,27 +920,31 @@ namespace PUPAcadPortal
                     "No File", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
-            var result = MessageBox.Show(
+            var r = MessageBox.Show(
                 $"Submit \"{_uploadedFileName}\"?\n\nThis action cannot be undone.",
                 "Confirm Upload", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result != DialogResult.Yes) return;
+            if (r != DialogResult.Yes) return;
 
             _activity.SubmissionStatus = "Submitted";
             _activity.SubmittedAt = DateTime.Now;
 
-            MessageBox.Show("File uploaded and submitted successfully!", "Submitted",
+            MessageBox.Show("File uploaded and submitted successfully! ✔", "Submitted",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
-
             OnBack?.Invoke();
         }
 
-        // RECITATION VIEW
+        private static string FormatFileSize(long bytes)
+        {
+            if (bytes >= 1_048_576) return $"{bytes / 1_048_576.0:F1} MB";
+            if (bytes >= 1_024) return $"{bytes / 1_024.0:F0} KB";
+            return $"{bytes} B";
+        }
+
+
         private void BuildRecitationView()
         {
-            bool isSubmitted = _activity.SubmissionStatus is "Submitted" or "Returned";
-            int w = Math.Max(600, pnlBody.ClientSize.Width - 60);
+            bool isSubm = _activity.SubmissionStatus is "Submitted" or "Returned";
+            int w = Math.Max(620, pnlBody.ClientSize.Width - 60);
             int y = 20;
 
             var instrPnl = BuildInstructionsPanel(w);
@@ -996,15 +952,32 @@ namespace PUPAcadPortal
             pnlBody.Controls.Add(instrPnl);
             y += instrPnl.MinimumSize.Height + 20;
 
+            var pnlInfo = new Panel
+            {
+                BackColor = Color.FromArgb(235, 248, 255),
+                Location = new Point(20, y),
+                Size = new Size(w, 60),
+                Padding = new Padding(14)
+            };
+            pnlInfo.Controls.Add(new Label
+            {
+                Text = "ℹ  Your instructor will record your participation score during the class session.",
+                Font = new Font("Segoe UI", 9F),
+                ForeColor = Color.FromArgb(20, 80, 160),
+                Dock = DockStyle.Fill,
+                TextAlign = ContentAlignment.MiddleLeft
+            });
+            pnlBody.Controls.Add(pnlInfo);
+            y += 70;
+
             pnlBody.Controls.Add(new Label
             {
-                Text = "Participation / Attendance Notes (optional):",
+                Text = "Participation Notes  (optional):",
                 Font = new Font("Segoe UI", 9.5F, FontStyle.Bold),
                 ForeColor = Color.FromArgb(40, 40, 40),
                 Location = new Point(20, y),
                 AutoSize = true
-            });
-            y += 24;
+            }); y += 24;
 
             var txtNotes = new TextBox
             {
@@ -1014,21 +987,21 @@ namespace PUPAcadPortal
                 Location = new Point(20, y),
                 Size = new Size(w, 120),
                 PlaceholderText = "Any notes for your instructor...",
-                ReadOnly = isSubmitted
+                ReadOnly = isSubm
             };
             pnlBody.Controls.Add(txtNotes);
             y += 130;
 
-            if (!isSubmitted)
+            if (!isSubm)
             {
                 var btnMark = new buttonRounded
                 {
-                    Text = "Mark as Attended",
-                    Size = new Size(160, 38),
+                    Text = "Mark as Attended  ✔",
+                    Size = new Size(180, 40),
                     Location = new Point(20, y),
                     BackColor = Color.Maroon,
                     ForeColor = Color.White,
-                    BorderRadius = 19,
+                    BorderRadius = 20,
                     Font = new Font("Segoe UI", 10F, FontStyle.Bold),
                     FlatStyle = FlatStyle.Flat
                 };
@@ -1037,22 +1010,37 @@ namespace PUPAcadPortal
                 {
                     _activity.SubmissionStatus = "Submitted";
                     _activity.SubmittedAt = DateTime.Now;
-                    MessageBox.Show("Marked as attended!", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Marked as attended!", "Done",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
                     OnBack?.Invoke();
                 };
                 pnlBody.Controls.Add(btnMark);
             }
-        }
-
-        // HELPERS
-        private void StretchBodyControls(int targetWidth)
-        {
-            foreach (Control c in pnlBody.Controls)
+            else
             {
-                if (c is Button || c is buttonRounded) continue;
-                if (c.Width < targetWidth) c.Width = targetWidth;
+                pnlBody.Controls.Add(new Label
+                {
+                    Text = $"✔  Marked as Attended  ·  {_activity.SubmittedAt:MMM dd, yyyy  h:mm tt}",
+                    Font = new Font("Segoe UI", 10.5F, FontStyle.Bold),
+                    ForeColor = Color.FromArgb(27, 110, 27),
+                    Location = new Point(20, y),
+                    AutoSize = true
+                });
+
+                if (_activity.Score.HasValue)
+                {
+                    pnlBody.Controls.Add(new Label
+                    {
+                        Text = $"Score:  {_activity.Score} / {_activity.Points} pts",
+                        Font = new Font("Segoe UI", 10.5F, FontStyle.Bold),
+                        ForeColor = Color.Maroon,
+                        Location = new Point(20, y + 30),
+                        AutoSize = true
+                    });
+                }
             }
         }
+
 
         private void btnBack_Click(object sender, EventArgs e)
         {

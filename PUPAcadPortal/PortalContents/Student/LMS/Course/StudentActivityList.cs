@@ -1,11 +1,10 @@
-﻿using Org.BouncyCastle.Asn1.Cmp;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace PUPAcadPortal
+namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 {
     public partial class StudentActivityList : UserControl
     {
@@ -13,7 +12,7 @@ namespace PUPAcadPortal
         public event Action<StudentActivityItem> OnOpenActivity;
 
         private StudentCourse _course;
-        private List<StudentActivityItem> _activities;
+        private List<StudentActivityItem> _activities = new();
         private System.Windows.Forms.Timer _searchTimer;
 
         public StudentActivityList(StudentCourse course)
@@ -23,80 +22,91 @@ namespace PUPAcadPortal
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
 
             lblTitle.Text = course.Name + "  —  " + course.Code;
+            lblInstructor.Text = "👤  " + course.Instructor + "    🕐  " + course.Schedule;
 
             _searchTimer = new System.Windows.Forms.Timer { Interval = 180 };
             _searchTimer.Tick += (s, e) => { _searchTimer.Stop(); RenderRows(); };
 
+            cmbFilter.SelectedIndex = 0;
+            cmbStatus.SelectedIndex = 0;
+
             LoadSampleActivities();
+            RebuildSummaryPills();
+
             this.Load += (s, e) => RenderRows();
+            flp.SizeChanged += flp_SizeChanged;
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing) { _searchTimer?.Dispose(); components?.Dispose(); }
-            base.Dispose(disposing);
-        }
 
-        //  Sample activities (all types, all statuses) 
         private void LoadSampleActivities()
         {
             _activities = new List<StudentActivityItem>
             {
                 new StudentActivityItem
                 {
-                    Id=1, Title="System Simulations", Type="Quiz",
-                    Deadline = DateTime.Now.AddDays(3), Points=50,
-                    SubmissionStatus = "Submitted", SubmittedAt = DateTime.Now.AddDays(-1),
-                    Score = 45,
-                    Instructions = "Answer all questions within the time limit. No back-navigation allowed.",
-                    Questions = SampleQuizQuestions()
+                    Id=1, Title="System Simulations Quiz", Type="Quiz",
+                    Deadline=DateTime.Now.AddDays(3), Points=50,
+                    SubmissionStatus="Submitted", SubmittedAt=DateTime.Now.AddDays(-1), Score=45,
+                    Instructions="Answer all 25 questions within the time limit. No back-navigation allowed.",
+                    Questions=SampleQuizQuestions()
                 },
                 new StudentActivityItem
                 {
-                    Id=2, Title="Integrating Methodologies", Type="FileUpload",
-                    Deadline = DateTime.Now.AddDays(7), Points=100,
-                    SubmissionStatus = "Returned", SubmittedAt = DateTime.Now.AddDays(-3),
-                    Score = 88, ReturnedAt = DateTime.Now.AddDays(-1),
-                    Remarks = "Good analysis overall. Please elaborate on the integration methodology in section 3. References need to follow APA format.",
-                    Instructions = "Upload your completed report (PDF or DOCX). Max file size: 10 MB."
+                    Id=2, Title="Integrating Methodologies Report", Type="FileUpload",
+                    Deadline=DateTime.Now.AddDays(7), Points=100,
+                    SubmissionStatus="Returned", SubmittedAt=DateTime.Now.AddDays(-3),
+                    Score=88, ReturnedAt=DateTime.Now.AddDays(-1),
+                    Remarks="Good analysis overall. Please elaborate on the integration methodology in section 3. References need to follow APA format.",
+                    ScoreBreakdown="Content: 35/40  |  Format: 18/20  |  References: 20/25  |  Clarity: 15/15",
+                    Suggestions="Strengthen section 3 with at least two additional peer-reviewed sources. Revisit APA 7th edition citation rules.",
+                    Instructions="Upload your completed report (PDF or DOCX). Max file size: 10 MB.",
+                    Attachments=new List<ActivityAttachment>
+                    {
+                        new ActivityAttachment { FileName="Report_Template.docx", FileType="docx", FileSize=48_200 },
+                        new ActivityAttachment { FileName="Rubric.pdf",           FileType="pdf",  FileSize=124_000 }
+                    }
                 },
                 new StudentActivityItem
                 {
-                    Id=3, Title="HCI Essay", Type="Essay",
-                    Deadline = DateTime.Now.AddDays(14), Points=75,
-                    SubmissionStatus = "Pending",
-                    Instructions = "Write a comprehensive essay (800–1200 words) on Human-Computer Interaction principles and their real-world application."
+                    Id=3, Title="HCI Reflection Essay", Type="Essay",
+                    Deadline=DateTime.Now.AddDays(14), Points=75,
+                    SubmissionStatus="Pending",
+                    Instructions="Write a comprehensive essay (800–1200 words) on Human-Computer Interaction principles and their real-world application.",
+                    EssayDraft=""
                 },
                 new StudentActivityItem
                 {
                     Id=4, Title="Programming Lab Activity 1", Type="FileUpload",
-                    Deadline = DateTime.Now.AddDays(1), Points=50,
-                    SubmissionStatus = "Pending",
-                    Instructions = "Complete the programming activity (Java), zip your project folder, and upload before the deadline."
+                    Deadline=DateTime.Now.AddDays(1), Points=50,
+                    SubmissionStatus="Pending",
+                    Instructions="Complete the Java lab exercise, zip your project folder, and upload before the deadline.",
+                    Attachments=new List<ActivityAttachment>
+                    {
+                        new ActivityAttachment { FileName="Lab1_Instructions.pdf", FileType="pdf", FileSize=220_000 }
+                    }
                 },
                 new StudentActivityItem
                 {
                     Id=5, Title="Midterm Long Quiz", Type="LongQuiz",
-                    Deadline = DateTime.Now.AddDays(-2), Points=100,
-                    SubmissionStatus = "Submitted", SubmittedAt = DateTime.Now.AddDays(-2).AddHours(-1),
-                    Score = 92,
-                    Instructions = "Covers Modules 1–5. 50 items. You have 90 minutes.",
-                    Questions = SampleQuizQuestions()
+                    Deadline=DateTime.Now.AddDays(-2), Points=100,
+                    SubmissionStatus="Submitted", SubmittedAt=DateTime.Now.AddDays(-2).AddHours(-1), Score=92,
+                    Instructions="Covers Modules 1–5. 50 items. You have 90 minutes.",
+                    Questions=SampleQuizQuestions()
                 },
                 new StudentActivityItem
                 {
                     Id=6, Title="Week 3 Recitation", Type="Recitation",
-                    Deadline = DateTime.Now.AddDays(-5), Points=25,
-                    SubmissionStatus = "Overdue",
-                    Instructions = "Oral recitation on Chapter 3 topics."
+                    Deadline=DateTime.Now.AddDays(-5), Points=25,
+                    SubmissionStatus="Overdue",
+                    Instructions="Oral recitation on Chapter 3 topics. Present your answers clearly."
                 },
                 new StudentActivityItem
                 {
                     Id=7, Title="Data Structures Quiz", Type="Quiz",
-                    Deadline = DateTime.Now.AddDays(5), Points=30,
-                    SubmissionStatus = "Pending",
-                    Instructions = "15 items. Multiple choice and identification.",
-                    Questions = SampleQuizQuestions()
+                    Deadline=DateTime.Now.AddDays(5), Points=30,
+                    SubmissionStatus="Pending",
+                    Instructions="15 items — Multiple choice and identification. 30 minutes only.",
+                    Questions=SampleQuizQuestions()
                 },
             };
         }
@@ -107,25 +117,63 @@ namespace PUPAcadPortal
             {
                 new ActivityQuestion { Number=1, QuestionType="MultipleChoice", Points=2,
                     Text="Which of the following is NOT a characteristic of an algorithm?",
-                    Choices=new List<string>{ "Finiteness", "Definiteness", "Randomness", "Input" },
+                    Choices=new List<string>{ "Finiteness","Definiteness","Randomness","Input" },
                     CorrectAnswer="Randomness" },
                 new ActivityQuestion { Number=2, QuestionType="TrueFalse", Points=1,
                     Text="A stack follows the First-In, First-Out (FIFO) principle.",
-                    Choices=new List<string>{ "True", "False" },
-                    CorrectAnswer="False" },
+                    Choices=new List<string>{ "True","False" }, CorrectAnswer="False" },
                 new ActivityQuestion { Number=3, QuestionType="Identification", Points=2,
                     Text="What data structure uses LIFO (Last-In, First-Out) ordering?",
                     CorrectAnswer="Stack" },
                 new ActivityQuestion { Number=4, QuestionType="MultipleChoice", Points=2,
                     Text="What is the time complexity of binary search?",
-                    Choices=new List<string>{ "O(n)", "O(log n)", "O(n²)", "O(1)" },
+                    Choices=new List<string>{ "O(n)","O(log n)","O(n²)","O(1)" },
                     CorrectAnswer="O(log n)" },
                 new ActivityQuestion { Number=5, QuestionType="Essay", Points=5,
                     Text="Explain the difference between a stack and a queue. Provide a real-world analogy for each." },
             };
         }
 
-        //  Render 
+
+        private void RebuildSummaryPills()
+        {
+            pnlSummary.Controls.Clear();
+
+            int pend = 0, sub = 0, over = 0;
+            foreach (var a in _activities)
+            {
+                if (a.EffectiveStatus == "Pending") pend++;
+                if (a.EffectiveStatus == "Submitted" || a.EffectiveStatus == "Returned") sub++;
+                if (a.EffectiveStatus == "Overdue") over++;
+            }
+
+            var pills = new (string label, Color bg, Color fg)[]
+            {
+                ($"Pending: {pend}",   Color.FromArgb(255,234,200), Color.FromArgb(180,70,0)),
+                ($"✔ Done: {sub}",     Color.FromArgb(210,245,215), Color.FromArgb(27,110,27)),
+                ($"⚠ Overdue: {over}", Color.FromArgb(255,215,215), Color.FromArgb(180,20,20)),
+            };
+
+            int x = 0;
+            foreach (var (label, bg, fg) in pills)
+            {
+                var lbl = new Label
+                {
+                    Text = label,
+                    BackColor = bg,
+                    ForeColor = fg,
+                    Font = new Font("Segoe UI", 8.5F, FontStyle.Bold),
+                    Location = new Point(x, 6),
+                    Size = new Size(130, 22),
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Padding = new Padding(4, 0, 4, 0)
+                };
+                pnlSummary.Controls.Add(lbl);
+                x += 140;
+            }
+        }
+
+
         private void RenderRows()
         {
             if (flp.ClientSize.Width < 100) return;
@@ -140,10 +188,8 @@ namespace PUPAcadPortal
             foreach (var act in _activities)
             {
                 if (filter != "All" && act.Type != filter) continue;
-
-                if (status != "All Status" && !act.SubmissionStatus.Equals(
+                if (status != "All Status" && !act.EffectiveStatus.Equals(
                         status, StringComparison.OrdinalIgnoreCase)) continue;
-
                 if (!string.IsNullOrEmpty(search) &&
                     !act.Title.ToLower().Contains(search)) continue;
 
@@ -165,21 +211,16 @@ namespace PUPAcadPortal
             flp.ResumeLayout(true);
         }
 
-        //  Row builder 
+
         private Panel BuildRow(StudentActivityItem act)
         {
-            bool isReturned = act.SubmissionStatus == "Returned";
-            bool isSubmitted = act.SubmissionStatus == "Submitted";
-            bool isOverdue = act.SubmissionStatus == "Overdue" ||
-                               (act.SubmissionStatus == "Pending" && act.Deadline < DateTime.Now);
+            string effStatus = act.EffectiveStatus;
+            bool isReturned = effStatus == "Returned";
+            bool isSubmitted = effStatus == "Submitted";
+            bool isOverdue = effStatus == "Overdue";
 
-            // Adjust effective status for overdue pending
-            string effectiveStatus = isOverdue && act.SubmissionStatus == "Pending"
-                                     ? "Overdue"
-                                     : act.SubmissionStatus;
-
-            int rowH = isReturned ? 110 : 80;
-            int rowW = Math.Max(700, flp.ClientSize.Width - 24);
+            int rowH = isReturned ? 118 : 84;
+            int rowW = Math.Max(720, flp.ClientSize.Width - 28);
 
             var row = new Panel
             {
@@ -189,7 +230,12 @@ namespace PUPAcadPortal
                 Margin = new Padding(4, 4, 4, 0)
             };
 
-            // Left accent bar
+            row.Paint += (s, e) =>
+            {
+                using var p = new Pen(Color.FromArgb(232, 232, 232));
+                e.Graphics.DrawLine(p, 6, row.Height - 1, row.Width - 1, row.Height - 1);
+            };
+
             Color typeColor = act.Type switch
             {
                 "Quiz" => Color.FromArgb(63, 81, 181),
@@ -199,7 +245,6 @@ namespace PUPAcadPortal
                 "Recitation" => Color.FromArgb(0, 150, 136),
                 _ => Color.Gray
             };
-
             row.Controls.Add(new Panel
             {
                 Width = 6,
@@ -207,123 +252,116 @@ namespace PUPAcadPortal
                 BackColor = typeColor
             });
 
-            // Type badge
-            string typeDisplay = act.Type == "FileUpload" ? "File Upload" :
-                                 act.Type == "LongQuiz" ? "Long Quiz" : act.Type;
-
+            string typeDisplay = act.Type switch
+            {
+                "FileUpload" => "File Upload",
+                "LongQuiz" => "Long Quiz",
+                _ => act.Type
+            };
             row.Controls.Add(new Label
             {
                 Text = typeDisplay,
                 BackColor = typeColor,
                 ForeColor = Color.White,
                 Font = new Font("Segoe UI", 7.5F, FontStyle.Bold),
-                Location = new Point(16, isReturned ? 40 : 34),
-                Size = new Size(82, 18),
+                Location = new Point(16, isReturned ? 46 : 38),
+                Size = new Size(86, 20),
                 TextAlign = ContentAlignment.MiddleCenter
             });
 
-            // Title
             row.Controls.Add(new Label
             {
                 Text = act.Title,
                 Font = new Font("Segoe UI", 11F, FontStyle.Bold),
-                ForeColor = Color.FromArgb(25, 25, 25),
+                ForeColor = Color.FromArgb(22, 22, 22),
                 Location = new Point(16, 8),
-                Size = new Size(350, 22),
+                Size = new Size(380, 24),
                 AutoEllipsis = true
             });
 
-            // Deadline
             TimeSpan ts = act.Deadline - DateTime.Now;
             string dueText = ts.TotalDays < 0 ? "(Overdue)" :
-                               ts.Days == 0 ? "(Due Today)" :
-                               ts.Days == 1 ? "(Due Tomorrow)" :
+                                ts.Days == 0 ? "(Due Today!)" :
+                                ts.Days == 1 ? "(Due Tomorrow)" :
                                                    $"(Due in {ts.Days}d)";
             Color dueColor = ts.TotalDays < 0 ? Color.Red :
-                               ts.Days <= 1 ? Color.OrangeRed :
-                                                   Color.FromArgb(60, 120, 60);
-
+                                ts.Days <= 1 ? Color.OrangeRed :
+                                                   Color.FromArgb(50, 120, 50);
             row.Controls.Add(new Label
             {
-                Text = $"📅  {act.Deadline:MMM dd, yyyy}  {dueText}",
+                Text = $"📅  {act.Deadline:MMM dd, yyyy  hh:mm tt}   {dueText}",
                 Font = new Font("Segoe UI", 8.5F),
                 ForeColor = dueColor,
-                Location = new Point(108, 10),
-                Size = new Size(310, 18)
-            });
-
-            // Points
-            row.Controls.Add(new Label
-            {
-                Text = $"🏆  {act.Points} pts" + (act.Score.HasValue ? $"   |   Score: {act.Score}/{act.Points}" : ""),
-                Font = new Font("Segoe UI", 8.5F, act.Score.HasValue ? FontStyle.Bold : FontStyle.Regular),
-                ForeColor = act.Score.HasValue ? Color.FromArgb(128, 0, 0) : Color.FromArgb(80, 80, 80),
-                Location = new Point(108, 34),
+                Location = new Point(110, 10),
                 Size = new Size(360, 18)
             });
 
-            //  Status badge 
-            (Color bg, Color fg, string icon) statusStyle = effectiveStatus switch
-            {
-                "Submitted" => (Color.FromArgb(220, 245, 220), Color.FromArgb(27, 110, 27), "✔ Submitted"),
-                "Returned" => (Color.FromArgb(220, 230, 255), Color.FromArgb(30, 60, 180), "↩ Returned"),
-                "Late" => (Color.FromArgb(255, 235, 210), Color.FromArgb(180, 70, 0), "⏱ Late"),
-                "Overdue" => (Color.FromArgb(255, 220, 220), Color.FromArgb(180, 20, 20), "⚠ Overdue"),
-                _ => (Color.FromArgb(235, 235, 235), Color.FromArgb(80, 80, 80), "○ Pending")
-            };
-
+            string ptsText = $"🏆  {act.Points} pts";
+            if (act.Score.HasValue)
+                ptsText += $"     Score: {act.Score} / {act.Points}";
             row.Controls.Add(new Label
             {
-                Text = statusStyle.icon,
-                BackColor = statusStyle.bg,
-                ForeColor = statusStyle.fg,
+                Text = ptsText,
+                Font = new Font("Segoe UI", 8.5F, act.Score.HasValue ? FontStyle.Bold : FontStyle.Regular),
+                ForeColor = act.Score.HasValue ? Color.FromArgb(128, 0, 0) : Color.FromArgb(80, 80, 80),
+                Location = new Point(110, 34),
+                Size = new Size(380, 18)
+            });
+
+            (Color bg, Color fg, string icon) st = effStatus switch
+            {
+                "Submitted" => (Color.FromArgb(215, 245, 215), Color.FromArgb(27, 110, 27), "✔  Submitted"),
+                "Returned" => (Color.FromArgb(215, 225, 255), Color.FromArgb(30, 60, 180), "↩  Returned"),
+                "Late" => (Color.FromArgb(255, 235, 210), Color.FromArgb(180, 70, 0), "⏱  Late"),
+                "Overdue" => (Color.FromArgb(255, 215, 215), Color.FromArgb(180, 20, 20), "⚠  Overdue"),
+                _ => (Color.FromArgb(232, 232, 232), Color.FromArgb(80, 80, 80), "○  Pending")
+            };
+            row.Controls.Add(new Label
+            {
+                Text = st.icon,
+                BackColor = st.bg,
+                ForeColor = st.fg,
                 Font = new Font("Segoe UI", 8F, FontStyle.Bold),
-                Location = new Point(490, isReturned ? 16 : 28),
-                Size = new Size(100, 22),
+                Location = new Point(510, isReturned ? 18 : 30),
+                Size = new Size(108, 24),
                 TextAlign = ContentAlignment.MiddleCenter
             });
 
-            //  Returned: show remarks section 
             if (isReturned && !string.IsNullOrEmpty(act.Remarks))
             {
                 row.Controls.Add(new Label
                 {
-                    Text = $"📝 Instructor Remarks:  {act.Remarks}",
+                    Text = $"📝  {act.Remarks}",
                     Font = new Font("Segoe UI", 8F, FontStyle.Italic),
                     ForeColor = Color.FromArgb(60, 80, 160),
-                    Location = new Point(16, 64),
-                    Size = new Size(rowW - 220, 36),
+                    Location = new Point(16, 70),
+                    Size = new Size(rowW - 320, 38),
                     AutoEllipsis = true
                 });
-
                 if (act.ReturnedAt.HasValue)
-                {
                     row.Controls.Add(new Label
                     {
-                        Text = $"Returned: {act.ReturnedAt:MMM dd, yyyy  h:mm tt}",
+                        Text = $"Returned  {act.ReturnedAt:MMM dd, yyyy  h:mm tt}",
                         Font = new Font("Segoe UI", 7.5F),
                         ForeColor = Color.Gray,
-                        Location = new Point(490, 44),
-                        Size = new Size(160, 14)
+                        Location = new Point(510, 50),
+                        Size = new Size(174, 14)
                     });
-                }
             }
 
-            //  Single action button 
             bool locked = act.LockAfterDeadline && act.Deadline < DateTime.Now
-                                  && act.SubmissionStatus == "Pending";
-            string btnLabel = locked ? "Locked 🔒" :
-                              effectiveStatus == "Pending" ||
-                              effectiveStatus == "Overdue" ? "Take Activity" :
-                                                               "Answer Activity";
+                            && act.SubmissionStatus == "Pending";
+            string btnLbl = locked ? "Locked 🔒" :
+                            effStatus is "Pending" or "Overdue" ? "Take Activity" :
+                                                                  "Answer Activity";
 
             var btn = new buttonRounded
             {
-                Text = btnLabel,
-                Size = new Size(148, 34),
-                BackColor = locked ? Color.FromArgb(160, 160, 160) : Color.Maroon,
+                Text = btnLbl,
+                Size = new Size(148, 36),
+                BackColor = locked ? Color.FromArgb(155, 155, 155) : Color.Maroon,
                 ForeColor = Color.White,
-                BorderRadius = 17,
+                BorderRadius = 18,
                 Font = new Font("Segoe UI", 9F, FontStyle.Bold),
                 Tag = act,
                 Enabled = !locked,
@@ -331,7 +369,7 @@ namespace PUPAcadPortal
                 FlatStyle = FlatStyle.Flat
             };
             btn.FlatAppearance.BorderSize = 0;
-            btn.Location = new Point(rowW - btn.Width - 12, (rowH - btn.Height) / 2);
+            btn.Location = new Point(rowW - btn.Width - 14, (rowH - btn.Height) / 2 - (isReturned ? 18 : 0));
             btn.Click += (s, e) =>
             {
                 if (s is buttonRounded b && b.Tag is StudentActivityItem a)
@@ -339,13 +377,12 @@ namespace PUPAcadPortal
             };
             row.Controls.Add(btn);
 
-            //  Remarks popup button (Returned only) 
             if (isReturned)
             {
-                var btnRemarks = new buttonRounded
+                var btnRmk = new buttonRounded
                 {
                     Text = "View Remarks",
-                    Size = new Size(120, 28),
+                    Size = new Size(132, 28),
                     BackColor = Color.FromArgb(40, 70, 200),
                     ForeColor = Color.White,
                     BorderRadius = 14,
@@ -354,29 +391,22 @@ namespace PUPAcadPortal
                     FlatStyle = FlatStyle.Flat,
                     Cursor = Cursors.Hand
                 };
-                btnRemarks.FlatAppearance.BorderSize = 0;
-                btnRemarks.Location = new Point(rowW - btnRemarks.Width - 12, (rowH - btnRemarks.Height) / 2 + 36);
-                btnRemarks.Click += (s, e) => ShowRemarksDialog(act);
-                row.Controls.Add(btnRemarks);
+                btnRmk.FlatAppearance.BorderSize = 0;
+                btnRmk.Location = new Point(rowW - btnRmk.Width - 14, btn.Bottom + 8);
+                btnRmk.Click += (s, e) => ShowRemarksDialog(act);
+                row.Controls.Add(btnRmk);
             }
-
-            // Bottom divider
-            row.Paint += (s, e) =>
-            {
-                using var p = new Pen(Color.FromArgb(235, 235, 235));
-                e.Graphics.DrawLine(p, 6, row.Height - 1, row.Width - 1, row.Height - 1);
-            };
 
             return row;
         }
 
-        //  Remarks popup 
+
         private void ShowRemarksDialog(StudentActivityItem act)
         {
             using var dlg = new Form
             {
                 Text = "Instructor Remarks",
-                Size = new Size(520, 340),
+                Size = new Size(560, 440),
                 StartPosition = FormStartPosition.CenterParent,
                 BackColor = Color.White,
                 FormBorderStyle = FormBorderStyle.FixedDialog,
@@ -384,85 +414,137 @@ namespace PUPAcadPortal
                 MinimizeBox = false
             };
 
-            dlg.Controls.Add(new Panel
-            {
-                Dock = DockStyle.Top,
-                Height = 52,
-                BackColor = Color.Maroon
-            });
-            ((Panel)dlg.Controls[0]).Controls.Add(new Label
+            var pnlH = new Panel { Dock = DockStyle.Top, Height = 54, BackColor = Color.Maroon };
+            pnlH.Controls.Add(new Label
             {
                 Text = act.Title,
                 Font = new Font("Segoe UI", 12F, FontStyle.Bold),
                 ForeColor = Color.White,
                 Dock = DockStyle.Fill,
                 TextAlign = ContentAlignment.MiddleLeft,
-                Padding = new Padding(12, 0, 0, 0)
+                Padding = new Padding(14, 0, 0, 0)
             });
+            dlg.Controls.Add(pnlH);
 
-            var pnlBody = new Panel { Dock = DockStyle.Fill, Padding = new Padding(16) };
+            var body = new Panel { Dock = DockStyle.Fill, Padding = new Padding(20), AutoScroll = true };
+            int y = 16;
 
-            pnlBody.Controls.Add(new Label
+            body.Controls.Add(new Label
             {
                 Text = $"Score:  {act.Score} / {act.Points} pts",
-                Font = new Font("Segoe UI", 11F, FontStyle.Bold),
-                ForeColor = Color.FromArgb(128, 0, 0),
-                Location = new Point(16, 12),
+                Font = new Font("Segoe UI", 13F, FontStyle.Bold),
+                ForeColor = Color.Maroon,
+                Location = new Point(16, y),
                 AutoSize = true
-            });
-            pnlBody.Controls.Add(new Label
+            }); y += 32;
+
+            if (!string.IsNullOrEmpty(act.ScoreBreakdown))
+            {
+                body.Controls.Add(new Label
+                {
+                    Text = "Score Breakdown:",
+                    Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                    ForeColor = Color.FromArgb(60, 60, 60),
+                    Location = new Point(16, y),
+                    AutoSize = true
+                }); y += 20;
+                body.Controls.Add(new Label
+                {
+                    Text = act.ScoreBreakdown,
+                    Font = new Font("Segoe UI", 9F),
+                    ForeColor = Color.FromArgb(80, 80, 80),
+                    Location = new Point(16, y),
+                    Size = new Size(500, 18)
+                }); y += 28;
+            }
+
+            body.Controls.Add(new Label
             {
                 Text = "Instructor Feedback:",
-                Font = new Font("Segoe UI", 9F, FontStyle.Bold),
-                ForeColor = Color.FromArgb(60, 60, 60),
-                Location = new Point(16, 44),
+                Font = new Font("Segoe UI", 9.5F, FontStyle.Bold),
+                ForeColor = Color.FromArgb(30, 50, 150),
+                Location = new Point(16, y),
                 AutoSize = true
-            });
-            pnlBody.Controls.Add(new Label
+            }); y += 22;
+
+            var pnlR = new Panel
+            {
+                BackColor = Color.FromArgb(235, 240, 255),
+                Location = new Point(16, y),
+                Size = new Size(500, 80),
+                Padding = new Padding(10)
+            };
+            pnlR.Controls.Add(new Label
             {
                 Text = act.Remarks,
                 Font = new Font("Segoe UI", 9.5F),
-                ForeColor = Color.FromArgb(40, 40, 40),
-                Location = new Point(16, 66),
-                Size = new Size(470, 120),
-                AutoSize = false
+                ForeColor = Color.FromArgb(30, 30, 80),
+                Dock = DockStyle.Fill
             });
+            body.Controls.Add(pnlR); y += 90;
+
+            if (!string.IsNullOrEmpty(act.Suggestions))
+            {
+                body.Controls.Add(new Label
+                {
+                    Text = "Suggestions for Improvement:",
+                    Font = new Font("Segoe UI", 9.5F, FontStyle.Bold),
+                    ForeColor = Color.FromArgb(60, 60, 60),
+                    Location = new Point(16, y),
+                    AutoSize = true
+                }); y += 22;
+
+                var pnlS = new Panel
+                {
+                    BackColor = Color.FromArgb(255, 248, 225),
+                    Location = new Point(16, y),
+                    Size = new Size(500, 60),
+                    Padding = new Padding(10)
+                };
+                pnlS.Controls.Add(new Label
+                {
+                    Text = act.Suggestions,
+                    Font = new Font("Segoe UI", 9F),
+                    ForeColor = Color.FromArgb(80, 60, 0),
+                    Dock = DockStyle.Fill
+                });
+                body.Controls.Add(pnlS); y += 70;
+            }
+
             if (act.ReturnedAt.HasValue)
-                pnlBody.Controls.Add(new Label
+            {
+                body.Controls.Add(new Label
                 {
                     Text = $"Returned on  {act.ReturnedAt:dddd, MMMM dd, yyyy  h:mm tt}",
                     Font = new Font("Segoe UI", 8F, FontStyle.Italic),
                     ForeColor = Color.Gray,
-                    Location = new Point(16, 198),
+                    Location = new Point(16, y),
                     AutoSize = true
                 });
+            }
 
-            var btnClose = new Button
+            var btnClose = new buttonRounded
             {
                 Text = "Close",
-                Size = new Size(100, 32),
-                Location = new Point(390, 230),
+                Size = new Size(110, 36),
                 BackColor = Color.Maroon,
                 ForeColor = Color.White,
+                BorderRadius = 18,
                 FlatStyle = FlatStyle.Flat,
                 DialogResult = DialogResult.OK
             };
             btnClose.FlatAppearance.BorderSize = 0;
-            pnlBody.Controls.Add(btnClose);
+            btnClose.Location = new Point(430, dlg.ClientSize.Height - 60);
+            dlg.Controls.Add(btnClose);
+            dlg.Controls.Add(body);
 
-            dlg.Controls.Add(pnlBody);
-            dlg.ShowDialog();
+            dlg.AcceptButton = btnClose;
+            dlg.ShowDialog(this);
         }
 
-        //  Events 
+
         private void btnBack_Click(object sender, EventArgs e) => OnBack?.Invoke();
-
-        private void txtSearch_TextChanged(object sender, EventArgs e)
-        {
-            _searchTimer.Stop();
-            _searchTimer.Start();
-        }
-
+        private void txtSearch_TextChanged(object sender, EventArgs e) { _searchTimer.Stop(); _searchTimer.Start(); }
         private void cmbFilter_SelectedIndexChanged(object sender, EventArgs e) => RenderRows();
         private void cmbStatus_SelectedIndexChanged(object sender, EventArgs e) => RenderRows();
         private void flp_SizeChanged(object sender, EventArgs e) => RenderRows();
