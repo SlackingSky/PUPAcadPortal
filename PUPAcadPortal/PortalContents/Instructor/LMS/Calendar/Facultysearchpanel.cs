@@ -15,6 +15,16 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
     {
         public event Action<List<FacultyCalendarEvent>>? ResultsChanged;
 
+        private TextBox _txtSearch;
+        private ComboBox _cboType;
+        private ComboBox _cboCourse;
+        private DateTimePicker _dtpFrom;
+        private DateTimePicker _dtpTo;
+        private CheckBox _chkDateRange;
+        private Button _btnSearch;
+        private Button _btnClear;
+        private FlowLayoutPanel _resultsFLP;
+        private Label _lblCount;
 
         private static readonly Color Maroon = Color.FromArgb(136, 14, 79);
         private static readonly Font UIFont = new Font("Segoe UI", 8.5f);
@@ -28,13 +38,15 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             BorderStyle = BorderStyle.None;
             Padding = new Padding(12, 10, 12, 8);
 
-            Paint += (s, e) =>
-            {
-                using var p = new Pen(Color.FromArgb(220, 220, 220), 1);
-                e.Graphics.DrawRectangle(p, 0, 0, Width - 1, Height - 1);
-            };
+            Paint += FacultySearchPanel_Paint;
 
             BuildControls();
+        }
+
+        private void FacultySearchPanel_Paint(object? sender, PaintEventArgs e)
+        {
+            using var p = new Pen(Color.FromArgb(220, 220, 220), 1);
+            e.Graphics.DrawRectangle(p, 0, 0, Width - 1, Height - 1);
         }
 
         private void BuildControls()
@@ -52,7 +64,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             };
 
             _txtSearch = new TextBox { Width = 220, Height = 30, Font = UIFont };
-            _txtSearch.KeyDown += (s, e) => { if (e.KeyCode == Keys.Enter) DoSearch(); };
+            _txtSearch.KeyDown += TxtSearch_KeyDown;
 
             _cboType = new ComboBox { Width = 140, DropDownStyle = ComboBoxStyle.DropDownList, Font = UIFont };
             _cboType.Items.Add("All Types");
@@ -67,10 +79,10 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
 
             _btnSearch = new Button { Width = 80, Height = 30, Text = "Search", BackColor = Maroon, ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Font = UIFont };
             _btnSearch.FlatAppearance.BorderSize = 0;
-            _btnSearch.Click += (s, e) => DoSearch();
+            _btnSearch.Click += BtnSearch_Click;
 
             _btnClear = new Button { Width = 60, Height = 30, Text = "Clear", FlatStyle = FlatStyle.Flat, Font = UIFont };
-            _btnClear.Click += (s, e) => ClearSearch();
+            _btnClear.Click += BtnClear_Click;
 
             foreach (Control c in new Control[] { _txtSearch, _cboType, _cboCourse, _btnSearch, _btnClear })
             {
@@ -92,11 +104,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             };
 
             _chkDateRange = new CheckBox { Text = "Date range:", AutoSize = true, Font = UIFont, Margin = new Padding(0, 4, 6, 0) };
-            _chkDateRange.CheckedChanged += (s, e) =>
-            {
-                _dtpFrom.Enabled = _chkDateRange.Checked;
-                _dtpTo.Enabled = _chkDateRange.Checked;
-            };
+            _chkDateRange.CheckedChanged += ChkDateRange_CheckedChanged;
 
             _dtpFrom = new DateTimePicker { Width = 140, Font = UIFont, Enabled = false, Format = DateTimePickerFormat.Short, Margin = new Padding(0, 0, 6, 0) };
             _dtpTo = new DateTimePicker { Width = 140, Font = UIFont, Enabled = false, Format = DateTimePickerFormat.Short, Margin = new Padding(0, 0, 6, 0) };
@@ -157,6 +165,21 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             _resultsFLP.Controls.Clear();
             _lblCount.Text = "";
             ResultsChanged?.Invoke(new List<FacultyCalendarEvent>());
+        }
+
+        private void TxtSearch_KeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) DoSearch();
+        }
+
+        private void BtnSearch_Click(object? sender, EventArgs e) => DoSearch();
+
+        private void BtnClear_Click(object? sender, EventArgs e) => ClearSearch();
+
+        private void ChkDateRange_CheckedChanged(object? sender, EventArgs e)
+        {
+            _dtpFrom.Enabled = _chkDateRange.Checked;
+            _dtpTo.Enabled = _chkDateRange.Checked;
         }
 
         private void ShowResults(List<FacultyCalendarEvent> results)

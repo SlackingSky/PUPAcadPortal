@@ -11,6 +11,10 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
     /// </summary>
     public partial class FacultyNotificationsPanel : Panel
     {
+        private FlowLayoutPanel _flp;
+        private Label _lblTitle;
+        private Button _btnClose;
+
         private static readonly Color Maroon = Color.FromArgb(136, 14, 79);
         private static readonly Color Overdue = Color.FromArgb(183, 28, 28);
         private static readonly Color Warning = Color.FromArgb(230, 81, 0);
@@ -20,25 +24,53 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
 
         public FacultyNotificationsPanel()
         {
-            InitializeComponent();
-
-            this.BorderStyle = BorderStyle.None;
+            Width = 320;
+            BackColor = Color.White;
+            BorderStyle = BorderStyle.None;
 
             // Shadow simulation via outer border
-            this.Paint += (s, e) =>
-            {
-                using var p = new Pen(Color.FromArgb(200, 200, 200), 1);
-                e.Graphics.DrawRectangle(p, 0, 0, Width - 1, Height - 1);
-            };
+            Paint += FacultyNotificationsPanel_Paint;
 
-            // Hide horizontal scrollbar 
+            // Header
+            var hdr = new Panel { Dock = DockStyle.Top, Height = 44, BackColor = Maroon };
+            _lblTitle = new Label
+            {
+                Text = "🔔  Notifications",
+                Dock = DockStyle.Fill,
+                Font = BoldFont,
+                ForeColor = Color.White,
+                TextAlign = ContentAlignment.MiddleLeft,
+                Padding = new Padding(12, 0, 0, 0),
+            };
+            _btnClose = new Button
+            {
+                Text = "✕",
+                Width = 30,
+                Dock = DockStyle.Right,
+                FlatStyle = FlatStyle.Flat,
+                ForeColor = Color.White,
+                BackColor = Color.Transparent,
+                Font = UIFont,
+                Cursor = Cursors.Hand,
+            };
+            _btnClose.FlatAppearance.BorderSize = 0;
+            _btnClose.Click += BtnClose_Click;
+            hdr.Controls.Add(_lblTitle);
+            hdr.Controls.Add(_btnClose);
+            Controls.Add(hdr);
+
+            // Scrollable list
+            _flp = new FlowLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                FlowDirection = FlowDirection.TopDown,
+                WrapContents = false,
+                AutoScroll = true,
+                Padding = new Padding(8),
+            };
             _flp.HorizontalScroll.Enabled = false;
             _flp.HorizontalScroll.Visible = false;
-        }
-
-        private void BtnClose_Click(object sender, EventArgs e)
-        {
-            this.Visible = false;
+            Controls.Add(_flp);
         }
 
         public new void Refresh()
@@ -60,11 +92,8 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             }
 
             foreach (var n in notes)
-            {
                 _flp.Controls.Add(MakeRow(n));
-            }
 
-            // Enforce no horizontal scroll after dynamic additions
             _flp.HorizontalScroll.Enabled = false;
             _flp.HorizontalScroll.Visible = false;
         }
@@ -74,7 +103,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             Color accent = n.IsOverdue ? Overdue
                          : n.IsToday ? Warning
                          : n.DaysLeft == 1 ? Color.FromArgb(200, 130, 0)
-                                           : Info;
+                                          : Info;
 
             var row = new Panel
             {
@@ -123,7 +152,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             string sub = n.Date.ToString("MMM dd");
             if (!string.IsNullOrEmpty(n.Event.StartTime)) sub += $"  •  {n.Event.StartTime}";
             if (!string.IsNullOrEmpty(n.Event.Course)) sub += $"  •  {n.Event.Course}";
-
             var lSub = new Label
             {
                 Text = sub,
@@ -146,6 +174,14 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             };
 
             return row;
+        }
+
+        private void BtnClose_Click(object? sender, EventArgs e) => Visible = false;
+
+        private void FacultyNotificationsPanel_Paint(object? sender, PaintEventArgs e)
+        {
+            using var p = new Pen(Color.FromArgb(200, 200, 200), 1);
+            e.Graphics.DrawRectangle(p, 0, 0, Width - 1, Height - 1);
         }
     }
 }

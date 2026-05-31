@@ -23,6 +23,8 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
         private const int HDR_H = 50;
 
         private DateTime _date;
+        private Panel _gridPanel = null!;
+        private Panel _headerPanel = null!;
 
         private FacultyCalendarEvent? _dragEvent;
         private bool _dragging;
@@ -37,6 +39,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
 
         public FacultyDayView()
         {
+            InitializeComponent();
             AutoScroll = true;
             BackColor = Color.White;
             BuildSkeleton();
