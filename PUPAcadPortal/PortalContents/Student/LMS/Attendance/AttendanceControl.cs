@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -9,273 +10,495 @@ namespace PUPAcadPortal
 {
     public partial class AttendanceControl : UserControl
     {
-        //  Runtime state 
-        private DataTable _subjectsDT;
-        private DataTable _logsDT;
+        // ─── Runtime State ────────────────────────────────────────────────────────
         private List<SubjectMeta> _subjects = new();
         private Dictionary<string, List<AttRecord>> _records = new();
         private string _selectedCode = null;
         private int _total, _present, _absent, _late, _excused;
         private double _pct;
+
         private const double REQUIRED_PCT = 80.0;
         private const int LATE_PER_ABS = 3;
 
-        // Constructor
+        // ─── Constructor ─────────────────────────────────────────────────────────
         public AttendanceControl()
         {
             InitializeComponent();
         }
 
-        // BUILD UI
+        // =========================================================================
+        //  BUILD UI
+        // =========================================================================
         private void BuildUI()
         {
             this.Dock = DockStyle.Fill;
-            this.BackColor = SystemColors.Control;
+            this.BackColor = Color.FromArgb(245, 246, 250);
+            this.Font = new Font("Segoe UI", 9f);
 
-            var wrapper = new Panel
+            // ── Outer scroll wrapper ──────────────────────────────────────────────
+            var scroll = new Panel
             {
                 Dock = DockStyle.Fill,
                 AutoScroll = true,
-                BackColor = SystemColors.Control
+                BackColor = Color.FromArgb(245, 246, 250)
             };
-            this.Controls.Add(wrapper);
+            this.Controls.Add(scroll);
 
-            //  Header bar 
-            pnlHeader = new Panel
+            // ── Build sections (added in reverse so DockStyle.Top stacks top→down)
+            var spacer = new Panel { Dock = DockStyle.Top, Height = 24, BackColor = Color.Transparent };
+
+            BuildLogsSection(out var logsSection);
+            BuildSubjectsSection(out var subjSection);
+            BuildQRStripSection(out var qrSection);
+            BuildMiniStatsBar(out var miniBar);
+            BuildSummaryCards(out var cards);
+            BuildHeader(out var header);
+
+            scroll.Controls.Add(spacer);
+            scroll.Controls.Add(logsSection);
+            scroll.Controls.Add(subjSection);
+            scroll.Controls.Add(qrSection);
+            scroll.Controls.Add(miniBar);
+            scroll.Controls.Add(cards);
+            scroll.Controls.Add(header);
+        }
+
+        // =========================================================================
+        //  HEADER
+        // =========================================================================
+        private void BuildHeader(out Panel header)
+        {
+            header = new Panel
             {
                 Dock = DockStyle.Top,
-                Height = 100,
-                BackColor = Color.White,
-                Padding = new Padding(12, 6, 12, 0)
+                Height = 110,
+                BackColor = Color.White
             };
-            pnlHeader.Paint += (s, e) =>
-                e.Graphics.DrawLine(new Pen(Color.FromArgb(220, 220, 220), 1),
-                    0, pnlHeader.Height - 1, pnlHeader.Width, pnlHeader.Height - 1);
 
-            lblPageTitle = MakeLabel("My Attendance", 18, FontStyle.Bold, Color.Maroon);
+            header.Paint += (s, e) =>
+            {
+                // Cast the sender back to a Panel
+                var panel = (Panel)s;
+
+                e.Graphics.DrawLine(new Pen(Color.FromArgb(225, 225, 235), 1),
+                    0, panel.Height - 1, panel.Width, panel.Height - 1);
+            };
+
+            // Title
+            lblPageTitle = MakeLabel("My Attendance", 17f, FontStyle.Bold, Color.FromArgb(128, 0, 0));
+            lblPageTitle.Location = new Point(18, 8);
             lblPageTitle.AutoSize = true;
-            lblPageTitle.Location = new Point(12, 4);
 
-            lblSemLbl = MakeLabel("Semester:", 9, FontStyle.Bold);
-            lblSemLbl.AutoSize = true;
-            lblSemLbl.Location = new Point(12, 46);
+            // Subtitle
+            var sub = MakeLabel("Track your academic attendance across all courses", 9f,
+                FontStyle.Regular, Color.FromArgb(120, 120, 140));
+            sub.Location = new Point(19, 36);
+            sub.AutoSize = true;
 
-            cmbSemester = new ComboBox
+            // ── Filter row ───────────────────────────────────────────────────────
+            int fx = 18, fy = 62;
+
+            lblPeriodLbl = MakeLabel("Period:", 8.5f, FontStyle.Bold, Color.FromArgb(80, 80, 100));
+            lblPeriodLbl.Location = new Point(fx, fy + 4);
+            lblPeriodLbl.AutoSize = true;
+
+            cmbPeriod = MakeCombo(new Point(fx + 52, fy), 140);
+            cmbPeriod.Items.AddRange(new object[] { "All Periods", "Prelim", "Midterm", "Final Term" });
+            cmbPeriod.SelectedIndex = 0;
+            cmbPeriod.SelectedIndexChanged += (s, e) => RefreshAll();
+
+            var lblCourseLbl = MakeLabel("Course:", 8.5f, FontStyle.Bold, Color.FromArgb(80, 80, 100));
+            lblCourseLbl.Location = new Point(fx + 210, fy + 4);
+            lblCourseLbl.AutoSize = true;
+
+            cmbCourse = MakeCombo(new Point(fx + 268, fy), 165);
+            cmbCourse.Items.Add("All Courses");
+            cmbCourse.SelectedIndex = 0;
+            cmbCourse.SelectedIndexChanged += (s, e) => RefreshAll();
+
+            var lblFromLbl = MakeLabel("From:", 8.5f, FontStyle.Bold, Color.FromArgb(80, 80, 100));
+            lblFromLbl.Location = new Point(fx + 452, fy + 4);
+            lblFromLbl.AutoSize = true;
+
+            dtpFrom = new DateTimePicker
             {
-                DropDownStyle = ComboBoxStyle.DropDownList,
-                Location = new Point(88, 43),
-                Width = 185,
+                Location = new Point(fx + 494, fy),
+                Width = 122,
+                Format = DateTimePickerFormat.Short,
+                Value = new DateTime(2026, 2, 1),
                 Font = new Font("Segoe UI", 9f)
             };
-            cmbSemester.Items.AddRange(new object[]
-            {
-                "All",
-                "1st Semester",
-                "2nd Semester"
-            });
-            cmbSemester.SelectedIndex = 0;
-            cmbSemester.SelectedIndexChanged += (s, e) => RefreshAll();
+            dtpFrom.ValueChanged += (s, e) => RefreshAll();
 
-            //  Month | Year | Refresh 
-            lblMonthLbl = MakeLabel("Month:", 9, FontStyle.Bold);
-            lblMonthLbl.AutoSize = true;
-            lblMonthLbl.Location = new Point(12, 74);
+            var lblToLbl = MakeLabel("To:", 8.5f, FontStyle.Bold, Color.FromArgb(80, 80, 100));
+            lblToLbl.Location = new Point(fx + 628, fy + 4);
+            lblToLbl.AutoSize = true;
 
-            cmbMonth = new ComboBox
+            dtpTo = new DateTimePicker
             {
-                DropDownStyle = ComboBoxStyle.DropDownList,
-                Location = new Point(68, 71),
-                Width = 130,
+                Location = new Point(fx + 652, fy),
+                Width = 122,
+                Format = DateTimePickerFormat.Short,
+                Value = DateTime.Today,
                 Font = new Font("Segoe UI", 9f)
             };
-            cmbMonth.Items.Add("All");
-            foreach (var mn in new[] { "January","February","March","April","May","June",
-                                       "July","August","September","October","November","December" })
-                cmbMonth.Items.Add(mn);
-            cmbMonth.SelectedIndex = 0;
-            cmbMonth.SelectedIndexChanged += (s, e) => RefreshAll();
+            dtpTo.ValueChanged += (s, e) => RefreshAll();
 
-            var lblYearLbl = MakeLabel("Year:", 9, FontStyle.Bold);
-            lblYearLbl.AutoSize = true;
-            lblYearLbl.Location = new Point(210, 74);
-
-            cmbYear = new ComboBox
-            {
-                DropDownStyle = ComboBoxStyle.DropDownList,
-                Location = new Point(255, 71),
-                Width = 90,
-                Font = new Font("Segoe UI", 9f)
-            };
-            for (int y = 2025; y <= DateTime.Today.Year + 1; y++)
-                cmbYear.Items.Add(y.ToString());
-            cmbYear.SelectedItem = DateTime.Today.Year.ToString();
-            if (cmbYear.SelectedIndex < 0) cmbYear.SelectedIndex = 0;
-            cmbYear.SelectedIndexChanged += (s, e) => RefreshAll();
-
-            btnRefresh = MakeButton("↺  Refresh", Color.Maroon);
-            btnRefresh.Location = new Point(360, 68);
-            btnRefresh.Size = new Size(108, 27);
+            btnRefresh = MakeAccentButton("↺  Refresh");
+            btnRefresh.Location = new Point(fx + 790, fy - 1);
+            btnRefresh.Size = new Size(100, 27);
             btnRefresh.Click += (s, e) => RefreshAll();
 
-            pnlHeader.Controls.AddRange(new Control[]
-                { lblPageTitle, lblSemLbl, cmbSemester,
-                  lblMonthLbl, cmbMonth, lblYearLbl, cmbYear, btnRefresh });
+            header.Controls.AddRange(new Control[]
+            {
+                lblPageTitle, sub,
+                lblPeriodLbl, cmbPeriod,
+                lblCourseLbl, cmbCourse,
+                lblFromLbl, dtpFrom,
+                lblToLbl, dtpTo,
+                btnRefresh
+            });
+        }
 
-            //  Summary cards 
-            tlpCards = new TableLayoutPanel
+        // =========================================================================
+        //  SUMMARY CARDS (5-card row)
+        // =========================================================================
+        private void BuildSummaryCards(out TableLayoutPanel cards)
+        {
+            cards = new TableLayoutPanel
             {
                 Dock = DockStyle.Top,
-                Height = 145,
+                Height = 138,
                 ColumnCount = 5,
                 RowCount = 1,
-                BackColor = Color.WhiteSmoke
+                BackColor = Color.FromArgb(245, 246, 250),
+                Padding = new Padding(12, 10, 12, 4)
             };
             for (int i = 0; i < 5; i++)
-                tlpCards.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            tlpCards.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+                cards.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20f));
+            cards.RowStyles.Add(new RowStyle(SizeType.Percent, 100f));
+            tlpCards = cards;
 
-            // Overall
-            pnlCardOverall = MakeCard();
-            lblOverallTitle = MakeCentredLabel("Overall Attendance", 9f, FontStyle.Bold);
-            lblOverallTitle.Dock = DockStyle.Top; lblOverallTitle.Height = 32;
-            lblOverallTitle.ForeColor = Color.FromArgb(80, 80, 80);
-            lblOverallPct = MakeCentredLabel("–", 26, FontStyle.Bold);
-            lblOverallPct.ForeColor = Color.ForestGreen;
-            lblOverallPct.Dock = DockStyle.Fill;
-            pnlCardOverall.Controls.Add(lblOverallPct);
-            pnlCardOverall.Controls.Add(lblOverallTitle);
+            // Card definitions: (field, title, accent color)
+            pnlCardOverall = MakeSummaryCard("Overall", "–", Color.FromArgb(128, 0, 0),
+                out lblOverallTitle, out lblOverallPct);
+            pnlCardPresent = MakeSummaryCard("Present", "–", Color.FromArgb(0, 150, 70),
+                out var _lpt, out lblPresentValue);
+            pnlCardLate = MakeSummaryCard("Late", "–", Color.FromArgb(220, 140, 0),
+                out var _llt, out lblLateValue);
+            pnlCardAbsent = MakeSummaryCard("Absent", "–", Color.FromArgb(200, 40, 40),
+                out var _lat, out lblAbsentValue);
+            pnlCardAlerts = MakeAlertCard(out lblAlertText, out btnViewDetails);
 
-            // Total
-            pnlCardTotal = MakeCard();
-            lblTotalTitle = MakeCentredLabel("Total Sessions", 9f, FontStyle.Bold);
-            lblTotalTitle.Dock = DockStyle.Top; lblTotalTitle.Height = 32;
-            lblTotalTitle.ForeColor = Color.FromArgb(80, 80, 80);
-            lblTotalValue = MakeCentredLabel("–", 26, FontStyle.Bold);
-            lblTotalValue.Dock = DockStyle.Fill;
-            pnlCardTotal.Controls.Add(lblTotalValue);
-            pnlCardTotal.Controls.Add(lblTotalTitle);
+            cards.Controls.Add(pnlCardOverall, 0, 0);
+            cards.Controls.Add(pnlCardPresent, 1, 0);
+            cards.Controls.Add(pnlCardLate, 2, 0);
+            cards.Controls.Add(pnlCardAbsent, 3, 0);
+            cards.Controls.Add(pnlCardAlerts, 4, 0);
+        }
 
-            // Status
-            pnlCardStatus = MakeCard();
-            lblStatusTitle = MakeCentredLabel("Attendance Status", 9f, FontStyle.Bold);
-            lblStatusTitle.Dock = DockStyle.Top; lblStatusTitle.Height = 32;
-            lblStatusTitle.ForeColor = Color.FromArgb(80, 80, 80);
-            lblStatusText = MakeCentredLabel("–", 15f, FontStyle.Bold);
-            lblStatusText.ForeColor = Color.ForestGreen;
-            lblStatusText.Dock = DockStyle.Fill;
-            pnlCardStatus.Controls.Add(lblStatusText);
-            pnlCardStatus.Controls.Add(lblStatusTitle);
-
-            // Required
-            pnlCardRequired = MakeCard();
-            lblRequiredTitle = MakeCentredLabel("Required Attendance", 9f, FontStyle.Bold);
-            lblRequiredTitle.Dock = DockStyle.Top; lblRequiredTitle.Height = 32;
-            lblRequiredTitle.ForeColor = Color.FromArgb(80, 80, 80);
-            lblRequiredValue = MakeCentredLabel("80%", 26, FontStyle.Bold);
-            lblRequiredValue.ForeColor = Color.FromArgb(128, 0, 0);
-            lblRequiredValue.Dock = DockStyle.Fill;
-            pnlCardRequired.Controls.Add(lblRequiredValue);
-            pnlCardRequired.Controls.Add(lblRequiredTitle);
-
-            // Alerts card
-            pnlCardAlerts = new Panel
+        private Panel MakeSummaryCard(string title, string value, Color accent,
+            out Label titleLbl, out Label valueLbl)
+        {
+            var card = new Panel
             {
-                BackColor = Color.FromArgb(255, 240, 240),
+                BackColor = Color.White,
                 Dock = DockStyle.Fill,
-                Margin = new Padding(4),
-                Padding = new Padding(10)
+                Margin = new Padding(4, 0, 4, 0)
             };
-            var alertInner = new TableLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                RowCount = 2,
-                ColumnCount = 1,
-                BackColor = Color.Transparent
-            };
-            alertInner.RowStyles.Add(new RowStyle(SizeType.Percent, 60F));
-            alertInner.RowStyles.Add(new RowStyle(SizeType.Percent, 40F));
+            card.Paint += (s, e) => DrawCardBorder(e.Graphics, card, accent);
 
-            lblAlertText = new Label
+            // Left accent bar
+            var bar = new Panel
+            {
+                BackColor = accent,
+                Location = new Point(0, 0),
+                Size = new Size(4, card.Height),
+                Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left
+            };
+            card.Resize += (s, e) => bar.Height = card.Height;
+
+            titleLbl = new Label
+            {
+                Text = title,
+                Font = new Font("Segoe UI", 8.5f, FontStyle.Bold),
+                ForeColor = Color.FromArgb(100, 100, 120),
+                AutoSize = false,
+                Dock = DockStyle.Top,
+                Height = 30,
+                TextAlign = ContentAlignment.BottomLeft,
+                Padding = new Padding(14, 0, 0, 0)
+            };
+
+            valueLbl = new Label
+            {
+                Text = value,
+                Font = new Font("Segoe UI", 24f, FontStyle.Bold),
+                ForeColor = accent,
+                AutoSize = false,
+                Dock = DockStyle.Fill,
+                TextAlign = ContentAlignment.MiddleLeft,
+                Padding = new Padding(12, 0, 0, 8)
+            };
+
+            card.Controls.Add(valueLbl);
+            card.Controls.Add(titleLbl);
+            card.Controls.Add(bar);
+            return card;
+        }
+
+        private Panel MakeAlertCard(out Label alertLbl, out Button detailsBtn)
+        {
+            var card = new Panel
+            {
+                BackColor = Color.FromArgb(255, 243, 243),
+                Dock = DockStyle.Fill,
+                Margin = new Padding(4, 0, 4, 0)
+            };
+            card.Paint += (s, e) => DrawCardBorder(e.Graphics, card, Color.FromArgb(200, 40, 40));
+
+            var bar = new Panel
+            {
+                BackColor = Color.FromArgb(200, 40, 40),
+                Location = new Point(0, 0),
+                Size = new Size(4, card.Height),
+                Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left
+            };
+            card.Resize += (s, e) => bar.Height = card.Height;
+
+            alertLbl = new Label
             {
                 Text = "Loading…",
-                ForeColor = Color.Crimson,
-                TextAlign = ContentAlignment.MiddleCenter,
-                Font = new Font("Segoe UI", 9.5f),
+                Font = new Font("Segoe UI", 8.5f),
+                ForeColor = Color.FromArgb(160, 40, 40),
                 Dock = DockStyle.Fill,
-                AutoSize = false
+                TextAlign = ContentAlignment.MiddleCenter,
+                AutoSize = false,
+                Padding = new Padding(10, 0, 10, 24)
             };
-            btnViewDetails = MakeButton("View Details", Color.Maroon);
-            btnViewDetails.Dock = DockStyle.Fill;
-            btnViewDetails.Margin = new Padding(20, 4, 20, 4);
-            btnViewDetails.Click += OnViewDetailsClick;
 
-            alertInner.Controls.Add(lblAlertText, 0, 0);
-            alertInner.Controls.Add(btnViewDetails, 0, 1);
-            pnlCardAlerts.Controls.Add(alertInner);
+            detailsBtn = MakeAccentButton("View Details");
+            detailsBtn.Dock = DockStyle.Bottom;
+            detailsBtn.Height = 28;
+            detailsBtn.Margin = new Padding(16, 0, 16, 8);
+            detailsBtn.Click += OnViewDetailsClick;
 
-            tlpCards.Controls.Add(pnlCardOverall, 0, 0);
-            tlpCards.Controls.Add(pnlCardTotal, 1, 0);
-            tlpCards.Controls.Add(pnlCardStatus, 2, 0);
-            tlpCards.Controls.Add(pnlCardRequired, 3, 0);
-            tlpCards.Controls.Add(pnlCardAlerts, 4, 0);
+            card.Controls.Add(alertLbl);
+            card.Controls.Add(detailsBtn);
+            card.Controls.Add(bar);
+            return card;
+        }
 
-            //  Mini-stats strip 
-            pnlMiniStats = new Panel
+        private static void DrawCardBorder(Graphics g, Panel card, Color accent)
+        {
+            using var pen = new Pen(Color.FromArgb(235, 235, 240), 1);
+            g.DrawRectangle(pen, 0, 0, card.Width - 1, card.Height - 1);
+        }
+
+        // =========================================================================
+        //  MINI STATS BAR  (progress bar + counts)
+        // =========================================================================
+        private void BuildMiniStatsBar(out Panel bar)
+        {
+            bar = new Panel
             {
                 Dock = DockStyle.Top,
-                Height = 46,
+                Height = 44,
                 BackColor = Color.White,
-                Padding = new Padding(12, 0, 12, 0)
+                Padding = new Padding(18, 0, 18, 0)
             };
-            pnlMiniStats.Paint += (s, e) =>
-                e.Graphics.DrawLine(new Pen(Color.FromArgb(230, 230, 230), 1),
-                    0, pnlMiniStats.Height - 1, pnlMiniStats.Width, pnlMiniStats.Height - 1);
-
-            int mx = 10;
-            lblMiniPresent = MakeMiniStat("● Present: –", Color.FromArgb(0, 130, 50), ref mx);
-            lblMiniLate = MakeMiniStat("● Late: –", Color.DarkOrange, ref mx);
-            lblMiniAbsent = MakeMiniStat("● Absent: –", Color.Crimson, ref mx);
-            lblMiniExcused = MakeMiniStat("● Excused: –", Color.RoyalBlue, ref mx);
-
-            pbAttendance = new ProgressBar
+            bar.Paint += (s, e) =>
             {
-                Location = new Point(mx + 16, 13),
-                Size = new Size(220, 18),
-                Minimum = 0,
-                Maximum = 100,
-                Style = ProgressBarStyle.Continuous
+                // Cast the sender to access its properties safely
+                var panel = (Panel)s;
+
+                e.Graphics.DrawLine(new Pen(Color.FromArgb(230, 230, 238), 1),
+                    0, 0, panel.Width, 0);
+                e.Graphics.DrawLine(new Pen(Color.FromArgb(230, 230, 238), 1),
+                    0, panel.Height - 1, panel.Width, panel.Height - 1);
             };
+            pnlMiniStats = bar;
+
+            int x = 18;
+            lblMiniPresent = MakeMiniChip("● Present: –", Color.FromArgb(0, 150, 70), ref x);
+            lblMiniLate = MakeMiniChip("● Late: –", Color.FromArgb(200, 120, 0), ref x);
+            lblMiniAbsent = MakeMiniChip("● Absent: –", Color.FromArgb(200, 40, 40), ref x);
+            lblMiniExcused = MakeMiniChip("● Excused: –", Color.FromArgb(50, 100, 200), ref x);
+
+            // Segmented progress bar host
+            pnlProgress = new Panel
+            {
+                Location = new Point(x + 20, 13),
+                Size = new Size(240, 18),
+                BackColor = Color.FromArgb(240, 240, 245)
+            };
+            pnlProgress.Paint += DrawSegmentedProgress;
+
             lblProgressPct = new Label
             {
                 AutoSize = true,
-                Location = new Point(mx + 246, 13),
+                Location = new Point(x + 270, 13),
                 Font = new Font("Segoe UI", 9f, FontStyle.Bold),
-                ForeColor = Color.FromArgb(60, 60, 60),
+                ForeColor = Color.FromArgb(80, 80, 100),
                 Text = "0%"
             };
-            pnlMiniStats.Controls.AddRange(new Control[]
-                { lblMiniPresent, lblMiniLate, lblMiniAbsent, lblMiniExcused,
-                  pbAttendance, lblProgressPct });
 
-            //  Subjects section title 
-            pnlSubjTitle = new Panel
+            bar.Controls.AddRange(new Control[]
+            {
+                lblMiniPresent, lblMiniLate, lblMiniAbsent, lblMiniExcused,
+                pnlProgress, lblProgressPct
+            });
+        }
+
+        private void DrawSegmentedProgress(object sender, PaintEventArgs e)
+        {
+            var g = e.Graphics;
+            var pan = (Panel)sender;
+            int w = pan.Width;
+            int h = pan.Height;
+
+            // Background track
+            using var bg = new SolidBrush(Color.FromArgb(230, 230, 238));
+            g.FillRectangle(bg, 0, 0, w, h);
+
+            if (_total <= 0) return;
+
+            double pF = (double)_present / _total;
+            double lF = (double)_late / _total;
+            double aF = (double)_absent / _total;
+            double eF = (double)_excused / _total;
+
+            int xP = 0;
+            int wP = (int)(w * pF);
+            int wL = (int)(w * lF);
+            int wA = (int)(w * aF);
+            int wE = (int)(w * eF);
+
+            using var bP = new SolidBrush(Color.FromArgb(0, 160, 75));
+            using var bL = new SolidBrush(Color.FromArgb(220, 150, 0));
+            using var bA = new SolidBrush(Color.FromArgb(210, 45, 45));
+            using var bE = new SolidBrush(Color.FromArgb(60, 110, 210));
+
+            g.FillRectangle(bP, xP, 0, wP, h); xP += wP;
+            g.FillRectangle(bL, xP, 0, wL, h); xP += wL;
+            g.FillRectangle(bA, xP, 0, wA, h); xP += wA;
+            g.FillRectangle(bE, xP, 0, wE, h);
+        }
+
+        // =========================================================================
+        //  QR ATTENDANCE HISTORY STRIP
+        // =========================================================================
+        private void BuildQRStripSection(out Panel section)
+        {
+            section = new Panel
+            {
+                Dock = DockStyle.Top,
+                Height = 46,
+                BackColor = Color.FromArgb(245, 246, 250),
+                Padding = new Padding(18, 6, 18, 4)
+            };
+
+            var titleRow = new Panel
             {
                 Dock = DockStyle.Top,
                 Height = 40,
-                BackColor = Color.WhiteSmoke,
-                Padding = new Padding(12, 0, 0, 0)
+                BackColor = Color.White,
+                Padding = new Padding(18, 0, 18, 0)
             };
-            pnlSubjTitle.Paint += (s, e) =>
-                e.Graphics.DrawLine(new Pen(Color.FromArgb(210, 210, 210), 1),
-                    0, pnlSubjTitle.Height - 1, pnlSubjTitle.Width, pnlSubjTitle.Height - 1);
-            lblSubjectsTitle = MakeLabel(
-                "Attendance per Subject  (click a row to see its log)",
-                10f, FontStyle.Bold, Color.FromArgb(50, 50, 50));
-            lblSubjectsTitle.AutoSize = true;
-            lblSubjectsTitle.Location = new Point(12, 10);
-            pnlSubjTitle.Controls.Add(lblSubjectsTitle);
+            titleRow.Paint += (s, e) =>
+                e.Graphics.DrawLine(new Pen(Color.FromArgb(225, 225, 235), 1),
+                    0, titleRow.Height - 1, titleRow.Width, titleRow.Height - 1);
+            pnlQRTitle = titleRow;
 
-            //  Subjects DataGridView 
+            var icon = MakeLabel("⊞", 11f, FontStyle.Bold, Color.FromArgb(128, 0, 0));
+            icon.AutoSize = true;
+            icon.Location = new Point(18, 8);
+
+            lblQRTitle = MakeLabel("QR Attendance History", 9.5f, FontStyle.Bold,
+                Color.FromArgb(50, 50, 70));
+            lblQRTitle.AutoSize = true;
+            lblQRTitle.Location = new Point(38, 10);
+
+            var badge = new Label
+            {
+                Text = "QR Scan",
+                Font = new Font("Segoe UI", 7.5f, FontStyle.Bold),
+                ForeColor = Color.White,
+                BackColor = Color.FromArgb(128, 0, 0),
+                AutoSize = true,
+                Location = new Point(200, 9),
+                Padding = new Padding(5, 2, 5, 2)
+            };
+
+            titleRow.Controls.AddRange(new Control[] { icon, lblQRTitle, badge });
+            section.Controls.Add(titleRow);
+
+            // QR DataGridView
+            dgvQR = new DataGridView
+            {
+                Dock = DockStyle.Top,
+                Height = 10,
+                AutoGenerateColumns = false,
+                AllowUserToAddRows = false,
+                AllowUserToDeleteRows = false,
+                AllowUserToResizeRows = false,
+                AllowUserToResizeColumns = false,
+                RowHeadersVisible = false,
+                SelectionMode = DataGridViewSelectionMode.FullRowSelect,
+                BackgroundColor = Color.White,
+                BorderStyle = BorderStyle.None,
+                CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal,
+                GridColor = Color.FromArgb(230, 230, 238),
+                ColumnHeadersHeight = 42,
+                RowTemplate = { Height = 38 },
+                ScrollBars = ScrollBars.None
+            };
+            ApplyGridHeaderStyle(dgvQR);
+            AddQRColumns();
+            dgvQR.SelectionChanged += (s, e) => dgvQR.ClearSelection();
+            dgvQR.DataBindingComplete += (s, e) => AutoSizeGrid(dgvQR, 360);
+
+            section.Height = 86; // initial; will resize
+            section.Controls.Add(dgvQR);
+
+            var outer = new Panel { Dock = DockStyle.Top, BackColor = Color.FromArgb(245, 246, 250) };
+            outer.Controls.Add(dgvQR);
+            outer.Controls.Add(titleRow);
+        }
+
+        // =========================================================================
+        //  SUBJECTS GRID SECTION
+        // =========================================================================
+        private void BuildSubjectsSection(out Panel section)
+        {
+            section = new Panel
+            {
+                Dock = DockStyle.Top,
+                BackColor = Color.FromArgb(245, 246, 250)
+            };
+
+            var titleRow = new Panel
+            {
+                Dock = DockStyle.Top,
+                Height = 42,
+                BackColor = Color.White
+            };
+            titleRow.Paint += (s, e) =>
+                e.Graphics.DrawLine(new Pen(Color.FromArgb(225, 225, 235), 1),
+                    0, titleRow.Height - 1, titleRow.Width, titleRow.Height - 1);
+
+            lblSubjectsTitle = MakeLabel("Attendance per Course", 9.5f, FontStyle.Bold,
+                Color.FromArgb(50, 50, 70));
+            lblSubjectsTitle.AutoSize = true;
+            lblSubjectsTitle.Location = new Point(18, 11);
+
+            var hint = MakeLabel("(click a row to view its log)", 8f,
+                FontStyle.Regular, Color.FromArgb(140, 140, 160));
+            hint.AutoSize = true;
+            hint.Location = new Point(204, 13);
+
+            titleRow.Controls.AddRange(new Control[] { lblSubjectsTitle, hint });
+
             dgvSubjects = new DataGridView
             {
                 Dock = DockStyle.Top,
@@ -290,37 +513,54 @@ namespace PUPAcadPortal
                 BackgroundColor = Color.White,
                 BorderStyle = BorderStyle.None,
                 CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal,
-                GridColor = Color.FromArgb(230, 230, 230),
-                ColumnHeadersHeight = 44,
+                GridColor = Color.FromArgb(230, 230, 238),
+                ColumnHeadersHeight = 42,
                 RowTemplate = { Height = 42 },
                 AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells,
                 Cursor = Cursors.Hand,
                 ScrollBars = ScrollBars.None
             };
-            StyleGridHeader(dgvSubjects);
+            ApplyGridHeaderStyle(dgvSubjects);
             AddSubjectColumns();
             dgvSubjects.CellFormatting += DgvSubjects_CellFormatting;
             dgvSubjects.CellClick += DgvSubjects_CellClick;
             dgvSubjects.SelectionChanged += (s, e) => dgvSubjects.ClearSelection();
-            dgvSubjects.DataBindingComplete += (s, e) => AutoSizeSubjectsGrid();
+            dgvSubjects.DataBindingComplete += (s, e) => AutoSizeGrid(dgvSubjects, 800);
 
-            // Log section title 
-            pnlLogTitle = new Panel
+            var gap = new Panel { Dock = DockStyle.Top, Height = 8, BackColor = Color.FromArgb(245, 246, 250) };
+
+            section.Controls.Add(gap);
+            section.Controls.Add(dgvSubjects);
+            section.Controls.Add(titleRow);
+        }
+
+        // =========================================================================
+        //  LOGS SECTION
+        // =========================================================================
+        private void BuildLogsSection(out Panel section)
+        {
+            section = new Panel
             {
                 Dock = DockStyle.Top,
-                Height = 40,
-                BackColor = Color.WhiteSmoke,
-                Padding = new Padding(12, 0, 0, 0)
+                BackColor = Color.FromArgb(245, 246, 250)
             };
-            pnlLogTitle.Paint += (s, e) =>
-                e.Graphics.DrawLine(new Pen(Color.FromArgb(210, 210, 210), 1),
-                    0, pnlLogTitle.Height - 1, pnlLogTitle.Width, pnlLogTitle.Height - 1);
-            lblAttendanceLogTitle = MakeLabel("Attendance Log", 10f, FontStyle.Bold, Color.FromArgb(50, 50, 50));
-            lblAttendanceLogTitle.AutoSize = true;
-            lblAttendanceLogTitle.Location = new Point(12, 10);
-            pnlLogTitle.Controls.Add(lblAttendanceLogTitle);
 
-            // Logs DataGridView 
+            var titleRow = new Panel
+            {
+                Dock = DockStyle.Top,
+                Height = 42,
+                BackColor = Color.White
+            };
+            titleRow.Paint += (s, e) =>
+                e.Graphics.DrawLine(new Pen(Color.FromArgb(225, 225, 235), 1),
+                    0, titleRow.Height - 1, titleRow.Width, titleRow.Height - 1);
+
+            lblAttendanceLogTitle = MakeLabel("Attendance Log", 9.5f, FontStyle.Bold,
+                Color.FromArgb(50, 50, 70));
+            lblAttendanceLogTitle.AutoSize = true;
+            lblAttendanceLogTitle.Location = new Point(18, 11);
+            titleRow.Controls.Add(lblAttendanceLogTitle);
+
             dgvLogs = new DataGridView
             {
                 Dock = DockStyle.Top,
@@ -335,104 +575,112 @@ namespace PUPAcadPortal
                 BackgroundColor = Color.White,
                 BorderStyle = BorderStyle.None,
                 CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal,
-                GridColor = Color.FromArgb(230, 230, 230),
-                ColumnHeadersHeight = 44,
+                GridColor = Color.FromArgb(230, 230, 238),
+                ColumnHeadersHeight = 42,
                 RowTemplate = { Height = 40 },
                 AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells,
                 ScrollBars = ScrollBars.None
             };
-            StyleGridHeader(dgvLogs);
+            ApplyGridHeaderStyle(dgvLogs);
             AddLogColumns();
             dgvLogs.CellFormatting += DgvLogs_CellFormatting;
             dgvLogs.SelectionChanged += (s, e) => dgvLogs.ClearSelection();
-            dgvLogs.DataBindingComplete += (s, e) => AutoSizeLogsGrid();
+            dgvLogs.DataBindingComplete += (s, e) => AutoSizeGrid(dgvLogs, 600);
 
-            // Bottom spacer 
-            var spacer = new Panel { Dock = DockStyle.Top, Height = 32, BackColor = SystemColors.Control };
+            var gap = new Panel { Dock = DockStyle.Top, Height = 8, BackColor = Color.FromArgb(245, 246, 250) };
 
-            // Reverse order
-            wrapper.Controls.Add(spacer);
-            wrapper.Controls.Add(dgvLogs);
-            wrapper.Controls.Add(pnlLogTitle);
-            wrapper.Controls.Add(dgvSubjects);
-            wrapper.Controls.Add(pnlSubjTitle);
-            wrapper.Controls.Add(pnlMiniStats);
-            wrapper.Controls.Add(tlpCards);
-            wrapper.Controls.Add(pnlHeader);
+            section.Controls.Add(gap);
+            section.Controls.Add(dgvLogs);
+            section.Controls.Add(titleRow);
         }
 
-        //  Grid auto-sizers 
-        private void AutoSizeSubjectsGrid()
+        // =========================================================================
+        //  GRID AUTO-SIZER
+        // =========================================================================
+        private static void AutoSizeGrid(DataGridView dgv, int maxH)
         {
-            if (dgvSubjects == null) return;
-            int rowH = dgvSubjects.Rows.GetRowsHeight(DataGridViewElementStates.Visible);
-            dgvSubjects.Height = dgvSubjects.ColumnHeadersHeight + rowH + 2;
+            if (dgv == null) return;
+            int rowH = dgv.Rows.GetRowsHeight(DataGridViewElementStates.Visible);
+            int desired = dgv.ColumnHeadersHeight + rowH + 2;
+            dgv.Height = Math.Min(desired, maxH);
+            dgv.ScrollBars = desired > maxH ? ScrollBars.Vertical : ScrollBars.None;
         }
 
-        private void AutoSizeLogsGrid()
-        {
-            if (dgvLogs == null) return;
-            int rowH = dgvLogs.Rows.GetRowsHeight(DataGridViewElementStates.Visible);
-            int desired = dgvLogs.ColumnHeadersHeight + rowH + 2;
-            dgvLogs.Height = Math.Min(desired, 620);
-            dgvLogs.ScrollBars = desired > 620 ? ScrollBars.Vertical : ScrollBars.None;
-        }
-
-        // SEED DATA
+        // =========================================================================
+        //  SEED DATA
+        // =========================================================================
         private void SeedData()
         {
             var defs = new[]
             {
-                (Code:"ELEC IT-FE2", Name:"BSIT Free Elective 2",                        Units:3, Sched:"Mon 10:30 AM–1:30 PM",       Days:new[]{DayOfWeek.Monday}),
-                (Code:"COMP 014",    Name:"Quantitative Methods with Modeling",            Units:3, Sched:"Mon 2:30 PM–5:30 PM",        Days:new[]{DayOfWeek.Monday}),
-                (Code:"COMP 012",    Name:"Network Administration",                        Units:3, Sched:"Wed 8:00 AM–1:30 PM",        Days:new[]{DayOfWeek.Wednesday}),
-                (Code:"COMP 009",    Name:"Object Oriented Programming",                   Units:3, Sched:"Wed 5:30 PM / Thu 10:30 AM", Days:new[]{DayOfWeek.Wednesday,DayOfWeek.Thursday}),
-                (Code:"INTE 202",    Name:"Interactive Programming & Technologies 1",      Units:3, Sched:"Thu 2:30 PM–8:00 PM",        Days:new[]{DayOfWeek.Thursday}),
-                (Code:"PATHFIT 4",   Name:"Physical Activity Towards Health & Fitness 4",  Units:2, Sched:"Fri 10:00 AM–12:00 PM",      Days:new[]{DayOfWeek.Friday}),
-                (Code:"COMP 013",    Name:"Human Computer Interaction",                    Units:3, Sched:"Sat 7:30 AM–10:30 AM",       Days:new[]{DayOfWeek.Saturday}),
-                (Code:"COMP 010",    Name:"Information Management",                        Units:3, Sched:"Sat 2:30 PM–8:00 PM",        Days:new[]{DayOfWeek.Saturday}),
+                (Code:"ELEC IT-FE2", Name:"BSIT Free Elective 2",                        Units:3, Sched:"Mon 10:30–1:30 PM",   Days:new[]{DayOfWeek.Monday}),
+                (Code:"COMP 014",    Name:"Quantitative Methods with Modeling",           Units:3, Sched:"Mon 2:30–5:30 PM",    Days:new[]{DayOfWeek.Monday}),
+                (Code:"COMP 012",    Name:"Network Administration",                       Units:3, Sched:"Wed 8:00–1:30 PM",    Days:new[]{DayOfWeek.Wednesday}),
+                (Code:"COMP 009",    Name:"Object Oriented Programming",                  Units:3, Sched:"Wed/Thu varied",      Days:new[]{DayOfWeek.Wednesday,DayOfWeek.Thursday}),
+                (Code:"INTE 202",    Name:"Interactive Programming & Technologies 1",     Units:3, Sched:"Thu 2:30–8:00 PM",    Days:new[]{DayOfWeek.Thursday}),
+                (Code:"PATHFIT 4",   Name:"Physical Activity Towards Health & Fitness 4", Units:2, Sched:"Fri 10:00–12:00 PM",  Days:new[]{DayOfWeek.Friday}),
+                (Code:"COMP 013",    Name:"Human Computer Interaction",                   Units:3, Sched:"Sat 7:30–10:30 AM",   Days:new[]{DayOfWeek.Saturday}),
+                (Code:"COMP 010",    Name:"Information Management",                       Units:3, Sched:"Sat 2:30–8:00 PM",    Days:new[]{DayOfWeek.Saturday}),
             };
 
-            var pool = new[] { "Present", "Present", "Present", "Present", "Late", "Absent", "Excused" };
+            var statusPool = new[] { "Present","Present","Present","Present","Present",
+                                     "Late","Absent","Excused" };
+            var sessionPool = new[]
+            {
+                "Lecture 1","Lecture 2","Lab Session","Quiz Session",
+                "Recitation","Midterm Exam","Finals Review","Group Activity"
+            };
             var rng = new Random(42);
-            var sem1Start = new DateTime(2025, 8, 1);
+            var sem1Strt = new DateTime(2025, 8, 1);
             var sem1End = new DateTime(2025, 12, 31);
-            var sem2Start = new DateTime(2026, 2, 1);
+            var sem2Strt = new DateTime(2026, 2, 1);
             var sem2End = new DateTime(2026, 5, 31);
 
+            // Populate course combobox
+            cmbCourse.Items.Clear();
+            cmbCourse.Items.Add("All Courses");
             foreach (var d in defs)
             {
-                _subjects.Add(new SubjectMeta { Code = d.Code, Name = d.Name, Units = d.Units, Schedule = d.Sched });
-                var recs = new List<AttRecord>();
+                _subjects.Add(new SubjectMeta
+                {
+                    Code = d.Code,
+                    Name = d.Name,
+                    Units = d.Units,
+                    Schedule = d.Sched
+                });
+                cmbCourse.Items.Add($"{d.Code} – {d.Name}");
 
-                // Seed 1st semester records (Aug–Dec 2025)
-                for (var dt = sem1Start; dt <= sem1End && dt.Date <= DateTime.Today; dt = dt.AddDays(1))
+                var recs = new List<AttRecord>();
+                int sessionCounter = 1;
+
+                void AddPeriodRecords(DateTime start, DateTime end, string acadYear, bool isQR)
                 {
-                    if (!d.Days.Contains(dt.DayOfWeek)) continue;
-                    string st = pool[rng.Next(pool.Length)];
-                    recs.Add(new AttRecord
+                    for (var dt = start; dt <= end && dt.Date <= DateTime.Today; dt = dt.AddDays(1))
                     {
-                        Date = dt.Date,
-                        Semester = "1st Semester 2026",
-                        Status = st,
-                        Remarks = BuildRemark(st, rng)
-                    });
+                        if (!d.Days.Contains(dt.DayOfWeek)) continue;
+                        string st = statusPool[rng.Next(statusPool.Length)];
+                        string period = dt.Month <= 9 ? "Prelim"
+                                      : dt.Month <= 11 ? "Midterm"
+                                      : "Final Term";
+                        recs.Add(new AttRecord
+                        {
+                            Date = dt.Date,
+                            AcadYear = acadYear,
+                            Period = period,
+                            Session = sessionPool[(sessionCounter++ - 1) % sessionPool.Length],
+                            Status = st,
+                            Remarks = BuildRemark(st, rng),
+                            IsQR = isQR || rng.Next(3) == 0
+                        });
+                    }
                 }
-                // Seed 2nd semester records (Feb–May 2026)
-                for (var dt = sem2Start; dt <= sem2End && dt.Date <= DateTime.Today; dt = dt.AddDays(1))
-                {
-                    if (!d.Days.Contains(dt.DayOfWeek)) continue;
-                    string st = pool[rng.Next(pool.Length)];
-                    recs.Add(new AttRecord
-                    {
-                        Date = dt.Date,
-                        Semester = "2nd Semester 2026",
-                        Status = st,
-                        Remarks = BuildRemark(st, rng)
-                    });
-                }
+
+                AddPeriodRecords(sem1Strt, sem1End, "2025–2026", false);
+                AddPeriodRecords(sem2Strt, sem2End, "2025–2026", true);
+
                 _records[d.Code] = recs;
             }
+            cmbCourse.SelectedIndex = 0;
         }
 
         private static string BuildRemark(string status, Random rng) => status switch
@@ -440,48 +688,39 @@ namespace PUPAcadPortal
             "Present" => "On Time",
             "Late" => $"Late by {rng.Next(5, 30)} min",
             "Excused" => "Medical certificate",
-            _ => "No excuse notice"
+            _ => "No excuse submitted"
         };
 
-        // REFRESH ALL
-        private void RefreshAll()
-        {
-            _selectedCode = null;
-            lblAttendanceLogTitle.Text = "Attendance Log";
-            ComputeTotals();
-            RefreshCards();
-            RefreshMiniStats();
-            RefreshSubjectsGrid();
-            RefreshLogsGrid();
-        }
-
-        // FILTERING
+        // =========================================================================
+        //  FILTERING
+        // =========================================================================
         private List<AttRecord> FilteredRecords(string code)
         {
             if (!_records.TryGetValue(code, out var all)) return new();
             var q = all.AsEnumerable();
 
-            string sem = cmbSemester.SelectedItem?.ToString() ?? "All";
-            if (sem == "1st Semester")
-                q = q.Where(r => r.Semester.Contains("1st Semester"));
-            else if (sem == "2nd Semester")
-                q = q.Where(r => r.Semester.Contains("2nd Semester"));
+            // Period filter
+            string period = cmbPeriod.SelectedItem?.ToString() ?? "All Periods";
+            if (period != "All Periods")
+                q = q.Where(r => r.Period == period);
 
-            string mon = cmbMonth.SelectedItem?.ToString() ?? "All";
-            if (mon != "All")
+            // Course filter (skip when showing per-course subjects grid)
+            string course = cmbCourse.SelectedItem?.ToString() ?? "All Courses";
+            if (course != "All Courses")
             {
-                int monthNum = DateTime.ParseExact(mon, "MMMM", null).Month;
-                q = q.Where(r => r.Date.Month == monthNum);
+                string filtCode = course.Split('–')[0].Trim();
+                if (filtCode != code) return new();
             }
 
-            string yr = cmbYear.SelectedItem?.ToString() ?? "All";
-            if (int.TryParse(yr, out int yearNum))
-                q = q.Where(r => r.Date.Year == yearNum);
+            // Date range filter
+            q = q.Where(r => r.Date >= dtpFrom.Value.Date && r.Date <= dtpTo.Value.Date);
 
             return q.ToList();
         }
 
-        // COMPUTE TOTALS
+        // =========================================================================
+        //  COMPUTE TOTALS
+        // =========================================================================
         private void ComputeTotals()
         {
             _total = _present = _absent = _late = _excused = 0;
@@ -494,71 +733,104 @@ namespace PUPAcadPortal
                 _late += recs.Count(r => r.Status == "Late");
                 _excused += recs.Count(r => r.Status == "Excused");
             }
-            int lateAbsences = _late / LATE_PER_ABS;
-            int effectivePresent = _present + (_late - lateAbsences * LATE_PER_ABS);
-            int effectiveAbsent = _absent + (_late / LATE_PER_ABS);
+            int effAbs = _absent + (_late / LATE_PER_ABS);
             _pct = _total > 0
-                ? Math.Round(Math.Max(0, (_total - effectiveAbsent) * 100.0 / _total), 1)
+                ? Math.Round(Math.Max(0, (_total - effAbs) * 100.0 / _total), 1)
                 : 0;
         }
 
-        // CARDS
+        // =========================================================================
+        //  REFRESH ALL
+        // =========================================================================
+        private void RefreshAll()
+        {
+            _selectedCode = null;
+            if (lblAttendanceLogTitle != null)
+                lblAttendanceLogTitle.Text = "Attendance Log";
+            ComputeTotals();
+            RefreshCards();
+            RefreshMiniStats();
+            RefreshSubjectsGrid();
+            RefreshLogsGrid();
+            RefreshQRGrid();
+        }
+
+        // =========================================================================
+        //  REFRESH CARDS
+        // =========================================================================
         private void RefreshCards()
         {
             lblOverallPct.Text = $"{_pct}%";
-            lblTotalValue.Text = _total.ToString();
+            lblPresentValue.Text = _present.ToString();
+            lblLateValue.Text = _late.ToString();
+            lblAbsentValue.Text = _absent.ToString();
 
-            string status = _pct >= 90 ? "Excellent" : _pct >= 80 ? "Good" : _pct >= 65 ? "At Risk" : "Poor";
-            Color sc = _pct >= 80 ? Color.ForestGreen : _pct >= 65 ? Color.DarkOrange : Color.Crimson;
-            lblStatusText.Text = status;
-            lblStatusText.ForeColor = sc;
-            lblOverallPct.ForeColor = sc;
+            Color attColor = _pct >= 90 ? Color.FromArgb(0, 150, 70)
+                           : _pct >= 80 ? Color.FromArgb(0, 130, 60)
+                           : _pct >= 65 ? Color.FromArgb(200, 120, 0)
+                           : Color.FromArgb(200, 40, 40);
+            lblOverallPct.ForeColor = attColor;
 
-            int atRisk = _subjects.Count(meta =>
+            int atRisk = CountAtRiskSubjects();
+            if (atRisk == 0)
+            {
+                lblAlertText.Text = "✓  All subjects meet the 80% requirement. Keep it up!";
+                lblAlertText.ForeColor = Color.FromArgb(0, 120, 60);
+                pnlCardAlerts.BackColor = Color.FromArgb(240, 255, 248);
+            }
+            else
+            {
+                lblAlertText.Text = $"⚠  {atRisk} subject{(atRisk > 1 ? "s" : "")} below the 80% threshold.";
+                lblAlertText.ForeColor = Color.FromArgb(180, 40, 40);
+                pnlCardAlerts.BackColor = Color.FromArgb(255, 243, 243);
+            }
+        }
+
+        private int CountAtRiskSubjects()
+        {
+            return _subjects.Count(meta =>
             {
                 var r = FilteredRecords(meta.Code);
                 if (r.Count == 0) return false;
-                int late = r.Count(x => x.Status == "Late");
-                int absent = r.Count(x => x.Status == "Absent");
-                int effAbs = absent + (late / LATE_PER_ABS);
-                double pct = Math.Max(0, (r.Count - effAbs) * 100.0 / r.Count);
-                return pct < REQUIRED_PCT;
+                int lt = r.Count(x => x.Status == "Late");
+                int ab = r.Count(x => x.Status == "Absent");
+                int ea = ab + (lt / LATE_PER_ABS);
+                double p = Math.Max(0, (r.Count - ea) * 100.0 / r.Count);
+                return p < REQUIRED_PCT;
             });
-
-            lblAlertText.Text = atRisk == 0
-                ? "All subjects above 80%. Keep it up!"
-                : $"You have {atRisk} subject{(atRisk > 1 ? "s" : "")} below the 80% threshold.";
-            lblAlertText.ForeColor = atRisk == 0 ? Color.FromArgb(0, 120, 60) : Color.Crimson;
-            pnlCardAlerts.BackColor = atRisk == 0 ? Color.FromArgb(240, 255, 245) : Color.FromArgb(255, 240, 240);
         }
 
-        // MINI STATS
+        // =========================================================================
+        //  REFRESH MINI STATS
+        // =========================================================================
         private void RefreshMiniStats()
         {
             lblMiniPresent.Text = $"● Present: {_present}";
             lblMiniLate.Text = $"● Late: {_late}";
             lblMiniAbsent.Text = $"● Absent: {_absent}";
             lblMiniExcused.Text = $"● Excused: {_excused}";
-            int p = (int)Math.Round(_pct);
-            pbAttendance.Value = Math.Clamp(p, 0, 100);
-            lblProgressPct.Text = $"{p}% overall";
+            lblProgressPct.Text = $"{(int)Math.Round(_pct)}% overall";
+            pnlProgress?.Invalidate();
         }
 
-        // SUBJECTS GRID
+        // =========================================================================
+        //  SUBJECTS GRID
+        // =========================================================================
+        private DataTable _subjectsDT;
         private void RefreshSubjectsGrid()
         {
             if (_subjectsDT == null)
             {
                 _subjectsDT = new DataTable();
                 _subjectsDT.Columns.Add("Code");
-                _subjectsDT.Columns.Add("Subject");
+                _subjectsDT.Columns.Add("Course Name");
                 _subjectsDT.Columns.Add("Schedule");
                 _subjectsDT.Columns.Add("Sessions", typeof(int));
                 _subjectsDT.Columns.Add("Present", typeof(int));
-                _subjectsDT.Columns.Add("Absent", typeof(int));
                 _subjectsDT.Columns.Add("Late", typeof(int));
+                _subjectsDT.Columns.Add("Absent", typeof(int));
                 _subjectsDT.Columns.Add("Excused", typeof(int));
-                _subjectsDT.Columns.Add("Attendance%");
+                _subjectsDT.Columns.Add("Att%");
                 _subjectsDT.Columns.Add("Status");
             }
             _subjectsDT.Rows.Clear();
@@ -574,25 +846,25 @@ namespace PUPAcadPortal
 
                 int effAbs = ab + (lt / LATE_PER_ABS);
                 double p = n > 0 ? Math.Round(Math.Max(0, (n - effAbs) * 100.0 / n), 1) : 0;
-
                 string st = p >= 90 ? "Excellent" : p >= 80 ? "Good" : p >= 65 ? "At Risk" : "Dropped";
-                _subjectsDT.Rows.Add(meta.Code, meta.Name, meta.Schedule, n, pr, ab, lt, ex, $"{p}%", st);
+
+                _subjectsDT.Rows.Add(meta.Code, meta.Name, meta.Schedule, n, pr, lt, ab, ex, $"{p}%", st);
             }
             dgvSubjects.DataSource = _subjectsDT;
         }
 
         private void AddSubjectColumns()
         {
-            dgvSubjects.Columns.Add(MakeFixedCol("Code", "Code", 90, false));
-            dgvSubjects.Columns.Add(MakeFillCol("Subject", "Subject", false));
-            dgvSubjects.Columns.Add(MakeFillCol("Schedule", "Schedule", false));
-            dgvSubjects.Columns.Add(MakeFixedCol("Sessions", "Sessions", 75, true));
-            dgvSubjects.Columns.Add(MakeFixedCol("Present", "Present", 70, true));
-            dgvSubjects.Columns.Add(MakeFixedCol("Absent", "Absent", 70, true));
-            dgvSubjects.Columns.Add(MakeFixedCol("Late", "Late", 65, true));
-            dgvSubjects.Columns.Add(MakeFixedCol("Excused", "Excused", 72, true));
-            dgvSubjects.Columns.Add(MakeFixedCol("Attendance%", "Attendance%", 100, true));
-            dgvSubjects.Columns.Add(MakeFixedCol("Status", "Status", 95, true));
+            dgvSubjects.Columns.Add(FixedCol("Code", "Code", 90, false));
+            dgvSubjects.Columns.Add(FillCol("Course Name", "Course Name", false));
+            dgvSubjects.Columns.Add(FillCol("Schedule", "Schedule", false));
+            dgvSubjects.Columns.Add(FixedCol("Sessions", "Sessions", 76, true));
+            dgvSubjects.Columns.Add(FixedCol("Present", "Present", 72, true));
+            dgvSubjects.Columns.Add(FixedCol("Late", "Late", 65, true));
+            dgvSubjects.Columns.Add(FixedCol("Absent", "Absent", 68, true));
+            dgvSubjects.Columns.Add(FixedCol("Excused", "Excused", 72, true));
+            dgvSubjects.Columns.Add(FixedCol("Att%", "Att%", 85, true));
+            dgvSubjects.Columns.Add(FixedCol("Status", "Status", 90, true));
         }
 
         private void DgvSubjects_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -603,27 +875,33 @@ namespace PUPAcadPortal
             if (col == "Status")
             {
                 string s = e.Value.ToString();
-                e.CellStyle.Font = new Font("Segoe UI", 9.5f, FontStyle.Bold);
+                e.CellStyle.Font = new Font("Segoe UI", 8.5f, FontStyle.Bold);
                 e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 (e.CellStyle.ForeColor, e.CellStyle.BackColor) = s switch
                 {
-                    "Excellent" => (Color.FromArgb(0, 120, 60), Color.FromArgb(225, 255, 235)),
-                    "Good" => (Color.ForestGreen, Color.FromArgb(235, 255, 240)),
-                    "At Risk" => (Color.DarkOrange, Color.FromArgb(255, 243, 205)),
-                    _ => (Color.Crimson, Color.FromArgb(255, 235, 235))
+                    "Excellent" => (Color.FromArgb(0, 120, 60), Color.FromArgb(220, 255, 235)),
+                    "Good" => (Color.FromArgb(0, 130, 70), Color.FromArgb(230, 255, 240)),
+                    "At Risk" => (Color.FromArgb(180, 100, 0), Color.FromArgb(255, 243, 210)),
+                    _ => (Color.FromArgb(180, 30, 30), Color.FromArgb(255, 232, 232))
                 };
             }
-            else if (col == "Attendance%")
+            else if (col == "Att%")
             {
                 if (double.TryParse(e.Value.ToString().Replace("%", ""), out double p))
                 {
                     e.CellStyle.Font = new Font("Segoe UI", 10f, FontStyle.Bold);
                     e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                    e.CellStyle.ForeColor = p >= REQUIRED_PCT ? Color.ForestGreen : Color.Crimson;
+                    e.CellStyle.ForeColor = p >= REQUIRED_PCT
+                        ? Color.FromArgb(0, 130, 60)
+                        : Color.FromArgb(200, 40, 40);
                 }
             }
-            else if (col == "Absent" && int.TryParse(e.Value.ToString(), out int ab) && ab > 0)
-                e.CellStyle.ForeColor = Color.Crimson;
+            else if (col == "Absent" &&
+                     int.TryParse(e.Value.ToString(), out int ab) && ab > 0)
+                e.CellStyle.ForeColor = Color.FromArgb(200, 40, 40);
+            else if (col == "Late" &&
+                     int.TryParse(e.Value.ToString(), out int lt) && lt > 0)
+                e.CellStyle.ForeColor = Color.FromArgb(180, 110, 0);
         }
 
         private void DgvSubjects_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -631,11 +909,15 @@ namespace PUPAcadPortal
             if (e.RowIndex < 0) return;
             _selectedCode = dgvSubjects.Rows[e.RowIndex].Cells["Code"]?.Value?.ToString();
             if (_selectedCode == null) return;
-            lblAttendanceLogTitle.Text = $"Attendance Log – {_selectedCode}";
+            lblAttendanceLogTitle.Text = $"Attendance Log  –  {_selectedCode}";
             RefreshLogsGrid();
+            RefreshQRGrid();
         }
 
-        // LOGS GRID
+        // =========================================================================
+        //  LOGS GRID
+        // =========================================================================
+        private DataTable _logsDT;
         private void RefreshLogsGrid()
         {
             if (_logsDT == null)
@@ -643,7 +925,8 @@ namespace PUPAcadPortal
                 _logsDT = new DataTable();
                 _logsDT.Columns.Add("Date");
                 _logsDT.Columns.Add("Code");
-                _logsDT.Columns.Add("Subject");
+                _logsDT.Columns.Add("Session");
+                _logsDT.Columns.Add("Period");
                 _logsDT.Columns.Add("Status");
                 _logsDT.Columns.Add("Remarks");
             }
@@ -656,122 +939,187 @@ namespace PUPAcadPortal
             foreach (var meta in toShow)
                 foreach (var rec in FilteredRecords(meta.Code).OrderByDescending(r => r.Date))
                     _logsDT.Rows.Add(
-                        rec.Date.ToString("MMMM d, yyyy (ddd)"),
-                        meta.Code, meta.Name, rec.Status, rec.Remarks);
+                        rec.Date.ToString("MMM d, yyyy (ddd)"),
+                        meta.Code,
+                        rec.Session,
+                        rec.Period,
+                        rec.Status,
+                        rec.Remarks);
 
             dgvLogs.DataSource = _logsDT;
         }
 
         private void AddLogColumns()
         {
-            dgvLogs.Columns.Add(MakeFixedCol("Date", "Date", 175, false));
-            dgvLogs.Columns.Add(MakeFixedCol("Code", "Code", 110, false));
-            dgvLogs.Columns.Add(MakeFillCol("Subject", "Subject", false));
-            dgvLogs.Columns.Add(MakeFixedCol("Status", "Status", 95, true));
-            dgvLogs.Columns.Add(MakeFillCol("Remarks", "Remarks", false));
+            dgvLogs.Columns.Add(FixedCol("Date", "Date", 155, false));
+            dgvLogs.Columns.Add(FixedCol("Code", "Code", 100, false));
+            dgvLogs.Columns.Add(FillCol("Session", "Session", false));
+            dgvLogs.Columns.Add(FixedCol("Period", "Period", 100, true));
+            dgvLogs.Columns.Add(FixedCol("Status", "Status", 90, true));
+            dgvLogs.Columns.Add(FillCol("Remarks", "Remarks", false));
         }
 
         private void DgvLogs_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (e.RowIndex < 0 || e.Value == null) return;
-            if (dgvLogs.Columns[e.ColumnIndex].Name != "Status") return;
+            string col = dgvLogs.Columns[e.ColumnIndex].Name;
 
-            string s = e.Value.ToString();
-            e.CellStyle.Font = new Font("Segoe UI", 9.5f, FontStyle.Bold);
-            e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            (e.CellStyle.ForeColor, e.CellStyle.BackColor) = s switch
+            if (col == "Status")
             {
-                "Present" => (Color.FromArgb(0, 130, 50), Color.FromArgb(225, 255, 235)),
-                "Late" => (Color.DarkOrange, Color.FromArgb(255, 243, 205)),
-                "Excused" => (Color.RoyalBlue, Color.FromArgb(220, 235, 255)),
-                _ => (Color.Crimson, Color.FromArgb(255, 235, 235))
-            };
+                string s = e.Value.ToString();
+                e.CellStyle.Font = new Font("Segoe UI", 8.5f, FontStyle.Bold);
+                e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                (e.CellStyle.ForeColor, e.CellStyle.BackColor) = s switch
+                {
+                    "Present" => (Color.FromArgb(0, 130, 60), Color.FromArgb(220, 255, 235)),
+                    "Late" => (Color.FromArgb(180, 110, 0), Color.FromArgb(255, 243, 210)),
+                    "Excused" => (Color.FromArgb(50, 100, 200), Color.FromArgb(220, 235, 255)),
+                    _ => (Color.FromArgb(180, 30, 30), Color.FromArgb(255, 232, 232))
+                };
+            }
+            else if (col == "Period")
+            {
+                string p = e.Value.ToString();
+                e.CellStyle.Font = new Font("Segoe UI", 8f, FontStyle.Regular);
+                e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                (e.CellStyle.ForeColor, e.CellStyle.BackColor) = p switch
+                {
+                    "Prelim" => (Color.FromArgb(70, 70, 180), Color.FromArgb(230, 230, 255)),
+                    "Midterm" => (Color.FromArgb(150, 80, 0), Color.FromArgb(255, 245, 220)),
+                    "Final Term" => (Color.FromArgb(128, 0, 0), Color.FromArgb(255, 235, 235)),
+                    _ => (Color.FromArgb(80, 80, 80), Color.White)
+                };
+            }
         }
 
-        // VIEW DETAILS 
+        // =========================================================================
+        //  QR GRID
+        // =========================================================================
+        private DataTable _qrDT;
+        private void RefreshQRGrid()
+        {
+            if (_qrDT == null)
+            {
+                _qrDT = new DataTable();
+                _qrDT.Columns.Add("Date");
+                _qrDT.Columns.Add("Course");
+                _qrDT.Columns.Add("Session");
+                _qrDT.Columns.Add("Scan Time");
+                _qrDT.Columns.Add("Status");
+            }
+            _qrDT.Rows.Clear();
+
+            var rng = new Random(99);
+            var toShow = _selectedCode != null
+                ? _subjects.Where(s => s.Code == _selectedCode)
+                : _subjects;
+
+            foreach (var meta in toShow)
+                foreach (var rec in FilteredRecords(meta.Code)
+                    .Where(r => r.IsQR)
+                    .OrderByDescending(r => r.Date)
+                    .Take(40))
+                {
+                    int h = rng.Next(7, 18);
+                    int m = rng.Next(0, 60);
+                    _qrDT.Rows.Add(
+                        rec.Date.ToString("MMM d, yyyy (ddd)"),
+                        meta.Code,
+                        rec.Session,
+                        $"{h:D2}:{m:D2}",
+                        rec.Status);
+                }
+
+            dgvQR.DataSource = _qrDT;
+        }
+
+        private void AddQRColumns()
+        {
+            dgvQR.Columns.Add(FixedCol("Date", "Date", 155, false));
+            dgvQR.Columns.Add(FixedCol("Course", "Course", 100, false));
+            dgvQR.Columns.Add(FillCol("Session", "Session", false));
+            dgvQR.Columns.Add(FixedCol("Scan Time", "Scan Time", 90, true));
+            dgvQR.Columns.Add(FixedCol("Status", "Status", 90, true));
+        }
+
+        // =========================================================================
+        //  VIEW DETAILS POPUP
+        // =========================================================================
         private void OnViewDetailsClick(object sender, EventArgs e)
         {
-            // Requires AtRiskPopup.cs and AtRiskSubjectInfo in your project.
             var atRiskList = new List<AtRiskSubjectInfo>();
-
             foreach (var meta in _subjects)
             {
                 var r = FilteredRecords(meta.Code);
                 if (r.Count == 0) continue;
-
-                int late = r.Count(x => x.Status == "Late");
-                int absent = r.Count(x => x.Status == "Absent");
-                int effAbs = absent + (late / LATE_PER_ABS);
-                double p = Math.Max(0, (r.Count - effAbs) * 100.0 / r.Count);
-
+                int lt = r.Count(x => x.Status == "Late");
+                int ab = r.Count(x => x.Status == "Absent");
+                int ea = ab + (lt / LATE_PER_ABS);
+                double p = Math.Max(0, (r.Count - ea) * 100.0 / r.Count);
                 if (p < REQUIRED_PCT)
-                {
                     atRiskList.Add(new AtRiskSubjectInfo
                     {
                         Code = meta.Code,
                         Name = meta.Name,
                         Attendance = Math.Round(p, 1),
-                        Absent = absent
+                        Absent = ab
                     });
-                }
             }
-
-            Form owner = this.FindForm();
-            AtRiskPopup.Show(owner, atRiskList);
+            AtRiskPopup.Show(this.FindForm(), atRiskList);
         }
 
-        // HELPERS
-        private static Panel MakeCard() =>
-            new Panel { BackColor = Color.White, Dock = DockStyle.Fill, Margin = new Padding(4) };
-
+        // =========================================================================
+        //  HELPERS
+        // =========================================================================
         private static Label MakeLabel(string text, float size, FontStyle style, Color? fore = null) =>
             new Label
             {
                 Text = text,
                 Font = new Font("Segoe UI", size, style),
-                ForeColor = fore ?? Color.FromArgb(40, 40, 40),
+                ForeColor = fore ?? Color.FromArgb(40, 40, 60),
                 AutoSize = true
             };
 
-        private static Label MakeCentredLabel(string text, float size, FontStyle style) =>
-            new Label
-            {
-                Text = text,
-                Font = new Font("Segoe UI", size, style),
-                TextAlign = ContentAlignment.MiddleCenter,
-                AutoSize = false
-            };
-
-        private static Button MakeButton(string text, Color back)
+        private static Button MakeAccentButton(string text)
         {
             var b = new Button
             {
                 Text = text,
-                BackColor = back,
+                BackColor = Color.FromArgb(128, 0, 0),
                 ForeColor = Color.White,
                 FlatStyle = FlatStyle.Flat,
-                Font = new Font("Segoe UI", 9f, FontStyle.Bold),
+                Font = new Font("Segoe UI", 8.5f, FontStyle.Bold),
                 Cursor = Cursors.Hand
             };
             b.FlatAppearance.BorderSize = 0;
             return b;
         }
 
-        private static Label MakeMiniStat(string text, Color color, ref int x)
+        private static ComboBox MakeCombo(Point loc, int width) =>
+            new ComboBox
+            {
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Location = loc,
+                Width = width,
+                Font = new Font("Segoe UI", 9f)
+            };
+
+        private static Label MakeMiniChip(string text, Color color, ref int x)
         {
             var lbl = new Label
             {
                 Text = text,
                 ForeColor = color,
-                Font = new Font("Segoe UI", 9.5f, FontStyle.Bold),
+                Font = new Font("Segoe UI", 8.5f, FontStyle.Bold),
                 AutoSize = true,
                 Location = new Point(x, 13)
             };
-            x += 128;
+            x += 130;
             return lbl;
         }
 
-        private static DataGridViewTextBoxColumn MakeFixedCol(string name, string header, int width, bool centre) =>
+        private static DataGridViewTextBoxColumn FixedCol(
+            string name, string header, int width, bool centre) =>
             new DataGridViewTextBoxColumn
             {
                 Name = name,
@@ -789,7 +1137,8 @@ namespace PUPAcadPortal
                 }
             };
 
-        private static DataGridViewTextBoxColumn MakeFillCol(string name, string header, bool centre) =>
+        private static DataGridViewTextBoxColumn FillCol(
+            string name, string header, bool centre) =>
             new DataGridViewTextBoxColumn
             {
                 Name = name,
@@ -806,28 +1155,34 @@ namespace PUPAcadPortal
                 }
             };
 
-        private static void StyleGridHeader(DataGridView dgv)
+        private static void ApplyGridHeaderStyle(DataGridView dgv)
         {
             dgv.EnableHeadersVisualStyles = false;
             dgv.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dgv.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(128, 0, 0);
             dgv.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10f, FontStyle.Bold);
+            dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 9f, FontStyle.Bold);
             dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgv.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.FromArgb(128, 0, 0);
-            dgv.DefaultCellStyle.Font = new Font("Segoe UI", 10f);
-            dgv.DefaultCellStyle.ForeColor = Color.FromArgb(40, 40, 40);
+            dgv.DefaultCellStyle.Font = new Font("Segoe UI", 9.5f);
+            dgv.DefaultCellStyle.ForeColor = Color.FromArgb(40, 40, 60);
             dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(245, 220, 220);
-            dgv.DefaultCellStyle.SelectionForeColor = Color.FromArgb(40, 40, 40);
+            dgv.DefaultCellStyle.SelectionForeColor = Color.FromArgb(40, 40, 60);
+            dgv.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(251, 251, 254);
         }
 
-        // INNER MODELS
+        // =========================================================================
+        //  INNER MODELS
+        // =========================================================================
         private class AttRecord
         {
             public DateTime Date { get; set; }
-            public string Semester { get; set; }
+            public string AcadYear { get; set; }
+            public string Period { get; set; }   // Prelim / Midterm / Final Term
+            public string Session { get; set; }
             public string Status { get; set; }
             public string Remarks { get; set; }
+            public bool IsQR { get; set; }
         }
 
         private class SubjectMeta
@@ -838,7 +1193,9 @@ namespace PUPAcadPortal
             public string Schedule { get; set; }
         }
 
-        // Now correctly triggered by the designer
+        // =========================================================================
+        //  LOAD
+        // =========================================================================
         private void AttendanceControl_Load(object sender, EventArgs e)
         {
             BuildUI();

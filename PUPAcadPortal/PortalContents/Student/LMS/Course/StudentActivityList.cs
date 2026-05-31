@@ -1,10 +1,8 @@
-﻿using Org.BouncyCastle.Asn1.Cmp;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using static System.Net.WebRequestMethods;
 
 namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 {
@@ -23,13 +21,12 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             InitializeComponent();
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
 
-            lblTitle.Text = course.Name + "  —  " + course.Code;
-            lblInstructor.Text = "👤  " + course.Instructor + "    🕐  " + course.Schedule;
+            lblTitle.Text = course.Name + "  \u2014  " + course.Code;
+            lblInstructor.Text = "\uD83D\uDC64  " + course.Instructor + "    \uD83D\uDD50  " + course.Schedule;
 
             _searchTimer = new System.Windows.Forms.Timer { Interval = 180 };
             _searchTimer.Tick += (s, e) => { _searchTimer.Stop(); RenderRows(); };
 
-            // Initialise dropdowns to index 0 silently
             cmbFilter.SelectedIndex = 0;
             cmbStatus.SelectedIndex = 0;
 
@@ -75,7 +72,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                     Id=3, Title="HCI Reflection Essay", Type="Essay",
                     Deadline=DateTime.Now.AddDays(14), Points=75,
                     SubmissionStatus="Pending",
-                    Instructions="Write a comprehensive essay (800–1200 words) on Human-Computer Interaction principles and their real-world application.",
+                    Instructions="Write a comprehensive essay (800\u20131200 words) on Human-Computer Interaction principles and their real-world application.",
                     EssayDraft=""
                 },
                 new StudentActivityItem
@@ -94,7 +91,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                     Id=5, Title="Midterm Long Quiz", Type="LongQuiz",
                     Deadline=DateTime.Now.AddDays(-2), Points=100,
                     SubmissionStatus="Submitted", SubmittedAt=DateTime.Now.AddDays(-2).AddHours(-1), Score=92,
-                    Instructions="Covers Modules 1–5. 50 items. You have 90 minutes.",
+                    Instructions="Covers Modules 1\u20135. 50 items. You have 90 minutes.",
                     Questions=SampleQuizQuestions()
                 },
                 new StudentActivityItem
@@ -109,7 +106,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                     Id=7, Title="Data Structures Quiz", Type="Quiz",
                     Deadline=DateTime.Now.AddDays(5), Points=30,
                     SubmissionStatus="Pending",
-                    Instructions="15 items — Multiple choice and identification. 30 minutes only.",
+                    Instructions="15 items \u2014 Multiple choice and identification. 30 minutes only.",
                     Questions=SampleQuizQuestions()
                 },
             };
@@ -131,7 +128,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                     CorrectAnswer="Stack" },
                 new ActivityQuestion { Number=4, QuestionType="MultipleChoice", Points=2,
                     Text="What is the time complexity of binary search?",
-                    Choices=new List<string>{ "O(n)","O(log n)","O(n²)","O(1)" },
+                    Choices=new List<string>{ "O(n)","O(log n)","O(n\u00B2)","O(1)" },
                     CorrectAnswer="O(log n)" },
                 new ActivityQuestion { Number=5, QuestionType="Essay", Points=5,
                     Text="Explain the difference between a stack and a queue. Provide a real-world analogy for each." },
@@ -148,15 +145,15 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             foreach (var a in _activities)
             {
                 if (a.EffectiveStatus == "Pending") pend++;
-                if (a.EffectiveStatus == "Submitted" || a.EffectiveStatus == "Returned") sub++;
+                if (a.EffectiveStatus is "Submitted" or "Returned") sub++;
                 if (a.EffectiveStatus == "Overdue") over++;
             }
 
             var pills = new (string label, Color bg, Color fg)[]
             {
                 ($"Pending: {pend}",   Color.FromArgb(255,234,200), Color.FromArgb(180,70,0)),
-                ($"✔ Done: {sub}",     Color.FromArgb(210,245,215), Color.FromArgb(27,110,27)),
-                ($"⚠ Overdue: {over}", Color.FromArgb(255,215,215), Color.FromArgb(180,20,20)),
+                ($"\u2714 Done: {sub}",     Color.FromArgb(210,245,215), Color.FromArgb(27,110,27)),
+                ($"\u26A0 Overdue: {over}", Color.FromArgb(255,215,215), Color.FromArgb(180,20,20)),
             };
 
             int x = 0;
@@ -169,12 +166,12 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                     ForeColor = fg,
                     Font = new Font("Segoe UI", 8.5F, FontStyle.Bold),
                     Location = new Point(x, 6),
-                    Size = new Size(130, 22),
+                    Size = new Size(138, 22),
                     TextAlign = ContentAlignment.MiddleCenter,
                     Padding = new Padding(4, 0, 4, 0)
                 };
                 pnlSummary.Controls.Add(lbl);
-                x += 140;
+                x += 148;
             }
         }
 
@@ -237,7 +234,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 Margin = new Padding(4, 4, 4, 0)
             };
 
-            // Bottom border paint
             row.Paint += (s, e) =>
             {
                 using var p = new Pen(Color.FromArgb(232, 232, 232));
@@ -254,12 +250,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 "Recitation" => Color.FromArgb(0, 150, 136),
                 _ => Color.Gray
             };
-            row.Controls.Add(new Panel
-            {
-                Width = 6,
-                Dock = DockStyle.Left,
-                BackColor = typeColor
-            });
+            row.Controls.Add(new Panel { Width = 6, Dock = DockStyle.Left, BackColor = typeColor });
 
             // ── Type badge ────────────────────────────────────────────────────
             string typeDisplay = act.Type switch
@@ -293,15 +284,15 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             // ── Deadline ──────────────────────────────────────────────────────
             TimeSpan ts = act.Deadline - DateTime.Now;
             string dueText = ts.TotalDays < 0 ? "(Overdue)" :
-                                ts.Days == 0 ? "(Due Today!)" :
-                                ts.Days == 1 ? "(Due Tomorrow)" :
-                                                   $"(Due in {ts.Days}d)";
+                             ts.Days == 0 ? "(Due Today!)" :
+                             ts.Days == 1 ? "(Due Tomorrow)" :
+                                                $"(Due in {ts.Days}d)";
             Color dueColor = ts.TotalDays < 0 ? Color.Red :
-                                ts.Days <= 1 ? Color.OrangeRed :
-                                                   Color.FromArgb(50, 120, 50);
+                             ts.Days <= 1 ? Color.OrangeRed :
+                                                Color.FromArgb(50, 120, 50);
             row.Controls.Add(new Label
             {
-                Text = $"📅  {act.Deadline:MMM dd, yyyy  hh:mm tt}   {dueText}",
+                Text = $"\uD83D\uDCC5  {act.Deadline:MMM dd, yyyy  hh:mm tt}   {dueText}",
                 Font = new Font("Segoe UI", 8.5F),
                 ForeColor = dueColor,
                 Location = new Point(110, 10),
@@ -309,7 +300,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             });
 
             // ── Points / score ────────────────────────────────────────────────
-            string ptsText = $"🏆  {act.Points} pts";
+            string ptsText = $"\uD83C\uDFC6  {act.Points} pts";
             if (act.Score.HasValue)
                 ptsText += $"     Score: {act.Score} / {act.Points}";
             row.Controls.Add(new Label
@@ -324,11 +315,11 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             // ── Status badge ──────────────────────────────────────────────────
             (Color bg, Color fg, string icon) st = effStatus switch
             {
-                "Submitted" => (Color.FromArgb(215, 245, 215), Color.FromArgb(27, 110, 27), "✔  Submitted"),
-                "Returned" => (Color.FromArgb(215, 225, 255), Color.FromArgb(30, 60, 180), "↩  Returned"),
-                "Late" => (Color.FromArgb(255, 235, 210), Color.FromArgb(180, 70, 0), "⏱  Late"),
-                "Overdue" => (Color.FromArgb(255, 215, 215), Color.FromArgb(180, 20, 20), "⚠  Overdue"),
-                _ => (Color.FromArgb(232, 232, 232), Color.FromArgb(80, 80, 80), "○  Pending")
+                "Submitted" => (Color.FromArgb(215, 245, 215), Color.FromArgb(27, 110, 27), "\u2714  Submitted"),
+                "Returned" => (Color.FromArgb(215, 225, 255), Color.FromArgb(30, 60, 180), "\u21A9  Returned"),
+                "Late" => (Color.FromArgb(255, 235, 210), Color.FromArgb(180, 70, 0), "\u23F1  Late"),
+                "Overdue" => (Color.FromArgb(255, 215, 215), Color.FromArgb(180, 20, 20), "\u26A0  Overdue"),
+                _ => (Color.FromArgb(232, 232, 232), Color.FromArgb(80, 80, 80), "\u25CB  Pending")
             };
             row.Controls.Add(new Label
             {
@@ -346,7 +337,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             {
                 row.Controls.Add(new Label
                 {
-                    Text = $"📝  {act.Remarks}",
+                    Text = $"\uD83D\uDCDD  {act.Remarks}",
                     Font = new Font("Segoe UI", 8F, FontStyle.Italic),
                     ForeColor = Color.FromArgb(60, 80, 160),
                     Location = new Point(16, 70),
@@ -365,27 +356,39 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             }
 
             // ── Action buttons ────────────────────────────────────────────────
+            // FIX (Image 2): items that are Returned cannot be answered again.
             bool locked = act.LockAfterDeadline && act.Deadline < DateTime.Now
-                            && act.SubmissionStatus == "Pending";
-            string btnLbl = locked ? "Locked 🔒" :
-                            effStatus is "Pending" or "Overdue" ? "Take Activity" :
-                                                                  "Answer Activity";
+                              && act.SubmissionStatus == "Pending";
+            bool canAnswer = !locked && !isReturned && !isSubmitted;   // <-- key fix
+
+            string btnLbl = locked ? "Locked \uD83D\uDD12" :
+                            isReturned ? "Returned" :
+                            isSubmitted ? "View Submission" :
+                            isOverdue ? "Take Activity" :
+                                         "Take Activity";
+
+            Color btnColor = locked ? Color.FromArgb(155, 155, 155) :
+                             isReturned ? Color.FromArgb(100, 100, 160) :
+                             isSubmitted ? Color.FromArgb(60, 60, 60) :
+                                          Color.Maroon;
 
             var btn = new buttonRounded
             {
                 Text = btnLbl,
                 Size = new Size(148, 36),
-                BackColor = locked ? Color.FromArgb(155, 155, 155) : Color.Maroon,
+                BackColor = btnColor,
                 ForeColor = Color.White,
                 BorderRadius = 18,
                 Font = new Font("Segoe UI", 9F, FontStyle.Bold),
                 Tag = act,
+                // Returned items: still clickable to open read-only view; locked items disabled.
                 Enabled = !locked,
                 Cursor = locked ? Cursors.No : Cursors.Hand,
                 FlatStyle = FlatStyle.Flat
             };
             btn.FlatAppearance.BorderSize = 0;
-            btn.Location = new Point(rowW - btn.Width - 14, (rowH - btn.Height) / 2 - (isReturned ? 18 : 0));
+            btn.Location = new Point(rowW - btn.Width - 14,
+                                     (rowH - btn.Height) / 2 - (isReturned ? 18 : 0));
             btn.Click += (s, e) =>
             {
                 if (s is buttonRounded b && b.Tag is StudentActivityItem a)
@@ -417,22 +420,32 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             return row;
         }
 
-        // ── Remarks dialog  (matches Image 1) ────────────────────────────────
+        // ── Remarks dialog ────────────────────────────────────────────────────
+        // FIX (Image 1): No system close button — dialog is closed only via the
+        //                maroon "Close" button inside the body.
 
         private void ShowRemarksDialog(StudentActivityItem act)
         {
             using var dlg = new Form
             {
-                Text = "Instructor Remarks",
-                Size = new Size(600, 500),
+                // FormBorderStyle.None removes the title-bar including the X button.
+                FormBorderStyle = FormBorderStyle.None,
+                Size = new Size(600, 520),
                 StartPosition = FormStartPosition.CenterParent,
                 BackColor = Color.White,
-                FormBorderStyle = FormBorderStyle.FixedDialog,
                 MaximizeBox = false,
-                MinimizeBox = false
+                MinimizeBox = false,
+                ShowInTaskbar = false
             };
 
-            // ── Maroon header ─────────────────────────────────────────────────
+            // Thin border drawn around the whole dialog
+            dlg.Paint += (s, e) =>
+            {
+                using var pen = new Pen(Color.FromArgb(180, 180, 180));
+                e.Graphics.DrawRectangle(pen, 0, 0, dlg.Width - 1, dlg.Height - 1);
+            };
+
+            // ── Maroon header (replaces system title bar) ─────────────────────
             var pnlH = new Panel
             {
                 Dock = DockStyle.Top,
@@ -448,6 +461,12 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 TextAlign = ContentAlignment.MiddleLeft,
                 Padding = new Padding(16, 0, 0, 0)
             });
+            // Allow dragging the borderless dialog by dragging its header
+            bool dragging = false;
+            System.Drawing.Point dragStart = default;
+            pnlH.MouseDown += (s, e) => { if (e.Button == MouseButtons.Left) { dragging = true; dragStart = e.Location; } };
+            pnlH.MouseMove += (s, e) => { if (dragging) dlg.Location = new System.Drawing.Point(dlg.Left + e.X - dragStart.X, dlg.Top + e.Y - dragStart.Y); };
+            pnlH.MouseUp += (s, e) => dragging = false;
             dlg.Controls.Add(pnlH);
 
             // ── Scrollable body ───────────────────────────────────────────────
@@ -458,9 +477,8 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 Padding = new Padding(20)
             };
             int y = 16;
-            int bodyW = 530;   // effective content width inside the 600px dialog
+            int bodyW = 530;
 
-            // Score Breakdown: (bold label, then plain text on same line pattern from Image 1)
             if (!string.IsNullOrEmpty(act.ScoreBreakdown))
             {
                 body.Controls.Add(new Label
@@ -482,7 +500,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 }); y += 30;
             }
 
-            // Instructor Feedback: (blue bold label matching Image 1)
             body.Controls.Add(new Label
             {
                 Text = "Instructor Feedback:",
@@ -492,7 +509,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 AutoSize = true
             }); y += 22;
 
-            // Blue feedback card (Image 1)
             int feedbackH = Math.Max(70, MeasureTextHeight(act.Remarks, new Font("Segoe UI", 9.5F), bodyW - 24) + 24);
             var pnlFeed = new Panel
             {
@@ -517,7 +533,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             body.Controls.Add(pnlFeed);
             y += feedbackH + 16;
 
-            // Suggestions for Improvement (amber card - Image 1)
             if (!string.IsNullOrEmpty(act.Suggestions))
             {
                 body.Controls.Add(new Label
@@ -554,7 +569,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 y += suggH + 16;
             }
 
-            // Returned date (italic, gray — Image 1 bottom)
             if (act.ReturnedAt.HasValue)
             {
                 body.Controls.Add(new Label
@@ -567,7 +581,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 }); y += 28;
             }
 
-            // Close button — bottom-right, inside body (matches Image 1)
+            // Close button (only way to close — no system X)
             var btnClose = new buttonRounded
             {
                 Text = "Close",
@@ -581,6 +595,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 DialogResult = DialogResult.OK
             };
             btnClose.FlatAppearance.BorderSize = 0;
+            btnClose.Click += (s, e) => dlg.Close();
             body.Controls.Add(btnClose);
 
             dlg.Controls.Add(body);
@@ -588,7 +603,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             dlg.ShowDialog(this);
         }
 
-        // Measure multi-line label height given a max width
         private static int MeasureTextHeight(string text, Font font, int maxWidth)
         {
             if (string.IsNullOrEmpty(text)) return 0;

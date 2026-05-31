@@ -18,11 +18,11 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
         private int _currentQ = 0;
         private Dictionary<int, string> _answers = new();
 
-        // Timers — declared here so Designer Dispose() can reach them
+        // Timers declared here so Designer Dispose() can reach them
         private System.Windows.Forms.Timer _countdownTimer;
         private System.Windows.Forms.Timer _autosaveTimer;
 
-        // File upload runtime state
+        // File-upload runtime state
         private string _uploadedFilePath = "";
         private string _uploadedFileName = "";
         private long _uploadedFileSize = 0;
@@ -74,17 +74,19 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 _ => _activity.Type
             };
 
-            lblMeta.Text = $"{typeDisplay}  ·  {_activity.Points} pts  ·  Due {_activity.Deadline:MMM dd, yyyy  h:mm tt}";
+            lblMeta.Text = $"{typeDisplay}  \u00B7  {_activity.Points} pts  \u00B7  Due {_activity.Deadline:MMM dd, yyyy  h:mm tt}";
 
             if (_activity.Score.HasValue)
             {
-                lblMeta.Text += $"  ·  Score: {_activity.Score} / {_activity.Points}";
+                lblMeta.Text += $"  \u00B7  Score: {_activity.Score} / {_activity.Points}";
                 lblMeta.ForeColor = Color.FromArgb(255, 210, 210);
             }
         }
 
         // ─────────────────────────────────────────────────────────────────────
         // DEADLINE COUNTDOWN BAR
+        // FIX (Image 3): The bar is added as a Dock=Top strip INSIDE pnlBody
+        //   instead of floating over it, so nothing overlaps.
         // ─────────────────────────────────────────────────────────────────────
 
         private void BuildDeadlineBar()
@@ -96,7 +98,9 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             {
                 Dock = DockStyle.Top,
                 Height = 34,
-                BackColor = isLate ? Color.FromArgb(175, 20, 20) : Color.FromArgb(45, 45, 45)
+                BackColor = isLate
+                    ? Color.FromArgb(175, 20, 20)
+                    : Color.FromArgb(45, 45, 45)
             };
 
             _lblDeadlineTimer = new Label
@@ -106,16 +110,15 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 Font = new Font("Segoe UI", 9F, FontStyle.Bold),
                 ForeColor = Color.White,
                 Text = isLate
-                            ? "⚠  Deadline has passed — late submission"
-                            : FormatCountdown(remaining)
+                    ? "\u26A0  Deadline has passed \u2014 late submission"
+                    : FormatCountdown(remaining)
             };
 
             pnlBar.Controls.Add(_lblDeadlineTimer);
-            Controls.Add(pnlBar);
 
-            pnlHeader.BringToFront();
-            pnlBar.SendToBack();
-            pnlBody.SendToBack();
+            // Add the bar at the TOP of pnlBody so content flows below it.
+            pnlBody.Controls.Add(pnlBar);
+            pnlBar.BringToFront();
         }
 
         private void StartCountdown()
@@ -128,8 +131,9 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 
                 if (rem.TotalSeconds <= 0)
                 {
-                    _lblDeadlineTimer.Text = "⚠  Deadline has passed — late submission";
-                    if (_lblDeadlineTimer.Parent is Panel p) p.BackColor = Color.FromArgb(175, 20, 20);
+                    _lblDeadlineTimer.Text = "\u26A0  Deadline has passed \u2014 late submission";
+                    if (_lblDeadlineTimer.Parent is Panel p)
+                        p.BackColor = Color.FromArgb(175, 20, 20);
                     _countdownTimer.Stop();
                 }
                 else
@@ -146,18 +150,32 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 
         private static string FormatCountdown(TimeSpan ts)
         {
-            if (ts.TotalDays >= 1) return $"⏱  {(int)ts.TotalDays}d {ts.Hours}h {ts.Minutes}m remaining";
-            if (ts.TotalHours >= 1) return $"⏱  {ts.Hours}h {ts.Minutes}m {ts.Seconds}s remaining";
-            return $"⚠  {ts.Minutes}m {ts.Seconds}s remaining — hurry!";
+            if (ts.TotalDays >= 1) return $"\u23F1  {(int)ts.TotalDays}d {ts.Hours}h {ts.Minutes}m remaining";
+            if (ts.TotalHours >= 1) return $"\u23F1  {ts.Hours}h {ts.Minutes}m {ts.Seconds}s remaining";
+            return $"\u26A0  {ts.Minutes}m {ts.Seconds}s remaining \u2014 hurry!";
         }
 
         // ─────────────────────────────────────────────────────────────────────
         // CONTENT ROUTER
+        // FIX (Image 3): Content is added to a scrollable inner Panel that
+        //   sits BELOW the deadline bar, so nothing overlaps.
         // ─────────────────────────────────────────────────────────────────────
+
+        // The scrollable area where each view adds its controls.
+        private Panel _scrollArea;
 
         private void BuildContentArea()
         {
-            pnlBody.Controls.Clear();
+            // Create a scroll area that fills the rest of pnlBody (below the deadline bar)
+            _scrollArea = new Panel
+            {
+                Dock = DockStyle.Fill,
+                AutoScroll = true,
+                Padding = new Padding(0)
+            };
+            pnlBody.Controls.Add(_scrollArea);
+            _scrollArea.SendToBack(); // deadline bar (Dock=Top, BringToFront) stays on top
+
             switch (_activity.Type)
             {
                 case "Essay": BuildEssayView(); break;
@@ -169,7 +187,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
         }
 
         // ─────────────────────────────────────────────────────────────────────
-        // SHARED: Amber instructions card
+        // SHARED helpers — now add controls to _scrollArea, not pnlBody
         // ─────────────────────────────────────────────────────────────────────
 
         private Panel BuildInstructionsPanel(int width)
@@ -187,7 +205,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 
             pnl.Controls.Add(new Label
             {
-                Text = "📋  Instructions",
+                Text = "\uD83D\uDCCB  Instructions",
                 Font = new Font("Segoe UI", 9.5F, FontStyle.Bold),
                 ForeColor = Color.FromArgb(120, 75, 0),
                 Location = new Point(22, 12),
@@ -205,11 +223,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             return pnl;
         }
 
-        // ─────────────────────────────────────────────────────────────────────
-        // SHARED: Attached reference-files list
-        //         Returns updated Y position.
-        // ─────────────────────────────────────────────────────────────────────
-
         private int BuildAttachmentList(int startY, int w)
         {
             if (_activity.Attachments == null || _activity.Attachments.Count == 0)
@@ -217,7 +230,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 
             int y = startY;
 
-            pnlBody.Controls.Add(new Label
+            _scrollArea.Controls.Add(new Label
             {
                 Text = "Attached Files",
                 Font = new Font("Segoe UI", 9.5F, FontStyle.Bold),
@@ -228,22 +241,20 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 
             foreach (var att in _activity.Attachments)
             {
-                // Determine icon from file extension since FileType may or may not be set
-                string ext = System.IO.Path.GetExtension(att.FileName).ToLowerInvariant();
+                string ext = Path.GetExtension(att.FileName).ToLowerInvariant();
                 string icon = ext switch
                 {
-                    ".pdf" => "📄",
-                    ".docx" => "📝",
-                    ".doc" => "📝",
-                    ".pptx" => "📊",
-                    ".ppt" => "📊",
-                    ".png" => "🖼",
-                    ".jpg" => "🖼",
-                    ".jpeg" => "🖼",
-                    _ => "📁"
+                    ".pdf" => "\uD83D\uDCC4",
+                    ".docx" => "\uD83D\uDCDD",
+                    ".doc" => "\uD83D\uDCDD",
+                    ".pptx" => "\uD83D\uDCCA",
+                    ".ppt" => "\uD83D\uDCCA",
+                    ".png" => "\uD83D\uDDBC",
+                    ".jpg" => "\uD83D\uDDBC",
+                    ".jpeg" => "\uD83D\uDDBC",
+                    _ => "\uD83D\uDCC1"
                 };
 
-                // Friendly file size — works whether FileSize is set or not
                 string sizeStr = att.FileSize > 0
                     ? (att.FileSize >= 1_048_576
                         ? $"{att.FileSize / 1_048_576.0:F1} MB"
@@ -295,7 +306,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 
                 string hint = string.IsNullOrEmpty(sizeStr)
                     ? "Click to download"
-                    : $"{sizeStr}  —  Click to download";
+                    : $"{sizeStr}  \u2014  Click to download";
 
                 pnlAtt.Controls.Add(new Label
                 {
@@ -321,15 +332,11 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 foreach (Control c in pnlAtt.Controls) c.Click += OpenFile;
                 foreach (Control c in pnlIcon.Controls) c.Click += OpenFile;
 
-                pnlBody.Controls.Add(pnlAtt);
+                _scrollArea.Controls.Add(pnlAtt);
                 y += 54;
             }
             return y + 8;
         }
-
-        // ─────────────────────────────────────────────────────────────────────
-        // SHARED: Blue instructor-remarks card
-        // ─────────────────────────────────────────────────────────────────────
 
         private Panel BuildRemarksPanel(int w, int y)
         {
@@ -347,7 +354,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             };
             pnl.Controls.Add(new Label
             {
-                Text = "📝  Instructor Remarks:",
+                Text = "\uD83D\uDCDD  Instructor Remarks:",
                 Font = new Font("Segoe UI", 9.5F, FontStyle.Bold),
                 ForeColor = Color.FromArgb(30, 50, 160),
                 Location = new Point(14, 10),
@@ -366,25 +373,27 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 
         // ══════════════════════════════════════════════════════════════════════
         // ESSAY VIEW
+        // FIX (Image 3): All controls added to _scrollArea with correct Y.
         // ══════════════════════════════════════════════════════════════════════
 
         private void BuildEssayView()
         {
             bool submitted = _activity.SubmissionStatus is "Submitted" or "Returned";
-            int w = Math.Max(640, pnlBody.ClientSize.Width - 60);
+            int w = Math.Max(640, _scrollArea.ClientSize.Width > 0
+                                  ? _scrollArea.ClientSize.Width - 60
+                                  : pnlBody.ClientSize.Width - 60);
             int y = 20;
 
             var instrPnl = BuildInstructionsPanel(w);
             instrPnl.Location = new Point(20, y);
-            pnlBody.Controls.Add(instrPnl);
+            _scrollArea.Controls.Add(instrPnl);
             y += instrPnl.MinimumSize.Height + 20;
 
             if (submitted)
             {
-                // ✔ Submitted status line
-                pnlBody.Controls.Add(new Label
+                _scrollArea.Controls.Add(new Label
                 {
-                    Text = $"✔  Essay Submitted  ·  {_activity.SubmittedAt:MMM dd, yyyy  h:mm tt}",
+                    Text = $"\u2714  Essay Submitted  \u00B7  {_activity.SubmittedAt:MMM dd, yyyy  h:mm tt}",
                     Font = new Font("Segoe UI", 10F, FontStyle.Bold),
                     ForeColor = Color.FromArgb(27, 110, 27),
                     Location = new Point(20, y),
@@ -393,7 +402,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 
                 if (_activity.Score.HasValue)
                 {
-                    pnlBody.Controls.Add(new Label
+                    _scrollArea.Controls.Add(new Label
                     {
                         Text = $"Score:  {_activity.Score} / {_activity.Points} pts",
                         Font = new Font("Segoe UI", 11F, FontStyle.Bold),
@@ -403,7 +412,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                     }); y += 32;
                 }
 
-                pnlBody.Controls.Add(new Label
+                _scrollArea.Controls.Add(new Label
                 {
                     Text = "Submitted Response:",
                     Font = new Font("Segoe UI", 9.5F, FontStyle.Bold),
@@ -424,15 +433,15 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                     Text = _activity.EssayDraft,
                     BorderStyle = BorderStyle.FixedSingle
                 };
-                pnlBody.Controls.Add(_txtEssay);
+                _scrollArea.Controls.Add(_txtEssay);
                 y += _txtEssay.Height + 18;
 
                 if (!string.IsNullOrEmpty(_activity.Remarks))
-                    pnlBody.Controls.Add(BuildRemarksPanel(w, y));
+                    _scrollArea.Controls.Add(BuildRemarksPanel(w, y));
             }
             else
             {
-                pnlBody.Controls.Add(new Label
+                _scrollArea.Controls.Add(new Label
                 {
                     Text = "Your Essay Response:",
                     Font = new Font("Segoe UI", 10.5F, FontStyle.Bold),
@@ -453,7 +462,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                     BorderStyle = BorderStyle.FixedSingle
                 };
                 _txtEssay.TextChanged += (s, e) => UpdateWordCount();
-                pnlBody.Controls.Add(_txtEssay);
+                _scrollArea.Controls.Add(_txtEssay);
                 y += _txtEssay.Height + 6;
 
                 _lblWordCount = new Label
@@ -463,24 +472,24 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                     Location = new Point(20, y),
                     AutoSize = true
                 };
-                pnlBody.Controls.Add(_lblWordCount);
+                _scrollArea.Controls.Add(_lblWordCount);
                 UpdateWordCount();
                 y += 22;
 
                 _lblAutosave = new Label
                 {
-                    Text = "💾  Draft autosaved every 30 seconds.",
+                    Text = "\uD83D\uDCBE  Draft autosaved every 30 seconds.",
                     Font = new Font("Segoe UI", 8F, FontStyle.Italic),
                     ForeColor = Color.FromArgb(0, 135, 0),
                     Location = new Point(20, y),
                     AutoSize = true
                 };
-                pnlBody.Controls.Add(_lblAutosave);
+                _scrollArea.Controls.Add(_lblAutosave);
                 y += 26;
 
                 var btnSub = new buttonRounded
                 {
-                    Text = "Submit Essay  ✔",
+                    Text = "Submit Essay  \u2714",
                     Size = new Size(164, 40),
                     Location = new Point(20, y),
                     BackColor = Color.Maroon,
@@ -491,7 +500,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 };
                 btnSub.FlatAppearance.BorderSize = 0;
                 btnSub.Click += SubmitEssay_Click;
-                pnlBody.Controls.Add(btnSub);
+                _scrollArea.Controls.Add(btnSub);
             }
         }
 
@@ -499,8 +508,8 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
         {
             if (_txtEssay == null || _lblWordCount == null) return;
             string t = _txtEssay.Text.Trim();
-            int words = string.IsNullOrWhiteSpace(t) ? 0 :
-                t.Split(new[] { ' ', '\n', '\r', '\t' }, StringSplitOptions.RemoveEmptyEntries).Length;
+            int words = string.IsNullOrWhiteSpace(t) ? 0
+                : t.Split(new[] { ' ', '\n', '\r', '\t' }, StringSplitOptions.RemoveEmptyEntries).Length;
             _lblWordCount.Text = $"Words: {words}  |  Characters: {t.Length}";
         }
 
@@ -509,7 +518,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             if (_txtEssay == null || _txtEssay.IsDisposed) return;
             _activity.EssayDraft = _txtEssay.Text;
             if (_lblAutosave != null && !_lblAutosave.IsDisposed)
-                _lblAutosave.Text = $"💾  Draft autosaved at {DateTime.Now:h:mm:ss tt}";
+                _lblAutosave.Text = $"\uD83D\uDCBE  Draft autosaved at {DateTime.Now:h:mm:ss tt}";
         }
 
         private void SubmitEssay_Click(object sender, EventArgs e)
@@ -528,33 +537,36 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             _activity.SubmissionStatus = "Submitted";
             _activity.SubmittedAt = DateTime.Now;
 
-            MessageBox.Show("Essay submitted successfully! ✔", "Submitted",
+            MessageBox.Show("Essay submitted successfully! \u2714", "Submitted",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
             OnBack?.Invoke();
         }
 
         // ══════════════════════════════════════════════════════════════════════
         // FILE UPLOAD VIEW
+        // FIX (Image 3): All controls added to _scrollArea with correct Y.
         // ══════════════════════════════════════════════════════════════════════
 
         private void BuildFileUploadView()
         {
             bool isSubm = _activity.SubmissionStatus is "Submitted" or "Returned";
-            int w = Math.Max(640, pnlBody.ClientSize.Width - 60);
+            int w = Math.Max(640, _scrollArea.ClientSize.Width > 0
+                                  ? _scrollArea.ClientSize.Width - 60
+                                  : pnlBody.ClientSize.Width - 60);
             int y = 20;
 
             var instrPnl = BuildInstructionsPanel(w);
             instrPnl.Location = new Point(20, y);
-            pnlBody.Controls.Add(instrPnl);
+            _scrollArea.Controls.Add(instrPnl);
             y += instrPnl.MinimumSize.Height + 20;
 
             y = BuildAttachmentList(y, w);
 
             if (isSubm)
             {
-                pnlBody.Controls.Add(new Label
+                _scrollArea.Controls.Add(new Label
                 {
-                    Text = $"✔  File Submitted  ·  {_activity.SubmittedAt:MMM dd, yyyy  h:mm tt}",
+                    Text = $"\u2714  File Submitted  \u00B7  {_activity.SubmittedAt:MMM dd, yyyy  h:mm tt}",
                     Font = new Font("Segoe UI", 10F, FontStyle.Bold),
                     ForeColor = Color.FromArgb(27, 110, 27),
                     Location = new Point(20, y),
@@ -563,7 +575,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 
                 if (_activity.Score.HasValue)
                 {
-                    pnlBody.Controls.Add(new Label
+                    _scrollArea.Controls.Add(new Label
                     {
                         Text = $"Score:  {_activity.Score} / {_activity.Points} pts",
                         Font = new Font("Segoe UI", 11F, FontStyle.Bold),
@@ -574,11 +586,11 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 }
 
                 if (!string.IsNullOrEmpty(_activity.Remarks))
-                    pnlBody.Controls.Add(BuildRemarksPanel(w, y));
+                    _scrollArea.Controls.Add(BuildRemarksPanel(w, y));
             }
             else
             {
-                pnlBody.Controls.Add(new Label
+                _scrollArea.Controls.Add(new Label
                 {
                     Text = "Attach Your Submission:",
                     Font = new Font("Segoe UI", 10.5F, FontStyle.Bold),
@@ -587,7 +599,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                     AutoSize = true
                 }); y += 28;
 
-                // Drop zone
                 var pnlDrop = new Panel
                 {
                     BackColor = Color.FromArgb(244, 248, 255),
@@ -597,7 +608,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 };
                 var lblHint = new Label
                 {
-                    Text = "Drag & drop your file here  —  or  —  click  Browse",
+                    Text = "Drag & drop your file here  \u2014  or  \u2014  click  Browse",
                     Font = new Font("Segoe UI", 10F),
                     ForeColor = Color.FromArgb(130, 130, 155),
                     Dock = DockStyle.Fill,
@@ -619,20 +630,20 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 pnlDrop.Controls.Add(lblHint);
                 pnlDrop.Controls.Add(btnBrowse);
                 btnBrowse.BringToFront();
-                pnlBody.Controls.Add(pnlDrop);
+                _scrollArea.Controls.Add(pnlDrop);
                 y += 110;
 
                 _lblFileName = new Label
                 {
                     Text = string.IsNullOrEmpty(_uploadedFileName)
-                                ? "No file selected." : $"📎  {_uploadedFileName}",
+                                    ? "No file selected." : $"\uD83D\uDCCE  {_uploadedFileName}",
                     Font = new Font("Segoe UI", 9F, FontStyle.Italic),
                     ForeColor = string.IsNullOrEmpty(_uploadedFileName)
-                                ? Color.Gray : Color.FromArgb(0, 105, 0),
+                                    ? Color.Gray : Color.FromArgb(0, 105, 0),
                     Location = new Point(20, y),
                     AutoSize = true
                 };
-                pnlBody.Controls.Add(_lblFileName);
+                _scrollArea.Controls.Add(_lblFileName);
 
                 _lblFileSize = new Label
                 {
@@ -642,12 +653,12 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                     Location = new Point(220, y),
                     AutoSize = true
                 };
-                pnlBody.Controls.Add(_lblFileSize);
+                _scrollArea.Controls.Add(_lblFileSize);
                 y += 26;
 
                 _btnRemoveFile = new buttonRounded
                 {
-                    Text = "✕  Remove",
+                    Text = "\u2715  Remove",
                     Size = new Size(104, 28),
                     Location = new Point(20, y),
                     BackColor = Color.FromArgb(175, 30, 30),
@@ -665,10 +676,10 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                     if (_lblFileSize != null) _lblFileSize.Text = "";
                     _btnRemoveFile.Visible = false;
                 };
-                pnlBody.Controls.Add(_btnRemoveFile);
+                _scrollArea.Controls.Add(_btnRemoveFile);
                 y += 40;
 
-                pnlBody.Controls.Add(new Label
+                _scrollArea.Controls.Add(new Label
                 {
                     Text = "Submission Notes  (optional):",
                     Font = new Font("Segoe UI", 9.5F, FontStyle.Bold),
@@ -688,12 +699,12 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                     Text = _activity.SubmissionNote
                 };
                 txtNotes.TextChanged += (s, e) => _activity.SubmissionNote = txtNotes.Text;
-                pnlBody.Controls.Add(txtNotes);
+                _scrollArea.Controls.Add(txtNotes);
                 y += 100;
 
                 var btnUpload = new buttonRounded
                 {
-                    Text = "Upload & Submit  ✔",
+                    Text = "Upload & Submit  \u2714",
                     Size = new Size(180, 40),
                     Location = new Point(20, y),
                     BackColor = Color.Maroon,
@@ -704,7 +715,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 };
                 btnUpload.FlatAppearance.BorderSize = 0;
                 btnUpload.Click += SubmitFileUpload_Click;
-                pnlBody.Controls.Add(btnUpload);
+                _scrollArea.Controls.Add(btnUpload);
             }
         }
 
@@ -722,7 +733,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 _uploadedFileSize = new FileInfo(dlg.FileName).Length;
                 _activity.UploadedFileName = _uploadedFileName;
 
-                if (_lblFileName != null) { _lblFileName.Text = $"📎  {_uploadedFileName}"; _lblFileName.ForeColor = Color.FromArgb(0, 105, 0); }
+                if (_lblFileName != null) { _lblFileName.Text = $"\uD83D\uDCCE  {_uploadedFileName}"; _lblFileName.ForeColor = Color.FromArgb(0, 105, 0); }
                 if (_lblFileSize != null) _lblFileSize.Text = $"  ({FormatFileSize(_uploadedFileSize)})";
                 if (_btnRemoveFile != null) _btnRemoveFile.Visible = true;
             }
@@ -743,7 +754,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             _activity.SubmissionStatus = "Submitted";
             _activity.SubmittedAt = DateTime.Now;
 
-            MessageBox.Show("File uploaded and submitted successfully! ✔", "Submitted",
+            MessageBox.Show("File uploaded and submitted successfully! \u2714", "Submitted",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
             OnBack?.Invoke();
         }
@@ -756,16 +767,18 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
         }
 
         // ══════════════════════════════════════════════════════════════════════
-        // QUIZ / LONG QUIZ VIEW
+        // QUIZ / LONG QUIZ VIEW  (Image 4 & 5)
+        // FIX: Both Quiz AND LongQuiz use the same "all questions on one page"
+        //      maroon-card design shown in Image 5.
         // ══════════════════════════════════════════════════════════════════════
 
         private void BuildQuizView()
         {
-            pnlBody.Controls.Clear();
+            _scrollArea.Controls.Clear();
 
             if (_activity.Questions == null || _activity.Questions.Count == 0)
             {
-                pnlBody.Controls.Add(new Label
+                _scrollArea.Controls.Add(new Label
                 {
                     Text = "No questions available.",
                     Font = new Font("Segoe UI", 11F),
@@ -776,249 +789,322 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 return;
             }
 
-            int w = Math.Max(640, pnlBody.ClientSize.Width - 60);
-            int y = 20;
-            int totalQ = _activity.Questions.Count;
             bool isSubm = _activity.SubmissionStatus is "Submitted" or "Returned";
+            int totalQ = _activity.Questions.Count;
+            int w = Math.Max(640, _scrollArea.ClientSize.Width > 0
+                                         ? _scrollArea.ClientSize.Width - 40
+                                         : pnlBody.ClientSize.Width - 40);
+            int y = 16;
 
-            // ── Progress strip ─────────────────────────────────────────────
-            var pnlProg = new Panel
+            // ── Instructions banner ────────────────────────────────────────
+            if (!string.IsNullOrEmpty(_activity.Instructions))
             {
-                Location = new Point(20, y),
-                Size = new Size(w, 54),
+                var instrPnl = BuildInstructionsPanel(w);
+                instrPnl.Location = new Point(16, y);
+                _scrollArea.Controls.Add(instrPnl);
+                y += instrPnl.MinimumSize.Height + 16;
+            }
+
+            // ── Question number pills ──────────────────────────────────────
+            int pillSize = 28;
+            int pillGap = 4;
+            var pnlPills = new Panel
+            {
+                Location = new Point(16, y),
+                Size = new Size(w, pillSize + 8),
                 BackColor = Color.Transparent
             };
-            pnlProg.Controls.Add(new Label
-            {
-                Text = $"Question  {_currentQ + 1}  of  {totalQ}",
-                Font = new Font("Segoe UI", 10.5F, FontStyle.Bold),
-                ForeColor = Color.FromArgb(30, 30, 30),
-                Location = new Point(0, 0),
-                AutoSize = true
-            });
-            pnlProg.Controls.Add(new Label
-            {
-                Text = $"{_answers.Count}/{totalQ} answered",
-                Font = new Font("Segoe UI", 8.5F),
-                ForeColor = Color.Gray,
-                Location = new Point(0, 24),
-                AutoSize = true
-            });
-
-            // Question navigation dots
-            int dotSize = Math.Max(20, Math.Min(26, (w - 220) / Math.Max(1, totalQ) - 4));
-            int dotStartX = w - totalQ * (dotSize + 4);
             for (int i = 0; i < totalQ; i++)
             {
                 bool ans = _answers.ContainsKey(i + 1);
-                bool cur = i == _currentQ;
                 int ci = i;
                 var dot = new Label
                 {
                     Text = (i + 1).ToString(),
-                    BackColor = cur ? Color.Maroon : ans ? Color.ForestGreen : Color.FromArgb(205, 205, 205),
+                    BackColor = ans ? Color.FromArgb(27, 110, 27) : Color.FromArgb(200, 200, 200),
                     ForeColor = Color.White,
-                    Font = new Font("Segoe UI", 7.5F, FontStyle.Bold),
-                    Location = new Point(dotStartX + i * (dotSize + 4), 10),
-                    Size = new Size(dotSize, dotSize),
+                    Font = new Font("Segoe UI", 8F, FontStyle.Bold),
+                    Location = new Point(i * (pillSize + pillGap), 4),
+                    Size = new Size(pillSize, pillSize),
                     TextAlign = ContentAlignment.MiddleCenter,
-                    Cursor = Cursors.Hand
+                    Cursor = Cursors.Default
                 };
-                dot.Click += (s, e) => { _currentQ = ci; BuildQuizView(); };
-                pnlProg.Controls.Add(dot);
+                pnlPills.Controls.Add(dot);
             }
-            pnlBody.Controls.Add(pnlProg);
-            y += pnlProg.Height + 12;
+            _scrollArea.Controls.Add(pnlPills);
+            y += pnlPills.Height + 12;
 
-            // ── White question card ────────────────────────────────────────
-            var q = _activity.Questions[_currentQ];
-            var pnlQ = new Panel
+            // ── Render every question as a maroon card (Image 5 style) ─────
+            for (int qi = 0; qi < totalQ; qi++)
             {
-                BackColor = Color.White,
-                Location = new Point(20, y),
-                Width = w,
-                AutoSize = true,
-                BorderStyle = BorderStyle.FixedSingle,
-                Padding = new Padding(18)
-            };
-            int qy = 16;
+                var q = _activity.Questions[qi];
+                int questionY = 0;
 
-            // Type badge
-            string typeBadge = q.QuestionType switch
-            {
-                "MultipleChoice" => "Multiple Choice",
-                "TrueFalse" => "True or False",
-                "Identification" => "Identification",
-                "Essay" => "Essay",
-                _ => q.QuestionType
-            };
-            Color badgeClr = q.QuestionType switch
-            {
-                "MultipleChoice" => Color.FromArgb(63, 81, 181),
-                "TrueFalse" => Color.FromArgb(0, 150, 136),
-                "Identification" => Color.FromArgb(156, 39, 176),
-                _ => Color.Gray
-            };
-            pnlQ.Controls.Add(new Label
-            {
-                Text = typeBadge,
-                BackColor = badgeClr,
-                ForeColor = Color.White,
-                Font = new Font("Segoe UI", 8F, FontStyle.Bold),
-                Location = new Point(18, qy),
-                Size = new Size(130, 22),
-                TextAlign = ContentAlignment.MiddleCenter
-            });
-            pnlQ.Controls.Add(new Label
-            {
-                Text = $"{q.Points} pt{(q.Points != 1 ? "s" : "")}",
-                Font = new Font("Segoe UI", 8.5F, FontStyle.Bold),
-                ForeColor = Color.Maroon,
-                Location = new Point(w - 76, qy),
-                Size = new Size(56, 22),
-                TextAlign = ContentAlignment.MiddleRight
-            }); qy += 34;
-
-            // Question text
-            pnlQ.Controls.Add(new Label
-            {
-                Text = $"{_currentQ + 1}.  {q.Text}",
-                Font = new Font("Segoe UI", 11F),
-                ForeColor = Color.FromArgb(22, 22, 22),
-                Location = new Point(18, qy),
-                MaximumSize = new Size(w - 38, 0),
-                AutoSize = true
-            }); qy += 66;
-
-            // Answer area
-            string saved = _answers.ContainsKey(q.Number) ? _answers[q.Number] : "";
-
-            if (q.QuestionType is "MultipleChoice" or "TrueFalse")
-            {
-                foreach (var choice in q.Choices)
+                // Outer card
+                var card = new Panel
                 {
-                    var rowPnl = new Panel
-                    {
-                        Location = new Point(16, qy),
-                        Size = new Size(w - 36, 38),
-                        BackColor = saved == choice ? Color.FromArgb(245, 235, 235) : Color.Transparent
-                    };
-                    string capturedChoice = choice;
-                    var rb = new RadioButton
-                    {
-                        Text = choice,
-                        Font = new Font("Segoe UI", 10.5F),
-                        ForeColor = Color.FromArgb(30, 30, 30),
-                        Location = new Point(8, 6),
-                        AutoSize = true,
-                        Checked = saved == choice,
-                        Enabled = !isSubm,
-                        Tag = choice
-                    };
-                    rb.CheckedChanged += (s, e) =>
-                    {
-                        if (!rb.Checked) return;
-                        _answers[q.Number] = rb.Tag.ToString();
-                        foreach (Control ctrl in pnlQ.Controls)
-                            if (ctrl is Panel rp && rp.Controls.Count > 0 && rp.Controls[0] is RadioButton r2)
-                                rp.BackColor = r2.Checked ? Color.FromArgb(245, 235, 235) : Color.Transparent;
-                    };
-                    rowPnl.Controls.Add(rb);
-                    pnlQ.Controls.Add(rowPnl);
-                    qy += 40;
-                }
-            }
-            else if (q.QuestionType == "Identification")
-            {
-                pnlQ.Controls.Add(new Label
+                    Location = new Point(16, y),
+                    Width = w,
+                    BackColor = Color.White,
+                    BorderStyle = BorderStyle.None
+                };
+                card.Paint += (s, e) =>
                 {
-                    Text = "Answer:",
-                    Font = new Font("Segoe UI", 9F, FontStyle.Bold),
-                    ForeColor = Color.FromArgb(55, 55, 55),
-                    Location = new Point(22, qy),
+                    using var pen = new Pen(Color.FromArgb(100, 0, 0), 2);
+                    e.Graphics.DrawRectangle(pen, 0, 0, card.Width - 1, card.Height - 1);
+                };
+
+                // Question number header (dark maroon bar)
+                var pnlQNum = new Panel
+                {
+                    Location = new Point(0, 0),
+                    Size = new Size(w, 32),
+                    BackColor = Color.FromArgb(100, 0, 0)
+                };
+                pnlQNum.Controls.Add(new Label
+                {
+                    Text = $"Question {qi + 1}",
+                    Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+                    ForeColor = Color.White,
+                    Location = new Point(12, 4),
                     AutoSize = true
-                }); qy += 22;
-                var txt = new TextBox
+                });
+                card.Controls.Add(pnlQNum);
+                questionY += 32;
+
+                // Question text bar (maroon)
+                string questionText = q.Text;
+                int qTextH = Math.Max(40,
+                    TextRenderer.MeasureText(questionText,
+                        new Font("Segoe UI", 10.5F, FontStyle.Bold),
+                        new Size(w - 28, int.MaxValue),
+                        TextFormatFlags.WordBreak).Height + 20);
+
+                var pnlQText = new Panel
                 {
-                    Font = new Font("Segoe UI", 10.5F),
-                    Location = new Point(22, qy),
-                    Size = new Size(Math.Min(420, w - 44), 30),
-                    Text = saved,
-                    ReadOnly = isSubm,
-                    PlaceholderText = "Type your answer here..."
+                    Location = new Point(0, questionY),
+                    Size = new Size(w, qTextH),
+                    BackColor = Color.FromArgb(128, 0, 0)
                 };
-                txt.TextChanged += (s, e) => _answers[q.Number] = txt.Text;
-                pnlQ.Controls.Add(txt); qy += 42;
+                pnlQText.Controls.Add(new Label
+                {
+                    Text = questionText,
+                    Font = new Font("Segoe UI", 10.5F, FontStyle.Bold),
+                    ForeColor = Color.White,
+                    Location = new Point(14, 10),
+                    MaximumSize = new Size(w - 28, 0),
+                    AutoSize = true
+                });
+                // Points badge (top-right of question bar)
+                pnlQText.Controls.Add(new Label
+                {
+                    Text = $"{q.Points} pt{(q.Points != 1 ? "s" : "")}",
+                    Font = new Font("Segoe UI", 8.5F, FontStyle.Bold),
+                    ForeColor = Color.FromArgb(255, 210, 160),
+                    Location = new Point(w - 64, 8),
+                    Size = new Size(56, 20),
+                    TextAlign = ContentAlignment.MiddleRight
+                });
+                card.Controls.Add(pnlQText);
+                questionY += qTextH;
+
+                string saved = _answers.ContainsKey(q.Number) ? _answers[q.Number] : "";
+
+                // ── Answer area (white background) ─────────────────────────
+                if (q.QuestionType is "MultipleChoice" or "TrueFalse")
+                {
+                    char letter = 'A';
+                    foreach (var choice in q.Choices)
+                    {
+                        bool isSelected = saved == choice;
+                        var pnlChoice = new Panel
+                        {
+                            Location = new Point(0, questionY),
+                            Size = new Size(w, 44),
+                            BackColor = isSelected
+                                ? Color.FromArgb(245, 220, 220)
+                                : Color.White,
+                            Cursor = isSubm ? Cursors.Default : Cursors.Hand
+                        };
+                        pnlChoice.Paint += (s, e) =>
+                        {
+                            using var pen = new Pen(Color.FromArgb(200, 170, 170));
+                            e.Graphics.DrawLine(pen, 0, pnlChoice.Height - 1,
+                                                     pnlChoice.Width - 1, pnlChoice.Height - 1);
+                        };
+
+                        // Letter box (A / B / C / D)
+                        var pnlLetter = new Panel
+                        {
+                            Location = new Point(0, 0),
+                            Size = new Size(44, 44),
+                            BackColor = Color.FromArgb(128, 0, 0)
+                        };
+                        pnlLetter.Controls.Add(new Label
+                        {
+                            Text = letter.ToString(),
+                            Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+                            ForeColor = Color.White,
+                            Dock = DockStyle.Fill,
+                            TextAlign = ContentAlignment.MiddleCenter
+                        });
+                        pnlChoice.Controls.Add(pnlLetter);
+
+                        // Radio button + label
+                        string capturedChoice = choice;
+                        var rb = new RadioButton
+                        {
+                            Text = choice,
+                            Font = new Font("Segoe UI", 10F),
+                            ForeColor = Color.FromArgb(30, 30, 30),
+                            Location = new Point(54, 10),
+                            AutoSize = true,
+                            Checked = isSelected,
+                            Enabled = !isSubm,
+                            Tag = choice
+                        };
+                        rb.CheckedChanged += (s, e) =>
+                        {
+                            if (!rb.Checked) return;
+                            _answers[q.Number] = rb.Tag.ToString();
+                            // Update pill color
+                            if (qi < pnlPills.Controls.Count)
+                                pnlPills.Controls[qi].BackColor = Color.FromArgb(27, 110, 27);
+                            // Update highlight on all choices in this card
+                            foreach (Control ctrl in card.Controls)
+                            {
+                                if (ctrl is Panel cp && cp.Height == 44 && cp.Controls.Count >= 2
+                                    && cp.Controls[1] is RadioButton r2)
+                                    cp.BackColor = r2.Checked
+                                        ? Color.FromArgb(245, 220, 220)
+                                        : Color.White;
+                            }
+                        };
+                        pnlChoice.Controls.Add(rb);
+
+                        // Whole row click selects the radio
+                        if (!isSubm)
+                        {
+                            pnlChoice.Click += (s, e) => { rb.Checked = true; };
+                            pnlLetter.Click += (s, e) => { rb.Checked = true; };
+                            foreach (Control cc in pnlLetter.Controls)
+                                cc.Click += (s, e) => { rb.Checked = true; };
+                        }
+
+                        card.Controls.Add(pnlChoice);
+                        questionY += 44;
+                        letter++;
+                    }
+                }
+                else if (q.QuestionType == "Identification")
+                {
+                    var pnlAns = new Panel
+                    {
+                        Location = new Point(0, questionY),
+                        Size = new Size(w, 62),
+                        BackColor = Color.White,
+                        Padding = new Padding(14)
+                    };
+                    var txt = new TextBox
+                    {
+                        Font = new Font("Segoe UI", 10.5F),
+                        Location = new Point(14, 16),
+                        Size = new Size(Math.Min(420, w - 28), 30),
+                        Text = saved,
+                        ReadOnly = isSubm,
+                        PlaceholderText = "Type your answer here..."
+                    };
+                    txt.TextChanged += (s, e) =>
+                    {
+                        _answers[q.Number] = txt.Text;
+                        if (qi < pnlPills.Controls.Count)
+                            pnlPills.Controls[qi].BackColor = string.IsNullOrWhiteSpace(txt.Text)
+                                ? Color.FromArgb(200, 200, 200)
+                                : Color.FromArgb(27, 110, 27);
+                    };
+                    pnlAns.Controls.Add(txt);
+                    card.Controls.Add(pnlAns);
+                    questionY += 62;
+                }
+                else // Essay-type question
+                {
+                    var pnlAns = new Panel
+                    {
+                        Location = new Point(0, questionY),
+                        Size = new Size(w, 180),
+                        BackColor = Color.White,
+                        Padding = new Padding(14)
+                    };
+                    var txtE = new TextBox
+                    {
+                        Multiline = true,
+                        ScrollBars = ScrollBars.Vertical,
+                        Font = new Font("Segoe UI", 10F),
+                        Location = new Point(14, 14),
+                        Size = new Size(w - 28, 148),
+                        Text = saved,
+                        ReadOnly = isSubm
+                    };
+                    txtE.TextChanged += (s, e) =>
+                    {
+                        _answers[q.Number] = txtE.Text;
+                        if (qi < pnlPills.Controls.Count)
+                            pnlPills.Controls[qi].BackColor = string.IsNullOrWhiteSpace(txtE.Text)
+                                ? Color.FromArgb(200, 200, 200)
+                                : Color.FromArgb(27, 110, 27);
+                    };
+                    pnlAns.Controls.Add(txtE);
+                    card.Controls.Add(pnlAns);
+                    questionY += 180;
+                }
+
+                card.Height = questionY;
+                _scrollArea.Controls.Add(card);
+                y += questionY + 16;
+            }
+
+            // ── Submit / status bar ────────────────────────────────────────
+            if (!isSubm)
+            {
+                var btnSubmit = new buttonRounded
+                {
+                    Text = "Submit Quiz  \u2714",
+                    Size = new Size(164, 42),
+                    Location = new Point(16, y),
+                    BackColor = Color.FromArgb(25, 105, 25),
+                    ForeColor = Color.White,
+                    BorderRadius = 21,
+                    Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+                    FlatStyle = FlatStyle.Flat
+                };
+                btnSubmit.FlatAppearance.BorderSize = 0;
+                btnSubmit.Click += SubmitQuiz_Click;
+                _scrollArea.Controls.Add(btnSubmit);
+                y += 58;
             }
             else
             {
-                pnlQ.Controls.Add(new Label
+                _scrollArea.Controls.Add(new Label
                 {
-                    Text = "Your Answer:",
-                    Font = new Font("Segoe UI", 9F, FontStyle.Bold),
-                    ForeColor = Color.FromArgb(55, 55, 55),
-                    Location = new Point(22, qy),
+                    Text = $"\u2714  Quiz submitted  \u00B7  {_activity.SubmittedAt:MMM dd, yyyy  h:mm tt}",
+                    Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+                    ForeColor = Color.FromArgb(27, 110, 27),
+                    Location = new Point(16, y),
                     AutoSize = true
-                }); qy += 22;
-                var txtE = new TextBox
+                }); y += 32;
+
+                if (_activity.Score.HasValue)
                 {
-                    Multiline = true,
-                    ScrollBars = ScrollBars.Vertical,
-                    Font = new Font("Segoe UI", 10F),
-                    Location = new Point(22, qy),
-                    Size = new Size(w - 44, 160),
-                    Text = saved,
-                    ReadOnly = isSubm
-                };
-                txtE.TextChanged += (s, e) => _answers[q.Number] = txtE.Text;
-                pnlQ.Controls.Add(txtE); qy += 170;
+                    _scrollArea.Controls.Add(new Label
+                    {
+                        Text = $"Score:  {_activity.Score} / {_activity.Points} pts",
+                        Font = new Font("Segoe UI", 11F, FontStyle.Bold),
+                        ForeColor = Color.Maroon,
+                        Location = new Point(16, y),
+                        AutoSize = true
+                    });
+                }
             }
-
-            pnlQ.Height = qy + 16;
-            pnlBody.Controls.Add(pnlQ);
-            y += pnlQ.Height + 20;
-
-            // ── Navigation buttons ─────────────────────────────────────────
-            var pnlNav = new Panel { Location = new Point(20, y), Size = new Size(w, 50), BackColor = Color.Transparent };
-
-            if (_currentQ > 0)
-            {
-                var btnPrev = MakeNavBtn("← Previous", Color.FromArgb(65, 65, 65), 0);
-                btnPrev.Click += (s, e) => { _currentQ--; BuildQuizView(); };
-                pnlNav.Controls.Add(btnPrev);
-            }
-
-            if (_currentQ < totalQ - 1)
-            {
-                var btnNext = MakeNavBtn("Next →", Color.Maroon, 142);
-                btnNext.Click += (s, e) => { _currentQ++; BuildQuizView(); };
-                pnlNav.Controls.Add(btnNext);
-            }
-            else if (!isSubm)
-            {
-                var btnSubmit = MakeNavBtn("Submit Quiz  ✔", Color.FromArgb(25, 105, 25), 142);
-                btnSubmit.Click += SubmitQuiz_Click;
-                pnlNav.Controls.Add(btnSubmit);
-            }
-
-            pnlBody.Controls.Add(pnlNav);
-        }
-
-        private buttonRounded MakeNavBtn(string text, Color back, int x)
-        {
-            var btn = new buttonRounded
-            {
-                Text = text,
-                Size = new Size(134, 38),
-                Location = new Point(x, 6),
-                BackColor = back,
-                ForeColor = Color.White,
-                BorderRadius = 19,
-                Font = new Font("Segoe UI", 9F, FontStyle.Bold),
-                FlatStyle = FlatStyle.Flat
-            };
-            btn.FlatAppearance.BorderSize = 0;
-            return btn;
         }
 
         private void SubmitQuiz_Click(object sender, EventArgs e)
@@ -1037,24 +1123,27 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             _activity.SubmissionStatus = "Submitted";
             _activity.SubmittedAt = DateTime.Now;
 
-            MessageBox.Show("Quiz submitted successfully! ✔", "Submitted",
+            MessageBox.Show("Quiz submitted successfully! \u2714", "Submitted",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
             OnBack?.Invoke();
         }
 
         // ══════════════════════════════════════════════════════════════════════
         // RECITATION VIEW
+        // FIX (Image 3): All controls added to _scrollArea with correct Y.
         // ══════════════════════════════════════════════════════════════════════
 
         private void BuildRecitationView()
         {
             bool isSubm = _activity.SubmissionStatus is "Submitted" or "Returned";
-            int w = Math.Max(640, pnlBody.ClientSize.Width - 60);
+            int w = Math.Max(640, _scrollArea.ClientSize.Width > 0
+                                  ? _scrollArea.ClientSize.Width - 60
+                                  : pnlBody.ClientSize.Width - 60);
             int y = 20;
 
             var instrPnl = BuildInstructionsPanel(w);
             instrPnl.Location = new Point(20, y);
-            pnlBody.Controls.Add(instrPnl);
+            _scrollArea.Controls.Add(instrPnl);
             y += instrPnl.MinimumSize.Height + 20;
 
             var pnlInfo = new Panel
@@ -1071,20 +1160,20 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             };
             pnlInfo.Controls.Add(new Label
             {
-                Text = "ℹ  Your instructor will record your participation score during the class session.",
+                Text = "\u2139  Your instructor will record your participation score during the class session.",
                 Font = new Font("Segoe UI", 9F),
                 ForeColor = Color.FromArgb(20, 80, 160),
                 Dock = DockStyle.Fill,
                 TextAlign = ContentAlignment.MiddleLeft
             });
-            pnlBody.Controls.Add(pnlInfo);
+            _scrollArea.Controls.Add(pnlInfo);
             y += 62;
 
             if (isSubm)
             {
-                pnlBody.Controls.Add(new Label
+                _scrollArea.Controls.Add(new Label
                 {
-                    Text = $"✔  Marked as Attended  ·  {_activity.SubmittedAt:MMM dd, yyyy  h:mm tt}",
+                    Text = $"\u2714  Marked as Attended  \u00B7  {_activity.SubmittedAt:MMM dd, yyyy  h:mm tt}",
                     Font = new Font("Segoe UI", 10F, FontStyle.Bold),
                     ForeColor = Color.FromArgb(27, 110, 27),
                     Location = new Point(20, y),
@@ -1093,7 +1182,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 
                 if (_activity.Score.HasValue)
                 {
-                    pnlBody.Controls.Add(new Label
+                    _scrollArea.Controls.Add(new Label
                     {
                         Text = $"Score:  {_activity.Score} / {_activity.Points} pts",
                         Font = new Font("Segoe UI", 11F, FontStyle.Bold),
@@ -1104,11 +1193,11 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 }
 
                 if (!string.IsNullOrEmpty(_activity.Remarks))
-                    pnlBody.Controls.Add(BuildRemarksPanel(w, y));
+                    _scrollArea.Controls.Add(BuildRemarksPanel(w, y));
             }
             else
             {
-                pnlBody.Controls.Add(new Label
+                _scrollArea.Controls.Add(new Label
                 {
                     Text = "Participation Notes  (optional):",
                     Font = new Font("Segoe UI", 9.5F, FontStyle.Bold),
@@ -1126,12 +1215,12 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                     Size = new Size(w, 120),
                     PlaceholderText = "Any notes for your instructor..."
                 };
-                pnlBody.Controls.Add(txtNotes);
+                _scrollArea.Controls.Add(txtNotes);
                 y += 130;
 
                 var btnMark = new buttonRounded
                 {
-                    Text = "Mark as Attended  ✔",
+                    Text = "Mark as Attended  \u2714",
                     Size = new Size(180, 40),
                     Location = new Point(20, y),
                     BackColor = Color.Maroon,
@@ -1149,7 +1238,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     OnBack?.Invoke();
                 };
-                pnlBody.Controls.Add(btnMark);
+                _scrollArea.Controls.Add(btnMark);
             }
         }
 

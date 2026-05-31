@@ -40,19 +40,19 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             _courses = new List<StudentCourse>
             {
                 new StudentCourse { Id=1, Name="Introduction to Programming 1", Code="ITP 101",
-                    Instructor="Prof. Juan dela Cruz", Schedule="MWF 7:30–9:00 AM",
+                    Instructor="Prof. Juan dela Cruz", Schedule="MWF 7:30\u20139:00 AM",
                     ActivityCount=8, PendingCount=2, SubmittedCount=5, OverdueCount=1 },
                 new StudentCourse { Id=2, Name="Principles of Accounting", Code="ACC 201",
-                    Instructor="Prof. Maria Santos", Schedule="TTH 10:00–11:30 AM",
+                    Instructor="Prof. Maria Santos", Schedule="TTH 10:00\u201311:30 AM",
                     ActivityCount=5, PendingCount=1, SubmittedCount=4, OverdueCount=0 },
                 new StudentCourse { Id=3, Name="Human Computer Interactions", Code="HCI 301",
-                    Instructor="Prof. Ana Reyes", Schedule="MWF 1:00–2:30 PM",
+                    Instructor="Prof. Ana Reyes", Schedule="MWF 1:00\u20132:30 PM",
                     ActivityCount=5, PendingCount=1, SubmittedCount=4, OverdueCount=0 },
                 new StudentCourse { Id=4, Name="Programming and Technologies 1", Code="PT 101",
-                    Instructor="Prof. Carlos Bautista", Schedule="TTH 1:00–2:30 PM",
+                    Instructor="Prof. Carlos Bautista", Schedule="TTH 1:00\u20132:30 PM",
                     ActivityCount=10, PendingCount=1, SubmittedCount=8, OverdueCount=1 },
                 new StudentCourse { Id=5, Name="Data Structures and Algorithms", Code="DSA 201",
-                    Instructor="Prof. Leo Pascual", Schedule="MWF 3:00–4:30 PM",
+                    Instructor="Prof. Leo Pascual", Schedule="MWF 3:00\u20134:30 PM",
                     ActivityCount=6, PendingCount=3, SubmittedCount=3, OverdueCount=0 },
             };
         }
@@ -70,6 +70,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                     Body="Prof. Pascual posted 'Sorting Algorithms Quiz'.", Time=DateTime.Now.AddHours(-5) },
             };
             lblNotifCount.Text = _notifications.Count.ToString();
+            lblNotifCount.Visible = _notifications.Count > 0;
         }
 
         // ── Stats ─────────────────────────────────────────────────────────────
@@ -103,7 +104,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 
             int pad = flpCards.Padding.Left + flpCards.Padding.Right;
             int cols = flpCards.ClientSize.Width >= 1300 ? 3
-                      : flpCards.ClientSize.Width >= 800 ? 2 : 1;
+                       : flpCards.ClientSize.Width >= 800 ? 2 : 1;
             int gap = 14;
             int avail = flpCards.ClientSize.Width - pad - (gap * 2 * cols) - 4;
             int cardW = Math.Max(300, avail / cols);
@@ -134,7 +135,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 Cursor = Cursors.Hand
             };
 
-            // Rounded border paint
             card.Paint += (s, e) =>
             {
                 var g = e.Graphics;
@@ -151,7 +151,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 BackColor = Color.Maroon
             };
 
-            // Gradient paint on header
             pnlTop.Paint += (s, e) =>
             {
                 using var brush = new LinearGradientBrush(
@@ -160,12 +159,11 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 e.Graphics.FillRectangle(brush, 0, 0, pnlTop.Width, pnlTop.Height);
             };
 
-            // Overdue badge
             if (course.OverdueCount > 0)
             {
                 pnlTop.Controls.Add(new Label
                 {
-                    Text = $"⚠  {course.OverdueCount} Overdue",
+                    Text = $"\u26A0  {course.OverdueCount} Overdue",
                     BackColor = Color.FromArgb(200, 30, 30),
                     ForeColor = Color.White,
                     Font = new Font("Segoe UI", 7.5F, FontStyle.Bold),
@@ -194,24 +192,22 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             });
             pnlTop.Controls.Add(new Label
             {
-                Text = "🕐  " + course.Schedule,
+                Text = "\uD83D\uDD50  " + course.Schedule,
                 Font = new Font("Segoe UI", 7.5F),
                 ForeColor = Color.FromArgb(200, 160, 160),
                 Location = new Point(12, 54),
                 AutoSize = true
             });
 
-            // ── Instructor ────────────────────────────────────────────────────
             var lblInstr = new Label
             {
-                Text = "👤  " + course.Instructor,
+                Text = "\uD83D\uDC64  " + course.Instructor,
                 Font = new Font("Segoe UI", 8.5F),
                 ForeColor = Color.FromArgb(75, 75, 75),
                 Location = new Point(12, 84),
                 Size = new Size(cardW - 24, 18)
             };
 
-            // ── Stats row ─────────────────────────────────────────────────────
             var statsData = new (string val, string label, Color clr)[]
             {
                 (course.ActivityCount.ToString(),  "Activities", Color.FromArgb(128, 0,   0)),
@@ -243,7 +239,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 });
             }
 
-            // ── Divider ───────────────────────────────────────────────────────
             var divider = new Panel
             {
                 Location = new Point(12, 160),
@@ -251,11 +246,10 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 BackColor = Color.FromArgb(232, 232, 232)
             };
 
-            // ── View Activities button ────────────────────────────────────────
             int btnW = Math.Min(164, cardW - 24);
             var btnView = new buttonRounded
             {
-                Text = "View Activities  →",
+                Text = "View Activities  \u2192",
                 Location = new Point(cardW - btnW - 12, 168),
                 Size = new Size(btnW, 36),
                 BackColor = Color.Maroon,
@@ -269,15 +263,18 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             btnView.FlatAppearance.BorderSize = 0;
             btnView.Click += (s, e) => OnOpenCourse?.Invoke(course);
 
-            // Hover effect on card
-            card.MouseEnter += (s, e) => { card.BackColor = Color.FromArgb(252, 248, 248); };
-            card.MouseLeave += (s, e) => { card.BackColor = Color.White; };
+            card.MouseEnter += (s, e) => card.BackColor = Color.FromArgb(252, 248, 248);
+            card.MouseLeave += (s, e) => card.BackColor = Color.White;
 
             card.Controls.AddRange(new Control[] { pnlTop, lblInstr, divider, btnView });
             return card;
         }
 
-        // ── Notification panel ────────────────────────────────────────────────
+        // ── Notification flyout ───────────────────────────────────────────────
+        // FIX (Image 6): Position the flyout relative to the Form's screen
+        //   coordinates so it appears correctly below the bell, anchored to
+        //   the right edge.  The flyout now also has a maroon header with the
+        //   bell icon and a proper scrollable list area.
 
         private void pnlNotifBadge_Click(object sender, EventArgs e)
         {
@@ -286,10 +283,11 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 
         private void ShowNotificationFlyout()
         {
+            // ── Build flyout ──────────────────────────────────────────────────
             var flyout = new Form
             {
                 Text = "",
-                Size = new Size(400, 360),
+                Size = new Size(420, Math.Min(400, 60 + _notifications.Count * 80)),
                 FormBorderStyle = FormBorderStyle.None,
                 StartPosition = FormStartPosition.Manual,
                 BackColor = Color.White,
@@ -297,15 +295,25 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 TopMost = true
             };
 
-            // Position below bell icon
-            var bellScreenPos = pnlNotifBadge.PointToScreen(Point.Empty);
-            flyout.Location = new Point(bellScreenPos.X - 350, bellScreenPos.Y + 36);
+            // Thin border
+            flyout.Paint += (s, e) =>
+            {
+                using var pen = new Pen(Color.FromArgb(200, 200, 200));
+                e.Graphics.DrawRectangle(pen, 0, 0, flyout.Width - 1, flyout.Height - 1);
+            };
 
-            // Header
+            // ── Position: bottom-left corner of the bell icon ─────────────────
+            // Convert the badge panel's screen position so the flyout appears
+            // directly below the bell regardless of where the window is.
+            var bellScreen = pnlNotifBadge.PointToScreen(
+                new Point(pnlNotifBadge.Width - flyout.Width, pnlNotifBadge.Height + 4));
+            flyout.Location = bellScreen;
+
+            // ── Header ───────────────────────────────────────────────────────
             var pnlH = new Panel { Dock = DockStyle.Top, Height = 44, BackColor = Color.Maroon };
             pnlH.Controls.Add(new Label
             {
-                Text = "🔔  Notifications",
+                Text = "\uD83D\uDD14  Notifications",
                 Font = new Font("Segoe UI", 11F, FontStyle.Bold),
                 ForeColor = Color.White,
                 Dock = DockStyle.Fill,
@@ -314,7 +322,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             });
             flyout.Controls.Add(pnlH);
 
-            // Notification list
+            // ── Notification list ─────────────────────────────────────────────
             var flp = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -324,12 +332,14 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 Padding = new Padding(8)
             };
 
+            int rowW = 388; // flyout is 420 wide; minus scroll bar padding
+
             foreach (var n in _notifications)
             {
                 var row = new Panel
                 {
-                    Width = 368,
-                    Height = 68,
+                    Width = rowW,
+                    Height = 72,
                     BackColor = n.IsRead ? Color.White : Color.FromArgb(254, 248, 248),
                     Margin = new Padding(0, 0, 0, 4),
                     Padding = new Padding(10, 8, 10, 8)
@@ -342,10 +352,10 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 
                 string icon = n.Kind switch
                 {
-                    "returned" => "↩",
-                    "deadline" => "⏰",
-                    "feedback" => "📝",
-                    _ => "📋"
+                    "returned" => "\u21A9",
+                    "deadline" => "\u23F0",
+                    "feedback" => "\uD83D\uDCDD",
+                    _ => "\uD83D\uDCCB"
                 };
                 Color iconColor = n.Kind switch
                 {
@@ -360,7 +370,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                     Text = icon,
                     Font = new Font("Segoe UI", 14F),
                     ForeColor = iconColor,
-                    Location = new Point(8, 12),
+                    Location = new Point(8, 14),
                     Size = new Size(28, 28),
                     TextAlign = ContentAlignment.MiddleCenter
                 });
@@ -369,16 +379,16 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                     Text = n.Title,
                     Font = new Font("Segoe UI", 9F, FontStyle.Bold),
                     ForeColor = Color.FromArgb(30, 30, 30),
-                    Location = new Point(42, 8),
-                    Size = new Size(300, 18)
+                    Location = new Point(44, 8),
+                    Size = new Size(rowW - 54, 18)
                 });
                 row.Controls.Add(new Label
                 {
                     Text = n.Body,
                     Font = new Font("Segoe UI", 8F),
                     ForeColor = Color.FromArgb(80, 80, 80),
-                    Location = new Point(42, 26),
-                    Size = new Size(300, 28),
+                    Location = new Point(44, 27),
+                    Size = new Size(rowW - 54, 28),
                     AutoEllipsis = true
                 });
                 row.Controls.Add(new Label
@@ -386,12 +396,24 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                     Text = FormatTimeAgo(n.Time),
                     Font = new Font("Segoe UI", 7.5F, FontStyle.Italic),
                     ForeColor = Color.Gray,
-                    Location = new Point(42, 50),
+                    Location = new Point(44, 54),
                     AutoSize = true
                 });
 
                 flp.Controls.Add(row);
                 n.IsRead = true;
+            }
+
+            if (_notifications.Count == 0)
+            {
+                flp.Controls.Add(new Label
+                {
+                    Text = "No new notifications.",
+                    Font = new Font("Segoe UI", 9.5F),
+                    ForeColor = Color.Gray,
+                    Padding = new Padding(12),
+                    AutoSize = true
+                });
             }
 
             lblNotifCount.Visible = false;

@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace PUPAcadPortal.PortalContents.Student.LMS
@@ -19,14 +14,15 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
 
         private void AttendanceContentStudent_Load(object sender, EventArgs e)
         {
-            if (_attendanceControl == null)
-            {
-                pnlAttendance.Controls.Clear();
+            if (_attendanceControl != null) return;
 
-                _attendanceControl = new AttendanceControl();
-                _attendanceControl.Dock = DockStyle.Fill;
-                pnlAttendance.Controls.Add(_attendanceControl);
-            }
+            this.Controls.Clear();
+
+            _attendanceControl = new AttendanceControl
+            {
+                Dock = DockStyle.Fill
+            };
+            this.Controls.Add(_attendanceControl);
         }
     }
 }
