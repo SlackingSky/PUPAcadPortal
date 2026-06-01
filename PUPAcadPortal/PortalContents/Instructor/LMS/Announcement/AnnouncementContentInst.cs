@@ -28,7 +28,6 @@ namespace PUPAcadPortal
         private ViewAnnouncement _viewAnnouncementUC;
         private AnnouncementInbox _inboxUC;
 
-        // (font-scaling fields removed – scaling caused overlay font corruption)
 
         private static readonly Dictionary<string, Color> CatIconColor = new()
         {
@@ -104,7 +103,6 @@ namespace PUPAcadPortal
             _viewAnnouncementUC.CloseRequested += (s, ev) => HideViewAnnouncementUC();
             pnlAnnouncement.Controls.Add(_viewAnnouncementUC);
 
-            // ── Inbox UC ────────────────────────────────────────────────────
             _inboxUC = new AnnouncementInbox
             {
                 Visible = false,
@@ -113,7 +111,6 @@ namespace PUPAcadPortal
             _inboxUC.CloseRequested += (s, ev) => _inboxUC.Visible = false;
             pnlAnnouncement.Controls.Add(_inboxUC);
 
-            // Wire the Inbox button that lives in the designer (btnInbox)
             if (btnInbox != null)
                 btnInbox.Click += (s, ev) => ShowInbox();
 
@@ -167,7 +164,6 @@ namespace PUPAcadPortal
             }
         }
 
-        // ── Inbox show/hide ──────────────────────────────────────────────────
         private void ShowInbox()
         {
             CenterControl(_inboxUC, pnlAnnouncement);
@@ -184,7 +180,6 @@ namespace PUPAcadPortal
             if (_inboxUC != null && _inboxUC.Visible)
                 CenterControl(_inboxUC, pnlAnnouncement);
 
-            // Suspend layout to prevent visual flickering while resizing
             this.SuspendLayout();
 
             AdjustLeftSidebarLayout(); 

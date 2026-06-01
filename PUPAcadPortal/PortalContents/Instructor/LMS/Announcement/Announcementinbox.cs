@@ -77,7 +77,6 @@ namespace PUPAcadPortal
                 ReceivedAt=DateTime.Now.AddDays(-5), Tag="Policy", IsRead=true },
         };
 
-        // ── Render Processing ────────────────────────────────────────────────
         private void RenderList(string? search = null)
         {
             _flpList.SuspendLayout();
@@ -238,7 +237,6 @@ namespace PUPAcadPortal
             _lblUnreadBadge.Visible = unread > 0;
         }
 
-        // ── Event Handlers ───────────────────────────────────────────────────
         private void BtnClose_Click(object? sender, EventArgs e)
         {
             CloseRequested?.Invoke(this, EventArgs.Empty);
@@ -282,15 +280,12 @@ namespace PUPAcadPortal
 
         private void AnnouncementInbox_Resize(object? sender, EventArgs e)
         {
-            // Keep _flpList filling the full left panel below the search box
             _flpList.Size = new Size(_pnlLeft.Width, Math.Max(40, _pnlLeft.Height - 40));
 
-            // Re-clip dynamic regions that depend on control layout bounds
             if (_lblUnreadBadge.Visible) MakeRound(_lblUnreadBadge, 8);
             if (_lblDetailTag.Visible) MakeRound(_lblDetailTag, 10);
         }
 
-        // ── Graphics Helpers ─────────────────────────────────────────────────
         private static void MakeRound(Control c, int r)
         {
             if (c.Width <= 0 || c.Height <= 0) return;

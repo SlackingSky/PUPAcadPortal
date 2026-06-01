@@ -12,18 +12,14 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
 {
     public partial class CalendarContentInst : UserControl
     {
-        // ── Shared state (kept for backward compat with UrDay) ────────────────
         public static int _year, _month;
         public static Dictionary<DateTime, string> notesDict = new();
-
-        // ── View state ────────────────────────────────────────────────────────
         private enum CalendarView { Monthly, Weekly, Daily }
         private CalendarView _currentView = CalendarView.Monthly;
         private DateTime _selectedDate = DateTime.Now.Date;
         private DateTime _navDate = DateTime.Now.Date;
         private EventType? _activeFilter = null;
 
-        // ── Layout panels ─────────────────────────────────────────────────────
         private Panel _pnlTopBar;
         private Panel _pnlViewArea;
         private Panel _pnlSidebar;
@@ -34,10 +30,8 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
         private FacultyNotificationsPanel _notifPanel = null!;
         private FacultySearchPanel _searchPanel = null!;
 
-        // Monthly view
         private FlowLayoutPanel _flpMonth = null!;
 
-        // Toolbar controls
         private Label _lblMonthYear;
         private Button _btnPrev, _btnNext, _btnToday;
         private Button _btnMonthly, _btnWeekly, _btnDaily;
@@ -47,20 +41,17 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
         private Button _btnSync;
         private Label _lblNotifBadge;
 
-        // Bottom detail – left column (day events) + right column (upcoming)
         private Label _lblSelDate;
         private FlowLayoutPanel _flpDayEvents;
         private FlowLayoutPanel _flpUpcoming;
         private Label _lblNoEvents;
         private Label _lblNoUpcoming;
 
-        // Active filter buttons
         private readonly List<Button> _filterBtns = new();
 
-        // Wheel filter – kept so we can toggle IsEnabled
         private CalendarWheelFilter _wheelFilter = null!;
 
-        // ── Constants ─────────────────────────────────────────────────────────
+        //  Constants 
         private static readonly Color Maroon = Color.FromArgb(136, 14, 79);
         private static readonly Color MaroonLight = Color.FromArgb(252, 240, 248);
         private static readonly Color MaroonDark = Color.FromArgb(100, 8, 55);
@@ -70,13 +61,13 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
         private static readonly Font HeaderFont = new Font("Maiandra GD", 22f, FontStyle.Bold);
         private static readonly Font SmallFont = new Font("Segoe UI", 7.5f);
 
-        // ── Constructor ───────────────────────────────────────────────────────
+        //  Constructor 
         public CalendarContentInst()
         {
             InitializeComponent();
         }
 
-        // ── Load ─────────────────────────────────────────────────────────────
+        //  Load 
         private void CalendarContentInst_Load(object sender, EventArgs e)
         {
             FacultyCalendarData.LoadData();
@@ -99,17 +90,12 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
 
             this.Resize += (s, ev) => LayoutAll();
 
-            // ── Scroll wheel → navigate months/weeks/days ────────────────────
-            // Disabled automatically when search or notification panel is open,
-            // or when the cursor is over the bottom detail strip.
             _wheelFilter = new CalendarWheelFilter(pnlCalendar, delta =>
             {
                 if (delta > 0) NavigatePrev();
                 else NavigateNext();
             });
 
-            // Exclude the bottom strip so scrolling the day-events list,
-            // upcoming list, or legend never triggers month navigation.
             this.BeginInvoke((Action)(() =>
             {
                 if (_pnlBottomDetail != null) _wheelFilter.AddExclusion(_pnlBottomDetail);
@@ -130,9 +116,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             }));
         }
 
-        // ══════════════════════════════════════════════════════════════════════
         //  TOP BAR
-        // ══════════════════════════════════════════════════════════════════════
         private void BuildTopBar()
         {
             _pnlTopBar = new Panel
@@ -358,8 +342,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
 
         // ══════════════════════════════════════════════════════════════════════
         //  BOTTOM DETAIL STRIP
-        //  Left half  → selected-day events (+ compact legend row)
-        //  Right half → upcoming events
         // ══════════════════════════════════════════════════════════════════════
         private void BuildBottomDetail()
         {
@@ -538,9 +520,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             _pnlBottomDetail.Controls.Add(flp);
         }
 
-        // ══════════════════════════════════════════════════════════════════════
         //  NOTIFICATIONS PANEL
-        // ══════════════════════════════════════════════════════════════════════
         private void BuildNotifPanel()
         {
             _notifPanel = new FacultyNotificationsPanel
@@ -549,18 +529,14 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
                 Visible = false,
                 Anchor = AnchorStyles.Top | AnchorStyles.Right,
             };
-            // Re-enable wheel scroll when the panel is closed via its ✕ button,
-            // but only when in Monthly view (Weekly/Daily need scroll for the timeline).
+            // Re-enable wheel scroll when the panel is closed via its ✕ button, but only when in Monthly view (Weekly/Daily need scroll for the timeline).
             _notifPanel.CloseRequested += (s, e) =>
             {
                 if (_wheelFilter != null && _currentView == CalendarView.Monthly)
                     _wheelFilter.IsEnabled = true;
             };
         }
-
-        // ══════════════════════════════════════════════════════════════════════
         //  SEARCH PANEL
-        // ══════════════════════════════════════════════════════════════════════
         private void BuildSearchPanel()
         {
             _searchPanel = new FacultySearchPanel
@@ -581,9 +557,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             };
         }
 
-        // ══════════════════════════════════════════════════════════════════════
         //  LAYOUT
-        // ══════════════════════════════════════════════════════════════════════
         private void LayoutAll()
         {
             if (pnlCalendar == null) return;
@@ -721,9 +695,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             if (_dayView != null) { _dayView.Left = 0; _dayView.Top = 0; _dayView.Width = w; _dayView.Height = h; }
         }
 
-        // ══════════════════════════════════════════════════════════════════════
         //  NAVIGATION
-        // ══════════════════════════════════════════════════════════════════════
         private void NavigatePrev()
         {
             _navDate = _currentView switch

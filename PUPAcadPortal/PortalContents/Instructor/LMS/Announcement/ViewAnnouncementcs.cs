@@ -214,10 +214,6 @@ namespace PUPAcadPortal
             string path = btnOpenFile.Tag as string;
             if (string.IsNullOrWhiteSpace(path)) return;
 
-            // For editable formats, open with the default associated editor.
-            // Process.Start with UseShellExecute=true already opens in the default app
-            // (e.g. Word for .docx, PowerPoint for .pptx), which allows editing.
-            // For read-only formats like PDF we warn the user.
             string ext = System.IO.Path.GetExtension(path).ToLower();
             if (ext == ".pdf")
             {

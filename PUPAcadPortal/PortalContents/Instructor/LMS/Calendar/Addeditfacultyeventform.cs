@@ -7,23 +7,14 @@ using PUPAcadPortal.Data;
 
 namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
 {
-    /// <summary>
-    /// Modal dialog for creating or editing a <see cref="FacultyCalendarEvent"/>.
-    /// Shows all fields: type, title, date, time, course, room, description, files.
-    ///
-    /// When <paramref name="defaultDate"/> has a non-zero TimeOfDay (e.g. from a
-    /// week/day-view slot double-click) that time is used as the preset start time.
-    /// </summary>
     public partial class AddEditFacultyEventForm : Form
     {
-        // ── Result ───────────────────────────────────────────────────────────
         public FacultyCalendarEvent? ResultEvent { get; private set; }
 
         private readonly FacultyCalendarEvent? _existing;
         private readonly DateTime _defaultDate;
         private readonly List<string> _files = new();
 
-        // ── Theme ────────────────────────────────────────────────────────────
         private static readonly Color Maroon = Color.FromArgb(136, 14, 79);
         private static readonly Font UIFont = new Font("Segoe UI", 9f);
 
@@ -48,11 +39,8 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             this.Text = _existing == null ? "Add Event" : "Edit Event";
             btnSave.Text = _existing == null ? "Save Event" : "Update Event";
 
-            // Always set the date picker to the calendar date
             dtpDate.Value = _defaultDate.Date;
 
-            // If the caller passed a datetime with a specific time (slot double-click),
-            // pre-fill start and end times from that; otherwise default to 08:00–09:30.
             if (_defaultDate.TimeOfDay.TotalMinutes > 0)
             {
                 dtpStart.Value = _defaultDate.Date.Add(_defaultDate.TimeOfDay);
@@ -64,12 +52,10 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
                 dtpEnd.Value = DateTime.Today.AddHours(9).AddMinutes(30);
             }
 
-            // Populate event types
             foreach (FacultyEventType t in Enum.GetValues<FacultyEventType>())
                 cboType.Items.Add(t);
             cboType.SelectedItem = presetType;
 
-            // Populate courses
             cboCourse.Items.Add("General");
             foreach (var c in FacultyCalendarData.GetAllCourses())
                 if (!cboCourse.Items.Contains(c)) cboCourse.Items.Add(c);
@@ -93,7 +79,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             RefreshFileList();
         }
 
-        // ── Helpers ──────────────────────────────────────────────────────────
 
         private void ApplyRoundedBorder(Control c)
         {
@@ -143,7 +128,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             RefreshFileList();
         }
 
-        // ── Event Handlers ───────────────────────────────────────────────────
 
         private void CboType_DrawItem(object? sender, DrawItemEventArgs e)
         {
