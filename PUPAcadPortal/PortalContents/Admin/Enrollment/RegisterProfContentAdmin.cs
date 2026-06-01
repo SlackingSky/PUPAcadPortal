@@ -542,7 +542,7 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
                 string barangay = phAddressFields.SelectedBarangayName;
                 string city = phAddressFields.SelectedCityName;
                 string province = phAddressFields.SelectedProvinceName;
-                string region = phAddressFields.SelectedRegionName      ;
+                string region = phAddressFields.SelectedRegionName;
                 string postal = phAddressFields.SelectedPostalCode;
 
                 string fullAddress = $"{address1}, {address2}, {barangay}, {city}, {province}, {region} {postal}".Trim();

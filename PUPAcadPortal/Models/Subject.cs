@@ -11,6 +11,8 @@ public partial class Subject
 
     public string SubjectName { get; set; } = null!;
 
+    public int? DepartmentId { get; set; }
+
     public string? Description { get; set; }
 
     public int LecUnits { get; set; }
@@ -18,6 +20,8 @@ public partial class Subject
     public int LabUnits { get; set; }
 
     public virtual ICollection<Curriculum> Curricula { get; set; } = new List<Curriculum>();
+
+    public virtual Department? Department { get; set; }
 
     public virtual ICollection<SubjectOffering> SubjectOfferings { get; set; } = new List<SubjectOffering>();
 
