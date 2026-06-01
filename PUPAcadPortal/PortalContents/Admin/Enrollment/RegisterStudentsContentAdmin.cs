@@ -586,6 +586,8 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             if (cmbRegion != null) cmbRegion.SelectedIndexChanged += (s, e) => ClearFieldHighlight(cmbRegion);
         }
 
+        /*
+
         private string GeneratePupEmailFromName(string firstName, string lastName, string middleName)
         {
             // Clean and format the name parts
@@ -634,7 +636,7 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
         {
             // Keep only letters (a-z)
             return new string(input.Where(c => char.IsLetter(c)).ToArray());
-        }
+        }*/
 
         private bool IsStudentIdExists(string studentId)
         {
