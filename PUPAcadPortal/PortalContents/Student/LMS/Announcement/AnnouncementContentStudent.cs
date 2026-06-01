@@ -1,28 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Text;
+using System.Linq;
 using System.Windows.Forms;
-using static PUPAcadPortal.PortalContents.Instructor.LMS.AnnouncementContentInst;
 
 namespace PUPAcadPortal.PortalContents.Student.LMS
 {
+    public class AnnouncementAttachment
+    {
+        public string FileName { get; set; } = string.Empty;
+        public string FileType { get; set; } = "pdf";   // pdf, docx, pptx, img
+        public long FileSizeBytes { get; set; } = 0;
+
+        public string SizeLabel => FileSizeBytes >= 1_048_576
+            ? $"{FileSizeBytes / 1_048_576.0:0.#} MB"
+            : $"{FileSizeBytes / 1024.0:0.#} KB";
+    }
+
     public partial class AnnouncementContentStudent : UserControl
     {
-
         private SizeF _designSize;
-
         private readonly Dictionary<Control, RectangleF> _origBounds = new();
         private readonly Dictionary<Control, float> _origFontSz = new();
+
         private class StudentAnnouncement
         {
             public int Id { get; set; }
             public string Title { get; set; } = string.Empty;
             public string Description { get; set; } = string.Empty;
             public string Category { get; set; } = "General";
+            public string CourseName { get; set; } = string.Empty;
             public string OfficeName { get; set; } = "Admin Office";
             public string InstructorName { get; set; } = string.Empty;
             public DateTime Date { get; set; } = DateTime.Now;
@@ -30,14 +39,13 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             public bool IsPinned { get; set; }
             public bool IsRead { get; set; }
             public string Status { get; set; } = "active";
+            public List<AnnouncementAttachment> Attachments { get; set; } = new();
         }
 
         private List<StudentAnnouncement> _announcements = new();
         private string _annCategoryFilter = "All Categories";
         private string _annSortOrder = "Latest First";
         private string _annSearchText = "";
-
-        private ViewAnnouncementStudent _viewStudentUC;
 
         private static readonly Dictionary<string, Color> CatIconColor = new()
         {
@@ -59,6 +67,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             ["Administrative"] = Color.FromArgb(230, 230, 245),
             ["Urgent"] = Color.FromArgb(255, 235, 235),
         };
+
         public AnnouncementContentStudent()
         {
             InitializeComponent();
@@ -66,26 +75,26 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
 
         private void AnnouncementContentStudent_Load(object sender, EventArgs e)
         {
+            cmbCategory.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbSort.DropDownStyle = ComboBoxStyle.DropDownList;
+
+            cmbCategory.Items.Clear();
+            cmbCategory.Items.AddRange(new object[]
+                { "All Categories", "General", "Academic", "Administrative",
+                  "Events", "Examinations", "Schedule", "Urgent" });
+            cmbCategory.SelectedIndex = 0;
+
+            cmbSort.Items.Clear();
+            cmbSort.Items.AddRange(new object[] { "Latest First", "Oldest First" });
+            cmbSort.SelectedIndex = 0;
             flpAnnouncements.AutoScroll = false;
             flpAnnouncements.FlowDirection = FlowDirection.TopDown;
             flpAnnouncements.WrapContents = false;
             flpAnnouncements.HorizontalScroll.Enabled = false;
             flpAnnouncements.HorizontalScroll.Visible = false;
             flpAnnouncements.AutoScroll = true;
-            this.Resize += UserControl_Resize;
 
-            _viewStudentUC = new ViewAnnouncementStudent
-            {
-                Visible = false,
-                Anchor = AnchorStyles.None,
-            };
-            _viewStudentUC.CloseRequested += (s, ev) =>
-            {
-                _viewStudentUC.Visible = false;
-                RenderAnnouncements();
-                BuildInsightsPanel();
-            };
-            pnlAnnounce.Controls.Add(_viewStudentUC);
+            this.Resize += UserControl_Resize;
 
             SeedAnnouncements();
             WireAnnouncementControls();
@@ -108,9 +117,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             ScaleControls(this.Controls, rx, ry);
             this.ResumeLayout(true);
 
-            if (_viewStudentUC != null && _viewStudentUC.Visible)
-                CentreInPanel(_viewStudentUC, pnlAnnounce);
-
             RenderAnnouncements();
             BuildCategoryPanel();
             BuildPinnedPanel();
@@ -124,8 +130,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                 if (ctrl.Tag is string t && t.Contains("noScale")) continue;
                 if (!_origBounds.TryGetValue(ctrl, out RectangleF ob)) continue;
 
-                int newX = R(ob.X * rx);
-                int newY = R(ob.Y * ry);
+                int newX = R(ob.X * rx), newY = R(ob.Y * ry);
                 int newW = Math.Max(1, R(ob.Width * rx));
                 int newH = Math.Max(1, R(ob.Height * ry));
 
@@ -204,27 +209,21 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                 filtered = filtered.Where(a =>
                     a.Title.ToLower().Contains(q) ||
                     a.Description.ToLower().Contains(q) ||
-                    a.OfficeName.ToLower().Contains(q));
+                    a.OfficeName.ToLower().Contains(q) ||
+                    a.CourseName.ToLower().Contains(q));
             }
 
-            List<StudentAnnouncement> sorted;
-
-            if (_annSortOrder == "Oldest First")
-            {
-                sorted = filtered
+            List<StudentAnnouncement> sorted = _annSortOrder == "Oldest First"
+                ? filtered
                     .OrderBy(a => a.IsPinned ? 0 : 1)
                     .ThenBy(a => a.IsRead ? 1 : 0)
                     .ThenBy(a => a.Date)
-                    .ToList();
-            }
-            else
-            {
-                sorted = filtered
+                    .ToList()
+                : filtered
                     .OrderBy(a => a.IsPinned ? 0 : 1)
                     .ThenBy(a => a.IsRead ? 1 : 0)
                     .ThenByDescending(a => a.Date)
                     .ToList();
-            }
 
             int cardWidth = Math.Max(400, flpAnnouncements.ClientSize.Width - 22);
 
@@ -235,27 +234,31 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             flpAnnouncements.ResumeLayout();
         }
 
-        private AnnouncementLayout BuildCard(StudentAnnouncement a, int cardWidth)
+        private AnnouncementCardUC BuildCard(StudentAnnouncement a, int cardWidth)
         {
-            var card = new AnnouncementLayout();
+            var card = new AnnouncementCardUC();
 
-            card.LoadStudent(
+            card.Load(
                 id: a.Id,
                 title: a.Title,
                 description: a.Description,
                 category: a.Category,
+                courseName: a.CourseName,
                 officeName: a.OfficeName,
+                instructorName: a.InstructorName,
                 date: a.Date,
                 isUrgent: a.IsUrgent,
                 isPinned: a.IsPinned,
                 isRead: a.IsRead,
-                cardWidth: cardWidth,
-                instructorName: a.InstructorName);
+                attachmentCount: a.Attachments.Count,
+                cardWidth: cardWidth);
+
+            card.Margin = new Padding(0, 0, 0, 4);
 
             card.CardClicked += (s, id) =>
             {
                 var ann = _announcements.Find(x => x.Id == id);
-                if (ann != null) ShowStudentAnnouncementDetail(ann);
+                if (ann != null) ShowDetailView(ann);
             };
             card.PinToggled += (s, id) =>
             {
@@ -271,38 +274,400 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             return card;
         }
 
-        private void ShowStudentAnnouncementDetail(StudentAnnouncement a)
+        private Panel _detailPanel; 
+
+        private void ShowDetailView(StudentAnnouncement a)
         {
             a.IsRead = true;
+            RenderAnnouncements();
+            BuildInsightsPanel();
 
-            _viewStudentUC.LoadAnnouncement(
-                a.Title,
-                a.Description,
-                a.Category,
-                a.OfficeName,
-                a.Date,
-                a.IsUrgent,
-                a.IsPinned,
-                a.InstructorName);
+            Color accent = (a.IsUrgent || !a.IsRead)
+                ? Color.FromArgb(139, 0, 0)
+                : CatIconColor.GetValueOrDefault(a.Category, Color.FromArgb(90, 90, 200));
 
-            CentreInPanel(_viewStudentUC, pnlAnnounce);
+            const int POPUP_W = 800;
+            const int HDR_H = 54;
+            const int PAD = 28;       
+            const int CORNER = 12;
 
-            _viewStudentUC.BringToFront();
-            _viewStudentUC.Visible = true;
+            int contentW = POPUP_W - PAD * 2 - SystemInformation.VerticalScrollBarWidth - 4;
 
+            var popup = new Form
+            {
+                FormBorderStyle = FormBorderStyle.None,
+                StartPosition = FormStartPosition.Manual,   
+                BackColor = Color.White,
+                Width = POPUP_W,
+                Height = 100,            
+                ShowInTaskbar = false,
+                KeyPreview = true,
+            };
+            popup.KeyDown += (s, ke) => { if (ke.KeyCode == Keys.Escape) popup.Close(); };
+
+            var hdr = new Panel
+            {
+                Dock = DockStyle.Top,
+                Height = HDR_H,
+                BackColor = accent,
+            };
+            popup.Controls.Add(hdr);
+            string pillTx = a.IsUrgent ? "⚠  URGENT" : a.Category.ToUpper();
+            var pillFont = new Font("Segoe UI", 8f, FontStyle.Bold);
+            int pillW = TextRenderer.MeasureText(pillTx, pillFont).Width + 22;
+            var pill = new Label
+            {
+                AutoSize = false,
+                Size = new Size(pillW, 24),
+                Location = new Point(PAD, (HDR_H - 24) / 2),
+                Text = pillTx,
+                Font = pillFont,
+                ForeColor = accent,
+                BackColor = Color.FromArgb(228, 255, 255, 255),
+                TextAlign = ContentAlignment.MiddleCenter,
+            };
+            MakeRoundedRegion(pill, 8);
+            hdr.Controls.Add(pill);
+            var btnClose = new Button
+            {
+                Size = new Size(32, 32),
+                Location = new Point(POPUP_W - 44, (HDR_H - 32) / 2),
+                Text = "✕",
+                Font = new Font("Segoe UI", 10f, FontStyle.Bold),
+                FlatStyle = FlatStyle.Flat,
+                BackColor = Color.Transparent,
+                ForeColor = Color.White,
+                Cursor = Cursors.Hand,
+                TabStop = false,
+            };
+            btnClose.FlatAppearance.BorderSize = 0;
+            btnClose.FlatAppearance.MouseOverBackColor = Color.FromArgb(50, 0, 0, 0);
+            btnClose.Click += (s, e) => popup.Close();
+            hdr.Controls.Add(btnClose);
+
+            bool dragging = false;
+            Point dragStart = Point.Empty;
+            hdr.MouseDown += (s, me) =>
+            {
+                if (me.Button == MouseButtons.Left) { dragging = true; dragStart = me.Location; }
+            };
+            hdr.MouseMove += (s, me) =>
+            {
+                if (!dragging) return;
+                popup.Location = new Point(
+                    popup.Location.X + me.X - dragStart.X,
+                    popup.Location.Y + me.Y - dragStart.Y);
+            };
+            hdr.MouseUp += (s, me) => dragging = false;
+
+            var body = new Panel
+            {
+                Dock = DockStyle.Fill,
+                AutoScroll = true,
+                BackColor = Color.White,
+            };
+            popup.Controls.Add(body);
+
+            var inner = new Panel
+            {
+                Left = 0,
+                Top = 0,
+                Width = POPUP_W - SystemInformation.VerticalScrollBarWidth,
+                BackColor = Color.White,
+            };
+            body.Controls.Add(inner);
+
+            int y = PAD - 4;
+
+            var lblTitle = new Label
+            {
+                AutoSize = false,
+                Width = contentW,
+                Location = new Point(PAD, y),
+                Text = a.Title,
+                Font = new Font("Segoe UI Semibold", 13f, FontStyle.Bold),
+                ForeColor = Color.FromArgb(18, 18, 18),
+            };
+            lblTitle.Height = TextRenderer.MeasureText(
+                a.Title, lblTitle.Font, new Size(contentW, 0),
+                TextFormatFlags.WordBreak).Height + 4;
+            inner.Controls.Add(lblTitle);
+            y += lblTitle.Height + 14;
+
+            var chips = new List<(string text, Color fg, Color bg)>
+            {
+                ("📅 " + a.Date.ToString("MMM d, yyyy  •  h:mm tt"),
+                    Color.FromArgb(55,55,55), Color.FromArgb(236,236,236)),
+                ("🏢 " + a.OfficeName,
+                    Color.FromArgb(35,80,155), Color.FromArgb(224,238,255)),
+                ("👤 " + a.InstructorName,
+                    Color.FromArgb(65,65,65), Color.FromArgb(236,236,236)),
+            };
+            if (!string.IsNullOrEmpty(a.CourseName))
+                chips.Add(("📚 " + a.CourseName,
+                    Color.FromArgb(40, 100, 40), Color.FromArgb(218, 244, 212)));
+
+            var chipFont = new Font("Segoe UI", 8f);
+            int cx = PAD, cy = y, chipH = 26, chipGap = 6;
+            foreach (var (text, fg, bg) in chips)
+            {
+                int cw = TextRenderer.MeasureText(text, chipFont).Width + 22;
+                if (cx + cw > PAD + contentW && cx > PAD)   // wrap row
+                { cx = PAD; cy += chipH + chipGap; }
+
+                var chip = new Label
+                {
+                    AutoSize = false,
+                    Size = new Size(cw, chipH),
+                    Location = new Point(cx, cy),
+                    Text = text,
+                    Font = chipFont,
+                    ForeColor = fg,
+                    BackColor = bg,
+                    TextAlign = ContentAlignment.MiddleCenter,
+                };
+                MakeRoundedRegion(chip, 9);
+                inner.Controls.Add(chip);
+                cx += cw + chipGap;
+            }
+            y = cy + chipH + 16;    
+
+            inner.Controls.Add(new Panel
+            {
+                Location = new Point(PAD, y),
+                Size = new Size(contentW, 1),
+                BackColor = Color.FromArgb(222, 222, 222),
+            });
+            y += 14;
+
+            var descFont = new Font("Segoe UI", 9.5f);
+            var lblDesc = new Label
+            {
+                AutoSize = false,
+                Width = contentW,
+                Location = new Point(PAD, y),
+                Text = a.Description,
+                Font = descFont,
+                ForeColor = Color.FromArgb(48, 48, 48),
+            };
+            lblDesc.Height = TextRenderer.MeasureText(
+                a.Description, descFont, new Size(contentW, 0),
+                TextFormatFlags.WordBreak).Height + 8;
+            inner.Controls.Add(lblDesc);
+            y += lblDesc.Height + 18;
+
+            if (a.Attachments.Count > 0)
+            {
+                inner.Controls.Add(new Panel
+                {
+                    Location = new Point(PAD, y),
+                    Size = new Size(contentW, 1),
+                    BackColor = Color.FromArgb(222, 222, 222),
+                });
+                y += 14;
+
+                inner.Controls.Add(new Label
+                {
+                    AutoSize = true,
+                    Location = new Point(PAD, y),
+                    Text = "📎  Attachments",
+                    Font = new Font("Segoe UI Semibold", 10f, FontStyle.Bold),
+                    ForeColor = Color.FromArgb(30, 30, 30),
+                    BackColor = Color.Transparent,
+                });
+                y += 34;
+
+                foreach (var att in a.Attachments)
+                {
+                    var attRow = BuildAttachmentRow(att, contentW);
+                    attRow.Location = new Point(PAD, y);
+                    inner.Controls.Add(attRow);
+                    y += attRow.Height + 8;
+                }
+            }
+
+            y += PAD;   
+
+            inner.Height = y;
+
+            var screen = Screen.FromControl(this).WorkingArea;
+            int maxBodyH = (int)(screen.Height * 0.84) - HDR_H;
+            int bodyH = Math.Min(y, maxBodyH);
+            popup.Height = HDR_H + bodyH;
+
+            void ApplyCorners()
+            {
+                var rp = new GraphicsPath();
+                int d = CORNER * 2;
+                int pw = popup.Width, ph = popup.Height;
+                rp.AddArc(0, 0, d, d, 180, 90);
+                rp.AddArc(pw - d, 0, d, d, 270, 90);
+                rp.AddArc(pw - d, ph - d, d, d, 0, 90);
+                rp.AddArc(0, ph - d, d, d, 90, 90);
+                rp.CloseFigure();
+                popup.Region = new Region(rp);
+            }
+            ApplyCorners();
+
+            var parentForm = this.FindForm();
+            Rectangle refRect;
+            if (parentForm != null && parentForm.Visible)
+                refRect = parentForm.Bounds;
+            else
+                refRect = screen;
+
+            popup.Location = new Point(
+                refRect.X + (refRect.Width - popup.Width) / 2,
+                refRect.Y + (refRect.Height - popup.Height) / 2);
+
+            int maxX = screen.Right - popup.Width;
+            int maxY = screen.Bottom - popup.Height;
+            popup.Location = new Point(
+                Math.Max(screen.Left, Math.Min(popup.Left, maxX)),
+                Math.Max(screen.Top, Math.Min(popup.Top, maxY)));
+
+            IWin32Window owner = (this.FindForm() as IWin32Window) ?? this;
+            popup.ShowDialog(owner);
+        }
+
+        private Panel BuildAttachmentRow(AnnouncementAttachment att, int rowWidth)
+        {
+            var (icon, iconColor, bgColor) = att.FileType.ToLower() switch
+            {
+                "pdf" => ("PDF", Color.FromArgb(192, 40, 40), Color.FromArgb(255, 242, 242)),
+                "docx" => ("DOC", Color.FromArgb(22, 96, 185), Color.FromArgb(232, 241, 255)),
+                "pptx" => ("PPT", Color.FromArgb(195, 90, 18), Color.FromArgb(255, 242, 228)),
+                "img" => ("IMG", Color.FromArgb(60, 155, 60), Color.FromArgb(230, 248, 230)),
+                _ => ("FILE", Color.FromArgb(100, 100, 100), Color.FromArgb(240, 240, 240)),
+            };
+
+            var row = new Panel
+            {
+                Size = new Size(rowWidth, 56),
+                BackColor = bgColor,
+                Margin = new Padding(0),
+            };
+
+            row.Paint += (s, pe) =>
+            {
+                pe.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                var rr = new Rectangle(0, 0, row.Width - 1, row.Height - 1);
+                using var gp = new GraphicsPath();
+                int cr = 8;
+                gp.AddArc(rr.X, rr.Y, cr, cr, 180, 90);
+                gp.AddArc(rr.Right - cr, rr.Y, cr, cr, 270, 90);
+                gp.AddArc(rr.Right - cr, rr.Bottom - cr, cr, cr, 0, 90);
+                gp.AddArc(rr.X, rr.Bottom - cr, cr, cr, 90, 90);
+                gp.CloseFigure();
+                using var brush = new SolidBrush(bgColor);
+                pe.Graphics.FillPath(brush, gp);
+                using var pen = new Pen(Color.FromArgb(210, 210, 210), 1f);
+                pe.Graphics.DrawPath(pen, gp);
+            };
+
+            var badge = new Label
+            {
+                AutoSize = false,
+                Size = new Size(42, 42),
+                Location = new Point(10, 7),
+                Text = icon,
+                Font = new Font("Segoe UI", 7.5f, FontStyle.Bold),
+                ForeColor = Color.White,
+                BackColor = iconColor,
+                TextAlign = ContentAlignment.MiddleCenter,
+            };
+            MakeRoundedRegion(badge, 6);
+            row.Controls.Add(badge);
+
+            int btnAreaW = 160;  
+            int nameW = rowWidth - 60 - btnAreaW - 10;
+            row.Controls.Add(new Label
+            {
+                AutoSize = false,
+                Size = new Size(nameW, 20),
+                Location = new Point(60, 9),
+                Text = att.FileName,
+                Font = new Font("Segoe UI Semibold", 9f, FontStyle.Bold),
+                ForeColor = Color.FromArgb(25, 25, 25),
+                AutoEllipsis = true,
+                BackColor = Color.Transparent,
+            });
+
+            row.Controls.Add(new Label
+            {
+                AutoSize = true,
+                Location = new Point(60, 31),
+                Text = att.FileType.ToUpper() + "  •  " + att.SizeLabel,
+                Font = new Font("Segoe UI", 7.5f),
+                ForeColor = Color.FromArgb(110, 110, 110),
+                BackColor = Color.Transparent,
+            });
+
+            // ── View button ───────────────────────────────────────────────────
+            int btnY = (56 - 30) / 2;
+            int btnViewX = rowWidth - btnAreaW + 4;
+
+            var btnView = new Button
+            {
+                Size = new Size(72, 30),
+                Location = new Point(btnViewX, btnY),
+                Text = "👁 View",
+                Font = new Font("Segoe UI", 8f, FontStyle.Bold),
+                FlatStyle = FlatStyle.Flat,
+                BackColor = iconColor,
+                ForeColor = Color.White,
+                Cursor = Cursors.Hand,
+                TabStop = false,
+            };
+            btnView.FlatAppearance.BorderSize = 0;
+            btnView.Click += (s, e) =>
+                MessageBox.Show(
+                    $"Opening  \"{att.FileName}\"  for preview.\n\nWire this to your file-server / storage path.",
+                    "View File", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            row.Controls.Add(btnView);
+
+            var btnSave = new Button
+            {
+                Size = new Size(76, 30),
+                Location = new Point(btnViewX + 78, btnY),
+                Text = "⬇ Save",
+                Font = new Font("Segoe UI", 8f, FontStyle.Bold),
+                FlatStyle = FlatStyle.Flat,
+                BackColor = Color.White,
+                ForeColor = iconColor,
+                Cursor = Cursors.Hand,
+                TabStop = false,
+            };
+            btnSave.FlatAppearance.BorderColor = iconColor;
+            btnSave.FlatAppearance.BorderSize = 1;
+            btnSave.Click += (s, e) =>
+                MessageBox.Show(
+                    $"Downloading  \"{att.FileName}\".\n\nWire this to your file-server / storage path.",
+                    "Save File", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            row.Controls.Add(btnSave);
+
+            return row;
+        }
+
+        private void CloseDetailView()
+        {
+            if (_detailPanel != null)
+            {
+                if (_detailPanel.Tag is Panel overlay)
+                    pnlAnnounce.Controls.Remove(overlay);
+                pnlAnnounce.Controls.Remove(_detailPanel);
+                _detailPanel.Dispose();
+                _detailPanel = null;
+            }
             RenderAnnouncements();
             BuildInsightsPanel();
         }
-
 
         private void BuildPinnedPanel()
         {
             flpPinned.Controls.Clear();
             flpPinned.FlowDirection = FlowDirection.TopDown;
             flpPinned.WrapContents = false;
-            flpPinned.AutoScroll = false;
-            flpPinned.HorizontalScroll.Enabled = false;
-            flpPinned.HorizontalScroll.Visible = false;
             flpPinned.AutoScroll = true;
 
             var pinned = _announcements.Where(a => a.IsPinned).ToList();
@@ -322,8 +687,8 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             foreach (var a in pinned)
             {
                 Color iconCol = CatIconColor.GetValueOrDefault(a.Category, Color.Gray);
-
                 int rowW = Math.Max(100, flpPinned.ClientSize.Width - 4);
+
                 var row = new Panel
                 {
                     Width = rowW,
@@ -331,7 +696,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                     BackColor = Color.White,
                     Margin = new Padding(0, 2, 0, 2),
                     Cursor = Cursors.Hand,
-                    Tag = a,
                 };
                 row.Paint += (s, pe) =>
                 {
@@ -363,8 +727,9 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                     ForeColor = Color.Gray,
                 });
 
-                row.Click += (s, ev) => ShowStudentAnnouncementDetail(a);
-                rowTitle.Click += (s, ev) => ShowStudentAnnouncementDetail(a);
+                EventHandler open = (s, ev) => ShowDetailView(a);
+                row.Click += open;
+                rowTitle.Click += open;
                 flpPinned.Controls.Add(row);
             }
         }
@@ -374,16 +739,12 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             flpCategories.Controls.Clear();
             flpCategories.FlowDirection = FlowDirection.TopDown;
             flpCategories.WrapContents = false;
-            flpCategories.BackColor = Color.White;
-            flpCategories.AutoScroll = false;
-            flpCategories.HorizontalScroll.Enabled = false;
-            flpCategories.HorizontalScroll.Visible = false;
             flpCategories.AutoScroll = true;
 
             var cats = new[]
             {
-                "All Categories", "General", "Academic", "Administrative",
-                "Events", "Examinations", "Schedule", "Urgent"
+                "All Categories","General","Academic","Administrative",
+                "Events","Examinations","Schedule","Urgent"
             };
 
             foreach (var cat in cats)
@@ -394,8 +755,8 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
 
                 bool isActive = _annCategoryFilter == cat;
                 Color dotCol = CatIconColor.GetValueOrDefault(cat, Color.FromArgb(139, 0, 0));
-
                 int rowW = Math.Max(100, flpCategories.ClientSize.Width - 4);
+
                 var row = new Panel
                 {
                     Width = rowW,
@@ -463,6 +824,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             int total = _announcements.Count;
             int unread = _announcements.Count(a => !a.IsRead);
             int pinned = _announcements.Count(a => a.IsPinned);
+            int withFiles = _announcements.Count(a => a.Attachments.Count > 0);
 
             void AddRow(string label, string value, int y, Color col)
             {
@@ -486,10 +848,11 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                 });
             }
 
-            AddRow("Total Announcements", total.ToString(), 30, Color.FromArgb(50, 50, 50));
+            AddRow("Total", total.ToString(), 30, Color.FromArgb(50, 50, 50));
             AddRow("Unread", unread.ToString(), 58, unread > 0 ? Color.FromArgb(200, 0, 0) : Color.Green);
             AddRow("Pinned", pinned.ToString(), 86, Color.FromArgb(150, 100, 0));
             AddRow("Read", (total - unread).ToString(), 114, Color.FromArgb(22, 163, 74));
+            AddRow("With Files", withFiles.ToString(), 142, Color.FromArgb(50, 100, 180));
         }
 
         private void SeedAnnouncements()
@@ -498,115 +861,168 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             {
                 new() {
                     Id = 1, Title = "Updated Travel Reimbursement Policy",
-                    Description   = "Please note that the mileage reimbursement rate for university-related travel has been adjusted. All reimbursement claims submitted after May 1, 2026 must use the new rate of ₱12.00 per km.",
-                    Category = "Administrative", OfficeName = "Admin Office", InstructorName = "Dr. Reyes",
-                    Date = new DateTime(2026, 4, 15, 10, 30, 0),
-                    IsUrgent = true, IsPinned = true, IsRead = false,
+                    Description    = "Please note that the mileage reimbursement rate for university-related travel has been adjusted. All reimbursement claims submitted after May 1, 2026 must use the new rate of ₱12.00 per km.",
+                    Category = "Administrative", CourseName = "", OfficeName = "Admin Office", InstructorName = "Dr. Reyes",
+                    Date = new DateTime(2026, 4, 15, 10, 30, 0), IsUrgent = true, IsPinned = true, IsRead = false,
+                    Attachments = new()
+                    {
+                        new() { FileName = "Travel_Reimbursement_Policy_2026.pdf",  FileType = "pdf",  FileSizeBytes = 512_000 },
+                        new() { FileName = "Reimbursement_Form_v3.docx",             FileType = "docx", FileSizeBytes = 124_000 },
+                    },
                 },
                 new() {
                     Id = 2, Title = "Midterm Examination Schedule Released",
-                    Description   = "The official midterm examination schedule for all BSIT 2nd year subjects is now available. Please check the LMS for your room assignments and bring your student ID on exam day.",
-                    Category = "Examinations", OfficeName = "Registrar's Office", InstructorName = "Prof. Santos",
-                    Date = new DateTime(2026, 4, 20, 8, 0, 0),
-                    IsUrgent = true, IsPinned = true, IsRead = false,
+                    Description    = "The official midterm examination schedule for all BSIT 2nd year subjects is now available. Please check the LMS for your room assignments and bring your student ID on exam day.",
+                    Category = "Examinations", CourseName = "BSIT 2nd Year", OfficeName = "Registrar's Office", InstructorName = "Prof. Santos",
+                    Date = new DateTime(2026, 4, 20, 8, 0, 0), IsUrgent = true, IsPinned = true, IsRead = false,
+                    Attachments = new()
+                    {
+                        new() { FileName = "Midterm_Schedule_AY2026.pdf",   FileType = "pdf",  FileSizeBytes = 320_000 },
+                        new() { FileName = "Room_Assignments_Midterm.xlsx", FileType = "docx", FileSizeBytes = 88_000  },
+                    },
                 },
                 new() {
                     Id = 3, Title = "Programming 1 – Lab Activity This Friday",
-                    Description   = "Bring your laptops for the graded lab activity covering Modules 4 and 5. The activity will be conducted using Visual Studio 2022. No borrowing of equipment will be allowed.",
-                    Category = "Academic", OfficeName = "CCIS Department", InstructorName = "Prof. Santos",
-                    Date = new DateTime(2026, 4, 18, 9, 0, 0),
-                    IsUrgent = false, IsPinned = false, IsRead = true,
+                    Description    = "Bring your laptops for the graded lab activity covering Modules 4 and 5. The activity will be conducted using Visual Studio 2022. No borrowing of equipment will be allowed.",
+                    Category = "Academic", CourseName = "CC111 – Programming 1", OfficeName = "CCIS Department", InstructorName = "Prof. Santos",
+                    Date = new DateTime(2026, 4, 18, 9, 0, 0), IsUrgent = false, IsPinned = false, IsRead = true,
+                    Attachments = new()
+                    {
+                        new() { FileName = "Lab_Activity_4_Instructions.pdf", FileType = "pdf",  FileSizeBytes = 210_000 },
+                        new() { FileName = "StarterCode_Module4.zip",         FileType = "docx", FileSizeBytes = 1_048_576 },
+                    },
                 },
                 new() {
                     Id = 4, Title = "PUP Foundation Day Celebration – May 17",
-                    Description   = "Join us for the PUP Foundation Day celebration. Activities include a student showcase, cultural performances, and a technology exhibit. Attendance is encouraged for all students.",
-                    Category = "Events", OfficeName = "Student Affairs Office", InstructorName = "Dr. Cruz",
-                    Date = new DateTime(2026, 4, 10, 14, 0, 0),
-                    IsUrgent = false, IsPinned = false, IsRead = false,
+                    Description    = "Join us for the PUP Foundation Day celebration. Activities include a student showcase, cultural performances, and a technology exhibit. Attendance is encouraged for all students.",
+                    Category = "Events", CourseName = "", OfficeName = "Student Affairs Office", InstructorName = "Dr. Cruz",
+                    Date = new DateTime(2026, 4, 10, 14, 0, 0), IsUrgent = false, IsPinned = false, IsRead = false,
+                    Attachments = new()
+                    {
+                        new() { FileName = "Foundation_Day_Program.pptx",  FileType = "pptx", FileSizeBytes = 2_097_152 },
+                        new() { FileName = "Event_Poster_2026.png",        FileType = "img",  FileSizeBytes = 450_000  },
+                    },
                 },
                 new() {
                     Id = 5, Title = "Reminder: Submit Assignment Outputs",
-                    Description   = "All pending assignment outputs for Information Management must be submitted via the LMS portal before May 15 at 11:59 PM. Late submissions will not be accepted under any circumstance.",
-                    Category = "Academic", OfficeName = "CCIS Department", InstructorName = "Prof. Santos",
-                    Date = new DateTime(2026, 4, 8, 11, 0, 0),
-                    IsUrgent = false, IsPinned = false, IsRead = true,
+                    Description    = "All pending assignment outputs for Information Management must be submitted via the LMS portal before May 15 at 11:59 PM. Late submissions will not be accepted under any circumstance.",
+                    Category = "Academic", CourseName = "IT222 – Information Management", OfficeName = "CCIS Department", InstructorName = "Prof. Santos",
+                    Date = new DateTime(2026, 4, 8, 11, 0, 0), IsUrgent = false, IsPinned = false, IsRead = true,
+                    Attachments = new(),
                 },
                 new() {
                     Id = 6, Title = "Library Hours Extended Until June",
-                    Description   = "The university library will extend its operating hours to 8:00 AM – 9:00 PM on weekdays starting May 1 through June 30, 2026 to support students during the examination period.",
-                    Category = "General", OfficeName = "Library Services", InstructorName = "Librarian Gomez",
-                    Date = new DateTime(2026, 4, 5, 7, 30, 0),
-                    IsUrgent = false, IsPinned = false, IsRead = false,
+                    Description    = "The university library will extend its operating hours to 8:00 AM – 9:00 PM on weekdays starting May 1 through June 30, 2026 to support students during the examination period.",
+                    Category = "General", CourseName = "", OfficeName = "Library Services", InstructorName = "Librarian Gomez",
+                    Date = new DateTime(2026, 4, 5, 7, 30, 0), IsUrgent = false, IsPinned = false, IsRead = false,
+                    Attachments = new()
+                    {
+                        new() { FileName = "Library_Extended_Hours_Notice.pdf", FileType = "pdf", FileSizeBytes = 95_000 },
+                    },
                 },
                 new() {
                     Id = 7, Title = "Enrollment for 2nd Semester Now Open",
-                    Description   = "Online enrollment for the 2nd semester of Academic Year 2026–2027 is now open. Students must settle all outstanding balances and secure their assessment forms before enrolling. Visit the Registrar's portal for the step-by-step guide.",
-                    Category = "General", OfficeName = "Registrar's Office", InstructorName = "Registrar Dela Torre",
-                    Date = new DateTime(2026, 5, 2, 8, 0, 0),
-                    IsUrgent = false, IsPinned = false, IsRead = false,
+                    Description    = "Online enrollment for the 2nd semester of Academic Year 2026–2027 is now open. Students must settle all outstanding balances and secure their assessment forms before enrolling.",
+                    Category = "General", CourseName = "", OfficeName = "Registrar's Office", InstructorName = "Registrar Dela Torre",
+                    Date = new DateTime(2026, 5, 2, 8, 0, 0), IsUrgent = false, IsPinned = false, IsRead = false,
+                    Attachments = new()
+                    {
+                        new() { FileName = "Enrollment_Guide_2ndSem.pdf",   FileType = "pdf",  FileSizeBytes = 680_000  },
+                        new() { FileName = "Assessment_Form_Template.docx", FileType = "docx", FileSizeBytes = 120_000  },
+                    },
                 },
                 new() {
                     Id = 8, Title = "Scholarship Application Deadline – May 20",
-                    Description   = "All students applying for the CHED Scholarship and PUP Internal Scholarship must submit their complete documentary requirements to the Scholarship Office no later than May 20, 2026 at 5:00 PM. No extensions will be granted.",
-                    Category = "Administrative", OfficeName = "Scholarship Office", InstructorName = "Dr. Valdez",
-                    Date = new DateTime(2026, 5, 5, 9, 0, 0),
-                    IsUrgent = true, IsPinned = false, IsRead = false,
+                    Description    = "All students applying for the CHED Scholarship and PUP Internal Scholarship must submit their complete documentary requirements to the Scholarship Office no later than May 20, 2026 at 5:00 PM.",
+                    Category = "Administrative", CourseName = "", OfficeName = "Scholarship Office", InstructorName = "Dr. Valdez",
+                    Date = new DateTime(2026, 5, 5, 9, 0, 0), IsUrgent = true, IsPinned = false, IsRead = false,
+                    Attachments = new()
+                    {
+                        new() { FileName = "Scholarship_Requirements_Checklist.pdf", FileType = "pdf",  FileSizeBytes = 400_000 },
+                        new() { FileName = "Application_Form_CHED_2026.docx",        FileType = "docx", FileSizeBytes = 190_000 },
+                    },
                 },
                 new() {
                     Id = 9, Title = "Campus-Wide Maintenance: May 14 (No Classes)",
-                    Description   = "There will be no classes on May 14, 2026 due to scheduled campus-wide electrical maintenance. All LMS deadlines falling on this date are automatically extended by 24 hours. Students are advised to plan accordingly.",
-                    Category = "Schedule", OfficeName = "Facilities Management Office", InstructorName = "Engr. Bautista",
-                    Date = new DateTime(2026, 5, 8, 7, 0, 0),
-                    IsUrgent = true, IsPinned = true, IsRead = false,
+                    Description    = "There will be no classes on May 14, 2026 due to scheduled campus-wide electrical maintenance. All LMS deadlines falling on this date are automatically extended by 24 hours.",
+                    Category = "Schedule", CourseName = "", OfficeName = "Facilities Management Office", InstructorName = "Engr. Bautista",
+                    Date = new DateTime(2026, 5, 8, 7, 0, 0), IsUrgent = true, IsPinned = true, IsRead = false,
+                    Attachments = new(),
                 },
                 new() {
                     Id = 10, Title = "Intramural Sports Registration Open",
-                    Description   = "Registration for the Annual PUP Intramural Sports Festival is now open. Students interested in joining basketball, volleyball, badminton, or swimming events must register through their respective department coordinators before May 22, 2026.",
-                    Category = "Events", OfficeName = "Student Affairs Office", InstructorName = "Coach Mendoza",
-                    Date = new DateTime(2026, 5, 6, 10, 0, 0),
-                    IsUrgent = false, IsPinned = false, IsRead = true,
+                    Description    = "Registration for the Annual PUP Intramural Sports Festival is now open. Students interested in joining basketball, volleyball, badminton, or swimming events must register through their respective department coordinators before May 22, 2026.",
+                    Category = "Events", CourseName = "", OfficeName = "Student Affairs Office", InstructorName = "Coach Mendoza",
+                    Date = new DateTime(2026, 5, 6, 10, 0, 0), IsUrgent = false, IsPinned = false, IsRead = true,
+                    Attachments = new()
+                    {
+                        new() { FileName = "Intramural_Sports_Registration_Form.docx", FileType = "docx", FileSizeBytes = 150_000 },
+                        new() { FileName = "Sports_Fest_Schedule_2026.pptx",           FileType = "pptx", FileSizeBytes = 3_145_728 },
+                    },
                 },
                 new() {
                     Id = 11, Title = "Final Examination Coverage Posted",
-                    Description   = "The official final examination coverage for all BSIT subjects has been posted on the LMS. Students are advised to review the coverage carefully and contact their respective professors for any clarifications. Good luck on your finals!",
-                    Category = "Examinations", OfficeName = "CCIS Department", InstructorName = "Prof. Santos",
-                    Date = new DateTime(2026, 5, 9, 8, 30, 0),
-                    IsUrgent = false, IsPinned = false, IsRead = false,
+                    Description    = "The official final examination coverage for all BSIT subjects has been posted on the LMS. Students are advised to review the coverage carefully and contact their respective professors for any clarifications. Good luck on your finals!",
+                    Category = "Examinations", CourseName = "BSIT – All Subjects", OfficeName = "CCIS Department", InstructorName = "Prof. Santos",
+                    Date = new DateTime(2026, 5, 9, 8, 30, 0), IsUrgent = false, IsPinned = false, IsRead = false,
+                    Attachments = new()
+                    {
+                        new() { FileName = "Finals_Coverage_BSIT_1stYear.pdf",  FileType = "pdf", FileSizeBytes = 760_000 },
+                        new() { FileName = "Finals_Coverage_BSIT_2ndYear.pdf",  FileType = "pdf", FileSizeBytes = 820_000 },
+                        new() { FileName = "Study_Guide_Summary.docx",          FileType = "docx", FileSizeBytes = 210_000 },
+                    },
                 },
                 new() {
                     Id = 12, Title = "Academic Integrity Seminar – May 16",
-                    Description   = "All students are required to attend the Academic Integrity and Anti-Plagiarism Seminar on May 16, 2026 at 1:00 PM via Zoom. Attendance will be recorded and counted toward your class standing. The meeting link will be sent through your official university email.",
-                    Category = "Academic", OfficeName = "CCIS Department", InstructorName = "Dr. Reyes",
-                    Date = new DateTime(2026, 5, 10, 9, 0, 0),
-                    IsUrgent = true, IsPinned = false, IsRead = false,
+                    Description    = "All students are required to attend the Academic Integrity and Anti-Plagiarism Seminar on May 16, 2026 at 1:00 PM via Zoom. Attendance will be recorded and counted toward your class standing.",
+                    Category = "Academic", CourseName = "All BSIT Sections", OfficeName = "CCIS Department", InstructorName = "Dr. Reyes",
+                    Date = new DateTime(2026, 5, 10, 9, 0, 0), IsUrgent = true, IsPinned = false, IsRead = false,
+                    Attachments = new()
+                    {
+                        new() { FileName = "Academic_Integrity_Seminar_Slides.pptx", FileType = "pptx", FileSizeBytes = 4_194_304 },
+                        new() { FileName = "Zoom_Meeting_Details.pdf",               FileType = "pdf",  FileSizeBytes = 60_000   },
+                    },
                 },
                 new() {
                     Id = 13, Title = "Lost & Found: Items at Security Office",
-                    Description   = "Several items including IDs, umbrellas, and a laptop bag have been turned over to the Security Office near Gate 1. Owners may claim their belongings by presenting valid identification. Unclaimed items will be turned over to the Student Affairs Office after May 25, 2026.",
-                    Category = "General", OfficeName = "Security Office", InstructorName = "Guard Navarro",
-                    Date = new DateTime(2026, 5, 7, 14, 0, 0),
-                    IsUrgent = false, IsPinned = false, IsRead = true,
+                    Description    = "Several items including IDs, umbrellas, and a laptop bag have been turned over to the Security Office near Gate 1. Owners may claim their belongings by presenting valid identification.",
+                    Category = "General", CourseName = "", OfficeName = "Security Office", InstructorName = "Guard Navarro",
+                    Date = new DateTime(2026, 5, 7, 14, 0, 0), IsUrgent = false, IsPinned = false, IsRead = true,
+                    Attachments = new()
+                    {
+                        new() { FileName = "LostAndFound_Photo_May7.jpg", FileType = "img", FileSizeBytes = 380_000 },
+                    },
                 },
                 new() {
                     Id = 14, Title = "IT Career Fair – May 22 at PUP Gymnasium",
-                    Description   = "The PUP Career Services Office invites all BSIT students to the annual IT Career Fair on May 22, 2026 from 9:00 AM to 4:00 PM at the university gymnasium. Over 30 technology companies will be present. Bring printed resumes and dress business casual.",
-                    Category = "Events", OfficeName = "Career Services Office", InstructorName = "Dr. Cruz",
-                    Date = new DateTime(2026, 5, 8, 10, 0, 0),
-                    IsUrgent = false, IsPinned = true, IsRead = false,
+                    Description    = "The PUP Career Services Office invites all BSIT students to the annual IT Career Fair on May 22, 2026 from 9:00 AM to 4:00 PM at the university gymnasium. Over 30 technology companies will be present.",
+                    Category = "Events", CourseName = "BSIT – All Years", OfficeName = "Career Services Office", InstructorName = "Dr. Cruz",
+                    Date = new DateTime(2026, 5, 8, 10, 0, 0), IsUrgent = false, IsPinned = true, IsRead = false,
+                    Attachments = new()
+                    {
+                        new() { FileName = "IT_CareerFair_2026_Program.pdf",    FileType = "pdf",  FileSizeBytes = 530_000 },
+                        new() { FileName = "Career_Fair_Poster_Official.png",   FileType = "img",  FileSizeBytes = 620_000 },
+                        new() { FileName = "Resume_Workshop_Slides.pptx",       FileType = "pptx", FileSizeBytes = 2_621_440 },
+                    },
                 },
                 new() {
                     Id = 15, Title = "Class Schedule Adjustment – May 13",
-                    Description   = "Due to the university-wide convocation, all morning classes on May 13, 2026 are moved to the afternoon session. Students with afternoon conflicts are advised to coordinate with their respective professors. The updated schedule is posted on the Registrar's portal.",
-                    Category = "Schedule", OfficeName = "Registrar's Office", InstructorName = "Registrar Dela Torre",
-                    Date = new DateTime(2026, 5, 10, 7, 30, 0),
-                    IsUrgent = true, IsPinned = false, IsRead = false,
+                    Description    = "Due to the university-wide convocation, all morning classes on May 13, 2026 are moved to the afternoon session. Students with afternoon conflicts are advised to coordinate with their respective professors.",
+                    Category = "Schedule", CourseName = "", OfficeName = "Registrar's Office", InstructorName = "Registrar Dela Torre",
+                    Date = new DateTime(2026, 5, 10, 7, 30, 0), IsUrgent = true, IsPinned = false, IsRead = false,
+                    Attachments = new(),
                 },
                 new() {
                     Id = 16, Title = "Capstone Project Defense Schedule Released",
-                    Description   = "The official schedule for 4th-year BSIT Capstone Project defenses has been published on the departmental bulletin board and LMS. All groups are required to submit their final manuscripts and slide decks at least three days before their assigned defense date. Coordinate with your adviser immediately.",
-                    Category = "Academic", OfficeName = "CCIS Department", InstructorName = "Prof. Santos",
-                    Date = new DateTime(2026, 5, 11, 8, 0, 0),
-                    IsUrgent = false, IsPinned = true, IsRead = false,
+                    Description    = "The official schedule for 4th-year BSIT Capstone Project defenses has been published on the departmental bulletin board and LMS. All groups are required to submit their final manuscripts and slide decks at least three days before their assigned defense date.",
+                    Category = "Academic", CourseName = "BSIT 4th Year – Capstone", OfficeName = "CCIS Department", InstructorName = "Prof. Santos",
+                    Date = new DateTime(2026, 5, 11, 8, 0, 0), IsUrgent = false, IsPinned = true, IsRead = false,
+                    Attachments = new()
+                    {
+                        new() { FileName = "Capstone_Defense_Schedule_2026.pdf",  FileType = "pdf",  FileSizeBytes = 420_000 },
+                        new() { FileName = "Defense_Manuscript_Template.docx",    FileType = "docx", FileSizeBytes = 300_000 },
+                        new() { FileName = "Capstone_Presentation_Guide.pptx",   FileType = "pptx", FileSizeBytes = 1_887_437 },
+                    },
                 },
             };
         }
@@ -624,24 +1040,28 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
 
         private static int R(float v) => (int)Math.Round(v);
 
-        private static void CentreInPanel(Control child, Control parent)
+        private static Panel MakeHRule(int x, int y, int width)
         {
-            int maxW = Math.Max(200, parent.ClientSize.Width - 40);
-            int maxH = Math.Max(100, parent.ClientSize.Height - 40);
-            if (child.Width > maxW || child.Height > maxH)
+            return new Panel
             {
-                float s = Math.Min((float)maxW / child.Width, (float)maxH / child.Height);
-                child.Width = (int)(child.Width * s);
-                child.Height = (int)(child.Height * s);
-            }
-            int x = (parent.ClientSize.Width - child.Width) / 2;
-            int y = (parent.ClientSize.Height - child.Height) / 4;
-            child.Location = new Point(Math.Max(0, x), Math.Max(0, y));
+                Location = new Point(x, y),
+                Size = new Size(width, 1),
+                BackColor = Color.FromArgb(230, 230, 230),
+            };
         }
 
-        // ════════════════════════════════════════════════════════════════════
-        //  DRAWING HELPERS
-        // ════════════════════════════════════════════════════════════════════
+        private static void ApplyRoundedCorners(Control c, int radius)
+        {
+            var path = new GraphicsPath();
+            var r = new Rectangle(0, 0, c.Width, c.Height);
+            path.AddArc(r.X, r.Y, radius * 2, radius * 2, 180, 90);
+            path.AddArc(r.Right - radius * 2, r.Y, radius * 2, radius * 2, 270, 90);
+            path.AddArc(r.Right - radius * 2, r.Bottom - radius * 2, radius * 2, radius * 2, 0, 90);
+            path.AddArc(r.X, r.Bottom - radius * 2, radius * 2, radius * 2, 90, 90);
+            path.CloseFigure();
+            c.Region = new Region(path);
+        }
+
         private static void MakeRoundedRegion(Control c, int radius)
         {
             var path = new GraphicsPath();

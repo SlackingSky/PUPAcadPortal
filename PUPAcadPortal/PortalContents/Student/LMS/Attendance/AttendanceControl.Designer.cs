@@ -2,28 +2,51 @@
 {
     partial class AttendanceControl
     {
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
+            {
                 components.Dispose();
+            }
             base.Dispose(disposing);
         }
 
+        #region Component Designer generated code
+
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
+        /// </summary>
         private void InitializeComponent()
         {
-            SuspendLayout();
+            this.SuspendLayout();
             // 
             // AttendanceControl
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            Name = "AttendanceControl";
-            Load += AttendanceControl_Load;
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Name = "AttendanceControl";
+            this.Size = new System.Drawing.Size(900, 700);
+            // Link the load event so BuildUI triggers
+            this.Load += new System.EventHandler(this.AttendanceControl_Load);
+            this.ResumeLayout(false);
+
         }
 
+        #endregion
+
+        // ---------------------------------------------------
+        // UI Fields required by the code-behind BuildUI() 
+        // ---------------------------------------------------
         private System.Windows.Forms.Panel pnlHeader;
         private System.Windows.Forms.Label lblPageTitle;
         private System.Windows.Forms.Label lblSemLbl;

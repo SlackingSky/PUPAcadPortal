@@ -3,66 +3,117 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace PUPAcadPortal
+namespace PUPAcadPortal.PortalForms
 {
+    /// <summary>
+    /// Event-creation dialog. Supports all EventType values including Quiz and SchoolEvent.
+    /// Opened from CalendarContentStudent and UrDay right-click menus.
+    /// </summary>
     public partial class AddEventForm : Form
     {
+        // ── Public result ─────────────────────────────────────────
         public CalendarEvent CreatedEvent { get; private set; }
 
-        private readonly DateTime _date;
-        private readonly EventType _defaultType;
+        // ── Theme colours ─────────────────────────────────────────
+        private static readonly Color C_Primary = Color.FromArgb(128, 0, 0);
+        private static readonly Color C_Surface = Color.FromArgb(250, 250, 252);
+        private static readonly Color C_Border = Color.FromArgb(210, 210, 218);
+        private static readonly Color C_TextDark = Color.FromArgb(28, 28, 36);
+        private static readonly Color C_TextMid = Color.FromArgb(80, 80, 92);
 
-        public AddEventForm(DateTime date, EventType defaultType = EventType.Class)
+        private readonly DateTime _date;
+
+        // ─────────────────────────────────────────────────────────
+        //  Constructors
+        // ─────────────────────────────────────────────────────────
+
+        /// <summary>Opens the dialog for <paramref name="date"/>, defaulting to Class type.</summary>
+        public AddEventForm(DateTime date) : this(date, EventType.Class) { }
+
+        /// <summary>Opens the dialog for <paramref name="date"/> with a pre-selected event type.</summary>
+        public AddEventForm(DateTime date, EventType preselect)
         {
             _date = date;
-            _defaultType = defaultType;
-
             InitializeComponent();
+            PopulateTypeCombo(preselect);
+            UpdateHeaderColor();
 
-            lblDateValue.Text = _date.ToString("MMMM dd, yyyy");
+            this.Text = "Add Event — " + date.ToString("MMMM dd, yyyy");
+            lblDate.Text = date.ToString("dddd, MMMM dd, yyyy");
 
-            foreach (var t in Enum.GetValues(typeof(EventType)))
-                cmbType.Items.Add(t);
-
-            cmbType.SelectedItem = _defaultType;
-
-            dtpStart.Checked = false;
-            dtpEnd.Checked = false;
-
-            dtpStart.Value = new DateTime(_date.Year, _date.Month, _date.Day, 8, 0, 0);
-            dtpEnd.Value = new DateTime(_date.Year, _date.Month, _date.Day, 9, 0, 0);
+            cmbType.SelectedIndexChanged += (s, e) => UpdateHeaderColor();
+            btnSave.Click += BtnSave_Click;
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        // ─────────────────────────────────────────────────────────
+        //  Initialisation helpers
+        // ─────────────────────────────────────────────────────────
+        private void PopulateTypeCombo(EventType preselect)
         {
+            cmbType.Items.Clear();
+            foreach (var val in Enum.GetValues(typeof(EventType)))
+                cmbType.Items.Add(val);
+            cmbType.SelectedItem = preselect;
+            if (cmbType.SelectedIndex < 0) cmbType.SelectedIndex = 0;
+        }
+
+        private void UpdateHeaderColor()
+        {
+            if (cmbType.SelectedItem is EventType t)
+            {
+                Color c = new CalendarEvent { Type = t }.GetColor();
+                pnlHeader.BackColor = c;
+                btnSave.BackColor = c;
+            }
+        }
+
+        // ─────────────────────────────────────────────────────────
+        //  Save handler
+        // ─────────────────────────────────────────────────────────
+        private void BtnSave_Click(object sender, EventArgs e)
+        {
+            // Title required
             if (string.IsNullOrWhiteSpace(txtTitle.Text))
             {
-                MessageBox.Show("Please enter a title.", "Add Event",
+                MessageBox.Show("Please enter an event title.", "Required",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtTitle.Focus();
+                return;
+            }
+
+            // Start time format
+            if (!string.IsNullOrWhiteSpace(txtStartTime.Text) &&
+                !TimeSpan.TryParse(txtStartTime.Text, out _))
+            {
+                MessageBox.Show("Start time must be in HH:mm format (e.g. 08:30).", "Invalid Time",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtStartTime.Focus();
+                return;
+            }
+
+            // End time format
+            if (!string.IsNullOrWhiteSpace(txtEndTime.Text) &&
+                !TimeSpan.TryParse(txtEndTime.Text, out _))
+            {
+                MessageBox.Show("End time must be in HH:mm format (e.g. 10:00).", "Invalid Time",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtEndTime.Focus();
                 return;
             }
 
             CreatedEvent = new CalendarEvent
             {
-                Type = cmbType.SelectedItem != null
-                    ? (EventType)cmbType.SelectedItem
-                    : EventType.Class,
+                Type = cmbType.SelectedItem is EventType t ? t : EventType.Class,
                 Title = txtTitle.Text.Trim(),
-                Description = txtDesc.Text.Trim(),
-                StartTime = dtpStart.Checked ? dtpStart.Value.ToString("h:mm tt") : "",
-                EndTime = dtpEnd.Checked ? dtpEnd.Value.ToString("h:mm tt") : "",
+                Course = txtCourse.Text.Trim(),
+                StartTime = txtStartTime.Text.Trim(),
+                EndTime = txtEndTime.Text.Trim(),
                 Room = txtRoom.Text.Trim(),
+                Description = txtDesc.Text.Trim(),
             };
 
-            this.DialogResult = DialogResult.OK;
-            this.Close();
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e) => this.Close();
-
-        private void AddEventForm_Load(object sender, EventArgs e)
-        {
-
+            DialogResult = DialogResult.OK;
+            Close();
         }
     }
 }

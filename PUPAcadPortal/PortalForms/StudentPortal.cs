@@ -13,6 +13,7 @@ using PUPAcadPortal.Utils;
 using PUPAcadPortal.PortalContents.Student.Enrollment;
 using PUPAcadPortal.PortalContents.Student.LMS;
 using PUPAcadPortal.Events;
+using PUPAcadPortal.PortalContents.Student.LMS.Course;
 
 namespace PUPAcadPortal.PortalForms
 {

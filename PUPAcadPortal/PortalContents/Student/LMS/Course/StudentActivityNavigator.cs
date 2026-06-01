@@ -2,23 +2,25 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace PUPAcadPortal
+namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 {
-    public class StudentActivityNavigator : UserControl
+    public partial class StudentActivityNavigator : UserControl
     {
         private StudentActivityDashboard _dashboard;
         private StudentActivityList _list;
         private StudentActivitySubmit _submit;
+        private StudentCourse _currentCourse;
 
         private Control _current;
 
         public StudentActivityNavigator()
         {
+            InitializeComponent();
             Dock = DockStyle.Fill;
             BackColor = Color.FromArgb(245, 245, 245);
-
             ShowDashboard();
         }
+
 
         private void ShowDashboard()
         {
@@ -29,6 +31,8 @@ namespace PUPAcadPortal
 
         private void ShowList(StudentCourse course)
         {
+            _currentCourse = course;
+
             _list = new StudentActivityList(course) { Dock = DockStyle.Fill };
             _list.OnBack += ShowDashboard;
             _list.OnOpenActivity += ShowSubmit;
@@ -37,18 +41,12 @@ namespace PUPAcadPortal
 
         private void ShowSubmit(StudentActivityItem activity)
         {
-            StudentCourse course = (_list != null)? new StudentCourse{ Id = 0,Name = "", Code = "",Instructor = ""}: null;
-
-            _submit = new StudentActivitySubmit(activity, course) { Dock = DockStyle.Fill };
-            _submit.OnBack += () => ShowList(GetCurrentCourse());
+            _submit = new StudentActivitySubmit(activity, _currentCourse)
+            { Dock = DockStyle.Fill };
+            _submit.OnBack += () => ShowList(_currentCourse);
             SwapView(_submit);
         }
 
-        private StudentCourse GetCurrentCourse()
-            return _list != null
-                ? new StudentCourse { Name = "", Code = "" }
-                : new StudentCourse();
-        }
 
         private void SwapView(Control next)
         {
