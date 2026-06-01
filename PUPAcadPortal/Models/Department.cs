@@ -17,5 +17,9 @@ public partial class Department
 
     public virtual Professor? DeanProfessor { get; set; }
 
+    public virtual ICollection<DepartmentPrefix> DepartmentPrefixes { get; set; } = new List<DepartmentPrefix>();
+
     public virtual ICollection<Professor> Professors { get; set; } = new List<Professor>();
+
+    public virtual ICollection<Subject> Subjects { get; set; } = new List<Subject>();
 }
