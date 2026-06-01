@@ -12,19 +12,11 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
 {
     internal static class CogGenerator
     {
-        // ─────────────────────────────────────────────────────────────────
-        //  COLOURS
-        // ─────────────────────────────────────────────────────────────────
         private static readonly BaseColor MAROON = new BaseColor(107, 26, 42);
         private static readonly BaseColor DARK_GRAY = new BaseColor(34, 34, 34);
         private static readonly BaseColor MID_GRAY = new BaseColor(85, 85, 85);
         private static readonly BaseColor BORDER_GRAY = new BaseColor(170, 170, 170);
 
-        // ─────────────────────────────────────────────────────────────────
-        //  CAMBRIA FONT REGISTRATION
-        //  iTextSharp can use a system font by full path.  We resolve the
-        //  Cambria path at runtime so it works on any Windows machine.
-        // ─────────────────────────────────────────────────────────────────
         private static BaseFont _cambriaBase;
         private static BaseFont CambriaBase
         {
@@ -64,9 +56,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
         private static PdfFont Cambria(float size, int style, BaseColor color) =>
             new PdfFont(CambriaBase, size, style, color);
 
-        // ─────────────────────────────────────────────────────────────────
         //  FONTS  (all Cambria)
-        // ─────────────────────────────────────────────────────────────────
         private static PdfFont F_COUNTRY => Cambria(8.5f, PdfFont.NORMAL, DARK_GRAY);
         private static PdfFont F_UNIV => Cambria(11f, PdfFont.BOLD, DARK_GRAY);
         private static PdfFont F_CAMPUS => Cambria(8.5f, PdfFont.NORMAL, DARK_GRAY);
@@ -84,18 +74,12 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
         private static PdfFont F_SCHOL_L => Cambria(9f, PdfFont.BOLD, DARK_GRAY);
         private static PdfFont F_SCHOL_V => Cambria(9f, PdfFont.NORMAL, DARK_GRAY);
 
-        // ─────────────────────────────────────────────────────────────────
-        //  PAGE MARGINS
-        // ─────────────────────────────────────────────────────────────────
         private const float MM = 2.835f;
         private const float LM = 15 * MM;
         private const float RM = 15 * MM;
         private const float TM = 10 * MM;
         private const float BM = 10 * MM;
 
-        // ─────────────────────────────────────────────────────────────────
-        //  PUBLIC DATA TYPE
-        // ─────────────────────────────────────────────────────────────────
         public struct GradeEntry
         {
             public string SubjectCode;
@@ -106,9 +90,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             public string EnrollmentType;   // "Regular" | "Irregular"  (from PUPSIS)
         }
 
-        // ─────────────────────────────────────────────────────────────────
-        //  PUBLIC ENTRY POINT
-        // ─────────────────────────────────────────────────────────────────
         public static void Generate(
             string outputPath,
             string logoImagePath,
@@ -171,7 +152,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             AddSemesterBlock(doc, contentWidth, 2, ayLabel, sem2Subjects);
 
             // ── Footer ────────────────────────────────────────────────
-            doc.Add(new Paragraph("This is system-generated, signature is not required.", F_FNOTE)
+            doc.Add(new Paragraph(" ", F_FNOTE)
             {
                 Alignment = Element.ALIGN_RIGHT,
                 SpacingBefore = 4f,
@@ -183,19 +164,13 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
 
             var priv = new Paragraph { Alignment = Element.ALIGN_CENTER, Leading = 13 };
             priv.Add(new Chunk(
-                "This document contains personal-identifiable information that is subject to Data Privacy.\n",
-                F_PRIV));
-            priv.Add(new Chunk(
-                "Please keep this document protected and in a safe place.",
+                "This certificate is not valid without an official dry seal or certified true copy.\n",
                 F_PRIV));
             doc.Add(priv);
 
             doc.Close();
         }
 
-        // ─────────────────────────────────────────────────────────────────
-        //  LOGO LOADER
-        // ─────────────────────────────────────────────────────────────────
         private static PdfImage TryLoadLogo(string hint)
         {
             // 1. Try embedded resource
@@ -232,9 +207,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             return null;
         }
 
-        // ─────────────────────────────────────────────────────────────────
-        //  MAROON DIVIDER
-        // ─────────────────────────────────────────────────────────────────
         private static void AddMaroonDivider(Document doc, float contentWidth)
         {
             var tbl = new PdfPTable(new float[] { contentWidth })
@@ -257,9 +229,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             doc.Add(tbl);
         }
 
-        // ─────────────────────────────────────────────────────────────────
-        //  SEMESTER BLOCK  –  matches Image 1 layout exactly
-        // ─────────────────────────────────────────────────────────────────
         private static void AddSemesterBlock(
             Document doc,
             float contentWidth,
@@ -270,8 +239,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             double gwa = ComputeGwa(subjects);
             string semOrd = semNum == 1 ? "1st" : "2nd";
 
-            // ── Semester / School Year header row  (matches Image 1) ──
-            // Cols: "Semester :" | value | "School Year :" | value
             float[] semColW = {
                 contentWidth * 0.14f,   // "Semester :"
                 contentWidth * 0.10f,   // "1st"
@@ -290,7 +257,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             semTable.AddCell(SemCell(ayLabel, F_SEM_VAL, Element.ALIGN_LEFT, true));
             doc.Add(semTable);
 
-            // ── Grade table  –  4 columns matching Image 1 ───────────
             // Code No. | Descriptive Title | Credits | Grades
             float[] gradeColW = {
                 contentWidth * 0.16f,   // Code No.
@@ -323,7 +289,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             }
             doc.Add(gradeTable);
 
-            // ── GPA row ───────────────────────────────────────────────
+            //  GPA row 
             float[] gpaColW = { contentWidth * 0.87f, contentWidth * 0.13f };
             var gpaTable = new PdfPTable(gpaColW)
             {
@@ -338,9 +304,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             doc.Add(gpaTable);
         }
 
-        // ─────────────────────────────────────────────────────────────────
         //  CELL HELPERS
-        // ─────────────────────────────────────────────────────────────────
         private static PdfPCell SemCell(string text, PdfFont font, int align, bool lastCol) =>
             new PdfPCell(new Phrase(text, font))
             {
@@ -399,9 +363,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
                 BorderWidth = 1f,
             };
 
-        // ─────────────────────────────────────────────────────────────────
         //  UTILITIES
-        // ─────────────────────────────────────────────────────────────────
         private static Paragraph CenterPara(string text, PdfFont font) =>
             new Paragraph(text, font) { Alignment = Element.ALIGN_CENTER };
 
