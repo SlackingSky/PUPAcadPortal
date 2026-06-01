@@ -252,6 +252,21 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
                 }
                 dgvScale.Rows.Add(vals);
             }
+
+            // ── Fix: size dgvScale to show every row without a scrollbar ──
+            // Height = column header + all data rows
+            int dgvH = dgvScale.ColumnHeadersHeight
+                       + rows * dgvScale.RowTemplate.Height
+                       + 2;   // +2 for border pixels
+            dgvScale.ScrollBars = ScrollBars.None;
+            dgvScale.Height = dgvH;
+
+            // ── Resize pnlScale so the grid is fully visible ──
+            // pnlScale padding is 9px top + 9px bottom; lblScale sits at y=9 with
+            // height ~19px; dgvScale is positioned at y=37 (9 padding + 19 label + 9 gap).
+            int pnlH = 37 + dgvH + 9;   // top offset + grid height + bottom padding
+            pnlScale.Height = pnlH;
+            pnlScale.MinimumSize = new Size(0, pnlH);
         }
 
         // ─────────────────────────────────────────────────────────────────────
@@ -730,6 +745,39 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
                     col.FillWeight = w;
                 else
                     col.FillWeight = 10;   // safe default for any unexpected column
+            }
+
+            // ── Fix 2: shrink tabGrades to fit rows exactly, removing blank space ──
+            // Calculate the exact pixel height required for all visible rows.
+            int rowCount = dg.Rows.Count;
+            int rowH = dg.RowTemplate.Height;              // 28 px per row
+            int headerH = dg.ColumnHeadersHeight;             // 32 px
+            int tabStrip = tabGrades.ItemSize.Height + 4;      // tab strip + border (~30 px)
+            int tpPad = 6;                                   // TabPage padding top+bottom
+            int minRows = 4;                                   // always show at least 4 rows
+
+            int contentH = headerH + Math.Max(minRows, rowCount) * rowH + tpPad + 2;
+            int newTabH = tabStrip + contentH;
+
+            if (tabGrades.Height != newTabH)
+            {
+                // Remove Bottom anchor so height change is not fought by the layout engine
+                tabGrades.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                tabGrades.Height = newTabH;
+
+                // Reposition lblPageInfo just below the tab control
+                int pageInfoY = tabGrades.Bottom + 4;
+                lblPageInfo.Location = new Point(lblPageInfo.Left, pageInfoY);
+
+                // Shrink pnlLeft to wrap its content tightly
+                int pnlLeftH = pageInfoY + lblPageInfo.Height + 8;
+                pnlLeft.Height = pnlLeftH;
+
+                // Shrink tlpMain row to the taller of left panel or right panel
+                int rightH = tlpRight.PreferredSize.Height > 0
+                    ? tlpRight.PreferredSize.Height
+                    : pnlLeftH;
+                tlpMain.Height = Math.Max(pnlLeftH, rightH);
             }
         }
 

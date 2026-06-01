@@ -41,7 +41,9 @@
             this.pnlSubjTitleRow = new System.Windows.Forms.Panel();
             this.lblSubjectsTitle = new System.Windows.Forms.Label();
             this.lblSubjectsHint = new System.Windows.Forms.Label();
+            // ── FIX: added pnlQrGap to match sibling sections ──────────────────────
             this.pnlQrSection = new System.Windows.Forms.Panel();
+            this.pnlQrGap = new System.Windows.Forms.Panel();
             this.dgvQR = new System.Windows.Forms.DataGridView();
             this.pnlQRTitle = new System.Windows.Forms.Panel();
             this.lblQrIcon = new System.Windows.Forms.Label();
@@ -88,7 +90,7 @@
             this.dtpTo = new System.Windows.Forms.DateTimePicker();
             this.btnRefresh = new System.Windows.Forms.Button();
 
-            // Setup temporary grid columns definitions
+            // Grid column definitions
             System.Windows.Forms.DataGridViewTextBoxColumn colQRDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             System.Windows.Forms.DataGridViewTextBoxColumn colQRCourse = new System.Windows.Forms.DataGridViewTextBoxColumn();
             System.Windows.Forms.DataGridViewTextBoxColumn colQRSession = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -133,9 +135,9 @@
             this.pnlHeader.SuspendLayout();
             this.SuspendLayout();
 
-            // 
+            // ──────────────────────────────────────────────────────────────────────
             // AttendanceControl Root
-            // 
+            // ──────────────────────────────────────────────────────────────────────
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(245, 246, 250);
@@ -145,9 +147,9 @@
             this.Controls.Add(this.pnlScrollWrapper);
             this.Load += new System.EventHandler(this.AttendanceControl_Load);
 
-            // 
+            // ──────────────────────────────────────────────────────────────────────
             // pnlScrollWrapper
-            // 
+            // ──────────────────────────────────────────────────────────────────────
             this.pnlScrollWrapper.AutoScroll = true;
             this.pnlScrollWrapper.BackColor = System.Drawing.Color.FromArgb(245, 246, 250);
             this.pnlScrollWrapper.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -160,17 +162,17 @@
             this.pnlScrollWrapper.Controls.Add(this.tlpCards);
             this.pnlScrollWrapper.Controls.Add(this.pnlHeader);
 
-            // 
+            // ──────────────────────────────────────────────────────────────────────
             // pnlSpacer
-            // 
+            // ──────────────────────────────────────────────────────────────────────
             this.pnlSpacer.BackColor = System.Drawing.Color.Transparent;
             this.pnlSpacer.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlSpacer.Height = 24;
             this.pnlSpacer.Name = "pnlSpacer";
 
-            // 
+            // ──────────────────────────────────────────────────────────────────────
             // pnlLogsSection
-            // 
+            // ──────────────────────────────────────────────────────────────────────
             this.pnlLogsSection.BackColor = System.Drawing.Color.FromArgb(245, 246, 250);
             this.pnlLogsSection.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlLogsSection.Name = "pnlLogsSection";
@@ -179,17 +181,13 @@
             this.pnlLogsSection.Controls.Add(this.dgvLogs);
             this.pnlLogsSection.Controls.Add(this.pnlLogsTitleRow);
 
-            // 
             // pnlLogsGap
-            // 
             this.pnlLogsGap.BackColor = System.Drawing.Color.FromArgb(245, 246, 250);
             this.pnlLogsGap.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlLogsGap.Height = 8;
             this.pnlLogsGap.Name = "pnlLogsGap";
 
-            // 
             // dgvLogs
-            // 
             this.dgvLogs.AllowUserToAddRows = false;
             this.dgvLogs.AllowUserToDeleteRows = false;
             this.dgvLogs.AllowUserToResizeColumns = false;
@@ -213,40 +211,46 @@
             this.dgvLogs.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DgvLogs_CellFormatting);
             this.dgvLogs.DataBindingComplete += (s, e) => AttendanceControl.AutoSizeGrid(this.dgvLogs, 600);
 
-            // colLogDate
             colLogDate.Name = "Date"; colLogDate.HeaderText = "Date"; colLogDate.DataPropertyName = "Date";
-            colLogDate.Width = 155; colLogDate.ReadOnly = true; colLogDate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            // colLogCode
+            colLogDate.Width = 155; colLogDate.ReadOnly = true;
+            colLogDate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+
             colLogCode.Name = "Code"; colLogCode.HeaderText = "Code"; colLogCode.DataPropertyName = "Code";
-            colLogCode.Width = 100; colLogCode.ReadOnly = true; colLogCode.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            // colLogSession
+            colLogCode.Width = 100; colLogCode.ReadOnly = true;
+            colLogCode.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+
             colLogSession.Name = "Session"; colLogSession.HeaderText = "Session"; colLogSession.DataPropertyName = "Session";
-            colLogSession.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill; colLogSession.ReadOnly = true; colLogSession.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            // colLogPeriod
+            colLogSession.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            colLogSession.ReadOnly = true;
+            colLogSession.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+
             colLogPeriod.Name = "Period"; colLogPeriod.HeaderText = "Period"; colLogPeriod.DataPropertyName = "Period";
-            colLogPeriod.Width = 100; colLogPeriod.ReadOnly = true; colLogPeriod.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            // colLogStatus
+            colLogPeriod.Width = 100; colLogPeriod.ReadOnly = true;
+            colLogPeriod.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+
             colLogStatus.Name = "Status"; colLogStatus.HeaderText = "Status"; colLogStatus.DataPropertyName = "Status";
-            colLogStatus.Width = 90; colLogStatus.ReadOnly = true; colLogStatus.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            // colLogRemarks
+            colLogStatus.Width = 90; colLogStatus.ReadOnly = true;
+            colLogStatus.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+
             colLogRemarks.Name = "Remarks"; colLogRemarks.HeaderText = "Remarks"; colLogRemarks.DataPropertyName = "Remarks";
-            colLogRemarks.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill; colLogRemarks.ReadOnly = true; colLogRemarks.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            colLogRemarks.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            colLogRemarks.ReadOnly = true;
+            colLogRemarks.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 
-            this.dgvLogs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { colLogDate, colLogCode, colLogSession, colLogPeriod, colLogStatus, colLogRemarks });
+            this.dgvLogs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[]
+                { colLogDate, colLogCode, colLogSession, colLogPeriod, colLogStatus, colLogRemarks });
 
-            // 
             // pnlLogsTitleRow
-            // 
             this.pnlLogsTitleRow.BackColor = System.Drawing.Color.White;
             this.pnlLogsTitleRow.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlLogsTitleRow.Height = 42;
             this.pnlLogsTitleRow.Name = "pnlLogsTitleRow";
             this.pnlLogsTitleRow.Controls.Add(this.lblAttendanceLogTitle);
-            this.pnlLogsTitleRow.Paint += (s, e) => e.Graphics.DrawLine(new System.Drawing.Pen(System.Drawing.Color.FromArgb(225, 225, 235), 1), 0, this.pnlLogsTitleRow.Height - 1, this.pnlLogsTitleRow.Width, this.pnlLogsTitleRow.Height - 1);
+            this.pnlLogsTitleRow.Paint += (s, e) => e.Graphics.DrawLine(
+                new System.Drawing.Pen(System.Drawing.Color.FromArgb(225, 225, 235), 1),
+                0, this.pnlLogsTitleRow.Height - 1, this.pnlLogsTitleRow.Width, this.pnlLogsTitleRow.Height - 1);
 
-            // 
             // lblAttendanceLogTitle
-            // 
             this.lblAttendanceLogTitle.AutoSize = true;
             this.lblAttendanceLogTitle.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
             this.lblAttendanceLogTitle.ForeColor = System.Drawing.Color.FromArgb(50, 50, 70);
@@ -254,9 +258,9 @@
             this.lblAttendanceLogTitle.Name = "lblAttendanceLogTitle";
             this.lblAttendanceLogTitle.Text = "Attendance Log";
 
-            // 
+            // ──────────────────────────────────────────────────────────────────────
             // pnlSubjSection
-            // 
+            // ──────────────────────────────────────────────────────────────────────
             this.pnlSubjSection.BackColor = System.Drawing.Color.FromArgb(245, 246, 250);
             this.pnlSubjSection.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlSubjSection.Name = "pnlSubjSection";
@@ -265,17 +269,13 @@
             this.pnlSubjSection.Controls.Add(this.dgvSubjects);
             this.pnlSubjSection.Controls.Add(this.pnlSubjTitleRow);
 
-            // 
             // pnlSubjGap
-            // 
             this.pnlSubjGap.BackColor = System.Drawing.Color.FromArgb(245, 246, 250);
             this.pnlSubjGap.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlSubjGap.Height = 8;
             this.pnlSubjGap.Name = "pnlSubjGap";
 
-            // 
             // dgvSubjects
-            // 
             this.dgvSubjects.AllowUserToAddRows = false;
             this.dgvSubjects.AllowUserToDeleteRows = false;
             this.dgvSubjects.AllowUserToResizeColumns = false;
@@ -301,53 +301,64 @@
             this.dgvSubjects.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvSubjects_CellClick);
             this.dgvSubjects.DataBindingComplete += (s, e) => AttendanceControl.AutoSizeGrid(this.dgvSubjects, 800);
 
-            // colSubjCode
             colSubjCode.Name = "Code"; colSubjCode.HeaderText = "Code"; colSubjCode.DataPropertyName = "Code";
-            colSubjCode.Width = 90; colSubjCode.ReadOnly = true; colSubjCode.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            // colSubjName
+            colSubjCode.Width = 90; colSubjCode.ReadOnly = true;
+            colSubjCode.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+
             colSubjName.Name = "Course Name"; colSubjName.HeaderText = "Course Name"; colSubjName.DataPropertyName = "Course Name";
-            colSubjName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill; colSubjName.ReadOnly = true; colSubjName.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            // colSubjSched
+            colSubjName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            colSubjName.ReadOnly = true;
+            colSubjName.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+
             colSubjSched.Name = "Schedule"; colSubjSched.HeaderText = "Schedule"; colSubjSched.DataPropertyName = "Schedule";
-            colSubjSched.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill; colSubjSched.ReadOnly = true; colSubjSched.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            // colSubjSessions
+            colSubjSched.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            colSubjSched.ReadOnly = true;
+            colSubjSched.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+
             colSubjSessions.Name = "Sessions"; colSubjSessions.HeaderText = "Sessions"; colSubjSessions.DataPropertyName = "Sessions";
-            colSubjSessions.Width = 76; colSubjSessions.ReadOnly = true; colSubjSessions.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            // colSubjPresent
+            colSubjSessions.Width = 76; colSubjSessions.ReadOnly = true;
+            colSubjSessions.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+
             colSubjPresent.Name = "Present"; colSubjPresent.HeaderText = "Present"; colSubjPresent.DataPropertyName = "Present";
-            colSubjPresent.Width = 72; colSubjPresent.ReadOnly = true; colSubjPresent.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            // colSubjLate
+            colSubjPresent.Width = 72; colSubjPresent.ReadOnly = true;
+            colSubjPresent.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+
             colSubjLate.Name = "Late"; colSubjLate.HeaderText = "Late"; colSubjLate.DataPropertyName = "Late";
-            colSubjLate.Width = 65; colSubjLate.ReadOnly = true; colSubjLate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            // colSubjAbsent
+            colSubjLate.Width = 65; colSubjLate.ReadOnly = true;
+            colSubjLate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+
             colSubjAbsent.Name = "Absent"; colSubjAbsent.HeaderText = "Absent"; colSubjAbsent.DataPropertyName = "Absent";
-            colSubjAbsent.Width = 68; colSubjAbsent.ReadOnly = true; colSubjAbsent.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            // colSubjExcused
+            colSubjAbsent.Width = 68; colSubjAbsent.ReadOnly = true;
+            colSubjAbsent.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+
             colSubjExcused.Name = "Excused"; colSubjExcused.HeaderText = "Excused"; colSubjExcused.DataPropertyName = "Excused";
-            colSubjExcused.Width = 72; colSubjExcused.ReadOnly = true; colSubjExcused.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            // colSubjPct
+            colSubjExcused.Width = 72; colSubjExcused.ReadOnly = true;
+            colSubjExcused.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+
             colSubjPct.Name = "Att%"; colSubjPct.HeaderText = "Att%"; colSubjPct.DataPropertyName = "Att%";
-            colSubjPct.Width = 85; colSubjPct.ReadOnly = true; colSubjPct.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            // colSubjStatus
+            colSubjPct.Width = 85; colSubjPct.ReadOnly = true;
+            colSubjPct.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+
             colSubjStatus.Name = "Status"; colSubjStatus.HeaderText = "Status"; colSubjStatus.DataPropertyName = "Status";
-            colSubjStatus.Width = 90; colSubjStatus.ReadOnly = true; colSubjStatus.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            colSubjStatus.Width = 90; colSubjStatus.ReadOnly = true;
+            colSubjStatus.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
 
-            this.dgvSubjects.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { colSubjCode, colSubjName, colSubjSched, colSubjSessions, colSubjPresent, colSubjLate, colSubjAbsent, colSubjExcused, colSubjPct, colSubjStatus });
+            this.dgvSubjects.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[]
+                { colSubjCode, colSubjName, colSubjSched, colSubjSessions,
+                  colSubjPresent, colSubjLate, colSubjAbsent, colSubjExcused, colSubjPct, colSubjStatus });
 
-            // 
             // pnlSubjTitleRow
-            // 
             this.pnlSubjTitleRow.BackColor = System.Drawing.Color.White;
             this.pnlSubjTitleRow.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlSubjTitleRow.Height = 42;
             this.pnlSubjTitleRow.Name = "pnlSubjTitleRow";
             this.pnlSubjTitleRow.Controls.Add(this.lblSubjectsTitle);
             this.pnlSubjTitleRow.Controls.Add(this.lblSubjectsHint);
-            this.pnlSubjTitleRow.Paint += (s, e) => e.Graphics.DrawLine(new System.Drawing.Pen(System.Drawing.Color.FromArgb(225, 225, 235), 1), 0, this.pnlSubjTitleRow.Height - 1, this.pnlSubjTitleRow.Width, this.pnlSubjTitleRow.Height - 1);
+            this.pnlSubjTitleRow.Paint += (s, e) => e.Graphics.DrawLine(
+                new System.Drawing.Pen(System.Drawing.Color.FromArgb(225, 225, 235), 1),
+                0, this.pnlSubjTitleRow.Height - 1, this.pnlSubjTitleRow.Width, this.pnlSubjTitleRow.Height - 1);
 
-            // 
             // lblSubjectsTitle
-            // 
             this.lblSubjectsTitle.AutoSize = true;
             this.lblSubjectsTitle.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
             this.lblSubjectsTitle.ForeColor = System.Drawing.Color.FromArgb(50, 50, 70);
@@ -355,9 +366,7 @@
             this.lblSubjectsTitle.Name = "lblSubjectsTitle";
             this.lblSubjectsTitle.Text = "Attendance per Course";
 
-            // 
             // lblSubjectsHint
-            // 
             this.lblSubjectsHint.AutoSize = true;
             this.lblSubjectsHint.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.lblSubjectsHint.ForeColor = System.Drawing.Color.FromArgb(140, 140, 160);
@@ -365,20 +374,28 @@
             this.lblSubjectsHint.Name = "lblSubjectsHint";
             this.lblSubjectsHint.Text = "(click a row to view its log)";
 
-            // 
-            // pnlQrSection
-            // 
+            // ══════════════════════════════════════════════════════════════════════
+            // pnlQrSection  ← FIX: AutoSize = true replaces hard-coded Height = 86
+            //                       so the section grows to fit dgvQR's actual rows.
+            //               Added pnlQrGap (8 px) to match sibling section styling.
+            // ══════════════════════════════════════════════════════════════════════
             this.pnlQrSection.BackColor = System.Drawing.Color.FromArgb(245, 246, 250);
             this.pnlQrSection.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlQrSection.Height = 86;
+            this.pnlQrSection.AutoSize = true;                              // ← FIX (was Height = 86)
+            this.pnlQrSection.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink; // ← FIX (new)
             this.pnlQrSection.Name = "pnlQrSection";
             this.pnlQrSection.Padding = new System.Windows.Forms.Padding(18, 6, 18, 4);
+            this.pnlQrSection.Controls.Add(this.pnlQrGap);                 // ← FIX (new gap panel)
             this.pnlQrSection.Controls.Add(this.dgvQR);
             this.pnlQrSection.Controls.Add(this.pnlQRTitle);
 
-            // 
+            // pnlQrGap  ← FIX: new 8 px bottom spacer, same pattern as sibling sections
+            this.pnlQrGap.BackColor = System.Drawing.Color.FromArgb(245, 246, 250);
+            this.pnlQrGap.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlQrGap.Height = 8;
+            this.pnlQrGap.Name = "pnlQrGap";
+
             // dgvQR
-            // 
             this.dgvQR.AllowUserToAddRows = false;
             this.dgvQR.AllowUserToDeleteRows = false;
             this.dgvQR.AllowUserToResizeColumns = false;
@@ -400,27 +417,31 @@
             this.dgvQR.SelectionChanged += (s, e) => this.dgvQR.ClearSelection();
             this.dgvQR.DataBindingComplete += (s, e) => AttendanceControl.AutoSizeGrid(this.dgvQR, 360);
 
-            // colQRDate
             colQRDate.Name = "Date"; colQRDate.HeaderText = "Date"; colQRDate.DataPropertyName = "Date";
-            colQRDate.Width = 155; colQRDate.ReadOnly = true; colQRDate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            // colQRCourse
+            colQRDate.Width = 155; colQRDate.ReadOnly = true;
+            colQRDate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+
             colQRCourse.Name = "Course"; colQRCourse.HeaderText = "Course"; colQRCourse.DataPropertyName = "Course";
-            colQRCourse.Width = 100; colQRCourse.ReadOnly = true; colQRCourse.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            // colQRSession
+            colQRCourse.Width = 100; colQRCourse.ReadOnly = true;
+            colQRCourse.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+
             colQRSession.Name = "Session"; colQRSession.HeaderText = "Session"; colQRSession.DataPropertyName = "Session";
-            colQRSession.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill; colQRSession.ReadOnly = true; colQRSession.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            // colQRScanTime
+            colQRSession.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            colQRSession.ReadOnly = true;
+            colQRSession.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+
             colQRScanTime.Name = "Scan Time"; colQRScanTime.HeaderText = "Scan Time"; colQRScanTime.DataPropertyName = "Scan Time";
-            colQRScanTime.Width = 90; colQRScanTime.ReadOnly = true; colQRScanTime.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            // colQRStatus
+            colQRScanTime.Width = 90; colQRScanTime.ReadOnly = true;
+            colQRScanTime.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+
             colQRStatus.Name = "Status"; colQRStatus.HeaderText = "Status"; colQRStatus.DataPropertyName = "Status";
-            colQRStatus.Width = 90; colQRStatus.ReadOnly = true; colQRStatus.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            colQRStatus.Width = 90; colQRStatus.ReadOnly = true;
+            colQRStatus.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
 
-            this.dgvQR.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { colQRDate, colQRCourse, colQRSession, colQRScanTime, colQRStatus });
+            this.dgvQR.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[]
+                { colQRDate, colQRCourse, colQRSession, colQRScanTime, colQRStatus });
 
-            // 
             // pnlQRTitle
-            // 
             this.pnlQRTitle.BackColor = System.Drawing.Color.White;
             this.pnlQRTitle.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlQRTitle.Height = 40;
@@ -429,11 +450,11 @@
             this.pnlQRTitle.Controls.Add(this.lblQrIcon);
             this.pnlQRTitle.Controls.Add(this.lblQRTitle);
             this.pnlQRTitle.Controls.Add(this.lblQrBadge);
-            this.pnlQRTitle.Paint += (s, e) => e.Graphics.DrawLine(new System.Drawing.Pen(System.Drawing.Color.FromArgb(225, 225, 235), 1), 0, this.pnlQRTitle.Height - 1, this.pnlQRTitle.Width, this.pnlQRTitle.Height - 1);
+            this.pnlQRTitle.Paint += (s, e) => e.Graphics.DrawLine(
+                new System.Drawing.Pen(System.Drawing.Color.FromArgb(225, 225, 235), 1),
+                0, this.pnlQRTitle.Height - 1, this.pnlQRTitle.Width, this.pnlQRTitle.Height - 1);
 
-            // 
             // lblQrIcon
-            // 
             this.lblQrIcon.AutoSize = true;
             this.lblQrIcon.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
             this.lblQrIcon.ForeColor = System.Drawing.Color.FromArgb(128, 0, 0);
@@ -441,9 +462,7 @@
             this.lblQrIcon.Name = "lblQrIcon";
             this.lblQrIcon.Text = "⊞";
 
-            // 
             // lblQRTitle
-            // 
             this.lblQRTitle.AutoSize = true;
             this.lblQRTitle.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
             this.lblQRTitle.ForeColor = System.Drawing.Color.FromArgb(50, 50, 70);
@@ -451,9 +470,7 @@
             this.lblQRTitle.Name = "lblQRTitle";
             this.lblQRTitle.Text = "QR Attendance History";
 
-            // 
             // lblQrBadge
-            // 
             this.lblQrBadge.AutoSize = true;
             this.lblQrBadge.BackColor = System.Drawing.Color.FromArgb(128, 0, 0);
             this.lblQrBadge.Font = new System.Drawing.Font("Segoe UI", 7.5F, System.Drawing.FontStyle.Bold);
@@ -463,9 +480,9 @@
             this.lblQrBadge.Padding = new System.Windows.Forms.Padding(5, 2, 5, 2);
             this.lblQrBadge.Text = "QR Scan";
 
-            // 
+            // ──────────────────────────────────────────────────────────────────────
             // pnlMiniStats
-            // 
+            // ──────────────────────────────────────────────────────────────────────
             this.pnlMiniStats.BackColor = System.Drawing.Color.White;
             this.pnlMiniStats.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlMiniStats.Height = 44;
@@ -477,14 +494,15 @@
             this.pnlMiniStats.Controls.Add(this.lblMiniExcused);
             this.pnlMiniStats.Controls.Add(this.pnlProgress);
             this.pnlMiniStats.Controls.Add(this.lblProgressPct);
-            this.pnlMiniStats.Paint += (s, e) => {
-                e.Graphics.DrawLine(new System.Drawing.Pen(System.Drawing.Color.FromArgb(230, 230, 238), 1), 0, 0, this.pnlMiniStats.Width, 0);
-                e.Graphics.DrawLine(new System.Drawing.Pen(System.Drawing.Color.FromArgb(230, 230, 238), 1), 0, this.pnlMiniStats.Height - 1, this.pnlMiniStats.Width, this.pnlMiniStats.Height - 1);
+            this.pnlMiniStats.Paint += (s, e) =>
+            {
+                e.Graphics.DrawLine(new System.Drawing.Pen(System.Drawing.Color.FromArgb(230, 230, 238), 1),
+                    0, 0, this.pnlMiniStats.Width, 0);
+                e.Graphics.DrawLine(new System.Drawing.Pen(System.Drawing.Color.FromArgb(230, 230, 238), 1),
+                    0, this.pnlMiniStats.Height - 1, this.pnlMiniStats.Width, this.pnlMiniStats.Height - 1);
             };
 
-            // 
             // lblMiniPresent
-            // 
             this.lblMiniPresent.AutoSize = true;
             this.lblMiniPresent.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
             this.lblMiniPresent.ForeColor = System.Drawing.Color.FromArgb(0, 150, 70);
@@ -492,9 +510,7 @@
             this.lblMiniPresent.Name = "lblMiniPresent";
             this.lblMiniPresent.Text = "● Present: –";
 
-            // 
             // lblMiniLate
-            // 
             this.lblMiniLate.AutoSize = true;
             this.lblMiniLate.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
             this.lblMiniLate.ForeColor = System.Drawing.Color.FromArgb(200, 120, 0);
@@ -502,9 +518,7 @@
             this.lblMiniLate.Name = "lblMiniLate";
             this.lblMiniLate.Text = "● Late: –";
 
-            // 
             // lblMiniAbsent
-            // 
             this.lblMiniAbsent.AutoSize = true;
             this.lblMiniAbsent.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
             this.lblMiniAbsent.ForeColor = System.Drawing.Color.FromArgb(200, 40, 40);
@@ -512,9 +526,7 @@
             this.lblMiniAbsent.Name = "lblMiniAbsent";
             this.lblMiniAbsent.Text = "● Absent: –";
 
-            // 
             // lblMiniExcused
-            // 
             this.lblMiniExcused.AutoSize = true;
             this.lblMiniExcused.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
             this.lblMiniExcused.ForeColor = System.Drawing.Color.FromArgb(50, 100, 200);
@@ -522,18 +534,14 @@
             this.lblMiniExcused.Name = "lblMiniExcused";
             this.lblMiniExcused.Text = "● Excused: –";
 
-            // 
             // pnlProgress
-            // 
             this.pnlProgress.BackColor = System.Drawing.Color.FromArgb(240, 240, 245);
             this.pnlProgress.Location = new System.Drawing.Point(558, 13);
             this.pnlProgress.Name = "pnlProgress";
             this.pnlProgress.Size = new System.Drawing.Size(240, 18);
             this.pnlProgress.Paint += new System.Windows.Forms.PaintEventHandler(this.DrawSegmentedProgress);
 
-            // 
             // lblProgressPct
-            // 
             this.lblProgressPct.AutoSize = true;
             this.lblProgressPct.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.lblProgressPct.ForeColor = System.Drawing.Color.FromArgb(80, 80, 100);
@@ -541,9 +549,9 @@
             this.lblProgressPct.Name = "lblProgressPct";
             this.lblProgressPct.Text = "0% overall";
 
-            // 
-            // tlpCards
-            // 
+            // ──────────────────────────────────────────────────────────────────────
+            // tlpCards  (5-column summary card row)
+            // ──────────────────────────────────────────────────────────────────────
             this.tlpCards.BackColor = System.Drawing.Color.FromArgb(245, 246, 250);
             this.tlpCards.ColumnCount = 5;
             this.tlpCards.Dock = System.Windows.Forms.DockStyle.Top;
@@ -563,9 +571,7 @@
             this.tlpCards.Controls.Add(this.pnlCardAbsent, 3, 0);
             this.tlpCards.Controls.Add(this.pnlCardAlerts, 4, 0);
 
-            // 
-            // pnlCardOverall
-            // 
+            // ── Card: Overall ─────────────────────────────────────────────────────
             this.pnlCardOverall.BackColor = System.Drawing.Color.White;
             this.pnlCardOverall.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlCardOverall.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -576,13 +582,12 @@
             this.pnlCardOverall.Paint += (s, e) => AttendanceControl.DrawCardBorder(e.Graphics, this.pnlCardOverall, System.Drawing.Color.FromArgb(128, 0, 0));
             this.pnlCardOverall.Resize += (s, e) => this.pnlBarOverall.Height = this.pnlCardOverall.Height;
 
-            // pnlBarOverall
             this.pnlBarOverall.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             this.pnlBarOverall.BackColor = System.Drawing.Color.FromArgb(128, 0, 0);
             this.pnlBarOverall.Location = new System.Drawing.Point(0, 0);
             this.pnlBarOverall.Name = "pnlBarOverall";
             this.pnlBarOverall.Size = new System.Drawing.Size(4, 124);
-            // lblOverallTitle
+
             this.lblOverallTitle.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblOverallTitle.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
             this.lblOverallTitle.ForeColor = System.Drawing.Color.FromArgb(100, 100, 120);
@@ -591,7 +596,7 @@
             this.lblOverallTitle.Padding = new System.Windows.Forms.Padding(14, 0, 0, 0);
             this.lblOverallTitle.Text = "Overall";
             this.lblOverallTitle.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // lblOverallPct
+
             this.lblOverallPct.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblOverallPct.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
             this.lblOverallPct.ForeColor = System.Drawing.Color.FromArgb(128, 0, 0);
@@ -600,9 +605,7 @@
             this.lblOverallPct.Text = "–";
             this.lblOverallPct.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 
-            // 
-            // pnlCardPresent
-            // 
+            // ── Card: Present ─────────────────────────────────────────────────────
             this.pnlCardPresent.BackColor = System.Drawing.Color.White;
             this.pnlCardPresent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlCardPresent.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -613,13 +616,12 @@
             this.pnlCardPresent.Paint += (s, e) => AttendanceControl.DrawCardBorder(e.Graphics, this.pnlCardPresent, System.Drawing.Color.FromArgb(0, 150, 70));
             this.pnlCardPresent.Resize += (s, e) => this.pnlBarPresent.Height = this.pnlCardPresent.Height;
 
-            // pnlBarPresent
             this.pnlBarPresent.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             this.pnlBarPresent.BackColor = System.Drawing.Color.FromArgb(0, 150, 70);
             this.pnlBarPresent.Location = new System.Drawing.Point(0, 0);
             this.pnlBarPresent.Name = "pnlBarPresent";
             this.pnlBarPresent.Size = new System.Drawing.Size(4, 124);
-            // lblPresentTitle
+
             this.lblPresentTitle.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblPresentTitle.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
             this.lblPresentTitle.ForeColor = System.Drawing.Color.FromArgb(100, 100, 120);
@@ -628,7 +630,7 @@
             this.lblPresentTitle.Padding = new System.Windows.Forms.Padding(14, 0, 0, 0);
             this.lblPresentTitle.Text = "Present";
             this.lblPresentTitle.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // lblPresentValue
+
             this.lblPresentValue.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblPresentValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
             this.lblPresentValue.ForeColor = System.Drawing.Color.FromArgb(0, 150, 70);
@@ -637,9 +639,7 @@
             this.lblPresentValue.Text = "–";
             this.lblPresentValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 
-            // 
-            // pnlCardLate
-            // 
+            // ── Card: Late ────────────────────────────────────────────────────────
             this.pnlCardLate.BackColor = System.Drawing.Color.White;
             this.pnlCardLate.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlCardLate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -650,13 +650,12 @@
             this.pnlCardLate.Paint += (s, e) => AttendanceControl.DrawCardBorder(e.Graphics, this.pnlCardLate, System.Drawing.Color.FromArgb(220, 140, 0));
             this.pnlCardLate.Resize += (s, e) => this.pnlBarLate.Height = this.pnlCardLate.Height;
 
-            // pnlBarLate
             this.pnlBarLate.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             this.pnlBarLate.BackColor = System.Drawing.Color.FromArgb(220, 140, 0);
             this.pnlBarLate.Location = new System.Drawing.Point(0, 0);
             this.pnlBarLate.Name = "pnlBarLate";
             this.pnlBarLate.Size = new System.Drawing.Size(4, 124);
-            // lblLateTitle
+
             this.lblLateTitle.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblLateTitle.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
             this.lblLateTitle.ForeColor = System.Drawing.Color.FromArgb(100, 100, 120);
@@ -665,7 +664,7 @@
             this.lblLateTitle.Padding = new System.Windows.Forms.Padding(14, 0, 0, 0);
             this.lblLateTitle.Text = "Late";
             this.lblLateTitle.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // lblLateValue
+
             this.lblLateValue.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblLateValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
             this.lblLateValue.ForeColor = System.Drawing.Color.FromArgb(220, 140, 0);
@@ -674,9 +673,7 @@
             this.lblLateValue.Text = "–";
             this.lblLateValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 
-            // 
-            // pnlCardAbsent
-            // 
+            // ── Card: Absent ──────────────────────────────────────────────────────
             this.pnlCardAbsent.BackColor = System.Drawing.Color.White;
             this.pnlCardAbsent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlCardAbsent.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -687,13 +684,12 @@
             this.pnlCardAbsent.Paint += (s, e) => AttendanceControl.DrawCardBorder(e.Graphics, this.pnlCardAbsent, System.Drawing.Color.FromArgb(200, 40, 40));
             this.pnlCardAbsent.Resize += (s, e) => this.pnlBarAbsent.Height = this.pnlCardAbsent.Height;
 
-            // pnlBarAbsent
             this.pnlBarAbsent.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             this.pnlBarAbsent.BackColor = System.Drawing.Color.FromArgb(200, 40, 40);
             this.pnlBarAbsent.Location = new System.Drawing.Point(0, 0);
             this.pnlBarAbsent.Name = "pnlBarAbsent";
             this.pnlBarAbsent.Size = new System.Drawing.Size(4, 124);
-            // lblAbsentTitle
+
             this.lblAbsentTitle.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblAbsentTitle.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
             this.lblAbsentTitle.ForeColor = System.Drawing.Color.FromArgb(100, 100, 120);
@@ -702,7 +698,7 @@
             this.lblAbsentTitle.Padding = new System.Windows.Forms.Padding(14, 0, 0, 0);
             this.lblAbsentTitle.Text = "Absent";
             this.lblAbsentTitle.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // lblAbsentValue
+
             this.lblAbsentValue.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblAbsentValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
             this.lblAbsentValue.ForeColor = System.Drawing.Color.FromArgb(200, 40, 40);
@@ -711,9 +707,7 @@
             this.lblAbsentValue.Text = "–";
             this.lblAbsentValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 
-            // 
-            // pnlCardAlerts
-            // 
+            // ── Card: Alerts ──────────────────────────────────────────────────────
             this.pnlCardAlerts.BackColor = System.Drawing.Color.FromArgb(255, 243, 243);
             this.pnlCardAlerts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlCardAlerts.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -724,13 +718,12 @@
             this.pnlCardAlerts.Paint += (s, e) => AttendanceControl.DrawCardBorder(e.Graphics, this.pnlCardAlerts, System.Drawing.Color.FromArgb(200, 40, 40));
             this.pnlCardAlerts.Resize += (s, e) => this.pnlBarAlerts.Height = this.pnlCardAlerts.Height;
 
-            // pnlBarAlerts
             this.pnlBarAlerts.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             this.pnlBarAlerts.BackColor = System.Drawing.Color.FromArgb(200, 40, 40);
             this.pnlBarAlerts.Location = new System.Drawing.Point(0, 0);
             this.pnlBarAlerts.Name = "pnlBarAlerts";
             this.pnlBarAlerts.Size = new System.Drawing.Size(4, 124);
-            // lblAlertText
+
             this.lblAlertText.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblAlertText.Font = new System.Drawing.Font("Segoe UI", 8.5F);
             this.lblAlertText.ForeColor = System.Drawing.Color.FromArgb(160, 40, 40);
@@ -738,7 +731,7 @@
             this.lblAlertText.Padding = new System.Windows.Forms.Padding(10, 0, 10, 24);
             this.lblAlertText.Text = "Loading…";
             this.lblAlertText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // btnViewDetails
+
             this.btnViewDetails.BackColor = System.Drawing.Color.FromArgb(128, 0, 0);
             this.btnViewDetails.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnViewDetails.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -752,9 +745,9 @@
             this.btnViewDetails.Text = "View Details";
             this.btnViewDetails.Click += new System.EventHandler(this.OnViewDetailsClick);
 
-            // 
-            // pnlHeader
-            // 
+            // ──────────────────────────────────────────────────────────────────────
+            // pnlHeader  (filter bar)
+            // ──────────────────────────────────────────────────────────────────────
             this.pnlHeader.BackColor = System.Drawing.Color.White;
             this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlHeader.Height = 110;
@@ -770,11 +763,11 @@
             this.pnlHeader.Controls.Add(this.lblToLbl);
             this.pnlHeader.Controls.Add(this.dtpTo);
             this.pnlHeader.Controls.Add(this.btnRefresh);
-            this.pnlHeader.Paint += (s, e) => e.Graphics.DrawLine(new System.Drawing.Pen(System.Drawing.Color.FromArgb(225, 225, 235), 1), 0, this.pnlHeader.Height - 1, this.pnlHeader.Width, this.pnlHeader.Height - 1);
+            this.pnlHeader.Paint += (s, e) => e.Graphics.DrawLine(
+                new System.Drawing.Pen(System.Drawing.Color.FromArgb(225, 225, 235), 1),
+                0, this.pnlHeader.Height - 1, this.pnlHeader.Width, this.pnlHeader.Height - 1);
 
-            // 
             // lblPageTitle
-            // 
             this.lblPageTitle.AutoSize = true;
             this.lblPageTitle.Font = new System.Drawing.Font("Segoe UI", 17F, System.Drawing.FontStyle.Bold);
             this.lblPageTitle.ForeColor = System.Drawing.Color.FromArgb(128, 0, 0);
@@ -782,9 +775,7 @@
             this.lblPageTitle.Name = "lblPageTitle";
             this.lblPageTitle.Text = "My Attendance";
 
-            // 
             // lblHeaderSubtitle
-            // 
             this.lblHeaderSubtitle.AutoSize = true;
             this.lblHeaderSubtitle.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblHeaderSubtitle.ForeColor = System.Drawing.Color.FromArgb(120, 120, 140);
@@ -792,9 +783,7 @@
             this.lblHeaderSubtitle.Name = "lblHeaderSubtitle";
             this.lblHeaderSubtitle.Text = "Track your academic attendance across all courses";
 
-            // 
             // lblPeriodLbl
-            // 
             this.lblPeriodLbl.AutoSize = true;
             this.lblPeriodLbl.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
             this.lblPeriodLbl.ForeColor = System.Drawing.Color.FromArgb(80, 80, 100);
@@ -802,9 +791,7 @@
             this.lblPeriodLbl.Name = "lblPeriodLbl";
             this.lblPeriodLbl.Text = "Period:";
 
-            // 
             // cmbPeriod
-            // 
             this.cmbPeriod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbPeriod.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.cmbPeriod.Location = new System.Drawing.Point(70, 62);
@@ -814,9 +801,7 @@
             this.cmbPeriod.SelectedIndex = 0;
             this.cmbPeriod.SelectedIndexChanged += (s, e) => this.RefreshAll();
 
-            // 
             // lblCourseLbl
-            // 
             this.lblCourseLbl.AutoSize = true;
             this.lblCourseLbl.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
             this.lblCourseLbl.ForeColor = System.Drawing.Color.FromArgb(80, 80, 100);
@@ -824,9 +809,7 @@
             this.lblCourseLbl.Name = "lblCourseLbl";
             this.lblCourseLbl.Text = "Course:";
 
-            // 
             // cmbCourse
-            // 
             this.cmbCourse.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCourse.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.cmbCourse.Location = new System.Drawing.Point(286, 62);
@@ -836,9 +819,7 @@
             this.cmbCourse.SelectedIndex = 0;
             this.cmbCourse.SelectedIndexChanged += (s, e) => this.RefreshAll();
 
-            // 
             // lblFromLbl
-            // 
             this.lblFromLbl.AutoSize = true;
             this.lblFromLbl.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
             this.lblFromLbl.ForeColor = System.Drawing.Color.FromArgb(80, 80, 100);
@@ -846,9 +827,7 @@
             this.lblFromLbl.Name = "lblFromLbl";
             this.lblFromLbl.Text = "From:";
 
-            // 
             // dtpFrom
-            // 
             this.dtpFrom.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.dtpFrom.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpFrom.Location = new System.Drawing.Point(512, 62);
@@ -857,9 +836,7 @@
             this.dtpFrom.Value = new System.DateTime(2026, 2, 1);
             this.dtpFrom.ValueChanged += (s, e) => this.RefreshAll();
 
-            // 
             // lblToLbl
-            // 
             this.lblToLbl.AutoSize = true;
             this.lblToLbl.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
             this.lblToLbl.ForeColor = System.Drawing.Color.FromArgb(80, 80, 100);
@@ -867,9 +844,7 @@
             this.lblToLbl.Name = "lblToLbl";
             this.lblToLbl.Text = "To:";
 
-            // 
             // dtpTo
-            // 
             this.dtpTo.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.dtpTo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpTo.Location = new System.Drawing.Point(670, 62);
@@ -878,9 +853,7 @@
             this.dtpTo.Value = System.DateTime.Today;
             this.dtpTo.ValueChanged += (s, e) => this.RefreshAll();
 
-            // 
             // btnRefresh
-            // 
             this.btnRefresh.BackColor = System.Drawing.Color.FromArgb(128, 0, 0);
             this.btnRefresh.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRefresh.FlatAppearance.BorderSize = 0;
@@ -893,7 +866,9 @@
             this.btnRefresh.Text = "↺  Refresh";
             this.btnRefresh.Click += (s, e) => this.RefreshAll();
 
-            // Final Layout Operations
+            // ──────────────────────────────────────────────────────────────────────
+            // Resume layouts
+            // ──────────────────────────────────────────────────────────────────────
             this.pnlScrollWrapper.ResumeLayout(false);
             this.pnlScrollWrapper.PerformLayout();
             this.pnlLogsSection.ResumeLayout(false);
@@ -945,11 +920,13 @@
             dgv.AlternatingRowsDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(251, 251, 254);
         }
 
-        // Parent scroll wrapper panels
+        // ── Field declarations ────────────────────────────────────────────────────
+
+        // Scroll wrapper
         private System.Windows.Forms.Panel pnlScrollWrapper;
         private System.Windows.Forms.Panel pnlSpacer;
 
-        // Header Section elements
+        // Header / filter bar
         private System.Windows.Forms.Panel pnlHeader;
         private System.Windows.Forms.Label lblPageTitle;
         private System.Windows.Forms.Label lblHeaderSubtitle;
@@ -963,7 +940,7 @@
         private System.Windows.Forms.DateTimePicker dtpTo;
         private System.Windows.Forms.Button btnRefresh;
 
-        // Metric row cards
+        // Summary cards
         private System.Windows.Forms.TableLayoutPanel tlpCards;
         private System.Windows.Forms.Panel pnlCardOverall;
         private System.Windows.Forms.Panel pnlBarOverall;
@@ -986,7 +963,7 @@
         private System.Windows.Forms.Label lblAlertText;
         private System.Windows.Forms.Button btnViewDetails;
 
-        // Segmented indicator bar components
+        // Mini stats / progress bar
         private System.Windows.Forms.Panel pnlMiniStats;
         private System.Windows.Forms.Label lblMiniPresent;
         private System.Windows.Forms.Label lblMiniLate;
@@ -995,15 +972,16 @@
         private System.Windows.Forms.Panel pnlProgress;
         private System.Windows.Forms.Label lblProgressPct;
 
-        // QR Scan data section
+        // QR Attendance History section  ← pnlQrGap is new
         private System.Windows.Forms.Panel pnlQrSection;
+        private System.Windows.Forms.Panel pnlQrGap;        // ← FIX: new field
         private System.Windows.Forms.Panel pnlQRTitle;
         private System.Windows.Forms.Label lblQrIcon;
         private System.Windows.Forms.Label lblQRTitle;
         private System.Windows.Forms.Label lblQrBadge;
         private System.Windows.Forms.DataGridView dgvQR;
 
-        // Subject meta matrix section
+        // Subjects per course section
         private System.Windows.Forms.Panel pnlSubjSection;
         private System.Windows.Forms.Panel pnlSubjTitleRow;
         private System.Windows.Forms.Label lblSubjectsTitle;
@@ -1011,7 +989,7 @@
         private System.Windows.Forms.Panel pnlSubjGap;
         private System.Windows.Forms.DataGridView dgvSubjects;
 
-        // Master records log history section
+        // Attendance log section
         private System.Windows.Forms.Panel pnlLogsSection;
         private System.Windows.Forms.Panel pnlLogsTitleRow;
         private System.Windows.Forms.Label lblAttendanceLogTitle;
