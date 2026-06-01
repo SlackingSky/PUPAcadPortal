@@ -28,916 +28,1445 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dgvHeaderStyle = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dgvDefaultStyle = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dgvScaleHeader = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dgvScaleDefault = new System.Windows.Forms.DataGridViewCellStyle();
-
-            this.scroll = new System.Windows.Forms.Panel();
-            this.stack = new System.Windows.Forms.TableLayoutPanel();
-            this.lblTitle = new System.Windows.Forms.Label();
-            this.pnlFilter = new System.Windows.Forms.Panel();
-            this.lblSem = new System.Windows.Forms.Label();
-            this.cmbSemester = new System.Windows.Forms.ComboBox();
-            this.lblYear = new System.Windows.Forms.Label();
-            this.cmbAcYear = new System.Windows.Forms.ComboBox();
-            this.lblPeriod = new System.Windows.Forms.Label();
-            this.cmbGradingPeriod = new System.Windows.Forms.ComboBox();
-            this.btnGenerateCOG = new System.Windows.Forms.Button();
-            this.tlpSummary = new System.Windows.Forms.TableLayoutPanel();
-            this.pnlGWA = new System.Windows.Forms.Panel();
-            this.lblGWATitle = new System.Windows.Forms.Label();
-            this.lblGWA = new System.Windows.Forms.Label();
-            this.pnlUnits = new System.Windows.Forms.Panel();
-            this.lblUnitsTitle = new System.Windows.Forms.Label();
-            this.lblTotalUnits = new System.Windows.Forms.Label();
-            this.pnlEarned = new System.Windows.Forms.Panel();
-            this.lblEarnedTitle = new System.Windows.Forms.Label();
-            this.lblUnitsEarned = new System.Windows.Forms.Label();
-            this.pnlPassed = new System.Windows.Forms.Panel();
-            this.lblPassedTitle = new System.Windows.Forms.Label();
-            this.lblPassed = new System.Windows.Forms.Label();
-            this.pnlFailed = new System.Windows.Forms.Panel();
-            this.lblFailedTitle = new System.Windows.Forms.Label();
-            this.lblFailed = new System.Windows.Forms.Label();
-            this.pnlIP = new System.Windows.Forms.Panel();
-            this.lblIPTitle = new System.Windows.Forms.Label();
-            this.lblInProgress = new System.Windows.Forms.Label();
-            this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
-            this.pnlLeft = new System.Windows.Forms.Panel();
-            this.lblSubjGrades = new System.Windows.Forms.Label();
-            this.txtSearch = new System.Windows.Forms.TextBox();
-            this.tabGrades = new System.Windows.Forms.TabControl();
-            this.tpMid = new System.Windows.Forms.TabPage();
-            this.dgvMid = new System.Windows.Forms.DataGridView();
-            this.tpFinal = new System.Windows.Forms.TabPage();
-            this.dgvFinal = new System.Windows.Forms.DataGridView();
-            this.lblPageInfo = new System.Windows.Forms.Label();
-            this.tlpRight = new System.Windows.Forms.TableLayoutPanel();
-            this.pnlTrend = new System.Windows.Forms.Panel();
-            this.lblTrend = new System.Windows.Forms.Label();
-            this.cmbTrend = new System.Windows.Forms.ComboBox();
-            this.pnlTrendChart = new System.Windows.Forms.Panel();
-            this.pnlPie = new System.Windows.Forms.Panel();
-            this.lblPie = new System.Windows.Forms.Label();
-            this.pnlPieChart = new System.Windows.Forms.Panel();
-            this.pnlNotes = new System.Windows.Forms.Panel();
-            this.lblNotes = new System.Windows.Forms.Label();
-            this.flpNotes = new System.Windows.Forms.FlowLayoutPanel();
-            this.lblNoNotes = new System.Windows.Forms.Label();
-            this.btnAddNote = new System.Windows.Forms.Button();
-            this.pnlScale = new System.Windows.Forms.Panel();
-            this.lblScale = new System.Windows.Forms.Label();
-            this.dgvScale = new System.Windows.Forms.DataGridView();
-
-            this.scroll.SuspendLayout();
-            this.stack.SuspendLayout();
-            this.pnlFilter.SuspendLayout();
-            this.tlpSummary.SuspendLayout();
-            this.pnlGWA.SuspendLayout();
-            this.pnlUnits.SuspendLayout();
-            this.pnlEarned.SuspendLayout();
-            this.pnlPassed.SuspendLayout();
-            this.pnlFailed.SuspendLayout();
-            this.pnlIP.SuspendLayout();
-            this.tlpMain.SuspendLayout();
-            this.pnlLeft.SuspendLayout();
-            this.tabGrades.SuspendLayout();
-            this.tpMid.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMid)).BeginInit();
-            this.tpFinal.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvFinal)).BeginInit();
-            this.tlpRight.SuspendLayout();
-            this.pnlTrend.SuspendLayout();
-            this.pnlPie.SuspendLayout();
-            this.pnlNotes.SuspendLayout();
-            this.flpNotes.SuspendLayout();
-            this.pnlScale.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvScale)).BeginInit();
-            this.SuspendLayout();
-
-            // Setup Styles
-            dgvHeaderStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dgvHeaderStyle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            dgvHeaderStyle.Font = new System.Drawing.Font("Segoe UI", 9F);
-            dgvHeaderStyle.ForeColor = System.Drawing.Color.White;
-            dgvHeaderStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-
-            dgvDefaultStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dgvDefaultStyle.BackColor = System.Drawing.Color.White;
-            dgvDefaultStyle.Font = new System.Drawing.Font("Segoe UI", 9F);
-            dgvDefaultStyle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            dgvDefaultStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(248)))));
-            dgvDefaultStyle.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            colScaleGrade1 = new DataGridViewTextBoxColumn();
+            colScalePercent1 = new DataGridViewTextBoxColumn();
+            colScaleDesc1 = new DataGridViewTextBoxColumn();
+            colScaleGrade2 = new DataGridViewTextBoxColumn();
+            colScalePercent2 = new DataGridViewTextBoxColumn();
+            colScaleDesc2 = new DataGridViewTextBoxColumn();
+            colScaleGrade3 = new DataGridViewTextBoxColumn();
+            colScalePercent3 = new DataGridViewTextBoxColumn();
+            colScaleDesc3 = new DataGridViewTextBoxColumn();
+            scroll = new Panel();
+            stack = new TableLayoutPanel();
+            lblTitle = new Label();
+            pnlFilter = new Panel();
+            btnGenerateCOG = new Button();
+            cmbAcYear = new ComboBox();
+            lblYear = new Label();
+            cmbSemester = new ComboBox();
+            lblSem = new Label();
+            tlpSummary = new TableLayoutPanel();
+            pnlGWA = new Panel();
+            lblGWA = new Label();
+            lblGWATitle = new Label();
+            pnlScholastic = new Panel();
+            lblScholasticStatus = new Label();
+            lblScholasticLbl = new Label();
+            pnlUnits = new Panel();
+            lblTotalUnits = new Label();
+            lblUnitsTitle = new Label();
+            pnlEarned = new Panel();
+            lblUnitsEarned = new Label();
+            lblEarnedTitle = new Label();
+            pnlPassed = new Panel();
+            lblPassed = new Label();
+            lblPassedTitle = new Label();
+            pnlFailed = new Panel();
+            lblFailed = new Label();
+            lblFailedTitle = new Label();
+            pnlIP = new Panel();
+            lblInProgress = new Label();
+            lblIPTitle = new Label();
+            tlpMain = new TableLayoutPanel();
+            pnlLeft = new Panel();
+            pnlDetail = new Panel();
+            lblBreakdownTitle = new Label();
+            lblDetailFeedback = new Label();
+            lblDetailFeedbackLbl = new Label();
+            lblDetailScholastic = new Label();
+            lblDetailScholasticLbl = new Label();
+            lblDetailRemarks = new Label();
+            lblDetailRemarksLbl = new Label();
+            lblDetailEquivalent = new Label();
+            lblDetailEqLbl = new Label();
+            lblDetailGrade = new Label();
+            lblDetailGradeLbl = new Label();
+            lblDetailTitle = new Label();
+            btnCloseDetail = new Button();
+            lblActLbl = new Label();
+            pbarActivities = new ProgressBar();
+            lblActVal = new Label();
+            lblQzLbl = new Label();
+            pbarQuizzes = new ProgressBar();
+            lblQzVal = new Label();
+            lblLQzLbl = new Label();
+            pbarLongQuizzes = new ProgressBar();
+            lblLQzVal = new Label();
+            lblAttLbl = new Label();
+            pbarAttendance = new ProgressBar();
+            lblAttVal = new Label();
+            lblMajLbl = new Label();
+            pbarMajorAssmt = new ProgressBar();
+            lblMajVal = new Label();
+            lblSubjGrades = new Label();
+            txtSearch = new TextBox();
+            tabGrades = new TabControl();
+            tpMid = new TabPage();
+            dgvMid = new DataGridView();
+            tpFinal = new TabPage();
+            dgvFinal = new DataGridView();
+            lblPageInfo = new Label();
+            tlpRight = new TableLayoutPanel();
+            pnlTrend = new Panel();
+            cmbTrend = new ComboBox();
+            lblTrend = new Label();
+            pnlTrendChart = new Panel();
+            pnlPie = new Panel();
+            lblPie = new Label();
+            pnlPieChart = new Panel();
+            pnlNotes = new Panel();
+            btnAddNote = new Button();
+            flpNotes = new FlowLayoutPanel();
+            lblNoNotes = new Label();
+            lblNotes = new Label();
+            pnlScale = new Panel();
+            dgvScale = new DataGridView();
+            lblScale = new Label();
+            scroll.SuspendLayout();
+            stack.SuspendLayout();
+            pnlFilter.SuspendLayout();
+            tlpSummary.SuspendLayout();
+            pnlGWA.SuspendLayout();
+            pnlScholastic.SuspendLayout();
+            pnlUnits.SuspendLayout();
+            pnlEarned.SuspendLayout();
+            pnlPassed.SuspendLayout();
+            pnlFailed.SuspendLayout();
+            pnlIP.SuspendLayout();
+            tlpMain.SuspendLayout();
+            pnlLeft.SuspendLayout();
+            pnlDetail.SuspendLayout();
+            tabGrades.SuspendLayout();
+            tpMid.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvMid).BeginInit();
+            tpFinal.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvFinal).BeginInit();
+            tlpRight.SuspendLayout();
+            pnlTrend.SuspendLayout();
+            pnlPie.SuspendLayout();
+            pnlNotes.SuspendLayout();
+            flpNotes.SuspendLayout();
+            pnlScale.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvScale).BeginInit();
+            SuspendLayout();
+            // 
+            // colScaleGrade1
+            // 
+            colScaleGrade1.HeaderText = "Grade";
+            colScaleGrade1.Name = "colScaleGrade1";
+            colScaleGrade1.ReadOnly = true;
+            // 
+            // colScalePercent1
+            // 
+            colScalePercent1.HeaderText = "Percentage";
+            colScalePercent1.Name = "colScalePercent1";
+            colScalePercent1.ReadOnly = true;
+            // 
+            // colScaleDesc1
+            // 
+            colScaleDesc1.HeaderText = "Description";
+            colScaleDesc1.Name = "colScaleDesc1";
+            colScaleDesc1.ReadOnly = true;
+            // 
+            // colScaleGrade2
+            // 
+            colScaleGrade2.HeaderText = "Grade";
+            colScaleGrade2.Name = "colScaleGrade2";
+            colScaleGrade2.ReadOnly = true;
+            // 
+            // colScalePercent2
+            // 
+            colScalePercent2.HeaderText = "Percentage";
+            colScalePercent2.Name = "colScalePercent2";
+            colScalePercent2.ReadOnly = true;
+            // 
+            // colScaleDesc2
+            // 
+            colScaleDesc2.HeaderText = "Description";
+            colScaleDesc2.Name = "colScaleDesc2";
+            colScaleDesc2.ReadOnly = true;
+            // 
+            // colScaleGrade3
+            // 
+            colScaleGrade3.HeaderText = "Grade";
+            colScaleGrade3.Name = "colScaleGrade3";
+            colScaleGrade3.ReadOnly = true;
+            // 
+            // colScalePercent3
+            // 
+            colScalePercent3.HeaderText = "Percentage";
+            colScalePercent3.Name = "colScalePercent3";
+            colScalePercent3.ReadOnly = true;
+            // 
+            // colScaleDesc3
+            // 
+            colScaleDesc3.HeaderText = "Description";
+            colScaleDesc3.Name = "colScaleDesc3";
+            colScaleDesc3.ReadOnly = true;
             // 
             // scroll
             // 
-            this.scroll.AutoScroll = true;
-            this.scroll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
-            this.scroll.Controls.Add(this.stack);
-            this.scroll.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scroll.Location = new System.Drawing.Point(0, 0);
-            this.scroll.Name = "scroll";
-            this.scroll.Padding = new System.Windows.Forms.Padding(14, 10, 14, 20);
-            this.scroll.Size = new System.Drawing.Size(1000, 900);
-            this.scroll.TabIndex = 0;
+            scroll.AutoScroll = true;
+            scroll.BackColor = Color.FromArgb(245, 245, 245);
+            scroll.Controls.Add(stack);
+            scroll.Dock = DockStyle.Fill;
+            scroll.Location = new Point(0, 0);
+            scroll.Margin = new Padding(4, 3, 4, 3);
+            scroll.Name = "scroll";
+            scroll.Padding = new Padding(16, 12, 16, 23);
+            scroll.Size = new Size(1167, 1038);
+            scroll.TabIndex = 0;
             // 
             // stack
             // 
-            this.stack.AutoSize = true;
-            this.stack.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.stack.ColumnCount = 1;
-            this.stack.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.stack.Controls.Add(this.lblTitle, 0, 0);
-            this.stack.Controls.Add(this.pnlFilter, 0, 1);
-            this.stack.Controls.Add(this.tlpSummary, 0, 2);
-            this.stack.Controls.Add(this.tlpMain, 0, 3);
-            this.stack.Controls.Add(this.pnlScale, 0, 4);
-            this.stack.Dock = System.Windows.Forms.DockStyle.Top;
-            this.stack.Location = new System.Drawing.Point(14, 10);
-            this.stack.Name = "stack";
-            this.stack.RowCount = 5;
-            this.stack.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.stack.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.stack.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.stack.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.stack.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.stack.Size = new System.Drawing.Size(972, 936);
-            this.stack.TabIndex = 0;
+            stack.AutoSize = true;
+            stack.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            stack.ColumnCount = 1;
+            stack.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            stack.Controls.Add(lblTitle, 0, 0);
+            stack.Controls.Add(pnlFilter, 0, 1);
+            stack.Controls.Add(tlpSummary, 0, 2);
+            stack.Controls.Add(tlpMain, 0, 3);
+            stack.Controls.Add(pnlScale, 0, 4);
+            stack.Dock = DockStyle.Top;
+            stack.Location = new Point(16, 12);
+            stack.Margin = new Padding(4, 3, 4, 3);
+            stack.Name = "stack";
+            stack.RowCount = 5;
+            stack.RowStyles.Add(new RowStyle());
+            stack.RowStyles.Add(new RowStyle());
+            stack.RowStyles.Add(new RowStyle());
+            stack.RowStyles.Add(new RowStyle());
+            stack.RowStyles.Add(new RowStyle());
+            stack.Size = new Size(1135, 953);
+            stack.TabIndex = 0;
             // 
             // lblTitle
             // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.lblTitle.Location = new System.Drawing.Point(0, 0);
-            this.lblTitle.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(93, 32);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "Grades";
+            lblTitle.AutoSize = true;
+            lblTitle.Font = new Font("Cambria", 20F, FontStyle.Bold);
+            lblTitle.ForeColor = Color.FromArgb(33, 33, 33);
+            lblTitle.Location = new Point(0, 0);
+            lblTitle.Margin = new Padding(0, 0, 0, 9);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(99, 32);
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "Grades";
             // 
             // pnlFilter
             // 
-            this.pnlFilter.BackColor = System.Drawing.Color.White;
-            this.pnlFilter.Controls.Add(this.btnGenerateCOG);
-            this.pnlFilter.Controls.Add(this.cmbGradingPeriod);
-            this.pnlFilter.Controls.Add(this.lblPeriod);
-            this.pnlFilter.Controls.Add(this.cmbAcYear);
-            this.pnlFilter.Controls.Add(this.lblYear);
-            this.pnlFilter.Controls.Add(this.cmbSemester);
-            this.pnlFilter.Controls.Add(this.lblSem);
-            this.pnlFilter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlFilter.Location = new System.Drawing.Point(0, 40);
-            this.pnlFilter.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
-            this.pnlFilter.Name = "pnlFilter";
-            this.pnlFilter.Size = new System.Drawing.Size(972, 62);
-            this.pnlFilter.TabIndex = 1;
-            // 
-            // lblSem
-            // 
-            this.lblSem.AutoSize = true;
-            this.lblSem.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblSem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.lblSem.Location = new System.Drawing.Point(10, 6);
-            this.lblSem.Name = "lblSem";
-            this.lblSem.Size = new System.Drawing.Size(65, 19);
-            this.lblSem.TabIndex = 0;
-            this.lblSem.Text = "Semester";
-            // 
-            // cmbSemester
-            // 
-            this.cmbSemester.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbSemester.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.cmbSemester.Items.AddRange(new object[] { "1st Semester", "2nd Semester" });
-            this.cmbSemester.Location = new System.Drawing.Point(10, 24);
-            this.cmbSemester.Name = "cmbSemester";
-            this.cmbSemester.Size = new System.Drawing.Size(130, 23);
-            this.cmbSemester.TabIndex = 1;
-            // 
-            // lblYear
-            // 
-            this.lblYear.AutoSize = true;
-            this.lblYear.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblYear.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.lblYear.Location = new System.Drawing.Point(150, 6);
-            this.lblYear.Name = "lblYear";
-            this.lblYear.Size = new System.Drawing.Size(98, 19);
-            this.lblYear.TabIndex = 2;
-            this.lblYear.Text = "Academic Year";
-            // 
-            // cmbAcYear
-            // 
-            this.cmbAcYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbAcYear.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.cmbAcYear.Items.AddRange(new object[] { "2024 - 2025", "2025 - 2026" });
-            this.cmbAcYear.Location = new System.Drawing.Point(150, 24);
-            this.cmbAcYear.Name = "cmbAcYear";
-            this.cmbAcYear.Size = new System.Drawing.Size(130, 23);
-            this.cmbAcYear.TabIndex = 3;
-            // 
-            // lblPeriod
-            // 
-            this.lblPeriod.AutoSize = true;
-            this.lblPeriod.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblPeriod.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.lblPeriod.Location = new System.Drawing.Point(290, 6);
-            this.lblPeriod.Name = "lblPeriod";
-            this.lblPeriod.Size = new System.Drawing.Size(100, 19);
-            this.lblPeriod.TabIndex = 4;
-            this.lblPeriod.Text = "Grading Period";
-            // 
-            // cmbGradingPeriod
-            // 
-            this.cmbGradingPeriod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbGradingPeriod.Enabled = false;
-            this.cmbGradingPeriod.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.cmbGradingPeriod.Items.AddRange(new object[] { "Regular", "Irregular" });
-            this.cmbGradingPeriod.Location = new System.Drawing.Point(290, 24);
-            this.cmbGradingPeriod.Name = "cmbGradingPeriod";
-            this.cmbGradingPeriod.Size = new System.Drawing.Size(130, 23);
-            this.cmbGradingPeriod.TabIndex = 5;
+            pnlFilter.BackColor = Color.White;
+            pnlFilter.Controls.Add(btnGenerateCOG);
+            pnlFilter.Controls.Add(cmbAcYear);
+            pnlFilter.Controls.Add(lblYear);
+            pnlFilter.Controls.Add(cmbSemester);
+            pnlFilter.Controls.Add(lblSem);
+            pnlFilter.Dock = DockStyle.Fill;
+            pnlFilter.Location = new Point(0, 41);
+            pnlFilter.Margin = new Padding(0, 0, 0, 9);
+            pnlFilter.Name = "pnlFilter";
+            pnlFilter.Size = new Size(1135, 69);
+            pnlFilter.TabIndex = 1;
             // 
             // btnGenerateCOG
             // 
-            this.btnGenerateCOG.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnGenerateCOG.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnGenerateCOG.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnGenerateCOG.FlatAppearance.BorderSize = 0;
-            this.btnGenerateCOG.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGenerateCOG.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnGenerateCOG.ForeColor = System.Drawing.Color.White;
-            this.btnGenerateCOG.Location = new System.Drawing.Point(842, 24);
-            this.btnGenerateCOG.Name = "btnGenerateCOG";
-            this.btnGenerateCOG.Size = new System.Drawing.Size(120, 28);
-            this.btnGenerateCOG.TabIndex = 6;
-            this.btnGenerateCOG.Text = "Generate COG";
-            this.btnGenerateCOG.UseVisualStyleBackColor = false;
-            this.btnGenerateCOG.Click += new System.EventHandler(this.BtnGenerateCOG_Click);
+            btnGenerateCOG.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnGenerateCOG.BackColor = Color.FromArgb(128, 0, 0);
+            btnGenerateCOG.Cursor = Cursors.Hand;
+            btnGenerateCOG.FlatAppearance.BorderSize = 0;
+            btnGenerateCOG.FlatStyle = FlatStyle.Flat;
+            btnGenerateCOG.Font = new Font("Cambria", 9F, FontStyle.Bold);
+            btnGenerateCOG.ForeColor = Color.White;
+            btnGenerateCOG.Location = new Point(983, 23);
+            btnGenerateCOG.Margin = new Padding(4, 3, 4, 3);
+            btnGenerateCOG.Name = "btnGenerateCOG";
+            btnGenerateCOG.Size = new Size(140, 35);
+            btnGenerateCOG.TabIndex = 6;
+            btnGenerateCOG.Text = "Generate COG";
+            btnGenerateCOG.UseVisualStyleBackColor = false;
+            btnGenerateCOG.Click += BtnGenerateCOG_Click;
+            // 
+            // cmbAcYear
+            // 
+            cmbAcYear.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbAcYear.Font = new Font("Segoe UI", 9F);
+            cmbAcYear.Items.AddRange(new object[] { "2024 - 2025", "2025 - 2026" });
+            cmbAcYear.Location = new Point(175, 28);
+            cmbAcYear.Margin = new Padding(4, 3, 4, 3);
+            cmbAcYear.Name = "cmbAcYear";
+            cmbAcYear.Size = new Size(151, 23);
+            cmbAcYear.TabIndex = 3;
+            // 
+            // lblYear
+            // 
+            lblYear.AutoSize = true;
+            lblYear.Font = new Font("Segoe UI", 9F);
+            lblYear.ForeColor = Color.FromArgb(100, 100, 100);
+            lblYear.Location = new Point(175, 7);
+            lblYear.Margin = new Padding(4, 0, 4, 0);
+            lblYear.Name = "lblYear";
+            lblYear.Size = new Size(85, 15);
+            lblYear.TabIndex = 2;
+            lblYear.Text = "Academic Year";
+            // 
+            // cmbSemester
+            // 
+            cmbSemester.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbSemester.Font = new Font("Segoe UI", 9F);
+            cmbSemester.Items.AddRange(new object[] { "1st Semester", "2nd Semester" });
+            cmbSemester.Location = new Point(12, 28);
+            cmbSemester.Margin = new Padding(4, 3, 4, 3);
+            cmbSemester.Name = "cmbSemester";
+            cmbSemester.Size = new Size(151, 23);
+            cmbSemester.TabIndex = 1;
+            // 
+            // lblSem
+            // 
+            lblSem.AutoSize = true;
+            lblSem.Font = new Font("Segoe UI", 9F);
+            lblSem.ForeColor = Color.FromArgb(100, 100, 100);
+            lblSem.Location = new Point(12, 7);
+            lblSem.Margin = new Padding(4, 0, 4, 0);
+            lblSem.Name = "lblSem";
+            lblSem.Size = new Size(55, 15);
+            lblSem.TabIndex = 0;
+            lblSem.Text = "Semester";
             // 
             // tlpSummary
             // 
-            this.tlpSummary.ColumnCount = 6;
-            this.tlpSummary.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tlpSummary.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tlpSummary.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tlpSummary.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tlpSummary.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tlpSummary.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tlpSummary.Controls.Add(this.pnlGWA, 0, 0);
-            this.tlpSummary.Controls.Add(this.pnlUnits, 1, 0);
-            this.tlpSummary.Controls.Add(this.pnlEarned, 2, 0);
-            this.tlpSummary.Controls.Add(this.pnlPassed, 3, 0);
-            this.tlpSummary.Controls.Add(this.pnlFailed, 4, 0);
-            this.tlpSummary.Controls.Add(this.pnlIP, 5, 0);
-            this.tlpSummary.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpSummary.Location = new System.Drawing.Point(0, 110);
-            this.tlpSummary.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
-            this.tlpSummary.Name = "tlpSummary";
-            this.tlpSummary.RowCount = 1;
-            this.tlpSummary.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpSummary.Size = new System.Drawing.Size(972, 80);
-            this.tlpSummary.TabIndex = 2;
+            tlpSummary.ColumnCount = 7;
+            tlpSummary.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.28571F));
+            tlpSummary.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.28571F));
+            tlpSummary.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.28571F));
+            tlpSummary.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.28571F));
+            tlpSummary.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.28571F));
+            tlpSummary.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.28571F));
+            tlpSummary.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.28571F));
+            tlpSummary.Controls.Add(pnlGWA, 0, 0);
+            tlpSummary.Controls.Add(pnlScholastic, 1, 0);
+            tlpSummary.Controls.Add(pnlUnits, 2, 0);
+            tlpSummary.Controls.Add(pnlEarned, 3, 0);
+            tlpSummary.Controls.Add(pnlPassed, 4, 0);
+            tlpSummary.Controls.Add(pnlFailed, 5, 0);
+            tlpSummary.Controls.Add(pnlIP, 6, 0);
+            tlpSummary.Dock = DockStyle.Fill;
+            tlpSummary.Location = new Point(0, 119);
+            tlpSummary.Margin = new Padding(0, 0, 0, 9);
+            tlpSummary.Name = "tlpSummary";
+            tlpSummary.RowCount = 1;
+            tlpSummary.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tlpSummary.Size = new Size(1135, 92);
+            tlpSummary.TabIndex = 2;
             // 
             // pnlGWA
             // 
-            this.pnlGWA.BackColor = System.Drawing.Color.White;
-            this.pnlGWA.Controls.Add(this.lblGWA);
-            this.pnlGWA.Controls.Add(this.lblGWATitle);
-            this.pnlGWA.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlGWA.Location = new System.Drawing.Point(0, 0);
-            this.pnlGWA.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlGWA.Name = "pnlGWA";
-            this.pnlGWA.Size = new System.Drawing.Size(162, 80);
-            this.pnlGWA.TabIndex = 0;
-            // 
-            // lblGWATitle
-            // 
-            this.lblGWATitle.AutoSize = true;
-            this.lblGWATitle.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblGWATitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
-            this.lblGWATitle.Location = new System.Drawing.Point(10, 8);
-            this.lblGWATitle.Name = "lblGWATitle";
-            this.lblGWATitle.Size = new System.Drawing.Size(147, 15);
-            this.lblGWATitle.TabIndex = 0;
-            this.lblGWATitle.Text = "General Weighted Average";
+            pnlGWA.BackColor = Color.White;
+            pnlGWA.Controls.Add(lblGWA);
+            pnlGWA.Controls.Add(lblGWATitle);
+            pnlGWA.Dock = DockStyle.Fill;
+            pnlGWA.Location = new Point(0, 0);
+            pnlGWA.Margin = new Padding(0);
+            pnlGWA.Name = "pnlGWA";
+            pnlGWA.Size = new Size(162, 92);
+            pnlGWA.TabIndex = 0;
             // 
             // lblGWA
             // 
-            this.lblGWA.AutoSize = true;
-            this.lblGWA.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
-            this.lblGWA.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.lblGWA.Location = new System.Drawing.Point(10, 28);
-            this.lblGWA.Name = "lblGWA";
-            this.lblGWA.Size = new System.Drawing.Size(36, 32);
-            this.lblGWA.TabIndex = 1;
-            this.lblGWA.Text = "—";
+            lblGWA.AutoSize = true;
+            lblGWA.Font = new Font("Cambria", 16F, FontStyle.Bold);
+            lblGWA.ForeColor = Color.FromArgb(33, 33, 33);
+            lblGWA.Location = new Point(12, 30);
+            lblGWA.Margin = new Padding(4, 0, 4, 0);
+            lblGWA.Name = "lblGWA";
+            lblGWA.Size = new Size(34, 26);
+            lblGWA.TabIndex = 1;
+            lblGWA.Text = "—";
+            // 
+            // lblGWATitle
+            // 
+            lblGWATitle.AutoSize = true;
+            lblGWATitle.Font = new Font("Segoe UI", 8.25F);
+            lblGWATitle.ForeColor = Color.FromArgb(110, 110, 110);
+            lblGWATitle.Location = new Point(12, 9);
+            lblGWATitle.Margin = new Padding(4, 0, 4, 0);
+            lblGWATitle.Name = "lblGWATitle";
+            lblGWATitle.Size = new Size(145, 13);
+            lblGWATitle.TabIndex = 0;
+            lblGWATitle.Text = "General Weighted Average";
+            // 
+            // pnlScholastic
+            // 
+            pnlScholastic.BackColor = Color.White;
+            pnlScholastic.Controls.Add(lblScholasticStatus);
+            pnlScholastic.Controls.Add(lblScholasticLbl);
+            pnlScholastic.Dock = DockStyle.Fill;
+            pnlScholastic.Location = new Point(167, 0);
+            pnlScholastic.Margin = new Padding(5, 0, 0, 0);
+            pnlScholastic.Name = "pnlScholastic";
+            pnlScholastic.Size = new Size(157, 92);
+            pnlScholastic.TabIndex = 1;
+            // 
+            // lblScholasticStatus
+            // 
+            lblScholasticStatus.BackColor = Color.FromArgb(21, 128, 61);
+            lblScholasticStatus.Font = new Font("Cambria", 8.5F, FontStyle.Bold);
+            lblScholasticStatus.ForeColor = Color.White;
+            lblScholasticStatus.Location = new Point(12, 32);
+            lblScholasticStatus.Margin = new Padding(4, 0, 4, 0);
+            lblScholasticStatus.Name = "lblScholasticStatus";
+            lblScholasticStatus.Padding = new Padding(5, 2, 5, 2);
+            lblScholasticStatus.Size = new Size(134, 25);
+            lblScholasticStatus.TabIndex = 1;
+            lblScholasticStatus.Text = "Regular";
+            lblScholasticStatus.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // lblScholasticLbl
+            // 
+            lblScholasticLbl.AutoSize = true;
+            lblScholasticLbl.Font = new Font("Segoe UI", 8.25F);
+            lblScholasticLbl.ForeColor = Color.FromArgb(110, 110, 110);
+            lblScholasticLbl.Location = new Point(12, 9);
+            lblScholasticLbl.Margin = new Padding(4, 0, 4, 0);
+            lblScholasticLbl.Name = "lblScholasticLbl";
+            lblScholasticLbl.Size = new Size(93, 13);
+            lblScholasticLbl.TabIndex = 0;
+            lblScholasticLbl.Text = "Scholastic Status";
             // 
             // pnlUnits
             // 
-            this.pnlUnits.BackColor = System.Drawing.Color.White;
-            this.pnlUnits.Controls.Add(this.lblTotalUnits);
-            this.pnlUnits.Controls.Add(this.lblUnitsTitle);
-            this.pnlUnits.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlUnits.Location = new System.Drawing.Point(166, 0);
-            this.pnlUnits.Margin = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.pnlUnits.Name = "pnlUnits";
-            this.pnlUnits.Size = new System.Drawing.Size(158, 80);
-            this.pnlUnits.TabIndex = 1;
-            // 
-            // lblUnitsTitle
-            // 
-            this.lblUnitsTitle.AutoSize = true;
-            this.lblUnitsTitle.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblUnitsTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
-            this.lblUnitsTitle.Location = new System.Drawing.Point(10, 8);
-            this.lblUnitsTitle.Name = "lblUnitsTitle";
-            this.lblUnitsTitle.Size = new System.Drawing.Size(64, 15);
-            this.lblUnitsTitle.TabIndex = 0;
-            this.lblUnitsTitle.Text = "Total Units";
+            pnlUnits.BackColor = Color.White;
+            pnlUnits.Controls.Add(lblTotalUnits);
+            pnlUnits.Controls.Add(lblUnitsTitle);
+            pnlUnits.Dock = DockStyle.Fill;
+            pnlUnits.Location = new Point(329, 0);
+            pnlUnits.Margin = new Padding(5, 0, 0, 0);
+            pnlUnits.Name = "pnlUnits";
+            pnlUnits.Size = new Size(157, 92);
+            pnlUnits.TabIndex = 2;
             // 
             // lblTotalUnits
             // 
-            this.lblTotalUnits.AutoSize = true;
-            this.lblTotalUnits.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
-            this.lblTotalUnits.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.lblTotalUnits.Location = new System.Drawing.Point(10, 28);
-            this.lblTotalUnits.Name = "lblTotalUnits";
-            this.lblTotalUnits.Size = new System.Drawing.Size(36, 32);
-            this.lblTotalUnits.TabIndex = 1;
-            this.lblTotalUnits.Text = "—";
+            lblTotalUnits.AutoSize = true;
+            lblTotalUnits.Font = new Font("Cambria", 16F, FontStyle.Bold);
+            lblTotalUnits.ForeColor = Color.FromArgb(33, 33, 33);
+            lblTotalUnits.Location = new Point(12, 30);
+            lblTotalUnits.Margin = new Padding(4, 0, 4, 0);
+            lblTotalUnits.Name = "lblTotalUnits";
+            lblTotalUnits.Size = new Size(34, 26);
+            lblTotalUnits.TabIndex = 1;
+            lblTotalUnits.Text = "—";
+            // 
+            // lblUnitsTitle
+            // 
+            lblUnitsTitle.AutoSize = true;
+            lblUnitsTitle.Font = new Font("Segoe UI", 8.25F);
+            lblUnitsTitle.ForeColor = Color.FromArgb(110, 110, 110);
+            lblUnitsTitle.Location = new Point(12, 9);
+            lblUnitsTitle.Margin = new Padding(4, 0, 4, 0);
+            lblUnitsTitle.Name = "lblUnitsTitle";
+            lblUnitsTitle.Size = new Size(62, 13);
+            lblUnitsTitle.TabIndex = 0;
+            lblUnitsTitle.Text = "Total Units";
             // 
             // pnlEarned
             // 
-            this.pnlEarned.BackColor = System.Drawing.Color.White;
-            this.pnlEarned.Controls.Add(this.lblUnitsEarned);
-            this.pnlEarned.Controls.Add(this.lblEarnedTitle);
-            this.pnlEarned.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlEarned.Location = new System.Drawing.Point(328, 0);
-            this.pnlEarned.Margin = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.pnlEarned.Name = "pnlEarned";
-            this.pnlEarned.Size = new System.Drawing.Size(158, 80);
-            this.pnlEarned.TabIndex = 2;
-            // 
-            // lblEarnedTitle
-            // 
-            this.lblEarnedTitle.AutoSize = true;
-            this.lblEarnedTitle.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblEarnedTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
-            this.lblEarnedTitle.Location = new System.Drawing.Point(10, 8);
-            this.lblEarnedTitle.Name = "lblEarnedTitle";
-            this.lblEarnedTitle.Size = new System.Drawing.Size(73, 15);
-            this.lblEarnedTitle.TabIndex = 0;
-            this.lblEarnedTitle.Text = "Units Earned";
+            pnlEarned.BackColor = Color.White;
+            pnlEarned.Controls.Add(lblUnitsEarned);
+            pnlEarned.Controls.Add(lblEarnedTitle);
+            pnlEarned.Dock = DockStyle.Fill;
+            pnlEarned.Location = new Point(491, 0);
+            pnlEarned.Margin = new Padding(5, 0, 0, 0);
+            pnlEarned.Name = "pnlEarned";
+            pnlEarned.Size = new Size(157, 92);
+            pnlEarned.TabIndex = 3;
             // 
             // lblUnitsEarned
             // 
-            this.lblUnitsEarned.AutoSize = true;
-            this.lblUnitsEarned.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
-            this.lblUnitsEarned.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.lblUnitsEarned.Location = new System.Drawing.Point(10, 28);
-            this.lblUnitsEarned.Name = "lblUnitsEarned";
-            this.lblUnitsEarned.Size = new System.Drawing.Size(36, 32);
-            this.lblUnitsEarned.TabIndex = 1;
-            this.lblUnitsEarned.Text = "—";
+            lblUnitsEarned.AutoSize = true;
+            lblUnitsEarned.Font = new Font("Cambria", 16F, FontStyle.Bold);
+            lblUnitsEarned.ForeColor = Color.FromArgb(33, 33, 33);
+            lblUnitsEarned.Location = new Point(12, 30);
+            lblUnitsEarned.Margin = new Padding(4, 0, 4, 0);
+            lblUnitsEarned.Name = "lblUnitsEarned";
+            lblUnitsEarned.Size = new Size(34, 26);
+            lblUnitsEarned.TabIndex = 1;
+            lblUnitsEarned.Text = "—";
+            // 
+            // lblEarnedTitle
+            // 
+            lblEarnedTitle.AutoSize = true;
+            lblEarnedTitle.Font = new Font("Segoe UI", 8.25F);
+            lblEarnedTitle.ForeColor = Color.FromArgb(110, 110, 110);
+            lblEarnedTitle.Location = new Point(12, 9);
+            lblEarnedTitle.Margin = new Padding(4, 0, 4, 0);
+            lblEarnedTitle.Name = "lblEarnedTitle";
+            lblEarnedTitle.Size = new Size(73, 13);
+            lblEarnedTitle.TabIndex = 0;
+            lblEarnedTitle.Text = "Units Earned";
             // 
             // pnlPassed
             // 
-            this.pnlPassed.BackColor = System.Drawing.Color.White;
-            this.pnlPassed.Controls.Add(this.lblPassed);
-            this.pnlPassed.Controls.Add(this.lblPassedTitle);
-            this.pnlPassed.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlPassed.Location = new System.Drawing.Point(490, 0);
-            this.pnlPassed.Margin = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.pnlPassed.Name = "pnlPassed";
-            this.pnlPassed.Size = new System.Drawing.Size(158, 80);
-            this.pnlPassed.TabIndex = 3;
-            // 
-            // lblPassedTitle
-            // 
-            this.lblPassedTitle.AutoSize = true;
-            this.lblPassedTitle.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblPassedTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
-            this.lblPassedTitle.Location = new System.Drawing.Point(10, 8);
-            this.lblPassedTitle.Name = "lblPassedTitle";
-            this.lblPassedTitle.Size = new System.Drawing.Size(43, 15);
-            this.lblPassedTitle.TabIndex = 0;
-            this.lblPassedTitle.Text = "Passed";
+            pnlPassed.BackColor = Color.White;
+            pnlPassed.Controls.Add(lblPassed);
+            pnlPassed.Controls.Add(lblPassedTitle);
+            pnlPassed.Dock = DockStyle.Fill;
+            pnlPassed.Location = new Point(653, 0);
+            pnlPassed.Margin = new Padding(5, 0, 0, 0);
+            pnlPassed.Name = "pnlPassed";
+            pnlPassed.Size = new Size(157, 92);
+            pnlPassed.TabIndex = 4;
             // 
             // lblPassed
             // 
-            this.lblPassed.AutoSize = true;
-            this.lblPassed.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
-            this.lblPassed.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.lblPassed.Location = new System.Drawing.Point(10, 28);
-            this.lblPassed.Name = "lblPassed";
-            this.lblPassed.Size = new System.Drawing.Size(36, 32);
-            this.lblPassed.TabIndex = 1;
-            this.lblPassed.Text = "—";
+            lblPassed.AutoSize = true;
+            lblPassed.Font = new Font("Cambria", 16F, FontStyle.Bold);
+            lblPassed.ForeColor = Color.FromArgb(33, 33, 33);
+            lblPassed.Location = new Point(12, 30);
+            lblPassed.Margin = new Padding(4, 0, 4, 0);
+            lblPassed.Name = "lblPassed";
+            lblPassed.Size = new Size(34, 26);
+            lblPassed.TabIndex = 1;
+            lblPassed.Text = "—";
+            // 
+            // lblPassedTitle
+            // 
+            lblPassedTitle.AutoSize = true;
+            lblPassedTitle.Font = new Font("Segoe UI", 8.25F);
+            lblPassedTitle.ForeColor = Color.FromArgb(110, 110, 110);
+            lblPassedTitle.Location = new Point(12, 9);
+            lblPassedTitle.Margin = new Padding(4, 0, 4, 0);
+            lblPassedTitle.Name = "lblPassedTitle";
+            lblPassedTitle.Size = new Size(42, 13);
+            lblPassedTitle.TabIndex = 0;
+            lblPassedTitle.Text = "Passed";
             // 
             // pnlFailed
             // 
-            this.pnlFailed.BackColor = System.Drawing.Color.White;
-            this.pnlFailed.Controls.Add(this.lblFailed);
-            this.pnlFailed.Controls.Add(this.lblFailedTitle);
-            this.pnlFailed.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlFailed.Location = new System.Drawing.Point(652, 0);
-            this.pnlFailed.Margin = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.pnlFailed.Name = "pnlFailed";
-            this.pnlFailed.Size = new System.Drawing.Size(158, 80);
-            this.pnlFailed.TabIndex = 4;
-            // 
-            // lblFailedTitle
-            // 
-            this.lblFailedTitle.AutoSize = true;
-            this.lblFailedTitle.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblFailedTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
-            this.lblFailedTitle.Location = new System.Drawing.Point(10, 8);
-            this.lblFailedTitle.Name = "lblFailedTitle";
-            this.lblFailedTitle.Size = new System.Drawing.Size(38, 15);
-            this.lblFailedTitle.TabIndex = 0;
-            this.lblFailedTitle.Text = "Failed";
+            pnlFailed.BackColor = Color.White;
+            pnlFailed.Controls.Add(lblFailed);
+            pnlFailed.Controls.Add(lblFailedTitle);
+            pnlFailed.Dock = DockStyle.Fill;
+            pnlFailed.Location = new Point(815, 0);
+            pnlFailed.Margin = new Padding(5, 0, 0, 0);
+            pnlFailed.Name = "pnlFailed";
+            pnlFailed.Size = new Size(157, 92);
+            pnlFailed.TabIndex = 5;
             // 
             // lblFailed
             // 
-            this.lblFailed.AutoSize = true;
-            this.lblFailed.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
-            this.lblFailed.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.lblFailed.Location = new System.Drawing.Point(10, 28);
-            this.lblFailed.Name = "lblFailed";
-            this.lblFailed.Size = new System.Drawing.Size(36, 32);
-            this.lblFailed.TabIndex = 1;
-            this.lblFailed.Text = "—";
+            lblFailed.AutoSize = true;
+            lblFailed.Font = new Font("Cambria", 16F, FontStyle.Bold);
+            lblFailed.ForeColor = Color.FromArgb(33, 33, 33);
+            lblFailed.Location = new Point(12, 30);
+            lblFailed.Margin = new Padding(4, 0, 4, 0);
+            lblFailed.Name = "lblFailed";
+            lblFailed.Size = new Size(34, 26);
+            lblFailed.TabIndex = 1;
+            lblFailed.Text = "—";
+            // 
+            // lblFailedTitle
+            // 
+            lblFailedTitle.AutoSize = true;
+            lblFailedTitle.Font = new Font("Segoe UI", 8.25F);
+            lblFailedTitle.ForeColor = Color.FromArgb(110, 110, 110);
+            lblFailedTitle.Location = new Point(12, 9);
+            lblFailedTitle.Margin = new Padding(4, 0, 4, 0);
+            lblFailedTitle.Name = "lblFailedTitle";
+            lblFailedTitle.Size = new Size(38, 13);
+            lblFailedTitle.TabIndex = 0;
+            lblFailedTitle.Text = "Failed";
             // 
             // pnlIP
             // 
-            this.pnlIP.BackColor = System.Drawing.Color.White;
-            this.pnlIP.Controls.Add(this.lblInProgress);
-            this.pnlIP.Controls.Add(this.lblIPTitle);
-            this.pnlIP.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlIP.Location = new System.Drawing.Point(814, 0);
-            this.pnlIP.Margin = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.pnlIP.Name = "pnlIP";
-            this.pnlIP.Size = new System.Drawing.Size(158, 80);
-            this.pnlIP.TabIndex = 5;
-            // 
-            // lblIPTitle
-            // 
-            this.lblIPTitle.AutoSize = true;
-            this.lblIPTitle.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblIPTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
-            this.lblIPTitle.Location = new System.Drawing.Point(10, 8);
-            this.lblIPTitle.Name = "lblIPTitle";
-            this.lblIPTitle.Size = new System.Drawing.Size(65, 15);
-            this.lblIPTitle.TabIndex = 0;
-            this.lblIPTitle.Text = "In Progress";
+            pnlIP.BackColor = Color.White;
+            pnlIP.Controls.Add(lblInProgress);
+            pnlIP.Controls.Add(lblIPTitle);
+            pnlIP.Dock = DockStyle.Fill;
+            pnlIP.Location = new Point(977, 0);
+            pnlIP.Margin = new Padding(5, 0, 0, 0);
+            pnlIP.Name = "pnlIP";
+            pnlIP.Size = new Size(158, 92);
+            pnlIP.TabIndex = 6;
             // 
             // lblInProgress
             // 
-            this.lblInProgress.AutoSize = true;
-            this.lblInProgress.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
-            this.lblInProgress.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.lblInProgress.Location = new System.Drawing.Point(10, 28);
-            this.lblInProgress.Name = "lblInProgress";
-            this.lblInProgress.Size = new System.Drawing.Size(36, 32);
-            this.lblInProgress.TabIndex = 1;
-            this.lblInProgress.Text = "—";
+            lblInProgress.AutoSize = true;
+            lblInProgress.Font = new Font("Cambria", 16F, FontStyle.Bold);
+            lblInProgress.ForeColor = Color.FromArgb(33, 33, 33);
+            lblInProgress.Location = new Point(12, 30);
+            lblInProgress.Margin = new Padding(4, 0, 4, 0);
+            lblInProgress.Name = "lblInProgress";
+            lblInProgress.Size = new Size(34, 26);
+            lblInProgress.TabIndex = 1;
+            lblInProgress.Text = "—";
+            // 
+            // lblIPTitle
+            // 
+            lblIPTitle.AutoSize = true;
+            lblIPTitle.Font = new Font("Segoe UI", 8.25F);
+            lblIPTitle.ForeColor = Color.FromArgb(110, 110, 110);
+            lblIPTitle.Location = new Point(12, 9);
+            lblIPTitle.Margin = new Padding(4, 0, 4, 0);
+            lblIPTitle.Name = "lblIPTitle";
+            lblIPTitle.Size = new Size(64, 13);
+            lblIPTitle.TabIndex = 0;
+            lblIPTitle.Text = "In Progress";
             // 
             // tlpMain
             // 
-            this.tlpMain.ColumnCount = 2;
-            this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 71F));
-            this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 29F));
-            this.tlpMain.Controls.Add(this.pnlLeft, 0, 0);
-            this.tlpMain.Controls.Add(this.tlpRight, 1, 0);
-            this.tlpMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpMain.Location = new System.Drawing.Point(0, 198);
-            this.tlpMain.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
-            this.tlpMain.Name = "tlpMain";
-            this.tlpMain.RowCount = 1;
-            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpMain.Size = new System.Drawing.Size(972, 540);
-            this.tlpMain.TabIndex = 3;
+            tlpMain.ColumnCount = 2;
+            tlpMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 71F));
+            tlpMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 29F));
+            tlpMain.Controls.Add(pnlLeft, 0, 0);
+            tlpMain.Controls.Add(tlpRight, 1, 0);
+            tlpMain.Dock = DockStyle.Fill;
+            tlpMain.Location = new Point(0, 220);
+            tlpMain.Margin = new Padding(0, 0, 0, 9);
+            tlpMain.Name = "tlpMain";
+            tlpMain.RowCount = 1;
+            tlpMain.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tlpMain.Size = new Size(1135, 623);
+            tlpMain.TabIndex = 3;
             // 
             // pnlLeft
             // 
-            this.pnlLeft.BackColor = System.Drawing.Color.White;
-            this.pnlLeft.Controls.Add(this.lblSubjGrades);
-            this.pnlLeft.Controls.Add(this.txtSearch);
-            this.pnlLeft.Controls.Add(this.tabGrades);
-            this.pnlLeft.Controls.Add(this.lblPageInfo);
-            this.pnlLeft.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlLeft.Location = new System.Drawing.Point(0, 0);
-            this.pnlLeft.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
-            this.pnlLeft.Name = "pnlLeft";
-            this.pnlLeft.Size = new System.Drawing.Size(682, 540);
-            this.pnlLeft.TabIndex = 0;
+            pnlLeft.BackColor = Color.White;
+            pnlLeft.Controls.Add(pnlDetail);
+            pnlLeft.Controls.Add(lblSubjGrades);
+            pnlLeft.Controls.Add(txtSearch);
+            pnlLeft.Controls.Add(tabGrades);
+            pnlLeft.Controls.Add(lblPageInfo);
+            pnlLeft.Dock = DockStyle.Fill;
+            pnlLeft.Location = new Point(0, 0);
+            pnlLeft.Margin = new Padding(0, 0, 9, 0);
+            pnlLeft.Name = "pnlLeft";
+            pnlLeft.Size = new Size(796, 623);
+            pnlLeft.TabIndex = 0;
+            // 
+            // pnlDetail
+            // 
+            pnlDetail.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pnlDetail.BackColor = Color.White;
+            pnlDetail.BorderStyle = BorderStyle.FixedSingle;
+            pnlDetail.Controls.Add(lblBreakdownTitle);
+            pnlDetail.Controls.Add(lblDetailFeedback);
+            pnlDetail.Controls.Add(lblDetailFeedbackLbl);
+            pnlDetail.Controls.Add(lblDetailScholastic);
+            pnlDetail.Controls.Add(lblDetailScholasticLbl);
+            pnlDetail.Controls.Add(lblDetailRemarks);
+            pnlDetail.Controls.Add(lblDetailRemarksLbl);
+            pnlDetail.Controls.Add(lblDetailEquivalent);
+            pnlDetail.Controls.Add(lblDetailEqLbl);
+            pnlDetail.Controls.Add(lblDetailGrade);
+            pnlDetail.Controls.Add(lblDetailGradeLbl);
+            pnlDetail.Controls.Add(lblDetailTitle);
+            pnlDetail.Controls.Add(btnCloseDetail);
+            pnlDetail.Controls.Add(lblActLbl);
+            pnlDetail.Controls.Add(pbarActivities);
+            pnlDetail.Controls.Add(lblActVal);
+            pnlDetail.Controls.Add(lblQzLbl);
+            pnlDetail.Controls.Add(pbarQuizzes);
+            pnlDetail.Controls.Add(lblQzVal);
+            pnlDetail.Controls.Add(lblLQzLbl);
+            pnlDetail.Controls.Add(pbarLongQuizzes);
+            pnlDetail.Controls.Add(lblLQzVal);
+            pnlDetail.Controls.Add(lblAttLbl);
+            pnlDetail.Controls.Add(pbarAttendance);
+            pnlDetail.Controls.Add(lblAttVal);
+            pnlDetail.Controls.Add(lblMajLbl);
+            pnlDetail.Controls.Add(pbarMajorAssmt);
+            pnlDetail.Controls.Add(lblMajVal);
+            pnlDetail.Location = new Point(0, 74);
+            pnlDetail.Margin = new Padding(4, 3, 4, 3);
+            pnlDetail.Name = "pnlDetail";
+            pnlDetail.Size = new Size(795, 530);
+            pnlDetail.TabIndex = 20;
+            pnlDetail.Visible = false;
+            // 
+            // lblBreakdownTitle
+            // 
+            lblBreakdownTitle.AutoSize = true;
+            lblBreakdownTitle.Font = new Font("Cambria", 11F, FontStyle.Bold);
+            lblBreakdownTitle.ForeColor = Color.FromArgb(33, 33, 33);
+            lblBreakdownTitle.Location = new Point(19, 188);
+            lblBreakdownTitle.Margin = new Padding(4, 0, 4, 0);
+            lblBreakdownTitle.Name = "lblBreakdownTitle";
+            lblBreakdownTitle.Size = new Size(134, 17);
+            lblBreakdownTitle.TabIndex = 11;
+            lblBreakdownTitle.Text = "Grade Breakdown";
+            // 
+            // lblDetailFeedback
+            // 
+            lblDetailFeedback.Font = new Font("Cambria", 10F, FontStyle.Italic);
+            lblDetailFeedback.ForeColor = Color.FromArgb(60, 60, 60);
+            lblDetailFeedback.Location = new Point(19, 135);
+            lblDetailFeedback.Margin = new Padding(4, 0, 4, 0);
+            lblDetailFeedback.Name = "lblDetailFeedback";
+            lblDetailFeedback.Size = new Size(747, 46);
+            lblDetailFeedback.TabIndex = 10;
+            // 
+            // lblDetailFeedbackLbl
+            // 
+            lblDetailFeedbackLbl.AutoSize = true;
+            lblDetailFeedbackLbl.Font = new Font("Segoe UI", 8.25F);
+            lblDetailFeedbackLbl.ForeColor = Color.FromArgb(120, 120, 120);
+            lblDetailFeedbackLbl.Location = new Point(19, 115);
+            lblDetailFeedbackLbl.Margin = new Padding(4, 0, 4, 0);
+            lblDetailFeedbackLbl.Name = "lblDetailFeedbackLbl";
+            lblDetailFeedbackLbl.Size = new Size(109, 13);
+            lblDetailFeedbackLbl.TabIndex = 9;
+            lblDetailFeedbackLbl.Text = "Instructor Feedback";
+            // 
+            // lblDetailScholastic
+            // 
+            lblDetailScholastic.AutoSize = true;
+            lblDetailScholastic.Font = new Font("Cambria", 14F, FontStyle.Bold);
+            lblDetailScholastic.ForeColor = Color.FromArgb(33, 33, 33);
+            lblDetailScholastic.Location = new Point(474, 83);
+            lblDetailScholastic.Margin = new Padding(4, 0, 4, 0);
+            lblDetailScholastic.Name = "lblDetailScholastic";
+            lblDetailScholastic.Size = new Size(29, 22);
+            lblDetailScholastic.TabIndex = 8;
+            lblDetailScholastic.Text = "—";
+            // 
+            // lblDetailScholasticLbl
+            // 
+            lblDetailScholasticLbl.AutoSize = true;
+            lblDetailScholasticLbl.Font = new Font("Segoe UI", 8.25F);
+            lblDetailScholasticLbl.ForeColor = Color.FromArgb(120, 120, 120);
+            lblDetailScholasticLbl.Location = new Point(474, 63);
+            lblDetailScholasticLbl.Margin = new Padding(4, 0, 4, 0);
+            lblDetailScholasticLbl.Name = "lblDetailScholasticLbl";
+            lblDetailScholasticLbl.Size = new Size(93, 13);
+            lblDetailScholasticLbl.TabIndex = 7;
+            lblDetailScholasticLbl.Text = "Scholastic Status";
+            // 
+            // lblDetailRemarks
+            // 
+            lblDetailRemarks.AutoSize = true;
+            lblDetailRemarks.Font = new Font("Cambria", 14F, FontStyle.Bold);
+            lblDetailRemarks.ForeColor = Color.FromArgb(33, 33, 33);
+            lblDetailRemarks.Location = new Point(322, 83);
+            lblDetailRemarks.Margin = new Padding(4, 0, 4, 0);
+            lblDetailRemarks.Name = "lblDetailRemarks";
+            lblDetailRemarks.Size = new Size(29, 22);
+            lblDetailRemarks.TabIndex = 6;
+            lblDetailRemarks.Text = "—";
+            // 
+            // lblDetailRemarksLbl
+            // 
+            lblDetailRemarksLbl.AutoSize = true;
+            lblDetailRemarksLbl.Font = new Font("Segoe UI", 8.25F);
+            lblDetailRemarksLbl.ForeColor = Color.FromArgb(120, 120, 120);
+            lblDetailRemarksLbl.Location = new Point(322, 63);
+            lblDetailRemarksLbl.Margin = new Padding(4, 0, 4, 0);
+            lblDetailRemarksLbl.Name = "lblDetailRemarksLbl";
+            lblDetailRemarksLbl.Size = new Size(50, 13);
+            lblDetailRemarksLbl.TabIndex = 5;
+            lblDetailRemarksLbl.Text = "Remarks";
+            // 
+            // lblDetailEquivalent
+            // 
+            lblDetailEquivalent.AutoSize = true;
+            lblDetailEquivalent.Font = new Font("Cambria", 14F, FontStyle.Bold);
+            lblDetailEquivalent.ForeColor = Color.FromArgb(33, 33, 33);
+            lblDetailEquivalent.Location = new Point(170, 83);
+            lblDetailEquivalent.Margin = new Padding(4, 0, 4, 0);
+            lblDetailEquivalent.Name = "lblDetailEquivalent";
+            lblDetailEquivalent.Size = new Size(29, 22);
+            lblDetailEquivalent.TabIndex = 4;
+            lblDetailEquivalent.Text = "—";
+            // 
+            // lblDetailEqLbl
+            // 
+            lblDetailEqLbl.AutoSize = true;
+            lblDetailEqLbl.Font = new Font("Segoe UI", 8.25F);
+            lblDetailEqLbl.ForeColor = Color.FromArgb(120, 120, 120);
+            lblDetailEqLbl.Location = new Point(170, 63);
+            lblDetailEqLbl.Margin = new Padding(4, 0, 4, 0);
+            lblDetailEqLbl.Name = "lblDetailEqLbl";
+            lblDetailEqLbl.Size = new Size(61, 13);
+            lblDetailEqLbl.TabIndex = 3;
+            lblDetailEqLbl.Text = "Equivalent";
+            // 
+            // lblDetailGrade
+            // 
+            lblDetailGrade.AutoSize = true;
+            lblDetailGrade.Font = new Font("Cambria", 14F, FontStyle.Bold);
+            lblDetailGrade.ForeColor = Color.FromArgb(33, 33, 33);
+            lblDetailGrade.Location = new Point(19, 83);
+            lblDetailGrade.Margin = new Padding(4, 0, 4, 0);
+            lblDetailGrade.Name = "lblDetailGrade";
+            lblDetailGrade.Size = new Size(29, 22);
+            lblDetailGrade.TabIndex = 2;
+            lblDetailGrade.Text = "—";
+            // 
+            // lblDetailGradeLbl
+            // 
+            lblDetailGradeLbl.AutoSize = true;
+            lblDetailGradeLbl.Font = new Font("Segoe UI", 8.25F);
+            lblDetailGradeLbl.ForeColor = Color.FromArgb(120, 120, 120);
+            lblDetailGradeLbl.Location = new Point(19, 63);
+            lblDetailGradeLbl.Margin = new Padding(4, 0, 4, 0);
+            lblDetailGradeLbl.Name = "lblDetailGradeLbl";
+            lblDetailGradeLbl.Size = new Size(80, 13);
+            lblDetailGradeLbl.TabIndex = 1;
+            lblDetailGradeLbl.Text = "Current Grade";
+            // 
+            // lblDetailTitle
+            // 
+            lblDetailTitle.AutoSize = true;
+            lblDetailTitle.Font = new Font("Cambria", 13F, FontStyle.Bold);
+            lblDetailTitle.ForeColor = Color.FromArgb(128, 0, 0);
+            lblDetailTitle.Location = new Point(19, 16);
+            lblDetailTitle.Margin = new Padding(4, 0, 4, 0);
+            lblDetailTitle.MaximumSize = new Size(700, 0);
+            lblDetailTitle.Name = "lblDetailTitle";
+            lblDetailTitle.Size = new Size(123, 21);
+            lblDetailTitle.TabIndex = 0;
+            lblDetailTitle.Text = "Subject Name";
+            // 
+            // btnCloseDetail
+            // 
+            btnCloseDetail.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnCloseDetail.BackColor = Color.Transparent;
+            btnCloseDetail.Cursor = Cursors.Hand;
+            btnCloseDetail.FlatAppearance.BorderSize = 0;
+            btnCloseDetail.FlatStyle = FlatStyle.Flat;
+            btnCloseDetail.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnCloseDetail.ForeColor = Color.FromArgb(120, 120, 120);
+            btnCloseDetail.Location = new Point(747, 12);
+            btnCloseDetail.Margin = new Padding(4, 3, 4, 3);
+            btnCloseDetail.Name = "btnCloseDetail";
+            btnCloseDetail.Size = new Size(35, 35);
+            btnCloseDetail.TabIndex = 12;
+            btnCloseDetail.Text = "✕";
+            btnCloseDetail.UseVisualStyleBackColor = false;
+            btnCloseDetail.Click += BtnCloseDetail_Click;
+            // 
+            // lblActLbl
+            // 
+            lblActLbl.AutoSize = true;
+            lblActLbl.Font = new Font("Segoe UI", 9F);
+            lblActLbl.ForeColor = Color.FromArgb(60, 60, 60);
+            lblActLbl.Location = new Point(19, 222);
+            lblActLbl.Margin = new Padding(4, 0, 4, 0);
+            lblActLbl.Name = "lblActLbl";
+            lblActLbl.Size = new Size(55, 15);
+            lblActLbl.TabIndex = 13;
+            lblActLbl.Text = "Activities";
+            // 
+            // pbarActivities
+            // 
+            pbarActivities.ForeColor = Color.FromArgb(128, 0, 0);
+            pbarActivities.Location = new Point(175, 219);
+            pbarActivities.Margin = new Padding(4, 3, 4, 3);
+            pbarActivities.Name = "pbarActivities";
+            pbarActivities.Size = new Size(502, 23);
+            pbarActivities.Style = ProgressBarStyle.Continuous;
+            pbarActivities.TabIndex = 14;
+            // 
+            // lblActVal
+            // 
+            lblActVal.AutoSize = true;
+            lblActVal.Font = new Font("Cambria", 9F, FontStyle.Bold);
+            lblActVal.ForeColor = Color.FromArgb(60, 60, 60);
+            lblActVal.Location = new Point(688, 222);
+            lblActVal.Margin = new Padding(4, 0, 4, 0);
+            lblActVal.Name = "lblActVal";
+            lblActVal.Size = new Size(19, 14);
+            lblActVal.TabIndex = 15;
+            lblActVal.Text = "—";
+            // 
+            // lblQzLbl
+            // 
+            lblQzLbl.AutoSize = true;
+            lblQzLbl.Font = new Font("Segoe UI", 9F);
+            lblQzLbl.ForeColor = Color.FromArgb(60, 60, 60);
+            lblQzLbl.Location = new Point(19, 261);
+            lblQzLbl.Margin = new Padding(4, 0, 4, 0);
+            lblQzLbl.Name = "lblQzLbl";
+            lblQzLbl.Size = new Size(47, 15);
+            lblQzLbl.TabIndex = 16;
+            lblQzLbl.Text = "Quizzes";
+            // 
+            // pbarQuizzes
+            // 
+            pbarQuizzes.ForeColor = Color.FromArgb(128, 0, 0);
+            pbarQuizzes.Location = new Point(175, 258);
+            pbarQuizzes.Margin = new Padding(4, 3, 4, 3);
+            pbarQuizzes.Name = "pbarQuizzes";
+            pbarQuizzes.Size = new Size(502, 23);
+            pbarQuizzes.Style = ProgressBarStyle.Continuous;
+            pbarQuizzes.TabIndex = 17;
+            // 
+            // lblQzVal
+            // 
+            lblQzVal.AutoSize = true;
+            lblQzVal.Font = new Font("Cambria", 9F, FontStyle.Bold);
+            lblQzVal.ForeColor = Color.FromArgb(60, 60, 60);
+            lblQzVal.Location = new Point(688, 261);
+            lblQzVal.Margin = new Padding(4, 0, 4, 0);
+            lblQzVal.Name = "lblQzVal";
+            lblQzVal.Size = new Size(19, 14);
+            lblQzVal.TabIndex = 18;
+            lblQzVal.Text = "—";
+            // 
+            // lblLQzLbl
+            // 
+            lblLQzLbl.AutoSize = true;
+            lblLQzLbl.Font = new Font("Segoe UI", 9F);
+            lblLQzLbl.ForeColor = Color.FromArgb(60, 60, 60);
+            lblLQzLbl.Location = new Point(19, 300);
+            lblLQzLbl.Margin = new Padding(4, 0, 4, 0);
+            lblLQzLbl.Name = "lblLQzLbl";
+            lblLQzLbl.Size = new Size(77, 15);
+            lblLQzLbl.TabIndex = 19;
+            lblLQzLbl.Text = "Long Quizzes";
+            // 
+            // pbarLongQuizzes
+            // 
+            pbarLongQuizzes.ForeColor = Color.FromArgb(128, 0, 0);
+            pbarLongQuizzes.Location = new Point(175, 298);
+            pbarLongQuizzes.Margin = new Padding(4, 3, 4, 3);
+            pbarLongQuizzes.Name = "pbarLongQuizzes";
+            pbarLongQuizzes.Size = new Size(502, 23);
+            pbarLongQuizzes.Style = ProgressBarStyle.Continuous;
+            pbarLongQuizzes.TabIndex = 20;
+            // 
+            // lblLQzVal
+            // 
+            lblLQzVal.AutoSize = true;
+            lblLQzVal.Font = new Font("Cambria", 9F, FontStyle.Bold);
+            lblLQzVal.ForeColor = Color.FromArgb(60, 60, 60);
+            lblLQzVal.Location = new Point(688, 300);
+            lblLQzVal.Margin = new Padding(4, 0, 4, 0);
+            lblLQzVal.Name = "lblLQzVal";
+            lblLQzVal.Size = new Size(19, 14);
+            lblLQzVal.TabIndex = 21;
+            lblLQzVal.Text = "—";
+            // 
+            // lblAttLbl
+            // 
+            lblAttLbl.AutoSize = true;
+            lblAttLbl.Font = new Font("Segoe UI", 9F);
+            lblAttLbl.ForeColor = Color.FromArgb(60, 60, 60);
+            lblAttLbl.Location = new Point(19, 339);
+            lblAttLbl.Margin = new Padding(4, 0, 4, 0);
+            lblAttLbl.Name = "lblAttLbl";
+            lblAttLbl.Size = new Size(68, 15);
+            lblAttLbl.TabIndex = 22;
+            lblAttLbl.Text = "Attendance";
+            // 
+            // pbarAttendance
+            // 
+            pbarAttendance.ForeColor = Color.FromArgb(128, 0, 0);
+            pbarAttendance.Location = new Point(175, 337);
+            pbarAttendance.Margin = new Padding(4, 3, 4, 3);
+            pbarAttendance.Name = "pbarAttendance";
+            pbarAttendance.Size = new Size(502, 23);
+            pbarAttendance.Style = ProgressBarStyle.Continuous;
+            pbarAttendance.TabIndex = 23;
+            // 
+            // lblAttVal
+            // 
+            lblAttVal.AutoSize = true;
+            lblAttVal.Font = new Font("Cambria", 9F, FontStyle.Bold);
+            lblAttVal.ForeColor = Color.FromArgb(60, 60, 60);
+            lblAttVal.Location = new Point(688, 339);
+            lblAttVal.Margin = new Padding(4, 0, 4, 0);
+            lblAttVal.Name = "lblAttVal";
+            lblAttVal.Size = new Size(19, 14);
+            lblAttVal.TabIndex = 24;
+            lblAttVal.Text = "—";
+            // 
+            // lblMajLbl
+            // 
+            lblMajLbl.AutoSize = true;
+            lblMajLbl.Font = new Font("Segoe UI", 9F);
+            lblMajLbl.ForeColor = Color.FromArgb(60, 60, 60);
+            lblMajLbl.Location = new Point(19, 378);
+            lblMajLbl.Margin = new Padding(4, 0, 4, 0);
+            lblMajLbl.Name = "lblMajLbl";
+            lblMajLbl.Size = new Size(108, 15);
+            lblMajLbl.TabIndex = 25;
+            lblMajLbl.Text = "Major Assessments";
+            // 
+            // pbarMajorAssmt
+            // 
+            pbarMajorAssmt.ForeColor = Color.FromArgb(128, 0, 0);
+            pbarMajorAssmt.Location = new Point(175, 376);
+            pbarMajorAssmt.Margin = new Padding(4, 3, 4, 3);
+            pbarMajorAssmt.Name = "pbarMajorAssmt";
+            pbarMajorAssmt.Size = new Size(502, 23);
+            pbarMajorAssmt.Style = ProgressBarStyle.Continuous;
+            pbarMajorAssmt.TabIndex = 26;
+            // 
+            // lblMajVal
+            // 
+            lblMajVal.AutoSize = true;
+            lblMajVal.Font = new Font("Cambria", 9F, FontStyle.Bold);
+            lblMajVal.ForeColor = Color.FromArgb(60, 60, 60);
+            lblMajVal.Location = new Point(688, 378);
+            lblMajVal.Margin = new Padding(4, 0, 4, 0);
+            lblMajVal.Name = "lblMajVal";
+            lblMajVal.Size = new Size(19, 14);
+            lblMajVal.TabIndex = 27;
+            lblMajVal.Text = "—";
             // 
             // lblSubjGrades
             // 
-            this.lblSubjGrades.AutoSize = true;
-            this.lblSubjGrades.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.lblSubjGrades.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblSubjGrades.Location = new System.Drawing.Point(10, 8);
-            this.lblSubjGrades.Name = "lblSubjGrades";
-            this.lblSubjGrades.Size = new System.Drawing.Size(115, 21);
-            this.lblSubjGrades.TabIndex = 0;
-            this.lblSubjGrades.Text = "Subject Grades";
+            lblSubjGrades.AutoSize = true;
+            lblSubjGrades.Font = new Font("Cambria", 12F, FontStyle.Bold);
+            lblSubjGrades.ForeColor = Color.FromArgb(128, 0, 0);
+            lblSubjGrades.Location = new Point(12, 9);
+            lblSubjGrades.Margin = new Padding(4, 0, 4, 0);
+            lblSubjGrades.Name = "lblSubjGrades";
+            lblSubjGrades.Size = new Size(118, 19);
+            lblSubjGrades.TabIndex = 0;
+            lblSubjGrades.Text = "Subject Grades";
             // 
             // txtSearch
             // 
-            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtSearch.Location = new System.Drawing.Point(10, 30);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.PlaceholderText = "Search subject code or name...";
-            this.txtSearch.Size = new System.Drawing.Size(290, 23);
-            this.txtSearch.TabIndex = 1;
-            this.txtSearch.TextChanged += new System.EventHandler(this.TxtSearch_TextChanged);
+            txtSearch.BorderStyle = BorderStyle.FixedSingle;
+            txtSearch.Font = new Font("Segoe UI", 9F);
+            txtSearch.Location = new Point(12, 37);
+            txtSearch.Margin = new Padding(4, 3, 4, 3);
+            txtSearch.Name = "txtSearch";
+            txtSearch.PlaceholderText = "Search subject code or name...";
+            txtSearch.Size = new Size(338, 23);
+            txtSearch.TabIndex = 1;
+            txtSearch.TextChanged += TxtSearch_TextChanged;
             // 
             // tabGrades
             // 
-            this.tabGrades.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabGrades.Controls.Add(this.tpMid);
-            this.tabGrades.Controls.Add(this.tpFinal);
-            this.tabGrades.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
-            this.tabGrades.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.tabGrades.ItemSize = new System.Drawing.Size(100, 26);
-            this.tabGrades.Location = new System.Drawing.Point(0, 64);
-            this.tabGrades.Name = "tabGrades";
-            this.tabGrades.SelectedIndex = 0;
-            this.tabGrades.Size = new System.Drawing.Size(682, 454);
-            this.tabGrades.TabIndex = 2;
-            this.tabGrades.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.TabGrades_DrawItem);
-            this.tabGrades.SelectedIndexChanged += new System.EventHandler(this.TabGrades_SelectedIndexChanged);
+            tabGrades.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            tabGrades.Controls.Add(tpMid);
+            tabGrades.Controls.Add(tpFinal);
+            tabGrades.DrawMode = TabDrawMode.OwnerDrawFixed;
+            tabGrades.Font = new Font("Cambria", 9F);
+            tabGrades.ItemSize = new Size(100, 26);
+            tabGrades.Location = new Point(0, 74);
+            tabGrades.Margin = new Padding(4, 3, 4, 3);
+            tabGrades.Name = "tabGrades";
+            tabGrades.SelectedIndex = 0;
+            tabGrades.Size = new Size(796, 524);
+            tabGrades.TabIndex = 2;
+            tabGrades.DrawItem += TabGrades_DrawItem;
+            tabGrades.SelectedIndexChanged += TabGrades_SelectedIndexChanged;
             // 
             // tpMid
             // 
-            this.tpMid.Controls.Add(this.dgvMid);
-            this.tpMid.Location = new System.Drawing.Point(4, 30);
-            this.tpMid.Name = "tpMid";
-            this.tpMid.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMid.Size = new System.Drawing.Size(674, 420);
-            this.tpMid.TabIndex = 0;
-            this.tpMid.Text = "Mid Term";
-            this.tpMid.UseVisualStyleBackColor = true;
+            tpMid.Controls.Add(dgvMid);
+            tpMid.Location = new Point(4, 30);
+            tpMid.Margin = new Padding(4, 3, 4, 3);
+            tpMid.Name = "tpMid";
+            tpMid.Padding = new Padding(4, 3, 4, 3);
+            tpMid.Size = new Size(788, 490);
+            tpMid.TabIndex = 0;
+            tpMid.Text = "Mid Term";
+            tpMid.UseVisualStyleBackColor = true;
             // 
             // dgvMid
             // 
-            this.dgvMid.AllowUserToAddRows = false;
-            this.dgvMid.AllowUserToDeleteRows = false;
-            this.dgvMid.AllowUserToResizeColumns = false;
-            this.dgvMid.AllowUserToResizeRows = false;
-            this.dgvMid.AutoGenerateColumns = true;
-            this.dgvMid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.None;
-            this.dgvMid.BackgroundColor = System.Drawing.Color.White;
-            this.dgvMid.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvMid.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-            this.dgvMid.ColumnHeadersDefaultCellStyle = dgvHeaderStyle;
-            this.dgvMid.ColumnHeadersHeight = 30;
-            this.dgvMid.DefaultCellStyle = dgvDefaultStyle;
-            this.dgvMid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvMid.EnableHeadersVisualStyles = false;
-            this.dgvMid.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.dgvMid.Location = new System.Drawing.Point(3, 3);
-            this.dgvMid.Name = "dgvMid";
-            this.dgvMid.ReadOnly = true;
-            this.dgvMid.RowHeadersVisible = false;
-            this.dgvMid.RowTemplate.Height = 26;
-            this.dgvMid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMid.Size = new System.Drawing.Size(668, 414);
-            this.dgvMid.TabIndex = 0;
-            this.dgvMid.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.DgGrades_DataBindingComplete);
+            dgvMid.AllowUserToAddRows = false;
+            dgvMid.AllowUserToDeleteRows = false;
+            dgvMid.AllowUserToResizeColumns = false;
+            dgvMid.AllowUserToResizeRows = false;
+            dgvMid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvMid.BackgroundColor = Color.White;
+            dgvMid.BorderStyle = BorderStyle.None;
+            dgvMid.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(106, 0, 0);
+            dataGridViewCellStyle1.Font = new Font("Cambria", 9F, FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(106, 0, 0);
+            dataGridViewCellStyle1.SelectionForeColor = Color.White;
+            dgvMid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dgvMid.ColumnHeadersHeight = 32;
+            dgvMid.Cursor = Cursors.Hand;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.White;
+            dataGridViewCellStyle2.Font = new Font("Cambria", 9F);
+            dataGridViewCellStyle2.ForeColor = Color.FromArgb(40, 40, 40);
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(245, 246, 248);
+            dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(33, 33, 33);
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dgvMid.DefaultCellStyle = dataGridViewCellStyle2;
+            dgvMid.Dock = DockStyle.Fill;
+            dgvMid.EnableHeadersVisualStyles = false;
+            dgvMid.GridColor = Color.FromArgb(220, 220, 220);
+            dgvMid.Location = new Point(4, 3);
+            dgvMid.Margin = new Padding(4, 3, 4, 3);
+            dgvMid.Name = "dgvMid";
+            dgvMid.ReadOnly = true;
+            dgvMid.RowHeadersVisible = false;
+            dgvMid.RowTemplate.Height = 28;
+            dgvMid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvMid.Size = new Size(780, 484);
+            dgvMid.TabIndex = 0;
+            dgvMid.DataBindingComplete += DgGrades_DataBindingComplete;
             // 
             // tpFinal
             // 
-            this.tpFinal.Controls.Add(this.dgvFinal);
-            this.tpFinal.Location = new System.Drawing.Point(4, 30);
-            this.tpFinal.Name = "tpFinal";
-            this.tpFinal.Padding = new System.Windows.Forms.Padding(3);
-            this.tpFinal.Size = new System.Drawing.Size(674, 420);
-            this.tpFinal.TabIndex = 1;
-            this.tpFinal.Text = "Final Term";
-            this.tpFinal.UseVisualStyleBackColor = true;
+            tpFinal.Controls.Add(dgvFinal);
+            tpFinal.Location = new Point(4, 30);
+            tpFinal.Margin = new Padding(4, 3, 4, 3);
+            tpFinal.Name = "tpFinal";
+            tpFinal.Padding = new Padding(4, 3, 4, 3);
+            tpFinal.Size = new Size(788, 490);
+            tpFinal.TabIndex = 1;
+            tpFinal.Text = "Final Term";
+            tpFinal.UseVisualStyleBackColor = true;
             // 
             // dgvFinal
             // 
-            this.dgvFinal.AllowUserToAddRows = false;
-            this.dgvFinal.AllowUserToDeleteRows = false;
-            this.dgvFinal.AllowUserToResizeColumns = false;
-            this.dgvFinal.AllowUserToResizeRows = false;
-            this.dgvFinal.AutoGenerateColumns = true;
-            this.dgvFinal.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.None;
-            this.dgvFinal.BackgroundColor = System.Drawing.Color.White;
-            this.dgvFinal.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvFinal.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-            this.dgvFinal.ColumnHeadersDefaultCellStyle = dgvHeaderStyle;
-            this.dgvFinal.ColumnHeadersHeight = 30;
-            this.dgvFinal.DefaultCellStyle = dgvDefaultStyle;
-            this.dgvFinal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvFinal.EnableHeadersVisualStyles = false;
-            this.dgvFinal.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.dgvFinal.Location = new System.Drawing.Point(3, 3);
-            this.dgvFinal.Name = "dgvFinal";
-            this.dgvFinal.ReadOnly = true;
-            this.dgvFinal.RowHeadersVisible = false;
-            this.dgvFinal.RowTemplate.Height = 26;
-            this.dgvFinal.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvFinal.Size = new System.Drawing.Size(668, 414);
-            this.dgvFinal.TabIndex = 0;
-            this.dgvFinal.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.DgGrades_DataBindingComplete);
+            dgvFinal.AllowUserToAddRows = false;
+            dgvFinal.AllowUserToDeleteRows = false;
+            dgvFinal.AllowUserToResizeColumns = false;
+            dgvFinal.AllowUserToResizeRows = false;
+            dgvFinal.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvFinal.BackgroundColor = Color.White;
+            dgvFinal.BorderStyle = BorderStyle.None;
+            dgvFinal.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvFinal.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dgvFinal.ColumnHeadersHeight = 32;
+            dgvFinal.Cursor = Cursors.Hand;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.White;
+            dataGridViewCellStyle3.Font = new Font("Cambria", 9F);
+            dataGridViewCellStyle3.ForeColor = Color.FromArgb(40, 40, 40);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(245, 246, 248);
+            dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(33, 33, 33);
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            dgvFinal.DefaultCellStyle = dataGridViewCellStyle3;
+            dgvFinal.Dock = DockStyle.Fill;
+            dgvFinal.EnableHeadersVisualStyles = false;
+            dgvFinal.GridColor = Color.FromArgb(220, 220, 220);
+            dgvFinal.Location = new Point(4, 3);
+            dgvFinal.Margin = new Padding(4, 3, 4, 3);
+            dgvFinal.Name = "dgvFinal";
+            dgvFinal.ReadOnly = true;
+            dgvFinal.RowHeadersVisible = false;
+            dgvFinal.RowTemplate.Height = 28;
+            dgvFinal.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvFinal.Size = new Size(780, 484);
+            dgvFinal.TabIndex = 0;
+            dgvFinal.DataBindingComplete += DgGrades_DataBindingComplete;
             // 
             // lblPageInfo
             // 
-            this.lblPageInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblPageInfo.AutoSize = true;
-            this.lblPageInfo.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblPageInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
-            this.lblPageInfo.Location = new System.Drawing.Point(10, 520);
-            this.lblPageInfo.Name = "lblPageInfo";
-            this.lblPageInfo.Size = new System.Drawing.Size(161, 15);
-            this.lblPageInfo.TabIndex = 3;
-            this.lblPageInfo.Text = "Showing 1 to 8 of 8 subjects";
+            lblPageInfo.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            lblPageInfo.AutoSize = true;
+            lblPageInfo.Font = new Font("Segoe UI", 9F);
+            lblPageInfo.ForeColor = Color.FromArgb(130, 130, 130);
+            lblPageInfo.Location = new Point(12, 602);
+            lblPageInfo.Margin = new Padding(4, 0, 4, 0);
+            lblPageInfo.Name = "lblPageInfo";
+            lblPageInfo.Size = new Size(154, 15);
+            lblPageInfo.TabIndex = 3;
+            lblPageInfo.Text = "Showing 1 to 8 of 8 subjects";
             // 
             // tlpRight
             // 
-            this.tlpRight.ColumnCount = 1;
-            this.tlpRight.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpRight.Controls.Add(this.pnlTrend, 0, 0);
-            this.tlpRight.Controls.Add(this.pnlPie, 0, 1);
-            this.tlpRight.Controls.Add(this.pnlNotes, 0, 2);
-            this.tlpRight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpRight.Location = new System.Drawing.Point(690, 0);
-            this.tlpRight.Margin = new System.Windows.Forms.Padding(0);
-            this.tlpRight.Name = "tlpRight";
-            this.tlpRight.RowCount = 3;
-            this.tlpRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 170F));
-            this.tlpRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 160F));
-            this.tlpRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpRight.Size = new System.Drawing.Size(282, 540);
-            this.tlpRight.TabIndex = 1;
+            tlpRight.ColumnCount = 1;
+            tlpRight.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tlpRight.Controls.Add(pnlTrend, 0, 0);
+            tlpRight.Controls.Add(pnlPie, 0, 1);
+            tlpRight.Controls.Add(pnlNotes, 0, 2);
+            tlpRight.Dock = DockStyle.Fill;
+            tlpRight.Location = new Point(805, 0);
+            tlpRight.Margin = new Padding(0);
+            tlpRight.Name = "tlpRight";
+            tlpRight.RowCount = 3;
+            tlpRight.RowStyles.Add(new RowStyle(SizeType.Absolute, 225F));
+            tlpRight.RowStyles.Add(new RowStyle(SizeType.Absolute, 213F));
+            tlpRight.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tlpRight.Size = new Size(330, 623);
+            tlpRight.TabIndex = 1;
             // 
             // pnlTrend
             // 
-            this.pnlTrend.BackColor = System.Drawing.Color.White;
-            this.pnlTrend.Controls.Add(this.cmbTrend);
-            this.pnlTrend.Controls.Add(this.lblTrend);
-            this.pnlTrend.Controls.Add(this.pnlTrendChart);
-            this.pnlTrend.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlTrend.Location = new System.Drawing.Point(0, 0);
-            this.pnlTrend.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
-            this.pnlTrend.Name = "pnlTrend";
-            this.pnlTrend.Size = new System.Drawing.Size(282, 162);
-            this.pnlTrend.TabIndex = 0;
-            // 
-            // lblTrend
-            // 
-            this.lblTrend.AutoSize = true;
-            this.lblTrend.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.lblTrend.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.lblTrend.Location = new System.Drawing.Point(10, 8);
-            this.lblTrend.Name = "lblTrend";
-            this.lblTrend.Size = new System.Drawing.Size(84, 21);
-            this.lblTrend.TabIndex = 0;
-            this.lblTrend.Text = "GWA Trend";
+            pnlTrend.BackColor = Color.White;
+            pnlTrend.Controls.Add(cmbTrend);
+            pnlTrend.Controls.Add(lblTrend);
+            pnlTrend.Controls.Add(pnlTrendChart);
+            pnlTrend.Dock = DockStyle.Fill;
+            pnlTrend.Location = new Point(0, 0);
+            pnlTrend.Margin = new Padding(0, 0, 0, 9);
+            pnlTrend.Name = "pnlTrend";
+            pnlTrend.Size = new Size(330, 216);
+            pnlTrend.TabIndex = 0;
             // 
             // cmbTrend
             // 
-            this.cmbTrend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbTrend.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbTrend.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.cmbTrend.Items.AddRange(new object[] { "Per Semester", "Per Year" });
-            this.cmbTrend.Location = new System.Drawing.Point(164, 6);
-            this.cmbTrend.Name = "cmbTrend";
-            this.cmbTrend.Size = new System.Drawing.Size(110, 23);
-            this.cmbTrend.TabIndex = 1;
-            this.cmbTrend.SelectedIndex = 0;
-            this.cmbTrend.SelectedIndexChanged += new System.EventHandler(this.CmbTrend_SelectedIndexChanged);
+            cmbTrend.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            cmbTrend.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbTrend.Font = new Font("Segoe UI", 8F);
+            cmbTrend.Items.AddRange(new object[] { "Per Semester", "Per Year" });
+            cmbTrend.Location = new Point(192, 7);
+            cmbTrend.Margin = new Padding(4, 3, 4, 3);
+            cmbTrend.Name = "cmbTrend";
+            cmbTrend.Size = new Size(128, 21);
+            cmbTrend.TabIndex = 1;
+            cmbTrend.SelectedIndexChanged += CmbTrend_SelectedIndexChanged;
+            // 
+            // lblTrend
+            // 
+            lblTrend.AutoSize = true;
+            lblTrend.Font = new Font("Cambria", 11F, FontStyle.Bold);
+            lblTrend.ForeColor = Color.FromArgb(33, 33, 33);
+            lblTrend.Location = new Point(12, 9);
+            lblTrend.Margin = new Padding(4, 0, 4, 0);
+            lblTrend.Name = "lblTrend";
+            lblTrend.Size = new Size(86, 17);
+            lblTrend.TabIndex = 0;
+            lblTrend.Text = "GWA Trend";
             // 
             // pnlTrendChart
             // 
-            this.pnlTrendChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlTrendChart.BackColor = System.Drawing.Color.White;
-            this.pnlTrendChart.Location = new System.Drawing.Point(8, 34);
-            this.pnlTrendChart.Name = "pnlTrendChart";
-            this.pnlTrendChart.Size = new System.Drawing.Size(266, 120);
-            this.pnlTrendChart.TabIndex = 2;
-            this.pnlTrendChart.Paint += new System.Windows.Forms.PaintEventHandler(this.PnlTrendChart_Paint);
+            pnlTrendChart.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pnlTrendChart.BackColor = Color.White;
+            pnlTrendChart.Location = new Point(9, 39);
+            pnlTrendChart.Margin = new Padding(4, 3, 4, 3);
+            pnlTrendChart.Name = "pnlTrendChart";
+            pnlTrendChart.Padding = new Padding(0, 0, 5, 0);
+            pnlTrendChart.Size = new Size(307, 173);
+            pnlTrendChart.TabIndex = 2;
+            pnlTrendChart.Paint += PnlTrendChart_Paint;
             // 
             // pnlPie
             // 
-            this.pnlPie.BackColor = System.Drawing.Color.White;
-            this.pnlPie.Controls.Add(this.lblPie);
-            this.pnlPie.Controls.Add(this.pnlPieChart);
-            this.pnlPie.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlPie.Location = new System.Drawing.Point(0, 170);
-            this.pnlPie.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
-            this.pnlPie.Name = "pnlPie";
-            this.pnlPie.Size = new System.Drawing.Size(282, 152);
-            this.pnlPie.TabIndex = 1;
+            pnlPie.BackColor = Color.White;
+            pnlPie.Controls.Add(lblPie);
+            pnlPie.Controls.Add(pnlPieChart);
+            pnlPie.Dock = DockStyle.Fill;
+            pnlPie.Location = new Point(0, 225);
+            pnlPie.Margin = new Padding(0, 0, 0, 9);
+            pnlPie.Name = "pnlPie";
+            pnlPie.Size = new Size(330, 204);
+            pnlPie.TabIndex = 1;
             // 
             // lblPie
             // 
-            this.lblPie.AutoSize = true;
-            this.lblPie.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.lblPie.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.lblPie.Location = new System.Drawing.Point(10, 8);
-            this.lblPie.Name = "lblPie";
-            this.lblPie.Size = new System.Drawing.Size(137, 21);
-            this.lblPie.TabIndex = 0;
-            this.lblPie.Text = "Grade Distribution";
+            lblPie.AutoSize = true;
+            lblPie.Font = new Font("Cambria", 11F, FontStyle.Bold);
+            lblPie.ForeColor = Color.FromArgb(33, 33, 33);
+            lblPie.Location = new Point(12, 9);
+            lblPie.Margin = new Padding(4, 0, 4, 0);
+            lblPie.Name = "lblPie";
+            lblPie.Size = new Size(139, 17);
+            lblPie.TabIndex = 0;
+            lblPie.Text = "Grade Distribution";
             // 
             // pnlPieChart
             // 
-            this.pnlPieChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlPieChart.BackColor = System.Drawing.Color.White;
-            this.pnlPieChart.Location = new System.Drawing.Point(8, 30);
-            this.pnlPieChart.Name = "pnlPieChart";
-            this.pnlPieChart.Size = new System.Drawing.Size(266, 114);
-            this.pnlPieChart.TabIndex = 1;
-            this.pnlPieChart.Paint += new System.Windows.Forms.PaintEventHandler(this.PnlPieChart_Paint);
+            pnlPieChart.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pnlPieChart.BackColor = Color.White;
+            pnlPieChart.Location = new Point(9, 35);
+            pnlPieChart.Margin = new Padding(4, 3, 4, 3);
+            pnlPieChart.Name = "pnlPieChart";
+            pnlPieChart.Size = new Size(307, 167);
+            pnlPieChart.TabIndex = 1;
+            pnlPieChart.Paint += PnlPieChart_Paint;
             // 
             // pnlNotes
             // 
-            this.pnlNotes.BackColor = System.Drawing.Color.White;
-            this.pnlNotes.Controls.Add(this.btnAddNote);
-            this.pnlNotes.Controls.Add(this.flpNotes);
-            this.pnlNotes.Controls.Add(this.lblNotes);
-            this.pnlNotes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlNotes.Location = new System.Drawing.Point(0, 330);
-            this.pnlNotes.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlNotes.Name = "pnlNotes";
-            this.pnlNotes.Size = new System.Drawing.Size(282, 210);
-            this.pnlNotes.TabIndex = 2;
-            // 
-            // lblNotes
-            // 
-            this.lblNotes.AutoSize = true;
-            this.lblNotes.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.lblNotes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.lblNotes.Location = new System.Drawing.Point(10, 8);
-            this.lblNotes.Name = "lblNotes";
-            this.lblNotes.Size = new System.Drawing.Size(94, 21);
-            this.lblNotes.TabIndex = 0;
-            this.lblNotes.Text = "Quick Notes";
-            // 
-            // flpNotes
-            // 
-            this.flpNotes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
-            this.flpNotes.AutoScroll = true;
-            this.flpNotes.BackColor = System.Drawing.Color.White;
-            this.flpNotes.Controls.Add(this.lblNoNotes);
-            this.flpNotes.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpNotes.Location = new System.Drawing.Point(8, 34);
-            this.flpNotes.Name = "flpNotes";
-            this.flpNotes.Size = new System.Drawing.Size(266, 134);
-            this.flpNotes.TabIndex = 1;
-            this.flpNotes.WrapContents = false;
-            // 
-            // lblNoNotes
-            // 
-            this.lblNoNotes.AutoSize = true;
-            this.lblNoNotes.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblNoNotes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
-            this.lblNoNotes.Location = new System.Drawing.Point(4, 4);
-            this.lblNoNotes.Margin = new System.Windows.Forms.Padding(4);
-            this.lblNoNotes.Name = "lblNoNotes";
-            this.lblNoNotes.Size = new System.Drawing.Size(222, 19);
-            this.lblNoNotes.TabIndex = 0;
-            this.lblNoNotes.Text = "No notes for this grading period.";
+            pnlNotes.BackColor = Color.White;
+            pnlNotes.Controls.Add(btnAddNote);
+            pnlNotes.Controls.Add(flpNotes);
+            pnlNotes.Controls.Add(lblNotes);
+            pnlNotes.Dock = DockStyle.Fill;
+            pnlNotes.Location = new Point(0, 438);
+            pnlNotes.Margin = new Padding(0);
+            pnlNotes.Name = "pnlNotes";
+            pnlNotes.Size = new Size(330, 185);
+            pnlNotes.TabIndex = 2;
             // 
             // btnAddNote
             // 
-            this.btnAddNote.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddNote.BackColor = System.Drawing.Color.White;
-            this.btnAddNote.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnAddNote.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
-            this.btnAddNote.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddNote.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnAddNote.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            this.btnAddNote.Location = new System.Drawing.Point(8, 174);
-            this.btnAddNote.Name = "btnAddNote";
-            this.btnAddNote.Size = new System.Drawing.Size(266, 28);
-            this.btnAddNote.TabIndex = 2;
-            this.btnAddNote.Text = "+ Add Note";
-            this.btnAddNote.UseVisualStyleBackColor = false;
-            this.btnAddNote.Click += new System.EventHandler(this.BtnAddNote_Click);
+            btnAddNote.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            btnAddNote.BackColor = Color.White;
+            btnAddNote.Cursor = Cursors.Hand;
+            btnAddNote.FlatAppearance.BorderColor = Color.FromArgb(180, 180, 180);
+            btnAddNote.FlatStyle = FlatStyle.Flat;
+            btnAddNote.Font = new Font("Segoe UI", 9F);
+            btnAddNote.ForeColor = Color.FromArgb(60, 60, 60);
+            btnAddNote.Location = new Point(9, 141);
+            btnAddNote.Margin = new Padding(4, 3, 4, 3);
+            btnAddNote.Name = "btnAddNote";
+            btnAddNote.Size = new Size(311, 32);
+            btnAddNote.TabIndex = 2;
+            btnAddNote.Text = "+ Add Note";
+            btnAddNote.UseVisualStyleBackColor = false;
+            btnAddNote.Click += BtnAddNote_Click;
+            // 
+            // flpNotes
+            // 
+            flpNotes.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            flpNotes.AutoScroll = true;
+            flpNotes.BackColor = Color.White;
+            flpNotes.Controls.Add(lblNoNotes);
+            flpNotes.FlowDirection = FlowDirection.TopDown;
+            flpNotes.Location = new Point(9, 39);
+            flpNotes.Margin = new Padding(4, 3, 4, 3);
+            flpNotes.Name = "flpNotes";
+            flpNotes.Size = new Size(311, 95);
+            flpNotes.TabIndex = 1;
+            flpNotes.WrapContents = false;
+            // 
+            // lblNoNotes
+            // 
+            lblNoNotes.AutoSize = true;
+            lblNoNotes.Font = new Font("Segoe UI", 9F);
+            lblNoNotes.ForeColor = Color.FromArgb(160, 160, 160);
+            lblNoNotes.Location = new Point(5, 5);
+            lblNoNotes.Margin = new Padding(5, 5, 5, 5);
+            lblNoNotes.Name = "lblNoNotes";
+            lblNoNotes.Size = new Size(179, 15);
+            lblNoNotes.TabIndex = 0;
+            lblNoNotes.Text = "No notes for this grading period.";
+            // 
+            // lblNotes
+            // 
+            lblNotes.AutoSize = true;
+            lblNotes.Font = new Font("Cambria", 11F, FontStyle.Bold);
+            lblNotes.ForeColor = Color.FromArgb(33, 33, 33);
+            lblNotes.Location = new Point(12, 9);
+            lblNotes.Margin = new Padding(4, 0, 4, 0);
+            lblNotes.Name = "lblNotes";
+            lblNotes.Size = new Size(90, 17);
+            lblNotes.TabIndex = 0;
+            lblNotes.Text = "Quick Notes";
             // 
             // pnlScale
             // 
-            this.pnlScale.BackColor = System.Drawing.Color.White;
-            this.pnlScale.Controls.Add(this.dgvScale);
-            this.pnlScale.Controls.Add(this.lblScale);
-            this.pnlScale.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlScale.Location = new System.Drawing.Point(0, 746);
-            this.pnlScale.Margin = new System.Windows.Forms.Padding(0, 0, 0, 10);
-            this.pnlScale.Name = "pnlScale";
-            this.pnlScale.Padding = new System.Windows.Forms.Padding(8);
-            this.pnlScale.Size = new System.Drawing.Size(972, 218);
-            this.pnlScale.TabIndex = 4;
-            // 
-            // lblScale
-            // 
-            this.lblScale.AutoSize = true;
-            this.lblScale.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.lblScale.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.lblScale.Location = new System.Drawing.Point(10, 8);
-            this.lblScale.Name = "lblScale";
-            this.lblScale.Size = new System.Drawing.Size(166, 21);
-            this.lblScale.TabIndex = 0;
-            this.lblScale.Text = "Grade Scale Reference";
+            pnlScale.BackColor = Color.White;
+            pnlScale.Controls.Add(dgvScale);
+            pnlScale.Controls.Add(lblScale);
+            pnlScale.Dock = DockStyle.Fill;
+            pnlScale.Location = new Point(0, 852);
+            pnlScale.Margin = new Padding(0, 0, 0, 12);
+            pnlScale.Name = "pnlScale";
+            pnlScale.Padding = new Padding(9, 9, 9, 9);
+            pnlScale.Size = new Size(1135, 89);
+            pnlScale.TabIndex = 4;
             // 
             // dgvScale
             // 
-            this.dgvScale.AllowUserToAddRows = false;
-            this.dgvScale.AllowUserToDeleteRows = false;
-            this.dgvScale.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvScale.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvScale.BackgroundColor = System.Drawing.Color.White;
-            this.dgvScale.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvScale.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-            this.dgvScale.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-
-            dgvScaleHeader.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dgvScaleHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
-            dgvScaleHeader.Font = new System.Drawing.Font("Segoe UI", 9F);
-            dgvScaleHeader.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            dgvScaleHeader.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dgvScaleHeader.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.dgvScale.ColumnHeadersDefaultCellStyle = dgvScaleHeader;
-            this.dgvScale.ColumnHeadersHeight = 28;
-
-            dgvScaleDefault.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dgvScaleDefault.BackColor = System.Drawing.Color.White;
-            dgvScaleDefault.Font = new System.Drawing.Font("Segoe UI", 9F);
-            dgvScaleDefault.ForeColor = System.Drawing.SystemColors.ControlText;
-            dgvScaleDefault.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(248)))));
-            dgvScaleDefault.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.dgvScale.DefaultCellStyle = dgvScaleDefault;
-            this.dgvScale.EnableHeadersVisualStyles = false;
-            this.dgvScale.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.dgvScale.Location = new System.Drawing.Point(8, 32);
-            this.dgvScale.Name = "dgvScale";
-            this.dgvScale.ReadOnly = true;
-            this.dgvScale.RowHeadersVisible = false;
-            this.dgvScale.RowTemplate.Height = 22;
-            this.dgvScale.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvScale.Size = new System.Drawing.Size(956, 178);
-            this.dgvScale.TabIndex = 1;
+            dgvScale.AllowUserToAddRows = false;
+            dgvScale.AllowUserToDeleteRows = false;
+            dgvScale.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvScale.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvScale.BackgroundColor = Color.White;
+            dgvScale.BorderStyle = BorderStyle.None;
+            dgvScale.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvScale.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(245, 247, 250);
+            dataGridViewCellStyle4.Font = new Font("Cambria", 9F, FontStyle.Bold);
+            dataGridViewCellStyle4.ForeColor = Color.FromArgb(60, 60, 60);
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dgvScale.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dgvScale.ColumnHeadersHeight = 28;
+            dgvScale.Columns.AddRange(new DataGridViewColumn[] { colScaleGrade1, colScalePercent1, colScaleDesc1, colScaleGrade2, colScalePercent2, colScaleDesc2, colScaleGrade3, colScalePercent3, colScaleDesc3 });
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = Color.White;
+            dataGridViewCellStyle5.Font = new Font("Cambria", 9F);
+            dataGridViewCellStyle5.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(245, 246, 248);
+            dataGridViewCellStyle5.SelectionForeColor = Color.FromArgb(33, 33, 33);
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
+            dgvScale.DefaultCellStyle = dataGridViewCellStyle5;
+            dgvScale.EnableHeadersVisualStyles = false;
+            dgvScale.GridColor = Color.FromArgb(220, 220, 220);
+            dgvScale.Location = new Point(9, 37);
+            dgvScale.Margin = new Padding(4, 3, 4, 3);
+            dgvScale.Name = "dgvScale";
+            dgvScale.ReadOnly = true;
+            dgvScale.RowHeadersVisible = false;
+            dgvScale.RowTemplate.Height = 24;
+            dgvScale.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvScale.Size = new Size(1116, 43);
+            dgvScale.TabIndex = 1;
+            // 
+            // lblScale
+            // 
+            lblScale.AutoSize = true;
+            lblScale.Font = new Font("Cambria", 12F, FontStyle.Bold);
+            lblScale.ForeColor = Color.FromArgb(33, 33, 33);
+            lblScale.Location = new Point(12, 9);
+            lblScale.Margin = new Padding(4, 0, 4, 0);
+            lblScale.Name = "lblScale";
+            lblScale.Size = new Size(172, 19);
+            lblScale.TabIndex = 0;
+            lblScale.Text = "Grade Scale Reference";
             // 
             // GradesPanel
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.scroll);
-            this.Name = "GradesPanel";
-            this.Size = new System.Drawing.Size(1000, 900);
-            this.scroll.ResumeLayout(false);
-            this.scroll.PerformLayout();
-            this.stack.ResumeLayout(false);
-            this.stack.PerformLayout();
-            this.pnlFilter.ResumeLayout(false);
-            this.pnlFilter.PerformLayout();
-            this.tlpSummary.ResumeLayout(false);
-            this.pnlGWA.ResumeLayout(false);
-            this.pnlGWA.PerformLayout();
-            this.pnlUnits.ResumeLayout(false);
-            this.pnlUnits.PerformLayout();
-            this.pnlEarned.ResumeLayout(false);
-            this.pnlEarned.PerformLayout();
-            this.pnlPassed.ResumeLayout(false);
-            this.pnlPassed.PerformLayout();
-            this.pnlFailed.ResumeLayout(false);
-            this.pnlFailed.PerformLayout();
-            this.pnlIP.ResumeLayout(false);
-            this.pnlIP.PerformLayout();
-            this.tlpMain.ResumeLayout(false);
-            this.pnlLeft.ResumeLayout(false);
-            this.pnlLeft.PerformLayout();
-            this.tabGrades.ResumeLayout(false);
-            this.tpMid.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMid)).EndInit();
-            this.tpFinal.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvFinal)).EndInit();
-            this.tlpRight.ResumeLayout(false);
-            this.pnlTrend.ResumeLayout(false);
-            this.pnlTrend.PerformLayout();
-            this.pnlPie.ResumeLayout(false);
-            this.pnlPie.PerformLayout();
-            this.pnlNotes.ResumeLayout(false);
-            this.pnlNotes.PerformLayout();
-            this.flpNotes.ResumeLayout(false);
-            this.flpNotes.PerformLayout();
-            this.pnlScale.ResumeLayout(false);
-            this.pnlScale.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvScale)).EndInit();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(scroll);
+            Margin = new Padding(4, 3, 4, 3);
+            Name = "GradesPanel";
+            Size = new Size(1167, 1038);
+            scroll.ResumeLayout(false);
+            scroll.PerformLayout();
+            stack.ResumeLayout(false);
+            stack.PerformLayout();
+            pnlFilter.ResumeLayout(false);
+            pnlFilter.PerformLayout();
+            tlpSummary.ResumeLayout(false);
+            pnlGWA.ResumeLayout(false);
+            pnlGWA.PerformLayout();
+            pnlScholastic.ResumeLayout(false);
+            pnlScholastic.PerformLayout();
+            pnlUnits.ResumeLayout(false);
+            pnlUnits.PerformLayout();
+            pnlEarned.ResumeLayout(false);
+            pnlEarned.PerformLayout();
+            pnlPassed.ResumeLayout(false);
+            pnlPassed.PerformLayout();
+            pnlFailed.ResumeLayout(false);
+            pnlFailed.PerformLayout();
+            pnlIP.ResumeLayout(false);
+            pnlIP.PerformLayout();
+            tlpMain.ResumeLayout(false);
+            pnlLeft.ResumeLayout(false);
+            pnlLeft.PerformLayout();
+            pnlDetail.ResumeLayout(false);
+            pnlDetail.PerformLayout();
+            tabGrades.ResumeLayout(false);
+            tpMid.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvMid).EndInit();
+            tpFinal.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvFinal).EndInit();
+            tlpRight.ResumeLayout(false);
+            pnlTrend.ResumeLayout(false);
+            pnlTrend.PerformLayout();
+            pnlPie.ResumeLayout(false);
+            pnlPie.PerformLayout();
+            pnlNotes.ResumeLayout(false);
+            pnlNotes.PerformLayout();
+            flpNotes.ResumeLayout(false);
+            flpNotes.PerformLayout();
+            pnlScale.ResumeLayout(false);
+            pnlScale.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvScale).EndInit();
+            ResumeLayout(false);
 
         }
 
         #endregion
 
+        // ── Field declarations ────────────────────────────────────────────
         private System.Windows.Forms.Panel scroll;
         private System.Windows.Forms.TableLayoutPanel stack;
         private System.Windows.Forms.Label lblTitle;
@@ -946,13 +1475,14 @@
         private System.Windows.Forms.ComboBox cmbSemester;
         private System.Windows.Forms.Label lblYear;
         private System.Windows.Forms.ComboBox cmbAcYear;
-        private System.Windows.Forms.Label lblPeriod;
-        private System.Windows.Forms.ComboBox cmbGradingPeriod;
         private System.Windows.Forms.Button btnGenerateCOG;
         private System.Windows.Forms.TableLayoutPanel tlpSummary;
         private System.Windows.Forms.Panel pnlGWA;
         private System.Windows.Forms.Label lblGWATitle;
         private System.Windows.Forms.Label lblGWA;
+        private System.Windows.Forms.Panel pnlScholastic;
+        private System.Windows.Forms.Label lblScholasticLbl;
+        private System.Windows.Forms.Label lblScholasticStatus;
         private System.Windows.Forms.Panel pnlUnits;
         private System.Windows.Forms.Label lblUnitsTitle;
         private System.Windows.Forms.Label lblTotalUnits;
@@ -994,5 +1524,45 @@
         private System.Windows.Forms.Panel pnlScale;
         private System.Windows.Forms.Label lblScale;
         private System.Windows.Forms.DataGridView dgvScale;
+
+        // Detail panel
+        private System.Windows.Forms.Panel pnlDetail;
+        private System.Windows.Forms.Button btnCloseDetail;
+        private System.Windows.Forms.Label lblDetailTitle;
+        private System.Windows.Forms.Label lblDetailGradeLbl;
+        private System.Windows.Forms.Label lblDetailGrade;
+        private System.Windows.Forms.Label lblDetailEqLbl;
+        private System.Windows.Forms.Label lblDetailEquivalent;
+        private System.Windows.Forms.Label lblDetailRemarksLbl;
+        private System.Windows.Forms.Label lblDetailRemarks;
+        private System.Windows.Forms.Label lblDetailScholasticLbl;
+        private System.Windows.Forms.Label lblDetailScholastic;
+        private System.Windows.Forms.Label lblDetailFeedbackLbl;
+        private System.Windows.Forms.Label lblDetailFeedback;
+        private System.Windows.Forms.Label lblBreakdownTitle;
+        private System.Windows.Forms.Label lblActLbl;
+        private System.Windows.Forms.ProgressBar pbarActivities;
+        private System.Windows.Forms.Label lblActVal;
+        private System.Windows.Forms.Label lblQzLbl;
+        private System.Windows.Forms.ProgressBar pbarQuizzes;
+        private System.Windows.Forms.Label lblQzVal;
+        private System.Windows.Forms.Label lblLQzLbl;
+        private System.Windows.Forms.ProgressBar pbarLongQuizzes;
+        private System.Windows.Forms.Label lblLQzVal;
+        private System.Windows.Forms.Label lblAttLbl;
+        private System.Windows.Forms.ProgressBar pbarAttendance;
+        private System.Windows.Forms.Label lblAttVal;
+        private System.Windows.Forms.Label lblMajLbl;
+        private System.Windows.Forms.ProgressBar pbarMajorAssmt;
+        private System.Windows.Forms.Label lblMajVal;
+        private DataGridViewTextBoxColumn colScaleGrade1;
+        private DataGridViewTextBoxColumn colScalePercent1;
+        private DataGridViewTextBoxColumn colScaleDesc1;
+        private DataGridViewTextBoxColumn colScaleGrade2;
+        private DataGridViewTextBoxColumn colScalePercent2;
+        private DataGridViewTextBoxColumn colScaleDesc2;
+        private DataGridViewTextBoxColumn colScaleGrade3;
+        private DataGridViewTextBoxColumn colScalePercent3;
+        private DataGridViewTextBoxColumn colScaleDesc3;
     }
 }

@@ -14,6 +14,8 @@ using PUPAcadPortal.PortalContents.Student.Enrollment;
 using PUPAcadPortal.PortalContents.Student.LMS;
 using PUPAcadPortal.Events;
 using PUPAcadPortal.PortalContents.Student.LMS.Course;
+using PUPAcadPortal.PortalContents.Student.LMS.Attendance;
+using PUPAcadPortal.PortalContents.Student.LMS.Grades;
 
 namespace PUPAcadPortal.PortalForms
 {
@@ -113,7 +115,7 @@ namespace PUPAcadPortal.PortalForms
 
         private void btnAttendance_Click(object sender, EventArgs e)
         {
-            mainContentPanel.ShowView(new AttendanceContentStudent());
+            mainContentPanel.ShowView(new AttendanceControl());
         }
 
         private void btnGrade_Click(object sender, EventArgs e)

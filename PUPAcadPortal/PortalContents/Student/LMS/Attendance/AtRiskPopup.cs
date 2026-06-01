@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace PUPAcadPortal
+namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
 {
     // Data model passed into the popup
     public class AtRiskSubjectInfo

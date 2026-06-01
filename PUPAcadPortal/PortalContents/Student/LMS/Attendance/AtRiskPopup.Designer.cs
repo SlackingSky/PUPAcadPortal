@@ -1,4 +1,4 @@
-﻿namespace PUPAcadPortal
+﻿namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
 {
     partial class AtRiskPopup
     {

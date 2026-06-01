@@ -12,36 +12,90 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
 {
     internal static class CogGenerator
     {
-        //  Colours 
+        // ─────────────────────────────────────────────────────────────────
+        //  COLOURS
+        // ─────────────────────────────────────────────────────────────────
         private static readonly BaseColor MAROON = new BaseColor(107, 26, 42);
         private static readonly BaseColor DARK_GRAY = new BaseColor(34, 34, 34);
         private static readonly BaseColor MID_GRAY = new BaseColor(85, 85, 85);
         private static readonly BaseColor BORDER_GRAY = new BaseColor(170, 170, 170);
 
-        //  Fonts 
-        private static readonly PdfFont F_COUNTRY = new PdfFont(PdfFont.FontFamily.HELVETICA, 8.5f, PdfFont.NORMAL, DARK_GRAY);
-        private static readonly PdfFont F_UNIV = new PdfFont(PdfFont.FontFamily.HELVETICA, 11f, PdfFont.BOLD, DARK_GRAY);
-        private static readonly PdfFont F_CAMPUS = new PdfFont(PdfFont.FontFamily.HELVETICA, 8.5f, PdfFont.NORMAL, DARK_GRAY);
-        private static readonly PdfFont F_TITLE = new PdfFont(PdfFont.FontFamily.TIMES_ROMAN, 12f, PdfFont.BOLD, DARK_GRAY);
-        private static readonly PdfFont F_CERT = new PdfFont(PdfFont.FontFamily.TIMES_ROMAN, 9.5f, PdfFont.NORMAL, DARK_GRAY);
-        private static readonly PdfFont F_CERT_B = new PdfFont(PdfFont.FontFamily.TIMES_ROMAN, 9.5f, PdfFont.BOLD, DARK_GRAY);
-        private static readonly PdfFont F_TH = new PdfFont(PdfFont.FontFamily.TIMES_ROMAN, 9f, PdfFont.BOLD, BaseColor.WHITE);
-        private static readonly PdfFont F_TD = new PdfFont(PdfFont.FontFamily.TIMES_ROMAN, 9f, PdfFont.NORMAL, DARK_GRAY);
-        private static readonly PdfFont F_GPA_L = new PdfFont(PdfFont.FontFamily.TIMES_ROMAN, 9.5f, PdfFont.BOLD, DARK_GRAY);
-        private static readonly PdfFont F_GPA_V = new PdfFont(PdfFont.FontFamily.TIMES_ROMAN, 9.5f, PdfFont.BOLD, DARK_GRAY);
-        private static readonly PdfFont F_FNOTE = new PdfFont(PdfFont.FontFamily.TIMES_ROMAN, 8f, PdfFont.ITALIC, MID_GRAY);
-        private static readonly PdfFont F_PRIV = new PdfFont(PdfFont.FontFamily.TIMES_ROMAN, 8f, PdfFont.BOLD, MAROON);
-        private static readonly PdfFont F_SEM_LBL = new PdfFont(PdfFont.FontFamily.TIMES_ROMAN, 9f, PdfFont.BOLD, DARK_GRAY);
-        private static readonly PdfFont F_SEM_VAL = new PdfFont(PdfFont.FontFamily.TIMES_ROMAN, 9f, PdfFont.NORMAL, DARK_GRAY);
+        // ─────────────────────────────────────────────────────────────────
+        //  CAMBRIA FONT REGISTRATION
+        //  iTextSharp can use a system font by full path.  We resolve the
+        //  Cambria path at runtime so it works on any Windows machine.
+        // ─────────────────────────────────────────────────────────────────
+        private static BaseFont _cambriaBase;
+        private static BaseFont CambriaBase
+        {
+            get
+            {
+                if (_cambriaBase != null) return _cambriaBase;
 
-        //  Page margins 
+                // Search common Windows font locations
+                string[] candidates =
+                {
+                    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "cambria.ttc,0"),
+                    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "CAMBRIA.TTC,0"),
+                    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "cambria.ttf"),
+                };
+
+                foreach (var path in candidates)
+                {
+                    string filePath = path.Contains(",") ? path.Split(',')[0] : path;
+                    if (File.Exists(filePath))
+                    {
+                        try
+                        {
+                            _cambriaBase = BaseFont.CreateFont(path, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+                            return _cambriaBase;
+                        }
+                        catch { /* try next */ }
+                    }
+                }
+
+                // Fallback to Times Roman if Cambria is unavailable
+                _cambriaBase = BaseFont.CreateFont(BaseFont.TIMES_ROMAN, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+                return _cambriaBase;
+            }
+        }
+
+        // Helper – create a Cambria PdfFont
+        private static PdfFont Cambria(float size, int style, BaseColor color) =>
+            new PdfFont(CambriaBase, size, style, color);
+
+        // ─────────────────────────────────────────────────────────────────
+        //  FONTS  (all Cambria)
+        // ─────────────────────────────────────────────────────────────────
+        private static PdfFont F_COUNTRY => Cambria(8.5f, PdfFont.NORMAL, DARK_GRAY);
+        private static PdfFont F_UNIV => Cambria(11f, PdfFont.BOLD, DARK_GRAY);
+        private static PdfFont F_CAMPUS => Cambria(8.5f, PdfFont.NORMAL, DARK_GRAY);
+        private static PdfFont F_TITLE => Cambria(12f, PdfFont.BOLD, DARK_GRAY);
+        private static PdfFont F_CERT => Cambria(9.5f, PdfFont.NORMAL, DARK_GRAY);
+        private static PdfFont F_CERT_B => Cambria(9.5f, PdfFont.BOLD, DARK_GRAY);
+        private static PdfFont F_TH => Cambria(9f, PdfFont.BOLD, BaseColor.WHITE);
+        private static PdfFont F_TD => Cambria(9f, PdfFont.NORMAL, DARK_GRAY);
+        private static PdfFont F_GPA_L => Cambria(9.5f, PdfFont.BOLD, DARK_GRAY);
+        private static PdfFont F_GPA_V => Cambria(9.5f, PdfFont.BOLD, DARK_GRAY);
+        private static PdfFont F_FNOTE => Cambria(8f, PdfFont.ITALIC, MID_GRAY);
+        private static PdfFont F_PRIV => Cambria(8f, PdfFont.BOLD, MAROON);
+        private static PdfFont F_SEM_LBL => Cambria(9f, PdfFont.BOLD, DARK_GRAY);
+        private static PdfFont F_SEM_VAL => Cambria(9f, PdfFont.NORMAL, DARK_GRAY);
+        private static PdfFont F_SCHOL_L => Cambria(9f, PdfFont.BOLD, DARK_GRAY);
+        private static PdfFont F_SCHOL_V => Cambria(9f, PdfFont.NORMAL, DARK_GRAY);
+
+        // ─────────────────────────────────────────────────────────────────
+        //  PAGE MARGINS
+        // ─────────────────────────────────────────────────────────────────
         private const float MM = 2.835f;
         private const float LM = 15 * MM;
         private const float RM = 15 * MM;
         private const float TM = 10 * MM;
         private const float BM = 10 * MM;
 
-        //  Grade entry 
+        // ─────────────────────────────────────────────────────────────────
+        //  PUBLIC DATA TYPE
+        // ─────────────────────────────────────────────────────────────────
         public struct GradeEntry
         {
             public string SubjectCode;
@@ -49,9 +103,12 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             public int Units;
             public double Equivalent;
             public string Remarks;
+            public string EnrollmentType;   // "Regular" | "Irregular"  (from PUPSIS)
         }
 
+        // ─────────────────────────────────────────────────────────────────
         //  PUBLIC ENTRY POINT
+        // ─────────────────────────────────────────────────────────────────
         public static void Generate(
             string outputPath,
             string logoImagePath,
@@ -59,130 +116,125 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             List<GradeEntry> sem1Subjects,
             List<GradeEntry> sem2Subjects)
         {
-            using (var fs = new FileStream(outputPath, FileMode.Create, FileAccess.Write))
+            using var fs = new FileStream(outputPath, FileMode.Create, FileAccess.Write);
+            var doc = new Document(PageSize.A4, LM, RM, TM, BM);
+            var writer = PdfWriter.GetInstance(doc, fs);
+            doc.Open();
+
+            float contentWidth = doc.PageSize.Width - LM - RM;
+
+            // ── Logo ──────────────────────────────────────────────────
+            PdfImage logo = TryLoadLogo(logoImagePath);
+            if (logo != null)
             {
-                var doc = new Document(PageSize.A4, LM, RM, TM, BM);
-                var writer = PdfWriter.GetInstance(doc, fs);
-                doc.Open();
-
-                float contentWidth = doc.PageSize.Width - LM - RM;
-
-                PdfImage logo = null;
-
-                string resourcesDir = Path.Combine(
-                    Path.GetDirectoryName(logoImagePath) ?? "", "");
-
-                string[] candidates =
-                {
-                    Path.Combine(resourcesDir, "img(1).png"),
-                    Path.Combine(resourcesDir, "img (1).png"),
-                    logoImagePath,
-                    Path.Combine(resourcesDir, "pup48x48.png"),
-                    Path.Combine(resourcesDir, "pup_logo.png"),
-                    Path.Combine(resourcesDir, "PUPLogo.png"),
-                };
-
-                // Also try embedded resource as fallback
-                if (logo == null)
-                {
-                    try
-                    {
-                        System.Drawing.Bitmap bmp = null;
-                        try { bmp = Properties.Resources.img__1_;} catch { }
-                        if (bmp == null) try { bmp = Properties.Resources.pup48x48; } catch { }
-                        if (bmp == null) try { bmp = Properties.Resources.img__1_; } catch { }
-
-                        if (bmp != null)
-                        {
-                            using (var ms = new MemoryStream())
-                            {
-                                bmp.Save(ms, ImageFormat.Png);
-                                logo = PdfImage.GetInstance(ms.ToArray());
-                            }
-                        }
-                    }
-                    catch { }
-                }
-
-                if (logo == null)
-                {
-                    string found = candidates.FirstOrDefault(
-                        p => !string.IsNullOrEmpty(p) && File.Exists(p));
-                    if (found != null)
-                        logo = PdfImage.GetInstance(found);
-                }
-
-                if (logo != null)
-                {
-                    logo.ScaleToFit(22 * MM, 22 * MM);
-                    logo.Alignment = Element.ALIGN_CENTER;
-                    logo.SpacingAfter = 3f;
-                    doc.Add(logo);
-                }
-
-                //  HEADER 
-                doc.Add(CenterPara("REPUBLIC OF THE PHILIPPINES", F_COUNTRY));
-                doc.Add(CenterPara("POLYTECHNIC UNIVERSITY OF THE PHILIPPINES", F_UNIV));
-                doc.Add(CenterPara("SANTA MARIA CAMPUS", F_CAMPUS));
-                doc.Add(Gap(4 * MM));
-
-                AddMaroonDivider(doc, contentWidth);
-                doc.Add(Gap(2 * MM));
-
-                //  TITLE 
-                var titlePara = new Paragraph("CERTIFICATE OF GRADES", F_TITLE)
-                {
-                    Alignment = Element.ALIGN_CENTER,
-                    SpacingBefore = 3f,
-                    SpacingAfter = 3f,
-                };
-                doc.Add(titlePara);
-
-                doc.Add(Gap(2 * MM));
-                AddMaroonDivider(doc, contentWidth);
-                doc.Add(Gap(5 * MM));
-
-                //  CERTIFICATION TEXT 
-                var certPara = new Paragraph { Alignment = Element.ALIGN_CENTER, Leading = 16 };
-                certPara.Add(new Chunk("This is to certify that ", F_CERT));
-                certPara.Add(new Chunk("JUAN SANTOS DELA CRUZ", F_CERT_B));
-                certPara.Add(new Chunk(", a ", F_CERT));
-                certPara.Add(new Chunk("BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY", F_CERT_B));
-                certPara.Add(new Chunk(
-                    " student, has completed and passed the following subjects listed below with the corresponding grades.",
-                    F_CERT));
-                doc.Add(certPara);
-                doc.Add(Gap(5 * MM));
-
-                AddSemesterBlock(doc, contentWidth, 1, ayLabel, sem1Subjects);
-                AddSemesterBlock(doc, contentWidth, 2, ayLabel, sem2Subjects);
-
-                var fnote = new Paragraph(
-                    "This is system-generated, signature is not required.", F_FNOTE)
-                {
-                    Alignment = Element.ALIGN_RIGHT,
-                    SpacingBefore = 4f,
-                    SpacingAfter = 2f,
-                };
-                doc.Add(fnote);
-
-                AddMaroonDivider(doc, contentWidth);
-                doc.Add(Gap(2 * MM));
-
-                var priv = new Paragraph { Alignment = Element.ALIGN_CENTER, Leading = 13 };
-                priv.Add(new Chunk(
-                    "This document contains personal-identifiable information that is subject to Data Privacy.\n",
-                    F_PRIV));
-                priv.Add(new Chunk(
-                    "Please keep this document protected and in a safe place.",
-                    F_PRIV));
-                doc.Add(priv);
-
-                doc.Close();
+                logo.ScaleToFit(22 * MM, 22 * MM);
+                logo.Alignment = Element.ALIGN_CENTER;
+                logo.SpacingAfter = 3f;
+                doc.Add(logo);
             }
+
+            // ── Header ────────────────────────────────────────────────
+            doc.Add(CenterPara("REPUBLIC OF THE PHILIPPINES", F_COUNTRY));
+            doc.Add(CenterPara("POLYTECHNIC UNIVERSITY OF THE PHILIPPINES", F_UNIV));
+            doc.Add(CenterPara("SANTA MARIA CAMPUS", F_CAMPUS));
+            doc.Add(Gap(4 * MM));
+
+            AddMaroonDivider(doc, contentWidth);
+            doc.Add(Gap(2 * MM));
+
+            // ── Title ─────────────────────────────────────────────────
+            doc.Add(new Paragraph("CERTIFICATE OF GRADES", F_TITLE)
+            {
+                Alignment = Element.ALIGN_CENTER,
+                SpacingBefore = 3f,
+                SpacingAfter = 3f
+            });
+
+            doc.Add(Gap(2 * MM));
+            AddMaroonDivider(doc, contentWidth);
+            doc.Add(Gap(5 * MM));
+
+            // ── Certification text ────────────────────────────────────
+            var certPara = new Paragraph { Alignment = Element.ALIGN_CENTER, Leading = 16 };
+            certPara.Add(new Chunk("This is to certify that ", F_CERT));
+            certPara.Add(new Chunk("JUAN SANTOS DELA CRUZ", F_CERT_B));
+            certPara.Add(new Chunk(", a ", F_CERT));
+            certPara.Add(new Chunk("BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY", F_CERT_B));
+            certPara.Add(new Chunk(
+                " student, has completed and passed the following subjects listed below " +
+                "with the corresponding grades.", F_CERT));
+            doc.Add(certPara);
+            doc.Add(Gap(5 * MM));
+
+            // ── Semester blocks ───────────────────────────────────────
+            AddSemesterBlock(doc, contentWidth, 1, ayLabel, sem1Subjects);
+            AddSemesterBlock(doc, contentWidth, 2, ayLabel, sem2Subjects);
+
+            // ── Footer ────────────────────────────────────────────────
+            doc.Add(new Paragraph("This is system-generated, signature is not required.", F_FNOTE)
+            {
+                Alignment = Element.ALIGN_RIGHT,
+                SpacingBefore = 4f,
+                SpacingAfter = 2f
+            });
+
+            AddMaroonDivider(doc, contentWidth);
+            doc.Add(Gap(2 * MM));
+
+            var priv = new Paragraph { Alignment = Element.ALIGN_CENTER, Leading = 13 };
+            priv.Add(new Chunk(
+                "This document contains personal-identifiable information that is subject to Data Privacy.\n",
+                F_PRIV));
+            priv.Add(new Chunk(
+                "Please keep this document protected and in a safe place.",
+                F_PRIV));
+            doc.Add(priv);
+
+            doc.Close();
         }
 
+        // ─────────────────────────────────────────────────────────────────
+        //  LOGO LOADER
+        // ─────────────────────────────────────────────────────────────────
+        private static PdfImage TryLoadLogo(string hint)
+        {
+            // 1. Try embedded resource
+            try
+            {
+                System.Drawing.Bitmap bmp = null;
+                try { bmp = Properties.Resources.img__1_; } catch { }
+                if (bmp == null) try { bmp = Properties.Resources.pup48x48; } catch { }
+
+                if (bmp != null)
+                {
+                    using var ms = new MemoryStream();
+                    bmp.Save(ms, ImageFormat.Png);
+                    return PdfImage.GetInstance(ms.ToArray());
+                }
+            }
+            catch { }
+
+            // 2. Try file-system candidates
+            string dir = string.IsNullOrEmpty(hint) ? "" : Path.GetDirectoryName(hint) ?? "";
+            string[] paths =
+            {
+                hint,
+                Path.Combine(dir, "img(1).png"),
+                Path.Combine(dir, "pup48x48.png"),
+                Path.Combine(dir, "pup_logo.png"),
+                Path.Combine(dir, "PUPLogo.png"),
+            };
+
+            foreach (var p in paths)
+                if (!string.IsNullOrEmpty(p) && File.Exists(p))
+                    try { return PdfImage.GetInstance(p); } catch { }
+
+            return null;
+        }
+
+        // ─────────────────────────────────────────────────────────────────
         //  MAROON DIVIDER
+        // ─────────────────────────────────────────────────────────────────
         private static void AddMaroonDivider(Document doc, float contentWidth)
         {
             var tbl = new PdfPTable(new float[] { contentWidth })
@@ -205,7 +257,9 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             doc.Add(tbl);
         }
 
-        //  SEMESTER BLOCK
+        // ─────────────────────────────────────────────────────────────────
+        //  SEMESTER BLOCK  –  matches Image 1 layout exactly
+        // ─────────────────────────────────────────────────────────────────
         private static void AddSemesterBlock(
             Document doc,
             float contentWidth,
@@ -216,15 +270,34 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             double gwa = ComputeGwa(subjects);
             string semOrd = semNum == 1 ? "1st" : "2nd";
 
-            float[] semColW = { contentWidth * 0.155f, contentWidth * 0.09f, contentWidth * 0.165f, contentWidth * 0.59f };
-            var semTable = new PdfPTable(semColW) { TotalWidth = contentWidth, LockedWidth = true, SpacingAfter = 0 };
+            // ── Semester / School Year header row  (matches Image 1) ──
+            // Cols: "Semester :" | value | "School Year :" | value
+            float[] semColW = {
+                contentWidth * 0.14f,   // "Semester :"
+                contentWidth * 0.10f,   // "1st"
+                contentWidth * 0.16f,   // "School Year :"
+                contentWidth * 0.60f,   // AY value (fills rest)
+            };
+            var semTable = new PdfPTable(semColW)
+            {
+                TotalWidth = contentWidth,
+                LockedWidth = true,
+                SpacingAfter = 0,
+            };
             semTable.AddCell(SemCell("Semester :", F_SEM_LBL, Element.ALIGN_LEFT, false));
             semTable.AddCell(SemCell(semOrd, F_SEM_VAL, Element.ALIGN_LEFT, false));
             semTable.AddCell(SemCell("School Year :", F_SEM_LBL, Element.ALIGN_LEFT, false));
             semTable.AddCell(SemCell(ayLabel, F_SEM_VAL, Element.ALIGN_LEFT, true));
             doc.Add(semTable);
 
-            float[] gradeColW = { contentWidth * 0.15f, contentWidth * 0.55f, contentWidth * 0.15f, contentWidth * 0.15f };
+            // ── Grade table  –  4 columns matching Image 1 ───────────
+            // Code No. | Descriptive Title | Credits | Grades
+            float[] gradeColW = {
+                contentWidth * 0.16f,   // Code No.
+                contentWidth * 0.58f,   // Descriptive Title
+                contentWidth * 0.13f,   // Credits
+                contentWidth * 0.13f,   // Grades
+            };
             var gradeTable = new PdfPTable(gradeColW)
             {
                 TotalWidth = contentWidth,
@@ -233,10 +306,10 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
                 HeaderRows = 1,
             };
 
-            gradeTable.AddCell(GradeHeaderCell("Code No."));
-            gradeTable.AddCell(GradeHeaderCell("Descriptive Title"));
-            gradeTable.AddCell(GradeHeaderCell("Credits"));
-            gradeTable.AddCell(GradeHeaderCell("Grades"));
+            gradeTable.AddCell(GradeHeaderCell("Code No.", Element.ALIGN_CENTER));
+            gradeTable.AddCell(GradeHeaderCell("Descriptive Title", Element.ALIGN_LEFT));
+            gradeTable.AddCell(GradeHeaderCell("Credits", Element.ALIGN_CENTER));
+            gradeTable.AddCell(GradeHeaderCell("Grades", Element.ALIGN_CENTER));
 
             bool shade = false;
             foreach (var s in subjects)
@@ -250,19 +323,24 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             }
             doc.Add(gradeTable);
 
-            float[] gpaColW = { contentWidth * 0.80f, contentWidth * 0.20f };
+            // ── GPA row ───────────────────────────────────────────────
+            float[] gpaColW = { contentWidth * 0.87f, contentWidth * 0.13f };
             var gpaTable = new PdfPTable(gpaColW)
             {
                 TotalWidth = contentWidth,
                 LockedWidth = true,
-                SpacingAfter = 4 * MM,
+                SpacingAfter = 5 * MM,
             };
-            gpaTable.AddCell(GpaCell("Grade Point Average (GPA):", F_GPA_L, Element.ALIGN_LEFT, BaseColor.WHITE));
-            gpaTable.AddCell(GpaCell($"{gwa:F2}", F_GPA_V, Element.ALIGN_CENTER, new BaseColor(240, 240, 240)));
+            gpaTable.AddCell(GpaCell("Grade Point Average (GPA):",
+                                     F_GPA_L, Element.ALIGN_LEFT, BaseColor.WHITE));
+            gpaTable.AddCell(GpaCell($"{gwa:F2}",
+                                     F_GPA_V, Element.ALIGN_CENTER, new BaseColor(240, 240, 240)));
             doc.Add(gpaTable);
         }
 
+        // ─────────────────────────────────────────────────────────────────
         //  CELL HELPERS
+        // ─────────────────────────────────────────────────────────────────
         private static PdfPCell SemCell(string text, PdfFont font, int align, bool lastCol) =>
             new PdfPCell(new Phrase(text, font))
             {
@@ -279,10 +357,10 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
                 BorderWidthRight = lastCol ? 1f : 0f,
             };
 
-        private static PdfPCell GradeHeaderCell(string text) =>
+        private static PdfPCell GradeHeaderCell(string text, int align = Element.ALIGN_CENTER) =>
             new PdfPCell(new Phrase(text, F_TH))
             {
-                HorizontalAlignment = Element.ALIGN_CENTER,
+                HorizontalAlignment = align,
                 VerticalAlignment = Element.ALIGN_MIDDLE,
                 BackgroundColor = MAROON,
                 PaddingTop = 5,
@@ -321,7 +399,9 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
                 BorderWidth = 1f,
             };
 
+        // ─────────────────────────────────────────────────────────────────
         //  UTILITIES
+        // ─────────────────────────────────────────────────────────────────
         private static Paragraph CenterPara(string text, PdfFont font) =>
             new Paragraph(text, font) { Alignment = Element.ALIGN_CENTER };
 
@@ -333,6 +413,17 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             double tw = subjects.Where(e => e.Remarks == "PASSED").Sum(e => e.Equivalent * e.Units);
             int tu = subjects.Where(e => e.Remarks == "PASSED").Sum(e => e.Units);
             return tu > 0 ? Math.Round(tw / tu, 2) : 0;
+        }
+
+        private static string DeriveAcademicStanding(double gwa, int failedCount)
+        {
+            if (failedCount >= 3) return "Academic Dismissal";
+            if (failedCount > 0) return "Probationary";
+            if (gwa > 0 && gwa <= 1.45) return "University Scholar";
+            if (gwa > 0 && gwa <= 1.75) return "College Scholar";
+            if (gwa > 0 && gwa <= 2.00) return "Dean's List";
+            if (gwa > 0 && gwa <= 3.00) return "Good Standing";
+            return "Conditional";
         }
     }
 }
