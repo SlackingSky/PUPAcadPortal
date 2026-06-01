@@ -203,17 +203,17 @@ namespace PUPAcadPortal
             {
                 using (var context = new AppDbContext())
                 {
-                    var adminRole = context.Roles.FirstOrDefault(r => r.RoleName == "Professor");
+                    var role = context.Roles.FirstOrDefault(r => r.RoleName == "Professor");
 
 
-                    if (adminRole == null)
+                    if (role == null)
                     {
-                        adminRole = new Role
+                        role = new Role
                         {
                             RoleName = "Professor"
                         };
 
-                        context.Roles.Add(adminRole);
+                        context.Roles.Add(role);
                         context.SaveChanges();
                     }
 
@@ -222,10 +222,10 @@ namespace PUPAcadPortal
 
                     var newUser = new User
                     {
-                        RoleId = adminRole.RoleId,
+                        RoleId = role.RoleId,
                         Username = username.ToLower(),
                         PasswordHash = hashedPassword,
-                        Email = "DemoProfessor@university.edu",
+                        PersonalEmail = "DemoProfessor@university.edu",
                         FirstName = "Demo",
                         LastName = "Professor",
                         IsActive = true,
