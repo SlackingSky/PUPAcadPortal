@@ -33,7 +33,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             flpCards.SizeChanged += flpCards_SizeChanged;
         }
 
-        // ── Sample data ──────────────────────────────────────────────────────
+        //  Sample data 
 
         private void LoadSampleData()
         {
@@ -73,7 +73,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             lblNotifCount.Visible = _notifications.Count > 0;
         }
 
-        // ── Stats ─────────────────────────────────────────────────────────────
+        //  Stats 
 
         private void UpdateStats()
         {
@@ -91,7 +91,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             lblOverdueValue.Text = over.ToString();
         }
 
-        // ── Card rendering ────────────────────────────────────────────────────
+        //  Card rendering 
 
         private void RenderCards()
         {
@@ -143,7 +143,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 g.DrawRectangle(pen, 0, 0, card.Width - 1, card.Height - 1);
             };
 
-            // ── Maroon header strip ──────────────────────────────────────────
+            //  Maroon header strip 
             var pnlTop = new Panel
             {
                 Location = new Point(0, 0),
@@ -270,8 +270,8 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             return card;
         }
 
-        // ── Notification flyout ───────────────────────────────────────────────
-        // FIX (Image 6): Position the flyout relative to the Form's screen
+        //  Notification flyout 
+        // Position the flyout relative to the Form's screen
         //   coordinates so it appears correctly below the bell, anchored to
         //   the right edge.  The flyout now also has a maroon header with the
         //   bell icon and a proper scrollable list area.
@@ -283,7 +283,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 
         private void ShowNotificationFlyout()
         {
-            // ── Build flyout ──────────────────────────────────────────────────
+            //  Build flyout 
             var flyout = new Form
             {
                 Text = "",
@@ -302,14 +302,14 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 e.Graphics.DrawRectangle(pen, 0, 0, flyout.Width - 1, flyout.Height - 1);
             };
 
-            // ── Position: bottom-left corner of the bell icon ─────────────────
+            //  Position: bottom-left corner of the bell icon 
             // Convert the badge panel's screen position so the flyout appears
             // directly below the bell regardless of where the window is.
             var bellScreen = pnlNotifBadge.PointToScreen(
                 new Point(pnlNotifBadge.Width - flyout.Width, pnlNotifBadge.Height + 4));
             flyout.Location = bellScreen;
 
-            // ── Header ───────────────────────────────────────────────────────
+            //  Header 
             var pnlH = new Panel { Dock = DockStyle.Top, Height = 44, BackColor = Color.Maroon };
             pnlH.Controls.Add(new Label
             {
@@ -322,7 +322,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             });
             flyout.Controls.Add(pnlH);
 
-            // ── Notification list ─────────────────────────────────────────────
+            //  Notification list 
             var flp = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -433,7 +433,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             return t.ToString("MMM dd");
         }
 
-        // ── Events ────────────────────────────────────────────────────────────
+        //  Events 
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {

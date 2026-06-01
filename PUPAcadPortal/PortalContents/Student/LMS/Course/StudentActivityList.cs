@@ -37,7 +37,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             flp.SizeChanged += flp_SizeChanged;
         }
 
-        // ── Sample data ──────────────────────────────────────────────────────
+        //  Sample data 
 
         private void LoadSampleActivities()
         {
@@ -135,7 +135,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             };
         }
 
-        // ── Summary pills ─────────────────────────────────────────────────────
+        //  Summary pills 
 
         private void RebuildSummaryPills()
         {
@@ -175,7 +175,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             }
         }
 
-        // ── Render ────────────────────────────────────────────────────────────
+        //  Render 
 
         private void RenderRows()
         {
@@ -214,7 +214,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             flp.ResumeLayout(true);
         }
 
-        // ── Row builder ───────────────────────────────────────────────────────
+        //  Row builder 
 
         private Panel BuildRow(StudentActivityItem act)
         {
@@ -240,7 +240,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 e.Graphics.DrawLine(p, 6, row.Height - 1, row.Width - 1, row.Height - 1);
             };
 
-            // ── Left accent bar ───────────────────────────────────────────────
+            //  Left accent bar 
             Color typeColor = act.Type switch
             {
                 "Quiz" => Color.FromArgb(63, 81, 181),
@@ -252,7 +252,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             };
             row.Controls.Add(new Panel { Width = 6, Dock = DockStyle.Left, BackColor = typeColor });
 
-            // ── Type badge ────────────────────────────────────────────────────
+            //  Type badge 
             string typeDisplay = act.Type switch
             {
                 "FileUpload" => "File Upload",
@@ -270,7 +270,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 TextAlign = ContentAlignment.MiddleCenter
             });
 
-            // ── Title ─────────────────────────────────────────────────────────
+            //  Title 
             row.Controls.Add(new Label
             {
                 Text = act.Title,
@@ -281,7 +281,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 AutoEllipsis = true
             });
 
-            // ── Deadline ──────────────────────────────────────────────────────
+            //  Deadline 
             TimeSpan ts = act.Deadline - DateTime.Now;
             string dueText = ts.TotalDays < 0 ? "(Overdue)" :
                              ts.Days == 0 ? "(Due Today!)" :
@@ -299,7 +299,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 Size = new Size(360, 18)
             });
 
-            // ── Points / score ────────────────────────────────────────────────
+            //  Points / score 
             string ptsText = $"\uD83C\uDFC6  {act.Points} pts";
             if (act.Score.HasValue)
                 ptsText += $"     Score: {act.Score} / {act.Points}";
@@ -312,7 +312,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 Size = new Size(380, 18)
             });
 
-            // ── Status badge ──────────────────────────────────────────────────
+            //  Status badge 
             (Color bg, Color fg, string icon) st = effStatus switch
             {
                 "Submitted" => (Color.FromArgb(215, 245, 215), Color.FromArgb(27, 110, 27), "\u2714  Submitted"),
@@ -332,7 +332,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 TextAlign = ContentAlignment.MiddleCenter
             });
 
-            // ── Returned: remarks preview ─────────────────────────────────────
+            //  Returned: remarks preview 
             if (isReturned && !string.IsNullOrEmpty(act.Remarks))
             {
                 row.Controls.Add(new Label
@@ -355,8 +355,8 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                     });
             }
 
-            // ── Action buttons ────────────────────────────────────────────────
-            // FIX (Image 2): items that are Returned cannot be answered again.
+            //  Action buttons 
+            //items that are Returned cannot be answered again.
             bool locked = act.LockAfterDeadline && act.Deadline < DateTime.Now
                               && act.SubmissionStatus == "Pending";
             bool canAnswer = !locked && !isReturned && !isSubmitted;   // <-- key fix
@@ -420,9 +420,8 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             return row;
         }
 
-        // ── Remarks dialog ────────────────────────────────────────────────────
-        // FIX (Image 1): No system close button — dialog is closed only via the
-        //                maroon "Close" button inside the body.
+        //  Remarks dialog 
+        //  No system close button — dialog is closed only via the maroon "Close" button inside the body.
 
         private void ShowRemarksDialog(StudentActivityItem act)
         {
@@ -445,7 +444,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 e.Graphics.DrawRectangle(pen, 0, 0, dlg.Width - 1, dlg.Height - 1);
             };
 
-            // ── Maroon header (replaces system title bar) ─────────────────────
+            //  Maroon header (replaces system title bar) 
             var pnlH = new Panel
             {
                 Dock = DockStyle.Top,
@@ -469,7 +468,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             pnlH.MouseUp += (s, e) => dragging = false;
             dlg.Controls.Add(pnlH);
 
-            // ── Scrollable body ───────────────────────────────────────────────
+            //  Scrollable body 
             var body = new Panel
             {
                 Dock = DockStyle.Fill,
@@ -612,7 +611,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             return sz.Height;
         }
 
-        // ── Events ────────────────────────────────────────────────────────────
+        //  Events 
 
         private void btnBack_Click(object sender, EventArgs e) => OnBack?.Invoke();
         private void txtSearch_TextChanged(object sender, EventArgs e) { _searchTimer.Stop(); _searchTimer.Start(); }

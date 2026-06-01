@@ -8,9 +8,7 @@ using System.Windows.Forms;
 
 namespace PUPAcadPortal.PortalContents.Student.LMS
 {
-    // ═══════════════════════════════════════════════════════════════════════════
     //  ATTACHMENT MODEL
-    // ═══════════════════════════════════════════════════════════════════════════
     public class AnnouncementAttachment
     {
         public string FileName { get; set; } = string.Empty;
@@ -22,17 +20,14 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             : $"{FileSizeBytes / 1024.0:0.#} KB";
     }
 
-    // ═══════════════════════════════════════════════════════════════════════════
     //  MAIN USER CONTROL
-    // ═══════════════════════════════════════════════════════════════════════════
     public partial class AnnouncementContentStudent : UserControl
     {
-        // ── Design-time sizing snapshot for proportional scaling ──────────────
+        //  Design-time sizing snapshot for proportional scaling 
         private SizeF _designSize;
         private readonly Dictionary<Control, RectangleF> _origBounds = new();
         private readonly Dictionary<Control, float> _origFontSz = new();
 
-        // ── Data model ────────────────────────────────────────────────────────
         private class StudentAnnouncement
         {
             public int Id { get; set; }
@@ -50,13 +45,12 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             public List<AnnouncementAttachment> Attachments { get; set; } = new();
         }
 
-        // ── Filter / search state ─────────────────────────────────────────────
         private List<StudentAnnouncement> _announcements = new();
         private string _annCategoryFilter = "All Categories";
         private string _annSortOrder = "Latest First";
         private string _annSearchText = "";
 
-        // ── Category colour maps ──────────────────────────────────────────────
+        //  Category colour maps 
         private static readonly Dictionary<string, Color> CatIconColor = new()
         {
             ["General"] = Color.FromArgb(55, 138, 221),
@@ -78,15 +72,12 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             ["Urgent"] = Color.FromArgb(255, 235, 235),
         };
 
-        // ─────────────────────────────────────────────────────────────────────
         public AnnouncementContentStudent()
         {
             InitializeComponent();
         }
 
-        // ═════════════════════════════════════════════════════════════════════
         //  LOAD
-        // ═════════════════════════════════════════════════════════════════════
         private void AnnouncementContentStudent_Load(object sender, EventArgs e)
         {
             // ── Fix ComboBoxes: DropDownList so they are not editable ─────────
@@ -104,7 +95,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             cmbSort.Items.AddRange(new object[] { "Latest First", "Oldest First" });
             cmbSort.SelectedIndex = 0;
 
-            // ── FlowLayout setup ─────────────────────────────────────────────
+            //  FlowLayout setup 
             flpAnnouncements.AutoScroll = false;
             flpAnnouncements.FlowDirection = FlowDirection.TopDown;
             flpAnnouncements.WrapContents = false;
@@ -124,9 +115,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             SnapshotControls(this.Controls);
         }
 
-        // ═════════════════════════════════════════════════════════════════════
         //  RESIZE / SCALE
-        // ═════════════════════════════════════════════════════════════════════
         private void UserControl_Resize(object sender, EventArgs e)
         {
             if (_designSize.Width == 0 || _designSize.Height == 0) return;
@@ -179,9 +168,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             }
         }
 
-        // ═════════════════════════════════════════════════════════════════════
         //  WIRE CONTROLS
-        // ═════════════════════════════════════════════════════════════════════
         private void WireAnnouncementControls()
         {
             txtSearch.TextChanged += (s, e) =>
@@ -211,9 +198,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             };
         }
 
-        // ═════════════════════════════════════════════════════════════════════
         //  RENDER ANNOUNCEMENT LIST
-        // ═════════════════════════════════════════════════════════════════════
         private void RenderAnnouncements()
         {
             flpAnnouncements.SuspendLayout();
@@ -262,9 +247,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             flpAnnouncements.ResumeLayout();
         }
 
-        // ═════════════════════════════════════════════════════════════════════
         //  BUILD CARD  —  delegates to AnnouncementCardUC (separate UserControl)
-        // ═════════════════════════════════════════════════════════════════════
         private AnnouncementCardUC BuildCard(StudentAnnouncement a, int cardWidth)
         {
             var card = new AnnouncementCardUC();
@@ -305,14 +288,12 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             return card;
         }
 
-        // ═════════════════════════════════════════════════════════════════════
         //  DETAIL VIEW  — proper Form popup (fixes all layout/clipping issues)
-        // ═════════════════════════════════════════════════════════════════════
         private Panel _detailPanel; // kept for API compat; not used by popup path
 
         private void ShowDetailView(StudentAnnouncement a)
         {
-            // ── Accent colour — computed BEFORE marking as read ───────────────
+            //  Accent colour — computed BEFORE marking as read 
             // Maroon for unread/urgent; category colour for already-read items
             Color accent = (a.IsUrgent || !a.IsRead)
                 ? Color.FromArgb(139, 0, 0)
@@ -323,7 +304,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             RenderAnnouncements();
             BuildInsightsPanel();
 
-            // ── Constants ─────────────────────────────────────────────────────
+            //  Constants 
             const int POPUP_W = 800;
             const int HDR_H = 54;
             const int PAD = 28;       // left/right padding inside body
@@ -332,7 +313,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             // content width = popup - both paddings - scrollbar allowance
             int contentW = POPUP_W - PAD * 2 - SystemInformation.VerticalScrollBarWidth - 4;
 
-            // ── Build popup Form ──────────────────────────────────────────────
+            //  Build popup Form 
             var popup = new Form
             {
                 FormBorderStyle = FormBorderStyle.None,
@@ -345,7 +326,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             };
             popup.KeyDown += (s, ke) => { if (ke.KeyCode == Keys.Escape) popup.Close(); };
 
-            // ── Header ────────────────────────────────────────────────────────
+            //  Header 
             var hdr = new Panel
             {
                 Dock = DockStyle.Top,
@@ -372,7 +353,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             MakeRoundedRegion(pill, 8);
             hdr.Controls.Add(pill);
 
-            // ✕ close button
             var btnClose = new Button
             {
                 Size = new Size(32, 32),
@@ -406,7 +386,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             };
             hdr.MouseUp += (s, me) => dragging = false;
 
-            // ── Body scroll panel ─────────────────────────────────────────────
+            //  Body scroll panel 
             // body fills the form below the header
             var body = new Panel
             {
@@ -430,7 +410,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             // Running y inside inner, offset from top
             int y = PAD - 4;
 
-            // ── Title ─────────────────────────────────────────────────────────
+            //  Title 
             var lblTitle = new Label
             {
                 AutoSize = false,
@@ -446,7 +426,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             inner.Controls.Add(lblTitle);
             y += lblTitle.Height + 14;
 
-            // ── Meta chips ────────────────────────────────────────────────────
             // Build each chip, measure, wrap manually so we don't rely on
             // FlowLayoutPanel.GetPreferredSize (which is unreliable before layout)
             var chips = new List<(string text, Color fg, Color bg)>
@@ -487,7 +466,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             }
             y = cy + chipH + 16;    // y after last chip row
 
-            // ── Divider ───────────────────────────────────────────────────────
+            //  Divider 
             inner.Controls.Add(new Panel
             {
                 Location = new Point(PAD, y),
@@ -496,7 +475,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             });
             y += 14;
 
-            // ── Description ───────────────────────────────────────────────────
+            //  Description 
             var descFont = new Font("Segoe UI", 9.5f);
             var lblDesc = new Label
             {
@@ -513,7 +492,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             inner.Controls.Add(lblDesc);
             y += lblDesc.Height + 18;
 
-            // ── Attachments ───────────────────────────────────────────────────
+            // Attachments 
             if (a.Attachments.Count > 0)
             {
                 // section divider
@@ -548,7 +527,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
 
             y += PAD;   // bottom padding
 
-            // ── Size form to content ──────────────────────────────────────────
+            //  Size form to content 
             inner.Height = y;
 
             var screen = Screen.FromControl(this).WorkingArea;
@@ -571,7 +550,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             }
             ApplyCorners();
 
-            // ── Centre over the parent window ─────────────────────────────────
+            //  Centre over the parent window 
             var parentForm = this.FindForm();
             Rectangle refRect;
             if (parentForm != null && parentForm.Visible)
@@ -590,20 +569,15 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                 Math.Max(screen.Left, Math.Min(popup.Left, maxX)),
                 Math.Max(screen.Top, Math.Min(popup.Top, maxY)));
 
-            // ── Show ──────────────────────────────────────────────────────────
+            //  Show 
             IWin32Window owner = (this.FindForm() as IWin32Window) ?? this;
             popup.ShowDialog(owner);
         }
 
-        // ─────────────────────────────────────────────────────────────────────
         //  ATTACHMENT ROW
-        //  • Uses real resource icons from Properties.Resources
-        //  • Save button opens SaveFileDialog
-        //  • No Region on the row panel (buttons never clipped)
-        // ─────────────────────────────────────────────────────────────────────
         private Panel BuildAttachmentRow(AnnouncementAttachment att, int rowWidth)
         {
-            // ── Colours & labels per file type ────────────────────────────────
+            //  Colours & labels per file type 
             var (label, iconColor, bgColor) = att.FileType.ToLower() switch
             {
                 "pdf" => ("PDF", Color.FromArgb(192, 40, 40), Color.FromArgb(255, 242, 242)),
@@ -613,7 +587,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                 _ => ("FILE", Color.FromArgb(100, 100, 100), Color.FromArgb(240, 240, 240)),
             };
 
-            // ── Resource icon lookup (falls back gracefully if missing) ────────
             // Maps to your Resources: pdf_icon.png, ppt_icon.png, paper-clip.png,
             // images(1).png, document_icon.png
             Image resourceIcon = att.FileType.ToLower() switch
@@ -621,11 +594,11 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                 "pdf" => TryGetResource("pdf_icon"),
                 "docx" => TryGetResource("paper_clip"),          // paper-clip.png
                 "pptx" => TryGetResource("ppt_icon"),
-                "img" => TryGetResource("images_1"),            // images (1).png
+                "img" => TryGetResource("images_1"),           
                 _ => TryGetResource("document_icon"),
             };
 
-            // ── Row panel ─────────────────────────────────────────────────────
+            //  Row panel 
             const int ROW_H = 60;
             const int ICON_S = 42;
             const int ICON_X = 10;
@@ -661,7 +634,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                 pe.Graphics.DrawPath(border, gp);
             };
 
-            // ── Icon badge ────────────────────────────────────────────────────
+            //  Icon badge 
             if (resourceIcon != null)
             {
                 // Real resource image inside a coloured rounded box
@@ -702,7 +675,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                 row.Controls.Add(badge);
             }
 
-            // ── File name ─────────────────────────────────────────────────────
+            //  File name 
             int nameW = rowWidth - TEXT_X - BTN_AREA - 4;
             row.Controls.Add(new Label
             {
@@ -716,7 +689,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                 BackColor = Color.Transparent,
             });
 
-            // ── Type + size ───────────────────────────────────────────────────
+            //  Type + size 
             row.Controls.Add(new Label
             {
                 AutoSize = true,
@@ -727,7 +700,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                 BackColor = Color.Transparent,
             });
 
-            // ── Buttons (View + Save) ─────────────────────────────────────────
+            // ── Buttons (View + Save) 
             int btnY = (ROW_H - BTN_H) / 2;
             int btnSaveX = rowWidth - BTN_W - 8;
             int btnViewX = btnSaveX - BTN_W - BTN_GAP;
@@ -787,7 +760,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             catch { return null; }
         }
 
-        // ── View: open with the system's default viewer ───────────────────────
+        //  View: open with the system's default viewer 
         private static void HandleViewFile(AnnouncementAttachment att)
         {
             // If you store real file paths in att, replace the MessageBox with:
@@ -838,24 +811,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             }
         }
 
-        private void CloseDetailView()
-        {
-            // Legacy stub — popup Form is self-closing; kept so nothing breaks
-            if (_detailPanel != null)
-            {
-                if (_detailPanel.Tag is Panel overlay)
-                    pnlAnnounce.Controls.Remove(overlay);
-                pnlAnnounce.Controls.Remove(_detailPanel);
-                _detailPanel.Dispose();
-                _detailPanel = null;
-            }
-            RenderAnnouncements();
-            BuildInsightsPanel();
-        }
-
-        // ═════════════════════════════════════════════════════════════════════
-        //  PINNED PANEL
-        // ═════════════════════════════════════════════════════════════════════
+        
         private void BuildPinnedPanel()
         {
             flpPinned.Controls.Clear();
@@ -927,9 +883,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             }
         }
 
-        // ═════════════════════════════════════════════════════════════════════
         //  CATEGORY PANEL
-        // ═════════════════════════════════════════════════════════════════════
         private void BuildCategoryPanel()
         {
             flpCategories.Controls.Clear();
@@ -1009,9 +963,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             }
         }
 
-        // ═════════════════════════════════════════════════════════════════════
         //  INSIGHTS PANEL
-        // ═════════════════════════════════════════════════════════════════════
         private void BuildInsightsPanel()
         {
             var toRemove = pnlInsights.Controls
@@ -1054,9 +1006,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             AddRow("With Files", withFiles.ToString(), 142, Color.FromArgb(50, 100, 180));
         }
 
-        // ═════════════════════════════════════════════════════════════════════
         //  SEED DATA  (with attachments)
-        // ═════════════════════════════════════════════════════════════════════
         private void SeedAnnouncements()
         {
             _announcements = new List<StudentAnnouncement>
@@ -1243,32 +1193,9 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             }
         }
 
-        // ═════════════════════════════════════════════════════════════════════
         //  HELPERS
-        // ═════════════════════════════════════════════════════════════════════
         private static int R(float v) => (int)Math.Round(v);
 
-        private static Panel MakeHRule(int x, int y, int width)
-        {
-            return new Panel
-            {
-                Location = new Point(x, y),
-                Size = new Size(width, 1),
-                BackColor = Color.FromArgb(230, 230, 230),
-            };
-        }
-
-        private static void ApplyRoundedCorners(Control c, int radius)
-        {
-            var path = new GraphicsPath();
-            var r = new Rectangle(0, 0, c.Width, c.Height);
-            path.AddArc(r.X, r.Y, radius * 2, radius * 2, 180, 90);
-            path.AddArc(r.Right - radius * 2, r.Y, radius * 2, radius * 2, 270, 90);
-            path.AddArc(r.Right - radius * 2, r.Bottom - radius * 2, radius * 2, radius * 2, 0, 90);
-            path.AddArc(r.X, r.Bottom - radius * 2, radius * 2, radius * 2, 90, 90);
-            path.CloseFigure();
-            c.Region = new Region(path);
-        }
 
         private static void MakeRoundedRegion(Control c, int radius)
         {

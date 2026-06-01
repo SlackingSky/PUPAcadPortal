@@ -7,16 +7,11 @@ using System.Windows.Forms;
 
 namespace PUPAcadPortal.PortalContents.Student.LMS
 {
-    // ═══════════════════════════════════════════════════════════════════════════
-    //  ANNOUNCEMENT CARD  — separate UserControl
-    // ═══════════════════════════════════════════════════════════════════════════
+    //  ANNOUNCEMENT CARD 
     public partial class AnnouncementCardUC : UserControl
     {
-        // ── Events ────────────────────────────────────────────────────────────
         public event EventHandler<int> CardClicked;
         public event EventHandler<int> PinToggled;
-
-        // ── State ─────────────────────────────────────────────────────────────
         private int _announcementId;
         private bool _isRead;
         private bool _isPinned;
@@ -24,7 +19,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
         private string _category = string.Empty;
         private Color _accentColor;
 
-        // ── Category colour maps ──────────────────────────────────────────────
         public static readonly Dictionary<string, Color> CatIconColor = new()
         {
             ["General"] = Color.FromArgb(55, 138, 221),
@@ -46,7 +40,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             ["Urgent"] = Color.FromArgb(255, 235, 235),
         };
 
-        // ── Resource name map — matches your Properties.Resources exactly ─────
         // Resource filenames (without extension) as they appear in the Resources folder
         private static readonly Dictionary<string, string> CatResourceName = new()
         {
@@ -59,7 +52,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             ["Urgent"] = "urgent1",            // urgent1.png
         };
 
-        // ─────────────────────────────────────────────────────────────────────
         public AnnouncementCardUC()
         {
             InitializeComponent();
@@ -70,7 +62,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             this.Height = 115;
         }
 
-        // ═════════════════════════════════════════════════════════════════════
         //  PUBLIC LOAD METHOD
         // ═════════════════════════════════════════════════════════════════════
         public void Load(

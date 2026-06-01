@@ -12,7 +12,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
     {
         private readonly QRScanResult _result;
 
-        // Drag support
         private bool _drag;
         private System.Drawing.Point _dragStart;
 
@@ -21,7 +20,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             InitializeComponent();
             _result = result;
 
-            // Wire up rounding events
             this.Resize += (s, e) => ApplyRounded(12);
             this.Shown += (s, e) => ApplyRounded(12);
 
@@ -30,7 +28,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
 
         private void PopulateDynamicData()
         {
-            // Update colors and text based on validation state
             iconStrip.BackColor = _result.IsValid
                 ? Color.FromArgb(242, 255, 248)
                 : Color.FromArgb(255, 243, 243);
@@ -42,7 +39,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
                 ? "Review the details below and confirm to record your attendance."
                 : "The QR code was decoded but the content format is unrecognised.";
 
-            // Populate Grid Data
             var rows = new[]
             {
                 ("Course Code",  _result.CourseCode ?? "–"),
@@ -92,7 +88,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             Region = new Region(path);
         }
 
-        // --- Event Handlers (Wired in Designer) ---
 
         private void BtnX_Click(object sender, EventArgs e)
         {
@@ -112,7 +107,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             Close();
         }
 
-        // Drag Support Events
         private void TitleBar_MouseDown(object sender, MouseEventArgs e)
         {
             _drag = true;
@@ -131,7 +125,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             _drag = false;
         }
 
-        // Custom Paint Events
         private void IconStrip_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.DrawLine(new Pen(Color.FromArgb(220, 220, 235)),

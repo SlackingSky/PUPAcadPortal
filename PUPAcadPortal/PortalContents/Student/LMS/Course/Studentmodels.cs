@@ -3,30 +3,20 @@ using System.Collections.Generic;
 
 namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 {
-    // ─── Course ───────────────────────────────────────────────────────────────
-    // Extends the original StudentCourse with optional new fields.
-    // The original already has: Id, Name, Code, Instructor,
-    //   ActivityCount, PendingCount, SubmittedCount, OverdueCount
-    public class StudentCourse
+        public class StudentCourse
     {
         public int Id { get; set; }
         public string Name { get; set; } = "";
         public string Code { get; set; } = "";
         public string Instructor { get; set; } = "";
-        public string Schedule { get; set; } = "";   // new
-        public string Room { get; set; } = "";   // new
+        public string Schedule { get; set; } = "";   
+        public string Room { get; set; } = "";   
         public int ActivityCount { get; set; }
         public int PendingCount { get; set; }
         public int SubmittedCount { get; set; }
         public int OverdueCount { get; set; }
     }
 
-    // ─── Activity ──────────────────────────────────────────────────────────────
-    // Extends the original StudentActivityItem.
-    // Original already has: Id, Title, Type, Instructions, Deadline, Points,
-    //   SubmissionStatus, SubmittedAt, ReturnedAt, Score, Remarks,
-    //   EssayDraft, Questions, Answers, UploadedFileName, SubmissionNote,
-    //   Attachments, LockAfterDeadline
     public class StudentActivityItem
     {
         public int Id { get; set; }
@@ -42,8 +32,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 
         public int? Score { get; set; }
         public string Remarks { get; set; } = "";
-
-        // new — feedback details
         public string ScoreBreakdown { get; set; } = "";
         public string Suggestions { get; set; } = "";
 
@@ -70,8 +58,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
         public string EffectiveStatus => IsOverdue ? "Overdue" : SubmissionStatus;
     }
 
-    // ─── Quiz Question ─────────────────────────────────────────────────────────
-    // Same as original ActivityQuestion
+    
     public class ActivityQuestion
     {
         public int Number { get; set; }
@@ -82,14 +69,13 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
         public string CorrectAnswer { get; set; } = "";
     }
 
-    // ─── Attachment ────────────────────────────────────────────────────────────
-    // Extends original ActivityAttachment (original only had FileName, FilePath).
+    //  Attachment 
     public class ActivityAttachment
     {
         public string FileName { get; set; } = "";
         public string FilePath { get; set; } = "";
-        public long FileSize { get; set; }       // new
-        public string FileType { get; set; } = "other"; // new: pdf|docx|pptx|image|other
+        public long FileSize { get; set; }       
+        public string FileType { get; set; } = "other"; //  pdf|docx|pptx|image|other
 
         // Computed helper — avoids referencing it in Designer
         public string FormattedSize =>
@@ -98,7 +84,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             FileSize > 0 ? $"{FileSize} B" : "";
     }
 
-    // ─── Notification ──────────────────────────────────────────────────────────
+    //  Notification 
     public class StudentNotification
     {
         public string Title { get; set; } = "";

@@ -11,7 +11,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
 {
     public partial class AttendanceControl : UserControl
     {
-        // ─── Runtime State ────────────────────────────────────────────────────────
+        //  Runtime State 
         private List<SubjectMeta> _subjects = new();
         private Dictionary<string, List<AttRecord>> _records = new();
         private string _selectedCode = null;
@@ -21,7 +21,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
         private const double REQUIRED_PCT = 80.0;
         private const int LATE_PER_ABS = 3;
 
-        // ─── Constructor ─────────────────────────────────────────────────────────
+        //  Constructor 
         public AttendanceControl()
         {
             InitializeComponent();
@@ -31,67 +31,12 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
 
         
 
-        private Panel MakeSummaryCard(string title, string value, Color accent,
-            out Label titleLbl, out Label valueLbl)
-        {
-            var card = new Panel
-            {
-                BackColor = Color.White,
-                Dock = DockStyle.Fill,
-                Margin = new Padding(4, 0, 4, 0)
-            };
-            card.Paint += (s, e) => DrawCardBorder(e.Graphics, card, accent);
-
-            // Left accent bar
-            var bar = new Panel
-            {
-                BackColor = accent,
-                Location = new Point(0, 0),
-                Size = new Size(4, card.Height),
-                Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left
-            };
-            card.Resize += (s, e) => bar.Height = card.Height;
-
-            titleLbl = new Label
-            {
-                Text = title,
-                Font = new Font("Segoe UI", 8.5f, FontStyle.Bold),
-                ForeColor = Color.FromArgb(100, 100, 120),
-                AutoSize = false,
-                Dock = DockStyle.Top,
-                Height = 30,
-                TextAlign = ContentAlignment.BottomLeft,
-                Padding = new Padding(14, 0, 0, 0)
-            };
-
-            valueLbl = new Label
-            {
-                Text = value,
-                Font = new Font("Segoe UI", 24f, FontStyle.Bold),
-                ForeColor = accent,
-                AutoSize = false,
-                Dock = DockStyle.Fill,
-                TextAlign = ContentAlignment.MiddleLeft,
-                Padding = new Padding(12, 0, 0, 8)
-            };
-
-            card.Controls.Add(valueLbl);
-            card.Controls.Add(titleLbl);
-            card.Controls.Add(bar);
-            return card;
-        }
-
-        
-
         private static void DrawCardBorder(Graphics g, Panel card, Color accent)
         {
             using var pen = new Pen(Color.FromArgb(235, 235, 240), 1);
             g.DrawRectangle(pen, 0, 0, card.Width - 1, card.Height - 1);
         }
 
-        // =========================================================================
-        //  MINI STATS BAR  (progress bar + counts)
-        // =========================================================================
         
 
         private void DrawSegmentedProgress(object sender, PaintEventArgs e)
@@ -129,17 +74,10 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             g.FillRectangle(bE, xP, 0, wE, h);
         }
 
-        // =========================================================================
-        //  QR ATTENDANCE HISTORY STRIP
-        // =========================================================================
         
 
         
         
-
-        // =========================================================================
-        //  GRID AUTO-SIZER
-        // =========================================================================
         private static void AutoSizeGrid(DataGridView dgv, int maxH)
         {
             if (dgv == null) return;
@@ -149,9 +87,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             dgv.ScrollBars = desired > maxH ? ScrollBars.Vertical : ScrollBars.None;
         }
 
-        // =========================================================================
-        //  SEED DATA
-        // =========================================================================
         private void SeedData()
         {
             var defs = new[]
@@ -179,7 +114,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             var sem2Strt = new DateTime(2026, 2, 1);
             var sem2End = new DateTime(2026, 5, 31);
 
-            // Populate course combobox
             cmbCourse.Items.Clear();
             cmbCourse.Items.Add("All Courses");
             foreach (var d in defs)
@@ -234,9 +168,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             _ => "No excuse submitted"
         };
 
-        // =========================================================================
-        //  FILTERING
-        // =========================================================================
         private List<AttRecord> FilteredRecords(string code)
         {
             if (!_records.TryGetValue(code, out var all)) return new();
@@ -261,9 +192,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             return q.ToList();
         }
 
-        // =========================================================================
-        //  COMPUTE TOTALS
-        // =========================================================================
+       
         private void ComputeTotals()
         {
             _total = _present = _absent = _late = _excused = 0;
@@ -282,9 +211,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
                 : 0;
         }
 
-        // =========================================================================
-        //  REFRESH ALL
-        // =========================================================================
         private void RefreshAll()
         {
             _selectedCode = null;
@@ -298,9 +224,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             RefreshQRGrid();
         }
 
-        // =========================================================================
         //  REFRESH CARDS
-        // =========================================================================
         private void RefreshCards()
         {
             lblOverallPct.Text = $"{_pct}%";
@@ -343,9 +267,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             });
         }
 
-        // =========================================================================
         //  REFRESH MINI STATS
-        // =========================================================================
         private void RefreshMiniStats()
         {
             lblMiniPresent.Text = $"● Present: {_present}";
@@ -356,9 +278,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             pnlProgress?.Invalidate();
         }
 
-        // =========================================================================
         //  SUBJECTS GRID
-        // =========================================================================
         private DataTable _subjectsDT;
         private void RefreshSubjectsGrid()
         {
@@ -445,9 +365,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             RefreshQRGrid();
         }
 
-        // =========================================================================
         //  LOGS GRID
-        // =========================================================================
         private DataTable _logsDT;
         private void RefreshLogsGrid()
         {
@@ -515,9 +433,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             }
         }
 
-        // =========================================================================
         //  QR GRID
-        // =========================================================================
         private DataTable _qrDT;
         private void RefreshQRGrid()
         {
@@ -558,9 +474,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
 
         
 
-        // =========================================================================
         //  VIEW DETAILS POPUP
-        // =========================================================================
         private void OnViewDetailsClick(object sender, EventArgs e)
         {
             var atRiskList = new List<AtRiskSubjectInfo>();
@@ -583,16 +497,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             }
             AtRiskPopup.Show(this.FindForm(), atRiskList);
         }
-
-        
-
-
-
-
-       
-
-        
-
         private static void ApplyGridHeaderStyle(DataGridView dgv)
         {
             dgv.EnableHeadersVisualStyles = false;
@@ -609,9 +513,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             dgv.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(251, 251, 254);
         }
 
-        // =========================================================================
         //  INNER MODELS
-        // =========================================================================
         private class AttRecord
         {
             public DateTime Date { get; set; }
@@ -631,13 +533,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             public string Schedule { get; set; }
         }
 
-        // =========================================================================
-        //  PUBLIC API  – called by AttendanceContentStudent after a QR confirm
-        // =========================================================================
-        /// <summary>
-        /// Inserts a QR-scanned attendance record into the in-memory store and
-        /// refreshes every visible grid and card so the student sees it instantly.
-        /// </summary>
         public void RecordQRAttendance(QRScanResult result)
         {
             if (result == null || string.IsNullOrWhiteSpace(result.CourseCode)) return;
@@ -673,9 +568,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             RefreshAll();
         }
 
-        // =========================================================================
         //  LOAD
-        // =========================================================================
         private void AttendanceControl_Load(object sender, EventArgs e)
         {
             SeedData();

@@ -52,9 +52,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             SeedDemoHistory();
         }
 
-        // =====================================================================
-        //  UI EVENT HANDLERS & LAYOUT (Replaces programmatic creation)
-        // =====================================================================
         private void MainAreaPanel_Resize(object sender, EventArgs e)
         {
             if (mainAreaPanel == null || pnlUpload == null) return;
@@ -158,7 +155,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             }
         }
 
-        // Populates the information side bar texts programmatically just like before.
         private void BuildInfoSidebarContent()
         {
             var title = new Label { Text = "How to use", Font = new Font("Segoe UI", 10f, FontStyle.Bold), ForeColor = Color.FromArgb(128, 0, 0), AutoSize = true, Dock = DockStyle.Top, Height = 28 };
@@ -191,9 +187,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             pnlInfoSide.Controls.AddRange(new Control[] { fmtBox, fmtTitle, sep2, stepsPanel, sep1, title });
         }
 
-        // =====================================================================
-        //  GRID CONFIGURATION
-        // =====================================================================
         private void SetupHistoryGrid()
         {
             ApplyGridStyle(dgvHistory);
@@ -246,9 +239,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
         private static DataGridViewTextBoxColumn FillCol(string name, string header, bool centre) =>
             new DataGridViewTextBoxColumn { Name = name, HeaderText = header, DataPropertyName = name, AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill, ReadOnly = true, DefaultCellStyle = { Alignment = centre ? DataGridViewContentAlignment.MiddleCenter : DataGridViewContentAlignment.MiddleLeft } };
 
-        // =====================================================================
-        //  MODE SWITCHING
-        // =====================================================================
         private void BtnModeUpload_Click(object sender, EventArgs e) => SwitchMode(ScanMode.Upload);
         private void BtnModeCamera_Click(object sender, EventArgs e) => SwitchMode(ScanMode.Camera);
 
@@ -283,9 +273,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             btn.ForeColor = active ? Color.White : Color.FromArgb(80, 80, 100);
         }
 
-        // =====================================================================
-        //  UPLOAD MODE
-        // =====================================================================
         private void BtnUpload_Click(object sender, EventArgs e)
         {
             using (var dlg = new OpenFileDialog { Title = "Select QR Code Image", Filter = "Image files|*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.tif;*.tiff|All files|*.*" })
@@ -337,9 +324,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             }
         }
 
-        // =====================================================================
-        //  CAMERA MODE
-        // =====================================================================
         private void PopulateCameraList()
         {
             try
@@ -459,9 +443,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             }
         }
 
-        // =====================================================================
-        //  CORE DECODING & PAYLOAD HANDLING
-        // =====================================================================
         private static string DecodeQR(Bitmap bmp)
         {
             try
@@ -506,10 +487,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
         {
             var result = ParsePayload(raw);
 
-            // Replace with your actual implementation of QRConfirmDialog
-            // using (var dlg = new QRConfirmDialog(result)) {
-            //     if (dlg.ShowDialog(this.FindForm()) != DialogResult.OK) return;
-            // }
 
             _historyDT.Rows.Add(result.ScanTime.ToString("HH:mm:ss"), result.CourseCode, result.CourseName, result.Period, result.Session, "Recorded");
             ShowResultSuccess(result);
@@ -539,9 +516,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             return r;
         }
 
-        // =====================================================================
-        //  UI FEEDBACK UPDATES
-        // =====================================================================
         private void ShowResultSuccess(QRScanResult r)
         {
             pnlResultAccent.BackColor = Color.FromArgb(0, 150, 70);
@@ -572,9 +546,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             pnlResult.Height = 0;
         }
 
-        // =====================================================================
-        //  HELPERS & CLEANUP
-        // =====================================================================
         private static GraphicsPath RoundedRect(Rectangle r, int radius)
         {
             var path = new GraphicsPath();

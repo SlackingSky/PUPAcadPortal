@@ -6,16 +6,10 @@ using System.Windows.Forms;
 
 namespace PUPAcadPortal.PortalForms
 {
-    /// <summary>
-    /// Event-creation dialog. Supports all EventType values including Quiz and SchoolEvent.
-    /// Opened from CalendarContentStudent and UrDay right-click menus.
-    /// </summary>
     public partial class AddEventForm : Form
     {
-        // ── Public result ─────────────────────────────────────────
         public CalendarEvent CreatedEvent { get; private set; }
 
-        // ── Theme colours ─────────────────────────────────────────
         private static readonly Color C_Primary = Color.FromArgb(128, 0, 0);
         private static readonly Color C_Surface = Color.FromArgb(250, 250, 252);
         private static readonly Color C_Border = Color.FromArgb(210, 210, 218);
@@ -23,21 +17,10 @@ namespace PUPAcadPortal.PortalForms
         private static readonly Color C_TextMid = Color.FromArgb(80, 80, 92);
 
         private readonly DateTime _date;
-
-        // ─────────────────────────────────────────────────────────
-        //  Constructors
-        // ─────────────────────────────────────────────────────────
-
-        /// <summary>Opens the dialog for <paramref name="date"/>, defaulting to Class type.</summary>
         public AddEventForm(DateTime date) : this(date, EventType.Class) { }
 
-        /// <summary>Opens the dialog for <paramref name="date"/> with a pre-selected event type.</summary>
         public AddEventForm(DateTime date, EventType preselect) : this(date, preselect, "") { }
 
-        /// <summary>
-        /// Opens the dialog for <paramref name="date"/> with a pre-selected event type
-        /// and a pre-filled start time (e.g. from a click on the weekly/daily timeline).
-        /// </summary>
         public AddEventForm(DateTime date, EventType preselect, string startTime)
         {
             _date = date;
@@ -55,9 +38,6 @@ namespace PUPAcadPortal.PortalForms
             btnSave.Click += BtnSave_Click;
         }
 
-        // ─────────────────────────────────────────────────────────
-        //  Initialisation helpers
-        // ─────────────────────────────────────────────────────────
         private void PopulateTypeCombo(EventType preselect)
         {
             cmbType.Items.Clear();
@@ -77,12 +57,8 @@ namespace PUPAcadPortal.PortalForms
             }
         }
 
-        // ─────────────────────────────────────────────────────────
-        //  Save handler
-        // ─────────────────────────────────────────────────────────
         private void BtnSave_Click(object sender, EventArgs e)
         {
-            // Title required
             if (string.IsNullOrWhiteSpace(txtTitle.Text))
             {
                 MessageBox.Show("Please enter an event title.", "Required",

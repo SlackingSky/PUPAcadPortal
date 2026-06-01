@@ -59,9 +59,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             StartCountdown();
         }
 
-        // ─────────────────────────────────────────────────────────────────────
         // HEADER
-        // ─────────────────────────────────────────────────────────────────────
 
         private void BuildHeader()
         {
@@ -83,11 +81,8 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             }
         }
 
-        // ─────────────────────────────────────────────────────────────────────
         // DEADLINE COUNTDOWN BAR
-        // FIX (Image 3): The bar is added as a Dock=Top strip INSIDE pnlBody
-        //   instead of floating over it, so nothing overlaps.
-        // ─────────────────────────────────────────────────────────────────────
+        //  The bar is added as a Dock=Top strip INSIDE pnlBody nstead of floating over it, so nothing overlaps.
 
         private void BuildDeadlineBar()
         {
@@ -155,11 +150,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             return $"\u26A0  {ts.Minutes}m {ts.Seconds}s remaining \u2014 hurry!";
         }
 
-        // ─────────────────────────────────────────────────────────────────────
-        // CONTENT ROUTER
-        // FIX (Image 3): Content is added to a scrollable inner Panel that
-        //   sits BELOW the deadline bar, so nothing overlaps.
-        // ─────────────────────────────────────────────────────────────────────
+        // Content is added to a scrollable inner Panel that  sits BELOW the deadline bar, so nothing overlaps.
 
         // The scrollable area where each view adds its controls.
         private Panel _scrollArea;
@@ -186,9 +177,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             }
         }
 
-        // ─────────────────────────────────────────────────────────────────────
         // SHARED helpers — now add controls to _scrollArea, not pnlBody
-        // ─────────────────────────────────────────────────────────────────────
 
         private Panel BuildInstructionsPanel(int width)
         {
@@ -371,10 +360,8 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             return pnl;
         }
 
-        // ══════════════════════════════════════════════════════════════════════
         // ESSAY VIEW
-        // FIX (Image 3): All controls added to _scrollArea with correct Y.
-        // ══════════════════════════════════════════════════════════════════════
+        // All controls added to _scrollArea with correct Y.
 
         private void BuildEssayView()
         {
@@ -542,10 +529,8 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             OnBack?.Invoke();
         }
 
-        // ══════════════════════════════════════════════════════════════════════
         // FILE UPLOAD VIEW
-        // FIX (Image 3): All controls added to _scrollArea with correct Y.
-        // ══════════════════════════════════════════════════════════════════════
+        // All controls added to _scrollArea with correct Y.
 
         private void BuildFileUploadView()
         {
@@ -766,11 +751,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             return $"{bytes} B";
         }
 
-        // ══════════════════════════════════════════════════════════════════════
-        // QUIZ / LONG QUIZ VIEW  (Image 4 & 5)
-        // FIX: Both Quiz AND LongQuiz use the same "all questions on one page"
-        //      maroon-card design shown in Image 5.
-        // ══════════════════════════════════════════════════════════════════════
+        // Both Quiz AND LongQuiz use the same "all questions on one page" maroon-card design shown in Image 5.
 
         private void BuildQuizView()
         {
@@ -796,7 +777,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                                          : pnlBody.ClientSize.Width - 40);
             int y = 16;
 
-            // ── Instructions banner ────────────────────────────────────────
+            //  Instructions banner 
             if (!string.IsNullOrEmpty(_activity.Instructions))
             {
                 var instrPnl = BuildInstructionsPanel(w);
@@ -805,7 +786,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 y += instrPnl.MinimumSize.Height + 16;
             }
 
-            // ── Question number pills ──────────────────────────────────────
+            //  Question number pills 
             int pillSize = 28;
             int pillGap = 4;
             var pnlPills = new Panel
@@ -834,7 +815,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             _scrollArea.Controls.Add(pnlPills);
             y += pnlPills.Height + 12;
 
-            // ── Render every question as a maroon card (Image 5 style) ─────
+            //  Render every question as a maroon card (Image 5 style) 
             for (int qi = 0; qi < totalQ; qi++)
             {
                 var q = _activity.Questions[qi];
@@ -910,7 +891,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 
                 string saved = _answers.ContainsKey(q.Number) ? _answers[q.Number] : "";
 
-                // ── Answer area (white background) ─────────────────────────
+                //  Answer area (white background) 
                 if (q.QuestionType is "MultipleChoice" or "TrueFalse")
                 {
                     char letter = 'A';
@@ -1063,7 +1044,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 y += questionY + 16;
             }
 
-            // ── Submit / status bar ────────────────────────────────────────
+            //  Submit / status bar 
             if (!isSubm)
             {
                 var btnSubmit = new buttonRounded
@@ -1128,10 +1109,8 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             OnBack?.Invoke();
         }
 
-        // ══════════════════════════════════════════════════════════════════════
         // RECITATION VIEW
-        // FIX (Image 3): All controls added to _scrollArea with correct Y.
-        // ══════════════════════════════════════════════════════════════════════
+        // All controls added to _scrollArea with correct Y.
 
         private void BuildRecitationView()
         {
@@ -1242,9 +1221,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             }
         }
 
-        // ─────────────────────────────────────────────────────────────────────
         // BACK
-        // ─────────────────────────────────────────────────────────────────────
 
         private void btnBack_Click(object sender, EventArgs e)
         {

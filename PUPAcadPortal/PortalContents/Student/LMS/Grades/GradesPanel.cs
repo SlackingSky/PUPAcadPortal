@@ -10,9 +10,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
 {
     public partial class GradesPanel : UserControl
     {
-        // ─────────────────────────────────────────────────────────────────────
-        //  DATA STRUCTURES
-        // ─────────────────────────────────────────────────────────────────────
 
         private struct GradeEntry
         {
@@ -34,9 +31,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             public string InstructorFeedback;
         }
 
-        // ─────────────────────────────────────────────────────────────────────
         //  STATIC SAMPLE DATA  – AY 2025-2026
-        // ─────────────────────────────────────────────────────────────────────
 
         private readonly List<GradeEntry> _midterm = new List<GradeEntry>
         {
@@ -145,9 +140,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             {"W","–","Withdrawal"},          {"P","–","Passed (Non-credit)"}, {"","",""}
         };
 
-        // ─────────────────────────────────────────────────────────────────────
         //  RUNTIME STATE
-        // ─────────────────────────────────────────────────────────────────────
 
         private bool _isMidterm = true;
         private GradeEntry? _detailSubject = null;      // currently expanded row
@@ -156,9 +149,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
         private DataTable _dtMid, _dtFinal, _dtMid2, _dtFinal2;
         private DataTable _dt2425s1Mid, _dt2425s1Final, _dt2425s2Mid, _dt2425s2Final;
 
-        // ─────────────────────────────────────────────────────────────────────
         //  CONSTRUCTOR
-        // ─────────────────────────────────────────────────────────────────────
 
         public GradesPanel()
         {
@@ -185,9 +176,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             RefreshAll();
         }
 
-        // ─────────────────────────────────────────────────────────────────────
         //  DATA / BINDING
-        // ─────────────────────────────────────────────────────────────────────
 
         private void BuildDataTables()
         {
@@ -253,7 +242,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
                 dgvScale.Rows.Add(vals);
             }
 
-            // ── Fix: size dgvScale to show every row without a scrollbar ──
+            // size dgvScale to show every row without a scrollbar ──
             // Height = column header + all data rows
             int dgvH = dgvScale.ColumnHeadersHeight
                        + rows * dgvScale.RowTemplate.Height
@@ -261,7 +250,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             dgvScale.ScrollBars = ScrollBars.None;
             dgvScale.Height = dgvH;
 
-            // ── Resize pnlScale so the grid is fully visible ──
+            //  Resize pnlScale so the grid is fully visible 
             // pnlScale padding is 9px top + 9px bottom; lblScale sits at y=9 with
             // height ~19px; dgvScale is positioned at y=37 (9 padding + 19 label + 9 gap).
             int pnlH = 37 + dgvH + 9;   // top offset + grid height + bottom padding
@@ -269,9 +258,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             pnlScale.MinimumSize = new Size(0, pnlH);
         }
 
-        // ─────────────────────────────────────────────────────────────────────
         //  REFRESH / FILTER
-        // ─────────────────────────────────────────────────────────────────────
 
         private void RefreshAll()
         {
@@ -339,23 +326,9 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             else if (gwa > 0) lblGWA.ForeColor = Color.FromArgb(220, 38, 38);
         }
 
-        // ─────────────────────────────────────────────────────────────────────
-        //  SCHOLASTIC STATUS  (per-subject: Regular / Irregular)
-        //  ACADEMIC STANDING  (summary card: GWA-based PUPSIS classification)
-        // ─────────────────────────────────────────────────────────────────────
-
-        /// <summary>
-        /// Returns "Regular" or "Irregular" for a given subject row.
-        /// In PUPSIS this reflects whether the student takes the subject
-        /// as part of their normal curriculum load.
-        /// </summary>
         private static string GetSubjectEnrollmentType(GradeEntry entry) =>
             entry.ScholasticStatus;   // already "Regular" | "Irregular" from data
 
-        /// <summary>
-        /// Derives the GWA-based academic standing shown in the summary card.
-        /// This is separate from the per-subject Regular/Irregular status.
-        /// </summary>
         private static string DeriveAcademicStanding(double gwa, int failedCount)
         {
             if (failedCount >= 3) return "Academic Dismissal";
@@ -389,9 +362,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
                 ? Color.FromArgb(180, 83, 9)     // amber for irregular
                 : Color.FromArgb(21, 128, 61);   // green for regular
 
-        // ─────────────────────────────────────────────────────────────────────
-        //  DATASET RESOLUTION
-        // ─────────────────────────────────────────────────────────────────────
 
         private (List<GradeEntry> mid, List<GradeEntry> final) GetActiveData()
         {
@@ -420,9 +390,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             return null;
         }
 
-        // ─────────────────────────────────────────────────────────────────────
-        //  DETAIL PANEL
-        // ─────────────────────────────────────────────────────────────────────
 
         private void ShowDetailPanel(GradeEntry entry)
         {
@@ -462,9 +429,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             _detailSubject = null;
         }
 
-        // ─────────────────────────────────────────────────────────────────────
         //  CHART PAINTING
-        // ─────────────────────────────────────────────────────────────────────
 
         private void PnlTrendChart_Paint(object sender, PaintEventArgs e)
         {
@@ -633,9 +598,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             }
         }
 
-        // ─────────────────────────────────────────────────────────────────────
         //  EVENT HANDLERS
-        // ─────────────────────────────────────────────────────────────────────
 
         private void CmbFilterChanged(object sender, EventArgs e)
         {
@@ -944,9 +907,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
         }
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
-    //  HELPER DIALOG – Add Note
-    // ─────────────────────────────────────────────────────────────────────────
     internal class NoteDialog : Form
     {
         public string NoteText { get; private set; } = "";

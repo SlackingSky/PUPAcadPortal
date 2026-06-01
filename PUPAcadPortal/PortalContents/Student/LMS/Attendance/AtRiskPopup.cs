@@ -6,7 +6,6 @@ using System.Windows.Forms;
 
 namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
 {
-    // Data model passed into the popup
     public class AtRiskSubjectInfo
     {
         public string Code { get; set; }
@@ -15,12 +14,10 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
         public int Absent { get; set; }
     }
 
-    // At-Risk Popup Form
     public partial class AtRiskPopup : Form
     {
         private readonly List<AtRiskSubjectInfo> _items;
 
-        // State variables for window dragging
         private bool _dragging = false;
         private Point _dragStart = Point.Empty;
 
@@ -33,16 +30,13 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
 
         private void PopulateDynamicContent()
         {
-            // Set dynamic form sizing
             this.Size = new Size(520, _items.Count == 0 ? 260 : 180 + _items.Count * 90 + 70);
 
-            // Configure Subtitle
             lblSub.Text = _items.Count == 0
                 ? "All subjects are within the 80% attendance requirement."
                 : $"{_items.Count} subject{(_items.Count > 1 ? "s" : "")} below the 80% attendance threshold.";
             lblSub.ForeColor = _items.Count == 0 ? Color.FromArgb(0, 130, 60) : Color.FromArgb(160, 80, 0);
 
-            // Populate the scroll panel
             if (_items.Count == 0)
             {
                 var pnlOk = new Panel

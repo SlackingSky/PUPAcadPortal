@@ -14,22 +14,12 @@ using System.Windows.Forms;
 
 namespace PUPAcadPortal.PortalContents.Student.LMS
 {
-    // ─────────────────────────────────────────────────────────────
-    //  View-mode enum
-    // ─────────────────────────────────────────────────────────────
     public enum CalendarView { Monthly, Weekly, Daily }
 
-    // ─────────────────────────────────────────────────────────────
-    //  Extended event type that covers the new student categories
-    // ─────────────────────────────────────────────────────────────
     public enum StudentEventCategory { Class, ActivityDeadline, Quiz, Exam, SchoolEvent, Personal, Consultation }
 
-    // ─────────────────────────────────────────────────────────────
-    //  CalendarContentStudent  (replaces the original file entirely)
-    // ─────────────────────────────────────────────────────────────
     public partial class CalendarContentStudent : UserControl
     {
-        // ── State ────────────────────────────────────────────────
         public static int _year = DateTime.Now.Year;
         public static int _month = DateTime.Now.Month;
         private DateTime _currentWeekStart;
@@ -38,11 +28,8 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
         private EventType? _activeFilter = null;
         private UrDay _selectedCell;
         private DateTime _lastSelectedDate = DateTime.Now.Date;
-
-        // ── Monthly-view controls ────────────────────────────────
         private FlowLayoutPanel pnlDayHeaders;
 
-        // ── Bottom detail panel ──────────────────────────────────
         private Panel pnlBottom;
         private Label lblSelectedDate;
         private FlowLayoutPanel flpDayEvents;
@@ -50,18 +37,18 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
         private Label lblNoEvents;
         private Label lblNoUpcoming;
 
-        // ── View-switcher / toolbar controls ────────────────────
+        //  View-switcher / toolbar controls 
         private Panel pnlToolbar;
         private Button btnMonthly, btnWeekly, btnDaily;
         private Label lblViewTitle;
         private Panel pnlViewBody;     // swappable content area
 
-        // ── Reminder banner ──────────────────────────────────────
+        //  Reminder banner 
         private Panel pnlReminderBanner;
         private Label lblReminderText;
         private System.Windows.Forms.Timer _reminderTimer;
 
-        // ── Theme palette ────────────────────────────────────────
+        //  Theme palette 
         private static readonly Color C_Primary = Color.FromArgb(128, 0, 0);   // Maroon
         private static readonly Color C_PrimaryLt = Color.FromArgb(160, 32, 32);
         private static readonly Color C_Accent = Color.FromArgb(66, 133, 244);   // Blue
@@ -71,7 +58,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
         private static readonly Color C_TextMid = Color.FromArgb(80, 80, 92);
         private static readonly Color C_TextLight = Color.FromArgb(150, 150, 160);
 
-        // ── Event-type colour helpers ────────────────────────────
+        //  Event-type colour helpers 
         private static Color GetCategoryColor(StudentEventCategory cat)
         {
             return cat switch
@@ -100,9 +87,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             };
         }
 
-        // ─────────────────────────────────────────────────────────
         //  Constructor
-        // ─────────────────────────────────────────────────────────
         public CalendarContentStudent()
         {
             InitializeComponent();
@@ -154,9 +139,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             };
         }
 
-        // ─────────────────────────────────────────────────────────
         //  Toolbar  (view buttons + nav + title)
-        // ─────────────────────────────────────────────────────────
         private void BuildToolbar()
         {
             const int H = 52;
@@ -287,9 +270,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             }
         }
 
-        // ─────────────────────────────────────────────────────────
         //  Swappable view body  (sits between toolbar and bottom panel)
-        // ─────────────────────────────────────────────────────────
         private void BuildViewBody()
         {
             pnlViewBody = new Panel
@@ -313,9 +294,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             pnlViewBody.Height = pnlCalendar.ClientSize.Height - TOOLBAR_H - BOTTOM_H - bannerOffset;
         }
 
-        // ─────────────────────────────────────────────────────────
         //  Reminder banner
-        // ─────────────────────────────────────────────────────────
         private void BuildReminderBanner()
         {
             pnlReminderBanner = new Panel
@@ -425,9 +404,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             PositionBottomPanel();
         }
 
-        // ─────────────────────────────────────────────────────────
         //  View switching
-        // ─────────────────────────────────────────────────────────
         private void SwitchView(CalendarView v)
         {
             _view = v;
@@ -463,9 +440,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             }
         }
 
-        // ─────────────────────────────────────────────────────────
         //  Navigation
-        // ─────────────────────────────────────────────────────────
         private void NavigatePrev()
         {
             switch (_view)
@@ -511,9 +486,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             OnDaySelected(DateTime.Now.Date);
         }
 
-        // ─────────────────────────────────────────────────────────
         //  ── MONTHLY VIEW ─────────────────────────────────────────
-        // ─────────────────────────────────────────────────────────
         private FlowLayoutPanel _fpMonth;
         private FlowLayoutPanel _fpDayHeaders;
 
@@ -663,9 +636,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             ResizeMonthCells();
         }
 
-        // ─────────────────────────────────────────────────────────
-        //  ── WEEKLY VIEW ──────────────────────────────────────────
-        // ─────────────────────────────────────────────────────────
+        //   WEEKLY VIEW 
         private void BuildWeeklyView()
         {
             pnlViewBody.Controls.Clear();
@@ -689,7 +660,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             const int hourH = 48;
             const int totalH = hourH * 24;
 
-            // ── Header strip (fixed, non-scrolling) ──────────────
+            //  Header strip (fixed, non-scrolling) 
             var header = new Panel
             {
                 Left = 0,
@@ -715,7 +686,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                 BackColor = Color.Transparent,
             });
 
-            // ── Scroll panel (vertical only) ─────────────────────
+            //  Scroll panel (vertical only) 
             // We place a fixed-size inner canvas inside so AutoScroll
             // gives us ONLY a vertical scrollbar (no horizontal).
             var scroll = new Panel
@@ -755,7 +726,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             scroll.Controls.Add(vbar);
             canvas.Top = -(7 * hourH);
 
-            // ── Time gutter column ────────────────────────────────
+            //  Time gutter column 
             var timeCol = new Panel
             {
                 Left = 0,
@@ -789,7 +760,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             }
             canvas.Controls.Add(timeCol);
 
-            // ── Lay out 7 day columns ─────────────────────────────
+            //   Lay out 7 day columns 
             // Calculate colW once outer has its real width.
             // We use a local method so we can call it both now and on resize.
             void LayoutColumns()
@@ -1036,9 +1007,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             block.BringToFront();
         }
 
-        // ─────────────────────────────────────────────────────────
-        //  ── DAILY VIEW ───────────────────────────────────────────
-        // ─────────────────────────────────────────────────────────
+        //   DAILY VIEW 
         private void BuildDailyView()
         {
             pnlViewBody.Controls.Clear();
@@ -1332,7 +1301,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                         c.Width = tw - c.Left - 8;
             };
 
-            // ── Click hint label ──────────────────────────────────
+            //  Click hint label 
             var hintLbl = new Label
             {
                 Text = allEvs.Count == 0
@@ -1379,15 +1348,8 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             };
         }
 
-        // ─────────────────────────────────────────────────────────
         //  Time-slot interaction helpers (Weekly + Daily)
-        // ─────────────────────────────────────────────────────────
 
-        /// <summary>
-        /// Opens the Add Event dialog for <paramref name="date"/> with
-        /// <paramref name="timeStr"/> pre-filled as the start time, saves the
-        /// result, and refreshes all views.
-        /// </summary>
         private void OpenWeekAddEvent(DateTime date, string timeStr)
         {
             using var dlg = new AddEventForm(date, EventType.Class, timeStr);
@@ -1403,9 +1365,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             }
         }
 
-        /// <summary>
-        /// Opens the Add Note dialog for <paramref name="date"/> and saves result.
-        /// </summary>
         private void OpenWeekAddNote(DateTime date)
         {
             var dict = SharedCalendarData.StudentNotes;
@@ -1422,12 +1381,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                 SwitchView(_view);
             }
         }
-
-        /// <summary>
-        /// Builds a right-click context menu for a time-slot in the Weekly or Daily view.
-        /// <paramref name="getTime"/> is called lazily so the time reflects the actual
-        /// mouse position at the moment the menu is opened.
-        /// </summary>
         private ContextMenuStrip BuildTimeSlotContextMenu(
             DateTime date,
             Func<string> getTime,
@@ -1436,7 +1389,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             var cms = new ContextMenuStrip();
             cms.Font = new Font("Segoe UI", 9f);
 
-            // ── Add Event sub-menu ────────────────────────────────
+            //  Add Event sub-menu 
             var addEvent = new ToolStripMenuItem("🗓  Add Event");
 
             foreach (var (icon, label, etype) in new[] {
@@ -1467,11 +1420,11 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                 addEvent.DropDownItems.Add(item);
             }
 
-            // ── Add Note ──────────────────────────────────────────
+            //  Add Note 
             var addNote = new ToolStripMenuItem("🗒  Add / Edit Note");
             addNote.Click += (s, e) => OpenWeekAddNote(date);
 
-            // ── View day ──────────────────────────────────────────
+            //  View day 
             var viewDay = new ToolStripMenuItem("📅  Open Day View");
             viewDay.Click += (s, e) =>
             {
@@ -1585,9 +1538,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             block.BringToFront();
         }
 
-        // ─────────────────────────────────────────────────────────
         //  Event Detail Dialog
-        // ─────────────────────────────────────────────────────────
         private void ShowEventDetailDialog(CalendarEvent ev, DateTime date)
         {
             using var frm = new Form
@@ -1697,9 +1648,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             frm.ShowDialog();
         }
 
-        // ─────────────────────────────────────────────────────────
         //  Bottom panel  (selected-day detail + upcoming)
-        // ─────────────────────────────────────────────────────────
         private void BuildBottomPanel()
         {
             const int BOTTOM_H = 240;
@@ -1717,7 +1666,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             // Top separator
             pnlBottom.Controls.Add(new Panel { Height = 1, Dock = DockStyle.Top, BackColor = C_Border });
 
-            // ── Left panel: selected-day events ──────────────────
+            //  Left panel: selected-day events 
             var pnlLeft = new Panel
             {
                 Left = 0,
@@ -1797,7 +1746,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             flpDayEvents.Controls.Add(lblNoEvents);
             pnlLeft.Controls.Add(flpDayEvents);
 
-            // ── Divider ───────────────────────────────────────────
+            //  Divider 
             pnlBottom.Controls.Add(new Panel
             {
                 Left = 508,
@@ -1808,7 +1757,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                 Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left,
             });
 
-            // ── Right panel: upcoming ─────────────────────────────
+            //  Right panel: upcoming 
             var pnlRight = new Panel
             {
                 Left = 516,
@@ -1862,9 +1811,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                     rp.Width = pnlBottom.Width - rp.Left - 8;
         }
 
-        // ─────────────────────────────────────────────────────────
         //  Quick-add student event
-        // ─────────────────────────────────────────────────────────
         private void QuickAddStudentEvent()
         {
             using var dlg = new AddEventForm(_lastSelectedDate);
@@ -1885,9 +1832,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                 if (ctrl is UrDay ud) ud.RefreshEventPills();
         }
 
-        // ─────────────────────────────────────────────────────────
         //  Filter / legend helpers
-        // ─────────────────────────────────────────────────────────
         private Button MakeFilterButton(string label, Color accent)
         {
             var btn = new Button
@@ -1939,9 +1884,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             }
         }
 
-        // ─────────────────────────────────────────────────────────
         //  Day detail / upcoming refresh
-        // ─────────────────────────────────────────────────────────
         private void OnDaySelected(DateTime date)
         {
             if (_fpMonth != null)
@@ -2134,9 +2077,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             return strip;
         }
 
-        // ─────────────────────────────────────────────────────────
         //  Resize handling
-        // ─────────────────────────────────────────────────────────
         private void OnFormResized(object sender, EventArgs e)
         {
             if (!this.IsHandleCreated || this.IsDisposed) return;
@@ -2153,9 +2094,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             }));
         }
 
-        // ─────────────────────────────────────────────────────────
         //  Utility helpers
-        // ─────────────────────────────────────────────────────────
         private static DateTime StartOfWeek(DateTime dt)
         {
             int diff = (7 + (int)dt.DayOfWeek) % 7;
