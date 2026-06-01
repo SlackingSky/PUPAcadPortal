@@ -22,7 +22,6 @@ namespace PUPAcadPortal
 
         private void WireEvents()
         {
-            btnClose.Click += (s, e) => ClosePanel();
             btnCancel.Click += (s, e) => ClosePanel();
             btnPost.Click += BtnPost_Click;
             btnBrowse.Click += BtnBrowse_Click;

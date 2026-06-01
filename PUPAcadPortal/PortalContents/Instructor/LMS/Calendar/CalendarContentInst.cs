@@ -1,5 +1,4 @@
-﻿
-using PUPAcadPortal.Data;
+﻿using PUPAcadPortal.Data;
 using PUPAcadPortal.Utils;
 using System;
 using System.Collections.Generic;
@@ -21,14 +20,14 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
         private enum CalendarView { Monthly, Weekly, Daily }
         private CalendarView _currentView = CalendarView.Monthly;
         private DateTime _selectedDate = DateTime.Now.Date;
-        private DateTime _navDate = DateTime.Now.Date;   // controls which month/week/day is shown
-        private EventType? _activeFilter = null;                // kept for UrDay compat
+        private DateTime _navDate = DateTime.Now.Date;
+        private EventType? _activeFilter = null;
 
         // ── Layout panels ─────────────────────────────────────────────────────
-        private Panel _pnlTopBar;      // toolbar above calendar
-        private Panel _pnlViewArea;    // holds the active view
-        private Panel _pnlSidebar;     // right sidebar (upcoming + legend)
-        private Panel _pnlBottomDetail;// selected-day detail strip
+        private Panel _pnlTopBar;
+        private Panel _pnlViewArea;
+        private Panel _pnlSidebar;
+        private Panel _pnlBottomDetail;
         private FlowLayoutPanel _pnlDayHeaders;
         private FacultyWeekView _weekView = null!;
         private FacultyDayView _dayView = null!;
@@ -48,7 +47,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
         private Button _btnSync;
         private Label _lblNotifBadge;
 
-        // Bottom detail
+        // Bottom detail – left column (day events) + right column (upcoming)
         private Label _lblSelDate;
         private FlowLayoutPanel _flpDayEvents;
         private FlowLayoutPanel _flpUpcoming;
@@ -58,7 +57,10 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
         // Active filter buttons
         private readonly List<Button> _filterBtns = new();
 
-        // Constants
+        // Wheel filter – kept so we can toggle IsEnabled
+        private CalendarWheelFilter _wheelFilter = null!;
+
+        // ── Constants ─────────────────────────────────────────────────────────
         private static readonly Color Maroon = Color.FromArgb(136, 14, 79);
         private static readonly Color MaroonLight = Color.FromArgb(252, 240, 248);
         private static readonly Color MaroonDark = Color.FromArgb(100, 8, 55);
@@ -86,8 +88,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             BuildNotifPanel();
             BuildSearchPanel();
 
-            // Wire drag-drop bridge: when an event is dropped onto a new cell,
-            // move it and refresh every view automatically.
             FacultyCalendarDragDropBridge.Attach(() =>
             {
                 RefreshMonthCells();
@@ -99,15 +99,15 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
 
             this.Resize += (s, ev) => LayoutAll();
 
-            // Scroll wheel → navigate months/weeks
-            var wheelFilter = new CalendarWheelFilter(pnlCalendar, delta =>
+            // ── Scroll wheel → navigate months/weeks/days ────────────────────
+            // Disabled automatically when search or notification panel is open.
+            _wheelFilter = new CalendarWheelFilter(pnlCalendar, delta =>
             {
                 if (delta > 0) NavigatePrev();
                 else NavigateNext();
             });
-            Application.AddMessageFilter(wheelFilter);
+            Application.AddMessageFilter(_wheelFilter);
 
-            // UrDay integration
             UrDay.DaySelected += OnDaySelected;
 
             this.BeginInvoke((Action)(() =>
@@ -140,16 +140,20 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
 
             int x = 10;
 
-            // ── Prev / Next / Today ─────────────────────────────────────────
             _btnPrev = MakeToolBtn("‹", x, 11, 32, 30); _btnPrev.Font = new Font("Segoe UI", 13f); x += 36;
             _btnToday = MakeToolBtn("Today", x, 11, 58, 30); x += 62;
             _btnNext = MakeToolBtn("›", x, 11, 32, 30); _btnNext.Font = new Font("Segoe UI", 13f); x += 44;
 
             _btnPrev.Click += (s, e) => NavigatePrev();
             _btnNext.Click += (s, e) => NavigateNext();
-            _btnToday.Click += (s, e) => { _navDate = DateTime.Now.Date; _selectedDate = _navDate; RefreshCurrentView(); OnDaySelected(_selectedDate); };
+            _btnToday.Click += (s, e) =>
+            {
+                _navDate = DateTime.Now.Date;
+                _selectedDate = _navDate;
+                RefreshCurrentView();
+                OnDaySelected(_selectedDate);
+            };
 
-            // ── Month/Year label ─────────────────────────────────────────────
             _lblMonthYear = new Label
             {
                 Left = x,
@@ -164,7 +168,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             _pnlTopBar.Controls.Add(_lblMonthYear);
             x += 248;
 
-            // ── View toggle buttons ──────────────────────────────────────────
             _btnMonthly = MakeViewToggle("Monthly", x, 14, 72); x += 75;
             _btnWeekly = MakeViewToggle("Weekly", x, 14, 64); x += 67;
             _btnDaily = MakeViewToggle("Daily", x, 14, 56); x += 62;
@@ -174,7 +177,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             _btnDaily.Click += (s, e) => SwitchView(CalendarView.Daily);
             UpdateViewToggleVisual();
 
-            // ── Right-side actions ───────────────────────────────────────────
             _btnAddEvent = new Button
             {
                 Text = "+ Add Event",
@@ -222,8 +224,13 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             _btnSync.Click += (s, e) => SyncLMS();
             _pnlTopBar.Controls.Add(_btnSync);
 
-            // Notification bell
-            var pnlNotifWrap = new Panel { Width = 36, Height = 30, Anchor = AnchorStyles.Top | AnchorStyles.Right, BackColor = Color.Transparent };
+            var pnlNotifWrap = new Panel
+            {
+                Width = 36,
+                Height = 30,
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
+                BackColor = Color.Transparent,
+            };
             _btnNotif = new Button
             {
                 Text = "🔔",
@@ -255,11 +262,9 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             _btnNotif.Click += (s, e) => ToggleNotifications();
             _pnlTopBar.Controls.Add(pnlNotifWrap);
 
-            // Position right-side buttons on resize
             _pnlTopBar.Resize += (s, e) => PositionRightButtons();
             PositionRightButtons();
 
-            // Add all to toolbar
             foreach (Control c in new Control[]
                 { _btnPrev, _btnToday, _btnNext, _btnMonthly, _btnWeekly, _btnDaily })
                 _pnlTopBar.Controls.Add(c);
@@ -268,19 +273,10 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
         private void PositionRightButtons()
         {
             int right = _pnlTopBar.ClientSize.Width - 8;
-            _btnAddEvent.Left = right - _btnAddEvent.Width;
-            _btnAddEvent.Top = 11;
-            right -= _btnAddEvent.Width + 6;
+            _btnAddEvent.Left = right - _btnAddEvent.Width; _btnAddEvent.Top = 11; right -= _btnAddEvent.Width + 6;
+            _btnSearch.Left = right - _btnSearch.Width; _btnSearch.Top = 11; right -= _btnSearch.Width + 4;
+            _btnSync.Left = right - _btnSync.Width; _btnSync.Top = 11; right -= _btnSync.Width + 6;
 
-            _btnSearch.Left = right - _btnSearch.Width;
-            _btnSearch.Top = 11;
-            right -= _btnSearch.Width + 4;
-
-            _btnSync.Left = right - _btnSync.Width;
-            _btnSync.Top = 11;
-            right -= _btnSync.Width + 6;
-
-            // Notification wrap
             foreach (Control c in _pnlTopBar.Controls)
             {
                 if (c is Panel pnl && pnl.Controls.Contains(_btnNotif))
@@ -297,13 +293,8 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
         // ══════════════════════════════════════════════════════════════════════
         private void BuildViewArea()
         {
-            _pnlViewArea = new Panel
-            {
-                BackColor = Color.White,
-                Parent = pnlCalendar,
-            };
+            _pnlViewArea = new Panel { BackColor = Color.White, Parent = pnlCalendar };
 
-            // Day-of-week headers for monthly view
             _pnlDayHeaders = new FlowLayoutPanel
             {
                 FlowDirection = FlowDirection.LeftToRight,
@@ -326,122 +317,42 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
                     Height = 28,
                 });
 
-            // Monthly FlowLayoutPanel (mirrors FPLmonth for UrDay compat)
-            _flpMonth = new FlowLayoutPanel
-            {
-                BackColor = Color.White,
-                Parent = _pnlViewArea,
-            };
-            // Alias to the designer-declared FPLmonth so existing UrDay code works
+            _flpMonth = new FlowLayoutPanel { BackColor = Color.White, Parent = _pnlViewArea };
             FPLmonth = _flpMonth;
 
-            // Weekly view
             _weekView = new FacultyWeekView { Parent = _pnlViewArea, Visible = false };
             _weekView.EventClicked += ShowEventDetail;
             _weekView.DayHeaderClicked += d => { _selectedDate = d; OnDaySelected(d); };
             _weekView.SlotDoubleClicked += d => QuickAddEventAtTime(d);
 
-            // Daily view
             _dayView = new FacultyDayView { Parent = _pnlViewArea, Visible = false };
             _dayView.EventClicked += ShowEventDetail;
             _dayView.SlotDoubleClicked += d => QuickAddEventAtTime(d);
         }
 
         // ══════════════════════════════════════════════════════════════════════
-        //  SIDEBAR
+        //  SIDEBAR  (empty – legend moved to bottom strip)
         // ══════════════════════════════════════════════════════════════════════
         private void BuildSidebar()
         {
             _pnlSidebar = new Panel
             {
-                Width = 260,
+                Width = 0,   // sidebar no longer needed; collapse it
                 BackColor = Color.White,
                 Parent = pnlCalendar,
                 Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom,
+                Visible = false,
             };
-            _pnlSidebar.Paint += (s, e) =>
-            {
-                using var p = new Pen(Color.FromArgb(220, 220, 220));
-                e.Graphics.DrawLine(p, 0, 0, 0, _pnlSidebar.Height);
-            };
-
-            // Upcoming events
-            var lblUp = new Label
-            {
-                Text = "Upcoming",
-                Left = 12,
-                Top = 8,
-                AutoSize = true,
-                Font = BoldFont,
-                ForeColor = Maroon,
-            };
-            _pnlSidebar.Controls.Add(lblUp);
-
-            // Legend
-            BuildLegend();
-
-            _flpUpcoming = new FlowLayoutPanel
-            {
-                Left = 0,
-                Top = 132,
-                FlowDirection = FlowDirection.TopDown,
-                WrapContents = false,
-                AutoScroll = true,
-                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom,
-            };
-            _flpUpcoming.HorizontalScroll.Enabled = false;
-            _flpUpcoming.HorizontalScroll.Visible = false;
-            _lblNoUpcoming = new Label { Text = "No upcoming events.", ForeColor = Color.Gray, AutoSize = true, Padding = new Padding(8) };
-            _flpUpcoming.Controls.Add(_lblNoUpcoming);
-            _pnlSidebar.Controls.Add(_flpUpcoming);
-        }
-
-        private void BuildLegend()
-        {
-            var types = new[]
-            {
-                (FacultyEventType.Class,        "Class"),
-                (FacultyEventType.Activity,     "Activity"),
-                (FacultyEventType.Quiz,         "Quiz"),
-                (FacultyEventType.LongQuiz,     "Long Quiz"),
-                (FacultyEventType.Deadline,     "Deadline"),
-                (FacultyEventType.Exam,         "Exam"),
-                (FacultyEventType.Consultation, "Consult"),
-                (FacultyEventType.PersonalNote, "Note"),
-            };
-
-            var flp = new FlowLayoutPanel
-            {
-                Left = 4,
-                Top = 28,
-                Width = _pnlSidebar.Width - 8,
-                Height = 96,
-                FlowDirection = FlowDirection.LeftToRight,
-                WrapContents = true,
-                BackColor = Color.Transparent,
-                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
-            };
-
-            foreach (var (t, name) in types)
-            {
-                var ev = new FacultyCalendarEvent { Type = t };
-                var chip = new Panel { Height = 20, BackColor = Color.Transparent, Margin = new Padding(0, 2, 10, 2) };
-                var dot = new Panel { Width = 10, Height = 10, Left = 0, Top = 5, BackColor = ev.GetColor() };
-                var lbl = new Label { Text = name, Left = 14, Top = 0, AutoSize = true, Font = SmallFont, ForeColor = Color.FromArgb(50, 50, 50), Height = 20 };
-                chip.Width = 14 + TextRenderer.MeasureText(name, SmallFont).Width + 6;
-                chip.Controls.Add(dot);
-                chip.Controls.Add(lbl);
-                flp.Controls.Add(chip);
-            }
-            _pnlSidebar.Controls.Add(flp);
         }
 
         // ══════════════════════════════════════════════════════════════════════
         //  BOTTOM DETAIL STRIP
+        //  Left half  → selected-day events (+ compact legend row)
+        //  Right half → upcoming events
         // ══════════════════════════════════════════════════════════════════════
         private void BuildBottomDetail()
         {
-            const int H = 210;
+            const int H = 220;   // extra 10 px for the legend chip row
 
             _pnlBottomDetail = new Panel
             {
@@ -456,26 +367,26 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
                 e.Graphics.DrawLine(p, 0, 0, _pnlBottomDetail.Width, 0);
             };
 
-            // Selected date label
+            // ── LEFT: selected-day events ─────────────────────────────────────
+
             _lblSelDate = new Label
             {
                 Text = "Select a day to manage events",
                 Left = 12,
-                Top = 8,
+                Top = 6,
                 AutoSize = true,
                 Font = BoldFont,
                 ForeColor = Maroon,
             };
             _pnlBottomDetail.Controls.Add(_lblSelDate);
 
-            // Add event button
             var btnAdd = new Button
             {
                 Text = "+ Add Event",
                 Left = 12,
-                Top = 30,
+                Top = 26,
                 Width = 100,
-                Height = 26,
+                Height = 24,
                 BackColor = Maroon,
                 ForeColor = Color.White,
                 FlatStyle = FlatStyle.Flat,
@@ -500,12 +411,14 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             foreach (var (label, ft) in filters)
             {
                 var cap = ft;
-                Color acc = ft == null ? Color.FromArgb(90, 90, 90) : new FacultyCalendarEvent { Type = ft.Value }.GetColor();
+                Color acc = ft == null
+                    ? Color.FromArgb(90, 90, 90)
+                    : new FacultyCalendarEvent { Type = ft.Value }.GetColor();
                 var btn = MakeFilterButton(label, acc);
-                btn.Left = fx; btn.Top = 32;
+                btn.Left = fx; btn.Top = 28;
                 btn.Click += (s, e) =>
                 {
-                    _activeFilter = null;   // for UrDay compat
+                    _activeFilter = null;
                     RefreshDayDetail(_selectedDate, cap);
                     HighlightFilterBtn(btn);
                 };
@@ -514,11 +427,13 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
                 fx += btn.Width + 5;
             }
 
-            // Day events list
+            // ── Compact legend row (bottom of the left column) ────────────────
+            BuildBottomLegend();
+
             _flpDayEvents = new FlowLayoutPanel
             {
                 Left = 0,
-                Top = 62,
+                Top = 56,
                 FlowDirection = FlowDirection.TopDown,
                 WrapContents = false,
                 AutoScroll = true,
@@ -529,6 +444,87 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             _lblNoEvents = new Label { Text = "No events for this day.", ForeColor = Color.Gray, AutoSize = true, Padding = new Padding(8) };
             _flpDayEvents.Controls.Add(_lblNoEvents);
             _pnlBottomDetail.Controls.Add(_flpDayEvents);
+
+            // ── Divider between left and right halves ─────────────────────────
+            var divider = new Panel
+            {
+                Width = 1,
+                BackColor = Color.FromArgb(220, 220, 220),
+                Top = 0,
+                Height = H,
+                Anchor = AnchorStyles.Top | AnchorStyles.Bottom,
+                Tag = "upcoming_divider",
+            };
+            _pnlBottomDetail.Controls.Add(divider);
+
+            // ── RIGHT: upcoming events ────────────────────────────────────────
+            var lblUp = new Label
+            {
+                Text = "Upcoming",
+                Top = 6,
+                AutoSize = true,
+                Font = BoldFont,
+                ForeColor = Maroon,
+                Tag = "upcoming_header",
+            };
+            _pnlBottomDetail.Controls.Add(lblUp);
+
+            _flpUpcoming = new FlowLayoutPanel
+            {
+                Top = 28,
+                FlowDirection = FlowDirection.TopDown,
+                WrapContents = false,
+                AutoScroll = true,
+                Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom,
+            };
+            _flpUpcoming.HorizontalScroll.Enabled = false;
+            _flpUpcoming.HorizontalScroll.Visible = false;
+            _lblNoUpcoming = new Label { Text = "No upcoming events.", ForeColor = Color.Gray, AutoSize = true, Padding = new Padding(8) };
+            _flpUpcoming.Controls.Add(_lblNoUpcoming);
+            _pnlBottomDetail.Controls.Add(_flpUpcoming);
+        }
+
+        /// <summary>
+        /// Builds a compact two-row legend chip strip inside the bottom detail panel,
+        /// pinned to the bottom-left corner. Tagged "bottom_legend" for LayoutAll.
+        /// </summary>
+        private void BuildBottomLegend()
+        {
+            var types = new[]
+            {
+                (FacultyEventType.Class,        "Class"),
+                (FacultyEventType.Activity,     "Activity"),
+                (FacultyEventType.Quiz,         "Quiz"),
+                (FacultyEventType.LongQuiz,     "Long Quiz"),
+                (FacultyEventType.Deadline,     "Deadline"),
+                (FacultyEventType.Exam,         "Exam"),
+                (FacultyEventType.Consultation, "Consult"),
+                (FacultyEventType.PersonalNote, "Note"),
+            };
+
+            var flp = new FlowLayoutPanel
+            {
+                Left = 4,
+                FlowDirection = FlowDirection.LeftToRight,
+                WrapContents = true,
+                Height = 44,
+                BackColor = Color.Transparent,
+                Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right,
+                Tag = "bottom_legend",
+            };
+
+            foreach (var (t, name) in types)
+            {
+                var ev = new FacultyCalendarEvent { Type = t };
+                var chip = new Panel { Height = 18, BackColor = Color.Transparent, Margin = new Padding(0, 1, 8, 1) };
+                var dot = new Panel { Width = 9, Height = 9, Left = 0, Top = 4, BackColor = ev.GetColor() };
+                var lbl = new Label { Text = name, Left = 13, Top = 0, AutoSize = true, Font = SmallFont, ForeColor = Color.FromArgb(50, 50, 50), Height = 18 };
+                chip.Width = 13 + TextRenderer.MeasureText(name, SmallFont).Width + 6;
+                chip.Controls.Add(dot);
+                chip.Controls.Add(lbl);
+                flp.Controls.Add(chip);
+            }
+            _pnlBottomDetail.Controls.Add(flp);
         }
 
         // ══════════════════════════════════════════════════════════════════════
@@ -541,6 +537,13 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
                 Parent = pnlCalendar,
                 Visible = false,
                 Anchor = AnchorStyles.Top | AnchorStyles.Right,
+            };
+            // Re-enable wheel scroll when the panel is closed via its ✕ button,
+            // but only when in Monthly view (Weekly/Daily need scroll for the timeline).
+            _notifPanel.CloseRequested += (s, e) =>
+            {
+                if (_wheelFilter != null && _currentView == CalendarView.Monthly)
+                    _wheelFilter.IsEnabled = true;
             };
         }
 
@@ -560,9 +563,10 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             {
                 _navDate = ev.Date;
                 _selectedDate = ev.Date;
-                SwitchView(CalendarView.Monthly);
+                SwitchView(CalendarView.Monthly);   // SwitchView sets IsEnabled correctly
                 OnDaySelected(ev.Date);
                 _searchPanel.Visible = false;
+                LayoutAll();
             };
         }
 
@@ -572,21 +576,19 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
         private void LayoutAll()
         {
             if (pnlCalendar == null) return;
-            const int SIDEBAR_W = 262;
-            const int BOTTOM_H = 210;
+            const int SIDEBAR_W = 0;    // sidebar removed – legend is in the bottom strip
+            const int BOTTOM_H = 220;
             const int TOPBAR_H = 52;
             const int SEARCH_H = 290;
+            const int LEGEND_H = 44;
 
             int cw = pnlCalendar.ClientSize.Width;
             int ch = pnlCalendar.ClientSize.Height;
 
-            // Top bar already docked
-
             // Search panel (below topbar, full width)
-            int searchTop = TOPBAR_H;
             if (_searchPanel != null)
             {
-                _searchPanel.Top = searchTop;
+                _searchPanel.Top = TOPBAR_H;
                 _searchPanel.Left = 0;
                 _searchPanel.Width = cw;
                 _searchPanel.Height = SEARCH_H;
@@ -594,52 +596,91 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
 
             // View area
             int viewTop = TOPBAR_H + (_searchPanel?.Visible == true ? SEARCH_H : 0);
-            int viewLeft = 0;
             int viewW = cw - SIDEBAR_W - 1;
             int viewH = ch - viewTop - BOTTOM_H;
 
             if (_pnlViewArea != null)
             {
-                _pnlViewArea.Left = viewLeft;
+                _pnlViewArea.Left = 0;
                 _pnlViewArea.Top = viewTop;
                 _pnlViewArea.Width = viewW;
                 _pnlViewArea.Height = viewH;
                 LayoutViewContents(viewW, viewH);
             }
 
-            // Sidebar
-            if (_pnlSidebar != null)
-            {
-                _pnlSidebar.Left = cw - SIDEBAR_W;
-                _pnlSidebar.Top = TOPBAR_H;
-                _pnlSidebar.Width = SIDEBAR_W;
-                _pnlSidebar.Height = ch - TOPBAR_H;
-            }
+            // Sidebar hidden – no sizing needed
 
-            // Bottom detail
+            // Bottom detail: left half = day events, right half = upcoming
             if (_pnlBottomDetail != null)
             {
                 _pnlBottomDetail.Left = 0;
                 _pnlBottomDetail.Top = ch - BOTTOM_H;
                 _pnlBottomDetail.Width = cw - SIDEBAR_W - 1;
                 _pnlBottomDetail.Height = BOTTOM_H;
-                _flpDayEvents.Width = _pnlBottomDetail.Width / 2;
-                _flpDayEvents.Height = BOTTOM_H - 68;
+
+                int totalW = _pnlBottomDetail.Width;
+                int halfW = totalW / 2;
+                int eventsH = BOTTOM_H - 56 - LEGEND_H;  // leaves room for legend at bottom
+                int upcomingH = BOTTOM_H - 32;
+
+                // Left: day-events FLP (sits between header row and bottom legend)
+                if (_flpDayEvents != null)
+                {
+                    _flpDayEvents.Width = halfW - 8;
+                    _flpDayEvents.Height = eventsH;
+                    _flpDayEvents.Top = 56;
+                }
+
+                // Bottom legend – pinned to the bottom of the left column
+                foreach (Control c in _pnlBottomDetail.Controls)
+                {
+                    if (c is FlowLayoutPanel leg && leg.Tag?.ToString() == "bottom_legend")
+                    {
+                        leg.Width = halfW - 8;
+                        leg.Top = BOTTOM_H - LEGEND_H;
+                        leg.Left = 4;
+                        break;
+                    }
+                }
+
+                // Divider
+                foreach (Control c in _pnlBottomDetail.Controls)
+                {
+                    if (c is Panel div && div.Tag?.ToString() == "upcoming_divider")
+                    {
+                        div.Left = halfW;
+                        div.Height = BOTTOM_H;
+                        break;
+                    }
+                }
+
+                // Right: "Upcoming" label
+                foreach (Control c in _pnlBottomDetail.Controls)
+                {
+                    if (c is Label lbl && lbl.Tag?.ToString() == "upcoming_header")
+                    {
+                        lbl.Left = halfW + 12;
+                        lbl.Top = 6;
+                        break;
+                    }
+                }
+
+                // Right: upcoming FLP
+                if (_flpUpcoming != null)
+                {
+                    _flpUpcoming.Left = halfW + 2;
+                    _flpUpcoming.Top = 28;
+                    _flpUpcoming.Width = totalW - halfW - 4;
+                    _flpUpcoming.Height = upcomingH;
+                }
             }
 
-            // Notifications popup
+            // Notifications popup (top-right overlay)
             if (_notifPanel != null)
             {
                 _notifPanel.Left = cw - _notifPanel.Width - 8;
                 _notifPanel.Top = TOPBAR_H + 4;
                 _notifPanel.Height = Math.Min(400, ch - TOPBAR_H - 16);
-            }
-
-            // Upcoming list in sidebar
-            if (_flpUpcoming != null)
-            {
-                _flpUpcoming.Width = SIDEBAR_W - 8;
-                _flpUpcoming.Height = ch - TOPBAR_H - 132;
             }
         }
 
@@ -665,21 +706,8 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
                 ResizeCalendarCells();
             }
 
-            if (_weekView != null)
-            {
-                _weekView.Left = 0;
-                _weekView.Top = 0;
-                _weekView.Width = w;
-                _weekView.Height = h;
-            }
-
-            if (_dayView != null)
-            {
-                _dayView.Left = 0;
-                _dayView.Top = 0;
-                _dayView.Width = w;
-                _dayView.Height = h;
-            }
+            if (_weekView != null) { _weekView.Left = 0; _weekView.Top = 0; _weekView.Width = w; _weekView.Height = h; }
+            if (_dayView != null) { _dayView.Left = 0; _dayView.Top = 0; _dayView.Width = w; _dayView.Height = h; }
         }
 
         // ══════════════════════════════════════════════════════════════════════
@@ -714,14 +742,22 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             _currentView = view;
             UpdateViewToggleVisual();
 
-            bool monthly = view == CalendarView.Monthly;
-            bool weekly = view == CalendarView.Weekly;
-            bool daily = view == CalendarView.Daily;
+            _pnlDayHeaders.Visible = view == CalendarView.Monthly;
+            _flpMonth.Visible = view == CalendarView.Monthly;
+            _weekView.Visible = view == CalendarView.Weekly;
+            _dayView.Visible = view == CalendarView.Daily;
 
-            _pnlDayHeaders.Visible = monthly;
-            _flpMonth.Visible = monthly;
-            _weekView.Visible = weekly;
-            _dayView.Visible = daily;
+            // Weekly and Daily views have their own internal scrollable timeline.
+            // Disable the month-navigation wheel filter so the user can scroll
+            // the hour grid without accidentally jumping weeks/days.
+            // Monthly view restores normal wheel-navigation behaviour,
+            // UNLESS the search or notification panel is currently open.
+            if (_wheelFilter != null)
+            {
+                bool overlayOpen = (_searchPanel?.Visible == true) ||
+                                   (_notifPanel?.Visible == true);
+                _wheelFilter.IsEnabled = (view == CalendarView.Monthly) && !overlayOpen;
+            }
 
             RefreshCurrentView();
         }
@@ -765,7 +801,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             int startDOW = (int)first.DayOfWeek;
             int daysInMonth = DateTime.DaysInMonth(dt.Year, dt.Month);
 
-            // Leading days from previous month
             if (startDOW > 0)
             {
                 DateTime prev = first.AddMonths(-1);
@@ -778,12 +813,10 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
                 }
             }
 
-            // Current month days
             for (int i = 1; i <= daysInMonth; i++)
                 _flpMonth.Controls.Add(new UrDay(i.ToString(), dt.Year, dt.Month, true,
                     GetHoliday(dt.Year, dt.Month, i), isStudent: false));
 
-            // Trailing days
             int total = _flpMonth.Controls.Count;
             int rem = total % 7;
             if (rem > 0)
@@ -796,7 +829,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
 
             ResizeCalendarCells();
 
-            // Highlight selected
             foreach (Control c in _flpMonth.Controls)
                 if (c is UrDay ud) ud.IsSelected = ud.CellDate == _selectedDate;
         }
@@ -812,8 +844,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
                 c.Height = 110;
                 c.Margin = new Padding(1);
             }
-
-            // Sync headers
             if (_pnlDayHeaders != null)
                 foreach (Control c in _pnlDayHeaders.Controls)
                     c.Width = cellW;
@@ -858,7 +888,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
                 .Where(ev => typeFilter == null || ev.Type == typeFilter)
                 .ToList();
 
-            // Notes
             if (notesDict.ContainsKey(date.Date) && !string.IsNullOrWhiteSpace(notesDict[date.Date]))
                 _flpDayEvents.Controls.Add(MakeEventCard(
                     "🗒 Note", notesDict[date.Date],
@@ -894,7 +923,10 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             _flpUpcoming.Controls.Clear();
             var upcoming = FacultyCalendarData.GetUpcoming(8);
 
-            if (upcoming.Count == 0) { _flpUpcoming.Controls.Add(_lblNoUpcoming); }
+            if (upcoming.Count == 0)
+            {
+                _flpUpcoming.Controls.Add(_lblNoUpcoming);
+            }
             else
             {
                 foreach (var item in upcoming)
@@ -909,7 +941,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
         }
 
         // ══════════════════════════════════════════════════════════════════════
-        //  EVENT CARDS (bottom strip)
+        //  EVENT CARDS
         // ══════════════════════════════════════════════════════════════════════
         private Panel MakeEventCard(string title, string body, Color accent,
                                     DateTime date, FacultyCalendarEvent? ev)
@@ -979,7 +1011,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
 
             if (ev != null)
             {
-                // Edit button
                 var btnEdit = new Button
                 {
                     Text = "✏",
@@ -998,7 +1029,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
                 btnEdit.Click += (s, e) => EditEvent(capturedEv, date);
                 card.Controls.Add(btnEdit);
 
-                // Delete button
                 var btnDel = new Button
                 {
                     Text = "✕",
@@ -1013,7 +1043,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
                     Cursor = Cursors.Hand,
                 };
                 btnDel.FlatAppearance.BorderSize = 0;
-                btnDel.Left = cardW - 48;
                 btnToggle.Left = cardW - 72;
                 btnDel.Click += (s, e) =>
                 {
@@ -1081,6 +1110,11 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             }
         }
 
+        /// <summary>
+        /// Called from week/day view slot double-clicks.
+        /// <paramref name="dateTime"/> carries both the date AND the clicked hour,
+        /// so the form opens with that slot pre-filled as start time.
+        /// </summary>
         private void QuickAddEventAtTime(DateTime dateTime)
         {
             using var dlg = new AddEditFacultyEventForm(dateTime);
@@ -1141,8 +1175,14 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
         // ══════════════════════════════════════════════════════════════════════
         private void ToggleNotifications()
         {
-            _notifPanel.Visible = !_notifPanel.Visible;
-            if (_notifPanel.Visible)
+            bool willShow = !_notifPanel.Visible;
+            _notifPanel.Visible = willShow;
+
+            // Wheel navigation is only active in Monthly view AND when no overlay is open.
+            if (_wheelFilter != null)
+                _wheelFilter.IsEnabled = !willShow && (_currentView == CalendarView.Monthly);
+
+            if (willShow)
             {
                 _notifPanel.Refresh();
                 _notifPanel.BringToFront();
@@ -1161,7 +1201,13 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
         // ══════════════════════════════════════════════════════════════════════
         private void ToggleSearch()
         {
-            _searchPanel.Visible = !_searchPanel.Visible;
+            bool willShow = !_searchPanel.Visible;
+            _searchPanel.Visible = willShow;
+
+            // Wheel navigation is only active in Monthly view AND when no overlay is open.
+            if (_wheelFilter != null)
+                _wheelFilter.IsEnabled = !willShow && (_currentView == CalendarView.Monthly);
+
             LayoutAll();
         }
 
@@ -1173,7 +1219,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             _btnSync.Text = "Syncing…";
             _btnSync.Enabled = false;
 
-            // Run sync on background thread, marshal back
             var timer = new System.Windows.Forms.Timer { Interval = 800 };
             timer.Tick += (s, e) =>
             {
@@ -1268,7 +1313,9 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             foreach (var b in _filterBtns)
             {
                 b.BackColor = Color.White;
-                b.ForeColor = (Color)b.Tag == Color.Empty ? Color.FromArgb(90, 90, 90) : b.FlatAppearance.BorderColor;
+                b.ForeColor = (Color)b.Tag == Color.Empty
+                    ? Color.FromArgb(90, 90, 90)
+                    : b.FlatAppearance.BorderColor;
             }
             active.BackColor = active.FlatAppearance.BorderColor;
             active.ForeColor = Color.White;

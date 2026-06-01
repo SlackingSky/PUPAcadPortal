@@ -20,7 +20,6 @@
             pnlTopBar = new Panel();
             lblDashboardTitle = new Label();
             txtSearchCourse = new TextBox();
-            cmbFilterCourse = new ComboBox();
             pnlStats = new Panel();
             pnlStatCourses = new Panel();
             pnlBarCourses = new Panel();
@@ -52,7 +51,6 @@
             pnlTopBar.BackColor = Color.FromArgb(128, 0, 0);
             pnlTopBar.Controls.Add(lblDashboardTitle);
             pnlTopBar.Controls.Add(txtSearchCourse);
-            pnlTopBar.Controls.Add(cmbFilterCourse);
             pnlTopBar.Dock = DockStyle.Top;
             pnlTopBar.Location = new Point(0, 0);
             pnlTopBar.Name = "pnlTopBar";
@@ -72,24 +70,12 @@
             // txtSearchCourse
             // 
             txtSearchCourse.Font = new Font("Segoe UI", 10F);
-            txtSearchCourse.Location = new Point(1260, 18);
+            txtSearchCourse.Location = new Point(1446, 21);
             txtSearchCourse.Name = "txtSearchCourse";
             txtSearchCourse.PlaceholderText = "🔍  Search course...";
             txtSearchCourse.Size = new Size(220, 25);
             txtSearchCourse.TabIndex = 1;
             txtSearchCourse.TextChanged += txtSearchCourse_TextChanged;
-            // 
-            // cmbFilterCourse
-            // 
-            cmbFilterCourse.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbFilterCourse.Font = new Font("Segoe UI", 10F);
-            cmbFilterCourse.FormattingEnabled = true;
-            cmbFilterCourse.Items.AddRange(new object[] { "All", "Active", "Ongoing", "Completed" });
-            cmbFilterCourse.Location = new Point(1492, 18);
-            cmbFilterCourse.Name = "cmbFilterCourse";
-            cmbFilterCourse.Size = new Size(150, 25);
-            cmbFilterCourse.TabIndex = 2;
-            cmbFilterCourse.SelectedIndexChanged += cmbFilterCourse_SelectedIndexChanged;
             // 
             // pnlStats
             // 
@@ -300,7 +286,6 @@
         private System.Windows.Forms.Panel pnlTopBar;
         private System.Windows.Forms.Label lblDashboardTitle;
         private System.Windows.Forms.TextBox txtSearchCourse;
-        private System.Windows.Forms.ComboBox cmbFilterCourse;
         private System.Windows.Forms.Panel pnlStats;
 
         private System.Windows.Forms.Panel pnlStatCourses;

@@ -282,7 +282,7 @@ namespace PUPAcadPortal
 
             var btnOpen = new buttonRounded
             {
-                Text = "Open Course →",
+                Text = "Open Course",
                 Size = new Size(126, 30),
                 Location = new Point(cardW - 140, bottomY),
                 BackColor = Color.FromArgb(128, 0, 0),
@@ -347,10 +347,6 @@ namespace PUPAcadPortal
             _searchTimer.Start();
         }
 
-        private void cmbFilterCourse_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            _filterStatus = cmbFilterCourse.SelectedItem?.ToString() ?? "All";
-            RefreshDashboard();
-        }
+        
     }
 }

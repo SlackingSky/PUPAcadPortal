@@ -10,6 +10,9 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
     /// <summary>
     /// Modal dialog for creating or editing a <see cref="FacultyCalendarEvent"/>.
     /// Shows all fields: type, title, date, time, course, room, description, files.
+    ///
+    /// When <paramref name="defaultDate"/> has a non-zero TimeOfDay (e.g. from a
+    /// week/day-view slot double-click) that time is used as the preset start time.
     /// </summary>
     public partial class AddEditFacultyEventForm : Form
     {
@@ -20,7 +23,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
         private readonly DateTime _defaultDate;
         private readonly List<string> _files = new();
 
-        // ── Theme configuration ──────────────────────────────────────────────
+        // ── Theme ────────────────────────────────────────────────────────────
         private static readonly Color Maroon = Color.FromArgb(136, 14, 79);
         private static readonly Font UIFont = new Font("Segoe UI", 9f);
 
@@ -42,35 +45,46 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
 
         private void SetupDynamicUI(FacultyEventType presetType)
         {
-            // Initial Window setup
             this.Text = _existing == null ? "Add Event" : "Edit Event";
             btnSave.Text = _existing == null ? "Save Event" : "Update Event";
-            dtpDate.Value = _defaultDate;
-            dtpStart.Value = DateTime.Today.AddHours(8);
-            dtpEnd.Value = DateTime.Today.AddHours(9).AddMinutes(30);
 
-            // Populate Event Types
-            foreach (FacultyEventType t in Enum.GetValues<FacultyEventType>())
+            // Always set the date picker to the calendar date
+            dtpDate.Value = _defaultDate.Date;
+
+            // If the caller passed a datetime with a specific time (slot double-click),
+            // pre-fill start and end times from that; otherwise default to 08:00–09:30.
+            if (_defaultDate.TimeOfDay.TotalMinutes > 0)
             {
-                cboType.Items.Add(t);
+                dtpStart.Value = _defaultDate.Date.Add(_defaultDate.TimeOfDay);
+                dtpEnd.Value = _defaultDate.Date.Add(_defaultDate.TimeOfDay).AddHours(1).AddMinutes(30);
             }
+            else
+            {
+                dtpStart.Value = DateTime.Today.AddHours(8);
+                dtpEnd.Value = DateTime.Today.AddHours(9).AddMinutes(30);
+            }
+
+            // Populate event types
+            foreach (FacultyEventType t in Enum.GetValues<FacultyEventType>())
+                cboType.Items.Add(t);
             cboType.SelectedItem = presetType;
 
-            // Populate Courses
+            // Populate courses
             cboCourse.Items.Add("General");
             foreach (var c in FacultyCalendarData.GetAllCourses())
-            {
                 if (!cboCourse.Items.Contains(c)) cboCourse.Items.Add(c);
-            }
 
-            // Add common course templates
-            foreach (var c in new[] { "CS101 – Data Structures", "MATH201 – Calculus II", "PHYS101 – Physics I", "ENG201 – Technical Writing" })
+            foreach (var c in new[]
             {
+                "CS101 – Data Structures",
+                "MATH201 – Calculus II",
+                "PHYS101 – Physics I",
+                "ENG201 – Technical Writing"
+            })
                 if (!cboCourse.Items.Contains(c)) cboCourse.Items.Add(c);
-            }
+
             cboCourse.Text = "General";
 
-            // Apply visual improvements
             ApplyRoundedBorder(txtTitle);
             ApplyRoundedBorder(txtRoom);
             ApplyRoundedBorder(txtDesc);
@@ -145,10 +159,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             e.DrawFocusRectangle();
         }
 
-        private void CboType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateAccentColor();
-        }
+        private void CboType_SelectedIndexChanged(object sender, EventArgs e) => UpdateAccentColor();
 
         private void ChkAllDay_CheckedChanged(object sender, EventArgs e)
         {

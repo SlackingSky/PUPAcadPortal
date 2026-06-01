@@ -4,18 +4,18 @@ using System.Windows.Forms;
 
 namespace PUPAcadPortal.Utils
 {
-    /// <summary>
-    /// Global message filter that intercepts WM_MOUSEWHEEL when the cursor
-    /// is inside a target control (or any of its children), then fires the
-    /// provided callback with the scroll delta.
-    /// Used by CalendarContentInst to scroll months/weeks/days.
-    /// </summary>
     public class CalendarWheelFilter : IMessageFilter
     {
         private const int WM_MOUSEWHEEL = 0x020A;
 
         private readonly Control _target;
         private readonly Action<int> _onScroll;   // positive = scroll up/prev, negative = next
+
+        /// <summary>
+        /// When false the filter passes every wheel message through untouched.
+        /// Toggle this off whenever a search/notification panel is visible.
+        /// </summary>
+        public bool IsEnabled { get; set; } = true;
 
         public CalendarWheelFilter(Control target, Action<int> onScroll)
         {
@@ -28,16 +28,19 @@ namespace PUPAcadPortal.Utils
             if (m.Msg != WM_MOUSEWHEEL)
                 return false;
 
+            // Disabled – let the message pass through (scrolls search/notif panels)
+            if (!IsEnabled)
+                return false;
+
             // Only intercept when cursor is inside the target control tree
             var cursor = Control.MousePosition;
             if (!IsOverControl(_target, cursor))
                 return false;
 
             // High word of wParam = delta (positive = forward/up)
-            // Use ToInt64() to avoid OverflowException on .NET 10 x64
             int delta = (short)((long)m.WParam.ToInt64() >> 16);
             _onScroll(delta);
-            return true;   // swallow – prevents accidental scrolling of nested panels
+            return true;   // swallow
         }
 
         private static bool IsOverControl(Control root, Point screenPt)

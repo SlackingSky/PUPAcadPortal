@@ -22,17 +22,21 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
         private static readonly Font UIFont = new Font("Segoe UI", 8.5f);
         private static readonly Font BoldFont = new Font("Segoe UI", 8.5f, FontStyle.Bold);
 
+        // Fired when the ✕ button is clicked so CalendarContentInst can
+        // re-enable the wheel filter.
+        public event EventHandler? CloseRequested;
+
         public FacultyNotificationsPanel()
         {
             Width = 320;
             BackColor = Color.White;
             BorderStyle = BorderStyle.None;
 
-            // Shadow simulation via outer border
             Paint += FacultyNotificationsPanel_Paint;
 
-            // Header
+            // ── Header ────────────────────────────────────────────────────────
             var hdr = new Panel { Dock = DockStyle.Top, Height = 44, BackColor = Maroon };
+
             _lblTitle = new Label
             {
                 Text = "🔔  Notifications",
@@ -42,6 +46,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
                 TextAlign = ContentAlignment.MiddleLeft,
                 Padding = new Padding(12, 0, 0, 0),
             };
+
             _btnClose = new Button
             {
                 Text = "✕",
@@ -55,11 +60,12 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             };
             _btnClose.FlatAppearance.BorderSize = 0;
             _btnClose.Click += BtnClose_Click;
+
             hdr.Controls.Add(_lblTitle);
             hdr.Controls.Add(_btnClose);
             Controls.Add(hdr);
 
-            // Scrollable list
+            // ── Scrollable list ───────────────────────────────────────────────
             _flp = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -96,6 +102,39 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
 
             _flp.HorizontalScroll.Enabled = false;
             _flp.HorizontalScroll.Visible = false;
+
+            // Re-measure rows once the FLP has been laid out
+            _flp.SizeChanged -= FlpSizeChanged;
+            _flp.SizeChanged += FlpSizeChanged;
+        }
+
+        private void FlpSizeChanged(object? sender, EventArgs e)
+        {
+            // Recalculate every row width when the FLP is resized (e.g. first paint)
+            int rowW = EffectiveRowWidth();
+            foreach (Control c in _flp.Controls)
+            {
+                if (c is Panel row && row.Tag is FacultyNotification)
+                {
+                    row.Width = rowW;
+                    // Update child label widths too
+                    foreach (Control child in row.Controls)
+                        if (child is Label lbl && lbl.Tag?.ToString() == "title_label")
+                            lbl.Width = rowW - 16;
+                        else if (child is Label lbl2 && lbl2.Tag?.ToString() == "sub_label")
+                            lbl2.Width = rowW - 16;
+                }
+            }
+            _flp.HorizontalScroll.Enabled = false;
+            _flp.HorizontalScroll.Visible = false;
+        }
+
+        /// <summary>Row width = FLP client width (already accounts for padding &amp; scrollbar).</summary>
+        private int EffectiveRowWidth()
+        {
+            // FLP padding is 8 each side; subtract 4 more for the margin gap
+            int w = _flp.ClientSize.Width - 4;
+            return Math.Max(100, w);
         }
 
         private Panel MakeRow(FacultyNotification n)
@@ -103,18 +142,31 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             Color accent = n.IsOverdue ? Overdue
                          : n.IsToday ? Warning
                          : n.DaysLeft == 1 ? Color.FromArgb(200, 130, 0)
-                                          : Info;
+                                           : Info;
+
+            // Use FLP client width; falls back to panel width on first render
+            int rowW = _flp.ClientSize.Width > 20
+                ? EffectiveRowWidth()
+                : Math.Max(100, Width - 16 - SystemInformation.VerticalScrollBarWidth);
 
             var row = new Panel
             {
-                Width = _flp.ClientSize.Width - 16,
-                Height = 60,
+                Width = rowW,
+                Height = 68,
                 BackColor = Color.FromArgb(250, 250, 250),
                 Margin = new Padding(0, 0, 0, 4),
+                Tag = n,   // store notification so FlpSizeChanged can identify rows
             };
 
             // Left accent bar
-            var bar = new Panel { Width = 4, Height = 60, Left = 0, Top = 0, BackColor = accent };
+            var bar = new Panel
+            {
+                Width = 4,
+                Height = row.Height,
+                Left = 0,
+                Top = 0,
+                BackColor = accent,
+            };
             row.Controls.Add(bar);
 
             // Badge
@@ -124,7 +176,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
                 Left = 10,
                 Top = 6,
                 AutoSize = false,
-                Width = 70,
+                Width = 74,
                 Height = 18,
                 TextAlign = ContentAlignment.MiddleCenter,
                 Font = new Font("Segoe UI", 7f, FontStyle.Bold),
@@ -138,13 +190,14 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             {
                 Text = $"{n.Event.GetTypeIcon()} {n.Event.Title}",
                 Left = 10,
-                Top = 27,
-                Width = row.Width - 20,
+                Top = 28,
+                Width = rowW - 16,
                 Font = BoldFont,
                 ForeColor = Color.FromArgb(40, 40, 40),
                 AutoSize = false,
                 Height = 18,
                 AutoEllipsis = true,
+                Tag = "title_label",
             };
             row.Controls.Add(lTitle);
 
@@ -156,13 +209,14 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             {
                 Text = sub,
                 Left = 10,
-                Top = 44,
-                Width = row.Width - 20,
+                Top = 50,
+                Width = rowW - 16,
                 Font = new Font("Segoe UI", 7.5f),
                 ForeColor = Color.Gray,
                 AutoSize = false,
                 Height = 14,
                 AutoEllipsis = true,
+                Tag = "sub_label",
             };
             row.Controls.Add(lSub);
 
@@ -176,7 +230,11 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             return row;
         }
 
-        private void BtnClose_Click(object? sender, EventArgs e) => Visible = false;
+        private void BtnClose_Click(object? sender, EventArgs e)
+        {
+            Visible = false;
+            CloseRequested?.Invoke(this, EventArgs.Empty);
+        }
 
         private void FacultyNotificationsPanel_Paint(object? sender, PaintEventArgs e)
         {

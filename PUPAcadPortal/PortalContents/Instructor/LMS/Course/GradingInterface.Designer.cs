@@ -92,7 +92,6 @@
             // btnBack
             // 
             btnBack.BackColor = Color.FromArgb(100, 0, 0);
-            btnBack.BorderRadius = 10;
             btnBack.FlatAppearance.BorderSize = 0;
             btnBack.FlatStyle = FlatStyle.Flat;
             btnBack.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
@@ -118,7 +117,7 @@
             // lblStudentName
             // 
             lblStudentName.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            lblStudentName.ForeColor = Color.FromArgb(255, 220, 220);
+            lblStudentName.ForeColor = Color.White;
             lblStudentName.Location = new Point(106, 36);
             lblStudentName.Name = "lblStudentName";
             lblStudentName.Size = new Size(380, 22);
@@ -165,7 +164,6 @@
             // btnPrevStudent
             // 
             btnPrevStudent.BackColor = Color.FromArgb(90, 0, 0);
-            btnPrevStudent.BorderRadius = 10;
             btnPrevStudent.FlatAppearance.BorderSize = 0;
             btnPrevStudent.FlatStyle = FlatStyle.Flat;
             btnPrevStudent.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
@@ -181,7 +179,6 @@
             // btnNextStudent
             // 
             btnNextStudent.BackColor = Color.FromArgb(90, 0, 0);
-            btnNextStudent.BorderRadius = 10;
             btnNextStudent.FlatAppearance.BorderSize = 0;
             btnNextStudent.FlatStyle = FlatStyle.Flat;
             btnNextStudent.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
@@ -405,7 +402,6 @@
             // btnSaveScore
             // 
             btnSaveScore.BackColor = Color.FromArgb(128, 0, 0);
-            btnSaveScore.BorderRadius = 10;
             btnSaveScore.FlatAppearance.BorderSize = 0;
             btnSaveScore.FlatStyle = FlatStyle.Flat;
             btnSaveScore.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
