@@ -1,4 +1,5 @@
 ﻿using PUPAcadPortal.PHAddress;
+using PUPAcadPortal.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -530,7 +531,10 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
                 if (!string.IsNullOrWhiteSpace(suffix) && suffix != "")
                     fullName += $" {suffix}";
 
-                string email = txtEmail.Text.Trim();
+                // Generate PUP email from name
+                GeneratingPupEmail emailGenerator = new GeneratingPupEmail();
+                string email = emailGenerator.GeneratePupEmailFromName(firstName, lastName, middleName);
+
                 string department = cmbDepartment.SelectedItem?.ToString() ?? "";
                 string specialization = department == "General Education" ? cmbSpecialization.SelectedItem?.ToString() ?? "N/A" : "N/A";
                 string employmentType = cmbEmploymentType.SelectedItem?.ToString() ?? "";

@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using PUPAcadPortal.PHAddress;
+using PUPAcadPortal.Utils;
 
 namespace PUPAcadPortal.PortalContents.Admin.Enrollment
 {
@@ -168,7 +169,8 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             string personalEmail = txtRSStudentEmailAdd.Text.Trim();
 
             // Generate PUP email from name
-            string pupEmail = GeneratePupEmailFromName(firstName, lastName, middleName);
+            GeneratingPupEmail emailGenerator = new GeneratingPupEmail();
+            string pupEmail = emailGenerator.GeneratePupEmailFromName(firstName, lastName, middleName);
 
             string course = "BSIT"; // Auto-set to BSIT
 
@@ -586,57 +588,6 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             if (cmbRegion != null) cmbRegion.SelectedIndexChanged += (s, e) => ClearFieldHighlight(cmbRegion);
         }
 
-        /*
-
-        private string GeneratePupEmailFromName(string firstName, string lastName, string middleName)
-        {
-            // Clean and format the name parts
-            string cleanFirstName = RemoveSpacesAndSpecialChars(firstName).ToLower();
-            string cleanLastName = RemoveSpacesAndSpecialChars(lastName).ToLower();
-
-            // Get middle initial (first letter of middle name, if exists)
-            string middleInitial = "";
-            if (!string.IsNullOrWhiteSpace(middleName))
-            {
-                middleInitial = middleName.Trim().ToLower();
-                // Take only the first character of the middle name
-                if (middleInitial.Length > 0)
-                {
-                    middleInitial = middleInitial[0].ToString();
-                }
-            }
-
-            // Combine: firstname + middleinitial + lastname
-            string emailUsername = cleanFirstName + middleInitial + cleanLastName;
-
-            // Remove any remaining special characters (keep only letters)
-            emailUsername = RemoveSpecialCharacters(emailUsername);
-
-            return $"{emailUsername}@iskolarngbayan.pup.edu.ph";
-        }
-
-        private string RemoveSpacesAndSpecialChars(string input)
-        {
-            if (string.IsNullOrWhiteSpace(input))
-                return "";
-
-            // Remove spaces, periods, commas, etc.
-            string cleaned = input.Replace(" ", "");
-            cleaned = cleaned.Replace(".", "");
-            cleaned = cleaned.Replace(",", "");
-            cleaned = cleaned.Replace("'", "");
-            cleaned = cleaned.Replace("-", "");
-            cleaned = cleaned.Replace("ñ", "n");
-            cleaned = cleaned.Replace("Ñ", "n");
-
-            return cleaned;
-        }
-
-        private string RemoveSpecialCharacters(string input)
-        {
-            // Keep only letters (a-z)
-            return new string(input.Where(c => char.IsLetter(c)).ToArray());
-        }*/
 
         private bool IsStudentIdExists(string studentId)
         {
