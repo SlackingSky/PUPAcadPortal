@@ -100,12 +100,23 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             this.Resize += (s, ev) => LayoutAll();
 
             // ── Scroll wheel → navigate months/weeks/days ────────────────────
-            // Disabled automatically when search or notification panel is open.
+            // Disabled automatically when search or notification panel is open,
+            // or when the cursor is over the bottom detail strip.
             _wheelFilter = new CalendarWheelFilter(pnlCalendar, delta =>
             {
                 if (delta > 0) NavigatePrev();
                 else NavigateNext();
             });
+
+            // Exclude the bottom strip so scrolling the day-events list,
+            // upcoming list, or legend never triggers month navigation.
+            this.BeginInvoke((Action)(() =>
+            {
+                if (_pnlBottomDetail != null) _wheelFilter.AddExclusion(_pnlBottomDetail);
+                if (_flpDayEvents != null) _wheelFilter.AddExclusion(_flpDayEvents);
+                if (_flpUpcoming != null) _wheelFilter.AddExclusion(_flpUpcoming);
+            }));
+
             Application.AddMessageFilter(_wheelFilter);
 
             UrDay.DaySelected += OnDaySelected;

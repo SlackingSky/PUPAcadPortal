@@ -9,7 +9,7 @@ namespace PUPAcadPortal
     public partial class ActivityDashboard : UserControl
     {
         public event Action<CourseActivity> OnOpenCourse;
-        private List<CourseActivity> _courses = new();
+        private List<CourseActivity> _courses = new List<CourseActivity>();
         private string _filterStatus = "All";
         private string _searchTerm = "";
 
@@ -176,8 +176,8 @@ namespace PUPAcadPortal
         {
             const int cardW = 430;
             const int cardH = 175;
-            const int statsY = 74;   
-            const int bottomY = 138;  
+            const int statsY = 74;
+            const int bottomY = 138;
 
             var card = new Panel
             {
@@ -207,7 +207,7 @@ namespace PUPAcadPortal
                 ForeColor = Color.White,
                 Font = new Font("Segoe UI", 10.5F, FontStyle.Bold),
                 Location = new Point(12, 8),
-                Width = cardW - 24,   
+                Width = cardW - 24,
                 Height = 26,
                 AutoEllipsis = true,
                 Tag = "COURSE"
@@ -309,20 +309,46 @@ namespace PUPAcadPortal
             Control container = this.Parent;
             if (container == null) return;
 
-            var mgmt = new AssignmentManagement(course);
-            mgmt.Dock = DockStyle.Fill;
+            // ── Step 1: open ClassFilesPage ──────────────────────────────────
+            var filesPage = new ClassFilesPage(course);
+            filesPage.Dock = DockStyle.Fill;
 
-            mgmt.OnBack += () =>
+            // Back from ClassFilesPage → return to ActivityDashboard
+            filesPage.OnBack += () =>
             {
-                container.Controls.Remove(mgmt);
-                mgmt.Dispose();
-                container.Controls.Add(this);
+                Control c = filesPage.Parent ?? container;
+                c.Controls.Remove(filesPage);
+                filesPage.Dispose();
+                c.Controls.Add(this);
                 this.BringToFront();
             };
 
+            // Activities button on ClassFilesPage → open AssignmentManagement
+            filesPage.OnOpenActivities += (courseActivity) =>
+            {
+                Control filesContainer = filesPage.Parent ?? container;
+
+                var mgmt = new AssignmentManagement(courseActivity);
+                mgmt.Dock = DockStyle.Fill;
+
+                // Back from AssignmentManagement → return to ClassFilesPage
+                mgmt.OnBack += () =>
+                {
+                    Control mc = mgmt.Parent ?? filesContainer;
+                    mc.Controls.Remove(mgmt);
+                    mgmt.Dispose();
+                    mc.Controls.Add(filesPage);
+                    filesPage.BringToFront();
+                };
+
+                filesContainer.Controls.Remove(filesPage);
+                filesContainer.Controls.Add(mgmt);
+                mgmt.BringToFront();
+            };
+
             container.Controls.Remove(this);
-            container.Controls.Add(mgmt);
-            mgmt.BringToFront();
+            container.Controls.Add(filesPage);
+            filesPage.BringToFront();
         }
 
         private void UpdateSummaryStats()
@@ -346,7 +372,5 @@ namespace PUPAcadPortal
             _searchTimer.Stop();
             _searchTimer.Start();
         }
-
-        
     }
 }

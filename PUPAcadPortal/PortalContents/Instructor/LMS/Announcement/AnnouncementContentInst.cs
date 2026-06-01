@@ -5,10 +5,12 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
-namespace PUPAcadPortal.PortalContents.Instructor.LMS
+namespace PUPAcadPortal
 {
     public partial class AnnouncementContentInst : UserControl
     {
@@ -24,10 +26,9 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
         private CreateAnnouncement _createAnnouncementUC;
         private ViewAnnouncement _viewAnnouncementUC;
+        private AnnouncementInbox _inboxUC;
 
-        private SizeF _designSize;
-        private readonly Dictionary<Control, RectangleF> _origBounds = new();
-        private readonly Dictionary<Control, float> _origFontSz = new();
+        // (font-scaling fields removed – scaling caused overlay font corruption)
 
         private static readonly Dictionary<string, Color> CatIconColor = new()
         {
@@ -66,7 +67,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         public AnnouncementContentInst()
         {
             InitializeComponent();
-
         }
 
         private void AnnouncementContentInst_Load(object sender, EventArgs e)
@@ -104,93 +104,97 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             _viewAnnouncementUC.CloseRequested += (s, ev) => HideViewAnnouncementUC();
             pnlAnnouncement.Controls.Add(_viewAnnouncementUC);
 
+            // ── Inbox UC ────────────────────────────────────────────────────
+            _inboxUC = new AnnouncementInbox
+            {
+                Visible = false,
+                Anchor = AnchorStyles.None,
+            };
+            _inboxUC.CloseRequested += (s, ev) => _inboxUC.Visible = false;
+            pnlAnnouncement.Controls.Add(_inboxUC);
+
+            // Wire the Inbox button that lives in the designer (btnInbox)
+            if (btnInbox != null)
+                btnInbox.Click += (s, ev) => ShowInbox();
+
             BuildCategorySidebar();
             RenderAnnouncements();
 
-            flpPinned.AutoScroll = true;
-            flpPinned.WrapContents = false;
-            flpPinned.FlowDirection = FlowDirection.TopDown;
+            flpPinnedpnlInsights.AutoScroll = true;
+            flpPinnedpnlInsights.WrapContents = false;
+            flpPinnedpnlInsights.FlowDirection = FlowDirection.TopDown;
 
-            pnlInsights.AutoScroll = false;
+            flpPinned.AutoScroll = false;
 
             this.MinimumSize = new Size(1024, 700);
-
-            _designSize = new SizeF(this.ClientSize.Width, this.ClientSize.Height);
-            SnapshotControls(this.Controls);
+            AdjustLeftSidebarLayout();
         }
-        private void SnapshotControls(Control.ControlCollection controls)
+
+        private void AdjustLeftSidebarLayout()
         {
-            foreach (Control ctrl in controls)
+            Control sidebar = flpCategories.Parent;
+            if (sidebar == null) return;
+
+            Control? pinnedHeader = sidebar.Controls.Cast<Control>().FirstOrDefault(c => c.Text.Contains("Pinned"));
+            Control? insightsHeader = sidebar.Controls.Cast<Control>().FirstOrDefault(c => c.Text.Contains("Insight"));
+
+            int categoryItemsCount = 6;
+            flpCategories.Height = (categoryItemsCount * 34) + ((categoryItemsCount - 1) * 4) + 8;
+
+            flpCategories.AutoScroll = false;
+            flpCategories.VerticalScroll.Enabled = false;
+            flpCategories.VerticalScroll.Visible = false;
+
             {
-                if (ctrl.Tag is string t && t.Contains("noScale")) continue;
-                _origBounds[ctrl] = new RectangleF(ctrl.Left, ctrl.Top, ctrl.Width, ctrl.Height);
-                _origFontSz[ctrl] = ctrl.Font.Size;
-                if (ctrl.HasChildren) SnapshotControls(ctrl.Controls);
+                pinnedHeader.Top = flpCategories.Bottom + 20;
+                flpPinnedpnlInsights.Top = pinnedHeader.Bottom + 8;
+            }
+
+            int totalSidebarHeight = sidebar.ClientSize.Height;
+
+            int insightsSectionRequiredHeight = flpPinned.Height + 20 + 8 + 15;
+
+            if (flpPinnedpnlInsights.Top > 0)
+            {
+                int availableSpaceForPinned = totalSidebarHeight - flpPinnedpnlInsights.Top - insightsSectionRequiredHeight;
+                flpPinnedpnlInsights.Height = Math.Max(100, availableSpaceForPinned); // 100px minimum guardrail
+            }
+
+            if (insightsHeader != null)
+            {
+                insightsHeader.Top = flpPinnedpnlInsights.Bottom + 20;
+                flpPinned.Top = insightsHeader.Bottom + 8;
             }
         }
 
-        private void ScaleControls(Control.ControlCollection controls, float rx, float ry)
+        // ── Inbox show/hide ──────────────────────────────────────────────────
+        private void ShowInbox()
         {
-            foreach (Control ctrl in controls)
-            {
-                if (ctrl.Tag is string t && t.Contains("noScale")) continue;
-                if (!_origBounds.TryGetValue(ctrl, out RectangleF ob)) continue;
-
-                int newX = ScaleRound(ob.X * rx);
-                int newY = ScaleRound(ob.Y * ry);
-                int newW = Math.Max(1, ScaleRound(ob.Width * rx));
-                int newH = Math.Max(1, ScaleRound(ob.Height * ry));
-
-                switch (ctrl.Dock)
-                {
-                    case DockStyle.Fill: break;
-                    case DockStyle.Top: ctrl.Height = newH; break;
-                    case DockStyle.Bottom: ctrl.Height = newH; break;
-                    case DockStyle.Left: ctrl.Width = newW; break;
-                    case DockStyle.Right: ctrl.Width = newW; break;
-                    default: ctrl.SetBounds(newX, newY, newW, newH); break;
-                }
-
-                if (_origFontSz.TryGetValue(ctrl, out float origSz))
-                {
-                    float newSz = Math.Max(6f, origSz * Math.Min(rx, ry));
-                    if (Math.Abs(ctrl.Font.Size - newSz) > 0.15f)
-                    {
-                        try
-                        {
-                            ctrl.Font = new Font(
-                                ctrl.Font.FontFamily, newSz,
-                                ctrl.Font.Style, GraphicsUnit.Point);
-                        }
-                        catch { /* font too small – silently skip */ }
-                    }
-                }
-
-                if (ctrl.HasChildren) ScaleControls(ctrl.Controls, rx, ry);
-            }
+            CenterControl(_inboxUC, pnlAnnouncement);
+            _inboxUC.BringToFront();
+            _inboxUC.Visible = true;
         }
-        private static int ScaleRound(float v) => (int)Math.Round(v);
 
         private void AnnouncementContentInst_Resize(object sender, EventArgs e)
         {
-            if (_designSize.Width == 0 || _designSize.Height == 0) return;
-
-            float rx = Math.Max(this.ClientSize.Width, 1024) / _designSize.Width;
-            float ry = Math.Max(this.ClientSize.Height, 700) / _designSize.Height;
-
-            this.SuspendLayout();
-            ScaleControls(this.Controls, rx, ry);
-            this.ResumeLayout(true);
-
             if (_createAnnouncementUC != null && _createAnnouncementUC.Visible)
                 CenterControl(_createAnnouncementUC, pnlAnnouncement);
             if (_viewAnnouncementUC != null && _viewAnnouncementUC.Visible)
                 CenterControl(_viewAnnouncementUC, pnlAnnouncement);
+            if (_inboxUC != null && _inboxUC.Visible)
+                CenterControl(_inboxUC, pnlAnnouncement);
+
+            // Suspend layout to prevent visual flickering while resizing
+            this.SuspendLayout();
+
+            AdjustLeftSidebarLayout(); 
 
             RenderAnnouncements();
             BuildCategorySidebar();
             RenderPinnedAnnouncements();
             RenderAnnouncementInsights();
+
+            this.ResumeLayout();
         }
 
         private void SeedSampleAnnouncements()
@@ -647,15 +651,15 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
         private void RenderPinnedAnnouncements()
         {
-            flpPinned.SuspendLayout();
-            flpPinned.Controls.Clear();
-            flpPinned.FlowDirection = FlowDirection.TopDown;
-            flpPinned.WrapContents = false;
-            flpPinned.AutoScroll = false;
-            flpPinned.HorizontalScroll.Enabled = false;
-            flpPinned.HorizontalScroll.Visible = false;
-            flpPinned.AutoScroll = true;
-            flpPinned.BackColor = Color.White;
+            flpPinnedpnlInsights.SuspendLayout();
+            flpPinnedpnlInsights.Controls.Clear();
+            flpPinnedpnlInsights.FlowDirection = FlowDirection.TopDown;
+            flpPinnedpnlInsights.WrapContents = false;
+            flpPinnedpnlInsights.AutoScroll = false;
+            flpPinnedpnlInsights.HorizontalScroll.Enabled = false;
+            flpPinnedpnlInsights.HorizontalScroll.Visible = false;
+            flpPinnedpnlInsights.AutoScroll = true;
+            flpPinnedpnlInsights.BackColor = Color.White;
 
             var pinnedList = announcements
                 .Where(a => a.IsPinned)
@@ -664,7 +668,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
             if (pinnedList.Count == 0)
             {
-                flpPinned.Controls.Add(new Label
+                flpPinnedpnlInsights.Controls.Add(new Label
                 {
                     Text = "No pinned announcements.",
                     Font = new Font("Segoe UI", 8.5f),
@@ -672,14 +676,14 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                     AutoSize = true,
                     Padding = new Padding(4),
                 });
-                flpPinned.ResumeLayout();
+                flpPinnedpnlInsights.ResumeLayout();
                 return;
             }
 
             foreach (var a in pinnedList)
             {
                 Color dotColor = CatIconColor.GetValueOrDefault(a.Category, Color.Gray);
-                int rowW = Math.Max(100, flpPinned.ClientSize.Width - 4);
+                int rowW = Math.Max(100, flpPinnedpnlInsights.ClientSize.Width - 4);
 
                 var row = new Panel
                 {
@@ -734,22 +738,22 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 row.Click += openHandler;
                 rowTitle.Click += openHandler;
 
-                flpPinned.Controls.Add(row);
+                flpPinnedpnlInsights.Controls.Add(row);
             }
 
-            flpPinned.ResumeLayout();
+            flpPinnedpnlInsights.ResumeLayout();
         }
 
         private void RenderAnnouncementInsights()
         {
-            var toRemove = pnlInsights.Controls
+            var toRemove = flpPinned.Controls
                 .OfType<Control>()
                 .Where(c => c.Name.StartsWith("ins_"))
                 .ToList();
-            foreach (var c in toRemove) pnlInsights.Controls.Remove(c);
+            foreach (var c in toRemove) flpPinned.Controls.Remove(c);
 
-            pnlInsights.BackColor = Color.White;
-            pnlInsights.AutoScroll = false;
+            flpPinned.BackColor = Color.White;
+            flpPinned.AutoScroll = false;
 
             int total = announcements.Count;
             int active = announcements.Count(a => a.Status == "active");
@@ -761,7 +765,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
             void AddRow(string label, string value, int y, Color col)
             {
-                pnlInsights.Controls.Add(new Label
+                flpPinned.Controls.Add(new Label
                 {
                     Name = "ins_lbl_" + y,
                     AutoSize = true,
@@ -770,14 +774,14 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                     ForeColor = Color.FromArgb(80, 80, 80),
                     Location = new Point(8, y),
                 });
-                pnlInsights.Controls.Add(new Label
+                flpPinned.Controls.Add(new Label
                 {
                     Name = "ins_val_" + y,
                     AutoSize = true,
                     Text = value,
                     Font = new Font("Segoe UI", 10f, FontStyle.Bold),
                     ForeColor = col,
-                    Location = new Point(pnlInsights.Width - 50, y - 2),
+                    Location = new Point(flpPinned.Width - 50, y - 2),
                 });
             }
 
@@ -787,7 +791,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             AddRow("Urgent", urgent.ToString(), 114, Color.Firebrick);
             AddRow("Avg. Reach", reach + "%", 142, Color.RoyalBlue);
 
-            pnlInsights.Refresh();
+            flpPinned.Refresh();
         }
 
         private static GraphicsPath RoundedRectPath(Rectangle r, int rad)
@@ -812,6 +816,11 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             var path = new GraphicsPath();
             path.AddEllipse(0, 0, p.Width, p.Height);
             p.Region = new Region(path);
+        }
+
+        private void panelLeft_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

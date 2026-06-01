@@ -19,14 +19,15 @@ namespace PUPAcadPortal
         private string _searchTerm = "";
         private System.Windows.Forms.Timer _searchTimer;
         private bool _initializing = true;
+
         public SubmissionList(ActivityItem activity, CourseActivity course)
         {
             _activity = activity;
             _course = course;
 
-            InitializeComponent();   
+            InitializeComponent();
 
-            _initializing = false;  
+            _initializing = false;
 
             SetupDebounce();
             PopulateHeader();
@@ -140,6 +141,13 @@ namespace PUPAcadPortal
             flpSubmissions.ResumeLayout();
         }
 
+        // ─────────────────────────────────────────────────────────────────────
+        //  CreateRow  –  Save button REMOVED.
+        //  Score textbox now saves automatically when:
+        //    • user presses Enter / Tab while focused on the score box
+        //    • user leaves the score box (LostFocus)
+        //  A subtle status label ("✓ Saved") appears inline to confirm.
+        // ─────────────────────────────────────────────────────────────────────
         private Panel CreateRow(StudentSubmission sub)
         {
             int rowW = Math.Max(980, flpSubmissions.ClientSize.Width - 30);
@@ -150,7 +158,7 @@ namespace PUPAcadPortal
                 Height = 88,
                 BackColor = Color.White,
                 Margin = new Padding(5, 4, 5, 0),
-                BorderStyle = BorderStyle.None
+                BorderStyle = BorderStyle.None,
             };
             row.Paint += (s, e) =>
             {
@@ -158,22 +166,23 @@ namespace PUPAcadPortal
                 e.Graphics.DrawRectangle(pen, 0, 0, row.Width - 1, row.Height - 1);
             };
 
+            // ── status accent bar ────────────────────────────────────────────
             Color statusColor = sub.Status switch
             {
                 "Submitted" => Color.FromArgb(46, 160, 67),
                 "Late" => Color.OrangeRed,
                 "Missing" => Color.FromArgb(185, 50, 50),
                 "Returned" => Color.FromArgb(90, 90, 100),
-                _ => Color.Gray
+                _ => Color.Gray,
             };
-
             row.Controls.Add(new Panel
             {
                 Width = 5,
                 Dock = DockStyle.Left,
-                BackColor = statusColor
+                BackColor = statusColor,
             });
 
+            // ── avatar initials ──────────────────────────────────────────────
             row.Controls.Add(new Label
             {
                 Text = GetInitials(sub.StudentName),
@@ -182,8 +191,10 @@ namespace PUPAcadPortal
                 BackColor = Color.FromArgb(128, 0, 0),
                 TextAlign = ContentAlignment.MiddleCenter,
                 Location = new Point(14, 20),
-                Size = new Size(46, 46)
+                Size = new Size(46, 46),
             });
+
+            // ── name + ID ────────────────────────────────────────────────────
             row.Controls.Add(new Label
             {
                 Text = sub.StudentName,
@@ -192,7 +203,7 @@ namespace PUPAcadPortal
                 Location = new Point(70, 8),
                 Width = 260,
                 Height = 22,
-                AutoEllipsis = true
+                AutoEllipsis = true,
             });
             row.Controls.Add(new Label
             {
@@ -201,9 +212,10 @@ namespace PUPAcadPortal
                 ForeColor = Color.Gray,
                 Location = new Point(70, 30),
                 Width = 200,
-                Height = 18
+                Height = 18,
             });
 
+            // ── status pill ──────────────────────────────────────────────────
             row.Controls.Add(new Label
             {
                 Text = sub.IsChecked ? "✅ " + sub.Status : sub.Status,
@@ -212,9 +224,10 @@ namespace PUPAcadPortal
                 Font = new Font("Segoe UI", 7.5F, FontStyle.Bold),
                 Location = new Point(70, 55),
                 Size = new Size(sub.IsChecked ? 100 : 78, 20),
-                TextAlign = ContentAlignment.MiddleCenter
+                TextAlign = ContentAlignment.MiddleCenter,
             });
 
+            // ── submission time ──────────────────────────────────────────────
             string timeText = sub.SubmissionTime == DateTime.MinValue
                 ? "Not submitted"
                 : sub.SubmissionTime.ToString("MMM dd, hh:mm tt");
@@ -225,9 +238,10 @@ namespace PUPAcadPortal
                 ForeColor = Color.Gray,
                 Location = new Point(360, 34),
                 Width = 200,
-                Height = 18
+                Height = 18,
             });
 
+            // ── remarks snippet ──────────────────────────────────────────────
             if (!string.IsNullOrEmpty(sub.Remarks))
                 row.Controls.Add(new Label
                 {
@@ -237,12 +251,16 @@ namespace PUPAcadPortal
                     Location = new Point(360, 56),
                     Width = 240,
                     Height = 18,
-                    AutoEllipsis = true
+                    AutoEllipsis = true,
                 });
 
+            // ─────────────────────────────────────────────────────────────────
+            //  RIGHT-SIDE CONTROLS (built right-to-left)
+            // ─────────────────────────────────────────────────────────────────
             int right = rowW - 12;
             const int btnH = 30, gap = 6;
 
+            // ── Return button ────────────────────────────────────────────────
             var btnReturn = MakeBtn("Return", Color.DarkOrange, 76, btnH, sub.IsChecked);
             right -= btnReturn.Width;
             btnReturn.Location = new Point(right, 28);
@@ -255,6 +273,7 @@ namespace PUPAcadPortal
             row.Controls.Add(btnReturn);
             right -= gap;
 
+            // ── Check button (opens GradingInterface) ────────────────────────
             var btnCheck = MakeBtn("Check", Color.FromArgb(63, 81, 181), 68, btnH,
                                    sub.Status != "Missing");
             right -= btnCheck.Width;
@@ -263,64 +282,117 @@ namespace PUPAcadPortal
             row.Controls.Add(btnCheck);
             right -= gap;
 
+            // ── " / pts" label ───────────────────────────────────────────────
+            var lblDivider = new Label
+            {
+                Text = $"/ {_activity.Points}",
+                Font = new Font("Segoe UI", 9F),
+                ForeColor = Color.Gray,
+                Width = 46,
+                Height = 20,
+                TextAlign = ContentAlignment.MiddleLeft,
+            };
+
+            // ── Inline "saved" status label ──────────────────────────────────
+            var lblSaved = new Label
+            {
+                Text = "",
+                Font = new Font("Segoe UI", 7.5F, FontStyle.Italic),
+                ForeColor = Color.FromArgb(46, 160, 67),
+                AutoSize = true,
+                BackColor = Color.Transparent,
+            };
+
+            // ── Score textbox (NO Save button) ───────────────────────────────
             var txtScore = new TextBox
             {
                 Text = sub.Score >= 0 ? sub.Score.ToString() : "",
                 Size = new Size(55, 30),
                 Font = new Font("Segoe UI", 10F),
-                PlaceholderText = "Score",
+                PlaceholderText = "—",
                 TextAlign = HorizontalAlignment.Center,
-                Enabled = !sub.IsChecked
+                Enabled = !sub.IsChecked,
+                BackColor = sub.IsChecked ? Color.FromArgb(245, 245, 245) : Color.White,
             };
+
+            // Position score textbox
             right -= txtScore.Width;
-            txtScore.Location = new Point(right, 28);
+            int scoreX = right;
+            txtScore.Location = new Point(scoreX, 28);
+
+            // Position the "/ pts" label just after the score box
+            right -= 4;
+            lblDivider.Location = new Point(right - 50, 34);
+            right -= 50 + gap;
+
+            // Position the saved label below the score box
+            lblSaved.Location = new Point(scoreX, 60);
+
+            // ── Save logic: triggered by Enter, Tab, or LostFocus ────────────
+            Action<bool> saveScore = (quiet) =>
+            {
+                if (sub.IsChecked) return;                   // already locked
+                string raw = txtScore.Text.Trim();
+                if (string.IsNullOrEmpty(raw)) return;       // nothing typed yet
+
+                if (!int.TryParse(raw, out int sc))
+                {
+                    if (!quiet)
+                        MessageBox.Show("Enter a valid numeric score.",
+                            "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                int clamped = Math.Clamp(sc, 0, _activity.Points);
+                if (sc != clamped)
+                {
+                    txtScore.Text = clamped.ToString();
+                    sc = clamped;
+                }
+
+                sub.Score = sc;
+                sub.IsChecked = true;
+                txtScore.Enabled = false;
+                txtScore.BackColor = Color.FromArgb(245, 245, 245);
+
+                // Show brief confirmation
+                lblSaved.Text = $"✓ Saved  {sc}/{_activity.Points}";
+                var timer = new System.Windows.Forms.Timer { Interval = 2500 };
+                timer.Tick += (tt, ee) => { lblSaved.Text = ""; timer.Stop(); timer.Dispose(); };
+                timer.Start();
+
+                // Update status pill
+                foreach (Control c in row.Controls)
+                    if (c is Label lbl && (lbl.Text == sub.Status || lbl.Text.StartsWith("✅")))
+                    {
+                        lbl.Text = "✅ " + sub.Status;
+                        lbl.Size = new Size(100, 20);
+                        break;
+                    }
+
+                UpdateStats();
+            };
+
             txtScore.KeyPress += (s, e) =>
             {
                 if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
                     e.Handled = true;
             };
-            row.Controls.Add(txtScore);
-
-            right -= 4;
-            row.Controls.Add(new Label
+            txtScore.KeyDown += (s, e) =>
             {
-                Text = $"/ {_activity.Points}",
-                Font = new Font("Segoe UI", 9F),
-                ForeColor = Color.Gray,
-                Location = new Point(right - 48, 34),
-                Width = 46,
-                Height = 20
-            });
-            right -= 50 + gap;
-
-            var btnSave = MakeBtn("Save", Color.FromArgb(128, 0, 0), 60, btnH,
-                                  !sub.IsChecked);
-            right -= btnSave.Width;
-            btnSave.Location = new Point(right, 28);
-            btnSave.Click += (s, e) =>
-            {
-                if (!int.TryParse(txtScore.Text, out int sc))
+                if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
                 {
-                    MessageBox.Show("Enter a valid numeric score.",
-                        "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
+                    saveScore(false);
+                    e.SuppressKeyPress = true;
                 }
-                sub.Score = Math.Clamp(sc, 0, _activity.Points);
-                sub.IsChecked = true;
-
-                txtScore.Text = sub.Score.ToString();
-                txtScore.Enabled = false;
-                btnSave.Enabled = false;
-
-                MessageBox.Show(
-                    $"Score saved: {sub.Score}/{_activity.Points}",
-                    "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                RefreshList();
             };
-            row.Controls.Add(btnSave);
-            right -= gap;
+            txtScore.LostFocus += (s, e) => saveScore(true);
 
+            row.Controls.Add(txtScore);
+            row.Controls.Add(lblDivider);
+            row.Controls.Add(lblSaved);
+
+            // ── Download button (FileUpload activities) ──────────────────────
             if (_activity.Type == ActivityType.FileUpload && sub.HasFile)
             {
                 var btnDl = MakeBtn("Download", Color.FromArgb(34, 139, 34), 92, btnH, true);
@@ -335,6 +407,18 @@ namespace PUPAcadPortal
             return row;
         }
 
+        // Helper: refresh the stats bar without full re-render
+        private void UpdateStats()
+        {
+            int totalSubmitted = _submissions.Count(s => s.Status != "Missing");
+            int totalLate = _submissions.Count(s => s.Status == "Late");
+            int totalMissing = _submissions.Count(s => s.Status == "Missing");
+            int totalChecked = _submissions.Count(s => s.IsChecked);
+            lblStats.Text =
+                $"Submitted: {totalSubmitted}  ·  Late: {totalLate}  ·  " +
+                $"Missing: {totalMissing}  ·  ✅ Checked: {totalChecked}";
+        }
+
         private static buttonRounded MakeBtn(
             string text, Color bg, int w, int h, bool enabled)
             => new buttonRounded
@@ -346,7 +430,7 @@ namespace PUPAcadPortal
                 BorderRadius = 8,
                 Enabled = enabled,
                 Font = new Font("Segoe UI", 8.5F, FontStyle.Bold),
-                Cursor = Cursors.Hand
+                Cursor = Cursors.Hand,
             };
 
         private void OpenGrading(StudentSubmission sub)
@@ -381,7 +465,6 @@ namespace PUPAcadPortal
                 OnBack.Invoke();
                 return;
             }
-
             Control container = this.Parent;
             if (container == null) return;
             container.Controls.Remove(this);

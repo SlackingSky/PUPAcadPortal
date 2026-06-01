@@ -1,4 +1,8 @@
-﻿namespace PUPAcadPortal
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace PUPAcadPortal
 {
     partial class ActivityDashboard
     {
@@ -70,7 +74,7 @@
             // txtSearchCourse
             // 
             txtSearchCourse.Font = new Font("Segoe UI", 10F);
-            txtSearchCourse.Location = new Point(1446, 21);
+            txtSearchCourse.Location = new Point(1400, 21);
             txtSearchCourse.Name = "txtSearchCourse";
             txtSearchCourse.PlaceholderText = "🔍  Search course...";
             txtSearchCourse.Size = new Size(220, 25);

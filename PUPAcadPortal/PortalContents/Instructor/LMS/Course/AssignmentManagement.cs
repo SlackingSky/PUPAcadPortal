@@ -16,12 +16,13 @@ namespace PUPAcadPortal
         private string _filterType = "All";
         private System.Windows.Forms.Timer _searchTimer;
         private bool _initializing = true;
+
         public AssignmentManagement(CourseActivity course)
         {
             _course = course;
-            InitializeComponent();       
+            InitializeComponent();
 
-            _initializing = false;       
+            _initializing = false;
 
             SetupDebounce();
             PopulateHeader();
@@ -134,7 +135,7 @@ namespace PUPAcadPortal
             {
                 Width = w,
                 Height = 100,
-                BackColor = Color.White,
+                BackColor = act.IsPublished ? Color.White : Color.FromArgb(250, 250, 252),
                 Margin = new Padding(0, 0, 0, 10)
             };
 
@@ -149,7 +150,9 @@ namespace PUPAcadPortal
             card.Paint += (s, e) =>
             {
                 e.Graphics.FillRectangle(new SolidBrush(typeColor), 0, 0, 6, card.Height);
-                using var pen = new Pen(Color.FromArgb(225, 225, 232));
+                using var pen = new Pen(act.IsPublished
+                    ? Color.FromArgb(225, 225, 232)
+                    : Color.FromArgb(210, 210, 220));
                 e.Graphics.DrawRectangle(pen, 0, 0, card.Width - 1, card.Height - 1);
             };
 
@@ -172,13 +175,42 @@ namespace PUPAcadPortal
                 TextAlign = ContentAlignment.MiddleCenter
             });
 
+            // ── Published / Unpublished status pill ───────────────────────────
+            var lblStatus = new Label
+            {
+                Text = act.IsPublished ? "● Published" : "○ Unpublished",
+                Font = new Font("Segoe UI", 7.5F, FontStyle.Bold),
+                ForeColor = act.IsPublished ? Color.FromArgb(22, 163, 74) : Color.FromArgb(120, 120, 130),
+                BackColor = act.IsPublished ? Color.FromArgb(220, 252, 231) : Color.FromArgb(235, 235, 240),
+                Location = new Point(116, 8),
+                AutoSize = false,
+                Size = new Size(92, 18),
+                TextAlign = ContentAlignment.MiddleCenter,
+            };
+            using (var path = new GraphicsPath())
+            {
+                var r = new Rectangle(0, 0, lblStatus.Width, lblStatus.Height);
+                // FIX 2: To create a perfect pill, the AddArc size parameters dictate the diameter 
+                // of the circle, which should perfectly match the height of the control.
+                int d = r.Height; // 18px diameter
+                path.AddArc(r.X, r.Y, d, d, 180, 90);
+                path.AddArc(r.Right - d, r.Y, d, d, 270, 90);
+                path.AddArc(r.Right - d, r.Bottom - d, d, d, 0, 90);
+                path.AddArc(r.X, r.Bottom - d, d, d, 90, 90);
+                path.CloseFigure();
+                lblStatus.Region = new Region(path);
+            }
+            card.Controls.Add(lblStatus);
+
             card.Controls.Add(new Label
             {
                 Text = act.Title,
                 Font = new Font("Segoe UI", 11F, FontStyle.Bold),
-                ForeColor = Color.FromArgb(30, 30, 35),
+                ForeColor = act.IsPublished ? Color.FromArgb(30, 30, 35) : Color.FromArgb(120, 120, 130),
                 Location = new Point(16, 30),
-                Width = w - 400,
+                // FIX 1: Shrunk the maximum label width to ensure it never overlaps the left edge 
+                // of the buttons, solving the cut-off / "tail" visual glitch on the green button.
+                Width = w - 430,
                 Height = 24,
                 AutoEllipsis = true
             });
@@ -251,6 +283,18 @@ namespace PUPAcadPortal
             btnDel.Click += (s, e) => DeleteActivity(act);
             card.Controls.Add(btnDel);
 
+            // ── Publish / Unpublish button ─────────────────────────────────────
+            right -= gap;
+            Color pubColor = act.IsPublished
+                ? Color.FromArgb(180, 100, 0)      // amber – "Unpublish"
+                : Color.FromArgb(22, 130, 60);      // green  – "Publish"
+            string pubText = act.IsPublished ? "Unpublish" : "Publish";
+            var btnPublish = CardBtn(pubText, pubColor, 90, btnH);
+            right -= btnPublish.Width;
+            btnPublish.Location = new Point(right, btnY);
+            btnPublish.Click += (s, e) => TogglePublish(act);
+            card.Controls.Add(btnPublish);
+
             return card;
         }
 
@@ -277,7 +321,7 @@ namespace PUPAcadPortal
 
             form.OnSave += saved =>
             {
-                if (existing == null)           
+                if (existing == null)
                     _course.Activities.Add(saved);
 
                 Control c = form.Parent ?? openContainer;
@@ -345,6 +389,19 @@ namespace PUPAcadPortal
                 _course.Activities.Remove(act);
                 RefreshList();
             }
+        }
+
+        private void TogglePublish(ActivityItem act)
+        {
+            act.IsPublished = !act.IsPublished;
+            string msg = act.IsPublished
+                ? $"✅ \"{act.Title}\" is now published.\nStudents can see and submit this activity."
+                : $"🔒 \"{act.Title}\" has been unpublished.\nStudents can no longer access this activity.";
+            MessageBox.Show(msg,
+                act.IsPublished ? "Activity Published" : "Activity Unpublished",
+                MessageBoxButtons.OK,
+                act.IsPublished ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
+            RefreshList();
         }
 
         private void btnBack_Click(object sender, EventArgs e)
