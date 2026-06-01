@@ -14,6 +14,6 @@ namespace PUPAcadPortal.Models
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseMySQL(DBConnectService.ConnectionString);
+            => optionsBuilder.UseMySQL(DBConnectService.ConnectionString);//"Server = localhost; Database=defaultdb;Uid=root;Pwd=1234;"
     }
 }
