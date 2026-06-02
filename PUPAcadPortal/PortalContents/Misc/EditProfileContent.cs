@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PUPAcadPortal.Utils;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -29,25 +30,26 @@ namespace PUPAcadPortal.PortalContents.Misc
                 using (var context = new Models.AppDbContext())
                 {
                     var user = await context.Users.FindAsync(Data.UserSession.UserID);
-                    var role = await context.Roles.FindAsync(user.RoleId);
                     if (user != null)
                     {
-                        txtUsername.Text = user.Username;
-                        txtPassword.Text = user.PasswordHash != null ? "********" : "No password set";
-                        txtPersonalEmail.Text = user.PersonalEmail ?? "No personal email set";
-                        mtbPhone.Text = user.ContactNumber ?? "No contact number set";
-                        phAddressFields1.AddressLine1.Text = user.AddressLine1 ?? "No address line 1 set";
-                        phAddressFields1.AddressLine2.Text = user.AddressLine2 ?? "No address line 2 set";
-                        phAddressFields1.RegionComboBox.Text = user.Region ?? "No region set";
-                        phAddressFields1.ProvinceComboBox.Text = user.Province ?? "No province set";
-                        phAddressFields1.CityComboBox.Text = user.CityMunicipality ?? "No city set";
-                        phAddressFields1.BarangayComboBox.Text = user.Barangay ?? "No barangay set";
-                        phAddressFields1.PostalTextBox.Text = user.PostalCode ?? "No postal code set";
-                        Data.UserSession.Login(user.Username, user.UserId, user.FirstName, user.LastName, role.RoleName);
-                        PUPAcadPortal.Events.InfoChangedEvent.RaiseInfoChanged();
+                        var role = await context.Roles.FindAsync(user.RoleId);
+                        this.SafeUIUpdate(() =>
+                        {
+                            txtUsername.Text = user.Username;
+                            txtPassword.Text = user.PasswordHash != null ? "********" : "No password set";
+                            txtPersonalEmail.Text = user.PersonalEmail ?? "No personal email set";
+                            mtbPhone.Text = user.ContactNumber ?? "No contact number set";
+                            phAddressFields1.AddressLine1.Text = user.AddressLine1 ?? "No address line 1 set";
+                            phAddressFields1.AddressLine2.Text = user.AddressLine2 ?? "No address line 2 set";
+                            phAddressFields1.RegionComboBox.Text = user.Region ?? "No region set";
+                            phAddressFields1.ProvinceComboBox.Text = user.Province ?? "No province set";
+                            phAddressFields1.CityComboBox.Text = user.CityMunicipality ?? "No city set";
+                            phAddressFields1.BarangayComboBox.Text = user.Barangay ?? "No barangay set";
+                            phAddressFields1.PostalTextBox.Text = user.PostalCode ?? "No postal code set";
+                            Data.UserSession.Login(user.Username, user.UserId, user.FirstName, user.LastName, role.RoleName);
+                            PUPAcadPortal.Events.InfoChangedEvent.RaiseInfoChanged();
+                        });
                     }
-
-                    
                 }
             }
             catch (Exception ex)

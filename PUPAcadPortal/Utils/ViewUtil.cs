@@ -22,6 +22,7 @@ namespace PUPAcadPortal.Utils
             {
                 if (containerPanel.Controls.Count > 0 && containerPanel.Controls[0].GetType() == newView.GetType())
                 {
+                    newView.Dispose();
                     return;
                 }
 

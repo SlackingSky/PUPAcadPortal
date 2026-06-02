@@ -151,6 +151,14 @@ namespace PUPAcadPortal.PortalContents.Misc
                     panel.ShowView(new EditProfileContent());
                 }
             };
+            this.MouseEnter += (s, e) =>
+            {
+                this.BackColor = Color.FromArgb(109, 0, 0);
+            };
+            this.MouseLeave += (s, e) =>
+            {
+                this.BackColor = Color.FromArgb(128, 0, 0);
+            };
         }
 
         private void WireUpAllClicks(Control parent)
@@ -158,6 +166,8 @@ namespace PUPAcadPortal.PortalContents.Misc
             foreach (Control child in parent.Controls)
             {
                 child.Click += (sender, e) => this.OnClick(e);
+                child.MouseEnter += (sender, e) => this.OnMouseEnter(e);
+                child.MouseLeave += (sender, e) => this.OnMouseLeave(e);
                 child.Cursor = Cursors.Hand;
                 if (child.HasChildren)
                 {
