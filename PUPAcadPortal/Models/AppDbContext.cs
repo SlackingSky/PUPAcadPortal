@@ -176,6 +176,8 @@ public partial class AppDbContext : DbContext
         {
             entity.HasKey(e => e.AnnouncementId).HasName("PRIMARY");
 
+            entity.HasIndex(e => e.SubjectOfferingId, "FK_Announcement_SubjectOffering");
+
             entity.HasIndex(e => e.CreatedByUserId, "FK_Announcement_User");
 
             entity.Property(e => e.AnnouncementId).HasColumnName("AnnouncementID");
@@ -186,11 +188,18 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.PostedDate)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("datetime");
+            entity.Property(e => e.SubjectOfferingId)
+                .HasMaxLength(50)
+                .HasColumnName("SubjectOfferingID");
             entity.Property(e => e.Title).HasMaxLength(255);
 
             entity.HasOne(d => d.CreatedByUser).WithMany(p => p.Announcements)
                 .HasForeignKey(d => d.CreatedByUserId)
                 .HasConstraintName("FK_Announcement_User");
+
+            entity.HasOne(d => d.SubjectOffering).WithMany(p => p.Announcements)
+                .HasForeignKey(d => d.SubjectOfferingId)
+                .HasConstraintName("FK_Announcement_SubjectOffering");
 
             entity.HasMany(d => d.TargetRoles).WithMany(p => p.Announcements)
                 .UsingEntity<Dictionary<string, object>>(
