@@ -11,11 +11,18 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
     /// <summary>
     /// Single-day hourly timeline.
     /// Drag cards vertically to reschedule within the day.
+    /// Right-click on any time slot shows a context menu to Add Event or Add Note.
     /// </summary>
     public partial class FacultyDayView : UserControl
     {
         public event Action<FacultyCalendarEvent>? EventClicked;
         public event Action<DateTime>? SlotDoubleClicked;
+
+        /// <summary>Fired when the user picks "Add Event" from the right-click menu.</summary>
+        public event Action<DateTime>? SlotAddEventRequested;
+
+        /// <summary>Fired when the user picks "Add Note" from the right-click menu.</summary>
+        public event Action<DateTime>? SlotAddNoteRequested;
 
         private const int HOUR_W = 60;
         private const int HOUR_H = 60;
@@ -29,6 +36,9 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
         private FacultyCalendarEvent? _dragEvent;
         private bool _dragging;
         private Panel? _dragGhost;
+
+        // Right-click state
+        private DateTime _rightClickDateTime;
 
         private static readonly Color Maroon = Color.FromArgb(136, 14, 79);
         private static readonly Color GridLine = Color.FromArgb(230, 230, 230);
@@ -67,6 +77,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             };
             _gridPanel.Paint += GridPanel_Paint;
             _gridPanel.MouseDoubleClick += GridPanel_MouseDoubleClick;
+            _gridPanel.MouseClick += GridPanel_MouseClick;   // right-click handler
             Controls.Add(_gridPanel);
 
             Resize += FacultyDayView_Resize;
@@ -76,6 +87,84 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
         {
             int hour = Math.Max(0, Math.Min(23, e.Y / HOUR_H));
             SlotDoubleClicked?.Invoke(_date.AddHours(hour));
+        }
+
+        // ── Right-click handler ───────────────────────────────────────────────
+        private void GridPanel_MouseClick(object? sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right) return;
+
+            int hour = Math.Max(0, Math.Min(23, e.Y / HOUR_H));
+            int minute = ((e.Y % HOUR_H) >= HOUR_H / 2) ? 30 : 0;
+
+            _rightClickDateTime = _date.AddHours(hour).AddMinutes(minute);
+            ShowSlotContextMenu(_gridPanel, e.Location);
+        }
+
+        // ── Context menu ──────────────────────────────────────────────────────
+        private void ShowSlotContextMenu(Control parent, Point location)
+        {
+            var cms = new ContextMenuStrip();
+            cms.Font = new Font("Segoe UI", 9f);
+            cms.BackColor = Color.White;
+
+            // Header label (non-clickable timestamp)
+            var lblItem = new ToolStripLabel
+            {
+                Text = _rightClickDateTime.ToString("dddd, MMMM dd  •  h:mm tt"),
+                Font = new Font("Segoe UI", 8f, FontStyle.Bold),
+                ForeColor = Color.FromArgb(136, 14, 79),
+                Enabled = false,
+            };
+            cms.Items.Add(lblItem);
+            cms.Items.Add(new ToolStripSeparator());
+
+            // Add Event
+            var addEvent = new ToolStripMenuItem
+            {
+                Text = "📅  Add Event Here",
+                Font = new Font("Segoe UI", 9f),
+                ForeColor = Color.FromArgb(21, 101, 192),
+            };
+            addEvent.Click += (s, ev) =>
+            {
+                if (SlotAddEventRequested != null)
+                    SlotAddEventRequested(_rightClickDateTime);
+                else
+                    SlotDoubleClicked?.Invoke(_rightClickDateTime);
+            };
+            cms.Items.Add(addEvent);
+
+            // Add Note
+            var addNote = new ToolStripMenuItem
+            {
+                Text = "🗒  Add Note Here",
+                Font = new Font("Segoe UI", 9f),
+                ForeColor = Color.FromArgb(80, 80, 80),
+            };
+            addNote.Click += (s, ev) =>
+            {
+                SlotAddNoteRequested?.Invoke(_rightClickDateTime);
+            };
+            cms.Items.Add(addNote);
+
+            cms.Items.Add(new ToolStripSeparator());
+
+            // Go to weekly view hint
+            var viewWeek = new ToolStripMenuItem
+            {
+                Text = "📆  Go to Week View",
+                Font = new Font("Segoe UI", 9f),
+                ForeColor = Color.FromArgb(80, 80, 80),
+            };
+            viewWeek.Click += (s, ev) =>
+            {
+                // Inform parent to switch — parent can subscribe or ignore
+                SlotDoubleClicked?.Invoke(_rightClickDateTime);
+            };
+            cms.Items.Add(viewWeek);
+
+            cms.Show(parent.PointToScreen(location));
         }
 
         private void FacultyDayView_Resize(object? sender, EventArgs e)
@@ -121,7 +210,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
                 placed.Add((ev, ci, 0));
             }
 
-            // Assign totalCols
             for (int i = 0; i < placed.Count; i++)
             {
                 var (ev, ci, _) = placed[i];
@@ -134,8 +222,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
                     .Where(p =>
                     {
                         if (!TimeSpan.TryParse(p.ev.StartTime, out var ps)) return false;
-                        int psm = (int)ps.TotalMinutes;
-                        int pem = psm + 60;
+                        int psm = (int)ps.TotalMinutes, pem = psm + 60;
                         if (TimeSpan.TryParse(p.ev.EndTime, out var pe2)) pem = (int)pe2.TotalMinutes;
                         return startMin < pem && endMin > psm;
                     })
@@ -238,12 +325,22 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
                 card.Controls.Add(lblRoom);
             }
 
-            // Click
+            // Click to open event detail
             Action<object?, EventArgs> clicked = (s, e) => EventClicked?.Invoke(ev);
             card.Click += clicked.Invoke;
             foreach (Control c in card.Controls) c.Click += clicked.Invoke;
 
-            // Drag
+            // Right-click on the card: show context menu at that event's slot time
+            card.MouseClick += (s, me) =>
+            {
+                if (me.Button != MouseButtons.Right) return;
+                _rightClickDateTime = ev.Date;
+                if (TimeSpan.TryParse(ev.StartTime, out var st))
+                    _rightClickDateTime = ev.Date.Add(st);
+                ShowSlotContextMenu(card, me.Location);
+            };
+
+            // ── Drag ─────────────────────────────────────────────────────────
             card.MouseDown += (s, me) =>
             {
                 if (me.Button != MouseButtons.Left) return;
@@ -257,7 +354,12 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
                 if (!_dragging)
                 {
                     _dragging = true;
-                    _dragGhost = new Panel { Width = card.Width, Height = card.Height, BackColor = Color.FromArgb(160, ev.GetColor()) };
+                    _dragGhost = new Panel
+                    {
+                        Width = card.Width,
+                        Height = card.Height,
+                        BackColor = Color.FromArgb(160, ev.GetColor()),
+                    };
                     _gridPanel.Controls.Add(_dragGhost);
                     _dragGhost.BringToFront();
                 }
@@ -285,11 +387,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
                         "Move Event", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     captured.StartTime = $"{newHour:D2}:00";
-                    if (TimeSpan.TryParse(captured.EndTime, out var oldEnd) &&
-                        TimeSpan.TryParse(captured.StartTime, out var newStart))
-                    {
-                        // Preserve duration
-                    }
                     FacultyCalendarData.UpdateEvent(captured);
                     Rebuild();
                 }
@@ -304,11 +401,11 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             bool today = _date == DateTime.Now.Date;
             g.Clear(Color.White);
 
-            string dayName = _date.ToString("dddd");
-            string dateStr = _date.ToString("MMMM dd, yyyy");
-            g.DrawString(dayName, HdrFont, today ? new SolidBrush(Maroon) : Brushes.Black,
+            g.DrawString(_date.ToString("dddd"), HdrFont,
+                today ? new SolidBrush(Maroon) : Brushes.Black,
                 new PointF(HOUR_W + 8, 6));
-            g.DrawString(dateStr, new Font("Segoe UI", 9f), Brushes.Gray,
+            g.DrawString(_date.ToString("MMMM dd, yyyy"),
+                new Font("Segoe UI", 9f), Brushes.Gray,
                 new PointF(HOUR_W + 8, 28));
 
             if (today)
@@ -332,7 +429,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
                     HOUR_W, y + HOUR_H / 2, _gridPanel.Width, y + HOUR_H / 2);
             }
 
-            // Current time
+            // Current time indicator
             if (_date == DateTime.Now.Date)
             {
                 int ty = (int)(DateTime.Now.TimeOfDay.TotalMinutes / 60.0 * HOUR_H);
@@ -341,6 +438,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             }
         }
 
+        // ── Utility ───────────────────────────────────────────────────────────
         private static GraphicsPath RoundedRect(Rectangle r, int rad)
         {
             var p = new GraphicsPath();

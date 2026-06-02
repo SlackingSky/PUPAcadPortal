@@ -319,10 +319,14 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             _weekView.EventClicked += ShowEventDetail;
             _weekView.DayHeaderClicked += d => { _selectedDate = d; OnDaySelected(d); };
             _weekView.SlotDoubleClicked += d => QuickAddEventAtTime(d);
+            _weekView.SlotAddEventRequested += d => QuickAddEventAtTime(d);
+            _weekView.SlotAddNoteRequested += d => QuickAddNoteAtTime(d);
 
             _dayView = new FacultyDayView { Parent = _pnlViewArea, Visible = false };
             _dayView.EventClicked += ShowEventDetail;
             _dayView.SlotDoubleClicked += d => QuickAddEventAtTime(d);
+            _dayView.SlotAddEventRequested += d => QuickAddEventAtTime(d);
+            _dayView.SlotAddNoteRequested += d => QuickAddNoteAtTime(d);
         }
 
         // ══════════════════════════════════════════════════════════════════════
@@ -1108,6 +1112,30 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
                 RefreshDayDetail(dateTime.Date, null);
                 RefreshUpcoming();
                 RefreshNotifBadge();
+            }
+        }
+
+        /// <summary>
+        /// Called from right-click "Add Note" in week/day view.
+        /// Opens the AddNotesForm pre-filled for the clicked date.
+        /// </summary>
+        private void QuickAddNoteAtTime(DateTime dateTime)
+        {
+            var date = dateTime.Date;
+            notesDict.TryGetValue(date, out string existingNote);
+
+            using var dlg = new AddNotesForm(date, existingNote ?? "");
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                if (dlg.IsDeleted)
+                    notesDict.Remove(date);
+                else if (!string.IsNullOrWhiteSpace(dlg.NoteText))
+                    notesDict[date] = dlg.NoteText;
+                else
+                    notesDict.Remove(date);
+
+                RefreshDayDetail(date, null);
+                RefreshMonthCells();
             }
         }
 

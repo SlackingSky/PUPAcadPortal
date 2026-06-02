@@ -11,6 +11,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
     /// <summary>
     /// Full 7-column weekly view with hour rows.
     /// Supports drag-and-drop event rescheduling.
+    /// Right-click on any time slot shows a context menu to Add Event or Add Note.
     /// </summary>
     public partial class FacultyWeekView : UserControl
     {
@@ -18,6 +19,12 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
         public event Action<FacultyCalendarEvent>? EventClicked;
         public event Action<DateTime>? DayHeaderClicked;
         public event Action<DateTime>? SlotDoubleClicked;
+
+        /// <summary>Fired when the user picks "Add Event" from the right-click menu.</summary>
+        public event Action<DateTime>? SlotAddEventRequested;
+
+        /// <summary>Fired when the user picks "Add Note" from the right-click menu.</summary>
+        public event Action<DateTime>? SlotAddNoteRequested;
 
         // ── Config ────────────────────────────────────────────────────────────
         private const int HOUR_W = 52;
@@ -27,14 +34,15 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
 
         // ── State ─────────────────────────────────────────────────────────────
         private DateTime _weekStart;
-        private Panel gridPanel = null!;
-        private Panel headerRow = null!;
 
         // Drag
         private FacultyCalendarEvent? _dragEvent;
         private Point _dragStartPt;
         private Panel? _dragGhost;
         private bool _dragging;
+
+        // Right-click state
+        private DateTime _rightClickDateTime;
 
         private static readonly Color Maroon = Color.FromArgb(136, 14, 79);
         private static readonly Color GridLine = Color.FromArgb(230, 230, 230);
@@ -54,15 +62,19 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
         // ── Public API ────────────────────────────────────────────────────────
         public void LoadWeek(DateTime anyDayInWeek)
         {
-            // Align to Sunday
             _weekStart = anyDayInWeek.Date.AddDays(-(int)anyDayInWeek.DayOfWeek);
             Rebuild();
         }
 
-        // ── Build ─────────────────────────────────────────────────────────────
+        // ── Build skeleton ────────────────────────────────────────────────────
         private void BuildSkeleton()
         {
-            _headerRow = new Panel { Height = HDR_H, Dock = DockStyle.Top, BackColor = Color.FromArgb(250, 250, 250) };
+            _headerRow = new Panel
+            {
+                Height = HDR_H,
+                Dock = DockStyle.Top,
+                BackColor = Color.FromArgb(250, 250, 250),
+            };
             _headerRow.Paint += HeaderRow_Paint;
             Controls.Add(_headerRow);
 
@@ -70,16 +82,17 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             {
                 Top = HDR_H,
                 Left = 0,
-                Width = this.ClientSize.Width,
+                Width = ClientSize.Width,
                 Height = HOUR_H * HOURS,
                 BackColor = Color.White,
                 Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
             };
             _gridPanel.Paint += GridPanel_Paint;
             _gridPanel.MouseDoubleClick += GridPanel_DoubleClick;
-            Controls.Add(_gridPanel);
+            _gridPanel.MouseClick += GridPanel_MouseClick;   // right-click handler
 
-            this.Resize += FacultyWeekView_Resize;
+            Controls.Add(_gridPanel);
+            Resize += FacultyWeekView_Resize;
         }
 
         private void FacultyWeekView_Resize(object? sender, EventArgs e)
@@ -93,19 +106,18 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
         {
             if (_weekStart == default) return;
 
-            // Remove old event cards
             var toRemove = _gridPanel.Controls.OfType<Panel>().ToList();
             foreach (var p in toRemove) _gridPanel.Controls.Remove(p);
 
             _headerRow.Invalidate();
             _gridPanel.Invalidate();
 
-            int colW = Math.Max(80, ((_gridPanel.Width - HOUR_W) / 7));
+            int colW = Math.Max(80, (_gridPanel.Width - HOUR_W) / 7);
             var events = FacultyCalendarData.GetEventsForWeek(_weekStart);
 
             foreach (var ev in events)
             {
-                if (ev.IsAllDay) continue;     // all-day shown in header
+                if (ev.IsAllDay) continue;
                 if (!TimeSpan.TryParse(ev.StartTime, out var st)) continue;
 
                 int col = (int)ev.Date.DayOfWeek;
@@ -121,8 +133,88 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
                 _gridPanel.Controls.Add(card);
             }
 
-            // Scroll to 7:00 AM on load
             AutoScrollPosition = new Point(0, (int)(7 * HOUR_H));
+        }
+
+        // ── Right-click handler ───────────────────────────────────────────────
+        private void GridPanel_MouseClick(object? sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right) return;
+
+            int colW = Math.Max(80, (_gridPanel.Width - HOUR_W) / 7);
+            int col = Math.Max(0, Math.Min(6, (e.X - HOUR_W) / colW));
+            int hour = Math.Max(0, Math.Min(23, e.Y / HOUR_H));
+            int minute = ((e.Y % HOUR_H) >= HOUR_H / 2) ? 30 : 0;
+
+            _rightClickDateTime = _weekStart.AddDays(col).AddHours(hour).AddMinutes(minute);
+
+            ShowSlotContextMenu(_gridPanel, e.Location);
+        }
+
+        // ── Context menu ──────────────────────────────────────────────────────
+        private void ShowSlotContextMenu(Control parent, Point location)
+        {
+            var cms = new ContextMenuStrip();
+            cms.Font = new Font("Segoe UI", 9f);
+            cms.BackColor = Color.White;
+
+            // ── Header label (non-clickable) ──────────────────────────────────
+            var lblItem = new ToolStripLabel
+            {
+                Text = _rightClickDateTime.ToString("ddd, MMM dd  •  h:mm tt"),
+                Font = new Font("Segoe UI", 8f, FontStyle.Bold),
+                ForeColor = Color.FromArgb(136, 14, 79),
+                Enabled = false,
+            };
+            cms.Items.Add(lblItem);
+            cms.Items.Add(new ToolStripSeparator());
+
+            // ── Add Event ─────────────────────────────────────────────────────
+            var addEvent = new ToolStripMenuItem
+            {
+                Text = "📅  Add Event Here",
+                Font = new Font("Segoe UI", 9f),
+                ForeColor = Color.FromArgb(21, 101, 192),
+            };
+            addEvent.Click += (s, e) =>
+            {
+                // Fire the delegate so CalendarContentInst can open the dialog
+                if (SlotAddEventRequested != null)
+                    SlotAddEventRequested(_rightClickDateTime);
+                else
+                    SlotDoubleClicked?.Invoke(_rightClickDateTime); // fallback
+            };
+            cms.Items.Add(addEvent);
+
+            // ── Add Note ──────────────────────────────────────────────────────
+            var addNote = new ToolStripMenuItem
+            {
+                Text = "🗒  Add Note Here",
+                Font = new Font("Segoe UI", 9f),
+                ForeColor = Color.FromArgb(80, 80, 80),
+            };
+            addNote.Click += (s, e) =>
+            {
+                SlotAddNoteRequested?.Invoke(_rightClickDateTime);
+            };
+            cms.Items.Add(addNote);
+
+            cms.Items.Add(new ToolStripSeparator());
+
+            // ── View day ──────────────────────────────────────────────────────
+            var viewDay = new ToolStripMenuItem
+            {
+                Text = "📆  View Full Day",
+                Font = new Font("Segoe UI", 9f),
+                ForeColor = Color.FromArgb(80, 80, 80),
+            };
+            viewDay.Click += (s, e) =>
+            {
+                DayHeaderClicked?.Invoke(_rightClickDateTime.Date);
+            };
+            cms.Items.Add(viewDay);
+
+            cms.Show(parent.PointToScreen(location));
         }
 
         // ── Event card ────────────────────────────────────────────────────────
@@ -143,13 +235,9 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             {
                 var g = pe.Graphics;
                 g.SmoothingMode = SmoothingMode.AntiAlias;
-                // Rounded rect
                 using var rr = RoundedRect(card.ClientRectangle, 4);
                 g.FillPath(new SolidBrush(card.BackColor), rr);
-                // Left accent bar
-                g.FillRectangle(new SolidBrush(ev.GetColor()),
-                    new Rectangle(0, 0, 4, card.Height));
-                // Border
+                g.FillRectangle(new SolidBrush(ev.GetColor()), new Rectangle(0, 0, 4, card.Height));
                 g.DrawPath(new Pen(ev.GetColor(), 0.5f), rr);
             };
 
@@ -167,12 +255,22 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             };
             card.Controls.Add(lbl);
 
-            // Click
+            // Click to open detail
             void Clicked(object? s, EventArgs e) => EventClicked?.Invoke(ev);
             card.Click += Clicked;
             lbl.Click += Clicked;
 
-            // Drag
+            // Right-click on card: same slot context menu
+            card.MouseClick += (s, me) =>
+            {
+                if (me.Button != MouseButtons.Right) return;
+                _rightClickDateTime = ev.Date;
+                if (TimeSpan.TryParse(ev.StartTime, out var st))
+                    _rightClickDateTime = ev.Date.Add(st);
+                ShowSlotContextMenu(card, me.Location);
+            };
+
+            // ── Drag ─────────────────────────────────────────────────────────
             card.MouseDown += (s, me) =>
             {
                 if (me.Button != MouseButtons.Left) return;
@@ -207,11 +305,9 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
                 if (_dragEvent == null) return;
 
                 var dropPt = _gridPanel.PointToClient(Cursor.Position);
-                int newCol = (dropPt.X - HOUR_W) / Math.Max(1, (_gridPanel.Width - HOUR_W) / 7);
-                int newHour = dropPt.Y / HOUR_H;
-                newCol = Math.Max(0, Math.Min(6, newCol));
-                newHour = Math.Max(0, Math.Min(23, newHour));
-
+                int colW2 = Math.Max(80, (_gridPanel.Width - HOUR_W) / 7);
+                int newCol = Math.Max(0, Math.Min(6, (dropPt.X - HOUR_W) / colW2));
+                int newHour = Math.Max(0, Math.Min(23, dropPt.Y / HOUR_H));
                 var newDate = _weekStart.AddDays(newCol);
                 var newTime = TimeSpan.FromHours(newHour);
                 var captured = _dragEvent;
@@ -231,7 +327,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             return card;
         }
 
-        // DoDragDrop equivalent: uses internal ghost panel for within-grid drags
         private void StartDragGhost(Panel source, FacultyCalendarEvent ev)
         {
             _dragGhost = new Panel
@@ -256,8 +351,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
         {
             var g = e.Graphics;
             g.Clear(Color.FromArgb(250, 250, 250));
-
-            // Hour gutter placeholder
             g.FillRectangle(new SolidBrush(Color.FromArgb(245, 245, 245)),
                 new Rectangle(0, 0, HOUR_W, HDR_H));
 
@@ -267,20 +360,17 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             {
                 var day = _weekStart.AddDays(i);
                 bool today = day.Date == DateTime.Now.Date;
-
                 int x = HOUR_W + i * colW;
                 var rect = new Rectangle(x, 0, colW, HDR_H);
 
                 if (today)
                     g.FillRectangle(new SolidBrush(Color.FromArgb(250, 230, 238)), rect);
 
-                // Day name
                 g.DrawString(day.ToString("ddd"),
                     UIFont, today ? new SolidBrush(Maroon) : Brushes.Gray,
                     new RectangleF(x + 2, 2, colW - 4, 14),
                     new StringFormat { Alignment = StringAlignment.Center });
 
-                // Day number circle for today
                 if (today)
                 {
                     var cRect = new Rectangle(x + colW / 2 - 12, 14, 24, 18);
@@ -296,11 +386,9 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
                         new StringFormat { Alignment = StringAlignment.Center });
                 }
 
-                // Vertical separator
                 g.DrawLine(new Pen(GridLine), x, 0, x, HDR_H);
             }
 
-            // Bottom border
             g.DrawLine(new Pen(Color.FromArgb(200, 200, 200)), 0, HDR_H - 1, _headerRow.Width, HDR_H - 1);
         }
 
@@ -313,18 +401,14 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
             for (int h = 0; h < HOURS; h++)
             {
                 int y = h * HOUR_H;
-                // Hour label
                 g.DrawString(h == 0 ? "12 AM" : h < 12 ? $"{h} AM" : h == 12 ? "12 PM" : $"{h - 12} PM",
                     HourFont, Brushes.Gray,
                     new RectangleF(2, y + 2, HOUR_W - 4, 16));
-                // Horizontal line
                 g.DrawLine(new Pen(GridLine), HOUR_W, y, _gridPanel.Width, y);
-                // Half-hour dashed
                 g.DrawLine(new Pen(Color.FromArgb(242, 242, 242)),
                     HOUR_W, y + HOUR_H / 2, _gridPanel.Width, y + HOUR_H / 2);
             }
 
-            // Vertical column separators + today highlight
             for (int i = 0; i < 7; i++)
             {
                 var day = _weekStart.AddDays(i);
@@ -348,10 +432,8 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
         private void GridPanel_DoubleClick(object? sender, MouseEventArgs e)
         {
             int colW = Math.Max(80, (_gridPanel.Width - HOUR_W) / 7);
-            int col = (e.X - HOUR_W) / colW;
-            int hour = e.Y / HOUR_H;
-            col = Math.Max(0, Math.Min(6, col));
-            hour = Math.Max(0, Math.Min(23, hour));
+            int col = Math.Max(0, Math.Min(6, (e.X - HOUR_W) / colW));
+            int hour = Math.Max(0, Math.Min(23, e.Y / HOUR_H));
             SlotDoubleClicked?.Invoke(_weekStart.AddDays(col).AddHours(hour));
         }
 
