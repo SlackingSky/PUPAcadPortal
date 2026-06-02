@@ -63,7 +63,7 @@ namespace PUPAcadPortal
             InitializeComponent();
         }
 
-        // ── Load ─────────────────────────────────────────────────────────────
+        //  Load 
         private void AnnouncementContentInst_Load(object sender, EventArgs e)
         {
             cmbFilter.Items.AddRange(new object[] { "All announcements", "Active only", "Inactive only" });
@@ -99,27 +99,41 @@ namespace PUPAcadPortal
                 btnInbox.Click += (s, ev) => ShowInbox();
 
             this.MinimumSize = new Size(1024, 700);
-            SyncMiddleRowBoxes();
-            RenderAnnouncements();      // calls Build* and Render* internally
+            RenderAnnouncements();        // calls Build* and Render* internally
+            SyncMiddleRowBoxes(rebuildContent: true);   // sync sizes then rebuild with correct widths
         }
 
-        // ── Middle-row sizing (Categories | Insights split) ──────────────────
-        // The TableLayoutPanel handles vertical positioning; we just need to keep
-        // the two side-by-side boxes filling pnlMiddleRow correctly on resize.
-        private void SyncMiddleRowBoxes()
+        private void SyncMiddleRowBoxes(bool rebuildContent = false)
         {
             if (pnlMiddleRow == null) return;
 
             int w = pnlMiddleRow.ClientSize.Width;
             int h = pnlMiddleRow.ClientSize.Height;
-            if (w < 10 || h < 10) return;
 
-            int half = (w - 4) / 2;            // 4 px gap between boxes
-            pnlCatBox.SetBounds(0, 0, half, h);
-            pnlInsightBox.SetBounds(half + 4, 0, w - half - 4, h);
+            if (w < 10) return;
+            if (h < 10) h = 260;
+
+            const int gap = 4;
+            int catW = (w - gap) / 2;
+            int insW = w - catW - gap;
+
+            // Size both boxes side by side filling pnlMiddleRow
+            pnlCatBox.SetBounds(0, 0, catW, h);
+            pnlInsightBox.SetBounds(catW + gap, 0, insW, h);
+
+            // flpPinned sits below lblInsightsTitle; fill remaining height
+            int titleH = lblInsightsTitle?.Height > 0 ? lblInsightsTitle.Height : 40;
+            flpPinned.SetBounds(0, titleH, insW - 2, h - titleH - 2);
+
+            // Rebuild rows so widths match the new panel sizes (load only)
+            if (rebuildContent)
+            {
+                BuildCategorySidebar();
+                RenderAnnouncementInsights();
+            }
         }
 
-        // ── Resize ───────────────────────────────────────────────────────────
+        //  Resize 
         private void AnnouncementContentInst_Resize(object sender, EventArgs e)
         {
             if (_createAnnouncementUC?.Visible == true) CenterControl(_createAnnouncementUC, pnlAnnouncement);
@@ -127,12 +141,14 @@ namespace PUPAcadPortal
             if (_inboxUC?.Visible == true) CenterControl(_inboxUC, pnlAnnouncement);
 
             this.SuspendLayout();
-            SyncMiddleRowBoxes();
-            RenderAnnouncements();
-            this.ResumeLayout();
+            RenderAnnouncements();      // rebuilds cards + sidebar content
+            this.ResumeLayout(true);
+
+            // Sync box sizes after layout; RenderAnnouncements already rebuilt the rows
+            SyncMiddleRowBoxes(rebuildContent: false);
         }
 
-        // ── Inbox ────────────────────────────────────────────────────────────
+        //  Inbox 
         private void ShowInbox()
         {
             CenterControl(_inboxUC, pnlAnnouncement);
@@ -140,7 +156,7 @@ namespace PUPAcadPortal
             _inboxUC.Visible = true;
         }
 
-        // ── Seed data ────────────────────────────────────────────────────────
+        //  Seed data 
         private void SeedSampleAnnouncements()
         {
             announcements.AddRange(new[]
@@ -196,14 +212,14 @@ namespace PUPAcadPortal
             });
         }
 
-        // ── Category sidebar ──────────────────────────────────────────────────
+        //  Category sidebar 
         private void BuildCategorySidebar()
         {
             flpCategories.SuspendLayout();
             flpCategories.Controls.Clear();
             flpCategories.FlowDirection = FlowDirection.TopDown;
             flpCategories.WrapContents = false;
-            flpCategories.AutoScroll = true;
+            flpCategories.AutoScroll = false;           // no horizontal bar
             flpCategories.HorizontalScroll.Enabled = false;
             flpCategories.HorizontalScroll.Visible = false;
             flpCategories.BackColor = Color.White;
@@ -220,8 +236,14 @@ namespace PUPAcadPortal
                 ["Examinations"] = CatIconColor["Examinations"],
             };
 
-            // Row width fits inside the half-width bordered box
-            int rowW = Math.Max(60, flpCategories.ClientSize.Width - 4);
+            // Row must be narrow enough to never exceed the panel's client width.
+            // Subtract 2 px so the row never triggers a horizontal scrollbar.
+            int rowW = Math.Max(60, flpCategories.ClientSize.Width - 2);
+
+            // Badge constants — keep them consistent and away from the right edge
+            const int BADGE_W = 22;
+            const int BADGE_H = 14;
+            const int BADGE_RIGHT = 4;   // gap from right edge of row
 
             foreach (var cat in categories)
             {
@@ -247,10 +269,11 @@ namespace PUPAcadPortal
                 };
                 MakeCircleRegion(dot);
 
+                // Label takes space between dot and badge
                 var lbl = new Label
                 {
                     AutoSize = false,
-                    Size = new Size(rowW - 34, 28),
+                    Size = new Size(rowW - 20 - BADGE_W - BADGE_RIGHT - 4, 28),
                     Location = new Point(20, 0),
                     Text = cat == "all" ? "All" : cat,
                     Font = new Font("Segoe UI", 8f, isActive ? FontStyle.Bold : FontStyle.Regular),
@@ -263,8 +286,8 @@ namespace PUPAcadPortal
                 var badge = new Label
                 {
                     AutoSize = false,
-                    Size = new Size(22, 14),
-                    Location = new Point(rowW - 26, 7),
+                    Size = new Size(BADGE_W, BADGE_H),
+                    Location = new Point(rowW - BADGE_W - BADGE_RIGHT, (28 - BADGE_H) / 2),
                     Text = count.ToString(),
                     Font = new Font("Segoe UI", 7f, FontStyle.Bold),
                     ForeColor = isActive ? Color.White : Color.FromArgb(80, 80, 80),
@@ -284,7 +307,7 @@ namespace PUPAcadPortal
                 lbl.Click += handler;
                 badge.Click += handler;
 
-                // Bottom divider line (paint)
+                // Bottom divider line
                 row.Paint += (s, pe) =>
                 {
                     using var pen = new Pen(Color.FromArgb(240, 240, 240));
@@ -325,7 +348,7 @@ namespace PUPAcadPortal
 
         private void AnnSort_Changed(object sender, EventArgs e) => RenderAnnouncements();
 
-        // ── Main feed render ──────────────────────────────────────────────────
+        //  Main feed render 
         private void RenderAnnouncements()
         {
             flowLayoutPanelAnnouncements.SuspendLayout();
@@ -403,7 +426,7 @@ namespace PUPAcadPortal
             return card;
         }
 
-        // ── View / Edit / Delete helpers ──────────────────────────────────────
+        //  View / Edit / Delete helpers 
         private void ShowViewAnnouncementUC(Announcement a)
         {
             _viewAnnouncementUC.LoadAnnouncement(a);
@@ -513,7 +536,7 @@ namespace PUPAcadPortal
                 Math.Max(0, (parent.ClientSize.Height - child.Height) / 4));
         }
 
-        // ── Pinned Announcements list ─────────────────────────────────────────
+        //  Pinned Announcements list 
         private void RenderPinnedAnnouncements()
         {
             flpPinnedpnlInsights.SuspendLayout();
@@ -617,75 +640,96 @@ namespace PUPAcadPortal
             flpPinnedpnlInsights.ResumeLayout();
         }
 
-        // ── Announcement Insights ─────────────────────────────────────────────
+        //  Announcement Insights 
         private void RenderAnnouncementInsights()
         {
-            // Clear previously generated controls
-            var old = flpPinned.Controls.OfType<Control>()
-                               .Where(c => c.Name.StartsWith("ins_")).ToList();
-            foreach (var c in old) flpPinned.Controls.Remove(c);
-
+            flpPinned.SuspendLayout();
+            flpPinned.Controls.Clear();
             flpPinned.BackColor = Color.White;
+            flpPinned.FlowDirection = FlowDirection.TopDown;
+            flpPinned.WrapContents = false;
+            flpPinned.AutoScroll = false;
 
             int total = announcements.Count;
             int active = announcements.Count(a => a.Status == "active");
             int pinnedCnt = announcements.Count(a => a.IsPinned);
-            int read = announcements.Sum(a => a.ViewedCount > 0 ? 1 : 0);
+            int readCnt = announcements.Sum(a => a.ViewedCount > 0 ? 1 : 0);
             int withFiles = announcements.Count(a => !string.IsNullOrWhiteSpace(a.AttachedFile));
+            int unread = total - active + (active > 0 ? active / 2 : 0);
 
-            int boxW = flpPinned.ClientSize.Width;
-            if (boxW < 10) boxW = 120;
+            // Row width: use the flpPinned width; if it hasn't been laid out yet use parent width
+            int rowW = flpPinned.Width > 10
+                ? flpPinned.Width
+                : (pnlInsightBox?.Width > 10 ? pnlInsightBox.Width - 2 : 120);
 
-            // Each row: label (left) + value (right-aligned)
-            void AddRow(string label, string value, int y, Color valCol)
+            const int ROW_H = 30;
+            const int DIV_H = 1;
+            const int VAL_W = 28;   
+            const int VAL_RIGHT = 6;  
+
+            void AddRow(string label, string value, Color valCol, bool addDivider = true)
             {
-                flpPinned.Controls.Add(new Label
+                // Full-width container panel
+                var row = new Panel
                 {
-                    Name = "ins_lbl_" + y,
+                    Name = "ins_row_" + label,
+                    Width = rowW,
+                    Height = ROW_H,
+                    BackColor = Color.White,
+                    Margin = new Padding(0),
+                };
+
+                row.Controls.Add(new Label
+                {
                     AutoSize = true,
                     Text = label,
                     Font = new Font("Segoe UI", 7.5f),
                     ForeColor = Color.FromArgb(80, 80, 80),
-                    Location = new Point(8, y + 1),
+                    Location = new Point(8, (ROW_H - 15) / 2),
                     BackColor = Color.Transparent,
                 });
-                flpPinned.Controls.Add(new Label
+
+                // Value label: right-anchored so it stays at the right edge on resize
+                var valLbl = new Label
                 {
-                    Name = "ins_val_" + y,
-                    AutoSize = true,
+                    AutoSize = false,
+                    Size = new Size(VAL_W, ROW_H),
+                    Anchor = AnchorStyles.Top | AnchorStyles.Right,
+                    Location = new Point(rowW - VAL_W - VAL_RIGHT, 0),
                     Text = value,
                     Font = new Font("Segoe UI", 8.5f, FontStyle.Bold),
                     ForeColor = valCol,
-                    Location = new Point(Math.Max(boxW - 30, 70), y),
                     BackColor = Color.Transparent,
-                });
-            }
+                    TextAlign = ContentAlignment.MiddleCenter,
+                };
+                row.Controls.Add(valLbl);
 
-            void AddDiv(int y)
-            {
-                flpPinned.Controls.Add(new Panel
+                flpPinned.Controls.Add(row);
+
+                if (addDivider)
                 {
-                    Name = "ins_div_" + y,
-                    Size = new Size(boxW - 16, 1),
-                    Location = new Point(8, y),
-                    BackColor = Color.FromArgb(238, 238, 238),
-                });
+                    flpPinned.Controls.Add(new Panel
+                    {
+                        Name = "ins_div_" + label,
+                        Width = rowW,
+                        Height = DIV_H,
+                        BackColor = Color.FromArgb(235, 235, 235),
+                        Margin = new Padding(0),
+                    });
+                }
             }
 
-            AddRow("Total", total.ToString(), 6, Color.FromArgb(50, 50, 50));
-            AddDiv(24);
-            AddRow("Unread", (total - active + (active > 0 ? active / 2 : 0)).ToString(), 30, Color.FromArgb(220, 50, 50));
-            AddDiv(48);
-            AddRow("Pinned", pinnedCnt.ToString(), 54, Color.DarkOrange);
-            AddDiv(72);
-            AddRow("Read", read.ToString(), 78, Color.ForestGreen);
-            AddDiv(96);
-            AddRow("With Files", withFiles > 0 ? withFiles.ToString() : "—", 102, Color.RoyalBlue);
+            AddRow("Total", total.ToString(), Color.FromArgb(50, 50, 50));
+            AddRow("Unread", unread.ToString(), Color.FromArgb(220, 50, 50));
+            AddRow("Pinned", pinnedCnt.ToString(), Color.DarkOrange);
+            AddRow("Read", readCnt.ToString(), Color.ForestGreen);
+            AddRow("With Files", withFiles > 0 ? withFiles.ToString() : "—", Color.RoyalBlue, addDivider: false);
 
+            flpPinned.ResumeLayout();
             flpPinned.Refresh();
         }
 
-        // ── Graphics helpers ──────────────────────────────────────────────────
+        //  Graphics helpers 
         private static GraphicsPath RoundedRectPath(Rectangle r, int rad)
         {
             var p = new GraphicsPath();

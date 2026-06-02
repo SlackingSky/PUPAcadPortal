@@ -30,7 +30,7 @@
             flpCategories = new FlowLayoutPanel();
             lblCatTitle = new Label();
             pnlInsightBox = new Panel();
-            flpPinned = new Panel();
+            flpPinned = new FlowLayoutPanel();
             lblInsightsTitle = new Label();
             pnlQuickTips = new Panel();
             btnManageNotif = new Button();
@@ -148,9 +148,13 @@
             tblSidebar.Margin = new Padding(0);
             tblSidebar.Name = "tblSidebar";
             tblSidebar.RowCount = 4;
+            // Row 0: label — auto height
             tblSidebar.RowStyles.Add(new RowStyle());
+            // Row 1: pinned list — takes remaining flexible space
             tblSidebar.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tblSidebar.RowStyles.Add(new RowStyle(SizeType.Absolute, 246F));
+            // Row 2: categories + insights — fixed 260 px so both boxes are fully visible
+            tblSidebar.RowStyles.Add(new RowStyle(SizeType.Absolute, 260F));
+            // Row 3: quick tips — fixed 94 px
             tblSidebar.RowStyles.Add(new RowStyle(SizeType.Absolute, 94F));
             tblSidebar.Size = new Size(260, 615);
             tblSidebar.TabIndex = 0;
@@ -196,14 +200,14 @@
             // 
             // pnlCatBox
             // 
-            pnlCatBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            pnlCatBox.Anchor = AnchorStyles.None;   // sized entirely by SyncMiddleRowBoxes
             pnlCatBox.BackColor = Color.White;
             pnlCatBox.BorderStyle = BorderStyle.FixedSingle;
             pnlCatBox.Controls.Add(flpCategories);
             pnlCatBox.Controls.Add(lblCatTitle);
             pnlCatBox.Location = new Point(0, 0);
             pnlCatBox.Name = "pnlCatBox";
-            pnlCatBox.Size = new Size(139, 380);
+            pnlCatBox.Size = new Size(128, 260);
             pnlCatBox.TabIndex = 0;
             // 
             // flpCategories
@@ -233,24 +237,27 @@
             // 
             // pnlInsightBox
             // 
-            pnlInsightBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            pnlInsightBox.Anchor = AnchorStyles.None;   // sized entirely by SyncMiddleRowBoxes
             pnlInsightBox.BackColor = Color.White;
             pnlInsightBox.BorderStyle = BorderStyle.FixedSingle;
+            pnlInsightBox.Controls.Add(lblInsightsTitle);   // add title FIRST so DockStyle.Top works
             pnlInsightBox.Controls.Add(flpPinned);
-            pnlInsightBox.Controls.Add(lblInsightsTitle);
-            pnlInsightBox.Location = new Point(144, 0);
+            pnlInsightBox.Location = new Point(132, 0);
             pnlInsightBox.Name = "pnlInsightBox";
-            pnlInsightBox.Size = new Size(174, 380);
+            pnlInsightBox.Size = new Size(128, 260);
             pnlInsightBox.TabIndex = 1;
             // 
-            // flpPinned
+            // flpPinned — Announcement Insights rows go here (FlowLayoutPanel for designer support)
             // 
+            flpPinned.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            flpPinned.AutoScroll = false;
             flpPinned.BackColor = Color.White;
-            flpPinned.Dock = DockStyle.Fill;
-            flpPinned.Location = new Point(0, 40);
+            flpPinned.FlowDirection = FlowDirection.TopDown;
+            flpPinned.Location = new Point(0, 40);   // below the 40px title label
             flpPinned.Name = "flpPinned";
-            flpPinned.Size = new Size(172, 338);
+            flpPinned.Size = new Size(126, 218);
             flpPinned.TabIndex = 1;
+            flpPinned.WrapContents = false;
             // 
             // lblInsightsTitle
             // 
@@ -377,7 +384,6 @@
 
         #endregion
 
-        // ── Top bar ────────────────────────────────────────────────────────
         private System.Windows.Forms.Panel panelTop;
         private System.Windows.Forms.TextBox textBox25;
         private System.Windows.Forms.ComboBox cmbSortBy;
@@ -385,7 +391,6 @@
         private System.Windows.Forms.Button btnCreateAnnouncement;
         private System.Windows.Forms.Button btnInbox;
 
-        // ── Sidebar ────────────────────────────────────────────────────────
         private System.Windows.Forms.Panel panelLeft;
         private System.Windows.Forms.TableLayoutPanel tblSidebar;
 
@@ -398,14 +403,13 @@
         private System.Windows.Forms.FlowLayoutPanel flpCategories;
         private System.Windows.Forms.Panel pnlInsightBox;
         private System.Windows.Forms.Label lblInsightsTitle;
-        private System.Windows.Forms.Panel flpPinned;
+        private System.Windows.Forms.FlowLayoutPanel flpPinned;  
 
         private System.Windows.Forms.Panel pnlQuickTips;
         private System.Windows.Forms.Label lblQuickTipsTitle;
         private System.Windows.Forms.Label lblQuickTipsBody;
         private System.Windows.Forms.Button btnManageNotif;
 
-        // ── Main feed ──────────────────────────────────────────────────────
         private System.Windows.Forms.Panel pnlAnnouncement;
         private System.Windows.Forms.Label lblShowing;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelAnnouncements;
