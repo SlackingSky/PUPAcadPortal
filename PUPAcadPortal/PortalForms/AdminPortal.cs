@@ -29,6 +29,7 @@ namespace PUPAcadPortal.PortalForms
             this.FormClosing += CloseApp.Form_Closing;
             btnLogout.Click += LogOut.LogOut_Click;
             QuickActionClickEvent.QuickActionClicked += AQuickActionClicked;
+            userProfile1.Click += UserProfile1_Click;
             this.Disposed += AdminPortal_Disposed;
             registrarSubmenuAnim = new SubmenuAnim(pnlRegistrarSubmenu, pnlRegistrarSubmenu.Height);
             subjectOfferingSubmenuAnim = new SubmenuAnim(pnlsubofferingSubmenu, pnlsubofferingSubmenu.Height);
@@ -159,6 +160,11 @@ namespace PUPAcadPortal.PortalForms
             buttonInteraction.InitializeMyPanelEvents(flowLayoutPanel1);
 
             btnDashboard.PerformClick();
+        }
+
+        private void UserProfile1_Click(object sender, EventArgs e)
+        {
+            mainContentPanel.ShowView(new PortalContents.Misc.EditProfileContent());
         }
     }
 }

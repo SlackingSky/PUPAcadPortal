@@ -10,9 +10,9 @@ namespace PUPAcadPortal.Data
         // Defines who is currently logged in
         public static string Username {  get; private set; }
         public static int UserID { get; private set; }
-        public static string FirstName { get; private set; }
-        public static string LastName { get; private set; }
-        public static string Role { get; private set; }
+        public static string? FirstName { get; private set; }
+        public static string? LastName { get; private set; }
+        public static string? Role { get; private set; }
         public static int? StudentID { get; private set; }
         public static int? ProfessorID { get; private set; }
         public static int? AdminID { get; private set; }
