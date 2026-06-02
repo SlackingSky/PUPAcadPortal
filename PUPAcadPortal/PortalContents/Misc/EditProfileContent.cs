@@ -29,6 +29,7 @@ namespace PUPAcadPortal.PortalContents.Misc
                 using (var context = new Models.AppDbContext())
                 {
                     var user = await context.Users.FindAsync(Data.UserSession.UserID);
+                    var role = await context.Roles.FindAsync(user.RoleId);
                     if (user != null)
                     {
                         txtUsername.Text = user.Username;
@@ -42,7 +43,8 @@ namespace PUPAcadPortal.PortalContents.Misc
                         phAddressFields1.CityComboBox.Text = user.CityMunicipality ?? "No city set";
                         phAddressFields1.BarangayComboBox.Text = user.Barangay ?? "No barangay set";
                         phAddressFields1.PostalTextBox.Text = user.PostalCode ?? "No postal code set";
-                        Data.UserSession.Login(user.Username, );
+                        Data.UserSession.Login(user.Username, user.UserId, user.FirstName, user.LastName, role.RoleName);
+                        PUPAcadPortal.Events.InfoChangedEvent.RaiseInfoChanged();
                     }
 
                     
@@ -72,9 +74,10 @@ namespace PUPAcadPortal.PortalContents.Misc
             if (MessageBox.Show("Are you sure you want to update your information?", "Confirm Update", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 MakeFieldsReadOnly(this);
-                btnEditInfo.Text = "Edit Information";
+                btnEditInfo.Text = "Saving Information...";
                 btnEditInfo.Enabled = false;
                 await UpdateInfo();
+                btnEditInfo.Text = "Edit Information";
                 btnEditInfo.Enabled = true;
                 btnEditInfo.Click -= SaveChanges;
                 btnEditInfo.Click += btnEditInfo_Click;
@@ -109,7 +112,15 @@ namespace PUPAcadPortal.PortalContents.Misc
                         user.Barangay = phAddressFields1.BarangayComboBox.Text;
                         user.PostalCode = phAddressFields1.PostalTextBox.Text;
                     }
-                    await context.SaveChangesAsync();
+                    var c = await context.SaveChangesAsync();
+                    if (c > 0)
+                    {
+                        MessageBox.Show("Profile updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("No changes were made to the profile.", "No Changes", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
             }
             catch (Exception ex)

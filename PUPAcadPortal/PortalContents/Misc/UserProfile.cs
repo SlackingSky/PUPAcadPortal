@@ -1,5 +1,6 @@
 ﻿using PUPAcadPortal.Data;
 using PUPAcadPortal.Models;
+using PUPAcadPortal.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,6 +8,7 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Forms;
 
@@ -24,6 +26,21 @@ namespace PUPAcadPortal.PortalContents.Misc
             InitializeComponent();
             lblName.TextChanged += lblName_TextChanged;
             WireUpAllClicks(this);
+            PUPAcadPortal.Events.InfoChangedEvent.InfoChanged += UserProfile_Load;
+        }
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            PUPAcadPortal.Events.InfoChangedEvent.InfoChanged -= UserProfile_Load;
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
         }
 
         private void lblName_TextChanged(object? sender, EventArgs e)
@@ -121,12 +138,19 @@ namespace PUPAcadPortal.PortalContents.Misc
             {
                 return;
             }
-
             string fullName = UserSession.FullName;
             lblName.Text = fullName;
             lblRole.Text = UserSession.Role;
             Bitmap profilePic = GenerateCircularAvatar(fullName, 40);
             pictureBox1.Image = profilePic;
+            this.Click += (s, e) =>
+            {
+                Panel? panel = this.FindForm()?.Controls.Find("mainContentPanel", true)[0] as Panel;
+                if (panel != null)
+                {
+                    panel.ShowView(new EditProfileContent());
+                }
+            };
         }
 
         private void WireUpAllClicks(Control parent)

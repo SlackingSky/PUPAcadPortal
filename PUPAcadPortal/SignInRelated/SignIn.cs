@@ -297,6 +297,7 @@ namespace PUPAcadPortal
             lblUsernameWarn.Visible = false;
             txtUsername.BackColor = Color.White;
             panel7.BackColor = Color.White;
+            PUPAcadPortal.Events.InfoChangedEvent.RaiseInfoChanged();
         }
 
         private void txtPassword_TextChanged(object sender, EventArgs e)

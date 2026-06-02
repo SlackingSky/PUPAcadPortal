@@ -1,16 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
-using System.Text;
+using System.Windows.Forms; // Added to resolve the Control type
 
 namespace PUPAcadPortal.Utils
 {
     public static class EventUnbinder
     {
+        /// <summary>
+        /// Recursively unbinds internal WinForms events from a control tree to assist the Garbage Collector.
+        /// </summary>
         public static void ClearAllEvents(Control control)
         {
-            if (control == null) return;
+            if (control == null || control.IsDisposed) return;
+            for (int i = control.Controls.Count - 1; i >= 0; i--)
+            {
+                Control child = control.Controls[i];
+                ClearAllEvents(child);
+            }
 
             PropertyInfo? eventsProperty = typeof(Component).GetProperty("Events",
                 BindingFlags.NonPublic | BindingFlags.Instance);
@@ -29,11 +36,6 @@ namespace PUPAcadPortal.Utils
                         headField.SetValue(eventHandlerList, null);
                     }
                 }
-            }
-
-            foreach (Control child in control.Controls)
-            {
-                ClearAllEvents(child);
             }
         }
     }
