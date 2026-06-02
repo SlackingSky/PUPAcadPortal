@@ -7,21 +7,14 @@ using System.Windows.Forms;
 
 namespace PUPAcadPortal.PortalContents.Student.LMS
 {
-    /// <summary>
-    /// Announcement card redesigned to match the compact list-row reference UI.
-    /// Layout (left → right):
-    ///   [Category icon square] | [pin emoji] [NEW badge] [URGENT pill] [Title bold]
-    ///                          |   Description (2 lines, ellipsis)
-    ///   [instructor]  [Viewed X/40  ████░░░░ progress bar]   [Category pill]  [Date]  [⋮]
-    /// Card height = 110px fixed.
-    /// </summary>
+    
     public partial class AnnouncementCardUC : UserControl
     {
-        // ── Events ────────────────────────────────────────────────────────────
+        // ── Events 
         public event EventHandler<int>? CardClicked;
         public event EventHandler<int>? PinToggled;
 
-        // ── State ─────────────────────────────────────────────────────────────
+        // ── State 
         private int _announcementId;
         private bool _isRead;
         private bool _isPinned;
@@ -30,11 +23,8 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
         private string _category = string.Empty;
         private Color _accentColor;
 
-        // Simulated "viewed" count (set externally or via seed)
-        public int ViewedCount { get; set; } = 0;
-        public int TotalStudents { get; set; } = 40;
 
-        // ── Category colours (same as before) ────────────────────────────────
+        // ── Category colours (same as before) 
         public static readonly Dictionary<string, Color> CatIconColor = new()
         {
             ["General"] = Color.FromArgb(55, 138, 221),
@@ -68,7 +58,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             ["Urgent"] = "urgent1",
         };
 
-        // ── Fonts / colours ───────────────────────────────────────────────────
+        // ── Fonts / colours 
         private static readonly Color Maroon = Color.FromArgb(139, 0, 0);
         private static readonly Color GridLine = Color.FromArgb(235, 235, 235);
         private static readonly Font FontTitle = new Font("Segoe UI", 9.5f, FontStyle.Bold);
@@ -77,7 +67,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
         private static readonly Font FontBadge = new Font("Segoe UI", 7f, FontStyle.Bold);
         private static readonly Font FontCat = new Font("Segoe UI", 7.5f, FontStyle.Bold);
 
-        // ── Constructor ───────────────────────────────────────────────────────
+        // ── Constructor 
         public AnnouncementCardUC()
         {
             InitializeComponent();
@@ -88,9 +78,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             Height = 110;
         }
 
-        // ═════════════════════════════════════════════════════════════════════
         //  PUBLIC LOAD
-        // ═════════════════════════════════════════════════════════════════════
         public void Load(
             int id,
             string title,
@@ -115,8 +103,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             _isUrgent = isUrgent;
             _isNew = isNew;
             _category = category;
-            ViewedCount = viewedCount;
-            TotalStudents = Math.Max(1, totalStudents);
 
             _accentColor = (isUrgent || !isRead)
                 ? Maroon
@@ -139,9 +125,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             Invalidate();
         }
 
-        // ═════════════════════════════════════════════════════════════════════
         //  BUILD ALL CHILD CONTROLS
-        // ═════════════════════════════════════════════════════════════════════
         private void BuildCard(
             string title,
             string description,
@@ -167,27 +151,16 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             Color iconCol = isUrgent
                 ? Maroon
                 : CatIconColor.GetValueOrDefault(category, Color.FromArgb(90, 90, 200));
+            // Light pastel background — original icon image rendered as-is on top
             Color iconBg = isUrgent
                 ? Color.FromArgb(255, 235, 235)
                 : CatBgColor.GetValueOrDefault(category, Color.FromArgb(230, 230, 245));
 
-            // ── Left accent bar (unread indicator) ────────────────────────────
-            if (!isRead)
-            {
-                var bar = new Panel
-                {
-                    Size = new Size(4, Height),
-                    Location = new Point(0, 0),
-                    BackColor = Maroon,
-                };
-                Controls.Add(bar);
-            }
-
-            // ── Category icon block ───────────────────────────────────────────
+            // ── Category icon block 
             var iconBlock = new Panel
             {
                 Size = new Size(ICON_SZ, ICON_SZ),
-                Location = new Point(ICON_X + (isRead ? 0 : 4), ICON_Y),
+                Location = new Point(ICON_X, ICON_Y),
                 BackColor = iconBg,
             };
             MakeRoundedRegion(iconBlock, 8);
@@ -199,16 +172,16 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
 
             if (resImg != null)
             {
-                const int IMG_PAD = 8;
+                const int IMG_PAD = 6;
                 int imgSz = ICON_SZ - IMG_PAD * 2;
-                var whiteBmp = RecolorToSilhouette(resImg, imgSz, iconCol);
+                // Display the original icon image without any recoloring
                 var pic = new PictureBox
                 {
                     Size = new Size(imgSz, imgSz),
                     Location = new Point(IMG_PAD, IMG_PAD),
                     BackColor = Color.Transparent,
-                    SizeMode = PictureBoxSizeMode.StretchImage,
-                    Image = whiteBmp,
+                    SizeMode = PictureBoxSizeMode.Zoom,
+                    Image = ResizeImage(resImg, imgSz),
                     TabStop = false,
                 };
                 iconBlock.Controls.Add(pic);
@@ -228,32 +201,11 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             }
             Controls.Add(iconBlock);
 
-            // ── ROW 1: pin + NEW + URGENT + Title ─────────────────────────────
+            // ── ROW 1: pin W + URGENT + Title 
             int rx = TEXT_X;
             int ry = 10;
 
-            // Pin emoji button
-            var btnPin = new Button
-            {
-                Text = isPinned ? "📌" : "📍",
-                Size = new Size(22, 22),
-                Location = new Point(rx, ry),
-                FlatStyle = FlatStyle.Flat,
-                Font = new Font("Segoe UI", 10f),
-                BackColor = Color.Transparent,
-                ForeColor = isPinned ? Maroon : Color.FromArgb(180, 180, 180),
-                Cursor = Cursors.Hand,
-                TabStop = false,
-            };
-            btnPin.FlatAppearance.BorderSize = 0;
-            btnPin.FlatAppearance.MouseOverBackColor = Color.FromArgb(20, 139, 0, 0);
-            btnPin.Click += (s, e) =>
-            {
-                _isPinned = !_isPinned;
-                PinToggled?.Invoke(this, _announcementId);
-            };
-            Controls.Add(btnPin);
-            rx += 26;
+            
 
             // "NEW" badge
             if (isNew || !isRead)
@@ -308,7 +260,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             };
             Controls.Add(lblTitle);
 
-            // ── ROW 2: Description ────────────────────────────────────────────
+            //  ROW 2: Description 
             var lblDesc = new Label
             {
                 Text = description,
@@ -322,7 +274,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             };
             Controls.Add(lblDesc);
 
-            // ── ROW 3: Instructor | Viewed progress bar ───────────────────────
+            //  ROW 3:  Viewed progress bar 
             int bottomY = 76;
 
             // Instructor label (left)
@@ -337,51 +289,12 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             };
             Controls.Add(lblInstr);
 
-            // "Viewed X/Y" + progress bar (centre-left)
-            int viewedLabelX = TEXT_X + 130;
-            int barX = viewedLabelX + 80;
-            int barW = Math.Max(50, cardWidth - barX - 220);
 
-            var lblViewed = new Label
-            {
-                Text = $"Viewed {viewedCount}/{totalStudents}",
-                Location = new Point(viewedLabelX, bottomY),
-                AutoSize = true,
-                Font = FontSmall,
-                ForeColor = Color.FromArgb(110, 110, 110),
-                BackColor = Color.Transparent,
-            };
-            Controls.Add(lblViewed);
-
-            // Progress bar background + fill (painted on a panel)
-            var progressBg = new Panel
-            {
-                Location = new Point(barX, bottomY + 4),
-                Size = new Size(barW, 6),
-                BackColor = Color.FromArgb(225, 225, 225),
-            };
-            MakeRoundedRegion(progressBg, 3);
-            Controls.Add(progressBg);
-
-            float ratio = (float)viewedCount / totalStudents;
-            int fillW = Math.Max(0, (int)(barW * ratio));
-            if (fillW > 0)
-            {
-                var progressFill = new Panel
-                {
-                    Location = new Point(0, 0),
-                    Size = new Size(fillW, 6),
-                    BackColor = Maroon,
-                };
-                MakeRoundedRegion(progressFill, 3);
-                progressBg.Controls.Add(progressFill);
-            }
-
-            // ── RIGHT META: Category pill + Date + ⋮ menu ────────────────────
+            // ─ RIGHT META: Category pill + Date + ⋮ menu 
             int metaRight = cardWidth - 8;
 
             // Three-dot menu button
-            var btnMenu = new Button
+            /*var btnMenu = new Button
             {
                 Text = "⋮",
                 Size = new Size(24, 24),
@@ -395,6 +308,30 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             };
             btnMenu.FlatAppearance.BorderSize = 0;
             Controls.Add(btnMenu);
+            metaRight -= 28;*/
+
+
+            // Pin emoji button
+            var btnPin = new Button
+            {
+                Text = isPinned ? "📌" : "📍",
+                Size = new Size(30, 30),
+                Location = new Point(metaRight - 24, 8),
+                FlatStyle = FlatStyle.Flat,
+                Font = new Font("Segoe UI", 10f),
+                BackColor = Color.Transparent,
+                ForeColor = isPinned ? Maroon : Color.FromArgb(180, 180, 180),
+                Cursor = Cursors.Hand,
+                TabStop = false,
+            };
+            btnPin.FlatAppearance.BorderSize = 0;
+            btnPin.FlatAppearance.MouseOverBackColor = Color.FromArgb(20, 139, 0, 0);
+            btnPin.Click += (s, e) =>
+            {
+                _isPinned = !_isPinned;
+                PinToggled?.Invoke(this, _announcementId);
+            };
+            Controls.Add(btnPin);
             metaRight -= 28;
 
             // Date label
@@ -474,15 +411,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             using var pen = new Pen(GridLine, 1f);
             e.Graphics.DrawLine(pen, 0, Height - 1, Width, Height - 1);
 
-            // Subtle left-edge gradient for unread items
-            if (!_isRead)
-            {
-                using var brush = new LinearGradientBrush(
-                    new Point(4, 0), new Point(56, 0),
-                    Color.FromArgb(30, 139, 0, 0),
-                    Color.Transparent);
-                e.Graphics.FillRectangle(brush, 4, 0, 52, Height);
-            }
+
         }
 
         // ═════════════════════════════════════════════════════════════════════
