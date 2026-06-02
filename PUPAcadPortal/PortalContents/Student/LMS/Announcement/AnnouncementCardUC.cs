@@ -7,18 +7,34 @@ using System.Windows.Forms;
 
 namespace PUPAcadPortal.PortalContents.Student.LMS
 {
-    //  ANNOUNCEMENT CARD 
+    /// <summary>
+    /// Announcement card redesigned to match the compact list-row reference UI.
+    /// Layout (left → right):
+    ///   [Category icon square] | [pin emoji] [NEW badge] [URGENT pill] [Title bold]
+    ///                          |   Description (2 lines, ellipsis)
+    ///   [instructor]  [Viewed X/40  ████░░░░ progress bar]   [Category pill]  [Date]  [⋮]
+    /// Card height = 110px fixed.
+    /// </summary>
     public partial class AnnouncementCardUC : UserControl
     {
-        public event EventHandler<int> CardClicked;
-        public event EventHandler<int> PinToggled;
+        // ── Events ────────────────────────────────────────────────────────────
+        public event EventHandler<int>? CardClicked;
+        public event EventHandler<int>? PinToggled;
+
+        // ── State ─────────────────────────────────────────────────────────────
         private int _announcementId;
         private bool _isRead;
         private bool _isPinned;
         private bool _isUrgent;
+        private bool _isNew;
         private string _category = string.Empty;
         private Color _accentColor;
 
+        // Simulated "viewed" count (set externally or via seed)
+        public int ViewedCount { get; set; } = 0;
+        public int TotalStudents { get; set; } = 40;
+
+        // ── Category colours (same as before) ────────────────────────────────
         public static readonly Dictionary<string, Color> CatIconColor = new()
         {
             ["General"] = Color.FromArgb(55, 138, 221),
@@ -40,29 +56,40 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             ["Urgent"] = Color.FromArgb(255, 235, 235),
         };
 
-        // Resource filenames (without extension) as they appear in the Resources folder
+        // Resource names for category icons
         private static readonly Dictionary<string, string> CatResourceName = new()
         {
-            ["General"] = "general1",          // general1.png
-            ["Academic"] = "academic",           // academic.png
-            ["Schedule"] = "schedule1",          // schedule1.png
-            ["Events"] = "events1",            // events1.png
-            ["Examinations"] = "examinationms1",     // examinationms1.png
-            ["Administrative"] = "administrativive",   // administrativive.png
-            ["Urgent"] = "urgent1",            // urgent1.png
+            ["General"] = "general1",
+            ["Academic"] = "academic",
+            ["Schedule"] = "schedule1",
+            ["Events"] = "events1",
+            ["Examinations"] = "examinationms1",
+            ["Administrative"] = "administrativive",
+            ["Urgent"] = "urgent1",
         };
 
+        // ── Fonts / colours ───────────────────────────────────────────────────
+        private static readonly Color Maroon = Color.FromArgb(139, 0, 0);
+        private static readonly Color GridLine = Color.FromArgb(235, 235, 235);
+        private static readonly Font FontTitle = new Font("Segoe UI", 9.5f, FontStyle.Bold);
+        private static readonly Font FontDesc = new Font("Segoe UI", 8.5f);
+        private static readonly Font FontSmall = new Font("Segoe UI", 7.5f);
+        private static readonly Font FontBadge = new Font("Segoe UI", 7f, FontStyle.Bold);
+        private static readonly Font FontCat = new Font("Segoe UI", 7.5f, FontStyle.Bold);
+
+        // ── Constructor ───────────────────────────────────────────────────────
         public AnnouncementCardUC()
         {
             InitializeComponent();
-            this.SetStyle(ControlStyles.OptimizedDoubleBuffer |
-                          ControlStyles.AllPaintingInWmPaint |
-                          ControlStyles.UserPaint, true);
-            this.Cursor = Cursors.Hand;
-            this.Height = 115;
+            SetStyle(ControlStyles.OptimizedDoubleBuffer |
+                     ControlStyles.AllPaintingInWmPaint |
+                     ControlStyles.UserPaint, true);
+            Cursor = Cursors.Hand;
+            Height = 110;
         }
 
-        //  PUBLIC LOAD METHOD
+        // ═════════════════════════════════════════════════════════════════════
+        //  PUBLIC LOAD
         // ═════════════════════════════════════════════════════════════════════
         public void Load(
             int id,
@@ -77,375 +104,401 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             bool isPinned,
             bool isRead,
             int attachmentCount,
-            int cardWidth)
+            int cardWidth,
+            bool isNew = false,
+            int viewedCount = 0,
+            int totalStudents = 40)
         {
             _announcementId = id;
             _isRead = isRead;
             _isPinned = isPinned;
             _isUrgent = isUrgent;
+            _isNew = isNew;
             _category = category;
+            ViewedCount = viewedCount;
+            TotalStudents = Math.Max(1, totalStudents);
 
             _accentColor = (isUrgent || !isRead)
-                ? Color.FromArgb(139, 0, 0)
+                ? Maroon
                 : CatIconColor.GetValueOrDefault(category, Color.FromArgb(90, 90, 200));
 
-            this.Width = cardWidth;
-            this.BackColor = isRead ? Color.White : Color.FromArgb(255, 249, 249);
+            Width = cardWidth;
+            BackColor = isRead ? Color.White : Color.FromArgb(255, 249, 249);
 
-            // ── Left accent bar ───────────────────────────────────────────────
-            pnlAccentBar.BackColor = isRead
-                ? Color.FromArgb(215, 215, 215)
-                : Color.FromArgb(139, 0, 0);
-            pnlAccentBar.Size = new Size(4, 115);
-            pnlAccentBar.Location = new Point(0, 0);
+            // Remove all old dynamic controls (keep the designer stubs)
+            SuspendLayout();
+            Controls.Clear();
+            ResumeLayout(false);
 
-            // ─────────────────────────────────────────────────────────────────
-            //  ICON BLOCK — painted rounded square (no Region = no child clipping)
-            // ─────────────────────────────────────────────────────────────────
-            const int ICON_SZ = 50;
-            const int IMG_PAD = 9;   // inner padding for the white icon image
-            const int IMG_SZ = ICON_SZ - IMG_PAD * 2;
-            const int CORNER_R = 10;
+            BuildCard(title, description, category, courseName,
+                      officeName, instructorName, date,
+                      isUrgent, isPinned, isRead, attachmentCount,
+                      cardWidth, isNew, viewedCount, totalStudents);
 
-            pnlIconBlock.Size = new Size(ICON_SZ, ICON_SZ);
-            pnlIconBlock.Location = new Point(14, (115 - ICON_SZ) / 2);
-            pnlIconBlock.BackColor = Color.Transparent; // transparent; we paint it ourselves
-            pnlIconBlock.Region = null;              // no region — children won't be clipped
+            WireClickEvents();
+            Invalidate();
+        }
 
-            // Remove old Paint handlers then add fresh one
-            Color paintAccent = _accentColor;
-            pnlIconBlock.Paint -= IconBlockPaint;       // clear previous (in case of reload)
-            void IconBlockPaint(object s, PaintEventArgs pe)
+        // ═════════════════════════════════════════════════════════════════════
+        //  BUILD ALL CHILD CONTROLS
+        // ═════════════════════════════════════════════════════════════════════
+        private void BuildCard(
+            string title,
+            string description,
+            string category,
+            string courseName,
+            string officeName,
+            string instructorName,
+            DateTime date,
+            bool isUrgent,
+            bool isPinned,
+            bool isRead,
+            int attachmentCount,
+            int cardWidth,
+            bool isNew,
+            int viewedCount,
+            int totalStudents)
+        {
+            const int ICON_SZ = 46;
+            const int ICON_X = 10;
+            const int ICON_Y = 10;
+            const int TEXT_X = ICON_X + ICON_SZ + 10;
+
+            Color iconCol = isUrgent
+                ? Maroon
+                : CatIconColor.GetValueOrDefault(category, Color.FromArgb(90, 90, 200));
+            Color iconBg = isUrgent
+                ? Color.FromArgb(255, 235, 235)
+                : CatBgColor.GetValueOrDefault(category, Color.FromArgb(230, 230, 245));
+
+            // ── Left accent bar (unread indicator) ────────────────────────────
+            if (!isRead)
             {
-                pe.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                using var path = new GraphicsPath();
-                int d = CORNER_R * 2;
-                var rc = new Rectangle(0, 0, ICON_SZ - 1, ICON_SZ - 1);
-                path.AddArc(rc.X, rc.Y, d, d, 180, 90);
-                path.AddArc(rc.Right - d, rc.Y, d, d, 270, 90);
-                path.AddArc(rc.Right - d, rc.Bottom - d, d, d, 0, 90);
-                path.AddArc(rc.X, rc.Bottom - d, d, d, 90, 90);
-                path.CloseFigure();
-                using var brush = new SolidBrush(paintAccent);
-                pe.Graphics.FillPath(brush, path);
+                var bar = new Panel
+                {
+                    Size = new Size(4, Height),
+                    Location = new Point(0, 0),
+                    BackColor = Maroon,
+                };
+                Controls.Add(bar);
             }
-            pnlIconBlock.Paint += IconBlockPaint;
 
-            // Determine resource
+            // ── Category icon block ───────────────────────────────────────────
+            var iconBlock = new Panel
+            {
+                Size = new Size(ICON_SZ, ICON_SZ),
+                Location = new Point(ICON_X + (isRead ? 0 : 4), ICON_Y),
+                BackColor = iconBg,
+            };
+            MakeRoundedRegion(iconBlock, 8);
+
             string resName = isUrgent
                 ? "urgent1"
                 : CatResourceName.GetValueOrDefault(category, "general1");
-            Image resImg = TryGetResource(resName);
-
-            // Hide fallback label by default
-            lblIconLetter.Visible = false;
-
-            // Remove old PictureBox children, add fresh one each Load call
-            for (int ci = pnlIconBlock.Controls.Count - 1; ci >= 0; ci--)
-                if (pnlIconBlock.Controls[ci] is PictureBox oldPic)
-                {
-                    oldPic.Image?.Dispose();
-                    pnlIconBlock.Controls.RemoveAt(ci);
-                }
+            Image? resImg = TryGetResource(resName);
 
             if (resImg != null)
             {
-                // White silhouette — crisp against coloured background
-                var whiteBmp = MakeTintedWhite(resImg, IMG_SZ);
+                const int IMG_PAD = 8;
+                int imgSz = ICON_SZ - IMG_PAD * 2;
+                var whiteBmp = RecolorToSilhouette(resImg, imgSz, iconCol);
                 var pic = new PictureBox
                 {
-                    Size = new Size(IMG_SZ, IMG_SZ),
+                    Size = new Size(imgSz, imgSz),
                     Location = new Point(IMG_PAD, IMG_PAD),
                     BackColor = Color.Transparent,
                     SizeMode = PictureBoxSizeMode.StretchImage,
                     Image = whiteBmp,
                     TabStop = false,
                 };
-                pnlIconBlock.Controls.Add(pic);
-                pic.BringToFront();
+                iconBlock.Controls.Add(pic);
             }
             else
             {
-                // Fallback: white letter initial
-                lblIconLetter.Visible = true;
-                lblIconLetter.Text = GetCategoryInitial(category, isUrgent);
-                lblIconLetter.Font = new Font("Segoe UI", 14f, FontStyle.Bold);
-                lblIconLetter.ForeColor = Color.White;
-                lblIconLetter.BackColor = Color.Transparent;
-                lblIconLetter.Dock = DockStyle.Fill;
-                lblIconLetter.TextAlign = ContentAlignment.MiddleCenter;
-            }
-
-            pnlIconBlock.Invalidate();
-
-            // ── Unread dot ────────────────────────────────────────────────────
-            pnlUnreadDot.Visible = !isRead;
-            pnlUnreadDot.BackColor = Color.FromArgb(139, 0, 0);
-            pnlUnreadDot.Size = new Size(10, 10);
-            pnlUnreadDot.Location = new Point(cardWidth - 20, 10);
-            MakeCircle(pnlUnreadDot);
-
-            // ── Category tag ──────────────────────────────────────────────────
-            Color tagBg = CatBgColor.GetValueOrDefault(category, Color.FromArgb(230, 230, 245));
-            lblCategoryTag.Text = isUrgent ? "⚠ URGENT" : category.ToUpper();
-            lblCategoryTag.Font = new Font("Segoe UI", 7.5f, FontStyle.Bold);
-            lblCategoryTag.ForeColor = _accentColor;
-            lblCategoryTag.BackColor = tagBg;
-            lblCategoryTag.Size = new Size(100, 20);
-            lblCategoryTag.Location = new Point(74, 12);
-            lblCategoryTag.TextAlign = ContentAlignment.MiddleCenter;
-            MakeRoundedPanel(lblCategoryTag, 8);
-
-            // ── Attachment badge ──────────────────────────────────────────────
-            lblAttachBadge.Visible = attachmentCount > 0;
-            if (attachmentCount > 0)
-            {
-                // Use paper-clip resource icon next to count
-                Image clipImg = TryGetResource("paper_clip");
-                lblAttachBadge.Text = clipImg == null
-                    ? $"📎 {attachmentCount} file{(attachmentCount > 1 ? "s" : "")}"
-                    : $"  {attachmentCount} file{(attachmentCount > 1 ? "s" : "")}";
-                lblAttachBadge.Font = new Font("Segoe UI", 7.5f, FontStyle.Bold);
-                lblAttachBadge.ForeColor = Color.FromArgb(40, 90, 175);
-                lblAttachBadge.BackColor = Color.FromArgb(225, 238, 255);
-                lblAttachBadge.Size = new Size(clipImg != null ? 100 : 90, 20);
-                lblAttachBadge.Location = new Point(182, 12);
-                lblAttachBadge.TextAlign = ContentAlignment.MiddleCenter;
-                MakeRoundedPanel(lblAttachBadge, 8);
-
-                if (clipImg != null)
+                var lbl = new Label
                 {
-                    // Small clip icon to the left inside the badge
-                    PictureBox clipPic = null;
-                    foreach (Control c in lblAttachBadge.Controls)
-                        if (c is PictureBox pb) { clipPic = pb; break; }
-                    if (clipPic == null)
-                    {
-                        clipPic = new PictureBox
-                        {
-                            BackColor = Color.Transparent,
-                            SizeMode = PictureBoxSizeMode.Zoom,
-                            TabStop = false,
-                            Size = new Size(13, 13),
-                            Location = new Point(4, 3),
-                        };
-                        lblAttachBadge.Controls.Add(clipPic);
-                    }
-                    clipPic.Image = clipImg;
-                }
+                    Dock = DockStyle.Fill,
+                    Text = GetCategoryInitial(category, isUrgent),
+                    Font = new Font("Segoe UI", 14f, FontStyle.Bold),
+                    ForeColor = iconCol,
+                    BackColor = Color.Transparent,
+                    TextAlign = ContentAlignment.MiddleCenter,
+                };
+                iconBlock.Controls.Add(lbl);
             }
+            Controls.Add(iconBlock);
 
-            // ── Title ─────────────────────────────────────────────────────────
-            int contentEndX = cardWidth - 195;
-            lblTitle.Text = title;
-            lblTitle.Font = new Font("Segoe UI Semibold", 10.5f, FontStyle.Bold);
-            lblTitle.ForeColor = isRead ? Color.FromArgb(55, 55, 55) : Color.FromArgb(15, 15, 15);
-            lblTitle.Location = new Point(74, 37);
-            lblTitle.Size = new Size(contentEndX - 74, 22);
-            lblTitle.AutoEllipsis = true;
-            lblTitle.BackColor = Color.Transparent;
+            // ── ROW 1: pin + NEW + URGENT + Title ─────────────────────────────
+            int rx = TEXT_X;
+            int ry = 10;
 
-            // ── Description ───────────────────────────────────────────────────
-            lblDescription.Text = description;
-            lblDescription.Font = new Font("Segoe UI", 8.5f);
-            lblDescription.ForeColor = Color.FromArgb(105, 105, 105);
-            lblDescription.Location = new Point(74, 62);
-            lblDescription.Size = new Size(contentEndX - 74, 30);
-            lblDescription.AutoEllipsis = true;
-            lblDescription.BackColor = Color.Transparent;
-
-            // ── Course chip ───────────────────────────────────────────────────
-            lblCourseChip.Visible = !string.IsNullOrEmpty(courseName);
-            if (!string.IsNullOrEmpty(courseName))
+            // Pin emoji button
+            var btnPin = new Button
             {
-                lblCourseChip.Text = "  " + courseName;
-                lblCourseChip.Font = new Font("Segoe UI", 7.5f);
-                lblCourseChip.ForeColor = Color.FromArgb(45, 100, 45);
-                lblCourseChip.BackColor = Color.FromArgb(220, 245, 215);
-                lblCourseChip.Location = new Point(74, 93);
-                lblCourseChip.Size = new Size(Math.Min(200, contentEndX - 78), 17);
-                lblCourseChip.TextAlign = ContentAlignment.MiddleLeft;
-                lblCourseChip.Padding = new Padding(4, 0, 0, 0);
-                MakeRoundedPanel(lblCourseChip, 6);
-
-                // Course/book icon inside chip
-                Image bookImg = TryGetResource("academic1");
-                if (bookImg != null)
-                {
-                    PictureBox bookPic = null;
-                    foreach (Control c in lblCourseChip.Controls)
-                        if (c is PictureBox pb) { bookPic = pb; break; }
-                    if (bookPic == null)
-                    {
-                        bookPic = new PictureBox
-                        {
-                            BackColor = Color.Transparent,
-                            SizeMode = PictureBoxSizeMode.Zoom,
-                            TabStop = false,
-                            Size = new Size(11, 11),
-                            Location = new Point(3, 3),
-                        };
-                        lblCourseChip.Controls.Add(bookPic);
-                    }
-                    bookPic.Image = bookImg;
-                }
-            }
-
-            // ── Right meta ────────────────────────────────────────────────────
-            int metaX = cardWidth - 188;
-
-            // Calendar icon for date
-            SetLabelWithIcon(lblDate,
-                date.ToString("MMM d, yyyy  •  h:mm tt"),
-                "calendar_1_0", 12,
-                new Font("Segoe UI", 7.8f), Color.Gray, metaX, 36);
-
-            // Building icon for office
-            SetLabelWithIcon(lblOffice,
-                officeName,
-                "administrativive", 12,
-                new Font("Segoe UI", 7.8f), Color.FromArgb(85, 85, 85), metaX, 57);
-
-            // Person icon for instructor
-            SetLabelWithIcon(lblInstructor,
-                instructorName,
-                "student_2_16", 12,
-                new Font("Segoe UI", 7.8f), Color.FromArgb(85, 85, 85), metaX, 77);
-
-            // ── Pin button — use marketing.png (pushpin) ──────────────────────
-            btnPin.Size = new Size(30, 30);
-            btnPin.Location = new Point(cardWidth - 40, 42);
-            btnPin.FlatStyle = FlatStyle.Flat;
-            btnPin.BackColor = Color.Transparent;
+                Text = isPinned ? "📌" : "📍",
+                Size = new Size(22, 22),
+                Location = new Point(rx, ry),
+                FlatStyle = FlatStyle.Flat,
+                Font = new Font("Segoe UI", 10f),
+                BackColor = Color.Transparent,
+                ForeColor = isPinned ? Maroon : Color.FromArgb(180, 180, 180),
+                Cursor = Cursors.Hand,
+                TabStop = false,
+            };
             btnPin.FlatAppearance.BorderSize = 0;
             btnPin.FlatAppearance.MouseOverBackColor = Color.FromArgb(20, 139, 0, 0);
-            btnPin.Cursor = Cursors.Hand;
-
-            Image pinImg = TryGetResource("marketing");
-            if (pinImg != null)
-            {
-                btnPin.Text = string.Empty;
-                btnPin.Image = isPinned
-                    ? MakeTintedColor(pinImg, 30, Color.FromArgb(139, 0, 0))
-                    : MakeTintedGray(pinImg, 30);
-                btnPin.ImageAlign = ContentAlignment.MiddleCenter;
-            }
-            else
-            {
-                btnPin.Text = isPinned ? "📌" : "📍";
-                btnPin.Font = new Font("Segoe UI Symbol", 11f);
-                btnPin.ForeColor = isPinned ? Color.FromArgb(139, 0, 0) : Color.FromArgb(190, 190, 190);
-            }
-
-            WireEvents(btnPin);
-        }
-
-        // ─────────────────────────────────────────────────────────────────────
-        //  Helper: set label text + small leading icon image via PictureBox
-        // ─────────────────────────────────────────────────────────────────────
-        private static void SetLabelWithIcon(
-            Label lbl, string text, string resName, int iconSize,
-            Font font, Color foreColor, int x, int y)
-        {
-            Image img = TryGetResource(resName);
-
-            lbl.Font = font;
-            lbl.ForeColor = foreColor;
-            lbl.AutoSize = true;
-            lbl.BackColor = Color.Transparent;
-
-            if (img != null)
-            {
-                lbl.Text = "      " + text;   // space for icon
-                lbl.Location = new Point(x, y);
-
-                PictureBox pic = null;
-                foreach (Control c in lbl.Controls)
-                    if (c is PictureBox pb) { pic = pb; break; }
-                if (pic == null)
-                {
-                    pic = new PictureBox
-                    {
-                        BackColor = Color.Transparent,
-                        SizeMode = PictureBoxSizeMode.Zoom,
-                        TabStop = false,
-                        Size = new Size(iconSize, iconSize),
-                    };
-                    lbl.Controls.Add(pic);
-                }
-                pic.Image = img;
-                pic.Location = new Point(0, (lbl.Height > 0 ? (lbl.Height - iconSize) / 2 : 1));
-                pic.BringToFront();
-            }
-            else
-            {
-                lbl.Text = text;
-                lbl.Location = new Point(x, y);
-            }
-        }
-
-        // ═════════════════════════════════════════════════════════════════════
-        //  WIRE EVENTS
-        // ═════════════════════════════════════════════════════════════════════
-        private bool _wired = false;
-        private void WireEvents(Button pinBtn)
-        {
-            if (_wired) return;
-            _wired = true;
-
-            pinBtn.Click += (s, e) =>
+            btnPin.Click += (s, e) =>
             {
                 _isPinned = !_isPinned;
                 PinToggled?.Invoke(this, _announcementId);
             };
+            Controls.Add(btnPin);
+            rx += 26;
 
-            foreach (Control c in this.Controls)
+            // "NEW" badge
+            if (isNew || !isRead)
             {
-                if (c == pinBtn) continue;
-                c.Click += (s, e) => CardClicked?.Invoke(this, _announcementId);
+                var newBadge = new Label
+                {
+                    Text = "NEW",
+                    AutoSize = false,
+                    Size = new Size(34, 18),
+                    Location = new Point(rx, ry + 2),
+                    Font = FontBadge,
+                    ForeColor = Color.White,
+                    BackColor = Color.FromArgb(34, 197, 94),
+                    TextAlign = ContentAlignment.MiddleCenter,
+                };
+                MakeRoundedRegion(newBadge, 6);
+                Controls.Add(newBadge);
+                rx += 40;
             }
-            this.Click += (s, e) => CardClicked?.Invoke(this, _announcementId);
+
+            // "URGENT" pill
+            if (isUrgent)
+            {
+                var urgentPill = new Label
+                {
+                    Text = "⚠ URGENT",
+                    AutoSize = false,
+                    Size = new Size(70, 18),
+                    Location = new Point(rx, ry + 2),
+                    Font = FontBadge,
+                    ForeColor = Color.White,
+                    BackColor = Maroon,
+                    TextAlign = ContentAlignment.MiddleCenter,
+                };
+                MakeRoundedRegion(urgentPill, 6);
+                Controls.Add(urgentPill);
+                rx += 76;
+            }
+
+            // Title
+            int titleW = cardWidth - rx - 220; // leave room for right-side meta
+            var lblTitle = new Label
+            {
+                Text = title,
+                Location = new Point(rx, ry),
+                Size = new Size(Math.Max(100, titleW), 22),
+                Font = isRead ? new Font("Segoe UI", 9.5f) : FontTitle,
+                ForeColor = isRead ? Color.FromArgb(55, 55, 55) : Color.FromArgb(15, 15, 15),
+                AutoEllipsis = true,
+                AutoSize = false,
+                BackColor = Color.Transparent,
+            };
+            Controls.Add(lblTitle);
+
+            // ── ROW 2: Description ────────────────────────────────────────────
+            var lblDesc = new Label
+            {
+                Text = description,
+                Location = new Point(TEXT_X, 35),
+                Size = new Size(cardWidth - TEXT_X - 220, 32),
+                Font = FontDesc,
+                ForeColor = Color.FromArgb(85, 85, 85),
+                AutoEllipsis = true,
+                AutoSize = false,
+                BackColor = Color.Transparent,
+            };
+            Controls.Add(lblDesc);
+
+            // ── ROW 3: Instructor | Viewed progress bar ───────────────────────
+            int bottomY = 76;
+
+            // Instructor label (left)
+            var lblInstr = new Label
+            {
+                Text = "👤 " + instructorName,
+                Location = new Point(TEXT_X, bottomY),
+                AutoSize = true,
+                Font = FontSmall,
+                ForeColor = Color.FromArgb(100, 100, 100),
+                BackColor = Color.Transparent,
+            };
+            Controls.Add(lblInstr);
+
+            // "Viewed X/Y" + progress bar (centre-left)
+            int viewedLabelX = TEXT_X + 130;
+            int barX = viewedLabelX + 80;
+            int barW = Math.Max(50, cardWidth - barX - 220);
+
+            var lblViewed = new Label
+            {
+                Text = $"Viewed {viewedCount}/{totalStudents}",
+                Location = new Point(viewedLabelX, bottomY),
+                AutoSize = true,
+                Font = FontSmall,
+                ForeColor = Color.FromArgb(110, 110, 110),
+                BackColor = Color.Transparent,
+            };
+            Controls.Add(lblViewed);
+
+            // Progress bar background + fill (painted on a panel)
+            var progressBg = new Panel
+            {
+                Location = new Point(barX, bottomY + 4),
+                Size = new Size(barW, 6),
+                BackColor = Color.FromArgb(225, 225, 225),
+            };
+            MakeRoundedRegion(progressBg, 3);
+            Controls.Add(progressBg);
+
+            float ratio = (float)viewedCount / totalStudents;
+            int fillW = Math.Max(0, (int)(barW * ratio));
+            if (fillW > 0)
+            {
+                var progressFill = new Panel
+                {
+                    Location = new Point(0, 0),
+                    Size = new Size(fillW, 6),
+                    BackColor = Maroon,
+                };
+                MakeRoundedRegion(progressFill, 3);
+                progressBg.Controls.Add(progressFill);
+            }
+
+            // ── RIGHT META: Category pill + Date + ⋮ menu ────────────────────
+            int metaRight = cardWidth - 8;
+
+            // Three-dot menu button
+            var btnMenu = new Button
+            {
+                Text = "⋮",
+                Size = new Size(24, 24),
+                Location = new Point(metaRight - 24, 8),
+                FlatStyle = FlatStyle.Flat,
+                Font = new Font("Segoe UI", 11f, FontStyle.Bold),
+                BackColor = Color.Transparent,
+                ForeColor = Color.FromArgb(160, 160, 160),
+                Cursor = Cursors.Hand,
+                TabStop = false,
+            };
+            btnMenu.FlatAppearance.BorderSize = 0;
+            Controls.Add(btnMenu);
+            metaRight -= 28;
+
+            // Date label
+            string dateStr = date.ToString("MMM d, yyyy  h:mm tt");
+            var lblDate = new Label
+            {
+                Text = dateStr,
+                AutoSize = true,
+                Font = FontSmall,
+                ForeColor = Color.FromArgb(130, 130, 130),
+                BackColor = Color.Transparent,
+            };
+            lblDate.Location = new Point(metaRight - 140, 14);
+            Controls.Add(lblDate);
+
+            // Category pill
+            Color catCol = CatIconColor.GetValueOrDefault(category, Color.FromArgb(90, 90, 200));
+            Color catBg = CatBgColor.GetValueOrDefault(category, Color.FromArgb(230, 230, 245));
+            string catText = isUrgent ? "Urgent" : category;
+            int catW = TextRenderer.MeasureText(catText, FontCat).Width + 20;
+
+            var lblCat = new Label
+            {
+                Text = catText,
+                AutoSize = false,
+                Size = new Size(catW, 22),
+                Location = new Point(metaRight - 140, 38),
+                Font = FontCat,
+                ForeColor = catCol,
+                BackColor = catBg,
+                TextAlign = ContentAlignment.MiddleCenter,
+            };
+            MakeRoundedRegion(lblCat, 8);
+            Controls.Add(lblCat);
+
+            // Attachment badge (small, bottom-right area)
+            if (attachmentCount > 0)
+            {
+                var lblAttach = new Label
+                {
+                    Text = $"📎 {attachmentCount}",
+                    AutoSize = true,
+                    Location = new Point(metaRight - 140, bottomY),
+                    Font = FontSmall,
+                    ForeColor = Color.FromArgb(40, 90, 175),
+                    BackColor = Color.Transparent,
+                };
+                Controls.Add(lblAttach);
+            }
         }
 
         // ═════════════════════════════════════════════════════════════════════
-        //  PAINT
+        //  WIRE CLICK EVENTS (all non-pin children fire CardClicked)
+        // ═════════════════════════════════════════════════════════════════════
+        private void WireClickEvents()
+        {
+            foreach (Control c in Controls)
+            {
+                // Skip pin button — it has its own handler
+                if (c is Button btn && btn.Text is "📌" or "📍") continue;
+                // Skip menu button
+                if (c is Button mb && mb.Text == "⋮") continue;
+                c.Click += (s, e) => CardClicked?.Invoke(this, _announcementId);
+            }
+            Click += (s, e) => CardClicked?.Invoke(this, _announcementId);
+        }
+
+        // ═════════════════════════════════════════════════════════════════════
+        //  PAINT — bottom border + subtle unread glow
         // ═════════════════════════════════════════════════════════════════════
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-            using var pen = new Pen(Color.FromArgb(232, 232, 232), 1f);
-            e.Graphics.DrawLine(pen, 0, this.Height - 1, this.Width, this.Height - 1);
+            // Bottom separator line
+            using var pen = new Pen(GridLine, 1f);
+            e.Graphics.DrawLine(pen, 0, Height - 1, Width, Height - 1);
 
+            // Subtle left-edge gradient for unread items
             if (!_isRead)
             {
                 using var brush = new LinearGradientBrush(
-                    new Point(4, 0), new Point(52, 0),
-                    Color.FromArgb(45, 139, 0, 0),
+                    new Point(4, 0), new Point(56, 0),
+                    Color.FromArgb(30, 139, 0, 0),
                     Color.Transparent);
-                e.Graphics.FillRectangle(brush, 4, 0, 48, this.Height);
+                e.Graphics.FillRectangle(brush, 4, 0, 52, Height);
             }
         }
 
         // ═════════════════════════════════════════════════════════════════════
         //  IMAGE HELPERS
         // ═════════════════════════════════════════════════════════════════════
-
-        // Load from Properties.Resources by name (reflection)
-        private static Image TryGetResource(string name)
+        private static Image? TryGetResource(string name)
         {
             try
             {
                 var prop = typeof(Properties.Resources).GetProperty(
-                    name,
-                    BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+                    name, BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
                 return prop?.GetValue(null) as Image;
             }
             catch { return null; }
         }
 
-        // ── Core: resize source image to target size ──────────────────────────
         private static Bitmap ResizeImage(Image src, int size)
         {
             var bmp = new Bitmap(size, size, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
@@ -458,37 +511,24 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             return bmp;
         }
 
-        // ── Pixel-level recolor: replace every non-transparent pixel with
-        //    targetColor, keeping the original alpha channel intact.
-        //    This gives a crisp silhouette in any colour against any background.
+        /// <summary>
+        /// Recolor every opaque pixel to <paramref name="targetColor"/>,
+        /// preserving the original alpha for smooth anti-aliased edges.
+        /// </summary>
         private static Bitmap RecolorToSilhouette(Image src, int size, Color targetColor)
         {
             var resized = ResizeImage(src, size);
             var result = new Bitmap(size, size, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-
             for (int x = 0; x < size; x++)
                 for (int y = 0; y < size; y++)
                 {
                     Color px = resized.GetPixel(x, y);
                     if (px.A < 8) { result.SetPixel(x, y, Color.Transparent); continue; }
-                    // Preserve original alpha so anti-aliased edges stay smooth
                     result.SetPixel(x, y, Color.FromArgb(px.A, targetColor));
                 }
             resized.Dispose();
             return result;
         }
-
-        // ── White silhouette — used on coloured icon blocks ───────────────────
-        private static Bitmap MakeTintedWhite(Image src, int size)
-            => RecolorToSilhouette(src, size, Color.White);
-
-        // ── Coloured silhouette — used for pin button active state ────────────
-        private static Bitmap MakeTintedColor(Image src, int size, Color tint)
-            => RecolorToSilhouette(src, size, tint);
-
-        // ── Gray silhouette — used for pin button inactive state ──────────────
-        private static Bitmap MakeTintedGray(Image src, int size)
-            => RecolorToSilhouette(src, size, Color.FromArgb(170, 170, 170));
 
         private static string GetCategoryInitial(string category, bool isUrgent)
         {
@@ -502,27 +542,23 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                 "Examinations" => "X",
                 "Administrative" => "AD",
                 "Urgent" => "!",
-                _ => category.Length > 0
-                    ? category[0].ToString().ToUpper() : "?",
+                _ => category.Length > 0 ? category[0].ToString().ToUpper() : "?",
             };
         }
 
-        private static void MakeRoundedPanel(Control c, int radius)
+        // ═════════════════════════════════════════════════════════════════════
+        //  SHAPE HELPERS
+        // ═════════════════════════════════════════════════════════════════════
+        private static void MakeRoundedRegion(Control c, int radius)
         {
             var path = new GraphicsPath();
             var r = new Rectangle(0, 0, c.Width, c.Height);
-            path.AddArc(r.X, r.Y, radius, radius, 180, 90);
-            path.AddArc(r.Right - radius, r.Y, radius, radius, 270, 90);
-            path.AddArc(r.Right - radius, r.Bottom - radius, radius, radius, 0, 90);
-            path.AddArc(r.X, r.Bottom - radius, radius, radius, 90, 90);
+            int d = radius * 2;
+            path.AddArc(r.X, r.Y, d, d, 180, 90);
+            path.AddArc(r.Right - d, r.Y, d, d, 270, 90);
+            path.AddArc(r.Right - d, r.Bottom - d, d, d, 0, 90);
+            path.AddArc(r.X, r.Bottom - d, d, d, 90, 90);
             path.CloseFigure();
-            c.Region = new Region(path);
-        }
-
-        private static void MakeCircle(Control c)
-        {
-            var path = new GraphicsPath();
-            path.AddEllipse(0, 0, c.Width, c.Height);
             c.Region = new Region(path);
         }
     }

@@ -41,6 +41,11 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             public bool IsUrgent { get; set; }
             public bool IsPinned { get; set; }
             public bool IsRead { get; set; }
+            /// <summary>True when posted within the last 3 days and not yet read.</summary>
+            public bool IsNew { get; set; }
+            /// <summary>Simulated viewer count (out of TotalStudents).</summary>
+            public int ViewedCount { get; set; } = 0;
+            public int TotalStudents { get; set; } = 40;
             public string Status { get; set; } = "active";
             public List<AnnouncementAttachment> Attachments { get; set; } = new();
         }
@@ -252,6 +257,9 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
         {
             var card = new AnnouncementCardUC();
 
+            // "NEW" badge: show when the announcement is within 3 days old and unread
+            bool isNew = !a.IsRead && (DateTime.Now - a.Date).TotalDays <= 3;
+
             card.Load(
                 id: a.Id,
                 title: a.Title,
@@ -265,9 +273,12 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                 isPinned: a.IsPinned,
                 isRead: a.IsRead,
                 attachmentCount: a.Attachments.Count,
-                cardWidth: cardWidth);
+                cardWidth: cardWidth,
+                isNew: isNew,
+                viewedCount: a.ViewedCount,
+                totalStudents: a.TotalStudents);
 
-            card.Margin = new Padding(0, 0, 0, 4);
+            card.Margin = new Padding(0, 0, 0, 0);  // rows sit flush like the reference
 
             card.CardClicked += (s, id) =>
             {
@@ -594,7 +605,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                 "pdf" => TryGetResource("pdf_icon"),
                 "docx" => TryGetResource("paper_clip"),          // paper-clip.png
                 "pptx" => TryGetResource("ppt_icon"),
-                "img" => TryGetResource("images_1"),           
+                "img" => TryGetResource("images_1"),
                 _ => TryGetResource("document_icon"),
             };
 
@@ -811,7 +822,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             }
         }
 
-        
+
         private void BuildPinnedPanel()
         {
             flpPinned.Controls.Clear();
@@ -1016,6 +1027,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                     Description    = "Please note that the mileage reimbursement rate for university-related travel has been adjusted. All reimbursement claims submitted after May 1, 2026 must use the new rate of ₱12.00 per km.",
                     Category = "Administrative", CourseName = "", OfficeName = "Admin Office", InstructorName = "Dr. Reyes",
                     Date = new DateTime(2026, 4, 15, 10, 30, 0), IsUrgent = true, IsPinned = true, IsRead = false,
+                    ViewedCount = 28, TotalStudents = 40,
                     Attachments = new()
                     {
                         new() { FileName = "Travel_Reimbursement_Policy_2026.pdf",  FileType = "pdf",  FileSizeBytes = 512_000 },
@@ -1027,6 +1039,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                     Description    = "The official midterm examination schedule for all BSIT 2nd year subjects is now available. Please check the LMS for your room assignments and bring your student ID on exam day.",
                     Category = "Examinations", CourseName = "BSIT 2nd Year", OfficeName = "Registrar's Office", InstructorName = "Prof. Santos",
                     Date = new DateTime(2026, 4, 20, 8, 0, 0), IsUrgent = true, IsPinned = true, IsRead = false,
+                    ViewedCount = 32, TotalStudents = 40,
                     Attachments = new()
                     {
                         new() { FileName = "Midterm_Schedule_AY2026.pdf",   FileType = "pdf",  FileSizeBytes = 320_000 },
@@ -1038,6 +1051,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                     Description    = "Bring your laptops for the graded lab activity covering Modules 4 and 5. The activity will be conducted using Visual Studio 2022. No borrowing of equipment will be allowed.",
                     Category = "Academic", CourseName = "CC111 – Programming 1", OfficeName = "CCIS Department", InstructorName = "Prof. Santos",
                     Date = new DateTime(2026, 4, 18, 9, 0, 0), IsUrgent = false, IsPinned = false, IsRead = true,
+                    ViewedCount = 36, TotalStudents = 40,
                     Attachments = new()
                     {
                         new() { FileName = "Lab_Activity_4_Instructions.pdf", FileType = "pdf",  FileSizeBytes = 210_000 },
@@ -1049,6 +1063,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                     Description    = "Join us for the PUP Foundation Day celebration. Activities include a student showcase, cultural performances, and a technology exhibit. Attendance is encouraged for all students.",
                     Category = "Events", CourseName = "", OfficeName = "Student Affairs Office", InstructorName = "Dr. Cruz",
                     Date = new DateTime(2026, 4, 10, 14, 0, 0), IsUrgent = false, IsPinned = false, IsRead = false,
+                    ViewedCount = 35, TotalStudents = 40,
                     Attachments = new()
                     {
                         new() { FileName = "Foundation_Day_Program.pptx",  FileType = "pptx", FileSizeBytes = 2_097_152 },
@@ -1060,6 +1075,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                     Description    = "All pending assignment outputs for Information Management must be submitted via the LMS portal before May 15 at 11:59 PM. Late submissions will not be accepted under any circumstance.",
                     Category = "Academic", CourseName = "IT222 – Information Management", OfficeName = "CCIS Department", InstructorName = "Prof. Santos",
                     Date = new DateTime(2026, 4, 8, 11, 0, 0), IsUrgent = false, IsPinned = false, IsRead = true,
+                    ViewedCount = 15, TotalStudents = 40,
                     Attachments = new(),
                 },
                 new() {
@@ -1067,6 +1083,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                     Description    = "The university library will extend its operating hours to 8:00 AM – 9:00 PM on weekdays starting May 1 through June 30, 2026 to support students during the examination period.",
                     Category = "General", CourseName = "", OfficeName = "Library Services", InstructorName = "Librarian Gomez",
                     Date = new DateTime(2026, 4, 5, 7, 30, 0), IsUrgent = false, IsPinned = false, IsRead = false,
+                    ViewedCount = 38, TotalStudents = 40,
                     Attachments = new()
                     {
                         new() { FileName = "Library_Extended_Hours_Notice.pdf", FileType = "pdf", FileSizeBytes = 95_000 },
@@ -1077,6 +1094,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                     Description    = "Online enrollment for the 2nd semester of Academic Year 2026–2027 is now open. Students must settle all outstanding balances and secure their assessment forms before enrolling.",
                     Category = "General", CourseName = "", OfficeName = "Registrar's Office", InstructorName = "Registrar Dela Torre",
                     Date = new DateTime(2026, 5, 2, 8, 0, 0), IsUrgent = false, IsPinned = false, IsRead = false,
+                    ViewedCount = 22, TotalStudents = 40,
                     Attachments = new()
                     {
                         new() { FileName = "Enrollment_Guide_2ndSem.pdf",   FileType = "pdf",  FileSizeBytes = 680_000  },
@@ -1088,6 +1106,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                     Description    = "All students applying for the CHED Scholarship and PUP Internal Scholarship must submit their complete documentary requirements to the Scholarship Office no later than May 20, 2026 at 5:00 PM.",
                     Category = "Administrative", CourseName = "", OfficeName = "Scholarship Office", InstructorName = "Dr. Valdez",
                     Date = new DateTime(2026, 5, 5, 9, 0, 0), IsUrgent = true, IsPinned = false, IsRead = false,
+                    ViewedCount = 28, TotalStudents = 40,
                     Attachments = new()
                     {
                         new() { FileName = "Scholarship_Requirements_Checklist.pdf", FileType = "pdf",  FileSizeBytes = 400_000 },
@@ -1099,6 +1118,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                     Description    = "There will be no classes on May 14, 2026 due to scheduled campus-wide electrical maintenance. All LMS deadlines falling on this date are automatically extended by 24 hours.",
                     Category = "Schedule", CourseName = "", OfficeName = "Facilities Management Office", InstructorName = "Engr. Bautista",
                     Date = new DateTime(2026, 5, 8, 7, 0, 0), IsUrgent = true, IsPinned = true, IsRead = false,
+                    ViewedCount = 18, TotalStudents = 40,
                     Attachments = new(),
                 },
                 new() {
@@ -1106,6 +1126,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                     Description    = "Registration for the Annual PUP Intramural Sports Festival is now open. Students interested in joining basketball, volleyball, badminton, or swimming events must register through their respective department coordinators before May 22, 2026.",
                     Category = "Events", CourseName = "", OfficeName = "Student Affairs Office", InstructorName = "Coach Mendoza",
                     Date = new DateTime(2026, 5, 6, 10, 0, 0), IsUrgent = false, IsPinned = false, IsRead = true,
+                    ViewedCount = 30, TotalStudents = 40,
                     Attachments = new()
                     {
                         new() { FileName = "Intramural_Sports_Registration_Form.docx", FileType = "docx", FileSizeBytes = 150_000 },
@@ -1117,6 +1138,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                     Description    = "The official final examination coverage for all BSIT subjects has been posted on the LMS. Students are advised to review the coverage carefully and contact their respective professors for any clarifications. Good luck on your finals!",
                     Category = "Examinations", CourseName = "BSIT – All Subjects", OfficeName = "CCIS Department", InstructorName = "Prof. Santos",
                     Date = new DateTime(2026, 5, 9, 8, 30, 0), IsUrgent = false, IsPinned = false, IsRead = false,
+                    ViewedCount = 20, TotalStudents = 40,
                     Attachments = new()
                     {
                         new() { FileName = "Finals_Coverage_BSIT_1stYear.pdf",  FileType = "pdf", FileSizeBytes = 760_000 },
@@ -1129,6 +1151,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                     Description    = "All students are required to attend the Academic Integrity and Anti-Plagiarism Seminar on May 16, 2026 at 1:00 PM via Zoom. Attendance will be recorded and counted toward your class standing.",
                     Category = "Academic", CourseName = "All BSIT Sections", OfficeName = "CCIS Department", InstructorName = "Dr. Reyes",
                     Date = new DateTime(2026, 5, 10, 9, 0, 0), IsUrgent = true, IsPinned = false, IsRead = false,
+                    ViewedCount = 25, TotalStudents = 40,
                     Attachments = new()
                     {
                         new() { FileName = "Academic_Integrity_Seminar_Slides.pptx", FileType = "pptx", FileSizeBytes = 4_194_304 },
@@ -1140,6 +1163,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                     Description    = "Several items including IDs, umbrellas, and a laptop bag have been turned over to the Security Office near Gate 1. Owners may claim their belongings by presenting valid identification.",
                     Category = "General", CourseName = "", OfficeName = "Security Office", InstructorName = "Guard Navarro",
                     Date = new DateTime(2026, 5, 7, 14, 0, 0), IsUrgent = false, IsPinned = false, IsRead = true,
+                    ViewedCount = 10, TotalStudents = 40,
                     Attachments = new()
                     {
                         new() { FileName = "LostAndFound_Photo_May7.jpg", FileType = "img", FileSizeBytes = 380_000 },
@@ -1150,6 +1174,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                     Description    = "The PUP Career Services Office invites all BSIT students to the annual IT Career Fair on May 22, 2026 from 9:00 AM to 4:00 PM at the university gymnasium. Over 30 technology companies will be present.",
                     Category = "Events", CourseName = "BSIT – All Years", OfficeName = "Career Services Office", InstructorName = "Dr. Cruz",
                     Date = new DateTime(2026, 5, 8, 10, 0, 0), IsUrgent = false, IsPinned = true, IsRead = false,
+                    ViewedCount = 32, TotalStudents = 40,
                     Attachments = new()
                     {
                         new() { FileName = "IT_CareerFair_2026_Program.pdf",    FileType = "pdf",  FileSizeBytes = 530_000 },
@@ -1162,6 +1187,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                     Description    = "Due to the university-wide convocation, all morning classes on May 13, 2026 are moved to the afternoon session. Students with afternoon conflicts are advised to coordinate with their respective professors.",
                     Category = "Schedule", CourseName = "", OfficeName = "Registrar's Office", InstructorName = "Registrar Dela Torre",
                     Date = new DateTime(2026, 5, 10, 7, 30, 0), IsUrgent = true, IsPinned = false, IsRead = false,
+                    ViewedCount = 14, TotalStudents = 40,
                     Attachments = new(),
                 },
                 new() {
@@ -1169,6 +1195,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                     Description    = "The official schedule for 4th-year BSIT Capstone Project defenses has been published on the departmental bulletin board and LMS. All groups are required to submit their final manuscripts and slide decks at least three days before their assigned defense date.",
                     Category = "Academic", CourseName = "BSIT 4th Year – Capstone", OfficeName = "CCIS Department", InstructorName = "Prof. Santos",
                     Date = new DateTime(2026, 5, 11, 8, 0, 0), IsUrgent = false, IsPinned = true, IsRead = false,
+                    ViewedCount = 36, TotalStudents = 40,
                     Attachments = new()
                     {
                         new() { FileName = "Capstone_Defense_Schedule_2026.pdf",  FileType = "pdf",  FileSizeBytes = 420_000 },
