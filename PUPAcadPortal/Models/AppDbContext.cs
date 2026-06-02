@@ -31,8 +31,6 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<Department> Departments { get; set; }
 
-    public virtual DbSet<DepartmentPrefix> DepartmentPrefixes { get; set; }
-
     public virtual DbSet<Enrollment> Enrollments { get; set; }
 
     public virtual DbSet<EnrollmentSubject> EnrollmentSubjects { get; set; }
@@ -340,26 +338,6 @@ public partial class AppDbContext : DbContext
             entity.HasOne(d => d.DeanProfessor).WithMany(p => p.Departments)
                 .HasForeignKey(d => d.DeanProfessorId)
                 .HasConstraintName("FK_Department_Dean");
-        });
-
-        modelBuilder.Entity<DepartmentPrefix>(entity =>
-        {
-            entity.HasKey(e => e.PrefixId).HasName("PRIMARY");
-
-            entity.ToTable("DepartmentPrefix");
-
-            entity.HasIndex(e => e.DepartmentId, "FK_Prefix_Department");
-
-            entity.HasIndex(e => e.Prefix, "Prefix").IsUnique();
-
-            entity.Property(e => e.PrefixId).HasColumnName("PrefixID");
-            entity.Property(e => e.DepartmentId).HasColumnName("DepartmentID");
-            entity.Property(e => e.Prefix).HasMaxLength(10);
-
-            entity.HasOne(d => d.Department).WithMany(p => p.DepartmentPrefixes)
-                .HasForeignKey(d => d.DepartmentId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Prefix_Department");
         });
 
         modelBuilder.Entity<Enrollment>(entity =>
@@ -806,23 +784,16 @@ public partial class AppDbContext : DbContext
 
             entity.ToTable("Subject");
 
-            entity.HasIndex(e => e.DepartmentId, "FK_Subject_Department");
-
             entity.HasIndex(e => e.SubjectCode, "SubjectCode").IsUnique();
 
             entity.Property(e => e.SubjectId)
                 .HasMaxLength(50)
                 .HasColumnName("SubjectID");
-            entity.Property(e => e.DepartmentId).HasColumnName("DepartmentID");
             entity.Property(e => e.Description).HasColumnType("text");
             entity.Property(e => e.LabUnits).HasColumnName("Lab_Units");
             entity.Property(e => e.LecUnits).HasColumnName("Lec_Units");
             entity.Property(e => e.SubjectCode).HasMaxLength(20);
             entity.Property(e => e.SubjectName).HasMaxLength(150);
-
-            entity.HasOne(d => d.Department).WithMany(p => p.Subjects)
-                .HasForeignKey(d => d.DepartmentId)
-                .HasConstraintName("FK_Subject_Department");
         });
 
         modelBuilder.Entity<SubjectOffering>(entity =>
@@ -933,11 +904,9 @@ public partial class AppDbContext : DbContext
 
             entity.ToTable("User");
 
-            entity.HasIndex(e => e.PersonalEmail, "Email").IsUnique();
+            entity.HasIndex(e => e.Email, "Email").IsUnique();
 
             entity.HasIndex(e => e.RoleId, "FK_User_Role");
-
-            entity.HasIndex(e => e.InstitutionalEmail, "UQ_InstitutionalEmail").IsUnique();
 
             entity.HasIndex(e => e.Username, "Username").IsUnique();
 
@@ -953,15 +922,14 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("datetime");
+            entity.Property(e => e.Email).HasMaxLength(100);
             entity.Property(e => e.FirstName).HasMaxLength(100);
-            entity.Property(e => e.InstitutionalEmail).HasMaxLength(100);
             entity.Property(e => e.IsActive)
                 .IsRequired()
                 .HasDefaultValueSql("'1'");
             entity.Property(e => e.LastName).HasMaxLength(100);
             entity.Property(e => e.MiddleName).HasMaxLength(100);
             entity.Property(e => e.PasswordHash).HasMaxLength(255);
-            entity.Property(e => e.PersonalEmail).HasMaxLength(100);
             entity.Property(e => e.PostalCode).HasMaxLength(20);
             entity.Property(e => e.Province).HasMaxLength(100);
             entity.Property(e => e.Region)

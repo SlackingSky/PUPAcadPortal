@@ -200,13 +200,13 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             LogStudentRegistration(studentId, fullName, pupEmail);
 
             // Single success message
-            //MessageBox.Show($"Student {fullName} ({studentId}) has been registered successfully!\n\n" +
-            //    $"Personal Email: {personalEmail}\n" +
-            //    $"PUP Email: {pupEmail}\n\n" +
-            //    "Login account has been created.\n" +
-            //    "Default Password: pup123456\n\n" +
-            //    "The student will appear in View All Users under Students tab.",
-            //    "Registration Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show($"Student {fullName} ({studentId}) has been registered successfully!\n\n" +
+                $"Personal Email: {personalEmail}\n" +
+                $"PUP Email: {pupEmail}\n\n" +
+                "Login account has been created.\n" +
+                "Default Password: pup123456\n\n" +
+                "The student will appear in View All Users under Students tab.",
+                "Registration Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             // Clear the form for next registration
             ClearStudentRegistrationForm();
