@@ -1,0 +1,651 @@
+﻿using PUPAcadPortal.PortalContents.Instructor.LMS.Course;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
+
+namespace PUPAcadPortal
+{
+    public partial class ActivityFormPage : UserControl
+    {
+        public event Action<ActivityItem> OnSave;
+        public event Action OnCancel;
+
+        private readonly CourseActivity _course;
+        private readonly ActivityItem? _editing;
+        private readonly bool _isNew;
+
+        // Working collections
+        private List<QuizQuestion> _questions = new();
+        private List<RubricCriteria> _rubricItems = new();
+        private List<CourseFileItem> _files = new();
+        private int _nextQId = 1, _nextRId = 1;
+
+        public ActivityFormPage(CourseActivity course, ActivityItem? editing)
+        {
+            _course = course;
+            _editing = editing;
+            _isNew = editing == null;
+            InitializeComponent();
+            PopulateForm();
+        }
+
+        private void PopulateForm()
+        {
+            lblPageTitle.Text = _isNew ? "Create Activity" : "Edit Activity";
+            lblCourseSub.Text = $"{_course.CourseCode} – {_course.CourseName}";
+            btnSave.Text = _isNew ? "✔  Create Activity" : "✔  Save Changes";
+
+            if (_editing != null)
+            {
+                txtTitle.Text = _editing.Title;
+                txtDescription.Text = _editing.Description;
+                SetCombo(cmbType, _editing.TypeString);
+                dtpDeadline.Value = _editing.Deadline > DateTime.MinValue ? _editing.Deadline : DateTime.Now.AddDays(7);
+                nudPoints.Value = Math.Clamp(_editing.Points, 1, 10000);
+                chkRubric.Checked = _editing.HasRubric;
+                _questions = new List<QuizQuestion>(_editing.Questions);
+                _rubricItems = new List<RubricCriteria>(_editing.RubricItems);
+                _files = new List<CourseFileItem>(_editing.AttachedFiles);
+                _nextQId = _questions.Count > 0 ? _questions.Max(q => q.QuestionId) + 1 : 1;
+                _nextRId = _rubricItems.Count > 0 ? _rubricItems.Max(r => r.CriteriaId) + 1 : 1;
+            }
+
+            RefreshTypePanel();
+            RefreshQuizPanel();
+            RefreshRubricPanel();
+            RefreshFilesPanel();
+        }
+
+        private void cmbType_SelectedIndexChanged(object sender, EventArgs e) => RefreshTypePanel();
+
+        private void RefreshTypePanel()
+        {
+            string t = cmbType.SelectedItem?.ToString() ?? "Assignment";
+            pnlQuizSection.Visible = t == "Quiz";
+            pnlRubricSection.Visible = t is "Essay" or "Assignment";
+            lblPointsNote.Text = t == "Quiz" ? "ℹ Points calculated from questions." : "";
+        }
+
+        private void btnAddQuestion_Click(object sender, EventArgs e)
+        {
+            _questions.Add(new QuizQuestion { QuestionId = _nextQId++, QuestionType = "MultipleChoice", Points = 1 });
+            RefreshQuizPanel();
+        }
+
+        private void RefreshQuizPanel()
+        {
+            flpQuestions.SuspendLayout();
+            flpQuestions.Controls.Clear();
+            for (int i = 0; i < _questions.Count; i++)
+                flpQuestions.Controls.Add(BuildQuestionRow(_questions[i], i + 1));
+            flpQuestions.ResumeLayout();
+
+            if (cmbType.SelectedItem?.ToString() == "Quiz" && _questions.Count > 0)
+                nudPoints.Value = _questions.Sum(q => q.Points);
+        }
+
+        private static readonly string[] ChoiceLetters = { "A", "B", "C", "D", "E", "F", "G", "H" };
+
+        private Panel BuildQuestionRow(QuizQuestion q, int num)
+        {
+            if (q.QuestionType == "MultipleChoice" && q.Choices.Count < 4)
+            {
+                while (q.Choices.Count < 4) q.Choices.Add("");
+            }
+
+            int rowW = Math.Max(700, flpQuestions.ClientSize.Width - 16);
+            var row = new Panel
+            {
+                Width = rowW,
+                BackColor = Color.White,
+                Margin = new Padding(0, 0, 0, 8)
+            };
+            row.Paint += (s, e) =>
+            {
+                using var pen = new Pen(Color.FromArgb(225, 225, 235));
+                e.Graphics.DrawRectangle(pen, 0, 0, row.Width - 1, row.Height - 1);
+                using var accent = new SolidBrush(Color.FromArgb(63, 81, 181));
+                e.Graphics.FillRectangle(accent, 0, 0, 4, row.Height);
+            };
+
+            var lblNum = new Label
+            {
+                Text = num.ToString(),
+                Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+                ForeColor = Color.White,
+                BackColor = Color.FromArgb(63, 81, 181),
+                TextAlign = ContentAlignment.MiddleCenter,
+                Location = new Point(12, 10),
+                Size = new Size(28, 28)
+            };
+
+            var cmbQType = new ComboBox
+            {
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Font = new Font("Segoe UI", 9F),
+                Location = new Point(48, 10),
+                Size = new Size(160, 25)
+            };
+            cmbQType.Items.AddRange(new object[] { "MultipleChoice", "Identification", "TrueFalse", "Essay" });
+            SetCombo(cmbQType, q.QuestionType);
+
+            var lblPts = new Label { Text = "pts:", Location = new Point(220, 14), AutoSize = true, Font = new Font("Segoe UI", 9F) };
+            var nudPts = new NumericUpDown
+            {
+                Minimum = 1,
+                Maximum = 1000,
+                Value = q.Points,
+                Location = new Point(250, 10),
+                Size = new Size(60, 25),
+                Font = new Font("Segoe UI", 9F)
+            };
+            nudPts.ValueChanged += (s, e) =>
+            {
+                q.Points = (int)nudPts.Value;
+                if (cmbType.SelectedItem?.ToString() == "Quiz")
+                    nudPoints.Value = _questions.Sum(x => x.Points);
+            };
+
+            var btnDel = new buttonRounded
+            {
+                Text = "✕",
+                Size = new Size(28, 26),
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
+                BackColor = Color.FromArgb(195, 55, 55),
+                ForeColor = Color.White,
+                BorderRadius = 6,
+                Font = new Font("Segoe UI", 9F)
+            };
+            btnDel.Click += (s, e) => { _questions.Remove(q); RefreshQuizPanel(); };
+
+            var txtQ = new TextBox
+            {
+                Text = q.QuestionText,
+                PlaceholderText = "Enter question text...",
+                Font = new Font("Segoe UI", 10F),
+                Location = new Point(12, 46),
+                Size = new Size(rowW - 20, 26)
+            };
+            txtQ.TextChanged += (s, e) => q.QuestionText = txtQ.Text;
+            int splitX = (int)(rowW * 0.55);
+            int rightW = rowW - splitX - 12;
+
+            var pnlChoices = new Panel
+            {
+                Location = new Point(12, 80),
+                BackColor = Color.Transparent
+            };
+            var pnlRight = new Panel
+            {
+                Location = new Point(splitX, 80),
+                Width = rightW,
+                BackColor = Color.FromArgb(248, 248, 252)
+            };
+            pnlRight.Paint += (s, e) =>
+            {
+                using var pen = new Pen(Color.FromArgb(210, 210, 230));
+                e.Graphics.DrawRectangle(pen, 0, 0, pnlRight.Width - 1, pnlRight.Height - 1);
+            };
+            var lblCorrect = new Label
+            {
+                Text = "✔  Correct Answer:",
+                Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                ForeColor = Color.FromArgb(30, 130, 80),
+                Location = new Point(10, 10),
+                AutoSize = true
+            };
+
+            var cmbCorrect = new ComboBox
+            {
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+                ForeColor = Color.FromArgb(30, 130, 80),
+                Location = new Point(10, 34),
+                Size = new Size(rightW - 20, 28)
+            };
+
+            var cmbTF = new ComboBox
+            {
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+                ForeColor = Color.FromArgb(30, 130, 80),
+                Location = new Point(10, 34),
+                Size = new Size(rightW - 20, 28),
+                Visible = false
+            };
+            cmbTF.Items.AddRange(new object[] { "True", "False" });
+            var txtOpenAns = new TextBox
+            {
+                PlaceholderText = "Model answer / key phrase...",
+                Font = new Font("Segoe UI", 9.5F),
+                Location = new Point(10, 34),
+                Size = new Size(rightW - 20, 26),
+                Visible = false
+            };
+            txtOpenAns.TextChanged += (s, e) => q.CorrectAnswer = txtOpenAns.Text;
+
+            pnlRight.Controls.AddRange(new Control[] { lblCorrect, cmbCorrect, cmbTF, txtOpenAns });
+            cmbCorrect.SelectedIndexChanged += (s, e) =>
+                q.CorrectAnswer = cmbCorrect.SelectedItem?.ToString() ?? "";
+            void SelectSavedAnswer()
+            {
+                if (cmbCorrect.Items.Contains(q.CorrectAnswer))
+                    cmbCorrect.SelectedItem = q.CorrectAnswer;
+                else if (cmbCorrect.Items.Count > 0)
+                    cmbCorrect.SelectedIndex = 0;
+            }
+
+            void RebuildChoices()
+            {
+                pnlChoices.SuspendLayout();
+                pnlChoices.Controls.Clear();
+                int choiceW = splitX - 20;
+                int y = 0;
+
+                for (int ci = 0; ci < q.Choices.Count; ci++)
+                {
+                    int idx = ci; 
+                    string letter = idx < ChoiceLetters.Length ? ChoiceLetters[idx] : $"#{idx + 1}";
+
+                    var lblLetter = new Label
+                    {
+                        Text = letter + ".",
+                        Font = new Font("Segoe UI", 9.5F, FontStyle.Bold),
+                        ForeColor = Color.FromArgb(63, 81, 181),
+                        Location = new Point(0, y + 4),
+                        Size = new Size(24, 22)
+                    };
+
+                    var txtChoice = new TextBox
+                    {
+                        Text = q.Choices[idx],
+                        PlaceholderText = $"Choice {letter}...",
+                        Font = new Font("Segoe UI", 9.5F),
+                        Location = new Point(28, y),
+                        Size = new Size(choiceW - 66, 26)
+                    };
+                    int capturedIdx = idx;
+                    txtChoice.TextChanged += (s, e) =>
+                    {
+                        if (capturedIdx < q.Choices.Count)
+                            q.Choices[capturedIdx] = txtChoice.Text;
+                        RefreshCorrectAnswerCombo(q, cmbCorrect);
+                        SelectSavedAnswer();
+                    };
+
+                    var btnRemChoice = new buttonRounded
+                    {
+                        Text = "−",
+                        Size = new Size(26, 26),
+                        Location = new Point(choiceW - 34, y),
+                        BackColor = idx >= 4
+                            ? Color.FromArgb(195, 55, 55)
+                            : Color.FromArgb(200, 200, 210),
+                        ForeColor = Color.White,
+                        BorderRadius = 5,
+                        Enabled = idx >= 4,   // A–D are permanent
+                        Font = new Font("Segoe UI", 9F, FontStyle.Bold)
+                    };
+                    btnRemChoice.Click += (s, e) =>
+                    {
+                        if (q.Choices.Count > 4)
+                        {
+                            q.Choices.RemoveAt(idx);
+                            RebuildChoices();
+                        }
+                    };
+
+                    pnlChoices.Controls.AddRange(new Control[] { lblLetter, txtChoice, btnRemChoice });
+                    y += 32;
+                }
+
+                if (q.Choices.Count < ChoiceLetters.Length)
+                {
+                    var btnAddChoice = new buttonRounded
+                    {
+                        Text = $"+ Add {(q.Choices.Count < ChoiceLetters.Length ? ChoiceLetters[q.Choices.Count] : "?")} Choice",
+                        Size = new Size(130, 26),
+                        Location = new Point(28, y),
+                        BackColor = Color.FromArgb(63, 81, 181),
+                        ForeColor = Color.White,
+                        BorderRadius = 6,
+                        Font = new Font("Segoe UI", 8.5F, FontStyle.Bold)
+                    };
+                    btnAddChoice.Click += (s, e) =>
+                    {
+                        q.Choices.Add("");
+                        RebuildChoices();
+                    };
+                    pnlChoices.Controls.Add(btnAddChoice);
+                    y += 32;
+                }
+
+                pnlChoices.Height = y + 4;
+                pnlChoices.Width = choiceW;
+
+                RefreshCorrectAnswerCombo(q, cmbCorrect);
+                SelectSavedAnswer();
+
+                pnlChoices.ResumeLayout();
+                pnlRight.Location = new Point(splitX, 80);
+                pnlRight.Height = Math.Max(pnlChoices.Height, 80);
+
+                row.Height = 80 + Math.Max(pnlChoices.Height, pnlRight.Height) + 12;
+                row.Invalidate();
+            }
+
+            void ApplyQuestionType(string qt)
+            {
+                q.QuestionType = qt;
+                bool isMC = qt == "MultipleChoice";
+                bool isTF = qt == "TrueFalse";
+                bool isOpen = qt is "Identification" or "Essay";
+
+                pnlChoices.Visible = isMC;
+                cmbCorrect.Visible = isMC;
+                cmbTF.Visible = isTF;
+                txtOpenAns.Visible = isOpen;
+
+                if (isTF)
+                {
+                    string saved = q.CorrectAnswer;
+                    if (!string.IsNullOrEmpty(saved) && cmbTF.Items.Contains(saved))
+                        cmbTF.SelectedItem = saved;
+                    else cmbTF.SelectedIndex = 0;
+                }
+
+                if (isOpen) txtOpenAns.Text = q.CorrectAnswer;
+
+                if (isMC) RebuildChoices();
+                else
+                {
+                    pnlRight.Height = 72;
+                    row.Height = 80 + pnlRight.Height + 12;
+                    row.Invalidate();
+                }
+            }
+
+            cmbTF.SelectedIndexChanged += (s, e) => q.CorrectAnswer = cmbTF.SelectedItem?.ToString() ?? "True";
+
+            cmbQType.SelectedIndexChanged += (s, e) =>
+            {
+                string qt = cmbQType.SelectedItem?.ToString() ?? "MultipleChoice";
+                ApplyQuestionType(qt);
+            };
+
+            row.Controls.AddRange(new Control[] { lblNum, cmbQType, lblPts, nudPts, btnDel, txtQ, pnlChoices, pnlRight });
+
+            void PositionDeleteBtn() => btnDel.Location = new Point(row.Width - 36, 10);
+            PositionDeleteBtn();
+            row.SizeChanged += (s, e) =>
+            {
+                PositionDeleteBtn();
+                txtQ.Width = row.Width - 20;
+            };
+
+            ApplyQuestionType(q.QuestionType);
+
+            return row;
+        }
+
+        private static void RefreshCorrectAnswerCombo(QuizQuestion q, ComboBox cmb)
+        {
+            string saved = cmb.SelectedItem?.ToString() ?? q.CorrectAnswer;
+            cmb.Items.Clear();
+            for (int i = 0; i < q.Choices.Count; i++)
+            {
+                string letter = i < ChoiceLetters.Length ? ChoiceLetters[i] : $"#{i + 1}";
+                string text = q.Choices[i].Trim();
+                string display = string.IsNullOrEmpty(text) ? $"{letter}. (empty)" : $"{letter}. {text}";
+                cmb.Items.Add(display);
+            }
+            // Restore selection by letter prefix
+            for (int i = 0; i < cmb.Items.Count; i++)
+            {
+                if (cmb.Items[i].ToString()!.StartsWith(saved))
+                { cmb.SelectedIndex = i; return; }
+            }
+            if (cmb.Items.Count > 0) cmb.SelectedIndex = 0;
+        }
+
+        private static string GetAnswerHint(string type) => type switch
+        {
+            "TrueFalse" => "Answer key: True or False",
+            _ => "Answer key / model answer"
+        };
+
+        private void chkRubric_CheckedChanged(object sender, EventArgs e)
+        {
+            pnlRubricRows.Visible = chkRubric.Checked;
+            lblRubricNote.Visible = chkRubric.Checked;
+        }
+
+        private void btnAddCriteria_Click(object sender, EventArgs e)
+        {
+            _rubricItems.Add(new RubricCriteria { CriteriaId = _nextRId++, MaxPoints = 25 });
+            RefreshRubricPanel();
+        }
+
+        private void RefreshRubricPanel()
+        {
+            flpRubric.SuspendLayout();
+            flpRubric.Controls.Clear();
+            foreach (var r in _rubricItems)
+                flpRubric.Controls.Add(BuildRubricRow(r));
+            flpRubric.ResumeLayout();
+
+            if (chkRubric.Checked && _rubricItems.Count > 0)
+            {
+                int total = _rubricItems.Sum(r => r.MaxPoints);
+                nudPoints.Value = Math.Clamp(total, 1, 10000);
+                lblRubricNote.Text = $"📊 Rubric total: {total} pts — max score locked to rubric.";
+            }
+        }
+
+        private Panel BuildRubricRow(RubricCriteria r)
+        {
+            int rowW = Math.Max(500, flpRubric.ClientSize.Width - 16);
+            var row = new Panel
+            {
+                Width = rowW,
+                Height = 60,
+                BackColor = Color.FromArgb(250, 250, 253),
+                Margin = new Padding(0, 0, 0, 4)
+            };
+            row.Paint += (s, e) =>
+            {
+                using var pen = new Pen(Color.FromArgb(225, 225, 235));
+                e.Graphics.DrawRectangle(pen, 0, 0, row.Width - 1, row.Height - 1);
+            };
+
+            var txtName = new TextBox { Text = r.Name, PlaceholderText = "Criteria name", Font = new Font("Segoe UI", 9.5F), Location = new Point(8, 8), Size = new Size(200, 26) };
+            txtName.TextChanged += (s, e) => r.Name = txtName.Text;
+
+            var txtDesc = new TextBox { Text = r.Description, PlaceholderText = "Description (optional)", Font = new Font("Segoe UI", 9.5F), Location = new Point(218, 8), Size = new Size(rowW - 400, 26) };
+            txtDesc.TextChanged += (s, e) => r.Description = txtDesc.Text;
+
+            var lblPts = new Label { Text = "Max pts:", Location = new Point(rowW - 175, 14), AutoSize = true, Font = new Font("Segoe UI", 9F) };
+            var nudPts = new NumericUpDown { Minimum = 1, Maximum = 9999, Value = Math.Max(1, r.MaxPoints), Location = new Point(rowW - 110, 8), Size = new Size(74, 26), Font = new Font("Segoe UI", 9F) };
+            nudPts.ValueChanged += (s, e) => { r.MaxPoints = (int)nudPts.Value; RefreshRubricPanel(); };
+
+            var btnDel = new buttonRounded { Text = "✕", Size = new Size(26, 26), Location = new Point(rowW - 34, 8), BackColor = Color.FromArgb(195, 55, 55), ForeColor = Color.White, BorderRadius = 5 };
+            btnDel.Click += (s, e) => { _rubricItems.Remove(r); RefreshRubricPanel(); };
+
+            row.Controls.AddRange(new Control[] { txtName, txtDesc, lblPts, nudPts, btnDel });
+            row.SizeChanged += (s, e) =>
+            {
+                txtDesc.Width = row.Width - 400;
+                lblPts.Left = row.Width - 175;
+                nudPts.Left = row.Width - 110;
+                btnDel.Left = row.Width - 34;
+            };
+            return row;
+        }
+
+        private void btnAttachFile_Click(object sender, EventArgs e)
+        {
+            using var ofd = new OpenFileDialog
+            {
+                Title = "Attach File to Activity",
+                Multiselect = true,
+                Filter = "All Files (*.*)|*.*|PDF|*.pdf|Word|*.docx|Images|*.png;*.jpg"
+            };
+            if (ofd.ShowDialog() != DialogResult.OK) return;
+
+            foreach (var path in ofd.FileNames)
+            {
+                var fi = new System.IO.FileInfo(path);
+                _files.Add(new CourseFileItem
+                {
+                    FileId = _files.Count + 1,
+                    FileName = fi.Name,
+                    FilePath = path,
+                    FileType = fi.Extension.TrimStart('.').ToUpper(),
+                    FileSizeBytes = fi.Length,
+                    UploadedAt = DateTime.Now,
+                    CourseId = _course.CourseId
+                });
+            }
+            RefreshFilesPanel();
+        }
+
+        private void RefreshFilesPanel()
+        {
+            flpFiles.SuspendLayout();
+            flpFiles.Controls.Clear();
+            foreach (var f in _files)
+                flpFiles.Controls.Add(BuildFileChip(f));
+            lblNoFiles.Visible = _files.Count == 0;
+            flpFiles.ResumeLayout();
+        }
+
+        private Panel BuildFileChip(CourseFileItem f)
+        {
+            var chip = new Panel
+            {
+                Width = 248,
+                Height = 44,
+                BackColor = Color.FromArgb(246, 246, 251),
+                Margin = new Padding(0, 0, 8, 6)
+            };
+            chip.Paint += (s, e) =>
+            {
+                using var pen = new Pen(Color.FromArgb(215, 215, 230));
+                e.Graphics.DrawRectangle(pen, 0, 0, chip.Width - 1, chip.Height - 1);
+            };
+
+            chip.Controls.Add(new Label { Text = FileIcon(f.FileType), Font = new Font("Segoe UI", 14F), Location = new Point(6, 8), AutoSize = true });
+            chip.Controls.Add(new Label { Text = f.FileName, Font = new Font("Segoe UI", 8.5F, FontStyle.Bold), Location = new Point(36, 6), Width = 168, Height = 16, AutoEllipsis = true });
+            chip.Controls.Add(new Label { Text = FormatBytes(f.FileSizeBytes), Font = new Font("Segoe UI", 8F), ForeColor = Color.Gray, Location = new Point(36, 24), AutoSize = true });
+
+            var captured = f;
+            var btnRm = new buttonRounded { Text = "✕", Size = new Size(22, 22), Location = new Point(chip.Width - 28, 11), BackColor = Color.FromArgb(200, 55, 55), ForeColor = Color.White, BorderRadius = 5, Font = new Font("Segoe UI", 8F) };
+            btnRm.Click += (s, e) => { _files.Remove(captured); RefreshFilesPanel(); };
+            chip.Controls.Add(btnRm);
+            return chip;
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            lblError.Text = "";
+            string type = cmbType.SelectedItem?.ToString() ?? "Assignment";
+
+            if (string.IsNullOrWhiteSpace(txtTitle.Text))
+            { lblError.Text = "⚠  Activity title is required."; txtTitle.Focus(); return; }
+
+            if (_isNew && dtpDeadline.Value <= DateTime.Now.AddMinutes(-1))
+            { lblError.Text = "⚠  Deadline must be in the future."; return; }
+
+            if (type == "Quiz" && _questions.Count == 0)
+            { lblError.Text = "⚠  Add at least one question for a Quiz."; return; }
+
+            var act = _editing ?? new ActivityItem { CourseId = _course.CourseId };
+            act.Title = txtTitle.Text.Trim();
+            act.Description = txtDescription.Text.Trim();
+            act.Type = Enum.TryParse<ActivityType>(type, out var at) ? at : ActivityType.Assignment;
+            act.Deadline = dtpDeadline.Value;
+            act.Points = (int)nudPoints.Value;
+            act.HasRubric = chkRubric.Checked;
+            act.Questions = new List<QuizQuestion>(_questions);
+            act.RubricItems = new List<RubricCriteria>(_rubricItems);
+            act.AttachedFiles = new List<CourseFileItem>(_files);
+            if (act.TotalStudents == 0) act.TotalStudents = 35;
+
+            OnSave?.Invoke(act);
+        }
+
+        private void pnlHeader_SizeChanged(object sender, System.EventArgs e)
+        {
+            if (this.btnSave != null && this.pnlHeader != null)
+            {
+                this.btnSave.Location = new System.Drawing.Point(this.pnlHeader.Width - this.btnSave.Width - 12, 17);
+            }
+        }
+
+        private void pnlQuizSection_SizeChanged(object sender, System.EventArgs e) { }
+        private void pnlRubricSection_SizeChanged(object sender, System.EventArgs e) { }
+        private void pnlFilesSection_SizeChanged(object sender, System.EventArgs e) { }
+
+        private void pnlScroll_SizeChanged(object sender, System.EventArgs e)
+        {
+            if (this.pnlScroll == null || this.stackPanel == null) return;
+            int w = System.Math.Max(600, this.pnlScroll.ClientSize.Width - 44);
+            foreach (System.Windows.Forms.Control c in this.stackPanel.Controls)
+            {
+                c.Width = w;
+                if (c is System.Windows.Forms.Panel p)
+                {
+                    foreach (System.Windows.Forms.Control inner in p.Controls)
+                    {
+                        if (inner is System.Windows.Forms.TextBox tb &&
+                            (tb.Name == "txtTitle" || tb.Name == "txtDescription"))
+                            tb.Width = w - 36;
+                    }
+                }
+            }
+        }
+
+        private static void SetupSectionLabel(System.Windows.Forms.Label lbl, string text, int x, int y, System.Drawing.Color color)
+        {
+            lbl.AutoSize = true;
+            lbl.Font = new System.Drawing.Font("Segoe UI", 10.5F, System.Drawing.FontStyle.Bold);
+            lbl.ForeColor = color;
+            lbl.Location = new System.Drawing.Point(x, y);
+            lbl.Text = text;
+            lbl.TabIndex = 0;
+        }
+
+        private static void SetupFieldLabel(System.Windows.Forms.Label lbl, string text, int x, int y)
+        {
+            lbl.AutoSize = true;
+            lbl.Font = new System.Drawing.Font("Segoe UI", 9F);
+            lbl.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            lbl.Location = new System.Drawing.Point(x, y);
+            lbl.Text = text;
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e) => OnCancel?.Invoke();
+
+        private static void SetCombo(ComboBox c, string val)
+        { int i = c.FindStringExact(val); c.SelectedIndex = i >= 0 ? i : 0; }
+
+        private static string FileIcon(string ext) => ext.ToUpper() switch
+        {
+            "PDF" => "📄",
+            "DOCX" or "DOC" => "📝",
+            "XLSX" or "XLS" => "📊",
+            "PNG" or "JPG" or "JPEG" => "🖼",
+            "ZIP" or "RAR" => "🗜",
+            _ => "📎"
+        };
+
+        private static string FormatBytes(long b)
+        {
+            if (b < 1024) return $"{b} B";
+            if (b < 1048576) return $"{b / 1024.0:F1} KB";
+            return $"{b / 1048576.0:F1} MB";
+        }
+    }
+}

@@ -1,21 +1,25 @@
-﻿using System.Windows.Forms;
+﻿using PUPAcadPortal.PortalContents.Instructor.LMS.Course;
+using System;
+using System.Windows.Forms;
 
 namespace PUPAcadPortal
 {
     public partial class LMSActivityHost : UserControl
     {
-        private Control _currentView;   
+        private Control _currentView;
 
         public LMSActivityHost()
         {
-            InitializeComponent();// default first screen
+            InitializeComponent();
+            ShowDashboard();
         }
+
 
         public void ShowDashboard()
         {
             var dashboard = new ActivityDashboard();
             dashboard.Dock = DockStyle.Fill;
-
+            dashboard.OnOpenCourse += course => OpenCourse(course);
             SwapView(dashboard);
         }
 
@@ -26,6 +30,7 @@ namespace PUPAcadPortal
             mgmt.OnBack += ShowDashboard;
             SwapView(mgmt);
         }
+
 
         private void SwapView(Control next)
         {

@@ -17,13 +17,12 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
         private readonly Dictionary<Control, RectangleF> _origBounds = new();
         private readonly Dictionary<Control, float> _origFontSz = new();
 
-        // ── Announcement system ──────────────────────────────────────────
         private List<AdminAnnouncement> announcements = new List<AdminAnnouncement>();
         private int editingAnnouncementId = -1;
         private string _activeCategoryFilter = "all";
         private string _activeStatusFilter = "all";
         private string _searchQuery = "";
-        private string _activeSortMode = "newest";   // NEW
+        private string _activeSortMode = "newest";   
 
         private CreateAnnouncementAdmin _createAnnouncementUC;
         private ViewAnnouncementAdmin _viewAnnouncementUC;
@@ -50,9 +49,6 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
             InitializeComponent();
         }
 
-        // ════════════════════════════════════════════════════════════════
-        //  ANNOUNCEMENT SYSTEM — ADMIN PORTAL
-        // ════════════════════════════════════════════════════════════════
 
         private bool _announcementInited = false;
 
@@ -61,8 +57,6 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
             if (_announcementInited) return;
             _announcementInited = true;
 
-            // Wire search / filter controls that live in the designer panel
-            // (add null-checks so it won't crash if controls are renamed)
             if (txtAnnSearch != null)
                 txtAnnSearch.TextChanged += (s, e) => { _searchQuery = txtAnnSearch.Text.Trim(); RenderAnnouncements(); };
 
@@ -138,28 +132,22 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
                     ShowCreateAnnouncementUC();
                 };
 
-            // Create + wire the CreateAnnouncement UC
             _createAnnouncementUC = new CreateAnnouncementAdmin { Visible = false, Anchor = AnchorStyles.None };
             _createAnnouncementUC.AnnouncementPosted += OnAnnouncementPosted;
             _createAnnouncementUC.CloseRequested += (s, e) => HideCreateAnnouncementUC();
             pnlAnnouncement.Controls.Add(_createAnnouncementUC);
 
-            // Create + wire the ViewAnnouncement UC
             _viewAnnouncementUC = new ViewAnnouncementAdmin { Visible = false, Anchor = AnchorStyles.None };
             _viewAnnouncementUC.EditRequested += OnViewEdit;
             _viewAnnouncementUC.DeleteRequested += (s, id) => DeleteAnnouncement(id);
             _viewAnnouncementUC.CloseRequested += (s, e) => HideViewAnnouncementUC();
             pnlAnnouncement.Controls.Add(_viewAnnouncementUC);
 
-            // Resize → re-center overlay UCs
-
-            // Seed data and first render
             SeedAnnouncements();
             BuildAnnCategorySidebar();
             RenderAnnouncements();
         }
 
-        // ── Seed sample data ─────────────────────────────────────────────
         private void SeedAnnouncements()
         {
             announcements.AddRange(new[]
@@ -215,7 +203,6 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
             });
         }
 
-        // ── Render cards ─────────────────────────────────────────────────
         private void RenderAnnouncements()
         {
             if (fplAnnouncement == null) return;
@@ -286,14 +273,11 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
             RenderAnnInsights();
         }
 
-        // ── Self-contained card builder (no stub dependency) ─────────────
         private Panel BuildAdminAnnouncementCard(AdminAnnouncement a, int cardWidth)
         {
             Color iconCol = AnnCatIconColor.GetValueOrDefault(a.Category, Color.Gray);
             Color iconBg = AnnCatBgColor.GetValueOrDefault(a.Category, Color.WhiteSmoke);
             bool isNew = (DateTime.Now - a.Date) < TimeSpan.FromDays(1);
-
-            // Extra bottom rows needed?
             bool hasNotify = a.NotifyStudents || a.NotifyInstructors;
             bool hasAttach = !string.IsNullOrWhiteSpace(a.AttachedFile);
             int extraHeight = (hasNotify || hasAttach) ? 22 : 0;
@@ -316,8 +300,6 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
                 using var path = AnnRoundedPath(new Rectangle(0, 0, card.Width - 1, card.Height - 1), 8);
                 pe.Graphics.DrawPath(pen, path);
             };
-
-            // ── Icon circle ──────────────────────────────────────────────
             var icon = new Panel { Size = new Size(42, 42), Location = new Point(12, 16), BackColor = iconBg };
             icon.Paint += (s, pe) =>
             {
@@ -333,9 +315,7 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
             card.Controls.Add(icon);
 
             int textX = 64;
-            int rightM = 12;   // right margin
-
-            // ── NEW ribbon ───────────────────────────────────────────────
+            int rightM = 12;   
             if (isNew)
             {
                 var ribbon = new System.Windows.Forms.Label
@@ -354,7 +334,6 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
                 ribbon.BringToFront();
             }
 
-            // ── ⋮ menu button ─────────────────────────────────────────────
             var btnMenu = new Button
             {
                 Size = new Size(28, 28),
@@ -395,8 +374,6 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
             btnMenu.Click += (s, ev) => ctx.Show(btnMenu, new Point(0, btnMenu.Height));
             card.Controls.Add(btnMenu);
 
-            // ── Date label (left-aligned after textX, top row) ───────────
-            // Keep date width bounded so it never crowds the menu button
             int dateMaxW = Math.Max(60, cardWidth - textX - 40);
             string dateText = a.Date.ToString("MMM d, yyyy  h:mm tt");
             var lblDate = new System.Windows.Forms.Label
@@ -413,7 +390,6 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
             };
             card.Controls.Add(lblDate);
 
-            // ── Pin + Urgent + Category badges (row 2) ────────────────────
             int badgeY = 30;
             int badgeX = textX;
 
@@ -449,7 +425,6 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
             }
 
             var pillFont = new Font("Segoe UI", 7.5f, FontStyle.Bold);
-            // Clamp pill width so it never goes off the right edge
             int pillW = Math.Min(
                 TextRenderer.MeasureText(a.Category, pillFont).Width + 14,
                 Math.Max(30, cardWidth - badgeX - rightM - 4));
@@ -486,7 +461,6 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
                 card.Controls.Add(ib);
             }
 
-            // ── Title (row 3) ─────────────────────────────────────────────
             int titleW = Math.Max(40, cardWidth - textX - rightM - 4);
             var lblTitle = new System.Windows.Forms.Label
             {
@@ -500,8 +474,6 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
                 AutoEllipsis = true,
             };
             card.Controls.Add(lblTitle);
-
-            // ── Description (row 4) ───────────────────────────────────────
             int descW = Math.Max(40, cardWidth - textX - rightM - 4);
             var lblDesc = new System.Windows.Forms.Label
             {
@@ -515,8 +487,6 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
                 AutoEllipsis = true,
             };
             card.Controls.Add(lblDesc);
-
-            // ── Author + date (row 5) — no view/read rate ─────────────────
             int authorY = 94;
             var lblAuthor = new System.Windows.Forms.Label
             {
@@ -528,8 +498,6 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
                 BackColor = Color.Transparent,
             };
             card.Controls.Add(lblAuthor);
-
-            // ── Notification + Attachment badges (row 6, only if present) ─
             if (hasNotify || hasAttach)
             {
                 int badgeRow = 112;
@@ -578,8 +546,6 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
                     card.Controls.Add(attachBadge);
                 }
             }
-
-            // ── Click → open detail ───────────────────────────────────────
             EventHandler openDetail = (s, ev) =>
             {
                 var ann = announcements.Find(x => x.Id == capturedId);
@@ -604,7 +570,6 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
             return p;
         }
 
-        // ── Category sidebar ─────────────────────────────────────────────
         private void BuildAnnCategorySidebar()
         {
             if (flpCategories == null) return;
@@ -614,7 +579,7 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
             flpCategories.FlowDirection = FlowDirection.TopDown;
             flpCategories.WrapContents = false;
             flpCategories.AutoScroll = true;
-            flpCategories.BackColor = Color.White;   // original white background
+            flpCategories.BackColor = Color.White;   
 
             var categories = new[] { "all", "General", "Academic", "Events", "Emergency", "Enrollment" };
 
@@ -624,7 +589,7 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
                 bool isActive = _activeCategoryFilter == cat;
 
                 Color dotCol = cat == "all"
-                    ? Color.FromArgb(139, 0, 0)   // maroon for "All"
+                    ? Color.FromArgb(139, 0, 0)   
                     : AnnCatIconColor.GetValueOrDefault(cat, Color.Gray);
 
                 int rowW = Math.Max(100, flpCategories.ClientSize.Width - 25);
@@ -648,7 +613,7 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
                     Location = new Point(26, 0),
                     Text = cat == "all" ? "All" : cat,
                     Font = new Font("Segoe UI", 9.5f, isActive ? FontStyle.Bold : FontStyle.Regular),
-                    ForeColor = Color.FromArgb(40, 40, 40),    // original dark text
+                    ForeColor = Color.FromArgb(40, 40, 40),    
                     TextAlign = ContentAlignment.MiddleLeft,
                     BackColor = Color.Transparent,
                 };
@@ -678,7 +643,6 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
             flpCategories.ResumeLayout();
         }
 
-        // ── Pinned sidebar ───────────────────────────────────────────────
         private void RenderAnnPinned()
         {
             if (flpPinned == null) return;
@@ -750,15 +714,13 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
 
             flpPinned.ResumeLayout();
         }
-
-        // ── Insights panel ───────────────────────────────────────────────
         private void RenderAnnInsights()
         {
             if (pnlInsights == null) return;
 
             var old = pnlInsights.Controls.OfType<Control>().Where(c => c.Name.StartsWith("ins_")).ToList();
             foreach (var c in old) pnlInsights.Controls.Remove(c);
-            pnlInsights.BackColor = Color.White;   // original white background
+            pnlInsights.BackColor = Color.White;   
 
             int total = announcements.Count;
             int active = announcements.Count(a => a.Status == "active");
@@ -774,7 +736,7 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
                     AutoSize = true,
                     Text = label,
                     Font = new Font("Segoe UI", 8.5f),
-                    ForeColor = Color.FromArgb(80, 80, 80),   // original muted dark label
+                    ForeColor = Color.FromArgb(80, 80, 80),  
                     Location = new Point(8, y)
                 });
                 pnlInsights.Controls.Add(new System.Windows.Forms.Label
@@ -796,7 +758,6 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
             pnlInsights.Refresh();
         }
 
-        // ── CRUD helpers ─────────────────────────────────────────────────
         private void EditAnnouncement(int id)
         {
             var a = announcements.Find(x => x.Id == id);
@@ -873,7 +834,6 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
             EditAnnouncement(id);
         }
 
-        // ── UC visibility helpers ────────────────────────────────────────
         private void ShowCreateAnnouncementUC()
         {
             CenterAnnControl(_createAnnouncementUC);
@@ -913,7 +873,6 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
                 Math.Max(0, (parent.ClientSize.Height - child.Height) / 4));
         }
 
-        // ── Drawing helpers ───────────────────────────────────────────────
         private static void AnnMakeCircle(Control c)
         {
             var path = new GraphicsPath();
