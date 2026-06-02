@@ -85,7 +85,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
         //  LOAD
         private void AnnouncementContentStudent_Load(object sender, EventArgs e)
         {
-            // ── Fix ComboBoxes: DropDownList so they are not editable ─────────
+            //  Fix ComboBoxes: DropDownList so they are not editable 
             cmbCategory.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbSort.DropDownStyle = ComboBoxStyle.DropDownList;
 
@@ -197,9 +197,34 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
 
             btnMarkAllRead.Click += (s, e) =>
             {
-                foreach (var a in _announcements) a.IsRead = true;
-                RenderAnnouncements();
+                // Mark every announcement as read in the data model
+                foreach (var a in _announcements)
+                {
+                    a.IsRead = true;
+                    a.IsNew = false;   // suppress the NEW badge
+                }
+
+                // Rebuild list so each card redraws with the updated state
+                RenderAnnouncements();   // internally calls BuildPinnedPanel()
+
+                // Refresh the two independent side panels
+                BuildCategoryPanel();
                 BuildInsightsPanel();
+
+                // Give a brief visual confirmation
+                btnMarkAllRead.Text = "✓  All marked as read";
+                btnMarkAllRead.Enabled = false;
+
+                // Restore button text after 2 seconds
+                var t = new System.Windows.Forms.Timer { Interval = 2000 };
+                t.Tick += (ts, te) =>
+                {
+                    btnMarkAllRead.Text = "✓  Mark all as read";
+                    btnMarkAllRead.Enabled = true;
+                    t.Stop();
+                    t.Dispose();
+                };
+                t.Start();
             };
         }
 
@@ -249,6 +274,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                 flpAnnouncements.Controls.Add(BuildCard(ann, cardWidth));
 
             BuildPinnedPanel();
+            BuildInsightsPanel();   // keep insights in sync on every render
             flpAnnouncements.ResumeLayout();
         }
 
@@ -756,7 +782,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             return row;
         }
 
-        // ── Try to get a resource image by name (returns null if not found) ──
+        //  Try to get a resource image by name (returns null if not found) ──
         private static Image TryGetResource(string name)
         {
             try
@@ -1206,9 +1232,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             };
         }
 
-        // ═════════════════════════════════════════════════════════════════════
         //  SNAPSHOT  (for responsive scaling)
-        // ═════════════════════════════════════════════════════════════════════
         private void SnapshotControls(Control.ControlCollection controls)
         {
             foreach (Control ctrl in controls)
