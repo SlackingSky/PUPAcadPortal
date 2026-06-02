@@ -2,11 +2,21 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Text;
 
-namespace PUPAcadPortal.Data
+namespace PUPAcadPortal.PortalContents.Student.LMS.Calendar
 {
-    public enum EventType { Class, Exam, Deadline, Cancelled, Consultation }
+    public enum EventType
+    {
+        Class = 0,
+        Exam = 1,
+        Deadline = 2,
+        Cancelled = 3,
+        Consultation = 4,
+        Quiz = 5,
+        SchoolEvent = 6,
+    }
 
     public class CalendarEvent
     {
@@ -17,36 +27,69 @@ namespace PUPAcadPortal.Data
         public string EndTime { get; set; } = "";
         public string Room { get; set; } = "";
 
+        public string Course { get; set; } = "";
+
         public Color GetColor()
         {
-            switch (Type)
+            return Type switch
             {
-                case EventType.Class: return Color.FromArgb(66, 133, 244);   // Blue
-                case EventType.Exam: return Color.FromArgb(220, 53, 69);    // Red
-                case EventType.Deadline: return Color.FromArgb(255, 140, 0);    // Orange
-                case EventType.Cancelled: return Color.FromArgb(108, 117, 125);  // Gray
-                case EventType.Consultation: return Color.FromArgb(32, 178, 170);   // Teal
-                default: return Color.DimGray;
-            }
+                EventType.Class => Color.FromArgb(66, 133, 244),   // Blue
+                EventType.Exam => Color.FromArgb(220, 53, 69),   // Red
+                EventType.Deadline => Color.FromArgb(255, 140, 0),   // Orange
+                EventType.Cancelled => Color.FromArgb(108, 117, 125),   // Gray
+                EventType.Consultation => Color.FromArgb(32, 178, 170),   // Teal
+                EventType.Quiz => Color.FromArgb(138, 43, 226),   // Purple
+                EventType.SchoolEvent => Color.FromArgb(0, 153, 102),   // Green
+                _ => Color.DimGray,
+            };
         }
 
         public string GetTypeLabel()
         {
-            switch (Type)
+            return Type switch
             {
-                case EventType.Class: return "CLASS";
-                case EventType.Exam: return "EXAM";
-                case EventType.Deadline: return "DEADLINE";
-                case EventType.Cancelled: return "CANCELLED";
-                case EventType.Consultation: return "CONSULT";
-                default: return "EVENT";
-            }
+                EventType.Class => "CLASS",
+                EventType.Exam => "EXAM",
+                EventType.Deadline => "DEADLINE",
+                EventType.Cancelled => "CANCELLED",
+                EventType.Consultation => "CONSULT",
+                EventType.Quiz => "QUIZ",
+                EventType.SchoolEvent => "SCHOOL EVENT",
+                _ => "EVENT",
+            };
+        }
+
+        public string GetIcon()
+        {
+            return Type switch
+            {
+                EventType.Class => "📘",
+                EventType.Exam => "📝",
+                EventType.Deadline => "📌",
+                EventType.Cancelled => "🚫",
+                EventType.Consultation => "🩺",
+                EventType.Quiz => "🧪",
+                EventType.SchoolEvent => "🏫",
+                _ => "📅",
+            };
+        }
+        public bool IsReminderWorthy(int daysAhead)
+        {
+            return Type switch
+            {
+                EventType.Exam => daysAhead <= 3,
+                EventType.Deadline => daysAhead <= 3,
+                EventType.Quiz => daysAhead <= 2,
+                EventType.Class => daysAhead == 0,
+                _ => false,
+            };
         }
     }
 
     public static class SharedCalendarData
     {
         public static bool isLoaded = false;
+
         private static readonly string SaveFolder =
             Path.Combine(Environment.GetFolderPath(
                 Environment.SpecialFolder.ApplicationData), "PUPAcadPortal");
@@ -54,34 +97,20 @@ namespace PUPAcadPortal.Data
         public static int CurrentYear = DateTime.Now.Year;
         public static int CurrentMonth = DateTime.Now.Month;
 
-        public static Dictionary<DateTime, string> InstructorAnnouncements = new Dictionary<DateTime, string>();
-        public static Dictionary<DateTime, string> StudentNotes = new Dictionary<DateTime, string>();
+        public static Dictionary<DateTime, string> InstructorAnnouncements
+            = new Dictionary<DateTime, string>();
 
-        public static Dictionary<DateTime, List<CalendarEvent>> Events = new Dictionary<DateTime, List<CalendarEvent>>();
+        public static Dictionary<DateTime, string> StudentNotes
+            = new Dictionary<DateTime, string>();
 
-        public static Dictionary<DateTime, List<CalendarEvent>> StudentEvents = new Dictionary<DateTime, List<CalendarEvent>>();
+        public static Dictionary<DateTime, List<CalendarEvent>> Events
+            = new Dictionary<DateTime, List<CalendarEvent>>();
+
+        public static Dictionary<DateTime, List<CalendarEvent>> StudentEvents
+            = new Dictionary<DateTime, List<CalendarEvent>>();
 
         public static Dictionary<DateTime, string> Holidays = new Dictionary<DateTime, string>
         {
-            // 2027
-            { new DateTime(2027,  1,  1), "New Year's Day"        },
-            { new DateTime(2027,  2, 25), "EDSA Revolution"       },
-            { new DateTime(2027,  4,  2), "Maundy Thursday"       },
-            { new DateTime(2027,  4,  3), "Good Friday"           },
-            { new DateTime(2027,  4,  4), "Black Saturday"        },
-            { new DateTime(2027,  4,  9), "Araw ng Kagitingan"    },
-            { new DateTime(2027,  5,  1), "Labor Day"             },
-            { new DateTime(2027,  6, 12), "Independence Day"      },
-            { new DateTime(2027,  8, 21), "Ninoy Aquino Day"      },
-            { new DateTime(2027,  8, 31), "National Heroes Day"   },
-            { new DateTime(2027, 11,  1), "All Saints' Day"       },
-            { new DateTime(2027, 11,  2), "All Souls' Day"        },
-            { new DateTime(2027, 11, 30), "Bonifacio Day"         },
-            { new DateTime(2027, 12,  8), "Immaculate Conception" },
-            { new DateTime(2027, 12, 24), "Christmas Eve"         },
-            { new DateTime(2027, 12, 25), "Christmas Day"         },
-            { new DateTime(2027, 12, 30), "Rizal Day"             },
-            { new DateTime(2027, 12, 31), "New Year's Eve"        },
             // 2025
             { new DateTime(2025,  1,  1), "New Year's Day"        },
             { new DateTime(2025,  4,  9), "Araw ng Kagitingan"    },
@@ -117,8 +146,26 @@ namespace PUPAcadPortal.Data
             { new DateTime(2026, 12, 25), "Christmas Day"         },
             { new DateTime(2026, 12, 30), "Rizal Day"             },
             { new DateTime(2026, 12, 31), "New Year's Eve"        },
+            // 2027
+            { new DateTime(2027,  1,  1), "New Year's Day"        },
+            { new DateTime(2027,  2, 25), "EDSA Revolution"       },
+            { new DateTime(2027,  4,  2), "Maundy Thursday"       },
+            { new DateTime(2027,  4,  3), "Good Friday"           },
+            { new DateTime(2027,  4,  4), "Black Saturday"        },
+            { new DateTime(2027,  4,  9), "Araw ng Kagitingan"    },
+            { new DateTime(2027,  5,  1), "Labor Day"             },
+            { new DateTime(2027,  6, 12), "Independence Day"      },
+            { new DateTime(2027,  8, 21), "Ninoy Aquino Day"      },
+            { new DateTime(2027,  8, 31), "National Heroes Day"   },
+            { new DateTime(2027, 11,  1), "All Saints' Day"       },
+            { new DateTime(2027, 11,  2), "All Souls' Day"        },
+            { new DateTime(2027, 11, 30), "Bonifacio Day"         },
+            { new DateTime(2027, 12,  8), "Immaculate Conception" },
+            { new DateTime(2027, 12, 24), "Christmas Eve"         },
+            { new DateTime(2027, 12, 25), "Christmas Day"         },
+            { new DateTime(2027, 12, 30), "Rizal Day"             },
+            { new DateTime(2027, 12, 31), "New Year's Eve"        },
         };
-
 
         public static List<CalendarEvent> GetEventsForDate(DateTime date)
         {
@@ -141,7 +188,6 @@ namespace PUPAcadPortal.Data
             SaveData();
         }
 
-
         public static List<CalendarEvent> GetStudentEventsForDate(DateTime date)
         {
             var key = date.Date;
@@ -163,7 +209,6 @@ namespace PUPAcadPortal.Data
             SaveData();
         }
 
-
         public static List<(DateTime Date, CalendarEvent Ev)> GetUpcoming(
             int count = 5,
             bool includeStudentEvents = false)
@@ -174,28 +219,50 @@ namespace PUPAcadPortal.Data
             foreach (var kv in Events)
             {
                 if (kv.Key < today) continue;
-                foreach (var ev in kv.Value)
-                    result.Add((kv.Key, ev));
+                foreach (var ev in kv.Value) result.Add((kv.Key, ev));
             }
 
             if (includeStudentEvents)
-            {
                 foreach (var kv in StudentEvents)
                 {
                     if (kv.Key < today) continue;
-                    foreach (var ev in kv.Value)
-                        result.Add((kv.Key, ev));
+                    foreach (var ev in kv.Value) result.Add((kv.Key, ev));
                 }
-            }
 
             result.Sort((a, b) => a.Date.CompareTo(b.Date));
-
-            if (result.Count > count)
-                result.RemoveRange(count, result.Count - count);
-
+            if (result.Count > count) result.RemoveRange(count, result.Count - count);
             return result;
         }
 
+        public static List<(DateTime Date, CalendarEvent Ev, int DaysLeft)> GetUpcomingReminders(
+            int daysAhead = 3,
+            bool includeStudentEvents = false)
+        {
+            var result = new List<(DateTime, CalendarEvent, int)>();
+            DateTime today = DateTime.Now.Date;
+
+            void Scan(Dictionary<DateTime, List<CalendarEvent>> store)
+            {
+                foreach (var kv in store)
+                {
+                    int days = (kv.Key.Date - today).Days;
+                    if (days < 0 || days > daysAhead) continue;
+                    foreach (var ev in kv.Value)
+                        if (ev.IsReminderWorthy(days))
+                            result.Add((kv.Key, ev, days));
+                }
+            }
+
+            Scan(Events);
+            if (includeStudentEvents) Scan(StudentEvents);
+
+            result.Sort((a, b) =>
+            {
+                int cmp = a.Item1.CompareTo(b.Item1);
+                return cmp != 0 ? cmp : a.Item2.Type.CompareTo(b.Item2.Type);
+            });
+            return result;
+        }
 
         public static void SaveData()
         {
@@ -207,12 +274,10 @@ namespace PUPAcadPortal.Data
                 foreach (var kv in StudentNotes)
                     sb.AppendLine($"{kv.Key:yyyy-MM-dd}|{Escape(kv.Value)}");
                 File.WriteAllText(Path.Combine(SaveFolder, "student_notes.txt"), sb.ToString(), Encoding.UTF8);
-
                 sb.Clear();
                 foreach (var kv in InstructorAnnouncements)
                     sb.AppendLine($"{kv.Key:yyyy-MM-dd}|{Escape(kv.Value)}");
                 File.WriteAllText(Path.Combine(SaveFolder, "announcements.txt"), sb.ToString(), Encoding.UTF8);
-
                 sb.Clear();
                 foreach (var kv in Events)
                     foreach (var ev in kv.Value)
@@ -223,8 +288,10 @@ namespace PUPAcadPortal.Data
                             Escape(ev.Description),
                             Escape(ev.StartTime),
                             Escape(ev.EndTime),
-                            Escape(ev.Room)));
-                File.WriteAllText(Path.Combine(SaveFolder, "events.txt"), sb.ToString(), Encoding.UTF8);            
+                            Escape(ev.Room),
+                            Escape(ev.Course)));
+                File.WriteAllText(Path.Combine(SaveFolder, "events.txt"), sb.ToString(), Encoding.UTF8);
+
                 sb.Clear();
                 foreach (var kv in StudentEvents)
                     foreach (var ev in kv.Value)
@@ -235,10 +302,11 @@ namespace PUPAcadPortal.Data
                             Escape(ev.Description),
                             Escape(ev.StartTime),
                             Escape(ev.EndTime),
-                            Escape(ev.Room)));
+                            Escape(ev.Room),
+                            Escape(ev.Course)));
                 File.WriteAllText(Path.Combine(SaveFolder, "student_events.txt"), sb.ToString(), Encoding.UTF8);
             }
-            catch { }
+            catch {  }
         }
 
         public static void LoadData()
@@ -254,7 +322,6 @@ namespace PUPAcadPortal.Data
                         if (p.Length == 2 && DateTime.TryParse(p[0], out DateTime d))
                             StudentNotes[d.Date] = Unescape(p[1]);
                     }
-
                 path = Path.Combine(SaveFolder, "announcements.txt");
                 if (File.Exists(path))
                     foreach (var line in File.ReadAllLines(path, Encoding.UTF8))
@@ -281,6 +348,7 @@ namespace PUPAcadPortal.Data
                                 StartTime = Unescape(p[4]),
                                 EndTime = Unescape(p[5]),
                                 Room = Unescape(p[6]),
+                                Course = p.Length >= 8 ? Unescape(p[7]) : "",
                             });
                         }
                     }
@@ -302,15 +370,20 @@ namespace PUPAcadPortal.Data
                                 StartTime = Unescape(p[4]),
                                 EndTime = Unescape(p[5]),
                                 Room = Unescape(p[6]),
+                                Course = p.Length >= 8 ? Unescape(p[7]) : "",
                             });
                         }
                     }
+
                 isLoaded = true;
             }
             catch { }
         }
 
-        private static string Escape(string s) => (s ?? "").Replace("|", "\\pipe").Replace("\r\n", "\\n").Replace("\n", "\\n");
-        private static string Unescape(string s) => (s ?? "").Replace("\\n", "\n").Replace("\\pipe", "|");
+        private static string Escape(string s)
+            => (s ?? "").Replace("|", "\\pipe").Replace("\r\n", "\\n").Replace("\n", "\\n");
+
+        private static string Unescape(string s)
+            => (s ?? "").Replace("\\n", "\n").Replace("\\pipe", "|");
     }
 }

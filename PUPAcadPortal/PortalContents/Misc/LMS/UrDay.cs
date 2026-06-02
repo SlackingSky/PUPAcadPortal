@@ -1,8 +1,8 @@
 ﻿/*
- *  UrDay.cs  –  Calendar Day Cell (Faculty Edition)
- *  Extends the original UrDay to support FacultyCalendarData alongside
- *  the legacy SharedCalendarData, and adds drag-drop source capability
- *  so events can be dragged to other cells on the monthly grid.
+ * UrDay.cs  –  Calendar Day Cell (Faculty Edition)
+ * Extends the original UrDay to support FacultyCalendarData alongside
+ * the legacy SharedCalendarData, and adds drag-drop source capability
+ * so events can be dragged to other cells on the monthly grid.
  */
 
 using System;
@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using PUPAcadPortal.PortalForms;
 using PUPAcadPortal.Data;
+using PUPAcadPortal.PortalContents.Student.LMS.Calendar;
 
 namespace PUPAcadPortal
 {
@@ -46,12 +47,23 @@ namespace PUPAcadPortal
         private FacultyCalendarEvent? _dragSourceEvent;
         private bool _isDraggingEvent;
         private Point _dragStartPt;
+        private Point _mouseDownPt;
+
+        // ── Theme ─────────────────────────────────────────────────
+        private static readonly Color C_Primary = Color.FromArgb(128, 0, 0);
+        private static readonly Color C_Selected = Color.FromArgb(255, 245, 245);
+        private static readonly Color C_Dim = Color.FromArgb(248, 248, 248);
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string AnnouncementText
         {
             get => lblAnnouncement.Text;
-            set { lblAnnouncement.Text = value ?? ""; lblAnnouncement.Visible = !string.IsNullOrWhiteSpace(value); RepositionPills(); }
+            set
+            {
+                lblAnnouncement.Text = value ?? "";
+                lblAnnouncement.Visible = !string.IsNullOrWhiteSpace(value);
+                RepositionPills();
+            }
         }
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -61,7 +73,12 @@ namespace PUPAcadPortal
         public bool IsSelected
         {
             get => _isSelected;
-            set { _isSelected = value; BackColor = value ? Color.FromArgb(255, 245, 245) : Color.White; Invalidate(); }
+            set
+            {
+                _isSelected = value;
+                BackColor = value ? C_Selected : Color.White;
+                Invalidate();
+            }
         }
 
         // ── Constructor ───────────────────────────────────────────────────────
@@ -94,7 +111,11 @@ namespace PUPAcadPortal
             lblDay.BackColor = Color.Transparent;
             lblDay.Text = day;
 
-            if (string.IsNullOrEmpty(day)) { BackColor = Color.FromArgb(248, 248, 248); return; }
+            if (string.IsNullOrEmpty(day))
+            {
+                BackColor = C_Dim;
+                return;
+            }
 
             int dayInt = int.Parse(day);
             _fullDate = new DateTime(year, month, dayInt);
@@ -113,7 +134,7 @@ namespace PUPAcadPortal
                 var gp = new GraphicsPath();
                 gp.AddEllipse(0, 0, lblDay.Width, lblDay.Height);
                 lblDay.Region = new Region(gp);
-                lblDay.BackColor = Color.Maroon;
+                lblDay.BackColor = C_Primary;
                 lblDay.ForeColor = Color.White;
             }
 
@@ -240,11 +261,11 @@ namespace PUPAcadPortal
                 foreach (var ev in legacy)
                 {
                     var cap = ev;
-                    var item = new ToolStripMenuItem($"{GetLegacyIcon(cap.Type)} [{cap.GetTypeLabel()}]  {cap.Title}");
+                    var item = new ToolStripMenuItem($"{cap.GetIcon()} [{cap.GetTypeLabel()}]  {cap.Title}");
                     item.Click += (ss, ee) =>
                     {
                         if (MessageBox.Show($"Remove \"{cap.Title}\" from {_fullDate:MMMM dd, yyyy}?",
-                                            "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                                            "Confirm Remove", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
                             if (_isStudent) SharedCalendarData.RemoveStudentEvent(_fullDate, cap);
                             else SharedCalendarData.RemoveEvent(_fullDate, cap);
@@ -262,7 +283,7 @@ namespace PUPAcadPortal
                     item.Click += (ss, ee) =>
                     {
                         if (MessageBox.Show($"Remove \"{cap.Title}\" from {_fullDate:MMMM dd, yyyy}?",
-                                            "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                                            "Confirm Remove", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
                             FacultyCalendarData.RemoveEvent(cap.Id);
                             RefreshEventPills();
@@ -275,16 +296,6 @@ namespace PUPAcadPortal
 
             ContextMenuStrip = _ctxMenu;
         }
-
-        private static string GetLegacyIcon(EventType t) => t switch
-        {
-            EventType.Class => "📘",
-            EventType.Exam => "📝",
-            EventType.Deadline => "📌",
-            EventType.Consultation => "🩺",
-            EventType.Cancelled => "🚫",
-            _ => "📅",
-        };
 
         // ══════════════════════════════════════════════════════════════════════
         //  EVENT PILLS
@@ -305,7 +316,7 @@ namespace PUPAcadPortal
 
             if (legacyCount > 0)
             {
-                _btnEventsDropdown = MakeGroupedDropdown($"📅 Events ({legacyCount})  ▾", Color.Maroon);
+                _btnEventsDropdown = MakeGroupedDropdown($"📅 Events ({legacyCount})  ▾", C_Primary);
                 var capShared = new List<CalendarEvent>(legacyEvents);
                 var capPersonal = new List<CalendarEvent>(personalEvents);
 
@@ -314,8 +325,8 @@ namespace PUPAcadPortal
                     var cms = new ContextMenuStrip { Font = new Font("Segoe UI", 8.5f) };
                     foreach (var ev in capShared)
                     {
-                        string line = BuildEventLine(ev.GetTypeLabel(), ev.Title, ev.StartTime, ev.EndTime, ev.Room);
-                        var item = new ToolStripMenuItem(line) { ForeColor = ev.GetColor(), Enabled = false };
+                        string line = BuildEventLine(ev.GetTypeLabel(), ev.Title, ev.StartTime, ev.EndTime, ev.Room, ev.Course);
+                        var item = new ToolStripMenuItem($"{ev.GetIcon()} {line}") { ForeColor = ev.GetColor(), Enabled = false };
                         cms.Items.Add(item);
                     }
                     if (capPersonal.Count > 0)
@@ -323,8 +334,8 @@ namespace PUPAcadPortal
                         if (capShared.Count > 0) cms.Items.Add(new ToolStripSeparator());
                         foreach (var ev in capPersonal)
                         {
-                            string line = BuildEventLine("MY " + ev.GetTypeLabel(), ev.Title, ev.StartTime, ev.EndTime, "");
-                            cms.Items.Add(new ToolStripMenuItem(line) { ForeColor = Color.FromArgb(80, 80, 80), Enabled = false });
+                            string line = BuildEventLine("MY " + ev.GetTypeLabel(), ev.Title, ev.StartTime, ev.EndTime, "", ev.Course);
+                            cms.Items.Add(new ToolStripMenuItem($"{ev.GetIcon()} {line}") { ForeColor = Color.FromArgb(80, 80, 80), Enabled = false });
                         }
                     }
                     cms.Show(_btnEventsDropdown, 0, _btnEventsDropdown!.Height);
@@ -340,9 +351,9 @@ namespace PUPAcadPortal
                 // Group by first type for colour
                 Color baseColor = facultyEvents[0].GetColor();
 
-                // Use a distinct colour per type if all same, else maroon-dark
+                // Use a distinct colour per type if all same, else dark primary
                 bool mixed = facultyEvents.Select(ev => ev.Type).Distinct().Count() > 1;
-                Color btnColor = mixed ? Color.FromArgb(100, 8, 55) : baseColor;
+                Color btnColor = mixed ? Color.FromArgb(100, C_Primary.R, C_Primary.G, C_Primary.B) : baseColor;
 
                 string label = facultyEvents.Count == 1
                     ? $"{facultyEvents[0].GetTypeIcon()} {TruncateStr(facultyEvents[0].Title, 18)}  ▾"
@@ -361,9 +372,9 @@ namespace PUPAcadPortal
                     var cms = new ContextMenuStrip { Font = new Font("Segoe UI", 8.5f) };
                     foreach (var ev in capFaculty)
                     {
-                        string line = BuildEventLine(ev.GetTypeLabel(), ev.Title, ev.StartTime, ev.EndTime, ev.Room);
+                        string line = BuildEventLine(ev.GetTypeLabel(), ev.Title, ev.StartTime, ev.EndTime, ev.Room, "");
                         if (ev.IsAutoSynced) line += "  🔄";
-                        var item = new ToolStripMenuItem(line) { ForeColor = ev.GetColor(), Enabled = false };
+                        var item = new ToolStripMenuItem($"{ev.GetTypeIcon()} {line}") { ForeColor = ev.GetColor(), Enabled = false };
                         cms.Items.Add(item);
                     }
                     cms.Show(_btnFacultyDrop, 0, _btnFacultyDrop!.Height);
@@ -377,8 +388,6 @@ namespace PUPAcadPortal
         }
 
         // ── Drag source from faculty pill ────────────────────────────────────
-        private Point _mouseDownPt;
-
         private void FacultyDrop_MouseDown(object? s, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left) return;
@@ -413,7 +422,7 @@ namespace PUPAcadPortal
         }
 
         // ══════════════════════════════════════════════════════════════════════
-        //  QUICK ADD (Faculty types)
+        //  QUICK ADD 
         // ══════════════════════════════════════════════════════════════════════
         private void QuickAddFacultyEvent(FacultyEventType type)
         {
@@ -425,8 +434,20 @@ namespace PUPAcadPortal
             DaySelected?.Invoke(_fullDate);
         }
 
+        // Legacy QuickAddEvent (kept so existing references don't break)
+        private void QuickAddEvent(EventType type)
+        {
+            if (!_isCurrentMonth) return;
+            using var dlg = new AddEventForm(_fullDate, type);
+            if (dlg.ShowDialog() != DialogResult.OK || dlg.CreatedEvent == null) return;
+            if (_isStudent) SharedCalendarData.AddStudentEvent(_fullDate, dlg.CreatedEvent);
+            else SharedCalendarData.AddEvent(_fullDate, dlg.CreatedEvent);
+            RefreshEventPills();
+            DaySelected?.Invoke(_fullDate);
+        }
+
         // ══════════════════════════════════════════════════════════════════════
-        //  NOTES / ANNOUNCEMENTS (unchanged logic, kept for compat)
+        //  NOTES / ANNOUNCEMENTS 
         // ══════════════════════════════════════════════════════════════════════
         private void OpenAnnouncementDialog()
         {
@@ -444,12 +465,12 @@ namespace PUPAcadPortal
                 MinimizeBox = false,
                 BackColor = Color.White,
             };
-            var pnlH = new Panel { Dock = DockStyle.Top, Height = 42, BackColor = Color.Maroon };
+            var pnlH = new Panel { Dock = DockStyle.Top, Height = 42, BackColor = C_Primary };
             var lH = new Label { Text = "Add Announcement", Dock = DockStyle.Fill, Font = new Font("Segoe UI", 11f, FontStyle.Bold), ForeColor = Color.White, TextAlign = ContentAlignment.MiddleLeft, Padding = new Padding(10, 0, 0, 0) };
             pnlH.Controls.Add(lH);
             var lbl = new Label { Text = "Announcement text:", Left = 12, Top = 54, AutoSize = true, Font = new Font("Segoe UI", 9f) };
             var txt = new TextBox { Left = 12, Top = 73, Width = 360, Height = 56, Multiline = true, ScrollBars = ScrollBars.Vertical, Text = existing, Font = new Font("Segoe UI", 9f) };
-            var btnOk = new Button { Text = "Save", Left = 188, Top = 138, Width = 90, Height = 30, BackColor = Color.Maroon, ForeColor = Color.White, FlatStyle = FlatStyle.Flat, DialogResult = DialogResult.OK };
+            var btnOk = new Button { Text = "Save", Left = 188, Top = 138, Width = 90, Height = 30, BackColor = C_Primary, ForeColor = Color.White, FlatStyle = FlatStyle.Flat, DialogResult = DialogResult.OK };
             var btnCn = new Button { Text = "Cancel", Left = 286, Top = 138, Width = 90, Height = 30, FlatStyle = FlatStyle.Flat, DialogResult = DialogResult.Cancel };
             btnOk.FlatAppearance.BorderSize = 0;
             frm.Controls.AddRange(new Control[] { pnlH, lbl, txt, btnOk, btnCn });
@@ -481,21 +502,6 @@ namespace PUPAcadPortal
             }
         }
 
-        // Legacy QuickAddEvent (kept so existing references don't break)
-        private void QuickAddEvent(EventType type)
-        {
-            if (!_isCurrentMonth) return;
-            using var dlg = new AddEventForm(_fullDate, type);
-            if (dlg.ShowDialog() != DialogResult.OK || dlg.CreatedEvent == null) return;
-            if (_isStudent) SharedCalendarData.AddStudentEvent(_fullDate, dlg.CreatedEvent);
-            else SharedCalendarData.AddEvent(_fullDate, dlg.CreatedEvent);
-            RefreshEventPills();
-            DaySelected?.Invoke(_fullDate);
-        }
-
-        // ══════════════════════════════════════════════════════════════════════
-        //  NOTES
-        // ══════════════════════════════════════════════════════════════════════
         private void LoadNote()
         {
             if (lblNote == null) return;
@@ -646,7 +652,7 @@ namespace PUPAcadPortal
             }
             else if (_isSelected || (_isHovered && _isCurrentMonth))
             {
-                borderColor = Color.Maroon;
+                borderColor = C_Primary;
                 penWidth = 2;
             }
             else
@@ -661,13 +667,15 @@ namespace PUPAcadPortal
 
         // ── Utilities ─────────────────────────────────────────────────────────
         private static string BuildEventLine(string typeLabel, string title,
-                                             string start, string end, string room)
+                                             string start, string end, string room, string course)
         {
             string line = $"[{typeLabel}]  {title}";
             if (!string.IsNullOrEmpty(start))
                 line += $"  •  {start}" + (string.IsNullOrEmpty(end) ? "" : "–" + end);
             if (!string.IsNullOrEmpty(room))
                 line += $"  •  Rm {room}";
+            if (!string.IsNullOrEmpty(course))
+                line += $"  •  {course}";
             return line;
         }
 

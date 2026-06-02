@@ -4,9 +4,8 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace PUPAcadPortal
+namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
 {
-    // Data model passed into the popup
     public class AtRiskSubjectInfo
     {
         public string Code { get; set; }
@@ -41,6 +40,84 @@ namespace PUPAcadPortal
                 ? "All subjects are within the 80% attendance requirement."
                 : $"{_items.Count} subject{(_items.Count > 1 ? "s" : "")} below the 80% attendance threshold.";
             lblSub.ForeColor = _items.Count == 0 ? Color.FromArgb(0, 130, 60) : Color.FromArgb(160, 80, 0);
+
+            var lblTitle = new Label
+            {
+                Text = "At-Risk Subjects",
+                Font = new Font("Segoe UI", 13f, FontStyle.Bold),
+                ForeColor = Color.White,
+                AutoSize = false,
+                TextAlign = ContentAlignment.MiddleLeft,
+                Left = 18,
+                Top = 0,
+                Width = 380,
+                Height = 52
+            };
+
+            var btnClose = new Button
+            {
+                Text = "✕",
+                Font = new Font("Segoe UI", 11f),
+                ForeColor = Color.White,
+                BackColor = Color.Transparent,
+                FlatStyle = FlatStyle.Flat,
+                Cursor = Cursors.Hand,
+                Size = new Size(40, 40),
+                Location = new Point(this.Width - 50, 6)
+            };
+            btnClose.FlatAppearance.BorderSize = 0;
+            btnClose.FlatAppearance.MouseOverBackColor = Color.FromArgb(160, 0, 0);
+            btnClose.Click += (s, e) => this.Close();
+            btnClose.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+
+            // Allow dragging by title bar
+            bool dragging = false;
+            Point dragStart = Point.Empty;
+            titleBar.MouseDown += (s, e) => { dragging = true; dragStart = e.Location; };
+            titleBar.MouseMove += (s, e) =>
+            {
+                if (!dragging) return;
+                var p = PointToScreen(e.Location);
+                Location = new Point(p.X - dragStart.X, p.Y - dragStart.Y);
+            };
+            titleBar.MouseUp += (s, e) => dragging = false;
+
+            titleBar.Controls.Add(lblTitle);
+            titleBar.Controls.Add(btnClose);
+
+            //  Subtitle strip 
+            var subtitle = new Panel
+            {
+                Dock = DockStyle.Top,
+                Height = 44,
+                BackColor = Color.FromArgb(248, 248, 248)
+            };
+            subtitle.Paint += (s, e) =>
+                e.Graphics.DrawLine(new Pen(Color.FromArgb(220, 220, 220)),
+                    0, subtitle.Height - 1, subtitle.Width, subtitle.Height - 1);
+
+            var lblSub = new Label
+            {
+                Text = _items.Count == 0
+                    ? "All subjects are within the 80% attendance requirement."
+                    : $"{_items.Count} subject{(_items.Count > 1 ? "s" : "")} below the 80% attendance threshold.",
+                Font = new Font("Segoe UI", 9.5f),
+                ForeColor = _items.Count == 0 ? Color.FromArgb(0, 130, 60) : Color.FromArgb(160, 80, 0),
+                AutoSize = false,
+                TextAlign = ContentAlignment.MiddleLeft,
+                Dock = DockStyle.Fill,
+                Padding = new Padding(18, 0, 0, 0)
+            };
+            subtitle.Controls.Add(lblSub);
+
+            //  Scrollable content area 
+            var scroll = new Panel
+            {
+                Dock = DockStyle.Fill,
+                AutoScroll = true,
+                BackColor = Color.FromArgb(252, 252, 252),
+                Padding = new Padding(16, 12, 16, 8)
+            };
 
             // Populate the scroll panel
             if (_items.Count == 0)

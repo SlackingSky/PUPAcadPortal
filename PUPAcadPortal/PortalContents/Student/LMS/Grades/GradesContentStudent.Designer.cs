@@ -1,4 +1,4 @@
-﻿namespace PUPAcadPortal.PortalContents.Student.LMS
+﻿namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
 {
     partial class GradesContentStudent
     {
