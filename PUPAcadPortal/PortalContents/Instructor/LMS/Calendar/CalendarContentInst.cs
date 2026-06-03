@@ -8,7 +8,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace PUPAcadPortal
+namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
 {
     public partial class CalendarContentInst : UserControl
     {

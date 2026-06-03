@@ -5,7 +5,7 @@ using System.IO;
 using System.Windows.Forms;
 using PUPAcadPortal.Data;
 
-namespace PUPAcadPortal
+namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
 {
     /// <summary>
     /// Rich read-only popup for viewing a <see cref="FacultyCalendarEvent"/>.

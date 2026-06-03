@@ -1,4 +1,4 @@
-﻿namespace PUPAcadPortal
+﻿namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
 {
     partial class AddEditFacultyEventForm
     {

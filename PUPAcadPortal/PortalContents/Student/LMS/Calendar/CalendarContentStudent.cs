@@ -1,5 +1,4 @@
 ﻿using PUPAcadPortal.Data;
-using PUPAcadPortal.PortalContents.Student.LMS.Calendar;
 using PUPAcadPortal.PortalForms;
 using PUPAcadPortal.Utils;
 using System;
@@ -12,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace PUPAcadPortal.PortalContents.Student.LMS
+namespace PUPAcadPortal
 {
     public enum CalendarView { Monthly, Weekly, Daily }
 

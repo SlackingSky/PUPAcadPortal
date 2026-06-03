@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using PUPAcadPortal.Data;
 
-namespace PUPAcadPortal
+namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
 {
     /// <summary>
     /// A popup panel that lists upcoming reminders and overdue alerts.

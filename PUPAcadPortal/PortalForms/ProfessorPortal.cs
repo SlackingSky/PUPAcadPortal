@@ -22,7 +22,6 @@ using PUPAcadPortal.PortalContents.Instructor.LMS;
 using PUPAcadPortal.Utils;
 using System.Runtime.InteropServices.Marshalling;
 using PUPAcadPortal.Events;
-using PUPAcadPortal.PortalContents.Student.LMS.Calendar;
 
 
 namespace PUPAcadPortal.PortalForms
@@ -115,7 +114,7 @@ namespace PUPAcadPortal.PortalForms
 
         private void btnCalendarIns_Click(object sender, EventArgs e)
         {
-            mainContentPanel.ShowView(new PortalContents.Instructor.LMS.CalendarContentInst());
+            mainContentPanel.ShowView(new PortalContents.Instructor.LMS.Calendar.CalendarContentInst());
         }
 
         private void btnCoursesIns_Click(object sender, EventArgs e)

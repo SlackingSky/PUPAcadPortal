@@ -1,4 +1,4 @@
-﻿namespace PUPAcadPortal.PortalContents.Student.LMS
+﻿namespace PUPAcadPortal
 {
     partial class CalendarContentStudent
     {

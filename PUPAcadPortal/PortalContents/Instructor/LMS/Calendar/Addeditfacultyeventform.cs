@@ -5,7 +5,7 @@ using System.IO;
 using System.Windows.Forms;
 using PUPAcadPortal.Data;
 
-namespace PUPAcadPortal
+namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
 {
     public partial class AddEditFacultyEventForm : Form
     {

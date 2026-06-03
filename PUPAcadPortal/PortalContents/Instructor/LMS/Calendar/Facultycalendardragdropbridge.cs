@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using PUPAcadPortal.Data;
 
-namespace PUPAcadPortal
+namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
 {
     /// <summary>
     /// Subscribes to <see cref="UrDay.EventDropped"/> (static event) once the

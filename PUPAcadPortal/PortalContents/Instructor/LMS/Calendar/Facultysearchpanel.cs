@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using PUPAcadPortal.Data;
 
-namespace PUPAcadPortal
+namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
 {
     /// <summary>
     /// A search/filter panel that slides in from the top.

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Windows.Forms;
 using PUPAcadPortal.Data;
 
-namespace PUPAcadPortal
+namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
 {
     /// <summary>
     /// Single-day hourly timeline.

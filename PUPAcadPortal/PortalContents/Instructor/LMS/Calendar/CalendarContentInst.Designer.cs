@@ -1,4 +1,4 @@
-﻿namespace PUPAcadPorta
+﻿namespace PUPAcadPortal.PortalContents.Instructor.LMS.Calendar
 {
     partial class CalendarContentInst
     {
@@ -40,8 +40,8 @@
             // lblMonthYear  (hidden – replaced by toolbar label, kept for compat)
             lblMonthYear.AutoSize = false;
             lblMonthYear.Font = new System.Drawing.Font("Maiandra GD", 22F,
-                                         System.Drawing.FontStyle.Bold,
-                                         System.Drawing.GraphicsUnit.Point, 0);
+                                        System.Drawing.FontStyle.Bold,
+                                        System.Drawing.GraphicsUnit.Point, 0);
             lblMonthYear.Location = new System.Drawing.Point(0, 0);
             lblMonthYear.Name = "lblMonthYear";
             lblMonthYear.Size = new System.Drawing.Size(0, 0);
@@ -71,7 +71,7 @@
 
         #endregion
 
-        // ── Designer fields ───────────────────────────────────────────────────
+        // ── Designer fields ──────────────────────────────────────────────────
         private System.Windows.Forms.Panel pnlCalendar;
         private System.Windows.Forms.Label lblMonthYear;
         private System.Windows.Forms.FlowLayoutPanel FPLmonth;

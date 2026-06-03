@@ -1,10 +1,15 @@
 ﻿using PUPAcadPortal.Data;
-using PUPAcadPortal.PortalContents.Student.LMS.Calendar;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Text;
+using System.Linq;
 
-namespace PUPAcadPortal.PortalForms
+namespace PUPAcadPortal
 {
     public partial class AddEventForm : Form
     {
