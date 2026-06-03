@@ -19,7 +19,6 @@
             pnlHeader = new Panel();
             picMegaphone = new PictureBox();
             lblFormTitle = new Label();
-            btnClose = new Button();
             lblTitle = new Label();
             txtTitle = new TextBox();
             lblDescription = new Label();
@@ -59,7 +58,6 @@
             pnlHeader.BackColor = Color.FromArgb(139, 0, 0);
             pnlHeader.Controls.Add(picMegaphone);
             pnlHeader.Controls.Add(lblFormTitle);
-            pnlHeader.Controls.Add(btnClose);
             pnlHeader.Dock = DockStyle.Top;
             pnlHeader.Location = new Point(0, 0);
             pnlHeader.Name = "pnlHeader";
@@ -87,22 +85,6 @@
             lblFormTitle.Size = new Size(188, 25);
             lblFormTitle.TabIndex = 1;
             lblFormTitle.Text = "Create Announcement";
-            // 
-            // btnClose
-            // 
-            btnClose.BackColor = Color.Transparent;
-            btnClose.Cursor = Cursors.Hand;
-            btnClose.FlatAppearance.BorderSize = 0;
-            btnClose.FlatAppearance.MouseOverBackColor = Color.FromArgb(180, 0, 0);
-            btnClose.FlatStyle = FlatStyle.Flat;
-            btnClose.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            btnClose.ForeColor = Color.White;
-            btnClose.Location = new Point(918, 9);
-            btnClose.Name = "btnClose";
-            btnClose.Size = new Size(34, 34);
-            btnClose.TabIndex = 2;
-            btnClose.Text = "×";
-            btnClose.UseVisualStyleBackColor = false;
             // 
             // lblTitle
             // 
@@ -292,17 +274,19 @@
             // 
             cmbCategory.AccessibleDescription = "";
             cmbCategory.AccessibleName = "";
-            cmbCategory.BackColor = SystemColors.Window;
+            cmbCategory.BackColor = Color.White;
+            cmbCategory.Cursor = Cursors.Hand;
             cmbCategory.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbCategory.FlatStyle = FlatStyle.Flat;
-            cmbCategory.Font = new Font("Segoe UI", 10F);
+            cmbCategory.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             cmbCategory.FormattingEnabled = true;
-            cmbCategory.Items.AddRange(new object[] { "General", "Academic", "Schedule", "Events", "Examinations" });
+            cmbCategory.Items.AddRange(new object[] { "Academic", "Events", "Examinations", "General", "Schedule" });
             cmbCategory.Location = new Point(608, 90);
             cmbCategory.Name = "cmbCategory";
             cmbCategory.Size = new Size(332, 25);
+            cmbCategory.Sorted = true;
             cmbCategory.TabIndex = 9;
-            cmbCategory.Tag = "Select your Category";
+            cmbCategory.Tag = "";
             // 
             // lblPostDate
             // 
@@ -470,7 +454,6 @@
         private System.Windows.Forms.Panel pnlHeader;
         private System.Windows.Forms.PictureBox picMegaphone;
         private System.Windows.Forms.Label lblFormTitle;
-        private System.Windows.Forms.Button btnClose;
 
         // ── Left column ───────────────────────────────────────────────────
         private System.Windows.Forms.Label lblTitle;

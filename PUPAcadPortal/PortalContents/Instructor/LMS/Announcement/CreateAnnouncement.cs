@@ -22,7 +22,6 @@ namespace PUPAcadPortal
 
         private void WireEvents()
         {
-            btnClose.Click += (s, e) => ClosePanel();
             btnCancel.Click += (s, e) => ClosePanel();
             btnPost.Click += BtnPost_Click;
             btnBrowse.Click += BtnBrowse_Click;
@@ -226,7 +225,7 @@ namespace PUPAcadPortal
                 btnRemoveAttach.Visible = true;
             }
 
-            lblFormTitle.Text = "Edit Announcement";
+            lblFormTitle.Text = "Announcement";
             btnPost.Text = "Save Changes";
         }
         private static void ShowError(string message) =>

@@ -7,6 +7,7 @@ using System.ComponentModel;
 using PUPAcadPortal.PortalForms;
 using PUPAcadPortal.PortalContents.Student.LMS.Calendar;
 
+
 namespace PUPAcadPortal
 {
     public partial class UrDay : UserControl
@@ -416,7 +417,7 @@ namespace PUPAcadPortal
 
             var dict = _isStudent
                 ? SharedCalendarData.StudentNotes
-                : PUPAcadPortal.PortalContents.Instructor.LMS.CalendarContentInst.notesDict;
+                : PortalContents.Instructor.LMS.CalendarContentInst.notesDict;
 
             bool has = dict.ContainsKey(_fullDate) && !string.IsNullOrWhiteSpace(dict[_fullDate]);
             if (has)
