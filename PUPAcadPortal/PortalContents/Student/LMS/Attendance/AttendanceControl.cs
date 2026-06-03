@@ -27,9 +27,9 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             InitializeComponent();
         }
 
-        
 
-        
+
+
 
         private static void DrawCardBorder(Graphics g, Panel card, Color accent)
         {
@@ -37,7 +37,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             g.DrawRectangle(pen, 0, 0, card.Width - 1, card.Height - 1);
         }
 
-        
+
 
         private void DrawSegmentedProgress(object sender, PaintEventArgs e)
         {
@@ -74,10 +74,10 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             g.FillRectangle(bE, xP, 0, wE, h);
         }
 
-        
 
-        
-        
+
+
+
         private static void AutoSizeGrid(DataGridView dgv, int maxH)
         {
             if (dgv == null) return;
@@ -192,7 +192,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             return q.ToList();
         }
 
-       
+
         private void ComputeTotals()
         {
             _total = _present = _absent = _late = _excused = 0;
@@ -316,7 +316,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             dgvSubjects.DataSource = _subjectsDT;
         }
 
-        
+
 
         private void DgvSubjects_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
@@ -398,7 +398,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             dgvLogs.DataSource = _logsDT;
         }
 
-        
+
 
         private void DgvLogs_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
@@ -472,7 +472,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             dgvQR.DataSource = _qrDT;
         }
 
-        
+
 
         //  VIEW DETAILS POPUP
         private void OnViewDetailsClick(object sender, EventArgs e)
@@ -566,6 +566,37 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
 
             // Live-refresh everything
             RefreshAll();
+        }
+
+        //  SCAN / UPLOAD QR BUTTON
+        private void BtnScanQR_Click(object sender, EventArgs e)
+        {
+            using var frm = new Form
+            {
+                Text = "Scan / Upload QR Attendance",
+                Width = 960,
+                Height = 680,
+                MinimumSize = new Size(860, 580),
+                StartPosition = FormStartPosition.CenterParent,
+                BackColor = Color.FromArgb(245, 246, 250),
+                Font = new Font("Segoe UI", 9f),
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                MaximizeBox = false,
+                MinimizeBox = false,
+            };
+
+            var scanner = new QRScanControl { Dock = DockStyle.Fill };
+            frm.Controls.Add(scanner);
+
+            // Wire the confirmed scan → record attendance and close
+            scanner.QRCodeScanned += (s2, result) =>
+            {
+                RecordQRAttendance(result);
+                frm.DialogResult = DialogResult.OK;
+                frm.Close();
+            };
+
+            frm.ShowDialog(this.FindForm());
         }
 
         //  LOAD

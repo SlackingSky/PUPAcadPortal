@@ -89,6 +89,7 @@
             this.lblToLbl = new System.Windows.Forms.Label();
             this.dtpTo = new System.Windows.Forms.DateTimePicker();
             this.btnRefresh = new System.Windows.Forms.Button();
+            this.btnScanQR = new System.Windows.Forms.Button();
 
             // Grid column definitions
             System.Windows.Forms.DataGridViewTextBoxColumn colQRDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -763,6 +764,7 @@
             this.pnlHeader.Controls.Add(this.lblToLbl);
             this.pnlHeader.Controls.Add(this.dtpTo);
             this.pnlHeader.Controls.Add(this.btnRefresh);
+            this.pnlHeader.Controls.Add(this.btnScanQR);
             this.pnlHeader.Paint += (s, e) => e.Graphics.DrawLine(
                 new System.Drawing.Pen(System.Drawing.Color.FromArgb(225, 225, 235), 1),
                 0, this.pnlHeader.Height - 1, this.pnlHeader.Width, this.pnlHeader.Height - 1);
@@ -866,6 +868,20 @@
             this.btnRefresh.Text = "↺  Refresh";
             this.btnRefresh.Click += (s, e) => this.RefreshAll();
 
+            // btnScanQR
+            this.btnScanQR.BackColor = System.Drawing.Color.FromArgb(0, 120, 80);
+            this.btnScanQR.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnScanQR.FlatAppearance.BorderSize = 0;
+            this.btnScanQR.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnScanQR.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
+            this.btnScanQR.ForeColor = System.Drawing.Color.White;
+            this.btnScanQR.Location = new System.Drawing.Point(920, 61);
+            this.btnScanQR.Name = "btnScanQR";
+            this.btnScanQR.Size = new System.Drawing.Size(140, 27);
+            this.btnScanQR.Text = "⊞  Scan / Upload QR";
+            this.btnScanQR.UseVisualStyleBackColor = false;
+            this.btnScanQR.Click += new System.EventHandler(this.BtnScanQR_Click);
+
             // ──────────────────────────────────────────────────────────────────────
             // Resume layouts
             // ──────────────────────────────────────────────────────────────────────
@@ -939,6 +955,7 @@
         private System.Windows.Forms.Label lblToLbl;
         private System.Windows.Forms.DateTimePicker dtpTo;
         private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.Button btnScanQR;
 
         // Summary cards
         private System.Windows.Forms.TableLayoutPanel tlpCards;

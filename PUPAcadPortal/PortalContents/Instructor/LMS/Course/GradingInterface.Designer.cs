@@ -1,19 +1,31 @@
-﻿using System.Reflection.PortableExecutable;
-
-namespace PUPAcadPortal
+﻿namespace PUPAcadPortal
 {
     partial class GradingInterface
     {
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null)) components.Dispose();
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
             base.Dispose(disposing);
         }
 
         #region Component Designer generated code
 
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
+        /// </summary>
         private void InitializeComponent()
         {
             pnlHeader = new Panel();
@@ -23,6 +35,7 @@ namespace PUPAcadPortal
             lblStudentId = new Label();
             lblSubmissionTime = new Label();
             lblMaxPoints = new Label();
+            lblNavCounter = new Label();
             btnPrevStudent = new buttonRounded();
             btnNextStudent = new buttonRounded();
             pnlMain = new Panel();
@@ -34,19 +47,10 @@ namespace PUPAcadPortal
             lblCharCount = new Label();
             pnlGrading = new Panel();
             lblGradingHeader = new Label();
-            pnlRubric = new Panel();
+            lblSaveStatus = new Label();
+            pnlRubricBox = new Panel();
             lblRubricHeader = new Label();
-            lblContentLabel = new Label();
-            nudContent = new NumericUpDown();
-            lblContentMax = new Label();
-            lblGrammarLabel = new Label();
-            nudGrammar = new NumericUpDown();
-            lblGrammarMax = new Label();
-            lblRelevanceLabel = new Label();
-            nudRelevance = new NumericUpDown();
-            lblRelevanceMax = new Label();
-            lblStructureLabel = new Label();
-            nudStructure = new NumericUpDown();
+            flpRubricRows = new FlowLayoutPanel();
             lblRubricTotal = new Label();
             chkAutoScore = new CheckBox();
             pnlScoreInput = new Panel();
@@ -54,151 +58,149 @@ namespace PUPAcadPortal
             txtScore = new TextBox();
             lblScoreOf = new Label();
             btnSaveScore = new buttonRounded();
-            lblSaveStatus = new Label();
             pnlRemarks = new Panel();
             lblRemarksHeader = new Label();
             txtRemarks = new TextBox();
-            lblStructureMax = new Label();
             pnlHeader.SuspendLayout();
             pnlMain.SuspendLayout();
             pnlEssay.SuspendLayout();
             pnlWordCount.SuspendLayout();
             pnlGrading.SuspendLayout();
-            pnlRubric.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)nudContent).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)nudGrammar).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)nudRelevance).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)nudStructure).BeginInit();
+            pnlRubricBox.SuspendLayout();
             pnlScoreInput.SuspendLayout();
             pnlRemarks.SuspendLayout();
             SuspendLayout();
             // 
             // pnlHeader
             // 
-            pnlHeader.BackColor = Color.Maroon;
+            pnlHeader.BackColor = Color.FromArgb(128, 0, 0);
             pnlHeader.Controls.Add(btnBack);
             pnlHeader.Controls.Add(lblActivityTitle);
             pnlHeader.Controls.Add(lblStudentName);
             pnlHeader.Controls.Add(lblStudentId);
             pnlHeader.Controls.Add(lblSubmissionTime);
             pnlHeader.Controls.Add(lblMaxPoints);
+            pnlHeader.Controls.Add(lblNavCounter);
             pnlHeader.Controls.Add(btnPrevStudent);
             pnlHeader.Controls.Add(btnNextStudent);
             pnlHeader.Dock = DockStyle.Top;
             pnlHeader.Location = new Point(0, 0);
             pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(1640, 90);
+            pnlHeader.Size = new Size(1680, 90);
             pnlHeader.TabIndex = 1;
             // 
             // btnBack
             // 
-            btnBack.BackColor = Color.FromArgb(109, 0, 0);
-            btnBack.BorderRadius = 10;
+            btnBack.BackColor = Color.FromArgb(100, 0, 0);
             btnBack.FlatAppearance.BorderSize = 0;
             btnBack.FlatStyle = FlatStyle.Flat;
             btnBack.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnBack.ForeColor = Color.White;
-            btnBack.Location = new Point(12, 26);
+            btnBack.Location = new Point(12, 28);
             btnBack.Name = "btnBack";
             btnBack.Size = new Size(80, 32);
             btnBack.TabIndex = 0;
-            btnBack.Text = "Back";
+            btnBack.Text = "← Back";
             btnBack.UseVisualStyleBackColor = false;
             btnBack.Click += btnBack_Click;
             // 
             // lblActivityTitle
             // 
+            lblActivityTitle.AutoEllipsis = true;
             lblActivityTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
             lblActivityTitle.ForeColor = Color.White;
-            lblActivityTitle.Location = new Point(105, 8);
+            lblActivityTitle.Location = new Point(106, 8);
             lblActivityTitle.Name = "lblActivityTitle";
-            lblActivityTitle.Size = new Size(750, 26);
+            lblActivityTitle.Size = new Size(740, 26);
             lblActivityTitle.TabIndex = 1;
-            lblActivityTitle.Text = "Activity Title";
             // 
             // lblStudentName
             // 
             lblStudentName.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            lblStudentName.ForeColor = Color.FromArgb(255, 220, 220);
-            lblStudentName.Location = new Point(105, 36);
+            lblStudentName.ForeColor = Color.White;
+            lblStudentName.Location = new Point(106, 36);
             lblStudentName.Name = "lblStudentName";
             lblStudentName.Size = new Size(380, 22);
             lblStudentName.TabIndex = 2;
-            lblStudentName.Text = "Student Name";
             // 
             // lblStudentId
             // 
             lblStudentId.Font = new Font("Segoe UI", 9F);
-            lblStudentId.ForeColor = Color.FromArgb(220, 180, 180);
-            lblStudentId.Location = new Point(105, 60);
+            lblStudentId.ForeColor = Color.FromArgb(220, 185, 185);
+            lblStudentId.Location = new Point(106, 60);
             lblStudentId.Name = "lblStudentId";
             lblStudentId.Size = new Size(200, 18);
             lblStudentId.TabIndex = 3;
-            lblStudentId.Text = "2024-00001-SM-0";
             // 
             // lblSubmissionTime
             // 
             lblSubmissionTime.Font = new Font("Segoe UI", 9F);
-            lblSubmissionTime.ForeColor = Color.FromArgb(220, 180, 180);
-            lblSubmissionTime.Location = new Point(315, 60);
+            lblSubmissionTime.ForeColor = Color.FromArgb(220, 185, 185);
+            lblSubmissionTime.Location = new Point(316, 60);
             lblSubmissionTime.Name = "lblSubmissionTime";
-            lblSubmissionTime.Size = new Size(300, 18);
+            lblSubmissionTime.Size = new Size(310, 18);
             lblSubmissionTime.TabIndex = 4;
-            lblSubmissionTime.Text = "Submitted: --";
             // 
             // lblMaxPoints
             // 
             lblMaxPoints.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblMaxPoints.ForeColor = Color.FromArgb(255, 193, 7);
-            lblMaxPoints.Location = new Point(625, 60);
+            lblMaxPoints.ForeColor = Color.FromArgb(255, 196, 0);
+            lblMaxPoints.Location = new Point(636, 60);
             lblMaxPoints.Name = "lblMaxPoints";
-            lblMaxPoints.Size = new Size(180, 18);
+            lblMaxPoints.Size = new Size(160, 18);
             lblMaxPoints.TabIndex = 5;
-            lblMaxPoints.Text = "Max Points: 100";
+            // 
+            // lblNavCounter
+            // 
+            lblNavCounter.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblNavCounter.ForeColor = Color.FromArgb(230, 185, 185);
+            lblNavCounter.Location = new Point(1380, 60);
+            lblNavCounter.Name = "lblNavCounter";
+            lblNavCounter.Size = new Size(80, 18);
+            lblNavCounter.TabIndex = 8;
+            lblNavCounter.Text = "1 / 1";
+            lblNavCounter.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // btnPrevStudent
             // 
-            btnPrevStudent.BackColor = Color.FromArgb(60, 60, 60);
-            btnPrevStudent.BorderRadius = 10;
+            btnPrevStudent.BackColor = Color.FromArgb(90, 0, 0);
             btnPrevStudent.FlatAppearance.BorderSize = 0;
             btnPrevStudent.FlatStyle = FlatStyle.Flat;
             btnPrevStudent.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnPrevStudent.ForeColor = Color.White;
-            btnPrevStudent.Location = new Point(1415, 26);
+            btnPrevStudent.Location = new Point(1464, 28);
             btnPrevStudent.Name = "btnPrevStudent";
-            btnPrevStudent.Size = new Size(110, 32);
+            btnPrevStudent.Size = new Size(96, 32);
             btnPrevStudent.TabIndex = 6;
-            btnPrevStudent.Text = "Prev";
+            btnPrevStudent.Text = "◀ Prev";
             btnPrevStudent.UseVisualStyleBackColor = false;
             btnPrevStudent.Click += btnPrevStudent_Click;
             // 
             // btnNextStudent
             // 
-            btnNextStudent.BackColor = Color.FromArgb(60, 60, 60);
-            btnNextStudent.BorderRadius = 10;
+            btnNextStudent.BackColor = Color.FromArgb(90, 0, 0);
             btnNextStudent.FlatAppearance.BorderSize = 0;
             btnNextStudent.FlatStyle = FlatStyle.Flat;
             btnNextStudent.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnNextStudent.ForeColor = Color.White;
-            btnNextStudent.Location = new Point(1531, 26);
+            btnNextStudent.Location = new Point(1568, 28);
             btnNextStudent.Name = "btnNextStudent";
-            btnNextStudent.Size = new Size(110, 32);
+            btnNextStudent.Size = new Size(96, 32);
             btnNextStudent.TabIndex = 7;
-            btnNextStudent.Text = "Next";
+            btnNextStudent.Text = "Next ▶";
             btnNextStudent.UseVisualStyleBackColor = false;
             btnNextStudent.Click += btnNextStudent_Click;
             // 
             // pnlMain
             // 
-            pnlMain.AllowDrop = true;
             pnlMain.AutoScroll = true;
-            pnlMain.BackColor = Color.FromArgb(245, 245, 245);
+            pnlMain.BackColor = Color.FromArgb(245, 245, 248);
             pnlMain.Controls.Add(pnlEssay);
             pnlMain.Controls.Add(pnlGrading);
             pnlMain.Dock = DockStyle.Fill;
             pnlMain.Location = new Point(0, 90);
             pnlMain.Name = "pnlMain";
-            pnlMain.Size = new Size(1640, 899);
+            pnlMain.Size = new Size(1680, 899);
             pnlMain.TabIndex = 0;
             // 
             // pnlEssay
@@ -210,39 +212,39 @@ namespace PUPAcadPortal
             pnlEssay.Controls.Add(pnlWordCount);
             pnlEssay.Location = new Point(10, 10);
             pnlEssay.Name = "pnlEssay";
-            pnlEssay.Size = new Size(1195, 873);
+            pnlEssay.Size = new Size(1200, 880);
             pnlEssay.TabIndex = 0;
             // 
             // lblEssayHeader
             // 
             lblEssayHeader.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            lblEssayHeader.ForeColor = Color.Maroon;
-            lblEssayHeader.Location = new Point(10, 8);
+            lblEssayHeader.ForeColor = Color.FromArgb(128, 0, 0);
+            lblEssayHeader.Location = new Point(12, 10);
             lblEssayHeader.Name = "lblEssayHeader";
             lblEssayHeader.Size = new Size(300, 22);
             lblEssayHeader.TabIndex = 0;
-            lblEssayHeader.Text = "Submission Content";
+            lblEssayHeader.Text = "📄 Submission Content";
             // 
             // txtEssayContent
             // 
             txtEssayContent.BackColor = Color.White;
             txtEssayContent.BorderStyle = BorderStyle.None;
             txtEssayContent.Font = new Font("Segoe UI", 10F);
-            txtEssayContent.Location = new Point(10, 38);
+            txtEssayContent.Location = new Point(12, 40);
             txtEssayContent.Multiline = true;
             txtEssayContent.Name = "txtEssayContent";
             txtEssayContent.ReadOnly = true;
             txtEssayContent.ScrollBars = ScrollBars.Vertical;
-            txtEssayContent.Size = new Size(1170, 779);
+            txtEssayContent.Size = new Size(1170, 810);
             txtEssayContent.TabIndex = 1;
             txtEssayContent.TextChanged += txtEssayContent_TextChanged;
             // 
             // pnlWordCount
             // 
-            pnlWordCount.BackColor = Color.FromArgb(245, 245, 245);
+            pnlWordCount.BackColor = Color.FromArgb(245, 245, 248);
             pnlWordCount.Controls.Add(lblWordCount);
             pnlWordCount.Controls.Add(lblCharCount);
-            pnlWordCount.Location = new Point(10, 846);
+            pnlWordCount.Location = new Point(12, 852);
             pnlWordCount.Name = "pnlWordCount";
             pnlWordCount.Size = new Size(1170, 22);
             pnlWordCount.TabIndex = 2;
@@ -261,9 +263,9 @@ namespace PUPAcadPortal
             // 
             lblCharCount.Font = new Font("Segoe UI", 9F);
             lblCharCount.ForeColor = Color.Gray;
-            lblCharCount.Location = new Point(110, 3);
+            lblCharCount.Location = new Point(112, 3);
             lblCharCount.Name = "lblCharCount";
-            lblCharCount.Size = new Size(150, 16);
+            lblCharCount.Size = new Size(160, 16);
             lblCharCount.TabIndex = 1;
             lblCharCount.Text = "Characters: 0";
             // 
@@ -272,157 +274,87 @@ namespace PUPAcadPortal
             pnlGrading.BackColor = Color.White;
             pnlGrading.BorderStyle = BorderStyle.FixedSingle;
             pnlGrading.Controls.Add(lblGradingHeader);
-            pnlGrading.Controls.Add(pnlRubric);
+            pnlGrading.Controls.Add(lblSaveStatus);
+            pnlGrading.Controls.Add(pnlRubricBox);
             pnlGrading.Controls.Add(pnlScoreInput);
             pnlGrading.Controls.Add(pnlRemarks);
-            pnlGrading.Location = new Point(1211, 10);
+            pnlGrading.Location = new Point(1218, 10);
             pnlGrading.Name = "pnlGrading";
-            pnlGrading.Size = new Size(430, 600);
+            pnlGrading.Size = new Size(446, 880);
             pnlGrading.TabIndex = 1;
             // 
             // lblGradingHeader
             // 
             lblGradingHeader.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            lblGradingHeader.ForeColor = Color.Maroon;
-            lblGradingHeader.Location = new Point(10, 8);
+            lblGradingHeader.ForeColor = Color.FromArgb(128, 0, 0);
+            lblGradingHeader.Location = new Point(12, 10);
             lblGradingHeader.Name = "lblGradingHeader";
-            lblGradingHeader.Size = new Size(200, 22);
+            lblGradingHeader.Size = new Size(200, 24);
             lblGradingHeader.TabIndex = 0;
-            lblGradingHeader.Text = "Grading";
+            lblGradingHeader.Text = "🎯 Grading";
             // 
-            // pnlRubric
+            // lblSaveStatus
             // 
-            pnlRubric.BackColor = Color.FromArgb(250, 248, 248);
-            pnlRubric.BorderStyle = BorderStyle.FixedSingle;
-            pnlRubric.Controls.Add(lblRubricHeader);
-            pnlRubric.Controls.Add(lblContentLabel);
-            pnlRubric.Controls.Add(nudContent);
-            pnlRubric.Controls.Add(lblContentMax);
-            pnlRubric.Controls.Add(lblGrammarLabel);
-            pnlRubric.Controls.Add(nudGrammar);
-            pnlRubric.Controls.Add(lblGrammarMax);
-            pnlRubric.Controls.Add(lblRelevanceLabel);
-            pnlRubric.Controls.Add(nudRelevance);
-            pnlRubric.Controls.Add(lblRelevanceMax);
-            pnlRubric.Controls.Add(lblStructureLabel);
-            pnlRubric.Controls.Add(nudStructure);
-            pnlRubric.Controls.Add(lblStructureMax);
-            pnlRubric.Controls.Add(lblRubricTotal);
-            pnlRubric.Controls.Add(chkAutoScore);
-            pnlRubric.Location = new Point(10, 38);
-            pnlRubric.Name = "pnlRubric";
-            pnlRubric.Size = new Size(408, 220);
-            pnlRubric.TabIndex = 1;
+            lblSaveStatus.Font = new Font("Segoe UI", 8.5F, FontStyle.Italic);
+            lblSaveStatus.ForeColor = Color.ForestGreen;
+            lblSaveStatus.Location = new Point(12, 36);
+            lblSaveStatus.Name = "lblSaveStatus";
+            lblSaveStatus.Size = new Size(420, 18);
+            lblSaveStatus.TabIndex = 1;
+            // 
+            // pnlRubricBox
+            // 
+            pnlRubricBox.BackColor = Color.FromArgb(251, 249, 249);
+            pnlRubricBox.BorderStyle = BorderStyle.FixedSingle;
+            pnlRubricBox.Controls.Add(lblRubricHeader);
+            pnlRubricBox.Controls.Add(flpRubricRows);
+            pnlRubricBox.Controls.Add(lblRubricTotal);
+            pnlRubricBox.Controls.Add(chkAutoScore);
+            pnlRubricBox.Location = new Point(12, 58);
+            pnlRubricBox.Name = "pnlRubricBox";
+            pnlRubricBox.Size = new Size(420, 300);
+            pnlRubricBox.TabIndex = 2;
             // 
             // lblRubricHeader
             // 
             lblRubricHeader.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblRubricHeader.ForeColor = Color.FromArgb(80, 80, 80);
-            lblRubricHeader.Location = new Point(15, 0);
+            lblRubricHeader.ForeColor = Color.FromArgb(70, 70, 80);
+            lblRubricHeader.Location = new Point(10, 8);
             lblRubricHeader.Name = "lblRubricHeader";
-            lblRubricHeader.Size = new Size(226, 20);
+            lblRubricHeader.Size = new Size(240, 20);
             lblRubricHeader.TabIndex = 0;
-            lblRubricHeader.Text = "Rubric-Based Grading";
+            lblRubricHeader.Text = "📊 Rubric-Based Grading";
             // 
-            // lblContentLabel
+            // flpRubricRows
             // 
-            lblContentLabel.Location = new Point(15, 29);
-            lblContentLabel.Name = "lblContentLabel";
-            lblContentLabel.Size = new Size(100, 23);
-            lblContentLabel.TabIndex = 1;
-            // 
-            // nudContent
-            // 
-            nudContent.Location = new Point(121, 29);
-            nudContent.Name = "nudContent";
-            nudContent.Size = new Size(120, 23);
-            nudContent.TabIndex = 2;
-            nudContent.ValueChanged += nudRubric_ValueChanged;
-            // 
-            // lblContentMax
-            // 
-            lblContentMax.Location = new Point(15, 30);
-            lblContentMax.Name = "lblContentMax";
-            lblContentMax.Size = new Size(100, 23);
-            lblContentMax.TabIndex = 3;
-            // 
-            // lblGrammarLabel
-            // 
-            lblGrammarLabel.Location = new Point(15, 94);
-            lblGrammarLabel.Name = "lblGrammarLabel";
-            lblGrammarLabel.Size = new Size(100, 23);
-            lblGrammarLabel.TabIndex = 4;
-            // 
-            // nudGrammar
-            // 
-            nudGrammar.Location = new Point(121, 92);
-            nudGrammar.Name = "nudGrammar";
-            nudGrammar.Size = new Size(120, 23);
-            nudGrammar.TabIndex = 5;
-            nudGrammar.ValueChanged += nudRubric_ValueChanged;
-            // 
-            // lblGrammarMax
-            // 
-            lblGrammarMax.Location = new Point(15, 94);
-            lblGrammarMax.Name = "lblGrammarMax";
-            lblGrammarMax.Size = new Size(100, 23);
-            lblGrammarMax.TabIndex = 6;
-            // 
-            // lblRelevanceLabel
-            // 
-            lblRelevanceLabel.Location = new Point(15, 124);
-            lblRelevanceLabel.Name = "lblRelevanceLabel";
-            lblRelevanceLabel.Size = new Size(100, 23);
-            lblRelevanceLabel.TabIndex = 7;
-            // 
-            // nudRelevance
-            // 
-            nudRelevance.Location = new Point(121, 122);
-            nudRelevance.Name = "nudRelevance";
-            nudRelevance.Size = new Size(120, 23);
-            nudRelevance.TabIndex = 8;
-            nudRelevance.ValueChanged += nudRubric_ValueChanged;
-            // 
-            // lblRelevanceMax
-            // 
-            lblRelevanceMax.Location = new Point(15, 124);
-            lblRelevanceMax.Name = "lblRelevanceMax";
-            lblRelevanceMax.Size = new Size(100, 23);
-            lblRelevanceMax.TabIndex = 9;
-            // 
-            // lblStructureLabel
-            // 
-            lblStructureLabel.Location = new Point(15, 58);
-            lblStructureLabel.Name = "lblStructureLabel";
-            lblStructureLabel.Size = new Size(100, 23);
-            lblStructureLabel.TabIndex = 10;
-            // 
-            // nudStructure
-            // 
-            nudStructure.Location = new Point(121, 58);
-            nudStructure.Name = "nudStructure";
-            nudStructure.Size = new Size(120, 23);
-            nudStructure.TabIndex = 11;
-            nudStructure.ValueChanged += nudRubric_ValueChanged;
+            flpRubricRows.AutoSize = true;
+            flpRubricRows.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            flpRubricRows.FlowDirection = FlowDirection.TopDown;
+            flpRubricRows.Location = new Point(10, 34);
+            flpRubricRows.Name = "flpRubricRows";
+            flpRubricRows.Size = new Size(0, 0);
+            flpRubricRows.TabIndex = 1;
+            flpRubricRows.WrapContents = false;
             // 
             // lblRubricTotal
             // 
             lblRubricTotal.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblRubricTotal.ForeColor = Color.Maroon;
-            lblRubricTotal.Location = new Point(8, 158);
+            lblRubricTotal.ForeColor = Color.FromArgb(128, 0, 0);
+            lblRubricTotal.Location = new Point(10, 240);
             lblRubricTotal.Name = "lblRubricTotal";
-            lblRubricTotal.Size = new Size(260, 22);
-            lblRubricTotal.TabIndex = 13;
+            lblRubricTotal.Size = new Size(280, 22);
+            lblRubricTotal.TabIndex = 2;
             lblRubricTotal.Text = "Rubric Total: 0 / 100";
             // 
             // chkAutoScore
             // 
             chkAutoScore.Font = new Font("Segoe UI", 9F);
-            chkAutoScore.Location = new Point(8, 184);
+            chkAutoScore.ForeColor = Color.FromArgb(60, 60, 70);
+            chkAutoScore.Location = new Point(10, 268);
             chkAutoScore.Name = "chkAutoScore";
             chkAutoScore.Size = new Size(240, 22);
-            chkAutoScore.TabIndex = 14;
-            chkAutoScore.Text = "Auto-fill score from rubric";
+            chkAutoScore.TabIndex = 3;
+            chkAutoScore.Text = "Auto-fill score from rubric total";
             chkAutoScore.CheckedChanged += chkAutoScore_CheckedChanged;
             // 
             // pnlScoreInput
@@ -432,29 +364,28 @@ namespace PUPAcadPortal
             pnlScoreInput.Controls.Add(txtScore);
             pnlScoreInput.Controls.Add(lblScoreOf);
             pnlScoreInput.Controls.Add(btnSaveScore);
-            pnlScoreInput.Controls.Add(lblSaveStatus);
-            pnlScoreInput.Location = new Point(10, 266);
+            pnlScoreInput.Location = new Point(12, 368);
             pnlScoreInput.Name = "pnlScoreInput";
-            pnlScoreInput.Size = new Size(408, 88);
-            pnlScoreInput.TabIndex = 2;
+            pnlScoreInput.Size = new Size(420, 90);
+            pnlScoreInput.TabIndex = 3;
             // 
             // lblScoreLabel
             // 
             lblScoreLabel.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            lblScoreLabel.ForeColor = Color.FromArgb(40, 40, 40);
-            lblScoreLabel.Location = new Point(3, 10);
+            lblScoreLabel.ForeColor = Color.FromArgb(35, 35, 45);
+            lblScoreLabel.Location = new Point(4, 12);
             lblScoreLabel.Name = "lblScoreLabel";
-            lblScoreLabel.Size = new Size(110, 22);
+            lblScoreLabel.Size = new Size(115, 24);
             lblScoreLabel.TabIndex = 0;
             lblScoreLabel.Text = "Final Score:";
             // 
             // txtScore
             // 
-            txtScore.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            txtScore.Location = new Point(115, 6);
-            txtScore.MaxLength = 4;
+            txtScore.Font = new Font("Segoe UI", 15F, FontStyle.Bold);
+            txtScore.Location = new Point(122, 8);
+            txtScore.MaxLength = 5;
             txtScore.Name = "txtScore";
-            txtScore.Size = new Size(80, 32);
+            txtScore.Size = new Size(80, 34);
             txtScore.TabIndex = 1;
             txtScore.TextAlign = HorizontalAlignment.Center;
             // 
@@ -462,134 +393,81 @@ namespace PUPAcadPortal
             // 
             lblScoreOf.Font = new Font("Segoe UI", 11F);
             lblScoreOf.ForeColor = Color.Gray;
-            lblScoreOf.Location = new Point(202, 12);
+            lblScoreOf.Location = new Point(210, 14);
             lblScoreOf.Name = "lblScoreOf";
-            lblScoreOf.Size = new Size(70, 22);
+            lblScoreOf.Size = new Size(80, 22);
             lblScoreOf.TabIndex = 2;
             lblScoreOf.Text = "/ 100";
             // 
             // btnSaveScore
             // 
-            btnSaveScore.BackColor = Color.Maroon;
-            btnSaveScore.BorderRadius = 10;
+            btnSaveScore.BackColor = Color.FromArgb(128, 0, 0);
             btnSaveScore.FlatAppearance.BorderSize = 0;
             btnSaveScore.FlatStyle = FlatStyle.Flat;
             btnSaveScore.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnSaveScore.ForeColor = Color.White;
-            btnSaveScore.Location = new Point(2, 50);
+            btnSaveScore.Location = new Point(4, 54);
             btnSaveScore.Name = "btnSaveScore";
-            btnSaveScore.Size = new Size(120, 32);
+            btnSaveScore.Size = new Size(149, 32);
             btnSaveScore.TabIndex = 3;
-            btnSaveScore.Text = "Save Score";
+            btnSaveScore.Text = "✔ Save and Lock Score";
             btnSaveScore.UseVisualStyleBackColor = false;
             btnSaveScore.Click += btnSaveScore_Click;
-            // 
-            // lblSaveStatus
-            // 
-            lblSaveStatus.Font = new Font("Segoe UI", 9F);
-            lblSaveStatus.ForeColor = Color.ForestGreen;
-            lblSaveStatus.Location = new Point(128, 58);
-            lblSaveStatus.Name = "lblSaveStatus";
-            lblSaveStatus.Size = new Size(260, 18);
-            lblSaveStatus.TabIndex = 4;
             // 
             // pnlRemarks
             // 
             pnlRemarks.BackColor = Color.White;
             pnlRemarks.Controls.Add(lblRemarksHeader);
             pnlRemarks.Controls.Add(txtRemarks);
-            pnlRemarks.Location = new Point(10, 362);
+            pnlRemarks.Location = new Point(12, 468);
             pnlRemarks.Name = "pnlRemarks";
-            pnlRemarks.Size = new Size(408, 220);
-            pnlRemarks.TabIndex = 3;
+            pnlRemarks.Size = new Size(420, 240);
+            pnlRemarks.TabIndex = 4;
             // 
             // lblRemarksHeader
             // 
             lblRemarksHeader.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblRemarksHeader.ForeColor = Color.FromArgb(80, 80, 80);
-            lblRemarksHeader.Location = new Point(3, 3);
+            lblRemarksHeader.ForeColor = Color.FromArgb(70, 70, 80);
+            lblRemarksHeader.Location = new Point(4, 4);
             lblRemarksHeader.Name = "lblRemarksHeader";
-            lblRemarksHeader.Size = new Size(250, 20);
+            lblRemarksHeader.Size = new Size(260, 22);
             lblRemarksHeader.TabIndex = 0;
-            lblRemarksHeader.Text = "Remarks / Feedback";
+            lblRemarksHeader.Text = "💬 Remarks / Feedback";
             // 
             // txtRemarks
             // 
-            txtRemarks.Font = new Font("Segoe UI", 9F);
-            txtRemarks.Location = new Point(0, 26);
+            txtRemarks.Font = new Font("Segoe UI", 9.5F);
+            txtRemarks.Location = new Point(0, 30);
             txtRemarks.Multiline = true;
             txtRemarks.Name = "txtRemarks";
             txtRemarks.PlaceholderText = "Add comments or feedback for the student...";
             txtRemarks.ScrollBars = ScrollBars.Vertical;
-            txtRemarks.Size = new Size(405, 185);
+            txtRemarks.Size = new Size(418, 205);
             txtRemarks.TabIndex = 1;
-            // 
-            // lblStructureMax
-            // 
-            lblStructureMax.Location = new Point(15, 58);
-            lblStructureMax.Name = "lblStructureMax";
-            lblStructureMax.Size = new Size(100, 23);
-            lblStructureMax.TabIndex = 12;
             // 
             // GradingInterface
             // 
             Controls.Add(pnlMain);
             Controls.Add(pnlHeader);
             Name = "GradingInterface";
-            Size = new Size(1640, 989);
+            Size = new Size(1680, 989);
             pnlHeader.ResumeLayout(false);
             pnlMain.ResumeLayout(false);
             pnlEssay.ResumeLayout(false);
             pnlEssay.PerformLayout();
             pnlWordCount.ResumeLayout(false);
             pnlGrading.ResumeLayout(false);
-            pnlRubric.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)nudContent).EndInit();
-            ((System.ComponentModel.ISupportInitialize)nudGrammar).EndInit();
-            ((System.ComponentModel.ISupportInitialize)nudRelevance).EndInit();
-            ((System.ComponentModel.ISupportInitialize)nudStructure).EndInit();
+            pnlRubricBox.ResumeLayout(false);
+            pnlRubricBox.PerformLayout();
             pnlScoreInput.ResumeLayout(false);
             pnlScoreInput.PerformLayout();
             pnlRemarks.ResumeLayout(false);
             pnlRemarks.PerformLayout();
             ResumeLayout(false);
-        }
 
-        /// <summary>
-        /// Configures one rubric row (label + NUD + max label) at a given Y position.
-        /// Called only from InitializeComponent — this is a Designer-side helper, not logic.
-        /// </summary>
-        private static void SetupRubricRow(
-            System.Windows.Forms.Label lbl, string name,
-            System.Windows.Forms.NumericUpDown nud, int max,
-            System.Windows.Forms.Label lblMax, int y)
-        {
-            lbl.Text = name;
-            lbl.Font = new System.Drawing.Font("Segoe UI", 9F);
-            lbl.ForeColor = System.Drawing.Color.FromArgb(60, 60, 60);
-            lbl.Location = new System.Drawing.Point(8, y + 5);
-            lbl.Size = new System.Drawing.Size(100, 18);
-            lbl.Name = $"lbl{name}Label";
-
-            nud.Minimum = 0;
-            nud.Maximum = max;
-            nud.Value = 0;
-            nud.Location = new System.Drawing.Point(115, y);
-            nud.Size = new System.Drawing.Size(60, 24);
-            nud.Font = new System.Drawing.Font("Segoe UI", 9F);
-            nud.Name = $"nud{name}";
-
-            lblMax.Text = $"/ {max}";
-            lblMax.Font = new System.Drawing.Font("Segoe UI", 9F);
-            lblMax.ForeColor = System.Drawing.Color.Gray;
-            lblMax.Location = new System.Drawing.Point(180, y + 5);
-            lblMax.Size = new System.Drawing.Size(50, 18);
-            lblMax.Name = $"lbl{name}Max";
         }
 
         #endregion
-
-        // ── Control declarations ───────────────────────────────────────────────
         private System.Windows.Forms.Panel pnlHeader;
         private buttonRounded btnBack;
         private System.Windows.Forms.Label lblActivityTitle;
@@ -597,9 +475,9 @@ namespace PUPAcadPortal
         private System.Windows.Forms.Label lblStudentId;
         private System.Windows.Forms.Label lblSubmissionTime;
         private System.Windows.Forms.Label lblMaxPoints;
+        private System.Windows.Forms.Label lblNavCounter;
         private buttonRounded btnPrevStudent;
         private buttonRounded btnNextStudent;
-
         private System.Windows.Forms.Panel pnlMain;
         private System.Windows.Forms.Panel pnlEssay;
         private System.Windows.Forms.Label lblEssayHeader;
@@ -607,35 +485,21 @@ namespace PUPAcadPortal
         private System.Windows.Forms.Panel pnlWordCount;
         private System.Windows.Forms.Label lblWordCount;
         private System.Windows.Forms.Label lblCharCount;
-
         private System.Windows.Forms.Panel pnlGrading;
         private System.Windows.Forms.Label lblGradingHeader;
-        private System.Windows.Forms.Panel pnlRubric;
+        private System.Windows.Forms.Label lblSaveStatus;
+        private System.Windows.Forms.Panel pnlRubricBox;
         private System.Windows.Forms.Label lblRubricHeader;
-        private System.Windows.Forms.Label lblContentLabel;
-        private System.Windows.Forms.NumericUpDown nudContent;
-        private System.Windows.Forms.Label lblContentMax;
-        private System.Windows.Forms.Label lblGrammarLabel;
-        private System.Windows.Forms.NumericUpDown nudGrammar;
-        private System.Windows.Forms.Label lblGrammarMax;
-        private System.Windows.Forms.Label lblRelevanceLabel;
-        private System.Windows.Forms.NumericUpDown nudRelevance;
-        private System.Windows.Forms.Label lblRelevanceMax;
-        private System.Windows.Forms.Label lblStructureLabel;
-        private System.Windows.Forms.NumericUpDown nudStructure;
+        private System.Windows.Forms.FlowLayoutPanel flpRubricRows;
         private System.Windows.Forms.Label lblRubricTotal;
         private System.Windows.Forms.CheckBox chkAutoScore;
-
         private System.Windows.Forms.Panel pnlScoreInput;
         private System.Windows.Forms.Label lblScoreLabel;
         private System.Windows.Forms.TextBox txtScore;
         private System.Windows.Forms.Label lblScoreOf;
         private buttonRounded btnSaveScore;
-        private System.Windows.Forms.Label lblSaveStatus;
-
         private System.Windows.Forms.Panel pnlRemarks;
         private System.Windows.Forms.Label lblRemarksHeader;
         private System.Windows.Forms.TextBox txtRemarks;
-        private Label lblStructureMax;
     }
 }
