@@ -9,7 +9,7 @@ using System.ComponentModel;
 namespace PUPAcadPortal.PortalContents.Instructor.LMS
 {
     //  Data model 
-    public enum AttendanceStatus { Present, Absent, Excused }
+    public enum AttendanceStatus { Present, Absent, Excused,Late }
 
     public class StudentAttendanceRecord
     {
@@ -78,7 +78,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
     //  Partial InstructorPortal 
 
-    public partial class AttendanceContentInst : UserControl
+    /*public partial class AttendanceContentInst : UserControl
     {
         //  State 
         private List<StudentAttendanceRecord> _allStudents = new();
@@ -819,7 +819,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             };
             g.DrawArc(pen, rect, startAngle, sweepAngle);
         }
-    }
+    }*/
 
     //  ManualEntryDialog 
 

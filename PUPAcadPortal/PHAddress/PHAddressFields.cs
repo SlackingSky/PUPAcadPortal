@@ -17,6 +17,15 @@ namespace PUPAcadPortal.PHAddress
         private ComboBox cmbCities;
         private ComboBox cmbBarangays;
         private TextBox txtPostal;
+        CheckBox chkSameAddress = new CheckBox { Text = "Same as Address Line 1", AutoSize = true, Anchor = AnchorStyles.Left, Margin = new Padding(3, 0, 3, 15) };
+        public TextBox AddressLine1 => (TextBox)this.Controls.Find("txtAddress1", true)[0];
+        public TextBox AddressLine2 => (TextBox)this.Controls.Find("txtAddress2", true)[0];
+        public CheckBox SameAsAddress1 => chkSameAddress;
+        public ComboBox RegionComboBox => cmbRegions;
+        public ComboBox ProvinceComboBox => cmbProvinces;
+        public ComboBox CityComboBox => cmbCities;
+        public ComboBox BarangayComboBox => cmbBarangays;
+        public TextBox PostalTextBox => txtPostal;
 
         // 2. Public Read-Only Properties
         public string SelectedAddressLine1 => ((TextBox)this.Controls.Find("txtAddress1", true)[0]).Text.Trim();
@@ -37,7 +46,6 @@ namespace PUPAcadPortal.PHAddress
         public PHAddressFields()
         {
             this.AutoSize = true;
-
             InitializeComponentLayout();
             SetRegistrationFontsTo12pt();
         }
@@ -73,8 +81,6 @@ namespace PUPAcadPortal.PHAddress
             Label lblAddress2 = new Label { Text = "Address Line 2:", AutoSize = true, Anchor = AnchorStyles.Left, Margin = marginSpacing };
             TextBox txtAddress2 = new TextBox { Name = "txtAddress2", Width = 500, PlaceholderText = "Building, Barangay (Optional)", Anchor = AnchorStyles.Left, Margin = marginSpacing };
 
-            // "Same as Address 1" Checkbox
-            CheckBox chkSameAddress = new CheckBox { Text = "Same as Address Line 1", AutoSize = true, Anchor = AnchorStyles.Left, Margin = new Padding(3, 0, 3, 15) };
             chkSameAddress.CheckedChanged += (s, e) =>
             {
                 if (chkSameAddress.Checked)

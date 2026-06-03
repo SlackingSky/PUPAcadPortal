@@ -25,22 +25,29 @@ namespace PUPAcadPortal.Utils
                     newView.Dispose();
                     return;
                 }
-                // Disposing old controls to prevent memory leaks in RAM
-                foreach (Control ctrl in containerPanel.Controls)
-                {
-                    EventUnbinder.ClearAllEvents(ctrl);
-                    ctrl.Dispose();
-                }
 
                 containerPanel.SuspendLayout();
-                // Clearing the container completely
-                containerPanel.Controls.Clear();
+                try
+                {
+                    for (int i = containerPanel.Controls.Count - 1; i >= 0; i--)
+                    {
+                        Control control = containerPanel.Controls[i];
+                        EventUnbinder.ClearAllEvents(control);
+                        control.Dispose();
+                    }
 
-                // Configure the layout rules for the incoming view
-                newView.Dock = DockStyle.Fill;
+                    // Clearing the container completely
+                    containerPanel.Controls.Clear();
 
-                containerPanel.Controls.Add(newView);
-                containerPanel.ResumeLayout(true);
+                    // Configure the layout rules for the incoming view
+                    newView.Dock = DockStyle.Fill;
+
+                    containerPanel.Controls.Add(newView);
+                }
+                finally
+                {
+                    containerPanel.ResumeLayout(true);
+                }
             }
         }
     }

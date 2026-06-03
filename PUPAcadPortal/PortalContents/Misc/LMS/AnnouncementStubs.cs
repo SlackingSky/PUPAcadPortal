@@ -1,18 +1,3 @@
-// ============================================================
-//  AnnouncementStubs.cs  (v4 – with notifications + attachments)
-//
-//  Lives in the AdminPortal branch only.
-//  Delete this file when the two branches are merged.
-//
-//  Changes from v3:
-//   • Categories updated: General, Academic, Events, Schedule,
-//     Examination, Emergency  (6 named + "All")
-//   • CreateAnnouncement: "Send Notification" checkbox (Students / Instructors)
-//   • CreateAnnouncement: attachment picker (PDF / Image)
-//   • Announcement model: NotifyStudents, NotifyInstructors, AttachmentPath
-//   • ViewAnnouncement: shows attachment link + notification targets
-// ============================================================
-
 using System;
 using System.Collections.Generic;
 using System.Drawing;

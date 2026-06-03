@@ -9,6 +9,8 @@ public partial class Announcement
 
     public int CreatedByUserId { get; set; }
 
+    public string? SubjectOfferingId { get; set; }
+
     public string Title { get; set; } = null!;
 
     public string Content { get; set; } = null!;
@@ -24,6 +26,8 @@ public partial class Announcement
     public DateTime PostedDate { get; set; }
 
     public virtual User CreatedByUser { get; set; } = null!;
+
+    public virtual SubjectOffering? SubjectOffering { get; set; }
 
     public virtual ICollection<Role> TargetRoles { get; set; } = new List<Role>();
 }

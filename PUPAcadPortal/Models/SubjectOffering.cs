@@ -23,6 +23,8 @@ public partial class SubjectOffering
 
     public virtual ICollection<Activity> Activities { get; set; } = new List<Activity>();
 
+    public virtual ICollection<Announcement> Announcements { get; set; } = new List<Announcement>();
+
     public virtual ICollection<CalendarEvent> CalendarEvents { get; set; } = new List<CalendarEvent>();
 
     public virtual ICollection<ClassSession> ClassSessions { get; set; } = new List<ClassSession>();
