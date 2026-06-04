@@ -1,4 +1,5 @@
-﻿using PUPAcadPortal.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using PUPAcadPortal.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +9,12 @@ namespace PUPAcadPortal.Utils
 {
     public class AutoGenerators
     {
-        public static string GenerateUniqueInstitutionalEmail(string firstName, string lastName, string? MiddleName = null)
+        public static async Task<string> GenerateUniqueInstitutionalEmail(string firstName, string lastName, string? MiddleName = null)
         {
-            return GenerateUniqueInstitutionalEmailBulk(firstName, lastName, MiddleName, new HashSet<string>());
+            return await GenerateUniqueInstitutionalEmailBulk(firstName, lastName, MiddleName, new HashSet<string>());
         }
 
-        public static string GenerateUniqueInstitutionalEmailBulk(string firstName, string lastName, string? MiddleName, HashSet<string> batchEmails)
+        public static async Task<string> GenerateUniqueInstitutionalEmailBulk(string firstName, string lastName, string? MiddleName, HashSet<string> batchEmails)
         {
             char middleInitial = !string.IsNullOrEmpty(MiddleName) ? char.ToLower(MiddleName[0]) : '\0';
             string cleanFirst = Regex.Replace(firstName.ToLower(), @"[^a-z0-9]", "");
@@ -27,7 +28,7 @@ namespace PUPAcadPortal.Utils
 
             using (var context = new AppDbContext())
             {
-                while (context.Users.Any(u => u.InstitutionalEmail == proposedEmail) || batchEmails.Contains(proposedEmail))
+                while (await context.Users.AnyAsync(u => u.InstitutionalEmail == proposedEmail) || batchEmails.Contains(proposedEmail))
                 {
                     proposedEmail = $"{baseIdentity}{collisionCounter}{domain}";
                     collisionCounter++;
@@ -36,15 +37,15 @@ namespace PUPAcadPortal.Utils
             return proposedEmail;
         }
 
-        public static int GetNextStudentSequence(int currentYear)
+        public static async Task<int> GetNextStudentSequence(int currentYear)
         {
             string yearPrefix = currentYear.ToString();
             using (var context = new AppDbContext())
             {
-                var lastStudent = context.Students
+                var lastStudent = await context.Students
                     .Where(s => s.StudentNumber.StartsWith(yearPrefix))
                     .OrderByDescending(s => s.StudentNumber)
-                    .FirstOrDefault();
+                    .FirstOrDefaultAsync();
 
                 if (lastStudent != null)
                 {
@@ -63,23 +64,50 @@ namespace PUPAcadPortal.Utils
             return $"{year}-{sequence:D5}-{campusCode}-{(isTransferee ? "1" : "0")}";
         }
 
-        public static string GenerateUniqueUsername(string firstName, string lastName, string? middleName = null)
+        public static async Task<string> GenerateUniqueUsername(string firstName, string lastName, string? middleName = null, bool isStudent = true)
         {
             char middleInitial = !string.IsNullOrEmpty(middleName) ? char.ToLower(middleName[0]) : '\0';
             string cleanFirst = Regex.Replace(firstName.ToLower(), @"[^a-z0-9]", "");
             string cleanLast = Regex.Replace(lastName.ToLower(), @"[^a-z0-9]", "");
-            string baseUsername = $"{cleanFirst}{(middleInitial != '\0' ? middleInitial.ToString() : "")}{cleanLast}";
+            string baseUsername = $"{(!isStudent ? "prof" : "")}{cleanFirst}{(middleInitial != '\0' ? middleInitial.ToString() : "")}{cleanLast}";
             string proposedUsername = baseUsername;
             int collisionCounter = 1;
             using (var context = new AppDbContext())
             {
-                while (context.Users.Any(u => u.Username == proposedUsername))
+                while (await context.Users.AnyAsync(u => u.Username == proposedUsername))
                 {
                     proposedUsername = $"{baseUsername}{collisionCounter}";
                     collisionCounter++;
                 }
             }
             return proposedUsername;
+        }
+
+        public static string GenerateUniqueProfId(int year, int sequence)
+        {
+            return $"PROF-{year}-{sequence:D5}";
+        }
+
+        public static async Task<int> GetNextProfSequence(int currentYear)
+        {
+            string yearPrefix = currentYear.ToString();
+            using (var context = new AppDbContext())
+            {
+                var lastStudent = await context.Professors
+                    .Where(p => p.EmployeeId.StartsWith($"PROF-{yearPrefix}"))
+                    .OrderByDescending(s => s.EmployeeId)
+                    .FirstOrDefaultAsync();
+
+                if (lastStudent != null)
+                {
+                    string[] parts = lastStudent.EmployeeId.Split('-');
+                    if (parts.Length >= 2 && int.TryParse(parts[2], out int lastSequence))
+                    {
+                        return lastSequence + 1;
+                    }
+                }
+                return 1;
+            }
         }
     }
 }

@@ -1,32 +1,119 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Windows.Forms;
 
 namespace PUPAcadPortal.Utils
 {
     public static class Validators
     {
-        private static void HighlightInvalidField(Control control)
+        public static void AttachLiveErrorClearers(Control container)
         {
-            if (control is TextBox txt)
+            foreach (Control child in container.Controls)
             {
-                txt.BackColor = Color.FromArgb(255, 220, 220);
+                if (child == null || child.Tag?.ToString() == "optional")
+                    continue;
+
+                if (child is TextBox txt)
+                {
+                    txt.TextChanged += (s, e) => registrationErrorProvider.SetError(txt, "");
+                }
+                else if (child is ComboBox cmb)
+                {
+                    cmb.SelectedIndexChanged += (s, e) => registrationErrorProvider.SetError(cmb, "");
+                }
+                else if (child is MaskedTextBox mtb)
+                {
+                    mtb.TextChanged += (s, e) => registrationErrorProvider.SetError(mtb, "");
+                }
+                else if (child is DateTimePicker dtp)
+                {
+                    dtp.ValueChanged += (s, e) => registrationErrorProvider.SetError(dtp, "");
+                }
+                else if (child.HasChildren)
+                {
+                    AttachLiveErrorClearers(child);
+                }
             }
-            else if (control is ComboBox cmb)
+        }
+
+        private static ErrorProvider registrationErrorProvider = new ErrorProvider()
+        {
+            BlinkStyle = ErrorBlinkStyle.NeverBlink
+        };
+
+        public static void ClearErrors()
+        {
+            registrationErrorProvider.Clear();
+        }
+
+        public static bool ValidateRegistration(this Control control)
+        {
+            registrationErrorProvider.Clear();
+
+            bool isValid = CheckControlsValidity(control);
+
+            if (!isValid)
             {
-                cmb.BackColor = Color.FromArgb(255, 220, 220);
+                MessageBox.Show("Please fill in all required fields.\nHover over the red icons for details.",
+                                "Incomplete Information",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
             }
-            else if (control is MaskedTextBox mtb)
+
+            return isValid;
+        }
+
+        private static bool CheckControlsValidity(Control container)
+        {
+            bool isValid = true;
+
+            foreach (Control child in container.Controls)
             {
-                mtb.BackColor = Color.FromArgb(255, 220, 220);
+                if (child == null || child.Tag?.ToString() == "optional")
+                    continue;
+
+                if (child is TextBox txt)
+                {
+                    if (string.IsNullOrWhiteSpace(txt.Text))
+                    {
+                        registrationErrorProvider.SetError(txt, "This text field is required.");
+                        isValid = false;
+                    }
+                }
+                else if (child is ComboBox cmb)
+                {
+                    if (cmb.SelectedIndex <= 0)
+                    {
+                        registrationErrorProvider.SetError(cmb, "Please select an option from the dropdown.");
+                        isValid = false;
+                    }
+                }
+                else if (child is MaskedTextBox mtb)
+                {
+                    if (!mtb.MaskCompleted)
+                    {
+                        registrationErrorProvider.SetError(mtb, "Please complete the required format.");
+                        isValid = false;
+                    }
+                }
+                else if (child is DateTimePicker dtp)
+                {
+                    if (!dtp.IsDateOfBirthValid())
+                        isValid = false;
+                }
+                else if (child.HasChildren)
+                {
+                    if (!CheckControlsValidity(child))
+                    {
+                        isValid = false;
+                    }
+                }
             }
-            else if (control is DateTimePicker dtp)
-            {
-                dtp.BackColor = Color.FromArgb(255, 220, 220);
-                dtp.CalendarForeColor = Color.Maroon;
-                dtp.CalendarTitleBackColor = Color.FromArgb(255, 220, 220);
-            }
+
+            return isValid;
         }
 
         private static int CalculateAge(DateTime birthDate)
@@ -37,153 +124,52 @@ namespace PUPAcadPortal.Utils
             return age;
         }
 
-        public static void ClearFieldHighlight(this TextBox textBox)
-        {
-            textBox.BackColor = Color.White;
-            textBox.Font = new Font(textBox.Font, FontStyle.Regular);
-        }
-
-        public static void ClearFieldHighlight(this ComboBox cmb)
-        {
-            cmb.BackColor = Color.White;
-            cmb.Font = new Font(cmb.Font, FontStyle.Regular);
-        }
-
-        public static void ClearFieldHighlight(this MaskedTextBox mtb)
-        {
-            mtb.BackColor = Color.White;
-            mtb.Font = new Font(mtb.Font, FontStyle.Regular);
-        }
-
-        public static void ClearFieldHighlight(this DateTimePicker dtp)
-        {
-            dtp.BackColor = Color.White;
-            dtp.Font = new Font(dtp.Font, FontStyle.Regular);
-            dtp.CalendarForeColor = SystemColors.WindowText;
-            dtp.CalendarTitleBackColor = SystemColors.Control;
-        }
-
         public static bool IsDateOfBirthValid(this DateTimePicker dtp)
         {
             DateTime dob = dtp.Value;
             int age = CalculateAge(dob);
 
-            // Check if date is in the future
             if (dob > DateTime.Today)
             {
-                HighlightInvalidField(dtp);
-                MessageBox.Show("Birth date cannot be in the future.", "Invalid Date",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                registrationErrorProvider.SetError(dtp, "Birth date cannot be in the future.");
                 return false;
             }
 
-            // Check if age is reasonable (at least 17, max 70 for college)
-            if (age < 17)
-            {
-                HighlightInvalidField(dtp);
-                MessageBox.Show($"Student must be at least 17 years old. Current age: {age}",
-                    "Age Requirement", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
+
 
             if (age > 70)
             {
-                HighlightInvalidField(dtp);
-                MessageBox.Show($"Please check the birth date. Age: {age}",
-                    "Invalid Date", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                registrationErrorProvider.SetError(dtp, "Invalid age for registration.");
                 return false;
             }
 
-            // Check for unreasonable year (before 1950)
             if (dob.Year < 1950)
             {
-                HighlightInvalidField(dtp);
-                MessageBox.Show("Please enter a valid birth date (year should be 1950 or later).",
-                    "Invalid Year", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                registrationErrorProvider.SetError(dtp, "Year must be 1950 or later.");
                 return false;
             }
 
-            ClearFieldHighlight(dtp);
+            if (dtp.Tag?.ToString() == "student")
+            {
+                if (age < 17)
+                {
+                    registrationErrorProvider.SetError(dtp, "Student must be at least 17 years old.");
+                    return false;
+                }
+            }
+            
+            if (age < 21 || age > 70 && dtp.Tag?.ToString() != "student")
+            {
+                registrationErrorProvider.SetError(dtp, $"Age must be between 21-70 years old. Current age: {age}");
+                return false;
+            }
+
             return true;
         }
 
-        public static bool ValidateStudentRegistration(this Control control)
+        public static bool IsValidEmail(this TextBox textBox)
         {
-            bool isValid = true;
-
-            // Clear all previous highlights
-            control.ClearAllHighlights();
-            foreach (Control child in control.Controls)
-            {
-                if (child != null)
-                {
-                    if (child.Tag?.ToString() == "optional")
-                        continue;
-                    if (child is TextBox txt)
-                    {
-                        if (string.IsNullOrWhiteSpace(txt.Text))
-                        {
-                            HighlightInvalidField(txt);
-                            isValid = false;
-                        }
-                    }
-                    else if (child is ComboBox cmb)
-                    {
-                        if (cmb.SelectedIndex <= 0)
-                        {
-                            HighlightInvalidField(cmb);
-                            isValid = false;
-                        }
-                    }
-                    else if (child is MaskedTextBox mtb)
-                    {
-                        if (string.IsNullOrWhiteSpace(mtb.Text))
-                        {
-                            HighlightInvalidField(mtb);
-                            isValid = false;
-                        }
-                    }
-                    else if (child.HasChildren)
-                    {
-                        child.ValidateStudentRegistration();
-                    }
-                }
-            }
-
-            // Show summary message if invalid
-            if (!isValid)
-            {
-                MessageBox.Show("Please fill in all required fields (marked with *).\n\n" +
-                                "Required fields have been highlighted in light red.",
-                                "Incomplete Information",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Warning);
-            }
-
-            return isValid;
-        }
-
-        private static void ClearAllHighlights(this Control control)
-        {
-            foreach (Control child in control.Controls)
-            {
-                if (child != null)
-                {
-                    if (child is TextBox txt) txt.ClearFieldHighlight();
-                    else if (child is ComboBox cmb) cmb.ClearFieldHighlight();
-                    else if (child is MaskedTextBox mtb) mtb.ClearFieldHighlight();
-                    else if (child is DateTimePicker dtp) dtp.ClearFieldHighlight();
-
-                    if (child.HasChildren)
-                    {
-                        child.ClearAllHighlights();
-                    }
-                }
-            }
-        }
-
-        public static bool IsValidEmail(this string email)
-        {
+            string email = textBox.Text;
             email = email.Trim().ToLower();
 
             // Self explanatory naman, checks email pattern, prevents g@com
@@ -191,8 +177,7 @@ namespace PUPAcadPortal.Utils
 
             if (!System.Text.RegularExpressions.Regex.IsMatch(email, emailPattern))
             {
-                MessageBox.Show("Please enter a valid email address!\n\nExample: student@domain.com",
-                    "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                registrationErrorProvider.SetError(textBox, "Please enter a valid email address! Example: user@domain.com");
                 return false;
             }
 
@@ -201,15 +186,13 @@ namespace PUPAcadPortal.Utils
                 var addr = new System.Net.Mail.MailAddress(email);
                 if (addr.Address != email)
                 {
-                    MessageBox.Show("Please enter a valid email address!", "Validation Error",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    registrationErrorProvider.SetError(textBox, "Please enter a valid email address! Example: user@domain.com");
                     return false;
                 }
             }
             catch
             {
-                MessageBox.Show("Please enter a valid email address!\n\nExample: student@domain.com",
-                    "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                registrationErrorProvider.SetError(textBox, "Please enter a valid email address! Example: user@domain.com");
                 return false;
             }
             return true;

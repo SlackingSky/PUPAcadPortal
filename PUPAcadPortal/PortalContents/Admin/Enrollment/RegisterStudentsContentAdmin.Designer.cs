@@ -244,7 +244,7 @@
             cmbRSStudentProgram.Items.AddRange(new object[] { "Select Course", "BS Information Technology" });
             cmbRSStudentProgram.Location = new Point(29, 855);
             cmbRSStudentProgram.Name = "cmbRSStudentProgram";
-            cmbRSStudentProgram.Size = new Size(328, 29);
+            cmbRSStudentProgram.Size = new Size(303, 29);
             cmbRSStudentProgram.TabIndex = 50;
             cmbRSStudentProgram.Tag = "ignore";
             cmbRSStudentProgram.Text = "BS Information Technology";
@@ -254,7 +254,7 @@
             cmbRSYearLevel.Font = new Font("Segoe UI", 12F);
             cmbRSYearLevel.FormattingEnabled = true;
             cmbRSYearLevel.Items.AddRange(new object[] { "Select Year Level", "1st Year", "2nd Year", "3rd Year", "4th Year" });
-            cmbRSYearLevel.Location = new Point(363, 855);
+            cmbRSYearLevel.Location = new Point(340, 855);
             cmbRSYearLevel.Name = "cmbRSYearLevel";
             cmbRSYearLevel.Size = new Size(246, 29);
             cmbRSYearLevel.TabIndex = 8;
@@ -265,7 +265,7 @@
             label22.AutoSize = true;
             label22.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label22.ForeColor = Color.Black;
-            label22.Location = new Point(362, 831);
+            label22.Location = new Point(338, 831);
             label22.Name = "label22";
             label22.Size = new Size(83, 21);
             label22.TabIndex = 43;
@@ -309,13 +309,14 @@
             dtpRSStudentBirthDate.Name = "dtpRSStudentBirthDate";
             dtpRSStudentBirthDate.Size = new Size(396, 29);
             dtpRSStudentBirthDate.TabIndex = 4;
+            dtpRSStudentBirthDate.Tag = "student";
             dtpRSStudentBirthDate.Value = new DateTime(2026, 4, 4, 22, 34, 4, 0);
             // 
             // mtbRSStudentPhoneNum
             // 
             mtbRSStudentPhoneNum.BorderStyle = BorderStyle.FixedSingle;
             mtbRSStudentPhoneNum.Font = new Font("Segoe UI", 12F);
-            mtbRSStudentPhoneNum.Location = new Point(470, 363);
+            mtbRSStudentPhoneNum.Location = new Point(470, 361);
             mtbRSStudentPhoneNum.Mask = "(+63) 000-000-0000";
             mtbRSStudentPhoneNum.Name = "mtbRSStudentPhoneNum";
             mtbRSStudentPhoneNum.Size = new Size(437, 29);
@@ -362,7 +363,7 @@
             txtRSStudentEmailAdd.Location = new Point(26, 361);
             txtRSStudentEmailAdd.Name = "txtRSStudentEmailAdd";
             txtRSStudentEmailAdd.PlaceholderText = "Personal Email Address";
-            txtRSStudentEmailAdd.Size = new Size(438, 29);
+            txtRSStudentEmailAdd.Size = new Size(408, 29);
             txtRSStudentEmailAdd.TabIndex = 5;
             // 
             // pnlStudentMaroonLine2

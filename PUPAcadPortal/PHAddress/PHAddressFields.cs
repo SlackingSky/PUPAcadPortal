@@ -79,7 +79,7 @@ namespace PUPAcadPortal.PHAddress
 
             // Address Line 2
             Label lblAddress2 = new Label { Text = "Address Line 2:", AutoSize = true, Anchor = AnchorStyles.Left, Margin = marginSpacing };
-            TextBox txtAddress2 = new TextBox { Name = "txtAddress2", Width = 500, PlaceholderText = "Building, Barangay (Optional)", Anchor = AnchorStyles.Left, Margin = marginSpacing };
+            TextBox txtAddress2 = new TextBox { Name = "txtAddress2", Width = 500, PlaceholderText = "Building, Barangay (Optional)", Anchor = AnchorStyles.Left, Margin = marginSpacing, Tag = "optional"};
 
             chkSameAddress.CheckedChanged += (s, e) =>
             {

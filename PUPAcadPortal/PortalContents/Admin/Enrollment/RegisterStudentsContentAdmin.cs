@@ -23,26 +23,6 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             InitializeComponent();
         }
 
-        // Helper method to find controls by name
-        private Control GetControl(string name)
-        {
-            // Search in the registration container
-            foreach (Control ctrl in pnlStudentRegistrationContainer.Controls)
-            {
-                if (ctrl.Name == name) return ctrl;
-
-                // Search in nested panels
-                if (ctrl.HasChildren)
-                {
-                    foreach (Control child in ctrl.Controls)
-                    {
-                        if (child.Name == name) return child;
-                    }
-                }
-            }
-            return null;
-        }
-
         private void AddSuffixComboBox()
         {
             // Position suffix to the right of Last Name field
@@ -80,10 +60,15 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
         {
 
             // Validate all required fields
-            if (!pnlStudentRegistrationContainer.ValidateStudentRegistration())
+            if (!pnlStudentRegistrationContainer.ValidateRegistration())
                 return;
-            if (!txtRSStudentEmailAdd.Text.IsValidEmail())
+            if (!txtRSStudentEmailAdd.IsValidEmail())
                 return;
+
+            if (MessageBox.Show("Are you sure you want to register this student? This action cannot be undone.", "Confirm Registration", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+            {
+                return;
+            }
 
             string program = cmbRSStudentProgram.Text.Trim() switch
             {
@@ -131,7 +116,7 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
 
             btnStudentRegistration.Enabled = false;
             this.FindForm().FormClosing += CloseApp.Cancel_Closing;
-            btnStudentRegistration.Text = "Registering Student";
+            btnStudentRegistration.Text = "Registering Student...";
             Application.UseWaitCursor = true;
 
             try
@@ -175,59 +160,6 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
                     btnStudentRegistration.Text = "Register Student";
                 });
             }
-        }
-
-        private void MarkRequiredFields()
-        {
-            // Add red asterisk to required field labels
-            AddRequiredAsterisk(label33, "Student ID");      // Student ID label
-            AddRequiredAsterisk(label30, "First Name");      // First Name label  
-            AddRequiredAsterisk(label29, "Last Name");       // Last Name label
-            AddRequiredAsterisk(label27, "Email");           // Email label
-            AddRequiredAsterisk(label25, "Phone");           // Phone label
-            AddRequiredAsterisk(label26, "Address");         // Address label
-        }
-
-        private void AddRequiredAsterisk(Label label, string originalText)
-        {
-            if (!label.Text.Contains("*"))
-            {
-                label.Text = originalText + " *";
-                label.ForeColor = Color.Maroon;
-            }
-        }
-
-        private void AttachRealTimeValidation()
-        {
-            txtRSStudentFirstName.TextChanged += (s, e) => txtRSStudentFirstName.ClearFieldHighlight();
-            txtRSStudentLastName.TextChanged += (s, e) => txtRSStudentLastName.ClearFieldHighlight();
-            txtRSStudentEmailAdd.TextChanged += (s, e) => txtRSStudentEmailAdd.ClearFieldHighlight();
-            mtbRSStudentPhoneNum.TextChanged += (s, e) => mtbRSStudentPhoneNum.ClearFieldHighlight();
-
-            // live date validation
-            dtpRSStudentBirthDate.Leave += (s, e) =>
-            {
-                // Re-validate when date changes
-                dtpRSStudentBirthDate.IsDateOfBirthValid();
-            };
-
-            // Address field real-time validation
-            TextBox txtAddress1 = phAddressFields.AddressLine1;
-            ComboBox cmbBarangay = phAddressFields.BarangayComboBox;
-            ComboBox cmbRegion = phAddressFields.RegionComboBox;
-            ComboBox cmbProvince = phAddressFields.ProvinceComboBox;
-            ComboBox cmbCity = phAddressFields.CityComboBox;
-            TextBox txtPostalCode = phAddressFields.PostalTextBox;
-
-
-            txtAddress1?.TextChanged += (s, e) => txtAddress1.ClearFieldHighlight();
-            cmbRegion?.TextChanged += (s, e) => cmbRegion.ClearFieldHighlight();
-            cmbProvince?.TextChanged += (s, e) => cmbProvince.ClearFieldHighlight();
-            cmbCity?.SelectedIndexChanged += (s, e) => cmbCity.ClearFieldHighlight();
-            cmbBarangay?.SelectedIndexChanged += (s, e) => cmbBarangay.ClearFieldHighlight();
-            txtPostalCode?.TextChanged += (s, e) => txtPostalCode.ClearFieldHighlight();
-            cmbRSYearLevel?.SelectedIndexChanged += (s, e) => cmbRSYearLevel.ClearFieldHighlight();
-            cmbRSEnrollmentStatus?.SelectedIndexChanged += (s, e) => cmbRSEnrollmentStatus.ClearFieldHighlight();
         }
 
         private void SetRegistrationFontsTo12pt()
@@ -282,7 +214,6 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             phAddressFields.Location = new Point(label26.Location.X, label26.Location.Y + 26);
             phAddressFields.Size = new Size(850, 250);
             pnlStudentRegistrationContainer.Controls.Add(phAddressFields);
-            phAddressFields.AddressLine2.Tag = "optional";
             phAddressFields.TabIndex = 7;
             AutoSetStudentId();
             mtbRSStudentPhoneNum.MakeCursorGotoStart();
@@ -293,24 +224,27 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             // THEN set fonts (so they apply to all controls including dynamically created ones)
             SetRegistrationFontsTo12pt();
 
-            // THEN mark required fields
-            MarkRequiredFields();
-
-            // THEN attach real-time validation
-            AttachRealTimeValidation();
+            Validators.AttachLiveErrorClearers(pnlStudentRegistrationContainer);
+            dtpRSStudentBirthDate.Leave += (s, e) => dtpRSStudentBirthDate.IsDateOfBirthValid();
+            txtRSStudentEmailAdd.TextChanged += (s, e) => txtRSStudentEmailAdd.IsValidEmail();
         }
 
-        private void AutoSetStudentId()
+        private async Task AutoSetStudentId()
         {
             int currentYear = DateTime.Now.Year;
-            int sequence = AutoGenerators.GetNextStudentSequence(currentYear);
+            int sequence = await AutoGenerators.GetNextStudentSequence(currentYear);
             txtRSStudentID.Text = AutoGenerators.FormatPupStudentNumber(currentYear, sequence, Services.StudentRegistrationService.CampusBranch, Services.StudentRegistrationService.IsTransferee);
         }
 
         private void btnStudentClearForm_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("Are you sure you want to clear this form?", "Confirm Clear", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+            {
+                return;
+            }
             Clear_Form(pnlStudentRegistrationContainer);
             phAddressFields.ClearAddressFields();
+            Validators.ClearErrors();
         }
 
         private void Clear_Form(Control control)
@@ -322,22 +256,18 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
                 if (ctrl is TextBox txt)
                 {
                     txt.Clear();
-                    txt.ClearFieldHighlight();
                 }
                 else if (ctrl is ComboBox cmb)
                 {
                     cmb.SelectedIndex = 0;
-                    cmb.ClearFieldHighlight();
                 }
                 else if (ctrl is MaskedTextBox mtb)
                 {
                     mtb.Clear();
-                    mtb.ClearFieldHighlight();
                 }
                 else if (ctrl is DateTimePicker dtp)
                 {
                     dtp.Value = DateTime.Now.AddDays(-1);
-                    dtp.ClearFieldHighlight();
                 }
 
                 if (ctrl.HasChildren)
@@ -354,10 +284,10 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             }
         }
 
-        private void cmbRSEnrollmentStatus_SelectedIndexChanged(object sender, EventArgs e)
+        private async void cmbRSEnrollmentStatus_SelectedIndexChanged(object sender, EventArgs e)
         {
             Services.StudentRegistrationService.IsTransferee = cmbRSEnrollmentStatus.SelectedItem != null && cmbRSEnrollmentStatus.SelectedItem.ToString() == "Transferee";
-            AutoSetStudentId();
+            await AutoSetStudentId();
         }
     }
 }

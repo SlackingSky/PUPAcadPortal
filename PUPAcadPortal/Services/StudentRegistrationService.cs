@@ -1,8 +1,11 @@
-﻿using PUPAcadPortal.Models;
-using PUPAcadPortal.Utils;
+﻿using Microsoft.EntityFrameworkCore;
 using PUPAcadPortal.Data;
+using PUPAcadPortal.Models;
+using PUPAcadPortal.Utils;
+using MySqlConnector;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace PUPAcadPortal.Services
 {
@@ -13,43 +16,44 @@ namespace PUPAcadPortal.Services
 
         public async Task<Student> RegisterSingleStudent(StudentRegistrationData dto)
         {
-            using (var context = new AppDbContext())
+        using (var context = new AppDbContext())
+        {
+            string tempPassword = "PUP" + dto.DateOfBirth.Year.ToString();
+            int currentYear = DateTime.Now.Year;
+            int sequence = await AutoGenerators.GetNextStudentSequence(currentYear);
+            string fName = dto.FirstName.ToLower().Trim();
+            string lName = dto.LastName.ToLower().Trim();
+
+            bool isDuplicate = await context.Users.AnyAsync(u =>
+                u.FirstName.ToLower() == fName &&
+                u.LastName.ToLower() == lName &&
+                u.Birthdate == dto.DateOfBirth &&
+                u.RoleId == 2);
+
+            if (isDuplicate)
             {
-                string tempPassword = "PUP" + dto.DateOfBirth.Year.ToString();
-                int currentYear = DateTime.Now.Year;
-                int sequence = AutoGenerators.GetNextStudentSequence(currentYear);
-                string fName = dto.FirstName.ToLower().Trim();
-                string lName = dto.LastName.ToLower().Trim();
+                throw new InvalidOperationException($"Registration failed. '{dto.FirstName} {dto.LastName}' born on {dto.DateOfBirth:MMMM dd, yyyy} is already registered.");
+            }
 
-                bool isDuplicate = context.Users.Any(u =>
-                    u.FirstName.ToLower() == fName &&
-                    u.LastName.ToLower() == lName &&
-                    u.Birthdate == dto.DateOfBirth);
+            string studentNumber = AutoGenerators.FormatPupStudentNumber(currentYear, sequence, CampusBranch, IsTransferee);
+            string officialEmail = await AutoGenerators.GenerateUniqueInstitutionalEmail(dto.FirstName, dto.LastName, dto.MiddleName);
+            string uniqueUsername = await AutoGenerators.GenerateUniqueUsername(dto.FirstName, dto.LastName, dto.MiddleName);
 
-                if (isDuplicate)
-                {
-                    throw new InvalidOperationException($"Registration failed. '{dto.FirstName} {dto.LastName}' born on {dto.DateOfBirth:MMMM dd, yyyy} is already registered.");
-                }
-
-                string studentNumber = AutoGenerators.FormatPupStudentNumber(currentYear, sequence, CampusBranch, IsTransferee);
-                string officialEmail = AutoGenerators.GenerateUniqueInstitutionalEmail(dto.FirstName, dto.LastName, dto.MiddleName);
-                string uniqueUsername = AutoGenerators.GenerateUniqueUsername(dto.FirstName, dto.LastName, dto.MiddleName);
-
-                var newStudent = MapToEntities(dto, studentNumber, officialEmail, uniqueUsername, tempPassword);
+            var newStudent = MapToEntities(dto, studentNumber, officialEmail, uniqueUsername, tempPassword);
 
 
-                await EmailService.SendWelcomeEmailAsync(
-                studentPersonalEmail:dto.Email,  
-                dto.FirstName,
-                officialEmail,
-                tempPassword,
-                studentNumber,
-                uniqueUsername
-        );
-                context.Students.Add(newStudent);
-                await context.SaveChangesAsync();
+            await EmailService.SendWelcomeEmailAsync(
+            studentPersonalEmail: dto.Email,
+            dto.FirstName,
+            officialEmail,
+            tempPassword,
+            studentNumber,
+            uniqueUsername
+            );
+            context.Students.Add(newStudent);
+            await context.SaveChangesAsync();
 
-                return newStudent;
+            return newStudent;
             }
         }
 
@@ -60,11 +64,11 @@ namespace PUPAcadPortal.Services
             using (var context = new AppDbContext())
             {
                 int currentYear = DateTime.Now.Year;
-                int currentSequence = AutoGenerators.GetNextStudentSequence(currentYear);
+                int currentSequence = await AutoGenerators.GetNextStudentSequence(currentYear);
                 HashSet<string> batchEmails = new HashSet<string>();
                 var newStudentsToSave = new List<Student>();
 
-                var existingUsers = context.Users.Select(u => new { u.FirstName, u.LastName, u.Birthdate }).ToList();
+                var existingUsers = await context.Users.Select(u => new { u.FirstName, u.LastName, u.Birthdate }).ToListAsync();
                 HashSet<string> existingIdentities = new HashSet<string>();
                 foreach (var u in existingUsers)
                 {
@@ -85,10 +89,10 @@ namespace PUPAcadPortal.Services
                     existingIdentities.Add(studentIdentityKey);
 
                     string studentNumber = AutoGenerators.FormatPupStudentNumber(currentYear, currentSequence, CampusBranch);
-                    string uniqueUsername = AutoGenerators.GenerateUniqueUsername(dto.FirstName, dto.LastName, dto.MiddleName);
+                    string uniqueUsername = await AutoGenerators.GenerateUniqueUsername(dto.FirstName, dto.LastName, dto.MiddleName);
                     currentSequence++;
 
-                    string officialEmail = AutoGenerators.GenerateUniqueInstitutionalEmailBulk(dto.FirstName, dto.LastName, dto.MiddleName, batchEmails);
+                    string officialEmail = await AutoGenerators.GenerateUniqueInstitutionalEmailBulk(dto.FirstName, dto.LastName, dto.MiddleName, batchEmails);
                     batchEmails.Add(officialEmail);
 
                     var newStudent = MapToEntities(dto, studentNumber, officialEmail, uniqueUsername, tempPassword);
