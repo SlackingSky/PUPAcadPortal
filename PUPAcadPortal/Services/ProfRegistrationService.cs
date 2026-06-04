@@ -18,7 +18,7 @@ namespace PUPAcadPortal.Services
             {
                 string tempPassword = "PUP" + prd.DateOfBirth.Year.ToString();
                 int currentYear = DateTime.Now.Year;
-                int sequence = await AutoGenerators.GetNextStudentSequence(currentYear);
+                int sequence = await AutoGenerators.GetNextProfSequence(currentYear);
                 string fName = prd.FirstName.ToLower().Trim();
                 string lName = prd.LastName.ToLower().Trim();
 

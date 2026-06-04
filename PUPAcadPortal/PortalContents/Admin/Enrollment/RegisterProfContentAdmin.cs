@@ -427,7 +427,7 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             cmbEmploymentType.SelectedIndexChanged += (s, e) =>
             {
                 string type = cmbEmploymentType.SelectedItem?.ToString();
-                txtMaxLoad.Text = type == "Full-Time" ? "40" : type == "Part-Time" ? "12" : "0";
+                txtMaxLoad.Text = type == "Full-Time" ? "24" : type == "Part-Time" ? "15" : "0";
             };
 
             // Highest Degree
