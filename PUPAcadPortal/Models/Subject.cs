@@ -19,6 +19,8 @@ public partial class Subject
 
     public int LabUnits { get; set; }
 
+    public int Units { get; set; }
+
     public virtual ICollection<Curriculum> Curricula { get; set; } = new List<Curriculum>();
 
     public virtual Department? Department { get; set; }

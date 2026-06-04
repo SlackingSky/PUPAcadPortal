@@ -108,9 +108,15 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.ActivityId)
                 .HasMaxLength(50)
                 .HasColumnName("ActivityID");
+            entity.Property(e => e.ActivityType)
+                .HasMaxLength(20)
+                .HasDefaultValueSql("'Assignment'");
             entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
             entity.Property(e => e.Deadline).HasColumnType("datetime");
             entity.Property(e => e.Description).HasColumnType("text");
+            entity.Property(e => e.IsPublished)
+                .HasDefaultValueSql("b'0'")
+                .HasColumnType("bit(1)");
             entity.Property(e => e.ModuleId)
                 .HasMaxLength(50)
                 .HasColumnName("ModuleID");
@@ -921,6 +927,10 @@ public partial class AppDbContext : DbContext
                 .HasMaxLength(50)
                 .HasColumnName("ActivityID");
             entity.Property(e => e.Grade).HasPrecision(5);
+            entity.Property(e => e.Remarks).HasMaxLength(20);
+            entity.Property(e => e.Status)
+                .HasMaxLength(20)
+                .HasDefaultValueSql("'Submitted'");
             entity.Property(e => e.StudentId).HasColumnName("StudentID");
             entity.Property(e => e.SubmissionDate)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")

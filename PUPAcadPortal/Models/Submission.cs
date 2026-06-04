@@ -17,6 +17,10 @@ public partial class Submission
 
     public decimal? Grade { get; set; }
 
+    public string Status { get; set; } = null!;
+
+    public string? Remarks { get; set; }
+
     public virtual Activity Activity { get; set; } = null!;
 
     public virtual Student Student { get; set; } = null!;
