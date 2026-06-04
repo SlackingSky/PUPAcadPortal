@@ -134,11 +134,12 @@
             pnlStudentRegistrationContainer.Location = new Point(112, 112);
             pnlStudentRegistrationContainer.Name = "pnlStudentRegistrationContainer";
             pnlStudentRegistrationContainer.Size = new Size(959, 990);
-            pnlStudentRegistrationContainer.TabIndex = 9;
+            pnlStudentRegistrationContainer.TabIndex = 0;
             // 
             // button1
             // 
             button1.BackColor = Color.Maroon;
+            button1.Cursor = Cursors.Hand;
             button1.FlatAppearance.BorderColor = Color.Maroon;
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -148,6 +149,7 @@
             button1.Name = "button1";
             button1.Size = new Size(239, 37);
             button1.TabIndex = 60;
+            button1.TabStop = false;
             button1.Text = "Bulk Student Registration";
             button1.TextAlign = ContentAlignment.MiddleRight;
             button1.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -179,6 +181,7 @@
             // 
             // btnStudentClearForm
             // 
+            btnStudentClearForm.Cursor = Cursors.Hand;
             btnStudentClearForm.FlatAppearance.BorderColor = Color.Gray;
             btnStudentClearForm.FlatStyle = FlatStyle.Flat;
             btnStudentClearForm.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -186,6 +189,7 @@
             btnStudentClearForm.Name = "btnStudentClearForm";
             btnStudentClearForm.Size = new Size(147, 37);
             btnStudentClearForm.TabIndex = 57;
+            btnStudentClearForm.TabStop = false;
             btnStudentClearForm.Text = "Clear Form";
             btnStudentClearForm.UseVisualStyleBackColor = true;
             btnStudentClearForm.Click += btnStudentClearForm_Click;
@@ -193,6 +197,7 @@
             // btnStudentRegistration
             // 
             btnStudentRegistration.BackColor = Color.Maroon;
+            btnStudentRegistration.Cursor = Cursors.Hand;
             btnStudentRegistration.FlatAppearance.BorderColor = Color.Maroon;
             btnStudentRegistration.FlatStyle = FlatStyle.Flat;
             btnStudentRegistration.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -201,7 +206,7 @@
             btnStudentRegistration.Location = new Point(702, 898);
             btnStudentRegistration.Name = "btnStudentRegistration";
             btnStudentRegistration.Size = new Size(215, 37);
-            btnStudentRegistration.TabIndex = 56;
+            btnStudentRegistration.TabIndex = 10;
             btnStudentRegistration.Text = "Register Student";
             btnStudentRegistration.TextAlign = ContentAlignment.MiddleRight;
             btnStudentRegistration.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -216,7 +221,7 @@
             cmbRSEnrollmentStatus.Location = new Point(617, 855);
             cmbRSEnrollmentStatus.Name = "cmbRSEnrollmentStatus";
             cmbRSEnrollmentStatus.Size = new Size(294, 29);
-            cmbRSEnrollmentStatus.TabIndex = 55;
+            cmbRSEnrollmentStatus.TabIndex = 9;
             cmbRSEnrollmentStatus.Text = "Select Type of Applicant";
             cmbRSEnrollmentStatus.SelectedIndexChanged += cmbRSEnrollmentStatus_SelectedIndexChanged;
             // 
@@ -251,7 +256,7 @@
             cmbRSYearLevel.Location = new Point(363, 855);
             cmbRSYearLevel.Name = "cmbRSYearLevel";
             cmbRSYearLevel.Size = new Size(246, 29);
-            cmbRSYearLevel.TabIndex = 49;
+            cmbRSYearLevel.TabIndex = 8;
             cmbRSYearLevel.Text = "Select Year Level";
             // 
             // label22
@@ -302,7 +307,7 @@
             dtpRSStudentBirthDate.Location = new Point(26, 231);
             dtpRSStudentBirthDate.Name = "dtpRSStudentBirthDate";
             dtpRSStudentBirthDate.Size = new Size(396, 29);
-            dtpRSStudentBirthDate.TabIndex = 37;
+            dtpRSStudentBirthDate.TabIndex = 4;
             dtpRSStudentBirthDate.Value = new DateTime(2026, 4, 4, 22, 34, 4, 0);
             // 
             // mtbRSStudentPhoneNum
@@ -313,7 +318,7 @@
             mtbRSStudentPhoneNum.Mask = "(+63) 000-000-0000";
             mtbRSStudentPhoneNum.Name = "mtbRSStudentPhoneNum";
             mtbRSStudentPhoneNum.Size = new Size(437, 29);
-            mtbRSStudentPhoneNum.TabIndex = 34;
+            mtbRSStudentPhoneNum.TabIndex = 6;
             // 
             // label25
             // 
@@ -357,7 +362,7 @@
             txtRSStudentEmailAdd.Name = "txtRSStudentEmailAdd";
             txtRSStudentEmailAdd.PlaceholderText = "Personal Email Address";
             txtRSStudentEmailAdd.Size = new Size(438, 29);
-            txtRSStudentEmailAdd.TabIndex = 27;
+            txtRSStudentEmailAdd.TabIndex = 5;
             // 
             // pnlStudentMaroonLine2
             // 
@@ -399,7 +404,7 @@
             txtRSStudentLastName.Name = "txtRSStudentLastName";
             txtRSStudentLastName.PlaceholderText = " Enter last name";
             txtRSStudentLastName.Size = new Size(393, 29);
-            txtRSStudentLastName.TabIndex = 22;
+            txtRSStudentLastName.TabIndex = 2;
             // 
             // label30
             // 
@@ -421,7 +426,7 @@
             txtRSStudentFirstName.Name = "txtRSStudentFirstName";
             txtRSStudentFirstName.PlaceholderText = " Enter first name";
             txtRSStudentFirstName.Size = new Size(468, 29);
-            txtRSStudentFirstName.TabIndex = 20;
+            txtRSStudentFirstName.TabIndex = 0;
             // 
             // label31
             // 
@@ -454,7 +459,7 @@
             txtRSStudentMiddleName.Name = "txtRSStudentMiddleName";
             txtRSStudentMiddleName.PlaceholderText = " Enter middle name";
             txtRSStudentMiddleName.Size = new Size(396, 29);
-            txtRSStudentMiddleName.TabIndex = 14;
+            txtRSStudentMiddleName.TabIndex = 1;
             // 
             // label33
             // 

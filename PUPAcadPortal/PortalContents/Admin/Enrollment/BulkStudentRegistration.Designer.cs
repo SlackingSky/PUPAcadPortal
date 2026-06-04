@@ -168,6 +168,7 @@
             // btnRegisterAll
             // 
             btnRegisterAll.BackColor = Color.Maroon;
+            btnRegisterAll.Cursor = Cursors.Hand;
             btnRegisterAll.FlatAppearance.BorderColor = Color.Maroon;
             btnRegisterAll.FlatStyle = FlatStyle.Flat;
             btnRegisterAll.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -185,6 +186,7 @@
             // 
             // btnImport
             // 
+            btnImport.Cursor = Cursors.Hand;
             btnImport.FlatAppearance.BorderColor = Color.Gray;
             btnImport.FlatStyle = FlatStyle.Flat;
             btnImport.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -198,6 +200,7 @@
             // 
             // btnClearTable
             // 
+            btnClearTable.Cursor = Cursors.Hand;
             btnClearTable.FlatAppearance.BorderColor = Color.Gray;
             btnClearTable.FlatStyle = FlatStyle.Flat;
             btnClearTable.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);

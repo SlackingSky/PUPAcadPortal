@@ -15,6 +15,7 @@ namespace PUPAcadPortal.Services
         {
             using (var context = new AppDbContext())
             {
+                string tempPassword = "PUP" + dto.DateOfBirth.Year.ToString();
                 int currentYear = DateTime.Now.Year;
                 int sequence = AutoGenerators.GetNextStudentSequence(currentYear);
                 string fName = dto.FirstName.ToLower().Trim();
@@ -34,8 +35,17 @@ namespace PUPAcadPortal.Services
                 string officialEmail = AutoGenerators.GenerateUniqueInstitutionalEmail(dto.FirstName, dto.LastName, dto.MiddleName);
                 string uniqueUsername = AutoGenerators.GenerateUniqueUsername(dto.FirstName, dto.LastName, dto.MiddleName);
 
-                var newStudent = MapToEntities(dto, studentNumber, officialEmail, uniqueUsername);
+                var newStudent = MapToEntities(dto, studentNumber, officialEmail, uniqueUsername, tempPassword);
 
+
+                await EmailService.SendWelcomeEmailAsync(
+                studentPersonalEmail:dto.Email,  
+                dto.FirstName,
+                officialEmail,
+                tempPassword,
+                studentNumber,
+                uniqueUsername
+        );
                 context.Students.Add(newStudent);
                 await context.SaveChangesAsync();
 
@@ -64,6 +74,7 @@ namespace PUPAcadPortal.Services
 
                 foreach (var dto in dtos)
                 {
+                    string tempPassword = "PUP" + dto.DateOfBirth.Year.ToString();
                     string studentIdentityKey = $"{dto.FirstName.ToLower()}|{dto.LastName.ToLower()}|{dto.DateOfBirth:yyyyMMdd}";
                     if (existingIdentities.Contains(studentIdentityKey))
                     {
@@ -80,12 +91,21 @@ namespace PUPAcadPortal.Services
                     string officialEmail = AutoGenerators.GenerateUniqueInstitutionalEmailBulk(dto.FirstName, dto.LastName, dto.MiddleName, batchEmails);
                     batchEmails.Add(officialEmail);
 
-                    var newStudent = MapToEntities(dto, studentNumber, officialEmail, uniqueUsername);
+                    var newStudent = MapToEntities(dto, studentNumber, officialEmail, uniqueUsername, tempPassword);
+
                     newStudentsToSave.Add(newStudent);
                     processedCount++;
-
+                    await EmailService.SendWelcomeEmailAsync(
+                    studentPersonalEmail: dto.Email,
+                    dto.FirstName,
+                    officialEmail,
+                    tempPassword,
+                    studentNumber,
+                    uniqueUsername
+                    );
                     if (processedCount % 500 == 0)
                     {
+
                         context.Students.AddRange(newStudentsToSave);
                         await context.SaveChangesAsync();
                         newStudentsToSave.Clear();
@@ -101,10 +121,8 @@ namespace PUPAcadPortal.Services
             return (processedCount, skippedRecords);
         }
 
-        private Student MapToEntities(StudentRegistrationData dto, string studentNum, string officialEmail, string uniqueUsername)
+        private Student MapToEntities(StudentRegistrationData dto, string studentNum, string officialEmail, string uniqueUsername, string tempPassword)
         {
-            string tempPassword = "PUP" + dto.DateOfBirth.Year.ToString();
-
             var newUser = new User
             {
                 FirstName = dto.FirstName,

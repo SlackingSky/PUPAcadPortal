@@ -110,7 +110,9 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
                 return;
             }
 
-            Cursor.Current = Cursors.WaitCursor;
+            this.FormClosing += CloseApp.Cancel_Closing;
+            Application.UseWaitCursor = true;
+            btnRegisterAll.Text = $"Registering {_pendingStudents.Count} students...";
             btnRegisterAll.Enabled = false;
 
             try
@@ -168,8 +170,10 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             {
                 this.SafeUIUpdate(() =>
                 {
-                    Cursor.Current = Cursors.Default;
+                    this.FormClosing -= CloseApp.Cancel_Closing;
+                    Application.UseWaitCursor = false;
                     btnRegisterAll.Enabled = true;
+                    btnRegisterAll.Text = "Register All Students";
                 });
             }
         }

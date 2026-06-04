@@ -78,6 +78,7 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             cmbSuffix.Name = "cmbSuffix";
             cmbSuffix.Location = new Point(lblSuffix.Location.X, txtRSStudentLastName.Location.Y);
             cmbSuffix.Size = new Size(70, 29);
+            cmbSuffix.TabIndex = 3;
             cmbSuffix.Font = new Font("Segoe UI", 12F, FontStyle.Regular);
             cmbSuffix.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbSuffix.Items.AddRange(new string[] { "", "Jr.", "Sr.", "I", "II", "III", "IV" });
@@ -190,7 +191,9 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             };
 
             btnStudentRegistration.Enabled = false;
-            Cursor.Current = Cursors.WaitCursor;
+            this.FindForm().FormClosing += CloseApp.Cancel_Closing;
+            btnStudentRegistration.Text = "Registering Student";
+            Application.UseWaitCursor = true;
 
             try
             {
@@ -225,10 +228,12 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             }
             finally
             {
+                Application.UseWaitCursor = false;
                 this.SafeUIUpdate(() =>
                 {
-                    Cursor.Current = Cursors.Default;
                     btnStudentRegistration.Enabled = true;
+                    this.FindForm().FormClosing -= CloseApp.Cancel_Closing;
+                    btnStudentRegistration.Text = "Register Student";
                 });
             }
         }
@@ -573,9 +578,8 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             mtbRSStudentPhoneNum.TextChanged += (s, e) => ClearFieldHighlight(mtbRSStudentPhoneNum);
 
             // live date validation
-            dtpRSStudentBirthDate.ValueChanged += (s, e) =>
+            dtpRSStudentBirthDate.Leave += (s, e) =>
             {
-                lblRSStudentContactInfo.Text = dtpRSStudentBirthDate.Value.ToString() + ";" + dtpRSStudentBirthDate.Text; 
                 if (isResetingForm) return;
                 // Re-validate when date changes
                 if (!ValidateDateOfBirth())
@@ -708,6 +712,7 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             phAddressFields.Location = new Point(label26.Location.X, label26.Location.Y + 26);
             phAddressFields.Size = new Size(850, 250);
             pnlStudentRegistrationContainer.Controls.Add(phAddressFields);
+            phAddressFields.TabIndex = 7;
             AutoSetStudentId();
             mtbRSStudentPhoneNum.MakeCursorGotoStart();
         }

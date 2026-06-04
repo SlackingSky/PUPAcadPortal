@@ -17,7 +17,13 @@ namespace PUPAcadPortal.Utils
 
             if (control.InvokeRequired)
             {
-                control.Invoke(action);
+                control.Invoke((MethodInvoker)delegate
+                {
+                    if (!control.IsDisposed && !control.Disposing)
+                    {
+                        action();
+                    }
+                });
             }
             else
             {
