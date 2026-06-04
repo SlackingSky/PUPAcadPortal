@@ -566,8 +566,10 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             };
             pnlProfRegistrationContainer.Controls.Add(btnRegister);
 
-            pnlProfRegistrationContainer.AutoScrollMinSize = new Size(0, yOffset + 100);
+            pnlProfRegistrationContainer.Height = yOffset + 80;
+            pnlProfBottomExtension.Location = new Point(pnlProfBottomExtension.Location.X, pnlProfRegistrationContainer.Height + 150);
             professorFormCreated = true;
+
         }
 
         private Control GetControl(string name)

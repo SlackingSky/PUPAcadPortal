@@ -1,11 +1,14 @@
-﻿using System;
+﻿using PUPAcadPortal.PHAddress;
+using PUPAcadPortal.Services;
+using PUPAcadPortal.Utils;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using PUPAcadPortal.PHAddress;
 
 namespace PUPAcadPortal.PortalContents.Admin.Enrollment
 {
@@ -14,6 +17,7 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
         private bool isResetingForm = false;
         private List<string[]> studentList = new List<string[]>();
         private PHAddressFields phAddressFields = new PHAddressFields();
+        private ComboBox cmbSuffix;
         public RegisterStudentsContentAdmin()
         {
             InitializeComponent();
@@ -55,8 +59,8 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
         {
             // Position suffix to the right of Last Name field
             // Last Name is at X=439, Y=173, Width=437
-            int yPosition = txtRSStudentLastName.Location.Y;  // Same Y as Last Name (173)
-            int xPosition = txtRSStudentLastName.Location.X + txtRSStudentLastName.Width + 10; // 439 + 437 + 10 = 886
+            int yPosition = label29.Location.Y;  // Same Y as Last Name (173)
+            int xPosition = txtRSStudentLastName.Location.X + txtRSStudentLastName.Width; // 439 + 437 + 10 = 886
 
             // But ensure it doesn't go out of bounds - adjust if needed
             if (xPosition + 120 > pnlStudentRegistrationContainer.Width)
@@ -67,12 +71,12 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             System.Windows.Forms.Label lblSuffix = new System.Windows.Forms.Label();
             lblSuffix.Text = "Suffix:";
             lblSuffix.Location = new Point(xPosition, yPosition);
-            lblSuffix.Size = new Size(60, 30);
+            lblSuffix.AutoSize = true;
             lblSuffix.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
 
-            ComboBox cmbSuffix = new ComboBox();
+            cmbSuffix = new ComboBox();
             cmbSuffix.Name = "cmbSuffix";
-            cmbSuffix.Location = new Point(xPosition + 55, yPosition);
+            cmbSuffix.Location = new Point(lblSuffix.Location.X, txtRSStudentLastName.Location.Y);
             cmbSuffix.Size = new Size(70, 29);
             cmbSuffix.Font = new Font("Segoe UI", 12F, FontStyle.Regular);
             cmbSuffix.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -134,92 +138,99 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             return true;
         }
 
-        private void btnStudentRegistration_Click(object sender, EventArgs e)
+        private async void btnStudentRegistration_Click(object sender, EventArgs e)
         {
 
             // Validate all required fields
             if (!ValidateStudentRegistration())
                 return;
 
-            // Check if student ID already exists
-            if (IsStudentIdExists(txtRSStudentID.Text.Trim()))
+            string program = cmbRSStudentProgram.Text.Trim() switch
             {
-                MessageBox.Show("Student ID already exists. Please check the ID number.",
-                    "Duplicate ID", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // Collect all student information
-            string studentId = txtRSStudentID.Text.Trim();
-            string firstName = txtRSStudentFirstName.Text.Trim();
-            string lastName = txtRSStudentLastName.Text.Trim();
-            string middleName = txtRSStudentMiddleName.Text.Trim();
-            ComboBox cmbSuffix = GetControl("cmbSuffix") as ComboBox;
-            string suffix = cmbSuffix?.SelectedItem?.ToString() ?? "";
-
-            // Format full name
-            string fullName = $"{lastName}, {firstName}";
-            if (!string.IsNullOrWhiteSpace(middleName))
-                fullName += $" {middleName}";
-            if (!string.IsNullOrWhiteSpace(suffix) && suffix != "")
-                fullName += $" {suffix}";
-
-            // Personal email (from enrollment form, entered by admin)
-            string personalEmail = txtRSStudentEmailAdd.Text.Trim();
-
-            // Generate PUP email from name
-            string pupEmail = GeneratePupEmailFromName(firstName, lastName, middleName);
-
-            string course = "BSIT"; // Auto-set to BSIT
-
-            // Get year level
-            string yearLevel = cmbRSYearLevel?.SelectedItem?.ToString() ?? "1st Year";
-
-            // Applicant type (from dropdown)
-            string applicantType = cmbRSEnrollmentStatus?.SelectedItem?.ToString() ?? "Regular Freshman";
-
-            // Create new student record with 7 columns
-            string[] newStudent = new string[]
-            {
-        studentId,
-        fullName,
-        personalEmail,      // Personal email from enrollment form
-        pupEmail,           // Auto-generated PUP email
-        course,
-        yearLevel,
-        applicantType       // Applicant type instead of enrollment status
+                "BS Information Technology" => "BSIT",
+                _ => "No Program"
             };
 
-            // Add to student list
-            studentList.Add(newStudent);
+            int yearLevel = cmbRSYearLevel?.SelectedItem?.ToString() switch
+            {
+                "1st Year" => 1,
+                "2nd Year" => 2,
+                "3rd Year" => 3,
+                "4th Year" => 4,
+                _ => 1
+            };
 
-            // Create login account for student
-            CreateStudentAccount(studentId, fullName, pupEmail);
+            string applicantType = cmbRSEnrollmentStatus?.SelectedItem?.ToString() ?? "Regular";
 
-            // Log the registration
-            LogStudentRegistration(studentId, fullName, pupEmail);
+            string suffix = cmbSuffix?.SelectedItem?.ToString();
+            TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
 
-            // Single success message
-            //MessageBox.Show($"Student {fullName} ({studentId}) has been registered successfully!\n\n" +
-            //    $"Personal Email: {personalEmail}\n" +
-            //    $"PUP Email: {pupEmail}\n\n" +
-            //    "Login account has been created.\n" +
-            //    "Default Password: pup123456\n\n" +
-            //    "The student will appear in View All Users under Students tab.",
-            //    "Registration Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            var dto = new Data.StudentRegistrationData
+            {
+                FirstName = textInfo.ToTitleCase(txtRSStudentFirstName.Text.Trim().ToLower()),
+                MiddleName = textInfo.ToTitleCase(txtRSStudentMiddleName.Text.Trim().ToLower()),
+                LastName = textInfo.ToTitleCase(txtRSStudentLastName.Text.Trim().ToLower()),
+                Suffix = suffix,
+                DateOfBirth = dtpRSStudentBirthDate.Value,
 
-            // Clear the form for next registration
-            ClearStudentRegistrationForm();
+                Email = txtRSStudentEmailAdd.Text.Trim().ToLowerInvariant(),
+                Phone = mtbRSStudentPhoneNum.Text.Trim(),
 
-            // Optional: Ask if user wants to view the student
-            //DialogResult viewResult = MessageBox.Show("Do you want to view all users now?",
-            //    "View Student", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                Address1 = phAddressFields.SelectedAddressLine1.Trim(),
+                Address2 = phAddressFields.SelectedAddressLine2.Trim(),
+                Region = phAddressFields.SelectedRegionName,
+                Province = phAddressFields.SelectedProvinceName,
+                City = phAddressFields.SelectedCityName,
+                Barangay = phAddressFields.SelectedBarangayName,
+                PostalCode = phAddressFields.SelectedPostalCode,
 
-            //if (viewResult == DialogResult.Yes)
-            //{
-            //    viewingStudents = true;
-            //    btnViewAllUsers.PerformClick();
-            //}
+                Program = program,
+                YearLevel = yearLevel,
+                StudentType = applicantType
+            };
+
+            btnStudentRegistration.Enabled = false;
+            Cursor.Current = Cursors.WaitCursor;
+
+            try
+            {
+                var service = new StudentRegistrationService();
+
+                var registeredStudent = await service.RegisterSingleStudent(dto);
+
+                this.SafeUIUpdate(() =>
+                {
+                    ClearStudentRegistrationForm();
+
+                    MessageBox.Show(
+                        $"Success! Student '{registeredStudent.User.FirstName} {registeredStudent.User.LastName}' has been securely registered.\n\n" +
+                        $"Generated Student No: {registeredStudent.StudentNumber}\n" +
+                        $"Generated Email: {registeredStudent.User.InstitutionalEmail}",
+                        "Registration Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                });
+            }
+            catch (InvalidOperationException ex)
+            {
+                this.SafeUIUpdate(() =>
+                {
+                    MessageBox.Show(ex.Message, "Duplicate Detected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                });
+            }
+            catch (Exception ex)
+            {
+                this.SafeUIUpdate(() =>
+                {
+                    MessageBox.Show($"A critical error occurred during registration:\n\n{ex.Message}", "Registration Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                });
+            }
+            finally
+            {
+                this.SafeUIUpdate(() =>
+                {
+                    Cursor.Current = Cursors.Default;
+                    btnStudentRegistration.Enabled = true;
+                });
+            }
         }
 
         private void ClearStudentRegistrationForm()
@@ -564,6 +575,7 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             // live date validation
             dtpRSStudentBirthDate.ValueChanged += (s, e) =>
             {
+                lblRSStudentContactInfo.Text = dtpRSStudentBirthDate.Value.ToString() + ";" + dtpRSStudentBirthDate.Text; 
                 if (isResetingForm) return;
                 // Re-validate when date changes
                 if (!ValidateDateOfBirth())
@@ -584,33 +596,6 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             if (txtAddress1 != null) txtAddress1.TextChanged += (s, e) => ClearFieldHighlight(txtAddress1);
             if (txtBarangay != null) txtBarangay.TextChanged += (s, e) => ClearFieldHighlight(txtBarangay);
             if (cmbRegion != null) cmbRegion.SelectedIndexChanged += (s, e) => ClearFieldHighlight(cmbRegion);
-        }
-
-        private string GeneratePupEmailFromName(string firstName, string lastName, string middleName)
-        {
-            // Clean and format the name parts
-            string cleanFirstName = RemoveSpacesAndSpecialChars(firstName).ToLower();
-            string cleanLastName = RemoveSpacesAndSpecialChars(lastName).ToLower();
-
-            // Get middle initial (first letter of middle name, if exists)
-            string middleInitial = "";
-            if (!string.IsNullOrWhiteSpace(middleName))
-            {
-                middleInitial = middleName.Trim().ToLower();
-                // Take only the first character of the middle name
-                if (middleInitial.Length > 0)
-                {
-                    middleInitial = middleInitial[0].ToString();
-                }
-            }
-
-            // Combine: firstname + middleinitial + lastname
-            string emailUsername = cleanFirstName + middleInitial + cleanLastName;
-
-            // Remove any remaining special characters (keep only letters)
-            emailUsername = RemoveSpecialCharacters(emailUsername);
-
-            return $"{emailUsername}@iskolarngbayan.pup.edu.ph";
         }
 
         private string RemoveSpacesAndSpecialChars(string input)
@@ -723,7 +708,15 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             phAddressFields.Location = new Point(label26.Location.X, label26.Location.Y + 26);
             phAddressFields.Size = new Size(850, 250);
             pnlStudentRegistrationContainer.Controls.Add(phAddressFields);
+            AutoSetStudentId();
+            mtbRSStudentPhoneNum.MakeCursorGotoStart();
+        }
 
+        private void AutoSetStudentId()
+        {
+            int currentYear = DateTime.Now.Year;
+            int sequence = AutoGenerators.GetNextStudentSequence(currentYear);
+            txtRSStudentID.Text = AutoGenerators.FormatPupStudentNumber(currentYear, sequence, Services.StudentRegistrationService.CampusBranch, Services.StudentRegistrationService.IsTransferee);
         }
 
         private void btnStudentClearForm_Click(object sender, EventArgs e)
@@ -750,6 +743,21 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
                 }
             }
             phAddressFields.ClearAddressFields();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            using (BulkStudentRegistration bulkForm = new BulkStudentRegistration())
+            {
+                bulkForm.StartPosition = FormStartPosition.CenterScreen;
+                bulkForm.ShowDialog();
+            }
+        }
+
+        private void cmbRSEnrollmentStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Services.StudentRegistrationService.IsTransferee = cmbRSEnrollmentStatus.SelectedItem != null && cmbRSEnrollmentStatus.SelectedItem.ToString() == "Transferee";
+            AutoSetStudentId();
         }
     }
 }
