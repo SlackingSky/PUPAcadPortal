@@ -66,6 +66,9 @@ namespace PUPAcadPortal
             pnlQuizSection.Visible = t == "Quiz";
             pnlRubricSection.Visible = t is "Essay" or "Assignment";
             lblPointsNote.Text = t == "Quiz" ? "ℹ Points calculated from questions." : "";
+
+            if (pnlRubricSection.Visible && chkRubric.Checked)
+                ApplyRubricLayout();
         }
 
         private void btnAddQuestion_Click(object sender, EventArgs e)
@@ -246,7 +249,7 @@ namespace PUPAcadPortal
 
                 for (int ci = 0; ci < q.Choices.Count; ci++)
                 {
-                    int idx = ci; 
+                    int idx = ci;
                     string letter = idx < ChoiceLetters.Length ? ChoiceLetters[idx] : $"#{idx + 1}";
 
                     var lblLetter = new Label
@@ -416,10 +419,42 @@ namespace PUPAcadPortal
             _ => "Answer key / model answer"
         };
 
+        // ════════════════════════════════════════════════════════════════════
+        //  RUBRIC SECTION CONSTANTS
+        // ════════════════════════════════════════════════════════════════════
+        // Summary panel height when rubric is enabled (fixed height so it never
+        // grows/shrinks unpredictably and the section wrapper matches).
+        private const int SummaryPanelH = 370;
+        // Max scrollable height for the criteria list before it scrolls
+        private const int CriteriaMaxH = SummaryPanelH;
+        // Row height for each criteria item
+        private const int CriteriaRowH = 58;
+
+        // ── Toggle rubric on/off ─────────────────────────────────────────────
         private void chkRubric_CheckedChanged(object sender, EventArgs e)
         {
-            pnlRubricRows.Visible = chkRubric.Checked;
-            lblRubricNote.Visible = chkRubric.Checked;
+            bool on = chkRubric.Checked;
+
+            // Show/hide criteria scroll and add-button
+            pnlCriteriaScroll.Visible = on;
+            btnAddCriteria.Visible = on;
+            lblRubricNote.Visible = on;
+
+            // Show/hide summary panel
+            pnlRubricSummary.Visible = on;
+
+            if (on)
+            {
+                RefreshRubricPanel();
+                ApplyRubricLayout();
+            }
+            else
+            {
+                // Collapse to header-only height
+                pnlRubricLeft.Height = 46;
+                pnlRubricSummary.Height = 46;
+                pnlRubricSection.Height = 46;
+            }
         }
 
         private void btnAddCriteria_Click(object sender, EventArgs e)
@@ -428,60 +463,330 @@ namespace PUPAcadPortal
             RefreshRubricPanel();
         }
 
+        // ── Refresh criteria list + update all summary widgets ───────────────
         private void RefreshRubricPanel()
         {
+            // ── Rebuild criteria rows ────────────────────────────────────────
             flpRubric.SuspendLayout();
             flpRubric.Controls.Clear();
-            foreach (var r in _rubricItems)
-                flpRubric.Controls.Add(BuildRubricRow(r));
+            int leftW = pnlCriteriaScroll.Width > 20 ? pnlCriteriaScroll.Width : 960;
+            for (int i = 0; i < _rubricItems.Count; i++)
+                flpRubric.Controls.Add(BuildRubricRow(_rubricItems[i], i + 1, leftW));
             flpRubric.ResumeLayout();
 
-            if (chkRubric.Checked && _rubricItems.Count > 0)
+            // ── Compute stats ────────────────────────────────────────────────
+            int count = _rubricItems.Count;
+            int totalPts = _rubricItems.Sum(r => r.MaxPoints);
+            int actPts = (int)nudPoints.Value;
+            int remaining;
+
+            if (chkRubric.Checked && count > 0)
             {
-                int total = _rubricItems.Sum(r => r.MaxPoints);
-                nudPoints.Value = Math.Clamp(total, 1, 10000);
-                lblRubricNote.Text = $"📊 Rubric total: {total} pts — max score locked to rubric.";
+                nudPoints.Value = Math.Clamp(totalPts, 1, 10000);
+                actPts = totalPts;
+                remaining = 0;
+                lblRubricNote.Text = $"Max score locked to rubric ({totalPts} pts)";
             }
+            else
+            {
+                remaining = Math.Max(0, actPts - totalPts);
+            }
+
+            // ── Stat card values ────────────────────────────────────────────
+            lblStatCriteriaVal.Text = count.ToString();
+            lblStatTotalVal.Text = totalPts.ToString();
+            lblStatRemainingVal.Text = remaining.ToString();
+
+            // Remaining color
+            bool balanced = remaining == 0 && count > 0;
+            lblStatRemainingVal.ForeColor = balanced
+                ? Color.FromArgb(26, 128, 64)
+                : remaining == 0 ? Color.FromArgb(26, 128, 64)
+                : Color.OrangeRed;
+
+            // Status card
+            (string statusText, Color statusColor, string statusIcon) = count switch
+            {
+                0 => ("Not\nConfigured", Color.FromArgb(130, 130, 140), "⚙"),
+                1 => ("Incomplete\n(add more)", Color.FromArgb(200, 100, 0), "⚠"),
+                _ when totalPts > 0 => ("✔  Ready", Color.FromArgb(26, 128, 64), "✔"),
+                _ => ("⚠ Check pts", Color.OrangeRed, "⚠")
+            };
+            lblStatStatusVal.Text = statusText;
+            lblStatStatusVal.ForeColor = statusColor;
+            lblStatStatusIcon.Text = statusIcon;
+            // Refresh the status card accent color
+            pnlStatStatus.Tag = ColorTranslator.ToHtml(statusColor);
+            pnlStatStatus.Invalidate();
+
+            // ── Progress bar ────────────────────────────────────────────────
+            int pct = actPts > 0 ? Math.Min(100, (int)Math.Round(totalPts * 100.0 / actPts)) : 0;
+            int fillW = (int)(pnlProgressBg.Width * pct / 100.0);
+            pnlProgressFill.Width = fillW;
+            lblProgressPct.Text = $"{pct}%";
+            pnlProgressFill.BackColor = pct >= 100
+                ? Color.FromArgb(26, 128, 64)
+                : pct >= 60 ? Color.FromArgb(255, 196, 0)
+                : Color.FromArgb(128, 0, 0);
+
+            // ── Validation message ──────────────────────────────────────────
+            lblValidationMsg.Text = count == 0
+                ? "⚠  Add at least one criterion to enable rubric grading."
+                : count == 1
+                ? "ℹ  Consider adding more criteria for balanced grading."
+                : totalPts == 0
+                ? "⚠  All criteria have 0 points — please set point values."
+                : balanced
+                ? "✔  Rubric is complete and ready to use."
+                : $"ℹ  Rubric total: {totalPts} pts (activity max set to match).";
+            lblValidationMsg.ForeColor = count == 0 || totalPts == 0
+                ? Color.FromArgb(180, 60, 0)
+                : balanced ? Color.FromArgb(26, 128, 64)
+                : Color.FromArgb(100, 80, 0);
+
+            // ── Resize layout ────────────────────────────────────────────────
+            ApplyRubricLayout();
         }
 
-        private Panel BuildRubricRow(RubricCriteria r)
+        // ── Central layout engine for the rubric section ─────────────────────
+        private void ApplyRubricLayout()
         {
-            int rowW = Math.Max(500, flpRubric.ClientSize.Width - 16);
+            if (!chkRubric.Checked || pnlRubricSection == null) return;
+
+            // Total section width
+            int secW = Math.Max(900, pnlRubricSection.Width);
+            int leftPad = 14;
+            int gap = 12;
+
+            // Left = ~70%, Right = ~30%, min 370px each
+            int rightW = Math.Max(432, (int)(secW * 0.30));
+            int leftW = Math.Max(460, secW - rightW - gap - leftPad);
+
+            // ── Position left column ─────────────────────────────────────────
+            pnlRubricLeft.Location = new Point(leftPad, 0);
+            pnlRubricLeft.Width = leftW;
+            pnlRubricHeader.Width = leftW;
+            btnAddCriteria.Location = new Point(leftW - btnAddCriteria.Width - 4, 9);
+
+            // Scrollable criteria area height: fits up to CriteriaMaxH
+            int rowCount = _rubricItems.Count;
+            int contentH = rowCount * (CriteriaRowH + 6) + 12;
+            int criteriaH = rowCount == 0 ? 0 : Math.Min(contentH, CriteriaMaxH);
+
+            pnlCriteriaScroll.Width = leftW;
+            pnlCriteriaScroll.Height = criteriaH;
+            flpRubric.Width = leftW - SystemInformation.VerticalScrollBarWidth - 2;
+
+            // Resize criteria row widths if width changed
+            foreach (Control c in flpRubric.Controls)
+                if (c is Panel row) ResizeCriteriaRow(row, flpRubric.Width);
+
+            int leftH = 46 + criteriaH;
+            pnlRubricLeft.Height = leftH;
+
+            // ── Position right column ────────────────────────────────────────
+            pnlRubricSummary.Location = new Point(leftPad + leftW + gap, 0);
+            pnlRubricSummary.Width = rightW;
+            pnlRubricSummary.Height = SummaryPanelH;
+
+            // Scale inner summary width items
+            int innerW = rightW - 28;
+            pnlSumDivider.Width = innerW;
+            pnlStatCards.Width = innerW;
+            pnlStatCardsRow2.Width = innerW;
+            pnlProgressArea.Width = innerW;
+            pnlGradeGuidelines.Width = innerW;
+            pnlValidation.Width = innerW;
+
+            // Stat card widths (2 per row, with 8px gap)
+            int cardW = (innerW - 8) / 2;
+            pnlStatCriteria.Width = cardW;
+            pnlStatTotalPts.Width = cardW;
+            pnlStatTotalPts.Left = cardW + 8;
+            pnlStatRemaining.Width = cardW;
+            pnlStatStatus.Width = cardW;
+            pnlStatStatus.Left = cardW + 8;
+
+            // Progress bar width
+            int progW = innerW - lblProgressPct.Width - 8;
+            pnlProgressBg.Width = Math.Max(60, progW);
+
+            // Guideline panel text width
+            lblGuidelineText.Width = innerW - 20;
+
+            // ── Section outer height ─────────────────────────────────────────
+            int sectionH = Math.Max(leftH, SummaryPanelH);
+            pnlRubricSection.Height = sectionH;
+
+            pnlRubricSection.Invalidate(true);
+            pnlRubricSummary.Invalidate();
+        }
+
+        // ── Paint handler for the summary panel border + accent bar ──────────
+        private void pnlRubricSummary_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
+        {
+            var g = e.Graphics;
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+            // Border
+            using var borderPen = new Pen(Color.FromArgb(210, 200, 215), 1f);
+            g.DrawRectangle(borderPen, 0, 0, pnlRubricSummary.Width - 1, pnlRubricSummary.Height - 1);
+
+            // Left accent bar (maroon)
+            using var accentBrush = new SolidBrush(Color.FromArgb(128, 0, 0));
+            g.FillRectangle(accentBrush, 0, 0, 4, pnlRubricSummary.Height);
+        }
+
+        // ── Shared stat-card Paint: draws border + colored top accent bar ────
+        private void StatCard_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
+        {
+            var panel = (Panel)sender;
+            var g = e.Graphics;
+
+            // Border
+            using var pen = new Pen(Color.FromArgb(225, 220, 235), 1f);
+            g.DrawRectangle(pen, 0, 0, panel.Width - 1, panel.Height - 1);
+
+            // Top accent bar using Tag color
+            try
+            {
+                string hex = panel.Tag?.ToString() ?? "#888888";
+                var c = ColorTranslator.FromHtml(hex);
+                using var bar = new SolidBrush(Color.FromArgb(220, c.R, c.G, c.B));
+                g.FillRectangle(bar, 1, 0, panel.Width - 2, 3);
+            }
+            catch { /* ignore bad hex */ }
+        }
+
+        // ── Build a single criteria row ───────────────────────────────────────
+        private Panel BuildRubricRow(RubricCriteria r, int rowNum, int rowW)
+        {
+            rowW = Math.Max(300, rowW);
             var row = new Panel
             {
                 Width = rowW,
-                Height = 60,
-                BackColor = Color.FromArgb(250, 250, 253),
-                Margin = new Padding(0, 0, 0, 4)
+                Height = CriteriaRowH,
+                BackColor = Color.White,
+                Margin = new Padding(0, 0, 0, 6),
+                Tag = "criteria-row"
             };
             row.Paint += (s, e) =>
             {
-                using var pen = new Pen(Color.FromArgb(225, 225, 235));
+                using var pen = new Pen(Color.FromArgb(225, 218, 230), 1f);
                 e.Graphics.DrawRectangle(pen, 0, 0, row.Width - 1, row.Height - 1);
+                // Left accent
+                using var acc = new SolidBrush(Color.FromArgb(128, 0, 0));
+                e.Graphics.FillRectangle(acc, 0, 0, 3, row.Height);
             };
 
-            var txtName = new TextBox { Text = r.Name, PlaceholderText = "Criteria name", Font = new Font("Segoe UI", 9.5F), Location = new Point(8, 8), Size = new Size(200, 26) };
+            // Row number badge
+            var lblNum = new Label
+            {
+                Text = rowNum.ToString(),
+                Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                ForeColor = Color.White,
+                BackColor = Color.FromArgb(128, 0, 0),
+                TextAlign = ContentAlignment.MiddleCenter,
+                Location = new Point(8, (CriteriaRowH - 24) / 2),
+                Size = new Size(24, 24),
+                TabIndex = 0
+            };
+
+            // Criteria name
+            var txtName = new TextBox
+            {
+                Text = r.Name,
+                PlaceholderText = "Criteria name",
+                Font = new Font("Segoe UI", 9.5F),
+                Location = new Point(38, (CriteriaRowH - 26) / 2),
+                Size = new Size(Math.Max(80, (int)(rowW * 0.32)), 26),
+                TabIndex = 1
+            };
             txtName.TextChanged += (s, e) => r.Name = txtName.Text;
 
-            var txtDesc = new TextBox { Text = r.Description, PlaceholderText = "Description (optional)", Font = new Font("Segoe UI", 9.5F), Location = new Point(218, 8), Size = new Size(rowW - 400, 26) };
+            // Description
+            int descX = txtName.Right + 8;
+            var txtDesc = new TextBox
+            {
+                Text = r.Description,
+                PlaceholderText = "Description (optional)",
+                Font = new Font("Segoe UI", 9.5F),
+                Location = new Point(descX, (CriteriaRowH - 26) / 2),
+                Size = new Size(Math.Max(60, rowW - descX - 170), 26),
+                TabIndex = 2
+            };
             txtDesc.TextChanged += (s, e) => r.Description = txtDesc.Text;
 
-            var lblPts = new Label { Text = "Max pts:", Location = new Point(rowW - 175, 14), AutoSize = true, Font = new Font("Segoe UI", 9F) };
-            var nudPts = new NumericUpDown { Minimum = 1, Maximum = 9999, Value = Math.Max(1, r.MaxPoints), Location = new Point(rowW - 110, 8), Size = new Size(74, 26), Font = new Font("Segoe UI", 9F) };
+            // Max pts label
+            var lblPts = new Label
+            {
+                Text = "pts:",
+                Font = new Font("Segoe UI", 8.5F),
+                ForeColor = Color.FromArgb(80, 80, 90),
+                Location = new Point(rowW - 158, (CriteriaRowH - 18) / 2 + 2),
+                AutoSize = true,
+                TabIndex = 3
+            };
+
+            // Max pts numeric
+            var nudPts = new NumericUpDown
+            {
+                Minimum = 1,
+                Maximum = 9999,
+                Value = Math.Max(1, r.MaxPoints),
+                Font = new Font("Segoe UI", 9F),
+                Location = new Point(rowW - 132, (CriteriaRowH - 26) / 2),
+                Size = new Size(80, 26),
+                TabIndex = 4
+            };
             nudPts.ValueChanged += (s, e) => { r.MaxPoints = (int)nudPts.Value; RefreshRubricPanel(); };
 
-            var btnDel = new buttonRounded { Text = "✕", Size = new Size(26, 26), Location = new Point(rowW - 34, 8), BackColor = Color.FromArgb(195, 55, 55), ForeColor = Color.White, BorderRadius = 5 };
+            // Delete button
+            var btnDel = new buttonRounded
+            {
+                Text = "✕",
+                Size = new Size(28, 28),
+                Location = new Point(rowW - 40, (CriteriaRowH - 28) / 2),
+                BackColor = Color.FromArgb(195, 55, 55),
+                ForeColor = Color.White,
+                BorderRadius = 6,
+                Font = new Font("Segoe UI", 8F, FontStyle.Bold),
+                Cursor = Cursors.Hand,
+                TabIndex = 5
+            };
+            btnDel.FlatAppearance.BorderSize = 0;
             btnDel.Click += (s, e) => { _rubricItems.Remove(r); RefreshRubricPanel(); };
 
-            row.Controls.AddRange(new Control[] { txtName, txtDesc, lblPts, nudPts, btnDel });
-            row.SizeChanged += (s, e) =>
-            {
-                txtDesc.Width = row.Width - 400;
-                lblPts.Left = row.Width - 175;
-                nudPts.Left = row.Width - 110;
-                btnDel.Left = row.Width - 34;
-            };
+            row.Controls.AddRange(new Control[] { lblNum, txtName, txtDesc, lblPts, nudPts, btnDel });
             return row;
+        }
+
+        // ── Resize a criteria row's fluid controls ────────────────────────────
+        private static void ResizeCriteriaRow(Panel row, int newRowW)
+        {
+            if (newRowW < 200) return;
+            foreach (Control c in row.Controls)
+            {
+                if (c is TextBox tb)
+                {
+                    if (tb.TabIndex == 1) // name
+                        tb.Width = Math.Max(80, (int)(newRowW * 0.32));
+                    else if (tb.TabIndex == 2) // description
+                    {
+                        int descX = row.Controls.OfType<TextBox>()
+                                       .FirstOrDefault(t => t.TabIndex == 1)?.Right + 8 ?? 200;
+                        tb.Location = new Point(descX, tb.Top);
+                        tb.Width = Math.Max(60, newRowW - descX - 170);
+                    }
+                }
+                else if (c is Label lbl && lbl.TabIndex == 3)
+                    lbl.Left = newRowW - 158;
+                else if (c is NumericUpDown nud)
+                    nud.Left = newRowW - 132;
+                else if (c is buttonRounded btn)
+                    btn.Left = newRowW - 40;
+            }
+            row.Width = newRowW;
         }
 
         private void btnAttachFile_Click(object sender, EventArgs e)
@@ -578,33 +883,30 @@ namespace PUPAcadPortal
 
         private void pnlHeader_SizeChanged(object sender, System.EventArgs e)
         {
-            if (this.btnSave != null && this.pnlHeader != null)
-            {
-                this.btnSave.Location = new System.Drawing.Point(this.pnlHeader.Width - this.btnSave.Width - 12, 17);
-            }
+            if (btnSave != null && pnlHeader != null)
+                btnSave.Location = new Point(pnlHeader.Width - btnSave.Width - 12, 17);
         }
 
-        private void pnlQuizSection_SizeChanged(object sender, System.EventArgs e) { }
-        private void pnlRubricSection_SizeChanged(object sender, System.EventArgs e) { }
-        private void pnlFilesSection_SizeChanged(object sender, System.EventArgs e) { }
+        private void pnlRubricSection_SizeChanged(object sender, System.EventArgs e)
+        {
+            if (chkRubric?.Checked == true)
+                ApplyRubricLayout();
+        }
 
         private void pnlScroll_SizeChanged(object sender, System.EventArgs e)
         {
-            if (this.pnlScroll == null || this.stackPanel == null) return;
-            int w = System.Math.Max(600, this.pnlScroll.ClientSize.Width - 44);
-            foreach (System.Windows.Forms.Control c in this.stackPanel.Controls)
+            if (pnlScroll == null || stackPanel == null) return;
+            int w = Math.Max(700, pnlScroll.ClientSize.Width - 44);
+            foreach (Control c in stackPanel.Controls)
             {
                 c.Width = w;
-                if (c is System.Windows.Forms.Panel p)
-                {
-                    foreach (System.Windows.Forms.Control inner in p.Controls)
-                    {
-                        if (inner is System.Windows.Forms.TextBox tb &&
-                            (tb.Name == "txtTitle" || tb.Name == "txtDescription"))
+                if (c is Panel p)
+                    foreach (Control inner in p.Controls)
+                        if (inner is TextBox tb && (tb.Name == "txtTitle" || tb.Name == "txtDescription"))
                             tb.Width = w - 36;
-                    }
-                }
             }
+            if (chkRubric?.Checked == true)
+                ApplyRubricLayout();
         }
 
         private static void SetupSectionLabel(System.Windows.Forms.Label lbl, string text, int x, int y, System.Drawing.Color color)
@@ -627,6 +929,9 @@ namespace PUPAcadPortal
         }
 
         private void btnCancel_Click(object sender, EventArgs e) => OnCancel?.Invoke();
+
+        private void pnlQuizSection_SizeChanged(object sender, System.EventArgs e) { }
+        private void pnlFilesSection_SizeChanged(object sender, System.EventArgs e) { }
 
         private static void SetCombo(ComboBox c, string val)
         { int i = c.FindStringExact(val); c.SelectedIndex = i >= 0 ? i : 0; }

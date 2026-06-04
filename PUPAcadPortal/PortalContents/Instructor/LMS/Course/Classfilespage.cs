@@ -28,7 +28,13 @@ namespace PUPAcadPortal
             _course = course;
             _modules = SeedModules();
             Build();
-            RenderModules();
+
+            // Defer initial render until the control is fully laid out so that
+            // _pnlScroll.ClientSize.Width returns the real value (not 0).
+            this.Load += (s, e) => RenderModules();
+
+            // Re-render when the scroll panel resizes so cards always fill the width.
+            _pnlScroll.ClientSizeChanged += (s, e) => ResizeModuleCards();
         }
 
         // ── seed ─────────────────────────────────────────────────────────────
@@ -182,11 +188,61 @@ namespace PUPAcadPortal
                 _flpModules.Controls.Add(BuildModuleCard(mod));
 
             _flpModules.ResumeLayout();
+
+            // Apply correct widths immediately after building
+            ResizeModuleCards();
+        }
+
+        // ── resize all cards to match the current scroll panel width ─────────
+        private void ResizeModuleCards()
+        {
+            int w = Math.Max(700, _pnlScroll.ClientSize.Width - 48);
+            foreach (Control ctrl in _flpModules.Controls)
+            {
+                if (!(ctrl is Panel card) || card.Tag is not CourseModule mod) continue;
+
+                card.Width = w;
+
+                // Resize inner controls that depend on card width
+                foreach (Control c in card.Controls)
+                {
+                    if (c is Panel hdr && hdr.Dock == DockStyle.Top)
+                    {
+                        // Update title, description and file-count label widths inside header
+                        foreach (Control h in hdr.Controls)
+                        {
+                            if (h is Label lbl)
+                            {
+                                if (lbl.Text == mod.Title)
+                                    lbl.Width = w - 220;
+                                else if (lbl.Text == mod.Description)
+                                    lbl.Width = w - 220;
+                                else if (lbl.Text.StartsWith("📎"))
+                                    lbl.Left = w - 210;
+                            }
+                            else if (h is Button btnExp)
+                                btnExp.Left = w - 40;
+                        }
+                    }
+                    else if (c is Panel pnlFiles && c.Visible)
+                    {
+                        pnlFiles.Width = w;
+                        foreach (Control fc in pnlFiles.Controls)
+                            fc.Width = w;
+                    }
+                }
+
+                card.Invalidate();
+            }
         }
 
         private Panel BuildModuleCard(CourseModule mod)
         {
-            int w = Math.Max(700, _pnlScroll.ClientSize.Width - 48);
+            // Use the scroll panel's current client width; fall back to 700 if not yet laid out
+            int w = _pnlScroll.ClientSize.Width > 48
+                ? _pnlScroll.ClientSize.Width - 48
+                : 700;
+            w = Math.Max(700, w);
             bool expanded = mod.IsExpanded;
 
             var card = new Panel
@@ -457,7 +513,7 @@ namespace PUPAcadPortal
                     : dlg.ModuleDescription,
                 Files = dlg.InitialFiles,
             });
-            RenderModules();
+            RenderModules();   // RenderModules now calls ResizeModuleCards internally
         }
 
         private void RebuildCard(Panel card, CourseModule mod)
