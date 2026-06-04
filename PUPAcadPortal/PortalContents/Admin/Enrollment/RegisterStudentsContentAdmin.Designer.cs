@@ -31,7 +31,7 @@
             pnlRegisterStudentContent = new Panel();
             pnlSpaceProviderRS = new Panel();
             pnlStudentRegistrationContainer = new Panel();
-            button1 = new Button();
+            btnBulkRegister = new Button();
             label1 = new Label();
             txtRSStudentID = new MaskedTextBox();
             btnStudentClearForm = new Button();
@@ -100,7 +100,7 @@
             pnlStudentRegistrationContainer.AutoScroll = true;
             pnlStudentRegistrationContainer.BackColor = Color.White;
             pnlStudentRegistrationContainer.BorderStyle = BorderStyle.FixedSingle;
-            pnlStudentRegistrationContainer.Controls.Add(button1);
+            pnlStudentRegistrationContainer.Controls.Add(btnBulkRegister);
             pnlStudentRegistrationContainer.Controls.Add(label1);
             pnlStudentRegistrationContainer.Controls.Add(txtRSStudentID);
             pnlStudentRegistrationContainer.Controls.Add(btnStudentClearForm);
@@ -136,25 +136,25 @@
             pnlStudentRegistrationContainer.Size = new Size(959, 990);
             pnlStudentRegistrationContainer.TabIndex = 0;
             // 
-            // button1
+            // btnBulkRegister
             // 
-            button1.BackColor = Color.Maroon;
-            button1.Cursor = Cursors.Hand;
-            button1.FlatAppearance.BorderColor = Color.Maroon;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.ForeColor = Color.White;
-            button1.Image = Properties.Resources.student_2_161;
-            button1.Location = new Point(674, 18);
-            button1.Name = "button1";
-            button1.Size = new Size(239, 37);
-            button1.TabIndex = 60;
-            button1.TabStop = false;
-            button1.Text = "Bulk Student Registration";
-            button1.TextAlign = ContentAlignment.MiddleRight;
-            button1.TextImageRelation = TextImageRelation.ImageBeforeText;
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
+            btnBulkRegister.BackColor = Color.Maroon;
+            btnBulkRegister.Cursor = Cursors.Hand;
+            btnBulkRegister.FlatAppearance.BorderColor = Color.Maroon;
+            btnBulkRegister.FlatStyle = FlatStyle.Flat;
+            btnBulkRegister.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnBulkRegister.ForeColor = Color.White;
+            btnBulkRegister.Image = Properties.Resources.student_2_161;
+            btnBulkRegister.Location = new Point(674, 18);
+            btnBulkRegister.Name = "btnBulkRegister";
+            btnBulkRegister.Size = new Size(239, 37);
+            btnBulkRegister.TabIndex = 60;
+            btnBulkRegister.TabStop = false;
+            btnBulkRegister.Text = "Bulk Student Registration";
+            btnBulkRegister.TextAlign = ContentAlignment.MiddleRight;
+            btnBulkRegister.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnBulkRegister.UseVisualStyleBackColor = false;
+            btnBulkRegister.Click += btnBulkRegister_Click;
             // 
             // label1
             // 
@@ -246,6 +246,7 @@
             cmbRSStudentProgram.Name = "cmbRSStudentProgram";
             cmbRSStudentProgram.Size = new Size(328, 29);
             cmbRSStudentProgram.TabIndex = 50;
+            cmbRSStudentProgram.Tag = "ignore";
             cmbRSStudentProgram.Text = "BS Information Technology";
             // 
             // cmbRSYearLevel
@@ -460,6 +461,7 @@
             txtRSStudentMiddleName.PlaceholderText = " Enter middle name";
             txtRSStudentMiddleName.Size = new Size(396, 29);
             txtRSStudentMiddleName.TabIndex = 1;
+            txtRSStudentMiddleName.Tag = "optional";
             // 
             // label33
             // 
@@ -579,6 +581,6 @@
         private PictureBox pictureBox5;
         private MaskedTextBox txtRSStudentID;
         private Label label1;
-        private Button button1;
+        private Button btnBulkRegister;
     }
 }

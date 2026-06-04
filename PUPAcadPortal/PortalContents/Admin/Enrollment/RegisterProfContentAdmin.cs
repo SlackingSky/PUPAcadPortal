@@ -60,9 +60,9 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             yOffset += 25;
 
             // Professor ID
-            Label lblProfID = new Label()
+            Label lblEmployeeId = new Label()
             {
-                Text = "Professor ID:*",
+                Text = "Employee ID:*",
                 Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold),
                 Size = new Size(labelWidth, 30),
                 Location = new Point(leftMargin, yOffset)
@@ -75,7 +75,7 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
                 Location = new Point(rightColumnX, yOffset),
                 PlaceholderText = "e.g., PROF-2024-001"
             };
-            pnlProfRegistrationContainer.Controls.Add(lblProfID);
+            pnlProfRegistrationContainer.Controls.Add(lblEmployeeId);
             pnlProfRegistrationContainer.Controls.Add(txtProfID);
             yOffset += 45;
 
