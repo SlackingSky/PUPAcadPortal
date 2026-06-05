@@ -271,7 +271,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
                 {
                     MessageBox.Show($"An error occurred:\n{ex.Message}", "System Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 });
-                
+
             }
             finally
             {
@@ -531,6 +531,36 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
 
             Enrollment_UpdateTotalUnits();
             CheckGlobalEnrollmentStatus();
+        }
+
+        private void btnDlOOWaiver_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                byte[] pdfBytes = Properties.Resources.OptOutWaiver;
+
+                if (pdfBytes == null || pdfBytes.Length == 0)
+                {
+                    MessageBox.Show("The waiver form could not be found in the system.", "File Missing", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                string tempFolder = System.IO.Path.GetTempPath();
+
+                string tempFilePath = System.IO.Path.Combine(tempFolder, "Opt-Out Waiver and Voluntary Contribution Form with Guidelines.pdf");
+
+                System.IO.File.WriteAllBytes(tempFilePath, pdfBytes);
+
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = tempFilePath,
+                    UseShellExecute = true
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Unable to open the document:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

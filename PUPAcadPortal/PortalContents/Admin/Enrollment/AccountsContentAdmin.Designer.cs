@@ -48,6 +48,7 @@
             label66 = new Label();
             label67 = new Label();
             pictureBox10 = new PictureBox();
+            dataGridView1 = new DataGridView();
             pnlAccountingRecordsContent.SuspendLayout();
             pnlARResultContainer.SuspendLayout();
             pnlARUnpaidAmount.SuspendLayout();
@@ -57,6 +58,7 @@
             pnlARTotalAmount.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox11).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox10).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // pnlAccountingRecordsContent
@@ -79,13 +81,15 @@
             // pnlARResultContainer
             // 
             pnlARResultContainer.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            pnlARResultContainer.AutoScroll = true;
             pnlARResultContainer.BackColor = Color.White;
+            pnlARResultContainer.Controls.Add(dataGridView1);
             pnlARResultContainer.Controls.Add(btnARSearch);
             pnlARResultContainer.Controls.Add(txtARSearchBar);
             pnlARResultContainer.Location = new Point(32, 250);
             pnlARResultContainer.Margin = new Padding(3, 2, 3, 2);
             pnlARResultContainer.Name = "pnlARResultContainer";
-            pnlARResultContainer.Size = new Size(1177, 292);
+            pnlARResultContainer.Size = new Size(1177, 444);
             pnlARResultContainer.TabIndex = 21;
             // 
             // btnARSearch
@@ -95,7 +99,7 @@
             btnARSearch.FlatStyle = FlatStyle.Flat;
             btnARSearch.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnARSearch.ForeColor = Color.White;
-            btnARSearch.Location = new Point(1014, 17);
+            btnARSearch.Location = new Point(1018, 17);
             btnARSearch.Margin = new Padding(3, 2, 3, 2);
             btnARSearch.Name = "btnARSearch";
             btnARSearch.Size = new Size(144, 32);
@@ -107,7 +111,7 @@
             // 
             txtARSearchBar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtARSearchBar.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtARSearchBar.Location = new Point(6, 18);
+            txtARSearchBar.Location = new Point(12, 18);
             txtARSearchBar.Margin = new Padding(3, 2, 3, 2);
             txtARSearchBar.Name = "txtARSearchBar";
             txtARSearchBar.PlaceholderText = "Search by student name, ID, or transaction type...";
@@ -299,12 +303,20 @@
             pictureBox10.TabIndex = 15;
             pictureBox10.TabStop = false;
             // 
-            // AdminAccountsContent
+            // dataGridView1
+            // 
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(14, 60);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.Size = new Size(1146, 376);
+            dataGridView1.TabIndex = 2;
+            // 
+            // AccountsContentAdmin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(pnlAccountingRecordsContent);
-            Name = "AdminAccountsContent";
+            Name = "AccountsContentAdmin";
             Size = new Size(1254, 719);
             Resize += AdminAccountsContent_Resize;
             pnlAccountingRecordsContent.ResumeLayout(false);
@@ -321,6 +333,7 @@
             pnlARTotalAmount.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox11).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox10).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
 
@@ -345,5 +358,6 @@
         private Label label66;
         private Label label67;
         private PictureBox pictureBox10;
+        private DataGridView dataGridView1;
     }
 }
