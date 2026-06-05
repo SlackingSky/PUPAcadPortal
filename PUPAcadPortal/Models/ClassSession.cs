@@ -19,5 +19,7 @@ public partial class ClassSession
 
     public virtual ICollection<AttendanceRecord> AttendanceRecords { get; set; } = new List<AttendanceRecord>();
 
+    public virtual ICollection<QrSession> QrSessions { get; set; } = new List<QrSession>();
+
     public virtual SubjectOffering SubjectOffering { get; set; } = null!;
 }
