@@ -5,10 +5,10 @@ using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using PUPAcadPortal.Data; // Ensure this points to where UserSession lives
+using PUPAcadPortal.Data;
 using PUPAcadPortal.Models;
 using PUPAcadPortal.Services;
-using PUPAcadPortal.Utils; // Ensure this points to where GlobalSession lives
+using PUPAcadPortal.Utils;
 
 namespace PUPAcadPortal.PortalContents.Student.Enrollment
 {
@@ -43,18 +43,14 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
 
         private void dgvEnrollment_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            // Only run this if we are in the checkbox column
             if (e.RowIndex >= 0 && e.ColumnIndex == dgvEnrollment.Columns["colSelect"].Index)
             {
-                // 1. Recalculate Select All status based on the now-updated data
                 _isAllSelected = _liveSubjects
                     .Where(s => s.IsEligible && s.Status == "Pending")
                     .All(s => s.IsSelected);
 
-                // 2. Force the header to redraw its checkbox
                 dgvEnrollment.InvalidateCell(dgvEnrollment.Columns["colSelect"].Index, -1);
 
-                // 3. Update units
                 Enrollment_UpdateTotalUnits();
             }
         }
@@ -76,26 +72,20 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
 
         private async Task Enrollment_InitializeAsync()
         {
-            // ─────────────────────────────────────────────────────────────────
-            // 1. DYNAMIC SESSION BOOT SEQUENCE
-            // ─────────────────────────────────────────────────────────────────
             try
             {
-                // Guard Clause: Ensure a student is actually the one logged in
                 if (!UserSession.StudentID.HasValue)
                 {
                     MessageBox.Show("Security Error: Only active students can access the enrollment module.", "Unauthorized", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                // Extract the exact ID from your UserSession
                 _currentStudentId = UserSession.StudentID.Value;
 
-                // Fetch their current academic standing (Program & Year Level)
                 var studentProfile = await _enrollmentService.GetStudentProfileAsync(_currentStudentId);
 
-                _currentProgram = studentProfile.Program;     // e.g., "BSIT"
-                _currentYearLevel = studentProfile.YearLevel; // e.g., 2
+                _currentProgram = studentProfile.Program;
+                _currentYearLevel = studentProfile.YearLevel;
             }
             catch (Exception ex)
             {
@@ -105,13 +95,9 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
 
             pnlRA10391.Visible = await _enrollmentService.IsStudentIskolar(_currentStudentId);
 
-            // ─────────────────────────────────────────────────────────────────
-            // 2. GRID UI SETUP
-            // ─────────────────────────────────────────────────────────────────
             dgvEnrollment.Visible = true;
             pnlContainerEnrollmentDGV.Visible = true;
 
-            // Configure Grid Columns
             dgvEnrollment.AutoGenerateColumns = false;
             if (dgvEnrollment.Columns.Contains("colSelect")) dgvEnrollment.Columns["colSelect"].DataPropertyName = "IsSelected";
             if (dgvEnrollment.Columns.Contains("colCode")) dgvEnrollment.Columns["colCode"].DataPropertyName = "Code";
@@ -120,10 +106,6 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             if (dgvEnrollment.Columns.Contains("colSchedule")) dgvEnrollment.Columns["colSchedule"].DataPropertyName = "Schedule";
             if (dgvEnrollment.Columns.Contains("colStatus")) dgvEnrollment.Columns["colStatus"].DataPropertyName = "Status";
 
-            // ─────────────────────────────────────────────────────────────────
-            // 3. PREREQUISITE ENGINE EXECUTION
-            // ─────────────────────────────────────────────────────────────────
-            // Fire the engine using the dynamic global period
             _liveSubjects = await _enrollmentService.GetAvailableSubjectsAsync(
                 _currentStudentId,
                 GlobalSession.ActiveAcademicPeriod,
@@ -131,14 +113,9 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
                 _currentYearLevel,
                 GlobalSession.ActiveSemesterIndex);
 
-            // ─────────────────────────────────────────────────────────────────
-            // 4. DASHBOARD POPULATION (Units & Status)
-            // ─────────────────────────────────────────────────────────────────
-            // Calculate Maximum Units
             int maxUnits = _liveSubjects.Sum(s => s.Units);
             lblMaximumUnits.Text = $"{maxUnits} Units";
 
-            // Determine Scholastic Status
             bool isIrregular = _liveSubjects.Any(s => !s.IsEligible);
 
             if (isIrregular)
@@ -153,9 +130,6 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             }
 
 
-            // ─────────────────────────────────────────────────────────────────
-            // 5. BIND DATA & FINALIZE RENDER
-            // ─────────────────────────────────────────────────────────────────
             dgvEnrollment.Columns["colSchedule"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgvEnrollment.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dgvEnrollment.DataSource = new BindingList<EnrollmentData>(_liveSubjects);
@@ -169,7 +143,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
 
         private void CheckGlobalEnrollmentStatus()
         {
-            bool hasEnrolledSubjects = _liveSubjects.Any(s => s.Status == "Enrolled");
+            bool hasEnrolledSubjects = _liveSubjects.Any(s => s.Status == "Officially Enrolled");
             bool hasPendingEligibleSubjects = _liveSubjects.Any(s => s.IsEligible && s.Status == "Pending");
             bool isFullyEnrolled = hasEnrolledSubjects && !hasPendingEligibleSubjects;
 
@@ -194,7 +168,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             int total = 0;
             foreach (var subject in _liveSubjects)
             {
-                if (subject.IsSelected && (subject.Status == "Pending" || subject.Status == "Enrolled"))
+                if (subject.IsSelected && (subject.Status == "Pending" || subject.Status == "Officially Enrolled"))
                 {
                     total += subject.Units;
                 }
@@ -216,7 +190,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
                 }
 
                 int selectedUnits = subjectsToEnroll.Sum(s => s.Units);
-                int alreadyEnrolledUnits = _liveSubjects.Where(s => s.Status == "Enrolled").Sum(s => s.Units);
+                int alreadyEnrolledUnits = _liveSubjects.Where(s => s.Status == "Officially Enrolled").Sum(s => s.Units);
                 int totalAttemptedUnits = selectedUnits + alreadyEnrolledUnits;
                 int requiredRegularUnits = _liveSubjects.Sum(s => s.Units);
 
@@ -286,7 +260,6 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
 
         private void dgvEnrollment_CurrentCellDirtyStateChanged(object sender, EventArgs e)
         {
-            // This forces the grid to "Commit" the change immediately when a checkbox is toggled
             if (dgvEnrollment.IsCurrentCellDirty)
             {
                 dgvEnrollment.CommitEdit(DataGridViewDataErrorContexts.Commit);
@@ -295,10 +268,8 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
 
         private void dgvEnrollment_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            // 1. Safety Guard: Check if DataGridView itself is null
             if (dgvEnrollment == null) return;
 
-            // 2. Handle Header Checkbox
             var colSelect = dgvEnrollment.Columns["colSelect"];
             if (e.RowIndex == -1 && colSelect != null && e.ColumnIndex == colSelect.Index)
             {
@@ -318,41 +289,33 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
                 var rowData = dgvEnrollment.Rows[e.RowIndex].DataBoundItem as EnrollmentData;
                 if (rowData != null)
                 {
-                    // Define what makes a subject "Not Enrollable"
                     bool isNotEnrollable = !rowData.IsEligible ||
-                                           rowData.Status == "Enrolled" ||
+                                           rowData.Status == "Officially Enrolled" ||
                                            rowData.Status == "Pending Payment";
 
                     if (isNotEnrollable)
                     {
-                        // Tell the grid to paint the background and borders...
-                        // BUT explicitly skip the 'ContentForeground' (which is the actual checkbox graphic)
                         e.Paint(e.CellBounds, DataGridViewPaintParts.Background |
                                               DataGridViewPaintParts.Border |
                                               DataGridViewPaintParts.SelectionBackground);
 
-                        // Tell the grid we are done drawing this cell so it doesn't draw the checkbox over it
                         e.Handled = true;
                         return;
                     }
                 }
             }
 
-            // 3. Handle Data Rows
             var colStatus = dgvEnrollment.Columns["colStatus"];
             if (e.RowIndex >= 0 && colStatus != null && e.ColumnIndex == colStatus.Index)
             {
-                // Check if Row exists and has DataBoundItem
                 if (e.RowIndex < dgvEnrollment.Rows.Count)
                 {
                     var row = dgvEnrollment.Rows[e.RowIndex];
                     var rowData = row.DataBoundItem as EnrollmentData;
 
-                    // If no data, exit early
                     if (rowData == null) return;
 
-                    // Apply background color
-                    if (rowData.Status == "Enrolled")
+                    if (rowData.Status == "Officially Enrolled")
                     {
                         e.CellStyle.BackColor = Color.SeaGreen;
                     }
@@ -364,7 +327,6 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
                     {
                         e.CellStyle.BackColor = Color.LightCoral;
 
-                        // Set strikeout font safely
                         if (row.DefaultCellStyle.Font == null || row.DefaultCellStyle.Font.Style != FontStyle.Strikeout)
                         {
                             row.DefaultCellStyle.Font = new Font(dgvEnrollment.Font, FontStyle.Strikeout);
@@ -375,8 +337,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
                         e.CellStyle.BackColor = Color.Gold;
                     }
 
-                    // Set text color if needed
-                    e.CellStyle.ForeColor = (rowData.Status == "Enrolled" || rowData.Status == "Pending Payment" || !rowData.IsEligible)
+                    e.CellStyle.ForeColor = (rowData.Status == "Officially Enrolled" || rowData.Status == "Pending Payment" || !rowData.IsEligible)
                                              ? Color.White : Color.Black;
                 }
             }
@@ -384,13 +345,11 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
 
         private void dgvEnrollment_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            // 1. Force the grid to save the checkbox state immediately
             dgvEnrollment.CommitEdit(DataGridViewDataErrorContexts.Commit);
 
             var colSelect = dgvEnrollment.Columns["colSelect"];
             var colAction = dgvEnrollment.Columns["colAction"];
 
-            // HEADER CLICK (Select All)
             if (e.RowIndex == -1 && colSelect != null && e.ColumnIndex == colSelect.Index)
             {
                 _isAllSelected = !_isAllSelected;
@@ -404,38 +363,34 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
                 return;
             }
 
-            // ROW CLICK (Single Checkbox)
             if (e.RowIndex >= 0 && colSelect != null && e.ColumnIndex == colSelect.Index)
             {
                 var rowData = dgvEnrollment.Rows[e.RowIndex].DataBoundItem as EnrollmentData;
                 if (rowData != null)
                 {
-                    if (rowData.Status == "Enrolled") return;
+                    if (rowData.Status == "Officially Enrolled") return;
 
                     if (!rowData.IsEligible)
                     {
-                        // Force it back to unchecked visually
                         rowData.IsSelected = false;
                         dgvEnrollment.InvalidateRow(e.RowIndex);
                         MessageBox.Show(rowData.PrerequisiteMessage, "Prerequisite Locked", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
 
-                    // Sync the header checkbox
                     _isAllSelected = _liveSubjects
                         .Where(s => s.IsEligible && s.Status == "Pending")
-                        .Any() && // Ensure there is at least one row to check
+                        .Any() &&
                         _liveSubjects
                         .Where(s => s.IsEligible && s.Status == "Pending")
-                        .All(s => s.IsSelected); // All must be true
+                        .All(s => s.IsSelected);
 
-                    dgvEnrollment.InvalidateColumn(e.ColumnIndex); // Update the header checkbox
+                    dgvEnrollment.InvalidateColumn(e.ColumnIndex);
                     Enrollment_UpdateTotalUnits();
                 }
                 return;
             }
 
-            // ACTION CLICK
             if (e.RowIndex >= 0 && colAction != null && e.ColumnIndex == colAction.Index)
             {
                 var rowData = dgvEnrollment.Rows[e.RowIndex].DataBoundItem as EnrollmentData;
@@ -517,7 +472,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             var data = dgvEnrollment.CurrentRow.DataBoundItem as EnrollmentData;
             if (data == null) return;
 
-            if (data.Status == "Enrolled")
+            if (data.Status == "Officially Enrolled")
             {
                 MessageBox.Show("You cannot drop an officially enrolled subject here. Please visit the Registrar.", "Action Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;

@@ -241,7 +241,7 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
 
         private void btnStudentClearForm_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to clear this form?", "Confirm Clear", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+            if (MessageBox.Show("Are you sure you want to clear this form?", "Confirm Clear", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
             {
                 return;
             }

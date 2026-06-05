@@ -508,7 +508,7 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             };
             btnClear.Click += (s, e) =>
             {
-                if (MessageBox.Show("Are you sure you want to clear this form?", "Confirm Clear", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+                if (MessageBox.Show("Are you sure you want to clear this form?", "Confirm Clear", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 {
                     return;
                 }
