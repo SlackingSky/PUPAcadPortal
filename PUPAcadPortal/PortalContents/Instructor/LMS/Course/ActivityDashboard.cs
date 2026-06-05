@@ -1,4 +1,5 @@
 ﻿using PUPAcadPortal.PortalContents.Instructor.LMS.Course;
+using PUPAcadPortal.Services;   
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -9,12 +10,42 @@ namespace PUPAcadPortal
     public partial class ActivityDashboard : UserControl
     {
         public event Action<CourseActivity> OnOpenCourse;
-        private List<CourseActivity> _courses = new List<CourseActivity>();
-        private string _filterStatus = "All";
-        private string _searchTerm = "";
 
+        private readonly IActivityDbService _svc;
+        private readonly IModuleDbService _moduleSvc;
+        private readonly int _professorId;
+
+        private List<CourseActivity> _courses = new();
+        private string _searchTerm = "";
+        private System.Windows.Forms.Timer _searchTimer;
+
+        // ── DB-backed constructor ──────────────────────────────
+        public ActivityDashboard(int professorId, IActivityDbService svc, IModuleDbService moduleSvc)
+        {
+            _professorId = professorId;
+            _svc = svc;
+            _moduleSvc = moduleSvc ?? new NullModuleDbService();
+
+            InitializeComponent();
+            LoadCoursesFromDb();
+            SetupSearchDebounce();
+            RefreshDashboard();
+
+            flpCourseCards.SizeChanged += (s, e) => ResizeCards();
+            this.Load += (s, e) => ResizeCards();
+        }
+
+        // ── Backward-compatible 2-arg constructor ──────────────
+        public ActivityDashboard(int professorId, IActivityDbService svc)
+            : this(professorId, svc, new NullModuleDbService()) { }
+
+        // ── Backward-compatible no-arg constructor (design-time) ─
         public ActivityDashboard()
         {
+            _professorId = 0;
+            _svc = null;
+            _moduleSvc = new NullModuleDbService();
+
             InitializeComponent();
             LoadSampleData();
             SetupSearchDebounce();
@@ -24,15 +55,30 @@ namespace PUPAcadPortal
             this.Load += (s, e) => ResizeCards();
         }
 
+        // ── Data loading ───────────────────────────────────────
+        private void LoadCoursesFromDb()
+        {
+            try
+            {
+                _courses = _svc!.GetCourseActivitiesForProfessor(_professorId);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Failed to load courses:\n{ex.Message}",
+                    "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _courses = new List<CourseActivity>();
+            }
+        }
+
         private void LoadSampleData()
         {
             _courses = new List<CourseActivity>
             {
                 new CourseActivity
                 {
-                    CourseId = 1,
-                    CourseName = "Introduction to Programming 1",
-                    CourseCode = "ITP 101",
+                    CourseId = 1, SubjectOfferingId = "SO-DEMO-001",
+                    CourseName = "Introduction to Programming 1", CourseCode = "ITP 101",
                     InstructorName = "Prof. Juan dela Cruz",
                     TotalAssignments = 5, TotalQuizzes = 3,
                     PendingSubmissions = 2, CheckedSubmissions = 6,
@@ -42,9 +88,8 @@ namespace PUPAcadPortal
                 },
                 new CourseActivity
                 {
-                    CourseId = 2,
-                    CourseName = "Principles of Accounting",
-                    CourseCode = "ACC 201",
+                    CourseId = 2, SubjectOfferingId = "SO-DEMO-002",
+                    CourseName = "Principles of Accounting", CourseCode = "ACC 201",
                     InstructorName = "Prof. Maria Santos",
                     TotalAssignments = 3, TotalQuizzes = 2,
                     PendingSubmissions = 1, CheckedSubmissions = 4,
@@ -54,9 +99,8 @@ namespace PUPAcadPortal
                 },
                 new CourseActivity
                 {
-                    CourseId = 3,
-                    CourseName = "Human Computer Interactions",
-                    CourseCode = "HCI 301",
+                    CourseId = 3, SubjectOfferingId = "SO-DEMO-003",
+                    CourseName = "Human Computer Interactions", CourseCode = "HCI 301",
                     InstructorName = "Prof. Ana Reyes",
                     TotalAssignments = 4, TotalQuizzes = 1,
                     PendingSubmissions = 0, CheckedSubmissions = 5,
@@ -66,9 +110,8 @@ namespace PUPAcadPortal
                 },
                 new CourseActivity
                 {
-                    CourseId = 4,
-                    CourseName = "Programming and Technologies 1",
-                    CourseCode = "PT 101",
+                    CourseId = 4, SubjectOfferingId = "SO-DEMO-004",
+                    CourseName = "Programming and Technologies 1", CourseCode = "PT 101",
                     InstructorName = "Prof. Carlos Bautista",
                     TotalAssignments = 6, TotalQuizzes = 4,
                     PendingSubmissions = 3, CheckedSubmissions = 7,
@@ -84,14 +127,13 @@ namespace PUPAcadPortal
             var rng = new Random(courseId * 7);
             var types = new[] { ActivityType.Assignment, ActivityType.Quiz, ActivityType.Essay, ActivityType.FileUpload };
             var list = new List<ActivityItem>();
-            string[] titles = {
-                "Lab Exercise 1", "Midterm Quiz", "Written Report", "Final Project", "Weekly Assignment"
-            };
+            string[] titles = { "Lab Exercise 1", "Midterm Quiz", "Written Report", "Final Project", "Weekly Assignment" };
             for (int i = 0; i < titles.Length; i++)
             {
                 list.Add(new ActivityItem
                 {
                     Id = courseId * 100 + i + 1,
+                    ActivityId = $"DEMO-{courseId}-{i}",
                     CourseId = courseId,
                     Title = titles[i],
                     Type = types[i % types.Length],
@@ -101,21 +143,17 @@ namespace PUPAcadPortal
                     SubmittedCount = rng.Next(15, 35),
                     LateCount = rng.Next(0, 5),
                     CheckedCount = rng.Next(5, 15),
-                    Description = "Sample activity description for demonstration."
+                    Description = "Sample activity description."
                 });
             }
             return list;
         }
 
-        private System.Windows.Forms.Timer _searchTimer;
+        // ── Search + filter ────────────────────────────────────
         private void SetupSearchDebounce()
         {
             _searchTimer = new System.Windows.Forms.Timer { Interval = 200 };
-            _searchTimer.Tick += (s, e) =>
-            {
-                _searchTimer.Stop();
-                RefreshDashboard();
-            };
+            _searchTimer.Tick += (s, e) => { _searchTimer.Stop(); RefreshDashboard(); };
         }
 
         private void RefreshDashboard()
@@ -124,13 +162,9 @@ namespace PUPAcadPortal
             flpCourseCards.Controls.Clear();
 
             var filtered = _courses.FindAll(c =>
-            {
-                bool matchFilter = _filterStatus == "All" || c.Status == _filterStatus;
-                bool matchSearch = string.IsNullOrEmpty(_searchTerm)
-                    || c.CourseName.IndexOf(_searchTerm, StringComparison.OrdinalIgnoreCase) >= 0
-                    || c.CourseCode.IndexOf(_searchTerm, StringComparison.OrdinalIgnoreCase) >= 0;
-                return matchFilter && matchSearch;
-            });
+                string.IsNullOrEmpty(_searchTerm)
+                || c.CourseName.IndexOf(_searchTerm, StringComparison.OrdinalIgnoreCase) >= 0
+                || c.CourseCode.IndexOf(_searchTerm, StringComparison.OrdinalIgnoreCase) >= 0);
 
             foreach (var course in filtered)
                 flpCourseCards.Controls.Add(CreateCourseCard(course));
@@ -140,18 +174,19 @@ namespace PUPAcadPortal
             ResizeCards();
         }
 
+        // ── Card builder (unchanged) ───────────────────────────
         private void ResizeCards()
         {
             if (flpCourseCards.Controls.Count == 0) return;
             const int columns = 3, margin = 10;
             int available = flpCourseCards.ClientSize.Width
-                            - flpCourseCards.Padding.Horizontal
-                            - (margin * 2 * columns);
+                          - flpCourseCards.Padding.Horizontal
+                          - (margin * 2 * columns);
             int cardW = Math.Max(320, available / columns);
 
             foreach (Control ctrl in flpCourseCards.Controls)
             {
-                if (!(ctrl is Panel card)) continue;
+                if (ctrl is not Panel card) continue;
                 card.Width = cardW;
                 foreach (Control c in card.Controls)
                 {
@@ -167,17 +202,12 @@ namespace PUPAcadPortal
         private static void UpdateHeaderChildren(Control header, int cardW)
         {
             foreach (Control h in header.Controls)
-            {
                 if (h.Tag?.ToString() == "COURSE") h.Width = cardW - 24;
-            }
         }
 
         private Panel CreateCourseCard(CourseActivity course)
         {
-            const int cardW = 430;
-            const int cardH = 175;
-            const int statsY = 74;
-            const int bottomY = 138;
+            const int cardW = 430, cardH = 175, statsY = 74, bottomY = 138;
 
             var card = new Panel
             {
@@ -200,7 +230,6 @@ namespace PUPAcadPortal
                 BackColor = Color.FromArgb(128, 0, 0),
                 Tag = "HEADER"
             };
-
             var lblName = new Label
             {
                 Text = course.CourseName,
@@ -221,7 +250,6 @@ namespace PUPAcadPortal
                 Width = 260,
                 Height = 18
             };
-
             hdr.Controls.AddRange(new Control[] { lblName, lblCode });
             card.Controls.Add(hdr);
 
@@ -238,47 +266,38 @@ namespace PUPAcadPortal
                 e.Graphics.DrawRectangle(pen, 0, 0, pnlStats.Width - 1, pnlStats.Height - 1);
             };
 
-            string[] statVals = { course.TotalAssignments.ToString(), course.TotalQuizzes.ToString(),
-                                    course.PendingSubmissions.ToString(), course.CheckedSubmissions.ToString() };
+            string[] statVals = { course.TotalAssignments.ToString(), course.TotalQuizzes.ToString(), course.PendingSubmissions.ToString(), course.CheckedSubmissions.ToString() };
             string[] statLbls = { "Assign.", "Quizzes", "Pending", "Checked" };
-            Color[] statColors = { Color.FromArgb(63, 81, 181), Color.FromArgb(0, 150, 136),
-                                    Color.FromArgb(211, 84, 0),  Color.FromArgb(46, 160, 67) };
+            Color[] statColors = { Color.FromArgb(63, 81, 181), Color.FromArgb(0, 150, 136), Color.FromArgb(211, 84, 0), Color.FromArgb(46, 160, 67) };
+
             for (int i = 0; i < 4; i++)
             {
-                int colW = (cardW - 24) / 4;
-                int x = i * colW;
-                pnlStats.Controls.Add(new Label
-                {
-                    Text = statVals[i],
-                    Font = new Font("Segoe UI", 15F, FontStyle.Bold),
-                    ForeColor = statColors[i],
-                    Location = new Point(x, 2),
-                    Width = colW,
-                    Height = 28,
-                    TextAlign = ContentAlignment.MiddleCenter
-                });
-                pnlStats.Controls.Add(new Label
-                {
-                    Text = statLbls[i],
-                    Font = new Font("Segoe UI", 7F),
-                    ForeColor = Color.Gray,
-                    Location = new Point(x, 32),
-                    Width = colW,
-                    Height = 15,
-                    TextAlign = ContentAlignment.MiddleCenter
-                });
+                int colW = (cardW - 24) / 4, x = i * colW;
+                pnlStats.Controls.Add(new Label { Text = statVals[i], Font = new Font("Segoe UI", 15F, FontStyle.Bold), ForeColor = statColors[i], Location = new Point(x, 2), Width = colW, Height = 28, TextAlign = ContentAlignment.MiddleCenter });
+                pnlStats.Controls.Add(new Label { Text = statLbls[i], Font = new Font("Segoe UI", 7F), ForeColor = Color.Gray, Location = new Point(x, 32), Width = colW, Height = 15, TextAlign = ContentAlignment.MiddleCenter });
             }
             card.Controls.Add(pnlStats);
 
-            var lblCount = new Label
+            card.Controls.Add(new Label
             {
                 Text = $"{course.ActivityCount} Activities",
                 Font = new Font("Segoe UI", 7.5F),
                 ForeColor = Color.FromArgb(120, 120, 130),
                 Location = new Point(14, bottomY + 6),
                 AutoSize = true
-            };
-            card.Controls.Add(lblCount);
+            });
+
+            if (!string.IsNullOrEmpty(course.Section))
+                card.Controls.Add(new Label
+                {
+                    Text = course.Section,
+                    Font = new Font("Segoe UI", 7.5F, FontStyle.Bold),
+                    BackColor = Color.FromArgb(240, 230, 255),
+                    ForeColor = Color.FromArgb(80, 0, 120),
+                    Location = new Point(110, bottomY + 6),
+                    Size = new Size(80, 18),
+                    TextAlign = ContentAlignment.MiddleCenter
+                });
 
             var btnOpen = new buttonRounded
             {
@@ -298,22 +317,22 @@ namespace PUPAcadPortal
             return card;
         }
 
+        // ════════════════════════════════════════════════════
+        //  Navigate into a course — passes BOTH services
+        // ════════════════════════════════════════════════════
         private void OpenCourseView(CourseActivity course)
         {
-            if (OnOpenCourse != null)
-            {
-                OnOpenCourse.Invoke(course);
-                return;
-            }
+            if (OnOpenCourse != null) { OnOpenCourse.Invoke(course); return; }
 
             Control container = this.Parent;
             if (container == null) return;
 
-            // ── Step 1: open ClassFilesPage ──────────────────────────────────
-            var filesPage = new ClassFilesPage(course);
+            // ── Pass _moduleSvc into ClassFilesPage ───────────
+            var filesPage = _moduleSvc != null
+                ? new ClassFilesPage(course, _moduleSvc)
+                : new ClassFilesPage(course);
             filesPage.Dock = DockStyle.Fill;
 
-            // Back from ClassFilesPage → return to ActivityDashboard
             filesPage.OnBack += () =>
             {
                 Control c = filesPage.Parent ?? container;
@@ -323,15 +342,16 @@ namespace PUPAcadPortal
                 this.BringToFront();
             };
 
-            // Activities button on ClassFilesPage → open AssignmentManagement
-            filesPage.OnOpenActivities += (courseActivity) =>
+            filesPage.OnOpenActivities += courseActivity =>
             {
                 Control filesContainer = filesPage.Parent ?? container;
 
-                var mgmt = new AssignmentManagement(courseActivity);
+                // _svc is IActivityDbService — AssignmentManagement only accepts IActivityDbService
+                var mgmt = _svc != null
+                    ? new AssignmentManagement(courseActivity, _svc)
+                    : new AssignmentManagement(courseActivity, new NullActivityDbService());
                 mgmt.Dock = DockStyle.Fill;
 
-                // Back from AssignmentManagement → return to ClassFilesPage
                 mgmt.OnBack += () =>
                 {
                     Control mc = mgmt.Parent ?? filesContainer;
@@ -351,6 +371,7 @@ namespace PUPAcadPortal
             filesPage.BringToFront();
         }
 
+        //  Stats bar 
         private void UpdateSummaryStats()
         {
             int acts = 0, pend = 0, chk = 0;

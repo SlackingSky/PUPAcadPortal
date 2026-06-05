@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using PUPAcadPortal.Models;
 
 namespace PUPAcadPortal
 {
@@ -22,14 +23,30 @@ namespace PUPAcadPortal
         private List<CourseFileItem> _files = new();
         private int _nextQId = 1, _nextRId = 1;
 
-        public ActivityFormPage(CourseActivity course, ActivityItem? editing)
+        // DB-loaded dropdowns (populated when service is available)
+        private List<Models.GradingCategory> _dbCategories = new();
+        private List<Models.Module> _dbModules = new();
+
+        // ── Primary constructor (4-arg, DB-backed) ────────────
+        public ActivityFormPage(
+            CourseActivity course,
+            ActivityItem? editing,
+            List<Models.GradingCategory> categories,
+            List<Models.Module> modules)
         {
             _course = course;
             _editing = editing;
             _isNew = editing == null;
+            _dbCategories = categories ?? new();
+            _dbModules = modules ?? new();
+
             InitializeComponent();
             PopulateForm();
         }
+
+        //  Backward-compatible 3-arg overload 
+        public ActivityFormPage(CourseActivity course, ActivityItem? editing, List<Models.GradingCategory> categories)
+            : this(course, editing, categories, new List<Models.Module>()) { }
 
         private void PopulateForm()
         {

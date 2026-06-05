@@ -7,12 +7,14 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Course
 
     public class ActivityItem
     {
-        public int Id { get; set; }
+        public int Id { get; set; }             
         public int CourseId { get; set; }
+
         public string Title { get; set; } = "";
         public string Description { get; set; } = "";
         public ActivityType Type { get; set; } = ActivityType.Assignment;
         public string TypeString => Type.ToString();
+
         public DateTime Deadline { get; set; } = DateTime.Now.AddDays(7);
         public int Points { get; set; } = 100;
         public bool HasRubric { get; set; } = false;
@@ -31,9 +33,20 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Course
 
         public bool IsOverdue => Deadline < DateTime.Now;
         public int PendingCount => SubmittedCount - CheckedCount;
+        public string ActivityId { get; set; } = string.Empty;
+
+        public string SubjectOfferingId { get; set; } = string.Empty;
+
+        public string? LinkedModuleId { get; set; }
+
+        public int? LinkedCategoryId { get; set; }
+
+        public string LinkedCategoryName { get; set; } = "";
+
+        public string LinkedModuleTitle { get; set; } = "";
     }
 
-    //  Quiz 
+
     public class QuizQuestion
     {
         public int QuestionId { get; set; }
@@ -77,6 +90,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Course
         public bool HasFile { get; set; } = false;
         public string EssayContent { get; set; } = "";
         public Dictionary<int, int> RubricScores { get; set; } = new();
+        public string SubmissionDbId { get; set; } = string.Empty;
     }
 
     public class CourseActivity
@@ -97,5 +111,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS.Course
 
         public List<ActivityItem> Activities { get; set; } = new();
         public List<CourseFileItem> CourseFiles { get; set; } = new();
+        public string SubjectOfferingId { get; set; } = string.Empty;
     }
 }

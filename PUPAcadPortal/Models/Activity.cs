@@ -21,6 +21,10 @@ public partial class Activity
 
     public DateTime Deadline { get; set; }
 
+    public string ActivityType { get; set; } = "Assignment";
+
+    public bool IsPublished { get; set; } = false;
+
     public virtual GradingCategory? Category { get; set; }
 
     public virtual Module? Module { get; set; }

@@ -1,4 +1,10 @@
-﻿using System;
+﻿// ============================================================
+//  Submission.cs  — UPDATED
+//  Added Status (varchar 20) and Remarks (varchar 20)
+//  to match the Submissions table definition exactly.
+// ============================================================
+
+using System;
 using System.Collections.Generic;
 
 namespace PUPAcadPortal.Models;
@@ -16,6 +22,10 @@ public partial class Submission
     public DateTime SubmissionDate { get; set; }
 
     public decimal? Grade { get; set; }
+
+    public string Status { get; set; } = "Submitted";
+
+    public string? Remarks { get; set; }
 
     public virtual Activity Activity { get; set; } = null!;
 

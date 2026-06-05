@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using Microsoft.EntityFrameworkCore;
 using PUPAcadPortal.Models;
+using PUPAcadPortal.Services;
 
 namespace PUPAcadPortal.PortalContents.Instructor.LMS
 {
@@ -16,8 +17,8 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
     {
         // ── Runtime State 
         private List<StudentAttendanceRecord> _allStudents = new();
-        private List<CourseSection>           _courseCatalogue = new();
-        private List<SessionSlot>             _sessionSlots = new();
+        private List<CourseSection> _courseCatalogue = new();
+        private List<SessionSlot> _sessionSlots = new();
 
         // DB-backed session + attendance caches
         // Key: (SubjectOfferingId, SessionDate) → loaded AttendanceRecords
@@ -25,16 +26,16 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         // Tracks the ClassSession.SessionId for the currently displayed session
         private int? _currentSessionId = null;
 
-        private SessionAttendanceControl      _sessionCard = null!;
-        private AttendanceGridControl         _grid        = null!;
-        private Panel?                        _qrOverlay   = null;
-        private QrCodeAttendanceControl?      _qrCard      = null;
-        private System.Windows.Forms.Timer    _searchTimer = null!;
+        private SessionAttendanceControl _sessionCard = null!;
+        private AttendanceGridControl _grid = null!;
+        private Panel? _qrOverlay = null;
+        private QrCodeAttendanceControl? _qrCard = null;
+        private System.Windows.Forms.Timer _searchTimer = null!;
         private string _pendingSearch = "";
 
         // The EF Core DbContext — injected or created fresh each operation
         // Replace "PupAcadPortalContext" with your actual DbContext class name.
-        private PupAcadPortalContext CreateContext() => new PupAcadPortalContext();
+        private AppDbContext CreateContext() => new AppDbContext();
 
         // ─────────────────────────────────────────────────────────────────────────
         public AttendanceContentInst()
@@ -74,12 +75,12 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         private void LayoutSummaryCards()
         {
             const int PAD = 6;
-            const int H   = 104;
-            int totalW   = pnlSummaryRow.ClientSize.Width - PAD * 2;
+            const int H = 104;
+            int totalW = pnlSummaryRow.ClientSize.Width - PAD * 2;
 
-            int sessionW  = (int)(totalW * 0.28);
+            int sessionW = (int)(totalW * 0.28);
             int remaining = totalW - sessionW - PAD * 5;
-            int cardW     = remaining / 5;
+            int cardW = remaining / 5;
 
             int x = PAD;
             int y = (pnlSummaryRow.ClientSize.Height - H) / 2;
@@ -88,20 +89,20 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             void Place(Panel p, int w)
             {
                 p.Location = new Point(x, y);
-                p.Size     = new Size(w, H);
+                p.Size = new Size(w, H);
                 x += w + PAD;
                 if (p == pnlCardSession)
                 {
                     panel21.Location = new Point(4, 22);
-                    panel21.Size     = new Size(w - 8, H - 26);
+                    panel21.Size = new Size(w - 8, H - 26);
                 }
             }
 
-            Place(pnlCardSession,    sessionW);
-            Place(pnlCardPresent,    cardW);
-            Place(pnlCardLate,       cardW);
-            Place(pnlCardAbsent,     cardW);
-            Place(pnlCardExcused,    cardW);
+            Place(pnlCardSession, sessionW);
+            Place(pnlCardPresent, cardW);
+            Place(pnlCardLate, cardW);
+            Place(pnlCardAbsent, cardW);
+            Place(pnlCardExcused, cardW);
             Place(pnlCardLastUpdate, cardW + (totalW - sessionW - cardW * 5 - PAD * 5));
         }
 
@@ -166,8 +167,8 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 _courseCatalogue = offerings.Select(so => new CourseSection
                 {
                     // Store SubjectOfferingId so we can look up ClassSessions later
-                    Code    = so.SubjectOfferingId,
-                    Title   = so.Subject?.SubjectName ?? so.SubjectOfferingId,
+                    Code = so.SubjectOfferingId,
+                    Title = so.Subject?.SubjectName ?? so.SubjectOfferingId,
                     Section = so.Section ?? string.Empty,
                 }).ToList();
             }
@@ -234,9 +235,9 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             int selectedIndex = cmbCourse.SelectedIndex;
             if (selectedIndex < 0 || selectedIndex >= _courseCatalogue.Count) return;
 
-            var course      = _courseCatalogue[selectedIndex];
+            var course = _courseCatalogue[selectedIndex];
             string offeringId = course.Code;           // SubjectOfferingId
-            DateTime date   = dtpDate.Value.Date;
+            DateTime date = dtpDate.Value.Date;
 
             try
             {
@@ -246,7 +247,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 var session = ctx.ClassSessions
                     .FirstOrDefault(cs =>
                         cs.SubjectOfferingId == offeringId &&
-                        cs.SessionDate.Date   == date);
+                        cs.SessionDate.Date == date);
 
                 if (session == null)
                 {
@@ -254,8 +255,8 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                     session = new PUPAcadPortal.Models.ClassSession
                     {
                         SubjectOfferingId = offeringId,
-                        SessionDate       = date,
-                        Topic             = "—",
+                        SessionDate = date,
+                        Topic = "—",
                     };
                     ctx.ClassSessions.Add(session);
                     ctx.SaveChanges();
@@ -286,7 +287,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
                 // 4. Map to the UI model
                 var list = new List<StudentAttendanceRecord>();
-                int row  = 1;
+                int row = 1;
 
                 foreach (var student in enrolledStudents)
                 {
@@ -300,15 +301,15 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                     list.Add(new StudentAttendanceRecord
                     {
                         // Link back to the DB record so we can update it on Save
-                        AttendanceId   = existing?.AttendanceId ?? 0,
-                        StudentId      = student.StudentId,
-                        RowNumber      = row++,
-                        LastName       = student.User?.LastName       ?? string.Empty,
-                        FirstName      = student.User?.FirstName      ?? string.Empty,
-                        MiddleInitial  = student.User?.MiddleName?.Substring(0, 1) ?? string.Empty,
-                        IdNumber       = student.StudentNumber,
-                        Status         = status,
-                        Remarks        = existing?.Remarks ?? string.Empty,
+                        AttendanceId = existing?.AttendanceId ?? 0,
+                        StudentId = student.StudentId,
+                        RowNumber = row++,
+                        LastName = student.User?.LastName ?? string.Empty,
+                        FirstName = student.User?.FirstName ?? string.Empty,
+                        MiddleInitial = student.User?.MiddleName?.Substring(0, 1) ?? string.Empty,
+                        IdNumber = student.StudentNumber,
+                        Status = status,
+                        Remarks = existing?.Remarks ?? string.Empty,
                     });
                 }
 
@@ -328,8 +329,8 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         private SessionKey CurrentKey() => new SessionKey
         {
             CourseDisplay = cmbCourse.Text,
-            SessionLabel  = cmbSession.Text,
-            Date          = dtpDate.Value.Date,
+            SessionLabel = cmbSession.Text,
+            Date = dtpDate.Value.Date,
         };
 
         // ── Filter Bar Wiring ─────────────────────────────────────────────────────
@@ -337,10 +338,10 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         {
             cmbCourse.SelectedIndexChanged += (s, e) => ReloadAndRefresh();
             cmbSession.SelectedIndexChanged += (s, e) => ReloadAndRefresh();
-            dtpDate.ValueChanged           += (s, e) => ReloadAndRefresh();
+            dtpDate.ValueChanged += (s, e) => ReloadAndRefresh();
 
             txtSearch.ForeColor = Color.Gray;
-            txtSearch.GotFocus  += (s, e) =>
+            txtSearch.GotFocus += (s, e) =>
             {
                 if (txtSearch.Text == "Search student…")
                 { txtSearch.Text = ""; txtSearch.ForeColor = Color.Black; }
@@ -384,7 +385,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             btnQRCode.Click -= BtnQrCode_Click;
             btnQRCode.Click += BtnQrCode_Click;
 
-            btnExport.Click    += (s, e) => ExportCsv();
+            btnExport.Click += (s, e) => ExportCsv();
             btnImportCSV.Click += (s, e) => ImportCsv();
         }
 
@@ -429,12 +430,12 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 foreach (var ui in _allStudents)
                 {
                     string statusStr = StatusString(ui.Status);
-                    string remarks   = ui.Remarks ?? string.Empty;
+                    string remarks = ui.Remarks ?? string.Empty;
 
                     if (existingInDb.TryGetValue(ui.StudentId, out var dbRec))
                     {
                         // Update existing record
-                        dbRec.Status  = statusStr;
+                        dbRec.Status = statusStr;
                         dbRec.Remarks = remarks;
                     }
                     else
@@ -444,8 +445,8 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                         {
                             SessionId = _currentSessionId.Value,
                             StudentId = ui.StudentId,
-                            Status    = statusStr,
-                            Remarks   = remarks,
+                            Status = statusStr,
+                            Remarks = remarks,
                         });
                     }
                 }
@@ -466,8 +467,8 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 UpdateSummaryCards();
 
                 int present = _allStudents.Count(x => x.Status == AttendanceStatus.Present);
-                int late    = _allStudents.Count(x => x.Status == AttendanceStatus.Late);
-                int absent  = _allStudents.Count(x => x.Status == AttendanceStatus.Absent);
+                int late = _allStudents.Count(x => x.Status == AttendanceStatus.Late);
+                int absent = _allStudents.Count(x => x.Status == AttendanceStatus.Absent);
                 int excused = _allStudents.Count(x => x.Status == AttendanceStatus.Excused);
 
                 MessageBox.Show(
@@ -493,20 +494,20 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         // ── Summary Cards ─────────────────────────────────────────────────────────
         private void UpdateSummaryCards()
         {
-            int total   = _allStudents.Count;
+            int total = _allStudents.Count;
             int present = _allStudents.Count(x => x.Status == AttendanceStatus.Present);
-            int late    = _allStudents.Count(x => x.Status == AttendanceStatus.Late);
-            int absent  = _allStudents.Count(x => x.Status == AttendanceStatus.Absent);
+            int late = _allStudents.Count(x => x.Status == AttendanceStatus.Late);
+            int absent = _allStudents.Count(x => x.Status == AttendanceStatus.Absent);
             int excused = _allStudents.Count(x => x.Status == AttendanceStatus.Excused);
 
             lblPresentNum.Text = present.ToString();
-            lblLateNum.Text    = late.ToString();
-            lblAbsentNum.Text  = absent.ToString();
+            lblLateNum.Text = late.ToString();
+            lblAbsentNum.Text = absent.ToString();
             lblExcusedNum.Text = excused.ToString();
 
             lblPresentPct.Text = total > 0 ? $"{present * 100.0 / total:F1}%" : "–";
-            lblLatePct.Text    = total > 0 ? $"{late    * 100.0 / total:F1}%" : "–";
-            lblAbsentPct.Text  = total > 0 ? $"{absent  * 100.0 / total:F1}%" : "–";
+            lblLatePct.Text = total > 0 ? $"{late * 100.0 / total:F1}%" : "–";
+            lblAbsentPct.Text = total > 0 ? $"{absent * 100.0 / total:F1}%" : "–";
             lblExcusedPct.Text = total > 0 ? $"{excused * 100.0 / total:F1}%" : "–";
 
             _sessionCard?.SetData(present, late, absent, excused);
@@ -514,7 +515,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
         private void UpdateLastUpdated()
         {
-            lblDateTime.Text    = DateTime.Now.ToString("MMMM dd, yyyy hh:mm tt");
+            lblDateTime.Text = DateTime.Now.ToString("MMMM dd, yyyy hh:mm tt");
             lblByInstructor.Text = "by Instructor";
         }
 
@@ -523,7 +524,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         {
             using var sfd = new SaveFileDialog
             {
-                Filter   = "CSV files (*.csv)|*.csv",
+                Filter = "CSV files (*.csv)|*.csv",
                 FileName = $"Attendance_{dtpDate.Value:yyyyMMdd}.csv",
             };
             if (sfd.ShowDialog() != DialogResult.OK) return;
@@ -552,7 +553,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             if (ofd.ShowDialog() != DialogResult.OK) return;
             try
             {
-                var lines    = File.ReadAllLines(ofd.FileName);
+                var lines = File.ReadAllLines(ofd.FileName);
                 int imported = 0;
                 foreach (var line in lines.Skip(1))
                 {
@@ -563,10 +564,10 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                     if (rec == null) continue;
                     rec.Status = parts[5].Trim() switch
                     {
-                        "Absent"  => AttendanceStatus.Absent,
-                        "Late"    => AttendanceStatus.Late,
+                        "Absent" => AttendanceStatus.Absent,
+                        "Late" => AttendanceStatus.Late,
                         "Excused" => AttendanceStatus.Excused,
-                        _         => AttendanceStatus.Present,
+                        _ => AttendanceStatus.Present,
                     };
                     if (parts.Length > 6) rec.Remarks = parts[6].Trim();
                     imported++;
@@ -586,18 +587,18 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         // ── Helpers ───────────────────────────────────────────────────────────────
         private static AttendanceStatus ParseStatus(string? s) => s switch
         {
-            "Absent"  => AttendanceStatus.Absent,
-            "Late"    => AttendanceStatus.Late,
+            "Absent" => AttendanceStatus.Absent,
+            "Late" => AttendanceStatus.Late,
             "Excused" => AttendanceStatus.Excused,
-            _         => AttendanceStatus.Present,
+            _ => AttendanceStatus.Present,
         };
 
         private static string StatusString(AttendanceStatus s) => s switch
         {
-            AttendanceStatus.Absent  => "Absent",
-            AttendanceStatus.Late    => "Late",
+            AttendanceStatus.Absent => "Absent",
+            AttendanceStatus.Late => "Late",
             AttendanceStatus.Excused => "Excused",
-            _                        => "Present",
+            _ => "Present",
         };
     }
 }

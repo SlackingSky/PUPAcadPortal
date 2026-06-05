@@ -20,13 +20,6 @@ namespace PUPAcadPortal
             SwapView(dashboard);
         }
 
-        public void OpenCourse(CourseActivity course)
-        {
-            var mgmt = new AssignmentManagement(course);
-            mgmt.Dock = DockStyle.Fill;
-            mgmt.OnBack += ShowDashboard;
-            SwapView(mgmt);
-        }
 
         private void SwapView(Control next)
         {
