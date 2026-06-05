@@ -53,6 +53,8 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<ProfessorAvailability> ProfessorAvailabilities { get; set; }
 
+    public virtual DbSet<QrSession> QrSessions { get; set; }
+
     public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<Room> Rooms { get; set; }
@@ -648,6 +650,30 @@ public partial class AppDbContext : DbContext
                 .HasConstraintName("FK_ProfAvail_Professor");
         });
 
+        modelBuilder.Entity<QrSession>(entity =>
+        {
+            entity.HasKey(e => e.QrSessionId).HasName("PRIMARY");
+
+            entity.ToTable("QrSession");
+
+            entity.HasIndex(e => e.SessionId, "FK_QrSession_ClassSession");
+
+            entity.Property(e => e.QrSessionId).HasColumnName("QrSessionID");
+            entity.Property(e => e.ExpiresAt).HasColumnType("datetime");
+            entity.Property(e => e.GeneratedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("datetime");
+            entity.Property(e => e.IsActive)
+                .IsRequired()
+                .HasDefaultValueSql("'1'");
+            entity.Property(e => e.SessionId).HasColumnName("SessionID");
+            entity.Property(e => e.Token).HasMaxLength(500);
+
+            entity.HasOne(d => d.Session).WithMany(p => p.QrSessions)
+                .HasForeignKey(d => d.SessionId)
+                .HasConstraintName("FK_QrSession_ClassSession");
+        });
+
         modelBuilder.Entity<Role>(entity =>
         {
             entity.HasKey(e => e.RoleId).HasName("PRIMARY");
@@ -858,6 +884,7 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.AcademicPeriodId)
                 .HasMaxLength(50)
                 .HasColumnName("AcademicPeriodID");
+            entity.Property(e => e.MaxSlots).HasDefaultValueSql("'50'");
             entity.Property(e => e.ProfessorId).HasColumnName("ProfessorID");
             entity.Property(e => e.Section)
                 .HasMaxLength(50)
