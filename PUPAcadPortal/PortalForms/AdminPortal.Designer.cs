@@ -45,6 +45,7 @@
             btnAccountingRecords = new Button();
             pnlEnrolledStudents = new Panel();
             btnEnrolledStudents = new Button();
+            btnManageRooms = new Button();
             panel17 = new Panel();
             btnRegisterStudent = new Button();
             panel18 = new Panel();
@@ -116,6 +117,7 @@
             flowLayoutPanel1.Controls.Add(panel3);
             flowLayoutPanel1.Controls.Add(pnlRegistrarFunctions);
             flowLayoutPanel1.Controls.Add(pnlRegistrarSubmenu);
+            flowLayoutPanel1.Controls.Add(btnManageRooms);
             flowLayoutPanel1.Controls.Add(panel17);
             flowLayoutPanel1.Controls.Add(panel18);
             flowLayoutPanel1.Controls.Add(panel11);
@@ -340,10 +342,33 @@
             btnEnrolledStudents.UseVisualStyleBackColor = true;
             btnEnrolledStudents.Click += btnEnrolledStudents_Click;
             // 
+            // btnManageRooms
+            // 
+            btnManageRooms.BackgroundImageLayout = ImageLayout.None;
+            btnManageRooms.Cursor = Cursors.Hand;
+            btnManageRooms.FlatAppearance.BorderSize = 0;
+            btnManageRooms.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnManageRooms.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            btnManageRooms.FlatStyle = FlatStyle.Flat;
+            btnManageRooms.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            btnManageRooms.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            btnManageRooms.Image = Properties.Resources.room20;
+            btnManageRooms.ImageAlign = ContentAlignment.MiddleLeft;
+            btnManageRooms.Location = new Point(0, 304);
+            btnManageRooms.Margin = new Padding(0);
+            btnManageRooms.Name = "btnManageRooms";
+            btnManageRooms.Padding = new Padding(16, 0, 0, 0);
+            btnManageRooms.Size = new Size(256, 48);
+            btnManageRooms.TabIndex = 13;
+            btnManageRooms.Text = "Manage Rooms";
+            btnManageRooms.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnManageRooms.UseVisualStyleBackColor = true;
+            btnManageRooms.Click += btnManageRooms_Click;
+            // 
             // panel17
             // 
             panel17.Controls.Add(btnRegisterStudent);
-            panel17.Location = new Point(0, 304);
+            panel17.Location = new Point(0, 352);
             panel17.Margin = new Padding(0);
             panel17.Name = "panel17";
             panel17.Size = new Size(256, 48);
@@ -375,7 +400,7 @@
             // panel18
             // 
             panel18.Controls.Add(btnRegisterProfessor);
-            panel18.Location = new Point(0, 352);
+            panel18.Location = new Point(0, 400);
             panel18.Margin = new Padding(0);
             panel18.Name = "panel18";
             panel18.Size = new Size(256, 48);
@@ -407,7 +432,7 @@
             // panel11
             // 
             panel11.Controls.Add(btnViewAllUsers);
-            panel11.Location = new Point(0, 400);
+            panel11.Location = new Point(0, 448);
             panel11.Margin = new Padding(0);
             panel11.Name = "panel11";
             panel11.Size = new Size(256, 48);
@@ -439,7 +464,7 @@
             // panel9
             // 
             panel9.Controls.Add(btnSubjectOffering);
-            panel9.Location = new Point(0, 448);
+            panel9.Location = new Point(0, 496);
             panel9.Margin = new Padding(0);
             panel9.Name = "panel9";
             panel9.Size = new Size(256, 48);
@@ -476,7 +501,7 @@
             pnlsubofferingSubmenu.Controls.Add(btnSO_Schedule);
             pnlsubofferingSubmenu.Controls.Add(btnSO_CurriculumArchive);
             pnlsubofferingSubmenu.FlowDirection = FlowDirection.TopDown;
-            pnlsubofferingSubmenu.Location = new Point(0, 496);
+            pnlsubofferingSubmenu.Location = new Point(0, 544);
             pnlsubofferingSubmenu.Margin = new Padding(0);
             pnlsubofferingSubmenu.Name = "pnlsubofferingSubmenu";
             pnlsubofferingSubmenu.Size = new Size(256, 190);
@@ -790,5 +815,6 @@
         private Button btnAnnouncement;
         private Panel mainContentPanel;
         private PortalContents.Misc.UserProfile userProfile1;
+        private Button btnManageRooms;
     }
 }

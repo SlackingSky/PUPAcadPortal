@@ -160,5 +160,11 @@ namespace PUPAcadPortal.PortalForms
 
             btnDashboard.PerformClick();
         }
+
+        private void btnManageRooms_Click(object sender, EventArgs e)
+
+        {
+            mainContentPanel.ShowView(new RoomsContentAdmin());
+        }
     }
 }
