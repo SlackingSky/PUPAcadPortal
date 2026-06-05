@@ -358,10 +358,6 @@ namespace PUPAcadPortal.PHAddress
             if (txtAddress2 != null) txtAddress2.Clear();
             if (chkSameAddress != null) chkSameAddress.Checked = false;
 
-            cmbRegions.Text = "";
-            cmbProvinces.Text = "";
-            cmbCities.Text = "";
-            cmbBarangays.Text = "";
             txtPostal.Clear();
 
             if (cmbRegions.Items.Count > 0)
@@ -370,7 +366,7 @@ namespace PUPAcadPortal.PHAddress
             }
             else
             {
-                cmbRegions.SelectedIndex = -1;
+                cmbRegions.SelectedIndex = 0;
             }
 
             cmbProvinces.DataSource = new List<LocationItem> { new LocationItem { Code = "", Name = "--- Select Province ---" } };

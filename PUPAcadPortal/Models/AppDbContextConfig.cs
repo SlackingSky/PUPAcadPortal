@@ -20,6 +20,7 @@ namespace PUPAcadPortal.Models
             {
                 string originalConnectionString = DBConnectService.ConnectionString;
                 //string originalConnectionString = "Server = localhost; Database=defaultdb;Uid=root;Pwd=1234;";
+                //string originalConnectionString = "Server = 100.104.37.56; Database=defaultdb; Uid=root;";
 
                 var builder = new MySqlConnectionStringBuilder(originalConnectionString)
                 {

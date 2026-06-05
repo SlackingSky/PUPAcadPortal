@@ -153,7 +153,8 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
                     }
                     else
                     {
-                        MessageBox.Show($"Success! The system generated credentials and perfectly registered {result.Processed} students into the database.",
+                        MessageBox.Show($"Success! The system generated credentials and perfectly registered {result.Processed} students into the database. \n" +
+                                "An email containing their credentials has beem sent to the specified email address.",
                                 "Registration Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 });

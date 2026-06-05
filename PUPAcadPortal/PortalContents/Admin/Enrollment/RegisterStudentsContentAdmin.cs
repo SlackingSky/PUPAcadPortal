@@ -127,13 +127,14 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
 
                 this.SafeUIUpdate(() =>
                 {
-                    btnStudentClearForm.PerformClick();
-
                     MessageBox.Show(
                         $"Success! Student '{registeredStudent.User.FirstName} {registeredStudent.User.LastName}' has been securely registered.\n\n" +
                         $"Generated Student No: {registeredStudent.StudentNumber}\n" +
-                        $"Generated Email: {registeredStudent.User.InstitutionalEmail}",
+                        $"Generated Email: {registeredStudent.User.InstitutionalEmail}\n" +
+                        "An email containing their credentials has beem sent to the specified email address.",
                         "Registration Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    btnStudentClearForm.PerformClick();
                 });
             }
             catch (InvalidOperationException ex)
@@ -217,6 +218,8 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             phAddressFields.TabIndex = 7;
             AutoSetStudentId();
             mtbRSStudentPhoneNum.MakeCursorGotoStart();
+            if (cmbRSEnrollmentStatus.Items.Count > 0) cmbRSEnrollmentStatus.SelectedIndex = 0;
+            if (cmbRSYearLevel.Items.Count > 0) cmbRSYearLevel.SelectedIndex = 0;
 
             // FIRST create dynamic controls
             AddSuffixComboBox();

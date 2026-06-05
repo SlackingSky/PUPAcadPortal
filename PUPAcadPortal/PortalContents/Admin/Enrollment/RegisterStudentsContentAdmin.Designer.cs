@@ -215,14 +215,14 @@
             // 
             // cmbRSEnrollmentStatus
             // 
+            cmbRSEnrollmentStatus.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbRSEnrollmentStatus.Font = new Font("Segoe UI", 12F);
             cmbRSEnrollmentStatus.FormattingEnabled = true;
-            cmbRSEnrollmentStatus.Items.AddRange(new object[] { "Select Applicant Type", "Regular", "Transferee", "Second Courser", "Returning Student", "Cross Enrollee", "Foreign Student" });
+            cmbRSEnrollmentStatus.Items.AddRange(new object[] { "Regular", "Transferee" });
             cmbRSEnrollmentStatus.Location = new Point(617, 855);
             cmbRSEnrollmentStatus.Name = "cmbRSEnrollmentStatus";
             cmbRSEnrollmentStatus.Size = new Size(294, 29);
             cmbRSEnrollmentStatus.TabIndex = 9;
-            cmbRSEnrollmentStatus.Text = "Select Type of Applicant";
             cmbRSEnrollmentStatus.SelectedIndexChanged += cmbRSEnrollmentStatus_SelectedIndexChanged;
             // 
             // label17
@@ -251,14 +251,14 @@
             // 
             // cmbRSYearLevel
             // 
+            cmbRSYearLevel.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbRSYearLevel.Font = new Font("Segoe UI", 12F);
             cmbRSYearLevel.FormattingEnabled = true;
-            cmbRSYearLevel.Items.AddRange(new object[] { "Select Year Level", "1st Year", "2nd Year", "3rd Year", "4th Year" });
+            cmbRSYearLevel.Items.AddRange(new object[] { "1st Year", "2nd Year", "3rd Year", "4th Year" });
             cmbRSYearLevel.Location = new Point(340, 855);
             cmbRSYearLevel.Name = "cmbRSYearLevel";
             cmbRSYearLevel.Size = new Size(246, 29);
             cmbRSYearLevel.TabIndex = 8;
-            cmbRSYearLevel.Text = "Select Year Level";
             // 
             // label22
             // 

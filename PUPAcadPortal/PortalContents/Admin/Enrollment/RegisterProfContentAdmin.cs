@@ -640,7 +640,8 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
                         MessageBox.Show(
                             $"Success! '{registeredProf.User.FirstName} {registeredProf.User.LastName}' has been securely registered.\n\n" +
                             $"Generated Employee No.: {registeredProf.EmployeeId}\n" +
-                            $"Generated Email: {registeredProf.User.InstitutionalEmail}",
+                            $"Generated Email: {registeredProf.User.InstitutionalEmail}\n" +
+                            "An email containing their credentials has beem sent to the specified email address.",
                             "Registration Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         btnClear.PerformClick();
                     });

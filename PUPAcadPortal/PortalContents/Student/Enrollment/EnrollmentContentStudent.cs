@@ -1,539 +1,466 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using PUPAcadPortal.Data;
+using PUPAcadPortal.Data; // Ensure this points to where UserSession lives
+using PUPAcadPortal.Models;
+using PUPAcadPortal.Services;
+using PUPAcadPortal.Utils; // Ensure this points to where GlobalSession lives
 
 namespace PUPAcadPortal.PortalContents.Student.Enrollment
 {
     public partial class EnrollmentContentStudent : UserControl
     {
-        public static bool isEnrolled = false; // Static variable to track enrollment status across the application
+        public static bool isEnrolled = false;
         public static int totalUnits = 0;
         public static StudentDataService dataService;
-        private List<string[]> enrollmentData = new List<string[]>();
+
+        private List<EnrollmentData> _liveSubjects = new List<EnrollmentData>();
+        private EnrollmentService _enrollmentService = new EnrollmentService();
+        private bool _isAllSelected = false;
+
+        // Dynamic State Variables
+        private int _currentStudentId;
+        private string _currentProgram;
+        private int _currentYearLevel;
+
         public EnrollmentContentStudent()
         {
             InitializeComponent();
-
             dataService = StudentDataService.Instance;
+            EnableDoubleBuffering(dgvEnrollment);
+
             btnSaveAndAssess.Click += btnSaveAndAssess_Click;
+            dgvEnrollment.CellPainting += dgvEnrollment_CellPainting;
+            dgvEnrollment.CellClick += dgvEnrollment_CellContentClick;
+            dgvEnrollment.SelectionChanged += dgvEnrollment_SelectionChanged;
+            dgvEnrollment.CurrentCellDirtyStateChanged += dgvEnrollment_CurrentCellDirtyStateChanged;
+            dgvEnrollment.CellValueChanged += dgvEnrollment_CellValueChanged;
         }
 
-        // ─────────────────────────────────────────────────────────────────
-        // ENROLLMENT
-        // ─────────────────────────────────────────────────────────────────
-        private void Enrollment_Initialize()
+        private void dgvEnrollment_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (isEnrolled)
+            // Only run this if we are in the checkbox column
+            if (e.RowIndex >= 0 && e.ColumnIndex == dgvEnrollment.Columns["colSelect"].Index)
             {
-                btnSaveAndAssess.Visible = false; // Hide the button if already enrolled
-                dgvEnrollment.Visible = false;
-                pnlContainerEnrollmentDGV.Visible = false;
-                btnSaveAndAssess.Enabled = false;
-                dgvEnrollmentConfirmed.Visible = true;
-                pnlEnrollmentConfirmedDGV.Visible = true;
-                lblTotalUnitsValue.Text = totalUnits.ToString();
-                btnDownloadCOR.Enabled = true;
-                btnDownloadCOR.BackColor = Color.Maroon;
+                // 1. Recalculate Select All status based on the now-updated data
+                _isAllSelected = _liveSubjects
+                    .Where(s => s.IsEligible && s.Status == "Pending")
+                    .All(s => s.IsSelected);
+
+                // 2. Force the header to redraw its checkbox
+                dgvEnrollment.InvalidateCell(dgvEnrollment.Columns["colSelect"].Index, -1);
+
+                // 3. Update units
+                Enrollment_UpdateTotalUnits();
+            }
+        }
+
+        private void EnableDoubleBuffering(DataGridView dgv)
+        {
+            typeof(DataGridView).InvokeMember("DoubleBuffered",
+                System.Reflection.BindingFlags.NonPublic |
+                System.Reflection.BindingFlags.Instance |
+                System.Reflection.BindingFlags.SetProperty,
+                null, dgv, new object[] { true });
+        }
+
+        private async void EnrollmentContentStudent_Load(object sender, EventArgs e)
+        {
+            SetupMaroonBorders();
+            await Enrollment_InitializeAsync();
+        }
+
+        private async Task Enrollment_InitializeAsync()
+        {
+            // ─────────────────────────────────────────────────────────────────
+            // 1. DYNAMIC SESSION BOOT SEQUENCE
+            // ─────────────────────────────────────────────────────────────────
+            try
+            {
+                // Guard Clause: Ensure a student is actually the one logged in
+                if (!UserSession.StudentID.HasValue)
+                {
+                    MessageBox.Show("Security Error: Only active students can access the enrollment module.", "Unauthorized", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Extract the exact ID from your UserSession
+                _currentStudentId = UserSession.StudentID.Value;
+
+                // Fetch their current academic standing (Program & Year Level)
+                var studentProfile = await _enrollmentService.GetStudentProfileAsync(_currentStudentId);
+
+                _currentProgram = studentProfile.Program;     // e.g., "BSIT"
+                _currentYearLevel = studentProfile.YearLevel; // e.g., 2
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Profile Initialization Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            btnSaveAndAssess.Text = "Save and Assess";   // change button text
-            dgvEnrollment.Visible = true;                // ensure original grid is visible
-            dgvEnrollmentConfirmed.Visible = false;      // hide confirmed grid initially
-            pnlEnrollmentConfirmedDGV.Visible = false;
-            pnlContainerEnrollmentDGV.Visible = true;
+
+            pnlRA10391.Visible = await _enrollmentService.IsStudentIskolar(_currentStudentId);
+
+            // ─────────────────────────────────────────────────────────────────
+            // 2. GRID UI SETUP
+            // ─────────────────────────────────────────────────────────────────
             dgvEnrollment.Visible = true;
+            pnlContainerEnrollmentDGV.Visible = true;
 
-            // Initialize COR button as disabled (grey)
-            btnDownloadCOR.Enabled = false;
-            btnDownloadCOR.BackColor = Color.DarkGray;
+            // Configure Grid Columns
+            dgvEnrollment.AutoGenerateColumns = false;
+            if (dgvEnrollment.Columns.Contains("colSelect")) dgvEnrollment.Columns["colSelect"].DataPropertyName = "IsSelected";
+            if (dgvEnrollment.Columns.Contains("colCode")) dgvEnrollment.Columns["colCode"].DataPropertyName = "Code";
+            if (dgvEnrollment.Columns.Contains("colTitle")) dgvEnrollment.Columns["colTitle"].DataPropertyName = "CourseTitle";
+            if (dgvEnrollment.Columns.Contains("colUnits")) dgvEnrollment.Columns["colUnits"].DataPropertyName = "Units";
+            if (dgvEnrollment.Columns.Contains("colSchedule")) dgvEnrollment.Columns["colSchedule"].DataPropertyName = "Schedule";
+            if (dgvEnrollment.Columns.Contains("colStatus")) dgvEnrollment.Columns["colStatus"].DataPropertyName = "Status";
 
-            Enrollment_LoadData();
-            Enrollment_UpdateTotalUnits();
-            ApplyStatusStyles();
-        }
+            // ─────────────────────────────────────────────────────────────────
+            // 3. PREREQUISITE ENGINE EXECUTION
+            // ─────────────────────────────────────────────────────────────────
+            // Fire the engine using the dynamic global period
+            _liveSubjects = await _enrollmentService.GetAvailableSubjectsAsync(
+                _currentStudentId,
+                GlobalSession.ActiveAcademicPeriod,
+                _currentProgram,
+                _currentYearLevel,
+                GlobalSession.ActiveSemesterIndex);
 
-        private void Enrollment_LoadData()
-        {
-            enrollmentData.Clear();
-            dgvEnrollment.Rows.Clear();
+            // ─────────────────────────────────────────────────────────────────
+            // 4. DASHBOARD POPULATION (Units & Status)
+            // ─────────────────────────────────────────────────────────────────
+            // Calculate Maximum Units
+            int maxUnits = _liveSubjects.Sum(s => s.Units);
+            lblMaximumUnits.Text = $"{maxUnits} Units";
 
-            // Define raw schedule entries (Day, StartTimes, EndTimes, CourseCode, CourseName)
-            // Each entry represents one meeting time for a course on a specific day.
-            var entries = new List<(string Day, string[] Starts, string[] Ends, string Code, string Name)>
-    {
-        // Monday
-        ("Monday", new[] { "10:30 AM" }, new[] { "1:30 PM" }, "ELEC IT-FE2", "BSIT Free Elective 2"),
-        ("Monday", new[] { "2:30 PM" }, new[] { "5:30 PM" }, "COMP 014", "Quantitative Methods with Modeling and Simulation"),
+            // Determine Scholastic Status
+            bool isIrregular = _liveSubjects.Any(s => !s.IsEligible);
 
-        // Wednesday
-        ("Wednesday", new[] { "8:00 AM", "10:30 AM" }, new[] { "10:00 AM", "1:30 PM" }, "COMP 012", "Network Administration"),
-        ("Wednesday", new[] { "5:30 PM" }, new[] { "7:30 PM" }, "COMP 009", "Object Oriented Programming"),
-
-        // Thursday
-        ("Thursday", new[] { "10:30 AM" }, new[] { "1:30 PM" }, "COMP 009", "Object Oriented Programming"),
-        ("Thursday", new[] { "2:30 PM", "5:00 PM" }, new[] { "4:30 PM", "8:00 PM" }, "INTE 202", "Interactive Programming and Technologies 1"),
-
-        // Friday
-        ("Friday", new[] { "10:00 AM" }, new[] { "12:00 PM" }, "PATHFIT 4", "Physical Activity Towards Health and Fitness 4"),
-
-        // Saturday
-        ("Saturday", new[] { "7:30 AM" }, new[] { "10:30 AM" }, "COMP 013", "Human Computer Interaction"),
-        ("Saturday", new[] { "2:30 PM", "5:00 PM" }, new[] { "4:30 PM", "8:00 PM" }, "COMP 010", "Information Management")
-    };
-
-            // Group by course code (and name) to combine multiple days
-            var grouped = entries.GroupBy(e => new { e.Code, e.Name })
-                                 .Select(g => new
-                                 {
-                                     Code = g.Key.Code,
-                                     Name = g.Key.Name,
-                                     // Collect schedule lines for each day
-                                     ScheduleLines = g.Select(e =>
-                                     {
-                                         // Build time slots for that day
-                                         string times = string.Join(", ", e.Starts.Select((s, i) => $"{s} - {e.Ends[i]}"));
-                                         return $"{e.Day} {times}";
-                                     }).ToList()
-                                 });
-
-            int GetUnits(string courseCode) => courseCode == "PATHFIT 4" ? 2 : 3;
-
-            foreach (var course in grouped)
+            if (isIrregular)
             {
-                // Combine all schedule lines with newline characters
-                string scheduleStr = string.Join(Environment.NewLine, course.ScheduleLines);
-                int units = GetUnits(course.Code);
-                string status = "Pending";
-
-                enrollmentData.Add(new string[] { course.Code, course.Name, units.ToString(), scheduleStr, status });
+                lblScholasticStatus.Text = "Irregular";
+                lblScholasticStatus.ForeColor = Color.DarkRed;
+            }
+            else
+            {
+                lblScholasticStatus.Text = "Regular";
+                lblScholasticStatus.ForeColor = Color.Black;
             }
 
-            // Enable text wrapping in the schedule column to show multiple lines
+
+            // ─────────────────────────────────────────────────────────────────
+            // 5. BIND DATA & FINALIZE RENDER
+            // ─────────────────────────────────────────────────────────────────
             dgvEnrollment.Columns["colSchedule"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgvEnrollment.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-
-            // Populate the DataGridView
-            foreach (var row in enrollmentData)
-            {
-                dgvEnrollment.Rows.Add(false, row[0], row[1], row[2], row[3], row[4], "More");
-            }
+            dgvEnrollment.DataSource = new BindingList<EnrollmentData>(_liveSubjects);
 
             Enrollment_UpdateTotalUnits();
-            // Reset the header checkbox state
             _isAllSelected = false;
             dgvEnrollment.InvalidateColumn(dgvEnrollment.Columns["colSelect"].Index);
+
+            CheckGlobalEnrollmentStatus();
         }
 
-        private void ApplyStatusStyles()
+        private void CheckGlobalEnrollmentStatus()
         {
-            foreach (DataGridViewRow row in dgvEnrollment.Rows)
+            bool hasEnrolledSubjects = _liveSubjects.Any(s => s.Status == "Enrolled");
+            bool hasPendingEligibleSubjects = _liveSubjects.Any(s => s.IsEligible && s.Status == "Pending");
+            bool isFullyEnrolled = hasEnrolledSubjects && !hasPendingEligibleSubjects;
+
+            isEnrolled = isFullyEnrolled;
+
+            if (isFullyEnrolled)
             {
-                if (row.IsNewRow) continue;
-                string status = row.Cells["colStatus"].Value?.ToString();
-                if (status == "Enrolled")
-                {
-                    row.Cells["colStatus"].Style.BackColor = Color.FromArgb(240, 240, 240);
-                    row.Cells["colStatus"].Style.ForeColor = Color.Black;
-                }
-                else if (status == "Pending")
-                {
-                    row.Cells["colStatus"].Style.BackColor = Color.Gold;
-                    row.Cells["colStatus"].Style.ForeColor = Color.Black;
-                }
-                else // Dropped or others
-                {
-                    row.Cells["colStatus"].Style.BackColor = Color.LightGray;
-                    row.Cells["colStatus"].Style.ForeColor = Color.Black;
-                }
+                btnDownloadCOR.Enabled = true;
+                btnDownloadCOR.BackColor = Color.Maroon;
             }
+            else
+            {
+                btnDownloadCOR.Enabled = false;
+                btnDownloadCOR.BackColor = Color.DarkGray;
+            }
+
+            btnSaveAndAssess.Visible = hasPendingEligibleSubjects;
         }
 
         private void Enrollment_UpdateTotalUnits()
         {
             int total = 0;
-            foreach (DataGridViewRow row in dgvEnrollment.Rows)
+            foreach (var subject in _liveSubjects)
             {
-                if (!row.IsNewRow)
+                if (subject.IsSelected && (subject.Status == "Pending" || subject.Status == "Enrolled"))
                 {
-                    // Check if the row is selected
-                    bool isSelected = row.Cells["colSelect"].Value != null && (bool)row.Cells["colSelect"].Value == true;
-                    if (isSelected && int.TryParse(row.Cells["colUnits"].Value?.ToString(), out int u))
-                    {
-                        total += u;
-                    }
+                    total += subject.Units;
                 }
             }
-
-            // Update the total units label
             lblTotalUnitsValue.Text = total.ToString();
             totalUnits = total;
         }
 
-        private void dgvEnrollment_SelectionChanged(object sender, EventArgs e) => dgvEnrollment.ClearSelection();
-
-        private bool allSelected = false;
-        private bool _isAllSelected = false;
-
-        private void dgvEnrollment_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        private async void btnSaveAndAssess_Click(object sender, EventArgs e)
         {
-            // Only paint custom header cells
-            if (e.RowIndex == -1)
+            try
             {
-                if (e.ColumnIndex == dgvEnrollment.Columns["colSelect"].Index)
+                var subjectsToEnroll = _liveSubjects.Where(s => s.IsSelected && s.Status == "Pending").ToList();
+
+                if (!subjectsToEnroll.Any())
                 {
-                    e.Paint(e.CellBounds, DataGridViewPaintParts.Background | DataGridViewPaintParts.Border);
-                    int x = e.CellBounds.Left + (e.CellBounds.Width - 14) / 2;
-                    int y = e.CellBounds.Top + (e.CellBounds.Height - 14) / 2;
-                    Rectangle checkRect = new Rectangle(x, y, 14, 14);
-                    ButtonState state = _isAllSelected ? ButtonState.Checked : ButtonState.Normal;
-                    ControlPaint.DrawCheckBox(e.Graphics, checkRect, state);
-                    e.Handled = true;
+                    MessageBox.Show("Please select at least one pending subject.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // Existing custom painting for Units, Status, Action columns (unchanged)
-                int colUnitsIndex = (dgvEnrollment.Columns["colUnits"]?.Index) ?? -1;
-                int colStatusIndex = (dgvEnrollment.Columns["colStatus"]?.Index) ?? -1;
-                int colActionIndex = (dgvEnrollment.Columns["colAction"]?.Index) ?? -1;
+                int selectedUnits = subjectsToEnroll.Sum(s => s.Units);
+                int alreadyEnrolledUnits = _liveSubjects.Where(s => s.Status == "Enrolled").Sum(s => s.Units);
+                int totalAttemptedUnits = selectedUnits + alreadyEnrolledUnits;
+                int requiredRegularUnits = _liveSubjects.Sum(s => s.Units);
 
-                // Check if current column is one of the ones we want to customise
-                if (e.ColumnIndex == colUnitsIndex || e.ColumnIndex == colStatusIndex || e.ColumnIndex == colActionIndex)
+                if (totalAttemptedUnits != requiredRegularUnits)
                 {
-                    // Paint background and border only
-                    e.Paint(e.CellBounds, DataGridViewPaintParts.Background | DataGridViewPaintParts.Border);
+                    bool hasFailedPrereqs = _liveSubjects.Any(s => !s.IsEligible);
 
-                    // Get header text safely
-                    string headerText = dgvEnrollment.Columns[e.ColumnIndex]?.HeaderText ?? "";
-
-                    // Use a safe font and brush
-                    using (SolidBrush brush = new SolidBrush(Color.White))
-                    using (StringFormat sf = new StringFormat())
+                    if (hasFailedPrereqs)
                     {
-                        sf.Alignment = StringAlignment.Center;
-                        sf.LineAlignment = StringAlignment.Center;
+                        DialogResult irregularConfirm = MessageBox.Show(
+                            $"You are attempting to enroll in {totalAttemptedUnits} units instead of the regular {requiredRegularUnits} units.\n\nBecause you have locked subjects, you will be processed as an Irregular student. Do you wish to proceed?",
+                            "Irregular Enrollment Status", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
-                        // Fallback font if e.CellStyle.Font is null
-                        Font font = e.CellStyle?.Font ?? new Font("Segoe UI", 9F, FontStyle.Bold);
+                        if (irregularConfirm != DialogResult.Yes) return;
+                    }
+                    else
+                    {
+                        MessageBox.Show(
+                            $"As a Regular student, you must take the full {requiredRegularUnits} units for this semester.\n\nYou only selected {totalAttemptedUnits} units. Please check all available subjects to proceed.",
+                            "Underload Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                        return;
+                    }
+                }
 
-                        e.Graphics.DrawString(headerText, font, brush, e.CellBounds, sf);
+                DialogResult confirm = MessageBox.Show("Are you sure you want to save and assess your enrollment?", "Confirm Enrollment", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (confirm != DialogResult.Yes) return;
+
+                btnSaveAndAssess.Enabled = false;
+                btnSaveAndAssess.Text = "Processing...";
+                Application.UseWaitCursor = true;
+
+                var result = await _enrollmentService.ProcessSaveAndAssessAsync(_currentStudentId, GlobalSession.ActiveAcademicPeriod, subjectsToEnroll);
+
+                this.SafeUIUpdate(async () =>
+                {
+                    if (!result.Success)
+                    {
+                        MessageBox.Show(result.Message, "Transaction Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
                     }
 
-                    e.Handled = true;
+                    await Enrollment_InitializeAsync();
+                    CheckGlobalEnrollmentStatus();
+                    dataService.SetEnrollmentStatus(true);
+
+                    MessageBox.Show("You successfully saved and assessed, if you see any pending payments, please contact the cashier.", "Enrollment Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                });
+            }
+            catch (Exception ex)
+            {
+                this.SafeUIUpdate(() =>
+                {
+                    MessageBox.Show($"An error occurred:\n{ex.Message}", "System Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                });
+                
+            }
+            finally
+            {
+                Application.UseWaitCursor = false;
+                this.SafeUIUpdate(() =>
+                {
+                    btnSaveAndAssess.Enabled = true;
+                    btnSaveAndAssess.Text = "Save and Assess";
+                });
+            }
+        }
+
+        private void dgvEnrollment_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            // This forces the grid to "Commit" the change immediately when a checkbox is toggled
+            if (dgvEnrollment.IsCurrentCellDirty)
+            {
+                dgvEnrollment.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            }
+        }
+
+        private void dgvEnrollment_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            // 1. Safety Guard: Check if DataGridView itself is null
+            if (dgvEnrollment == null) return;
+
+            // 2. Handle Header Checkbox
+            var colSelect = dgvEnrollment.Columns["colSelect"];
+            if (e.RowIndex == -1 && colSelect != null && e.ColumnIndex == colSelect.Index)
+            {
+                e.Paint(e.CellBounds, DataGridViewPaintParts.Background | DataGridViewPaintParts.Border);
+                int x = e.CellBounds.Left + (e.CellBounds.Width - 14) / 2;
+                int y = e.CellBounds.Top + (e.CellBounds.Height - 14) / 2;
+                e.Paint(e.CellBounds, DataGridViewPaintParts.Background | DataGridViewPaintParts.Border);
+                ButtonState state = _isAllSelected ? ButtonState.Checked : ButtonState.Normal;
+                Rectangle checkRect = new Rectangle(x, y, 14, 14);
+                ControlPaint.DrawCheckBox(e.Graphics, checkRect, state);
+                e.Handled = true;
+                return;
+            }
+
+            if (e.RowIndex >= 0 && colSelect != null && e.ColumnIndex == colSelect.Index)
+            {
+                var rowData = dgvEnrollment.Rows[e.RowIndex].DataBoundItem as EnrollmentData;
+                if (rowData != null)
+                {
+                    // Define what makes a subject "Not Enrollable"
+                    bool isNotEnrollable = !rowData.IsEligible ||
+                                           rowData.Status == "Enrolled" ||
+                                           rowData.Status == "Pending Payment";
+
+                    if (isNotEnrollable)
+                    {
+                        // Tell the grid to paint the background and borders...
+                        // BUT explicitly skip the 'ContentForeground' (which is the actual checkbox graphic)
+                        e.Paint(e.CellBounds, DataGridViewPaintParts.Background |
+                                              DataGridViewPaintParts.Border |
+                                              DataGridViewPaintParts.SelectionBackground);
+
+                        // Tell the grid we are done drawing this cell so it doesn't draw the checkbox over it
+                        e.Handled = true;
+                        return;
+                    }
+                }
+            }
+
+            // 3. Handle Data Rows
+            var colStatus = dgvEnrollment.Columns["colStatus"];
+            if (e.RowIndex >= 0 && colStatus != null && e.ColumnIndex == colStatus.Index)
+            {
+                // Check if Row exists and has DataBoundItem
+                if (e.RowIndex < dgvEnrollment.Rows.Count)
+                {
+                    var row = dgvEnrollment.Rows[e.RowIndex];
+                    var rowData = row.DataBoundItem as EnrollmentData;
+
+                    // If no data, exit early
+                    if (rowData == null) return;
+
+                    // Apply background color
+                    if (rowData.Status == "Enrolled")
+                    {
+                        e.CellStyle.BackColor = Color.SeaGreen;
+                    }
+                    else if (rowData.Status == "Pending Payment")
+                    {
+                        e.CellStyle.BackColor = Color.DarkOrange;
+                    }
+                    else if (!rowData.IsEligible)
+                    {
+                        e.CellStyle.BackColor = Color.LightCoral;
+
+                        // Set strikeout font safely
+                        if (row.DefaultCellStyle.Font == null || row.DefaultCellStyle.Font.Style != FontStyle.Strikeout)
+                        {
+                            row.DefaultCellStyle.Font = new Font(dgvEnrollment.Font, FontStyle.Strikeout);
+                        }
+                    }
+                    else if (rowData.Status == "Pending")
+                    {
+                        e.CellStyle.BackColor = Color.Gold;
+                    }
+
+                    // Set text color if needed
+                    e.CellStyle.ForeColor = (rowData.Status == "Enrolled" || rowData.Status == "Pending Payment" || !rowData.IsEligible)
+                                             ? Color.White : Color.Black;
                 }
             }
         }
 
-        private void dgvEnrollment_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvEnrollment_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            // ----- HEADER CHECKBOX CLICK (Select/Deselect All) -----
-            if (e.RowIndex == -1 && e.ColumnIndex == dgvEnrollment.Columns["colSelect"].Index)
+            // 1. Force the grid to save the checkbox state immediately
+            dgvEnrollment.CommitEdit(DataGridViewDataErrorContexts.Commit);
+
+            var colSelect = dgvEnrollment.Columns["colSelect"];
+            var colAction = dgvEnrollment.Columns["colAction"];
+
+            // HEADER CLICK (Select All)
+            if (e.RowIndex == -1 && colSelect != null && e.ColumnIndex == colSelect.Index)
             {
-                // Toggle master state
                 _isAllSelected = !_isAllSelected;
-
-                // Update all row checkboxes
-                foreach (DataGridViewRow row in dgvEnrollment.Rows)
+                foreach (var subject in _liveSubjects)
                 {
-                    if (!row.IsNewRow)
-                        row.Cells["colSelect"].Value = _isAllSelected;
+                    if (subject.IsEligible && subject.Status == "Pending")
+                        subject.IsSelected = _isAllSelected;
                 }
-
-                // Force the grid to commit changes and refresh
-                dgvEnrollment.EndEdit();
-                dgvEnrollment.Refresh();
-
-                // Redraw the header checkbox
-                dgvEnrollment.InvalidateColumn(dgvEnrollment.Columns["colSelect"].Index);
-
-                // Update total units
+                dgvEnrollment.InvalidateColumn(e.ColumnIndex);
                 Enrollment_UpdateTotalUnits();
                 return;
             }
 
-            // ----- ROW CHECKBOX CLICK (update header state) -----
-            if (e.RowIndex >= 0 && e.ColumnIndex == dgvEnrollment.Columns["colSelect"].Index)
+            // ROW CLICK (Single Checkbox)
+            if (e.RowIndex >= 0 && colSelect != null && e.ColumnIndex == colSelect.Index)
             {
-                // Use BeginInvoke to let the row checkbox toggle finish first
-                this.BeginInvoke(new Action(() =>
+                var rowData = dgvEnrollment.Rows[e.RowIndex].DataBoundItem as EnrollmentData;
+                if (rowData != null)
                 {
-                    // Check if all rows are now selected
-                    bool allSelected = true;
-                    foreach (DataGridViewRow row in dgvEnrollment.Rows)
+                    if (rowData.Status == "Enrolled") return;
+
+                    if (!rowData.IsEligible)
                     {
-                        if (!row.IsNewRow)
-                        {
-                            object val = row.Cells["colSelect"].Value;
-                            bool isChecked = (val != null && (bool)val == true);
-                            if (!isChecked)
-                            {
-                                allSelected = false;
-                                break;
-                            }
-                        }
+                        // Force it back to unchecked visually
+                        rowData.IsSelected = false;
+                        dgvEnrollment.InvalidateRow(e.RowIndex);
+                        MessageBox.Show(rowData.PrerequisiteMessage, "Prerequisite Locked", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
                     }
-                    _isAllSelected = allSelected;
-                    dgvEnrollment.InvalidateColumn(dgvEnrollment.Columns["colSelect"].Index);
+
+                    // Sync the header checkbox
+                    _isAllSelected = _liveSubjects
+                        .Where(s => s.IsEligible && s.Status == "Pending")
+                        .Any() && // Ensure there is at least one row to check
+                        _liveSubjects
+                        .Where(s => s.IsEligible && s.Status == "Pending")
+                        .All(s => s.IsSelected); // All must be true
+
+                    dgvEnrollment.InvalidateColumn(e.ColumnIndex); // Update the header checkbox
                     Enrollment_UpdateTotalUnits();
-                }));
+                }
                 return;
             }
 
-            // ----- EXISTING ACTION COLUMN CLICK (context menu) -----
-            if (e.ColumnIndex == dgvEnrollment.Columns["colAction"].Index && e.RowIndex >= 0)
+            // ACTION CLICK
+            if (e.RowIndex >= 0 && colAction != null && e.ColumnIndex == colAction.Index)
             {
-                Rectangle cellRect = dgvEnrollment.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, true);
-                Point menuLocation = dgvEnrollment.PointToScreen(new Point(cellRect.Left, cellRect.Bottom));
-                cmsEnrollAction.Show(menuLocation);
+                var rowData = dgvEnrollment.Rows[e.RowIndex].DataBoundItem as EnrollmentData;
+                if (rowData != null && !rowData.IsEligible)
+                {
+                    MessageBox.Show(rowData.PrerequisiteMessage, "Subject Locked", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
 
-        private void Enrollment_ShowOverlay()
-        {
-            pnlViewDetails.Parent = pnlEnrollContent;
-            pnlViewDetails.BringToFront();
-            pnlViewDetails.Visible = true;
-            pnlViewDetails.Location = new Point((pnlViewDetails.Parent.Width - pnlViewDetails.Width) / 2, (pnlViewDetails.Parent.Height - pnlViewDetails.Height) / 2);
-        }
-        private void Enrollment_HideOverlay() => pnlViewDetails.Visible = false;
-        private void Enrollment_viewDetailsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (dgvEnrollment.CurrentRow != null)
-            {
-                // Retrieve values from the current row
-                string code = dgvEnrollment.CurrentRow.Cells["colCode"].Value?.ToString() ?? "";
-                string title = dgvEnrollment.CurrentRow.Cells["colTitle"].Value?.ToString() ?? "";
-                string units = dgvEnrollment.CurrentRow.Cells["colUnits"].Value?.ToString() ?? "";
-                string schedule = dgvEnrollment.CurrentRow.Cells["colSchedule"].Value?.ToString() ?? "";
-                string status = dgvEnrollment.CurrentRow.Cells["colStatus"].Value?.ToString() ?? "";
+        private void dgvEnrollment_SelectionChanged(object sender, EventArgs e) => dgvEnrollment.ClearSelection();
 
-                // Assign to labels (make sure these label names exist in pnlViewDetails)
-                lblDetailCode.Text = $"Code: {code}";
-                lblDetailTitle.Text = $"Title: {title}";
-                lblDetailUnits.Text = $"Units: {units}";
-                txtDetailSchedule.Text = $"Schedule: {schedule}";
-                lblDetailStatus.Text = $"Status: {status}";
-            }
-            Enrollment_ShowOverlay();
-        }
-        private void btnEnrollCloseDetails_Click(object sender, EventArgs e) => Enrollment_HideOverlay();
-        private void dropSubjectToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (dgvEnrollment.CurrentRow == null) return;
-
-            // Confirm drop
-            DialogResult result = MessageBox.Show("Are you sure you want to drop this subject?", "Confirm Drop",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (result != DialogResult.Yes) return;
-
-            // Get course code of the row to drop
-            string courseCode = dgvEnrollment.CurrentRow.Cells["colCode"].Value.ToString();
-
-            // Remove from enrollmentData list
-            var toRemove = enrollmentData.FirstOrDefault(r => r[0] == courseCode);
-            if (toRemove != null) enrollmentData.Remove(toRemove);
-
-            // Remove from DataGridView
-            dgvEnrollment.Rows.RemoveAt(dgvEnrollment.CurrentRow.Index);
-
-            // Update total units
-            Enrollment_UpdateTotalUnits();
-            ApplyStatusStyles();
-
-            MessageBox.Show("Subject dropped successfully.", "Dropped", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        private void btnSaveAndAssess_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                // 1. Guard: ensure dgvEnrollment exists and has rows
-                if (dgvEnrollment == null || dgvEnrollment.IsDisposed)
-                {
-                    MessageBox.Show("Enrollment grid is not available. Please refresh the page.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                if (dgvEnrollment.Rows.Count == 0)
-                {
-                    MessageBox.Show("No courses to enroll.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-
-                // 2. Confirm save
-                DialogResult confirm = MessageBox.Show("Are you sure you want to save and assess your enrollment?\nThis action cannot be undone.",
-                    "Confirm Enrollment", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (confirm != DialogResult.Yes) return;
-
-                // 3. Collect selected rows
-                List<DataGridViewRow> selectedRows = new List<DataGridViewRow>();
-                foreach (DataGridViewRow row in dgvEnrollment.Rows)
-                {
-                    if (row.IsNewRow) continue;
-                    object cellValue = row.Cells["colSelect"]?.Value;
-                    if (cellValue != null && Convert.ToBoolean(cellValue))
-                        selectedRows.Add(row);
-                }
-
-                if (selectedRows.Count == 0)
-                {
-                    MessageBox.Show("Please select at least one subject to enroll.", "No Selection",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                // 4. Build DataTable for confirmed enrollment
-                DataTable confirmedTable = new DataTable();
-                confirmedTable.Columns.Add("Code", typeof(string));
-                confirmedTable.Columns.Add("Title", typeof(string));
-                confirmedTable.Columns.Add("Units", typeof(string));
-                confirmedTable.Columns.Add("Schedule", typeof(string));
-                confirmedTable.Columns.Add("Status", typeof(string));
-
-                int totalUnits = 0;
-                foreach (DataGridViewRow row in selectedRows)
-                {
-                    string unitsStr = row.Cells["colUnits"]?.Value?.ToString() ?? "0";
-                    confirmedTable.Rows.Add(
-                        row.Cells["colCode"]?.Value ?? "",
-                        row.Cells["colTitle"]?.Value ?? "",
-                        unitsStr,
-                        row.Cells["colSchedule"]?.Value ?? "",
-                        "Enrolled"
-                    );
-                    if (int.TryParse(unitsStr, out int u))
-                        totalUnits += u;
-                }
-
-                // 5. Reposition the confirmed grid panel
-                pnlEnrollmentConfirmedDGV.Location = pnlContainerEnrollmentDGV.Location;
-                pnlEnrollmentConfirmedDGV.Size = pnlContainerEnrollmentDGV.Size;
-
-                // 6. Configure confirmed grid columns using actual designer column names
-                dgvEnrollmentConfirmed.AutoGenerateColumns = false;
-
-                if (dgvEnrollmentConfirmed.Columns.Contains("colCode2"))
-                    dgvEnrollmentConfirmed.Columns["colCode2"].DataPropertyName = "Code";
-                if (dgvEnrollmentConfirmed.Columns.Contains("colCourseTitle2"))
-                    dgvEnrollmentConfirmed.Columns["colCourseTitle2"].DataPropertyName = "Title";
-                if (dgvEnrollmentConfirmed.Columns.Contains("colUnits2"))
-                    dgvEnrollmentConfirmed.Columns["colUnits2"].DataPropertyName = "Units";
-                if (dgvEnrollmentConfirmed.Columns.Contains("colSchedule2"))
-                    dgvEnrollmentConfirmed.Columns["colSchedule2"].DataPropertyName = "Schedule";
-                if (dgvEnrollmentConfirmed.Columns.Contains("colStatus2"))
-                    dgvEnrollmentConfirmed.Columns["colStatus2"].DataPropertyName = "Status";
-                if (dgvEnrollmentConfirmed.Columns.Contains("colAction2"))
-                    dgvEnrollmentConfirmed.Columns["colAction2"].Visible = false;
-
-                // 7. Bind data
-                dgvEnrollmentConfirmed.DataSource = confirmedTable;
-
-                // --- FORCE PROPER DISPLAY WITH 12PT FONT ---
-                dgvEnrollmentConfirmed.SuspendLayout();
-
-                dgvEnrollmentConfirmed.DefaultCellStyle.Font = new Font("Segoe UI", 12F);
-                dgvEnrollmentConfirmed.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-
-                dgvEnrollmentConfirmed.RowTemplate.Height = 35;
-                dgvEnrollmentConfirmed.ColumnHeadersHeight = 40;
-
-                dgvEnrollmentConfirmed.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-
-                if (dgvEnrollmentConfirmed.Columns.Contains("colCourseTitle2"))
-                {
-                    dgvEnrollmentConfirmed.Columns["colCourseTitle2"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                    dgvEnrollmentConfirmed.Columns["colCourseTitle2"].MinimumWidth = 250;
-                }
-
-                if (dgvEnrollmentConfirmed.Columns.Contains("colSchedule2"))
-                    dgvEnrollmentConfirmed.Columns["colSchedule2"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-
-                dgvEnrollmentConfirmed.ResumeLayout();
-                dgvEnrollmentConfirmed.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-
-                // 8. Remove selection highlight
-                dgvEnrollmentConfirmed.EnableHeadersVisualStyles = false;
-                dgvEnrollmentConfirmed.DefaultCellStyle.SelectionBackColor = dgvEnrollmentConfirmed.DefaultCellStyle.BackColor;
-                dgvEnrollmentConfirmed.DefaultCellStyle.SelectionForeColor = dgvEnrollmentConfirmed.DefaultCellStyle.ForeColor;
-                dgvEnrollmentConfirmed.ColumnHeadersDefaultCellStyle.SelectionBackColor = dgvEnrollmentConfirmed.ColumnHeadersDefaultCellStyle.BackColor;
-                dgvEnrollmentConfirmed.ColumnHeadersDefaultCellStyle.SelectionForeColor = dgvEnrollmentConfirmed.ColumnHeadersDefaultCellStyle.ForeColor;
-                dgvEnrollmentConfirmed.RowHeadersVisible = false;
-
-                // 9. Center align Units and Status columns
-                if (dgvEnrollmentConfirmed.Columns.Contains("colUnits2"))
-                {
-                    dgvEnrollmentConfirmed.Columns["colUnits2"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                    dgvEnrollmentConfirmed.Columns["colUnits2"].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                }
-                if (dgvEnrollmentConfirmed.Columns.Contains("colStatus2"))
-                {
-                    dgvEnrollmentConfirmed.Columns["colStatus2"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                    dgvEnrollmentConfirmed.Columns["colStatus2"].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                }
-
-                // 10. Hide original UI, show confirmed grid
-                dgvEnrollment.Visible = false;
-                pnlContainerEnrollmentDGV.Visible = false;
-                btnSaveAndAssess.Visible = false;
-                pnlEnrollmentConfirmedDGV.Visible = true;
-                dgvEnrollmentConfirmed.Visible = true;
-
-                // 13. Save enrollment status
-                SetEnrollmentStatus(true);
-
-                //// 14. Refresh accounts data to show real payment information
-                //RefreshAccountsAfterEnrollment();
-                isEnrolled = true;
-
-                MessageBox.Show("You are officially enrolled!", "Enrollment Successful",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An error occurred:\n{ex.Message}\n\nPlease contact support.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            // Enable COR download button after successful enrollment
-            btnDownloadCOR.Enabled = true;
-            btnDownloadCOR.BackColor = Color.Maroon;
-
-            // After successful enrollment confirmation
-            dataService.SetEnrollmentStatus(true);
-            //RefreshAccountsAfterEnrollment();
-        }
-
-        // ─────────────────────────────────────────────────────────────────
-        // Maroon border for info cards (draws 1px Maroon border)
-        // ─────────────────────────────────────────────────────────────────
         private void SetupMaroonBorders()
         {
             foreach (Panel p in new[] { pnlEnrollLeftCard, pnlEnrollMiddleCard, pnlEnrollRightCard })
             {
                 p.BackColor = Color.White;
                 p.BorderStyle = BorderStyle.None;
-                p.Paint += (s, e) =>
+                p.Paint += (s, ev) =>
                 {
-                    ControlPaint.DrawBorder(e.Graphics, p.ClientRectangle,
-                        Color.Maroon, 1, ButtonBorderStyle.Solid,
-                        Color.Maroon, 1, ButtonBorderStyle.Solid,
-                        Color.Maroon, 1, ButtonBorderStyle.Solid,
-                        Color.Maroon, 1, ButtonBorderStyle.Solid);
+                    ControlPaint.DrawBorder(ev.Graphics, p.ClientRectangle,
+                        Color.Maroon, 1, ButtonBorderStyle.Solid, Color.Maroon, 1, ButtonBorderStyle.Solid,
+                        Color.Maroon, 1, ButtonBorderStyle.Solid, Color.Maroon, 1, ButtonBorderStyle.Solid);
                 };
             }
-        }
-
-        // Method to save enrollment status after successful enrollment
-        private void SetEnrollmentStatus(bool enrolled)
-        {
-            dataService.SetEnrollmentStatus(enrolled);
-        }
-
-        private void EnrollmentContentStudent_Load(object sender, EventArgs e)
-        {
-            Enrollment_Initialize();
-            SetupMaroonBorders();
         }
 
         private void btnDownloadCOR_Click(object sender, EventArgs e)
@@ -541,7 +468,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             try
             {
                 var img = Properties.Resources.CertificateOfRegistration;
-                if (img == null) throw new Exception("Certificate image not found.");
+                if (img == null) throw new Exception("Certificate asset not found.");
                 using (SaveFileDialog sfd = new SaveFileDialog())
                 {
                     sfd.Filter = "PNG Image|*.png";
@@ -554,6 +481,56 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
                 }
             }
             catch (Exception ex) { MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
+
+        private void Enrollment_ShowOverlay()
+        {
+            pnlViewDetails.Parent = pnlEnrollContent;
+            pnlViewDetails.BringToFront();
+            pnlViewDetails.Visible = true;
+            pnlViewDetails.Location = new Point((pnlViewDetails.Parent.Width - pnlViewDetails.Width) / 2, (pnlViewDetails.Parent.Height - pnlViewDetails.Height) / 2);
+        }
+
+        private void Enrollment_HideOverlay() => pnlViewDetails.Visible = false;
+        private void btnEnrollCloseDetails_Click(object sender, EventArgs e) => Enrollment_HideOverlay();
+
+        private void Enrollment_viewDetailsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dgvEnrollment.CurrentRow != null)
+            {
+                var data = dgvEnrollment.CurrentRow.DataBoundItem as EnrollmentData;
+                if (data != null)
+                {
+                    lblDetailCode.Text = $"Code: {data.Code}";
+                    lblDetailTitle.Text = $"Title: {data.CourseTitle}";
+                    lblDetailUnits.Text = $"Units: {data.Units}";
+                    txtDetailSchedule.Text = $"Schedule: {data.Schedule}";
+                    lblDetailStatus.Text = $"Status: {data.Status}";
+                }
+            }
+            Enrollment_ShowOverlay();
+        }
+
+        private void dropSubjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dgvEnrollment.CurrentRow == null) return;
+            var data = dgvEnrollment.CurrentRow.DataBoundItem as EnrollmentData;
+            if (data == null) return;
+
+            if (data.Status == "Enrolled")
+            {
+                MessageBox.Show("You cannot drop an officially enrolled subject here. Please visit the Registrar.", "Action Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DialogResult result = MessageBox.Show($"Are you sure you want to drop {data.Code} from your cart?", "Confirm Drop", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result != DialogResult.Yes) return;
+
+            _liveSubjects.Remove(data);
+            dgvEnrollment.DataSource = new BindingList<EnrollmentData>(_liveSubjects);
+
+            Enrollment_UpdateTotalUnits();
+            CheckGlobalEnrollmentStatus();
         }
     }
 }

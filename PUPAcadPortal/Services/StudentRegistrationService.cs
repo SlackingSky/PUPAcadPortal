@@ -5,7 +5,8 @@ using PUPAcadPortal.Utils;
 using MySqlConnector;
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PUPAcadPortal.Services
 {
@@ -16,44 +17,73 @@ namespace PUPAcadPortal.Services
 
         public async Task<Student> RegisterSingleStudent(StudentRegistrationData dto)
         {
-        using (var context = new AppDbContext())
-        {
-            string tempPassword = "PUP" + dto.DateOfBirth.Year.ToString();
-            int currentYear = DateTime.Now.Year;
-            int sequence = await AutoGenerators.GetNextStudentSequence(currentYear);
-            string fName = dto.FirstName.ToLower().Trim();
-            string lName = dto.LastName.ToLower().Trim();
-
-            bool isDuplicate = await context.Users.AnyAsync(u =>
-                u.FirstName.ToLower() == fName &&
-                u.LastName.ToLower() == lName &&
-                u.Birthdate == dto.DateOfBirth &&
-                u.RoleId == 2);
-
-            if (isDuplicate)
+            using (var context = new AppDbContext())
             {
-                throw new InvalidOperationException($"Registration failed. '{dto.FirstName} {dto.LastName}' born on {dto.DateOfBirth:MMMM dd, yyyy} is already registered.");
-            }
+                string tempPassword = "PUP" + dto.DateOfBirth.Year.ToString();
+                int currentYear = DateTime.Now.Year;
+                int sequence = await AutoGenerators.GetNextStudentSequence(currentYear);
+                string fName = dto.FirstName.ToLower().Trim();
+                string lName = dto.LastName.ToLower().Trim();
 
-            string studentNumber = AutoGenerators.FormatPupStudentNumber(currentYear, sequence, CampusBranch, IsTransferee);
-            string officialEmail = await AutoGenerators.GenerateUniqueInstitutionalEmail(dto.FirstName, dto.LastName, dto.MiddleName);
-            string uniqueUsername = await AutoGenerators.GenerateUniqueUsername(dto.FirstName, dto.LastName, dto.MiddleName);
+                bool isDuplicate = await context.Users.AnyAsync(u =>
+                    u.FirstName.ToLower() == fName &&
+                    u.LastName.ToLower() == lName &&
+                    u.Birthdate == dto.DateOfBirth &&
+                    u.RoleId == 2);
 
-            var newStudent = MapToEntities(dto, studentNumber, officialEmail, uniqueUsername, tempPassword);
+                if (isDuplicate)
+                {
+                    throw new InvalidOperationException($"Registration failed. '{dto.FirstName} {dto.LastName}' born on {dto.DateOfBirth:MMMM dd, yyyy} is already registered.");
+                }
 
+                string studentNumber = AutoGenerators.FormatPupStudentNumber(currentYear, sequence, CampusBranch, IsTransferee);
+                string officialEmail = await AutoGenerators.GenerateUniqueInstitutionalEmail(dto.FirstName, dto.LastName, dto.MiddleName);
+                string uniqueUsername = await AutoGenerators.GenerateUniqueUsername(dto.FirstName, dto.LastName, dto.MiddleName);
 
-            await EmailService.SendWelcomeEmailAsync(
-            studentPersonalEmail: dto.Email,
-            dto.FirstName,
-            officialEmail,
-            tempPassword,
-            studentNumber,
-            uniqueUsername
-            );
-            context.Students.Add(newStudent);
-            await context.SaveChangesAsync();
+                var newStudent = MapToEntities(dto, studentNumber, officialEmail, uniqueUsername, tempPassword);
 
-            return newStudent;
+                await EmailService.SendWelcomeEmailAsync(
+                    studentPersonalEmail: dto.Email,
+                    dto.FirstName,
+                    officialEmail,
+                    tempPassword,
+                    studentNumber,
+                    uniqueUsername
+                );
+
+                var strategy = context.Database.CreateExecutionStrategy();
+
+                return await strategy.ExecuteAsync(async () =>
+                {
+                    using (var transaction = await context.Database.BeginTransactionAsync())
+                    {
+                        try
+                        {
+                            context.Students.Add(newStudent);
+                            await context.SaveChangesAsync();
+
+                            var freeTuitionDiscount = new StudentDiscount
+                            {
+                                StudentId = newStudent.StudentId,
+                                DiscountName = "RA 10931 (Free Higher Education Act)",
+                                Percentage = 100.00m,
+                                IsActive = true
+                            };
+                            context.StudentDiscounts.Add(freeTuitionDiscount);
+
+                            await context.SaveChangesAsync();
+                            await transaction.CommitAsync();
+
+                            return newStudent;
+                        }
+                        catch (Exception)
+                        {
+                            await transaction.RollbackAsync();
+                            context.ChangeTracker.Clear();
+                            throw;
+                        }
+                    }
+                });
             }
         }
 
@@ -61,6 +91,7 @@ namespace PUPAcadPortal.Services
         {
             int processedCount = 0;
             var skippedRecords = new List<StudentRegistrationData>();
+
             using (var context = new AppDbContext())
             {
                 int currentYear = DateTime.Now.Year;
@@ -70,16 +101,20 @@ namespace PUPAcadPortal.Services
 
                 var existingUsers = await context.Users.Select(u => new { u.FirstName, u.LastName, u.Birthdate }).ToListAsync();
                 HashSet<string> existingIdentities = new HashSet<string>();
+
                 foreach (var u in existingUsers)
                 {
                     string dob = u.Birthdate.HasValue ? u.Birthdate.Value.ToString("yyyyMMdd") : "20000101";
                     existingIdentities.Add($"{u.FirstName.ToLower()}|{u.LastName.ToLower()}|{dob}");
                 }
 
+                var strategy = context.Database.CreateExecutionStrategy();
+
                 foreach (var dto in dtos)
                 {
                     string tempPassword = "PUP" + dto.DateOfBirth.Year.ToString();
                     string studentIdentityKey = $"{dto.FirstName.ToLower()}|{dto.LastName.ToLower()}|{dto.DateOfBirth:yyyyMMdd}";
+
                     if (existingIdentities.Contains(studentIdentityKey))
                     {
                         skippedRecords.Add(dto);
@@ -99,30 +134,66 @@ namespace PUPAcadPortal.Services
 
                     newStudentsToSave.Add(newStudent);
                     processedCount++;
+
                     await EmailService.SendWelcomeEmailAsync(
-                    studentPersonalEmail: dto.Email,
-                    dto.FirstName,
-                    officialEmail,
-                    tempPassword,
-                    studentNumber,
-                    uniqueUsername
+                        studentPersonalEmail: dto.Email,
+                        dto.FirstName,
+                        officialEmail,
+                        tempPassword,
+                        studentNumber,
+                        uniqueUsername
                     );
+
                     if (processedCount % 500 == 0)
                     {
-
-                        context.Students.AddRange(newStudentsToSave);
-                        await context.SaveChangesAsync();
+                        await SaveBatchWithRetryAsync(context, strategy, newStudentsToSave);
                         newStudentsToSave.Clear();
                     }
                 }
 
                 if (newStudentsToSave.Count > 0)
                 {
-                    context.Students.AddRange(newStudentsToSave);
-                    await context.SaveChangesAsync();
+                    await SaveBatchWithRetryAsync(context, strategy, newStudentsToSave);
+                    newStudentsToSave.Clear();
                 }
             }
+
             return (processedCount, skippedRecords);
+        }
+
+        private async Task SaveBatchWithRetryAsync(AppDbContext context, Microsoft.EntityFrameworkCore.Storage.IExecutionStrategy strategy, List<Student> studentsBatch)
+        {
+            await strategy.ExecuteAsync(async () =>
+            {
+                using (var transaction = await context.Database.BeginTransactionAsync())
+                {
+                    try
+                    {
+                        context.Students.AddRange(studentsBatch);
+                        await context.SaveChangesAsync();
+
+                        var batchDiscounts = studentsBatch.Select(s => new StudentDiscount
+                        {
+                            StudentId = s.StudentId,
+                            DiscountName = "RA 10931 (Free Higher Education Act)",
+                            Percentage = 100.00m,
+                            IsActive = true
+                        }).ToList();
+
+                        context.StudentDiscounts.AddRange(batchDiscounts);
+                        await context.SaveChangesAsync();
+
+                        await transaction.CommitAsync();
+                    }
+                    catch (Exception)
+                    {
+                        await transaction.RollbackAsync();
+
+                        context.ChangeTracker.Clear();
+                        throw;
+                    }
+                }
+            });
         }
 
         private Student MapToEntities(StudentRegistrationData dto, string studentNum, string officialEmail, string uniqueUsername, string tempPassword)
@@ -155,7 +226,7 @@ namespace PUPAcadPortal.Services
             {
                 User = newUser,
                 StudentNumber = studentNum,
-                StudentType =  dto.StudentType ?? "Regular",
+                StudentType = dto.StudentType ?? "Regular",
                 Program = dto.Program,
                 YearLevel = dto.YearLevel > 0 ? dto.YearLevel : 1
             };

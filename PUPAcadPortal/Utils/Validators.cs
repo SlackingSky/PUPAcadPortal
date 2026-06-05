@@ -85,7 +85,7 @@ namespace PUPAcadPortal.Utils
                 }
                 else if (child is ComboBox cmb)
                 {
-                    if (cmb.SelectedIndex <= 0)
+                    if (cmb.SelectedIndex < 0)
                     {
                         registrationErrorProvider.SetError(cmb, "Please select an option from the dropdown.");
                         isValid = false;
@@ -135,21 +135,21 @@ namespace PUPAcadPortal.Utils
                 return false;
             }
 
-
-
-            if (age > 70)
-            {
-                registrationErrorProvider.SetError(dtp, "Invalid age for registration.");
-                return false;
-            }
-
             if (dob.Year < 1950)
             {
                 registrationErrorProvider.SetError(dtp, "Year must be 1950 or later.");
                 return false;
             }
 
-            if (dtp.Tag?.ToString() == "student")
+            if (age > 70)
+            {
+                registrationErrorProvider.SetError(dtp, "Invalid age for registration. Maximum age is 70.");
+                return false;
+            }
+
+            bool isStudent = (dtp.Tag?.ToString() == "student");
+
+            if (isStudent)
             {
                 if (age < 17)
                 {
@@ -157,13 +157,16 @@ namespace PUPAcadPortal.Utils
                     return false;
                 }
             }
-            
-            if (age < 21 || age > 70 && dtp.Tag?.ToString() != "student")
+            else
             {
-                registrationErrorProvider.SetError(dtp, $"Age must be between 21-70 years old. Current age: {age}");
-                return false;
+                if (age < 21)
+                {
+                    registrationErrorProvider.SetError(dtp, $"Age must be between 21-70 years old. Current age: {age}");
+                    return false;
+                }
             }
 
+            registrationErrorProvider.SetError(dtp, string.Empty);
             return true;
         }
 

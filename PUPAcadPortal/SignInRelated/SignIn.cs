@@ -172,6 +172,8 @@ namespace PUPAcadPortal
                  {
                     form.Size = _usableScreenSize;
                     form.Location = _usableScreenLoc;
+                    var systemService = new SystemService();
+                    await systemService.LoadCurrentAcademicPeriodAsync();
                     form.ShowDialog();
                     txtUsername.Clear();
                     txtPassword.Clear();
