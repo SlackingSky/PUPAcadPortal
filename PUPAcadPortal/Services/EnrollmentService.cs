@@ -46,12 +46,16 @@ namespace PUPAcadPortal.Services
                               && (es.SubjectStatus == "Officially Enrolled" || es.SubjectStatus == "Pending Payment"))
                     .ToDictionaryAsync(es => es.SubjectOfferingId, es => es.SubjectStatus);
 
-                var passedSubjectIds = await context.FinalCourseGrades
-                    .Include(f => f.EnrollmentSubj)
+                var passedSubjectIdsList = await context.FinalCourseGrades
                     .Where(f => f.EnrollmentSubj.Enrollment.StudentId == studentId
                              && f.FinalRating <= 3.00m && f.FinalRating >= 1.00m)
                     .Select(f => f.EnrollmentSubj.SubjectOffering.SubjectId)
                     .ToListAsync();
+
+                var passedSubjectIdsQuery = context.FinalCourseGrades
+                    .Where(f => f.EnrollmentSubj.Enrollment.StudentId == studentId
+                             && f.FinalRating <= 3.00m && f.FinalRating >= 1.00m)
+                    .Select(f => f.EnrollmentSubj.SubjectOffering.SubjectId);
 
                 var requiredSubjectIdsQuery = context.Curricula
                     .Where(c => c.Program == program
@@ -68,7 +72,7 @@ namespace PUPAcadPortal.Services
                     .Where(so => so.AcademicPeriodId == academicPeriodId
                               && so.Status == "Active"
                               && requiredSubjectIdsQuery.Contains(so.SubjectId)
-                              && !passedSubjectIds.Contains(so.SubjectId))
+                              && !passedSubjectIdsQuery.Contains(so.SubjectId))
                     .ToListAsync();
 
                 return offerings.Select(so =>
@@ -76,8 +80,9 @@ namespace PUPAcadPortal.Services
                     bool isProcessed = existingEnrollments.ContainsKey(so.SubjectOfferingId);
                     string dbStatus = isProcessed ? existingEnrollments[so.SubjectOfferingId] : null;
 
+                    // Use the LOCAL LIST for the memory check
                     var missingPrereqs = so.Subject.SubjectPrerequisiteSubjects
-                        .Where(pr => !passedSubjectIds.Contains(pr.RequiredSubjectId))
+                        .Where(pr => !passedSubjectIdsList.Contains(pr.RequiredSubjectId))
                         .Select(pr => pr.RequiredSubject != null
                             ? $"{pr.RequiredSubject.SubjectCode}"
                             : "Unknown Subject")

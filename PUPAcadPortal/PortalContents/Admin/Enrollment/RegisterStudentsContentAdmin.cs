@@ -113,7 +113,8 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
 
                 Program = program,
                 YearLevel = yearLevel,
-                StudentType = applicantType
+                StudentType = applicantType,
+                CurriculumYear = (int)cmbCurriculumYear.SelectedItem
             };
 
             btnStudentRegistration.Enabled = false;

@@ -15,6 +15,19 @@ namespace PUPAcadPortal.Services
         public static bool IsTransferee { get; set; } = false;
         public static string CampusBranch { get; set; } = "SM";
 
+
+        public async Task<int> GetLatestCurriculumYearAsync(string programCode)
+        {
+            using (var context = new AppDbContext())
+            {
+                return await context.Curricula
+                    .Where(c => c.Program == programCode)
+                    .Select(c => c.RevisionYear)
+                    .OrderByDescending(y => y)
+                    .FirstOrDefaultAsync();
+            }
+        }
+
         public async Task<List<int>> GetAvailableCurriculumYearsAsync(string programCode)
         {
             using (var context = new AppDbContext())
@@ -104,6 +117,7 @@ namespace PUPAcadPortal.Services
         {
             int processedCount = 0;
             var skippedRecords = new List<StudentRegistrationData>();
+            var curriculumYearCache = new Dictionary<string, int>();
 
             using (var context = new AppDbContext())
             {
@@ -134,7 +148,12 @@ namespace PUPAcadPortal.Services
                         continue;
                     }
 
-                    existingIdentities.Add(studentIdentityKey);
+                    if (!curriculumYearCache.ContainsKey(dto.Program))
+                    {
+                        int latestYear = await GetLatestCurriculumYearAsync(dto.Program);
+                        curriculumYearCache[dto.Program] = latestYear;
+                    }
+                    int assignedYear = curriculumYearCache[dto.Program];
 
                     string studentNumber = AutoGenerators.FormatPupStudentNumber(currentYear, currentSequence, CampusBranch);
                     string uniqueUsername = await AutoGenerators.GenerateUniqueUsername(dto.FirstName, dto.LastName, dto.MiddleName);
@@ -144,6 +163,8 @@ namespace PUPAcadPortal.Services
                     batchEmails.Add(officialEmail);
 
                     var newStudent = MapToEntities(dto, studentNumber, officialEmail, uniqueUsername, tempPassword);
+
+                    newStudent.CurriculumYear = assignedYear;
 
                     newStudentsToSave.Add(newStudent);
                     processedCount++;
@@ -241,7 +262,8 @@ namespace PUPAcadPortal.Services
                 StudentNumber = studentNum,
                 StudentType = dto.StudentType ?? "Regular",
                 Program = dto.Program,
-                YearLevel = dto.YearLevel > 0 ? dto.YearLevel : 1
+                YearLevel = dto.YearLevel > 0 ? dto.YearLevel : 1,
+                CurriculumYear = dto.CurriculumYear,
             };
 
             return newStudent;
