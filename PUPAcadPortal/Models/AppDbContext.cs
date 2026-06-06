@@ -1061,6 +1061,8 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.Region)
                 .HasMaxLength(100)
                 .HasDefaultValueSql("'N/A'");
+            entity.Property(e => e.ResetPasswordToken).HasMaxLength(255);
+            entity.Property(e => e.ResetTokenExpiry).HasColumnType("datetime");
             entity.Property(e => e.RoleId).HasColumnName("RoleID");
             entity.Property(e => e.Suffix).HasMaxLength(20);
             entity.Property(e => e.Username).HasMaxLength(50);

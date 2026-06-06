@@ -313,5 +313,13 @@ namespace PUPAcadPortal
         {
             txtUsername.Focus();
         }
+
+        private void lnkForgotPassword_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            using (var recoveryForm = new PUPAcadPortal.SignInRelated.AccountRecovery.ForgotPasswordForm())
+            {
+                recoveryForm.ShowDialog();
+            }
+        }
     }
 }

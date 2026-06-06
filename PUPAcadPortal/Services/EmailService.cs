@@ -105,5 +105,40 @@ namespace PUPAcadPortal.Utils
                 Console.WriteLine($"Email Failed to Send: {ex.Message}");
             }
         }
+
+            public static async Task SendPasswordResetEmailAsync(string targetEmail, string firstName, string resetPin)
+            {
+            try
+            {
+                var mailMessage = new System.Net.Mail.MailMessage();
+                // NOTE: Replace these with your actual SMTP credentials from your existing methods
+                mailMessage.From = new System.Net.Mail.MailAddress("pupacademicportal@gmail.com");
+                mailMessage.To.Add(targetEmail);
+                mailMessage.Subject = "PUP Portal - Password Reset Verification Code";
+
+                mailMessage.Body = $@"
+            <h3>Hello {firstName},</h3>
+            <p>We received a request to reset the password for your PUP Academic Portal account.</p>
+            <p>Your 6-digit password reset code is: <b><span style='font-size: 24px;'>{resetPin}</span></b></p>
+            <p>This code will expire in 15 minutes.</p>
+            <p>If you did not request this, please ignore this email.</p>
+            <br/>
+            <p>PUP IT Support Team</p>";
+
+                mailMessage.IsBodyHtml = true;
+
+                using (var smtpClient = new System.Net.Mail.SmtpClient("smtp.gmail.com", 587))
+                {
+                    // Replace with your actual credentials
+                    smtpClient.Credentials = new System.Net.NetworkCredential("pupacademicportal@gmail.com", "ryob acox atcb mmnq");
+                    smtpClient.EnableSsl = true;
+                    await smtpClient.SendMailAsync(mailMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to send reset email: {ex.Message}");
+            }
+        }
     }
 }
