@@ -47,6 +47,10 @@ public partial class User
 
     public DateTime CreatedAt { get; set; }
 
+    public string? ResetPasswordToken { get; set; }
+
+    public DateTime? ResetTokenExpiry { get; set; }
+
     public virtual ICollection<ActivityLog> ActivityLogs { get; set; } = new List<ActivityLog>();
 
     public virtual ICollection<Admin> Admins { get; set; } = new List<Admin>();
