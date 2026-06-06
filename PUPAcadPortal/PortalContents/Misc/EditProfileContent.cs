@@ -1,4 +1,6 @@
-﻿using PUPAcadPortal.Utils;
+﻿using Microsoft.EntityFrameworkCore;
+using PUPAcadPortal.Data;
+using PUPAcadPortal.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -33,8 +35,26 @@ namespace PUPAcadPortal.PortalContents.Misc
                     if (user != null)
                     {
                         var role = await context.Roles.FindAsync(user.RoleId);
-                        this.SafeUIUpdate(() =>
+                        string idNumber = user.RoleId switch
                         {
+                            1 => (await context.Admins
+                                     .Where(a => a.UserId == user.UserId)
+                                     .Select(a => (int?)a.AdminId)
+                                     .FirstOrDefaultAsync())?.ToString() ?? "No ID Found",
+
+                            2 => await context.Students
+                                     .Where(s => s.UserId == user.UserId)
+                                     .Select(s => s.StudentNumber)
+                                     .FirstOrDefaultAsync() ?? "No ID Found",
+                            3 => await context.Professors
+                                     .Where(p => p.UserId == user.UserId)
+                                     .Select(p => p.EmployeeId)
+                                     .FirstOrDefaultAsync() ?? "No ID Found",
+                            _ => "No ID Found"
+                        };
+                        this.SafeUIUpdate(async () =>
+                        {
+                            txtIDNumber.Text = idNumber;
                             txtUsername.Text = user.Username;
                             txtPassword.Text = user.PasswordHash != null ? "********" : "No password set";
                             txtPersonalEmail.Text = user.PersonalEmail ?? "No personal email set";
