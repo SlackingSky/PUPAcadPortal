@@ -47,8 +47,8 @@ namespace PUPAcadPortal.PortalContents.Admin.SubOffering
 
         private async Task EvaluateSecurityLockAsync()
         {
-            //bool isActive = await _subjectService.IsSemesterActiveAsync();
-            bool isActive = false;
+            bool isActive = await _subjectService.IsSemesterActiveAsync();
+            //bool isActive = false;
 
             if (isActive)
             {
