@@ -260,7 +260,8 @@ namespace PUPAcadPortal.Services
             {
                 User = newUser,
                 StudentNumber = studentNum,
-                StudentType = dto.StudentType ?? "Regular",
+                AdmissionType = dto.AdmissionType ?? "Regular",
+                AcademicStanding = dto.AcademicStanding ?? "Regular",
                 Program = dto.Program,
                 YearLevel = dto.YearLevel > 0 ? dto.YearLevel : 1,
                 CurriculumYear = dto.CurriculumYear,

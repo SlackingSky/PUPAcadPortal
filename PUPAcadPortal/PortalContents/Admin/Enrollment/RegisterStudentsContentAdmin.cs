@@ -113,7 +113,8 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
 
                 Program = program,
                 YearLevel = yearLevel,
-                StudentType = applicantType,
+                AdmissionType = applicantType,
+                AcademicStanding = applicantType == "Regular" ? "Regular" : "Irregular",
                 CurriculumYear = (int)cmbCurriculumYear.SelectedItem
             };
 

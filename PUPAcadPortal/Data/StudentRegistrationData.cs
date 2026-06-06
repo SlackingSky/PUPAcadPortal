@@ -32,6 +32,9 @@ namespace PUPAcadPortal.Data
         [Optional]
         public int YearLevel { get; set; }
         [Optional]
-        public string StudentType { get; set; }
+        public string AdmissionType { get; set; }
+
+        [Optional]
+        public string AcademicStanding { get; set; }
     }
 }
