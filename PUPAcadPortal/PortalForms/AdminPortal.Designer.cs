@@ -72,6 +72,7 @@
             label3 = new Label();
             label4 = new Label();
             pictureBox2 = new PictureBox();
+            btnManageSubs = new Button();
             pnlSidebar.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             panel7.SuspendLayout();
@@ -496,15 +497,16 @@
             // pnlsubofferingSubmenu
             // 
             pnlsubofferingSubmenu.BackColor = Color.FromArgb(128, 109, 0, 0);
-            pnlsubofferingSubmenu.Controls.Add(btnSO_CurrentSemester);
-            pnlsubofferingSubmenu.Controls.Add(btnSO_EditSchedule);
-            pnlsubofferingSubmenu.Controls.Add(btnSO_Schedule);
+            pnlsubofferingSubmenu.Controls.Add(btnManageSubs);
             pnlsubofferingSubmenu.Controls.Add(btnSO_CurriculumArchive);
+            pnlsubofferingSubmenu.Controls.Add(btnSO_EditSchedule);
+            pnlsubofferingSubmenu.Controls.Add(btnSO_CurrentSemester);
+            pnlsubofferingSubmenu.Controls.Add(btnSO_Schedule);
             pnlsubofferingSubmenu.FlowDirection = FlowDirection.TopDown;
             pnlsubofferingSubmenu.Location = new Point(0, 544);
             pnlsubofferingSubmenu.Margin = new Padding(0);
             pnlsubofferingSubmenu.Name = "pnlsubofferingSubmenu";
-            pnlsubofferingSubmenu.Size = new Size(256, 190);
+            pnlsubofferingSubmenu.Size = new Size(256, 248);
             pnlsubofferingSubmenu.TabIndex = 11;
             pnlsubofferingSubmenu.Visible = false;
             pnlsubofferingSubmenu.WrapContents = false;
@@ -519,7 +521,7 @@
             btnSO_CurrentSemester.FlatStyle = FlatStyle.Flat;
             btnSO_CurrentSemester.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             btnSO_CurrentSemester.ForeColor = Color.White;
-            btnSO_CurrentSemester.Location = new Point(0, 0);
+            btnSO_CurrentSemester.Location = new Point(0, 144);
             btnSO_CurrentSemester.Margin = new Padding(0);
             btnSO_CurrentSemester.Name = "btnSO_CurrentSemester";
             btnSO_CurrentSemester.Padding = new Padding(26, 0, 0, 0);
@@ -540,7 +542,7 @@
             btnSO_EditSchedule.FlatStyle = FlatStyle.Flat;
             btnSO_EditSchedule.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             btnSO_EditSchedule.ForeColor = Color.White;
-            btnSO_EditSchedule.Location = new Point(0, 48);
+            btnSO_EditSchedule.Location = new Point(0, 96);
             btnSO_EditSchedule.Margin = new Padding(0);
             btnSO_EditSchedule.Name = "btnSO_EditSchedule";
             btnSO_EditSchedule.Padding = new Padding(26, 0, 0, 0);
@@ -561,7 +563,7 @@
             btnSO_Schedule.FlatStyle = FlatStyle.Flat;
             btnSO_Schedule.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             btnSO_Schedule.ForeColor = Color.White;
-            btnSO_Schedule.Location = new Point(0, 96);
+            btnSO_Schedule.Location = new Point(0, 192);
             btnSO_Schedule.Margin = new Padding(0);
             btnSO_Schedule.Name = "btnSO_Schedule";
             btnSO_Schedule.Padding = new Padding(26, 0, 0, 0);
@@ -582,7 +584,7 @@
             btnSO_CurriculumArchive.FlatStyle = FlatStyle.Flat;
             btnSO_CurriculumArchive.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             btnSO_CurriculumArchive.ForeColor = Color.White;
-            btnSO_CurriculumArchive.Location = new Point(0, 144);
+            btnSO_CurriculumArchive.Location = new Point(0, 48);
             btnSO_CurriculumArchive.Margin = new Padding(0);
             btnSO_CurriculumArchive.Name = "btnSO_CurriculumArchive";
             btnSO_CurriculumArchive.Padding = new Padding(26, 0, 0, 0);
@@ -734,6 +736,27 @@
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
             // 
+            // btnManageSubs
+            // 
+            btnManageSubs.BackColor = Color.Transparent;
+            btnManageSubs.Cursor = Cursors.Hand;
+            btnManageSubs.FlatAppearance.BorderSize = 0;
+            btnManageSubs.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnManageSubs.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            btnManageSubs.FlatStyle = FlatStyle.Flat;
+            btnManageSubs.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            btnManageSubs.ForeColor = Color.White;
+            btnManageSubs.Location = new Point(0, 0);
+            btnManageSubs.Margin = new Padding(0);
+            btnManageSubs.Name = "btnManageSubs";
+            btnManageSubs.Padding = new Padding(26, 0, 0, 0);
+            btnManageSubs.Size = new Size(256, 48);
+            btnManageSubs.TabIndex = 4;
+            btnManageSubs.Text = " Manage Subjects";
+            btnManageSubs.TextAlign = ContentAlignment.MiddleLeft;
+            btnManageSubs.UseVisualStyleBackColor = false;
+            btnManageSubs.Click += btnManageSubs_Click;
+            // 
             // AdminPortal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -816,5 +839,6 @@
         private Panel mainContentPanel;
         private PortalContents.Misc.UserProfile userProfile1;
         private Button btnManageRooms;
+        private Button btnManageSubs;
     }
 }

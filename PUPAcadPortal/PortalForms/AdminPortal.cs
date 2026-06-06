@@ -166,5 +166,10 @@ namespace PUPAcadPortal.PortalForms
         {
             mainContentPanel.ShowView(new RoomsContentAdmin());
         }
+
+        private void btnManageSubs_Click(object sender, EventArgs e)
+        {
+            mainContentPanel.ShowView(new SubjectManagementContentAdmin());
+        }
     }
 }
