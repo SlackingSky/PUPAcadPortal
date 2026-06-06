@@ -15,6 +15,19 @@ namespace PUPAcadPortal.Services
         public static bool IsTransferee { get; set; } = false;
         public static string CampusBranch { get; set; } = "SM";
 
+        public async Task<List<int>> GetAvailableCurriculumYearsAsync(string programCode)
+        {
+            using (var context = new AppDbContext())
+            {
+                return await context.Curricula
+                    .Where(c => c.Program == programCode)
+                    .Select(c => c.RevisionYear)
+                    .Distinct()
+                    .OrderByDescending(y => y)
+                    .ToListAsync();
+            }
+        }
+
         public async Task<Student> RegisterSingleStudent(StudentRegistrationData dto)
         {
             using (var context = new AppDbContext())

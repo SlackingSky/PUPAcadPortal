@@ -18,6 +18,7 @@ namespace PUPAcadPortal.Services
                     .AsNoTracking() // AsNoTracking makes read-only queries much faster
                     .FirstOrDefaultAsync(ap => ap.Status == "Current");
 
+
                 // 2. Safety Net: If the database is missing a current period, stop the app
                 if (activePeriod == null)
                 {

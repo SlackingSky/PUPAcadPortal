@@ -31,6 +31,8 @@
             pnlRegisterStudentContent = new Panel();
             pnlSpaceProviderRS = new Panel();
             pnlStudentRegistrationContainer = new Panel();
+            label2 = new Label();
+            cmbCurriculumYear = new ComboBox();
             btnBulkRegister = new Button();
             label1 = new Label();
             txtRSStudentID = new MaskedTextBox();
@@ -100,6 +102,8 @@
             pnlStudentRegistrationContainer.AutoScroll = true;
             pnlStudentRegistrationContainer.BackColor = Color.White;
             pnlStudentRegistrationContainer.BorderStyle = BorderStyle.FixedSingle;
+            pnlStudentRegistrationContainer.Controls.Add(label2);
+            pnlStudentRegistrationContainer.Controls.Add(cmbCurriculumYear);
             pnlStudentRegistrationContainer.Controls.Add(btnBulkRegister);
             pnlStudentRegistrationContainer.Controls.Add(label1);
             pnlStudentRegistrationContainer.Controls.Add(txtRSStudentID);
@@ -135,6 +139,27 @@
             pnlStudentRegistrationContainer.Name = "pnlStudentRegistrationContainer";
             pnlStudentRegistrationContainer.Size = new Size(959, 990);
             pnlStudentRegistrationContainer.TabIndex = 0;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.ForeColor = Color.Black;
+            label2.Location = new Point(478, 831);
+            label2.Name = "label2";
+            label2.Size = new Size(89, 21);
+            label2.TabIndex = 62;
+            label2.Text = "Curriculum";
+            // 
+            // cmbCurriculumYear
+            // 
+            cmbCurriculumYear.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbCurriculumYear.Font = new Font("Segoe UI", 12F);
+            cmbCurriculumYear.FormattingEnabled = true;
+            cmbCurriculumYear.Location = new Point(478, 855);
+            cmbCurriculumYear.Name = "cmbCurriculumYear";
+            cmbCurriculumYear.Size = new Size(126, 29);
+            cmbCurriculumYear.TabIndex = 61;
             // 
             // btnBulkRegister
             // 
@@ -257,7 +282,7 @@
             cmbRSYearLevel.Items.AddRange(new object[] { "1st Year", "2nd Year", "3rd Year", "4th Year" });
             cmbRSYearLevel.Location = new Point(340, 855);
             cmbRSYearLevel.Name = "cmbRSYearLevel";
-            cmbRSYearLevel.Size = new Size(246, 29);
+            cmbRSYearLevel.Size = new Size(128, 29);
             cmbRSYearLevel.TabIndex = 8;
             // 
             // label22
@@ -583,5 +608,7 @@
         private MaskedTextBox txtRSStudentID;
         private Label label1;
         private Button btnBulkRegister;
+        private Label label2;
+        private ComboBox cmbCurriculumYear;
     }
 }

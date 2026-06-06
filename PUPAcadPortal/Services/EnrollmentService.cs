@@ -37,12 +37,13 @@ namespace PUPAcadPortal.Services
         {
             using (var context = new AppDbContext())
             {
-                var processedStatuses = new List<string> { "Officially Enrolled", "Pending Payment" };
+                var student = await context.Students.FindAsync(studentId);
+                if (student == null) throw new Exception("Student not found.");
 
                 var existingEnrollments = await context.EnrollmentSubjects
                     .Where(es => es.Enrollment.StudentId == studentId
                               && es.Enrollment.AcademicPeriodId == academicPeriodId
-                              && (es.SubjectStatus == "Officially Enrolled" || es.SubjectStatus == "Pending Payment")) // <-- THE FIX
+                              && (es.SubjectStatus == "Officially Enrolled" || es.SubjectStatus == "Pending Payment"))
                     .ToDictionaryAsync(es => es.SubjectOfferingId, es => es.SubjectStatus);
 
                 var passedSubjectIds = await context.FinalCourseGrades
@@ -53,8 +54,11 @@ namespace PUPAcadPortal.Services
                     .ToListAsync();
 
                 var requiredSubjectIdsQuery = context.Curricula
-                    .Where(c => c.Program == program && c.YearLevel == yearLevel && c.SemesterIndex == semesterIndex)
-                    .Select(c => c.SubjectId);
+                    .Where(c => c.Program == program
+                             && c.RevisionYear == student.CurriculumYear
+                             && ((c.YearLevel < yearLevel) || (c.YearLevel == yearLevel && c.SemesterIndex <= semesterIndex)))
+                    .Select(c => c.SubjectId)
+                    .Distinct();
 
                 var offerings = await context.SubjectOfferings
                     .Include(so => so.Subject)
@@ -63,7 +67,8 @@ namespace PUPAcadPortal.Services
                     .Include(so => so.RoomSchedules)
                     .Where(so => so.AcademicPeriodId == academicPeriodId
                               && so.Status == "Active"
-                              && requiredSubjectIdsQuery.Contains(so.SubjectId))
+                              && requiredSubjectIdsQuery.Contains(so.SubjectId)
+                              && !passedSubjectIds.Contains(so.SubjectId))
                     .ToListAsync();
 
                 return offerings.Select(so =>
@@ -74,21 +79,12 @@ namespace PUPAcadPortal.Services
                     var missingPrereqs = so.Subject.SubjectPrerequisiteSubjects
                         .Where(pr => !passedSubjectIds.Contains(pr.RequiredSubjectId))
                         .Select(pr => pr.RequiredSubject != null
-                            ? $"{pr.RequiredSubject.SubjectCode} ({pr.RequiredSubject.SubjectName})"
+                            ? $"{pr.RequiredSubject.SubjectCode}"
                             : "Unknown Subject")
                         .ToList();
 
                     bool isEligible = !missingPrereqs.Any();
-
-                    string rowStatus;
-                    if (isProcessed)
-                    {
-                        rowStatus = dbStatus;
-                    }
-                    else
-                    {
-                        rowStatus = isEligible ? "Pending" : "Locked";
-                    }
+                    string rowStatus = isProcessed ? dbStatus : (isEligible ? "Pending" : "Locked");
 
                     return new EnrollmentData
                     {

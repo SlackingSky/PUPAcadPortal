@@ -81,9 +81,12 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
 
                 _allRecords = await _accountingService.GetStudentAccountingRecordsAsync(activePeriod);
 
-                UpdateSummaryCards(_allRecords);
-                BindGrid(_allRecords);
-                dgvAccountingRecords.ClearSelection();
+                this.SafeUIUpdate(() =>
+                {
+                    UpdateSummaryCards(_allRecords);
+                    BindGrid(_allRecords);
+                    dgvAccountingRecords.ClearSelection();
+                });
             }
             catch (Exception ex)
             {
@@ -96,7 +99,7 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             decimal totalAssessed = records.Sum(r => r.TotalAmount);
             decimal totalPaid = records.Sum(r => r.PaidAmount);
             decimal totalUnpaid = records.Sum(r => r.UnpaidAmount);
-
+            
             lblTotalAmount.Text = $"₱{totalAssessed:N2}";
             lblPaid.Text = $"₱{totalPaid:N2}";
             lblUnpaid.Text = $"₱{totalUnpaid:N2}";
