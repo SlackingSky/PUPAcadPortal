@@ -7,6 +7,9 @@ using System.Text;
 using System.Windows.Forms;
 using PUPAcadPortal.PortalContents.Student.Enrollment;
 using PUPAcadPortal.Data;
+using Microsoft.EntityFrameworkCore;
+using PUPAcadPortal.Models;
+
 
 namespace PUPAcadPortal.PortalContents.Student.Enrollment
 {
@@ -34,7 +37,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
 
         private DataTable accountsTable;
 
-        private void Accounts_Initialize()
+        private async void Accounts_Initialize()
         {
             pnlAccountsContent.Visible = true;
             CreateAccountsTable();
@@ -87,23 +90,49 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             dgvAccounts.Columns["colAccountsPaidDate"].DataPropertyName = "colAccountsPaidDate";
         }
 
-        private void LoadAccountsData()
+        //pagload ng data sa acc page
+        private async Task LoadAccountsDataAsync(string selectedSemester = "All")
         {
             accountsTable.Rows.Clear();
 
-            var records = _dataService.GetPaymentRecords();
+            // i dunno how to make it dynamic
+            int currentStudentId = 123456;
 
-            foreach (var record in records)
+            using (var context = new AppDbContext())
             {
-                accountsTable.Rows.Add(
-                    record.ReferenceId,
-                    record.Description,
-                    $"₱{record.Amount:N2}",
-                    record.DueDate?.ToString("MM/dd/yyyy") ?? "",
-                    record.Status,
-                    record.PaidDate?.ToString("MM/dd/yyyy") ?? ""
-                );
+                // Fetch the student's account and pull payment histories from the database
+                var studentAccount = await context.StudentAccounts
+                    .Include(sa => sa.PaymentHistories)
+                    .FirstOrDefaultAsync(sa => sa.StudentId == currentStudentId);
+
+                if (studentAccount == null) return;
+
+                // filter the records based on the selected sem
+                var records = studentAccount.PaymentHistories.AsEnumerable();
+
+                // If the user selected something other than "All" (e.g., "First Semester"),it'll filter the rows dynamically
+                if (!string.Equals(selectedSemester, "All", StringComparison.OrdinalIgnoreCase) && !string.IsNullOrEmpty(selectedSemester))
+                {
+                    records = records.Where(r => r.Description != null &&
+                                                 r.Description.IndexOf(selectedSemester, StringComparison.OrdinalIgnoreCase) >= 0);
+                }
+
+                // 3. Loop through the  database records 
+                foreach (var record in records)
+                {
+                    accountsTable.Rows.Add(
+                        record.ReferenceId ?? "N/A",
+                        record.Description,
+                        $"₱{record.Amount:N2}",
+                        record.DueDate.ToString("MM/dd/yyyy") ,
+                        record.Status,
+                        record.PaidDate?.ToString("MM/dd/yyyy") ?? ""
+                    );
+                }
             }
+
+            // Refresh the Total Assessment, Total Paid, and Balance boxes based on the visible rows
+            UpdateAccountsSummary();
         }
 
         private void SetupAccountsGridStyle()
@@ -336,14 +365,14 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             pnlSpaceProviderAccounts.Top = pnlEnrollStatusCard.Bottom + 20;
             pnlSpaceProviderAccounts.Height = 50;
         }
-        private void ShowEnrolledState()
+        private async void ShowEnrolledState()
         {
             // Show the enrollment status card
             pnlEnrollStatusCard.Visible = true;
             lblEnrollStatus.Visible = true;
 
             // Load real data
-            LoadAccountsData();
+            await LoadAccountsDataAsync();
 
             // Enable enrollment-dependent features
             btnAccountsDownloadStatement.Enabled = true;
@@ -371,14 +400,14 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             lblBalancePeso.Text = "₱0.00";
         }
 
-        private void RefreshAccountsAfterEnrollment()
+        private async void RefreshAccountsAfterEnrollment()
         {
-            LoadAccountsData(); // This will now use the data service
+            await LoadAccountsDataAsync(); // This will now use the data service
             UpdateAccountsSummary();
             dgvAccounts.Refresh();
         }
 
-        private void AccountsContentStudent_Load(object sender, EventArgs e)
+        private async void AccountsContentStudent_Load(object sender, EventArgs e)
         {
             Accounts_Initialize();
             if (EnrollmentContentStudent.isEnrolled)
