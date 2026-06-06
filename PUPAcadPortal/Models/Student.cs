@@ -17,9 +17,13 @@ public partial class Student
 
     public string Program { get; set; } = null!;
 
+    public int CurriculumYear { get; set; }
+
     public virtual ICollection<AttendanceRecord> AttendanceRecords { get; set; } = new List<AttendanceRecord>();
 
     public virtual ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
+
+    public virtual ICollection<QrScanLog> QrScanLogs { get; set; } = new List<QrScanLog>();
 
     public virtual ICollection<StudentAccount> StudentAccounts { get; set; } = new List<StudentAccount>();
 

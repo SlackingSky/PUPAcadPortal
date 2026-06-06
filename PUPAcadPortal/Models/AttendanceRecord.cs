@@ -15,6 +15,14 @@ public partial class AttendanceRecord
 
     public string? Remarks { get; set; }
 
+    public bool IsQrVerified { get; set; }
+
+    public DateTime? QrScannedAt { get; set; }
+
+    public string? QrNonce { get; set; }
+
+    public virtual ICollection<QrScanLog> QrScanLogs { get; set; } = new List<QrScanLog>();
+
     public virtual ClassSession Session { get; set; } = null!;
 
     public virtual Student Student { get; set; } = null!;
