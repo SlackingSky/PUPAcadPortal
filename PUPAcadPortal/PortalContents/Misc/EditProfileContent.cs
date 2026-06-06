@@ -66,7 +66,7 @@ namespace PUPAcadPortal.PortalContents.Misc
                             phAddressFields1.CityComboBox.Text = user.CityMunicipality ?? "No city set";
                             phAddressFields1.BarangayComboBox.Text = user.Barangay ?? "No barangay set";
                             phAddressFields1.PostalTextBox.Text = user.PostalCode ?? "No postal code set";
-                            Data.UserSession.Login(user.Username, user.UserId, user.FirstName, user.LastName, role.RoleName);
+                            Data.UserSession.UpdateProfile(user.Username, user.UserId, user.FirstName, user.LastName, role.RoleName);
                             PUPAcadPortal.Events.InfoChangedEvent.RaiseInfoChanged();
                         });
                     }
@@ -165,11 +165,11 @@ namespace PUPAcadPortal.PortalContents.Misc
         {
             foreach (Control childControl in control.Controls)
             {
-                if (childControl.Name != "txtIDNumber")
+                if (childControl.Tag?.ToString() != "disabled")
                 {
                     childControl.Enabled = true;
                 }
-                if (childControl is TextBox textBox)
+                if (childControl is TextBox textBox && childControl.Tag?.ToString() != "disabled")
                 {
                     textBox.ReadOnly = false;
                 }

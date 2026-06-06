@@ -66,6 +66,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
 
         private async void EnrollmentContentStudent_Load(object sender, EventArgs e)
         {
+            btnDownloadCOR.Enabled = false;
             SetupMaroonBorders();
             await Enrollment_InitializeAsync();
         }
@@ -93,18 +94,25 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
                 return;
             }
 
-            pnlRA10391.Visible = await _enrollmentService.IsStudentIskolar(_currentStudentId);
+            this.SafeUIUpdate(async() =>
+            {
+                pnlRA10391.Visible = await _enrollmentService.IsStudentIskolar(_currentStudentId);
+            });
 
-            dgvEnrollment.Visible = true;
-            pnlContainerEnrollmentDGV.Visible = true;
 
-            dgvEnrollment.AutoGenerateColumns = false;
-            if (dgvEnrollment.Columns.Contains("colSelect")) dgvEnrollment.Columns["colSelect"].DataPropertyName = "IsSelected";
-            if (dgvEnrollment.Columns.Contains("colCode")) dgvEnrollment.Columns["colCode"].DataPropertyName = "Code";
-            if (dgvEnrollment.Columns.Contains("colTitle")) dgvEnrollment.Columns["colTitle"].DataPropertyName = "CourseTitle";
-            if (dgvEnrollment.Columns.Contains("colUnits")) dgvEnrollment.Columns["colUnits"].DataPropertyName = "Units";
-            if (dgvEnrollment.Columns.Contains("colSchedule")) dgvEnrollment.Columns["colSchedule"].DataPropertyName = "Schedule";
-            if (dgvEnrollment.Columns.Contains("colStatus")) dgvEnrollment.Columns["colStatus"].DataPropertyName = "Status";
+            this.SafeUIUpdate(async () =>
+            {
+                dgvEnrollment.Visible = true;
+                pnlContainerEnrollmentDGV.Visible = true;
+
+                dgvEnrollment.AutoGenerateColumns = false;
+                if (dgvEnrollment.Columns.Contains("colSelect")) dgvEnrollment.Columns["colSelect"].DataPropertyName = "IsSelected";
+                if (dgvEnrollment.Columns.Contains("colCode")) dgvEnrollment.Columns["colCode"].DataPropertyName = "Code";
+                if (dgvEnrollment.Columns.Contains("colTitle")) dgvEnrollment.Columns["colTitle"].DataPropertyName = "CourseTitle";
+                if (dgvEnrollment.Columns.Contains("colUnits")) dgvEnrollment.Columns["colUnits"].DataPropertyName = "Units";
+                if (dgvEnrollment.Columns.Contains("colSchedule")) dgvEnrollment.Columns["colSchedule"].DataPropertyName = "Schedule";
+                if (dgvEnrollment.Columns.Contains("colStatus")) dgvEnrollment.Columns["colStatus"].DataPropertyName = "Status";
+            });
 
             _liveSubjects = await _enrollmentService.GetAvailableSubjectsAsync(
                 _currentStudentId,
@@ -114,29 +122,47 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
                 GlobalSession.ActiveSemesterIndex);
 
             int maxUnits = _liveSubjects.Sum(s => s.Units);
-            lblMaximumUnits.Text = $"{maxUnits} Units";
+
+            this.SafeUIUpdate(() =>
+            {
+                lblMaximumUnits.Text = $"{maxUnits} Units";
+            });
+            
 
             bool isIrregular = _liveSubjects.Any(s => !s.IsEligible);
 
             if (isIrregular)
             {
-                lblScholasticStatus.Text = "Irregular";
-                lblScholasticStatus.ForeColor = Color.DarkRed;
+                this.SafeUIUpdate(() =>
+                {
+                    lblScholasticStatus.Text = "Irregular";
+                    lblScholasticStatus.ForeColor = Color.DarkRed;
+                });
             }
             else
             {
-                lblScholasticStatus.Text = "Regular";
-                lblScholasticStatus.ForeColor = Color.Black;
+                this.SafeUIUpdate(() =>
+                {
+                    lblScholasticStatus.Text = "Regular";
+                    lblScholasticStatus.ForeColor = Color.Black;
+                });
             }
 
 
-            dgvEnrollment.Columns["colSchedule"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            dgvEnrollment.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            dgvEnrollment.DataSource = new BindingList<EnrollmentData>(_liveSubjects);
+            this.SafeUIUpdate(() =>
+            {
+                dgvEnrollment.Columns["colSchedule"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+                dgvEnrollment.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+                dgvEnrollment.DataSource = new BindingList<EnrollmentData>(_liveSubjects);
+            });
 
             Enrollment_UpdateTotalUnits();
             _isAllSelected = false;
-            dgvEnrollment.InvalidateColumn(dgvEnrollment.Columns["colSelect"].Index);
+
+            this.SafeUIUpdate(() =>
+            {
+                dgvEnrollment.InvalidateColumn(dgvEnrollment.Columns["colSelect"].Index);
+            });
 
             CheckGlobalEnrollmentStatus();
         }
@@ -173,7 +199,11 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
                     total += subject.Units;
                 }
             }
-            lblTotalUnitsValue.Text = total.ToString();
+
+            this.SafeUIUpdate(() =>
+            {
+                lblTotalUnitsValue.Text = total.ToString();
+            });
             totalUnits = total;
         }
 
