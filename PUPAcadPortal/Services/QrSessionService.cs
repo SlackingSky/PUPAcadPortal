@@ -20,7 +20,7 @@ namespace PUPAcadPortal.Services
         // CREATE
         // ══════════════════════════════════════════════════════════════════════
         public static QrSession Create(
-            int sessionId,77777777
+            int sessionId,
             string courseCode,
             string courseName,
             string period,
