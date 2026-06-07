@@ -23,12 +23,13 @@ namespace PUPAcadPortal
         private readonly CourseActivity _course;
         private readonly IModuleDbService _svc;
         private List<CourseModule> _modules = new();
+        private NullModuleDbService nullModuleDbService;
 
         // ── DB-backed constructor ──────────────────────────────────────────────
         public ClassFilesPage(CourseActivity course, IModuleDbService svc)
         {
             _course = course;
-            _svc = svc ?? new NullModuleDbService();
+            _svc = svc;
 
             InitializeComponent();   // designer builds _pnlHeader, _pnlScroll, _flpModules
             WireDesignerControls();  // populate labels + hook events
@@ -42,6 +43,12 @@ namespace PUPAcadPortal
             : this(course, new NullModuleDbService())
         {
             _modules = SeedSampleModules();
+        }
+
+        public ClassFilesPage(CourseActivity course, NullModuleDbService nullModuleDbService)
+        {
+            _course = course;
+            this.nullModuleDbService = nullModuleDbService;
         }
 
         // ══════════════════════════════════════════════════════════════════════
@@ -487,7 +494,9 @@ namespace PUPAcadPortal
             }
         }
 
+        // ══════════════════════════════════════════════════════════════════════
         //  Helpers
+        // ══════════════════════════════════════════════════════════════════════
 
         private void RenumberModules()
         {
@@ -600,7 +609,9 @@ namespace PUPAcadPortal
         }
     }
 
+    // ══════════════════════════════════════════════════════════════════════════
     //  Supporting data classes
+    // ══════════════════════════════════════════════════════════════════════════
 
     public class CourseModule
     {

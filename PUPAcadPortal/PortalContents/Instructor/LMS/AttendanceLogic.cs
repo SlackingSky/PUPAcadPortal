@@ -1,31 +1,38 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Linq;
 using System.Windows.Forms;
 using System.ComponentModel;
 
 namespace PUPAcadPortal.PortalContents.Instructor.LMS
 {
-    //  Data model 
-    public enum AttendanceStatus { Present, Absent, Excused,Late }
+    public enum AttendanceStatus { Present, Absent, Excused, Late }
 
+    // ── StudentAttendanceRecord (updated: added IsQrVerified + QrScannedAt) ──────
     public class StudentAttendanceRecord
     {
-        // ── DB backing fields (NEW) ───────────────────────────────────────────
+        // ── DB backing fields ─────────────────────────────────────────────────────
         /// <summary>
-        /// AttendanceRecord.AttendanceId — 0 means this record does not yet
-        /// exist in the database (will be INSERTed on save).
+        /// AttendanceRecord.AttendanceId — 0 means not yet persisted.
         /// </summary>
         public int AttendanceId { get; set; }
 
-        /// <summary>
-        /// Student.StudentId — used to match this UI row to the DB Student entity.
-        /// </summary>
+        /// <summary>Student.StudentId</summary>
         public int StudentId { get; set; }
 
-        // ── Display fields ────────────────────────────────────────────────────
+        // ── QR lock fields ────────────────────────────────────────────────────────
+        /// <summary>
+        /// True when this record was created by a verified QR scan.
+        /// Faculty status-editing controls must be disabled for such rows.
+        /// </summary>
+        public bool IsQrVerified { get; set; }
+
+        /// <summary>
+        /// UTC timestamp of the scan that created this record (null if manual).
+        /// </summary>
+        public DateTime? QrScannedAt { get; set; }
+
+        // ── Display fields ────────────────────────────────────────────────────────
         public int RowNumber { get; set; }
         public string LastName { get; set; } = string.Empty;
         public string FirstName { get; set; } = string.Empty;
@@ -38,20 +45,15 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         public string Remarks { get; set; } = string.Empty;
     }
 
-    //  Course / Session catalogue 
-
+    // ── Course / Session catalogue (unchanged) ────────────────────────────────────
     public class CourseSection
     {
         /// <summary>SubjectOfferingId — the PK used in ClassSession lookups.</summary>
         public string Code { get; set; } = string.Empty;
 
-        /// <summary>Subject name (e.g. "Introduction to Programming 1")</summary>
         public string Title { get; set; } = string.Empty;
-
-        /// <summary>Section identifier (e.g. "BSIT 1-1")</summary>
         public string Section { get; set; } = string.Empty;
 
-        /// <summary>Formatted string shown in the ComboBox.</summary>
         public string DisplayName => $"{Title} — {Section}";
     }
 
@@ -60,13 +62,12 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         public string Label { get; set; } = string.Empty;
     }
 
-    //  Attendance data per session 
-
+    // ── Session key (unchanged) ───────────────────────────────────────────────────
     public class SessionKey
     {
         public string CourseDisplay { get; set; } = string.Empty;
         public string SessionLabel { get; set; } = string.Empty;
-        public System.DateTime Date { get; set; }
+        public DateTime Date { get; set; }
 
         public bool Equals(SessionKey? other)
         {
@@ -82,6 +83,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             System.HashCode.Combine(CourseDisplay, SessionLabel, Date.Date);
     }
 
+    // ── ManualEntryDialog (unchanged) ─────────────────────────────────────────────
     public class ManualEntryDialog : Form
     {
         private string _selectedStatus = "Present";

@@ -1,65 +1,49 @@
 ﻿using PUPAcadPortal.Models;
-using PUPAcadPortal.PortalContents.Instructor.LMS.Course;
+using System;
 using System.Collections.Generic;
 
 namespace PUPAcadPortal.Services
 {
-    public class NullModuleDbService : IModuleDbService
+    /// <summary>
+    /// Design-time / unit-test stub that performs no database access.
+    /// Returns empty collections and throws for write operations that would
+    /// require a live database, so bugs are obvious during development.
+    /// </summary>
+    public class NullCourseDbService : ICourseDbService
     {
-        public List<Module> GetModulesForOffering(string subjectOfferingId)
-            => new();
+        // ── Professor: read ───────────────────────────────────────────────────
 
-        public Module CreateModule(
-            string subjectOfferingId,
-            string title,
-            string description,
-            string? fileUrl = null)
-            => new Module
-            {
-                ModuleId = $"NULL-{System.Guid.NewGuid():N}",
-                SubjectOfferingId = subjectOfferingId,
-                Title = title,
-                ModuleDescription = description,
-                FileUrl = fileUrl,
-                UploadDate = System.DateTime.Now,
-            };
+        public List<CourseDto> GetCoursesForProfessor(int professorId)
+            => new List<CourseDto>();
 
-        public void UpdateModule(string moduleId, string title, string description, string? fileUrl) { }
+        public CourseDto? GetCourseById(string subjectOfferingId)
+            => null;
 
-        public void DeleteModule(string moduleId) { }
-    }
+        // ── Professor: write ──────────────────────────────────────────────────
 
-    public class NullActivityDbService : IActivityDbService
-    {
-        public List<CourseActivity> GetCourseActivitiesForProfessor(int professorId)
-            => new();
-
-        public List<ActivityItem> GetActivitiesForOffering(string subjectOfferingId)
-            => new();
-
-        public ActivityItem CreateActivity(string subjectOfferingId, ActivityItem item)
+        public CourseDto CreateCourse(int professorId, CourseDto dto)
         {
-            item.ActivityId = $"NULL-{System.Guid.NewGuid():N}";
-            return item;
+            // Return the DTO with a placeholder ID so the UI can display something.
+            dto.SubjectOfferingId = $"NULL-{Guid.NewGuid():N}";
+            dto.ProfessorId = professorId;
+            return dto;
         }
 
-        public void UpdateActivity(ActivityItem item) { }
+        public void UpdateCourse(CourseDto dto) { /* no-op */ }
 
-        public void DeleteActivity(string activityId) { }
+        public void DeleteCourse(string subjectOfferingId) { /* no-op */ }
 
-        public void TogglePublish(string activityId, bool publish) { }
+        // ── Shared lookup helpers ─────────────────────────────────────────────
 
-        public List<StudentSubmission> GetSubmissionsForActivity(string activityId)
-            => new();
+        public List<SubjectLookupDto> GetAllSubjects()
+            => new List<SubjectLookupDto>();
 
-        public void SaveGrade(string submissionId, int score, string remarks) { }
+        public List<AcademicPeriodLookupDto> GetAllAcademicPeriods()
+            => new List<AcademicPeriodLookupDto>();
 
-        public void ReturnSubmission(string submissionId) { }
+        // ── Student: read ─────────────────────────────────────────────────────
 
-        public List<GradingCategory> GetCategoriesForOffering(string subjectOfferingId)
-            => new();
-
-        public List<Module> GetModulesForOffering(string subjectOfferingId)
-            => new();
+        public List<CourseDto> GetCoursesForStudent(int studentId)
+            => new List<CourseDto>();
     }
 }

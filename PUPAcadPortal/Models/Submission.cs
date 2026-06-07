@@ -1,10 +1,4 @@
-﻿// ============================================================
-//  Submission.cs  — UPDATED
-//  Added Status (varchar 20) and Remarks (varchar 20)
-//  to match the Submissions table definition exactly.
-// ============================================================
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace PUPAcadPortal.Models;
@@ -23,7 +17,7 @@ public partial class Submission
 
     public decimal? Grade { get; set; }
 
-    public string Status { get; set; } = "Submitted";
+    public string Status { get; set; } = null!;
 
     public string? Remarks { get; set; }
 

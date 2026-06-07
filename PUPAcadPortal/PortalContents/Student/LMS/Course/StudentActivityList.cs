@@ -1,4 +1,5 @@
 ﻿using System;
+using PUPAcadPortal.Services;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -14,10 +15,36 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
         private StudentCourse _course;
         private List<StudentActivityItem> _activities = new();
         private System.Windows.Forms.Timer _searchTimer;
+        private readonly int _studentId;
+        private readonly IStudentCourseDbService _svc;
+        private readonly bool _useSampleData;
 
         public StudentActivityList(StudentCourse course)
+            : this(course, 0, new NullStudentCourseDbService(), true)
+        {
+        }
+
+        public StudentActivityList(
+            StudentCourse course,
+            int studentId,
+            IStudentCourseDbService svc)
+            : this(course, studentId, svc, false)
+        {
+        }
+
+        private StudentActivityList(
+            StudentCourse course,
+            int studentId,
+            IStudentCourseDbService svc,
+            bool useSampleData)
         {
             _course = course;
+            _studentId = studentId;
+            _svc = svc ?? new NullStudentCourseDbService();
+            _useSampleData = useSampleData
+                || studentId <= 0
+                || string.IsNullOrWhiteSpace(course.SubjectOfferingId);
+
             InitializeComponent();
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
 
@@ -30,7 +57,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             cmbFilter.SelectedIndex = 0;
             cmbStatus.SelectedIndex = 0;
 
-            LoadSampleActivities();
+            LoadActivities();
             RebuildSummaryPills();
 
             this.Load += (s, e) => RenderRows();
@@ -110,6 +137,31 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                     Questions=SampleQuizQuestions()
                 },
             };
+        }
+
+        private void LoadActivities()
+        {
+            if (_useSampleData)
+            {
+                LoadSampleActivities();
+                return;
+            }
+
+            try
+            {
+                _activities = _svc.GetActivitiesForStudentOffering(
+                    _course.SubjectOfferingId,
+                    _studentId);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Failed to load activities:\n{ex.Message}",
+                    "Database Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                _activities = new List<StudentActivityItem>();
+            }
         }
 
         private static List<ActivityQuestion> SampleQuizQuestions()

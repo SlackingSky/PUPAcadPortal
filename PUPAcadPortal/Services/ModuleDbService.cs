@@ -61,7 +61,6 @@ namespace PUPAcadPortal.Services
         }
 
         //  UPDATE
-
         public void UpdateModule(
             string moduleId,
             string title,
@@ -70,15 +69,20 @@ namespace PUPAcadPortal.Services
         {
             if (string.IsNullOrWhiteSpace(moduleId))
                 throw new ArgumentException("ModuleId is required.", nameof(moduleId));
+            if (string.IsNullOrWhiteSpace(title))
+                throw new ArgumentException("Title is required.", nameof(title));
 
             using var ctx = _ctxFactory();
 
             var entity = ctx.Modules.Find(moduleId)
                 ?? throw new InvalidOperationException($"Module '{moduleId}' not found.");
 
-            entity.Title = title?.Trim() ?? entity.Title;
+            entity.Title = title.Trim();
             entity.ModuleDescription = string.IsNullOrWhiteSpace(description) ? null : description.Trim();
-            entity.FileUrl = fileUrl;
+
+            // Only update FileUrl when explicitly provided; preserve existing URL otherwise.
+            if (fileUrl != null)
+                entity.FileUrl = fileUrl;
 
             ctx.SaveChanges();
         }
@@ -92,12 +96,11 @@ namespace PUPAcadPortal.Services
             using var ctx = _ctxFactory();
 
             var entity = ctx.Modules.Find(moduleId);
-            if (entity == null) return;   // already gone – idempotent
+            if (entity == null) return;  // already gone — idempotent
 
             ctx.Modules.Remove(entity);
             ctx.SaveChanges();
         }
-
 
         private static string GenerateModuleId()
             => $"MOD-{DateTime.UtcNow:yyyyMMddHHmmss}-{Guid.NewGuid().ToString("N")[..6].ToUpper()}";

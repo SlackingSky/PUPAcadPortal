@@ -9,29 +9,19 @@ namespace PUPAcadPortal.Services
 {
     public class ActivityDbService : IActivityDbService
     {
-        // ── Factory keeps each operation in its own short-lived context ──
         private readonly Func<AppDbContext> _ctxFactory;
 
-        /// <param name="ctxFactory">
-        /// Pass a factory so each call gets a fresh DbContext.
-        /// Example from DI: <c>() => serviceProvider.GetRequiredService&lt;AppDbContext&gt;()</c>
-        /// Example direct:  <c>() => new AppDbContext(options)</c>
-        /// </param>
         public ActivityDbService(Func<AppDbContext> ctxFactory)
         {
             _ctxFactory = ctxFactory ?? throw new ArgumentNullException(nameof(ctxFactory));
         }
 
-        // ════════════════════════════════════════════════════
         //  Dashboard
-        // ════════════════════════════════════════════════════
 
         public List<CourseActivity> GetCourseActivitiesForProfessor(int professorId)
         {
             using var ctx = _ctxFactory();
 
-            // Load all offerings for this professor, eagerly fetching the
-            // Subject and the Activities (with their Submissions).
             var offerings = ctx.SubjectOfferings
                 .Include(o => o.Subject)
                 .Include(o => o.Activities)
@@ -52,22 +42,19 @@ namespace PUPAcadPortal.Services
                 int totalQuizzes = activities.Count(a =>
                     string.Equals(a.ActivityType, "Quiz", StringComparison.OrdinalIgnoreCase));
 
-                // Pending = submitted but Grade is still null
                 int pending = activities.SelectMany(a => a.Submissions)
-                    .Count(s => s.Grade == null);
-
-                // Checked = graded
+                                         .Count(s => s.Grade == null);
                 int checked_ = activities.SelectMany(a => a.Submissions)
-                    .Count(s => s.Grade != null);
+                                         .Count(s => s.Grade != null);
 
-                DateTime nearest = activities.Any()
+                DateTime nearest = activities.Any(a => a.Deadline >= DateTime.Now)
                     ? activities.Where(a => a.Deadline >= DateTime.Now)
                                 .OrderBy(a => a.Deadline)
                                 .Select(a => a.Deadline)
-                                .FirstOrDefault()
+                                .First()
                     : DateTime.Now.AddDays(30);
 
-                var ca = new CourseActivity
+                result.Add(new CourseActivity
                 {
                     CourseId = courseCounter++,
                     SubjectOfferingId = offering.SubjectOfferingId,
@@ -82,17 +69,13 @@ namespace PUPAcadPortal.Services
                     Status = offering.Status,
                     ActivityCount = activities.Count,
                     Activities = MapActivities(activities)
-                };
-
-                result.Add(ca);
+                });
             }
 
             return result;
         }
 
-        // ════════════════════════════════════════════════════
         //  Activity list
-        // ════════════════════════════════════════════════════
 
         public List<ActivityItem> GetActivitiesForOffering(string subjectOfferingId)
         {
@@ -106,8 +89,6 @@ namespace PUPAcadPortal.Services
                 .AsNoTracking()
                 .ToList();
 
-            // Count enrolled students for this offering so we can show
-            // TotalStudents on each card (used for "X/35 submitted" display).
             int enrolled = ctx.EnrollmentSubjects
                 .Count(es => es.SubjectOfferingId == subjectOfferingId
                           && es.SubjectStatus == "Enrolled");
@@ -115,9 +96,6 @@ namespace PUPAcadPortal.Services
             return MapActivities(activities, enrolled);
         }
 
-        // ════════════════════════════════════════════════════
-        //  CRUD
-        // ════════════════════════════════════════════════════
 
         public ActivityItem CreateActivity(string subjectOfferingId, ActivityItem item)
         {
@@ -130,7 +108,7 @@ namespace PUPAcadPortal.Services
                 ActivityId = newId,
                 SubjectOfferingId = subjectOfferingId,
                 Title = item.Title,
-                Description = item.Description,
+                Description = string.IsNullOrWhiteSpace(item.Description) ? null : item.Description,
                 MaxPoints = item.Points,
                 Deadline = item.Deadline,
                 ActivityType = item.TypeString,
@@ -142,8 +120,10 @@ namespace PUPAcadPortal.Services
             ctx.Activities.Add(entity);
             ctx.SaveChanges();
 
-            // Return item with the generated ID filled in
+            // Return the item with DB-generated values filled in
             item.ActivityId = newId;
+            item.SubjectOfferingId = subjectOfferingId;
+            item.IsPublished = false;
             return item;
         }
 
@@ -156,13 +136,12 @@ namespace PUPAcadPortal.Services
                     $"Activity '{item.ActivityId}' not found.");
 
             entity.Title = item.Title;
-            entity.Description = item.Description;
+            entity.Description = string.IsNullOrWhiteSpace(item.Description) ? null : item.Description;
             entity.MaxPoints = item.Points;
             entity.Deadline = item.Deadline;
             entity.ActivityType = item.TypeString;
             entity.CategoryId = item.LinkedCategoryId;
-            entity.ModuleId = string.IsNullOrEmpty(item.LinkedModuleId)
-                                  ? null : item.LinkedModuleId;
+            entity.ModuleId = string.IsNullOrEmpty(item.LinkedModuleId) ? null : item.LinkedModuleId;
 
             ctx.SaveChanges();
         }
@@ -172,7 +151,7 @@ namespace PUPAcadPortal.Services
             using var ctx = _ctxFactory();
 
             var entity = ctx.Activities.Find(activityId);
-            if (entity == null) return;  // already gone
+            if (entity == null) return;
 
             ctx.Activities.Remove(entity);
             ctx.SaveChanges();
@@ -190,22 +169,19 @@ namespace PUPAcadPortal.Services
             ctx.SaveChanges();
         }
 
-        // ════════════════════════════════════════════════════
         //  Submissions
-        // ════════════════════════════════════════════════════
 
         public List<StudentSubmission> GetSubmissionsForActivity(string activityId)
         {
             using var ctx = _ctxFactory();
 
-            // 1. Find the SubjectOfferingID for this activity
             var activity = ctx.Activities
                 .AsNoTracking()
                 .FirstOrDefault(a => a.ActivityId == activityId)
                 ?? throw new InvalidOperationException(
                     $"Activity '{activityId}' not found.");
 
-            // 2. All enrolled students for this offering
+            // All enrolled students for this offering
             var enrolledStudents = ctx.EnrollmentSubjects
                 .Include(es => es.Enrollment)
                     .ThenInclude(e => e.Student)
@@ -215,14 +191,11 @@ namespace PUPAcadPortal.Services
                 .AsNoTracking()
                 .ToList();
 
-            // 3. Actual submissions for this activity
-            var submissions = ctx.Submissions
+            // Actual submissions keyed by StudentId for O(1) lookup
+            var submissionMap = ctx.Submissions
                 .Where(s => s.ActivityId == activityId)
                 .AsNoTracking()
-                .ToList();
-
-            // Map submissions by StudentID for quick lookup
-            var submissionMap = submissions.ToDictionary(s => s.StudentId);
+                .ToDictionary(s => s.StudentId);
 
             var result = new List<StudentSubmission>();
 
@@ -236,28 +209,25 @@ namespace PUPAcadPortal.Services
                     ? $"{user.LastName.ToUpper()}, {user.FirstName} {user.MiddleName}".Trim()
                     : $"Student #{student.StudentId}";
 
-                bool hasSubmission = submissionMap.TryGetValue(student.StudentId, out var sub);
+                bool hasSub = submissionMap.TryGetValue(student.StudentId, out var sub);
 
-                string status = !hasSubmission
-                    ? "Missing"
-                    : sub!.Status ?? "Submitted";
-
-                bool isChecked = hasSubmission && sub!.Grade != null;
+                string status = !hasSub ? "Missing" : sub!.Status ?? "Submitted";
+                bool isChecked = hasSub && sub!.Grade != null;
 
                 result.Add(new StudentSubmission
                 {
                     StudentId = student.StudentNumber ?? student.StudentId.ToString(),
                     StudentName = fullName,
                     Section = es.Section ?? "",
-                    SubmissionTime = hasSubmission ? sub!.SubmissionDate : DateTime.MinValue,
+                    SubmissionTime = hasSub ? sub!.SubmissionDate : DateTime.MinValue,
                     Status = status,
-                    Score = hasSubmission && sub!.Grade != null
-                                       ? (int)Math.Round((double)sub!.Grade)
-                                       : -1,
+                    Score = hasSub && sub!.Grade != null
+                                        ? (int)Math.Round((double)sub!.Grade)
+                                        : -1,
                     IsChecked = isChecked,
-                    Remarks = hasSubmission ? (sub!.Remarks ?? "") : "",
-                    HasFile = hasSubmission && !string.IsNullOrEmpty(sub!.SubmittedFile),
-                    SubmissionDbId = hasSubmission ? sub!.SubmissionId : string.Empty
+                    Remarks = hasSub ? (sub!.Remarks ?? "") : "",
+                    HasFile = hasSub && !string.IsNullOrEmpty(sub!.SubmittedFile),
+                    SubmissionDbId = hasSub ? sub!.SubmissionId : string.Empty
                 });
             }
 
@@ -274,7 +244,8 @@ namespace PUPAcadPortal.Services
 
             sub.Grade = score;
             sub.Status = "Graded";
-            sub.Remarks = remarks;
+            // Truncate to 500 chars to match DB column length
+            sub.Remarks = remarks?.Length > 500 ? remarks[..500] : remarks;
 
             ctx.SaveChanges();
         }
@@ -291,9 +262,7 @@ namespace PUPAcadPortal.Services
             ctx.SaveChanges();
         }
 
-        // ════════════════════════════════════════════════════
         //  Dropdowns
-        // ════════════════════════════════════════════════════
 
         public List<GradingCategory> GetCategoriesForOffering(string subjectOfferingId)
         {
@@ -317,13 +286,7 @@ namespace PUPAcadPortal.Services
                 .ToList();
         }
 
-        // ════════════════════════════════════════════════════
-        //  Private helpers
-        // ════════════════════════════════════════════════════
 
-        /// <summary>
-        /// Maps a list of <see cref="Activity"/> EF entities to <see cref="ActivityItem"/> UI models.
-        /// </summary>
         private static List<ActivityItem> MapActivities(
             IEnumerable<Activity> activities,
             int enrolledCount = 0)
@@ -333,23 +296,18 @@ namespace PUPAcadPortal.Services
 
             foreach (var a in activities)
             {
-                int submitted = a.Submissions?.Count(s =>
-                    s.Status != "Missing") ?? 0;
-                int late = a.Submissions?.Count(s =>
-                    s.Status == "Late") ?? 0;
-                int graded = a.Submissions?.Count(s =>
-                    s.Grade != null) ?? 0;
+                int submitted = a.Submissions?.Count(s => s.Status != "Missing") ?? 0;
+                int late = a.Submissions?.Count(s => s.Status == "Late") ?? 0;
+                int graded = a.Submissions?.Count(s => s.Grade != null) ?? 0;
                 int total = enrolledCount > 0
                     ? enrolledCount
                     : (a.Submissions?.Count ?? 0);
 
-                // Map ActivityType string → enum
                 ActivityType typeEnum = a.ActivityType?.ToLowerInvariant() switch
                 {
                     "quiz" => ActivityType.Quiz,
                     "essay" => ActivityType.Essay,
-                    "fileupload" => ActivityType.FileUpload,
-                    "file upload" => ActivityType.FileUpload,
+                    "fileupload" or "file upload" => ActivityType.FileUpload,
                     _ => ActivityType.Assignment
                 };
 
@@ -379,7 +337,6 @@ namespace PUPAcadPortal.Services
             return result;
         }
 
-        /// <summary>Generates a compact unique ID for a new Activity row.</summary>
         private static string GenerateActivityId()
             => $"ACT-{DateTime.UtcNow:yyyyMMddHHmmss}-{Guid.NewGuid().ToString("N")[..6].ToUpper()}";
     }

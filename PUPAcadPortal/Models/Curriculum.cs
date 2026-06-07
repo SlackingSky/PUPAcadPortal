@@ -9,6 +9,8 @@ public partial class Curriculum
 
     public string Program { get; set; } = null!;
 
+    public int RevisionYear { get; set; }
+
     public int YearLevel { get; set; }
 
     public int SemesterIndex { get; set; }

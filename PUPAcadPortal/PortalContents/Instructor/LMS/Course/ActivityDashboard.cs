@@ -1,397 +1,147 @@
-﻿using PUPAcadPortal.PortalContents.Instructor.LMS.Course;
-using PUPAcadPortal.Services;   
+﻿using PUPAcadPortal.Models;
+using PUPAcadPortal.PortalContents.Instructor.LMS.Course;
+using PUPAcadPortal.Services;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace PUPAcadPortal
+namespace PUPAcadPortal.PortalContents.Instructor.LMS
 {
-    public partial class ActivityDashboard : UserControl
+    /// <summary>
+    /// Top-level container shown under the "Courses" sidebar button.
+    /// Hosts <see cref="CourseManagementDashboard"/> and handles
+    /// sub-page navigation without requiring the parent form.
+    /// </summary>
+    public sealed class ActivityDashboard : UserControl
     {
-        public event Action<CourseActivity> OnOpenCourse;
-
-        private readonly IActivityDbService _svc;
-        private readonly IModuleDbService _moduleSvc;
+        // ── Services ─────────────────────────────────────────────────────────
         private readonly int _professorId;
+        private readonly ICourseDbService _courseSvc;
+        private readonly IActivityDbService _activitySvc;
+        private readonly IModuleDbService _moduleSvc;
 
-        private List<CourseActivity> _courses = new();
-        private string _searchTerm = "";
-        private System.Windows.Forms.Timer _searchTimer;
+        // ── Current child view ────────────────────────────────────────────────
+        private Control? _current;
 
-        // ── DB-backed constructor ──────────────────────────────
-        public ActivityDashboard(int professorId, IActivityDbService svc, IModuleDbService moduleSvc)
+        // ── DB context factory (mirrors CourseManagementDashboard pattern) ────
+        private static AppDbContext CreateContext() => new AppDbContext();
+
+        // ── DB-backed constructor ─────────────────────────────────────────────
+        public ActivityDashboard(int professorId)
+            : this(professorId,
+                   new CourseDbService(CreateContext),
+                   new ActivityDbService(CreateContext),
+                   new ModuleDbService(CreateContext))
+        { }
+
+        /// <summary>WinForms designer / no-session fallback.</summary>
+        public ActivityDashboard()
+            : this(0,
+                   new NullCourseDbService(),
+                   new NullActivityDbService(),
+                   new NullModuleDbService())
+        { }
+
+        // ── Private shared constructor ────────────────────────────────────────
+        public ActivityDashboard(
+            int professorId,
+            ICourseDbService courseSvc,
+            IActivityDbService activitySvc,
+            IModuleDbService moduleSvc)
         {
             _professorId = professorId;
-            _svc = svc;
-            _moduleSvc = moduleSvc ?? new NullModuleDbService();
+            _courseSvc = courseSvc;
+            _activitySvc = activitySvc;
+            _moduleSvc = moduleSvc;
 
-            InitializeComponent();
-            LoadCoursesFromDb();
-            SetupSearchDebounce();
-            RefreshDashboard();
+            Dock = DockStyle.Fill;
+            BackColor = Color.FromArgb(245, 245, 248);
 
-            flpCourseCards.SizeChanged += (s, e) => ResizeCards();
-            this.Load += (s, e) => ResizeCards();
+            ShowDashboard();
         }
 
-        // ── Backward-compatible 2-arg constructor ──────────────
-        public ActivityDashboard(int professorId, IActivityDbService svc)
-            : this(professorId, svc, new NullModuleDbService()) { }
+        // ── Navigation helpers ────────────────────────────────────────────────
 
-        // ── Backward-compatible no-arg constructor (design-time) ─
-        public ActivityDashboard()
+        private void ShowDashboard()
         {
-            _professorId = 0;
-            _svc = null;
-            _moduleSvc = new NullModuleDbService();
+            var dashboard = new CourseManagementDashboard(
+                _professorId,
+                _courseSvc,
+                _activitySvc,
+                _moduleSvc)
+            {
+                Dock = DockStyle.Fill
+            };
 
-            InitializeComponent();
-            LoadSampleData();
-            SetupSearchDebounce();
-            RefreshDashboard();
+            // When the professor clicks "Open Course" on a card, navigate into it
+            dashboard.OnOpenCourse += courseDto => NavigateIntoCourse(courseDto);
 
-            flpCourseCards.SizeChanged += (s, e) => ResizeCards();
-            this.Load += (s, e) => ResizeCards();
+            SwapView(dashboard);
         }
 
-        // ── Data loading ───────────────────────────────────────
-        private void LoadCoursesFromDb()
+        private void NavigateIntoCourse(CourseDto courseDto)
         {
-            try
-            {
-                _courses = _svc!.GetCourseActivitiesForProfessor(_professorId);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    $"Failed to load courses:\n{ex.Message}",
-                    "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                _courses = new List<CourseActivity>();
-            }
-        }
+            var courseActivity = DtoToCourseActivity(courseDto);
 
-        private void LoadSampleData()
-        {
-            _courses = new List<CourseActivity>
+            var filesPage = new ClassFilesPage(courseActivity, _moduleSvc)
             {
-                new CourseActivity
+                Dock = DockStyle.Fill
+            };
+
+            filesPage.OnBack += ShowDashboard;
+
+            filesPage.OnOpenActivities += ca =>
+            {
+                var mgmt = new AssignmentManagement(ca, _activitySvc)
                 {
-                    CourseId = 1, SubjectOfferingId = "SO-DEMO-001",
-                    CourseName = "Introduction to Programming 1", CourseCode = "ITP 101",
-                    InstructorName = "Prof. Juan dela Cruz",
-                    TotalAssignments = 5, TotalQuizzes = 3,
-                    PendingSubmissions = 2, CheckedSubmissions = 6,
-                    NearestDeadline = DateTime.Now.AddDays(2),
-                    Status = "Active", ActivityCount = 8,
-                    Activities = SampleActivities(1)
-                },
-                new CourseActivity
-                {
-                    CourseId = 2, SubjectOfferingId = "SO-DEMO-002",
-                    CourseName = "Principles of Accounting", CourseCode = "ACC 201",
-                    InstructorName = "Prof. Maria Santos",
-                    TotalAssignments = 3, TotalQuizzes = 2,
-                    PendingSubmissions = 1, CheckedSubmissions = 4,
-                    NearestDeadline = DateTime.Now.AddDays(5),
-                    Status = "Active", ActivityCount = 5,
-                    Activities = SampleActivities(2)
-                },
-                new CourseActivity
-                {
-                    CourseId = 3, SubjectOfferingId = "SO-DEMO-003",
-                    CourseName = "Human Computer Interactions", CourseCode = "HCI 301",
-                    InstructorName = "Prof. Ana Reyes",
-                    TotalAssignments = 4, TotalQuizzes = 1,
-                    PendingSubmissions = 0, CheckedSubmissions = 5,
-                    NearestDeadline = DateTime.Now.AddDays(10),
-                    Status = "Ongoing", ActivityCount = 5,
-                    Activities = SampleActivities(3)
-                },
-                new CourseActivity
-                {
-                    CourseId = 4, SubjectOfferingId = "SO-DEMO-004",
-                    CourseName = "Programming and Technologies 1", CourseCode = "PT 101",
-                    InstructorName = "Prof. Carlos Bautista",
-                    TotalAssignments = 6, TotalQuizzes = 4,
-                    PendingSubmissions = 3, CheckedSubmissions = 7,
-                    NearestDeadline = DateTime.Now.AddDays(1),
-                    Status = "Active", ActivityCount = 10,
-                    Activities = SampleActivities(4)
-                }
-            };
-        }
-
-        private static List<ActivityItem> SampleActivities(int courseId)
-        {
-            var rng = new Random(courseId * 7);
-            var types = new[] { ActivityType.Assignment, ActivityType.Quiz, ActivityType.Essay, ActivityType.FileUpload };
-            var list = new List<ActivityItem>();
-            string[] titles = { "Lab Exercise 1", "Midterm Quiz", "Written Report", "Final Project", "Weekly Assignment" };
-            for (int i = 0; i < titles.Length; i++)
-            {
-                list.Add(new ActivityItem
-                {
-                    Id = courseId * 100 + i + 1,
-                    ActivityId = $"DEMO-{courseId}-{i}",
-                    CourseId = courseId,
-                    Title = titles[i],
-                    Type = types[i % types.Length],
-                    Deadline = DateTime.Now.AddDays(rng.Next(-2, 14)),
-                    Points = (rng.Next(3) + 1) * 25,
-                    TotalStudents = 35,
-                    SubmittedCount = rng.Next(15, 35),
-                    LateCount = rng.Next(0, 5),
-                    CheckedCount = rng.Next(5, 15),
-                    Description = "Sample activity description."
-                });
-            }
-            return list;
-        }
-
-        // ── Search + filter ────────────────────────────────────
-        private void SetupSearchDebounce()
-        {
-            _searchTimer = new System.Windows.Forms.Timer { Interval = 200 };
-            _searchTimer.Tick += (s, e) => { _searchTimer.Stop(); RefreshDashboard(); };
-        }
-
-        private void RefreshDashboard()
-        {
-            flpCourseCards.SuspendLayout();
-            flpCourseCards.Controls.Clear();
-
-            var filtered = _courses.FindAll(c =>
-                string.IsNullOrEmpty(_searchTerm)
-                || c.CourseName.IndexOf(_searchTerm, StringComparison.OrdinalIgnoreCase) >= 0
-                || c.CourseCode.IndexOf(_searchTerm, StringComparison.OrdinalIgnoreCase) >= 0);
-
-            foreach (var course in filtered)
-                flpCourseCards.Controls.Add(CreateCourseCard(course));
-
-            UpdateSummaryStats();
-            flpCourseCards.ResumeLayout();
-            ResizeCards();
-        }
-
-        // ── Card builder (unchanged) ───────────────────────────
-        private void ResizeCards()
-        {
-            if (flpCourseCards.Controls.Count == 0) return;
-            const int columns = 3, margin = 10;
-            int available = flpCourseCards.ClientSize.Width
-                          - flpCourseCards.Padding.Horizontal
-                          - (margin * 2 * columns);
-            int cardW = Math.Max(320, available / columns);
-
-            foreach (Control ctrl in flpCourseCards.Controls)
-            {
-                if (ctrl is not Panel card) continue;
-                card.Width = cardW;
-                foreach (Control c in card.Controls)
-                {
-                    if (c.Tag?.ToString() == "HEADER") { c.Width = cardW; UpdateHeaderChildren(c, cardW); }
-                    else if (c.Tag?.ToString() == "STATS") c.Width = cardW - 24;
-                    else if (c is buttonRounded b && b.Tag?.ToString() == "OPEN_BTN")
-                        b.Location = new Point(cardW - 140, b.Location.Y);
-                }
-                card.Invalidate();
-            }
-        }
-
-        private static void UpdateHeaderChildren(Control header, int cardW)
-        {
-            foreach (Control h in header.Controls)
-                if (h.Tag?.ToString() == "COURSE") h.Width = cardW - 24;
-        }
-
-        private Panel CreateCourseCard(CourseActivity course)
-        {
-            const int cardW = 430, cardH = 175, statsY = 74, bottomY = 138;
-
-            var card = new Panel
-            {
-                Width = cardW,
-                Height = cardH,
-                BackColor = Color.White,
-                Margin = new Padding(10)
-            };
-            card.Paint += (s, e) =>
-            {
-                using var pen = new Pen(Color.FromArgb(218, 218, 225));
-                e.Graphics.DrawRectangle(pen, 0, 0, card.Width - 1, card.Height - 1);
-            };
-
-            var hdr = new Panel
-            {
-                Width = cardW,
-                Height = 64,
-                Dock = DockStyle.Top,
-                BackColor = Color.FromArgb(128, 0, 0),
-                Tag = "HEADER"
-            };
-            var lblName = new Label
-            {
-                Text = course.CourseName,
-                ForeColor = Color.White,
-                Font = new Font("Segoe UI", 10.5F, FontStyle.Bold),
-                Location = new Point(12, 8),
-                Width = cardW - 24,
-                Height = 26,
-                AutoEllipsis = true,
-                Tag = "COURSE"
-            };
-            var lblCode = new Label
-            {
-                Text = course.CourseCode,
-                ForeColor = Color.FromArgb(230, 185, 185),
-                Font = new Font("Segoe UI", 8.5F),
-                Location = new Point(12, 36),
-                Width = 260,
-                Height = 18
-            };
-            hdr.Controls.AddRange(new Control[] { lblName, lblCode });
-            card.Controls.Add(hdr);
-
-            var pnlStats = new Panel
-            {
-                Location = new Point(12, statsY),
-                Size = new Size(cardW - 24, 54),
-                BackColor = Color.FromArgb(248, 248, 251),
-                Tag = "STATS"
-            };
-            pnlStats.Paint += (s, e) =>
-            {
-                using var pen = new Pen(Color.FromArgb(235, 235, 240));
-                e.Graphics.DrawRectangle(pen, 0, 0, pnlStats.Width - 1, pnlStats.Height - 1);
-            };
-
-            string[] statVals = { course.TotalAssignments.ToString(), course.TotalQuizzes.ToString(), course.PendingSubmissions.ToString(), course.CheckedSubmissions.ToString() };
-            string[] statLbls = { "Assign.", "Quizzes", "Pending", "Checked" };
-            Color[] statColors = { Color.FromArgb(63, 81, 181), Color.FromArgb(0, 150, 136), Color.FromArgb(211, 84, 0), Color.FromArgb(46, 160, 67) };
-
-            for (int i = 0; i < 4; i++)
-            {
-                int colW = (cardW - 24) / 4, x = i * colW;
-                pnlStats.Controls.Add(new Label { Text = statVals[i], Font = new Font("Segoe UI", 15F, FontStyle.Bold), ForeColor = statColors[i], Location = new Point(x, 2), Width = colW, Height = 28, TextAlign = ContentAlignment.MiddleCenter });
-                pnlStats.Controls.Add(new Label { Text = statLbls[i], Font = new Font("Segoe UI", 7F), ForeColor = Color.Gray, Location = new Point(x, 32), Width = colW, Height = 15, TextAlign = ContentAlignment.MiddleCenter });
-            }
-            card.Controls.Add(pnlStats);
-
-            card.Controls.Add(new Label
-            {
-                Text = $"{course.ActivityCount} Activities",
-                Font = new Font("Segoe UI", 7.5F),
-                ForeColor = Color.FromArgb(120, 120, 130),
-                Location = new Point(14, bottomY + 6),
-                AutoSize = true
-            });
-
-            if (!string.IsNullOrEmpty(course.Section))
-                card.Controls.Add(new Label
-                {
-                    Text = course.Section,
-                    Font = new Font("Segoe UI", 7.5F, FontStyle.Bold),
-                    BackColor = Color.FromArgb(240, 230, 255),
-                    ForeColor = Color.FromArgb(80, 0, 120),
-                    Location = new Point(110, bottomY + 6),
-                    Size = new Size(80, 18),
-                    TextAlign = ContentAlignment.MiddleCenter
-                });
-
-            var btnOpen = new buttonRounded
-            {
-                Text = "Open Course",
-                Size = new Size(126, 30),
-                Location = new Point(cardW - 140, bottomY),
-                BackColor = Color.FromArgb(128, 0, 0),
-                ForeColor = Color.White,
-                BorderRadius = 14,
-                Cursor = Cursors.Hand,
-                Font = new Font("Segoe UI", 8.5F, FontStyle.Bold),
-                Tag = "OPEN_BTN"
-            };
-            btnOpen.Click += (s, e) => OpenCourseView(course);
-            card.Controls.Add(btnOpen);
-
-            return card;
-        }
-
-        // ════════════════════════════════════════════════════
-        //  Navigate into a course — passes BOTH services
-        // ════════════════════════════════════════════════════
-        private void OpenCourseView(CourseActivity course)
-        {
-            if (OnOpenCourse != null) { OnOpenCourse.Invoke(course); return; }
-
-            Control container = this.Parent;
-            if (container == null) return;
-
-            // ── Pass _moduleSvc into ClassFilesPage ───────────
-            var filesPage = _moduleSvc != null
-                ? new ClassFilesPage(course, _moduleSvc)
-                : new ClassFilesPage(course);
-            filesPage.Dock = DockStyle.Fill;
-
-            filesPage.OnBack += () =>
-            {
-                Control c = filesPage.Parent ?? container;
-                c.Controls.Remove(filesPage);
-                filesPage.Dispose();
-                c.Controls.Add(this);
-                this.BringToFront();
-            };
-
-            filesPage.OnOpenActivities += courseActivity =>
-            {
-                Control filesContainer = filesPage.Parent ?? container;
-
-                // _svc is IActivityDbService — AssignmentManagement only accepts IActivityDbService
-                var mgmt = _svc != null
-                    ? new AssignmentManagement(courseActivity, _svc)
-                    : new AssignmentManagement(courseActivity, new NullActivityDbService());
-                mgmt.Dock = DockStyle.Fill;
-
-                mgmt.OnBack += () =>
-                {
-                    Control mc = mgmt.Parent ?? filesContainer;
-                    mc.Controls.Remove(mgmt);
-                    mgmt.Dispose();
-                    mc.Controls.Add(filesPage);
-                    filesPage.BringToFront();
+                    Dock = DockStyle.Fill
                 };
 
-                filesContainer.Controls.Remove(filesPage);
-                filesContainer.Controls.Add(mgmt);
-                mgmt.BringToFront();
+                mgmt.OnBack += () => NavigateIntoCourse(courseDto);   // back to course files
+
+                SwapView(mgmt);
             };
 
-            container.Controls.Remove(this);
-            container.Controls.Add(filesPage);
-            filesPage.BringToFront();
+            SwapView(filesPage);
         }
 
-        //  Stats bar 
-        private void UpdateSummaryStats()
+        // ── View swapper ──────────────────────────────────────────────────────
+
+        private void SwapView(Control next)
         {
-            int acts = 0, pend = 0, chk = 0;
-            foreach (var c in _courses)
+            SuspendLayout();
+
+            if (_current != null)
             {
-                acts += c.ActivityCount;
-                pend += c.PendingSubmissions;
-                chk += c.CheckedSubmissions;
+                Controls.Remove(_current);
+                _current.Dispose();
             }
-            lblTotalCourses.Text = _courses.Count.ToString();
-            lblTotalActivities.Text = acts.ToString();
-            lblTotalPending.Text = pend.ToString();
-            lblTotalChecked.Text = chk.ToString();
+
+            _current = next;
+            Controls.Add(next);
+            next.BringToFront();
+
+            ResumeLayout(true);
         }
 
-        private void txtSearchCourse_TextChanged(object sender, EventArgs e)
-        {
-            _searchTerm = txtSearchCourse.Text;
-            _searchTimer.Stop();
-            _searchTimer.Start();
-        }
+        // ── DTO → CourseActivity converter (mirrors CourseManagementDashboard) ─
+
+        private static CourseActivity DtoToCourseActivity(CourseDto dto) =>
+            new CourseActivity
+            {
+                SubjectOfferingId = dto.SubjectOfferingId,
+                CourseName = dto.SubjectName,
+                CourseCode = dto.SubjectCode,
+                Section = dto.Section,
+                InstructorName = dto.InstructorName,
+                Schedule = dto.Schedule,
+                ActivityCount = dto.ActivityCount,
+                TotalAssignments = dto.TotalAssignments,
+                TotalQuizzes = dto.TotalQuizzes,
+                PendingSubmissions = dto.PendingSubmissions,
+                CheckedSubmissions = dto.CheckedSubmissions,
+                Status = dto.Status,
+                Activities = new System.Collections.Generic.List<ActivityItem>()
+            };
     }
 }

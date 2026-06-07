@@ -27,7 +27,6 @@ namespace PUPAcadPortal
         private List<Models.GradingCategory> _dbCategories = new();
         private List<Models.Module> _dbModules = new();
 
-        // ── Primary constructor (4-arg, DB-backed) ────────────
         public ActivityFormPage(
             CourseActivity course,
             ActivityItem? editing,
@@ -436,18 +435,12 @@ namespace PUPAcadPortal
             _ => "Answer key / model answer"
         };
 
-        // ════════════════════════════════════════════════════════════════════
         //  RUBRIC SECTION CONSTANTS
-        // ════════════════════════════════════════════════════════════════════
-        // Summary panel height when rubric is enabled (fixed height so it never
-        // grows/shrinks unpredictably and the section wrapper matches).
         private const int SummaryPanelH = 370;
-        // Max scrollable height for the criteria list before it scrolls
         private const int CriteriaMaxH = SummaryPanelH;
-        // Row height for each criteria item
         private const int CriteriaRowH = 58;
 
-        // ── Toggle rubric on/off ─────────────────────────────────────────────
+        //  Toggle rubric on/off 
         private void chkRubric_CheckedChanged(object sender, EventArgs e)
         {
             bool on = chkRubric.Checked;
@@ -480,7 +473,7 @@ namespace PUPAcadPortal
             RefreshRubricPanel();
         }
 
-        // ── Refresh criteria list + update all summary widgets ───────────────
+        // ── Refresh criteria list + update all summary widgets 
         private void RefreshRubricPanel()
         {
             // ── Rebuild criteria rows ────────────────────────────────────────

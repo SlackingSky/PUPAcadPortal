@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PUPAcadPortal.Models;
 
@@ -14,7 +15,7 @@ public partial class QrSession
 
     public DateTime ExpiresAt { get; set; }
 
-    public bool IsActive { get; set; } = true;
+    public bool? IsActive { get; set; }
 
     public virtual ClassSession Session { get; set; } = null!;
 }

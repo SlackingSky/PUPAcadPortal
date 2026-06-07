@@ -121,7 +121,7 @@
             _pnlScroll.Size = new Size(1680, 909);
             _pnlScroll.TabIndex = 1;
 
-            //  _flpModules 
+            // ── _flpModules ────────────────────────────────────────────────
             _flpModules.AutoSize = true;
             _flpModules.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             _flpModules.BackColor = Color.FromArgb(245, 245, 248);
@@ -133,7 +133,7 @@
             _flpModules.TabIndex = 0;
             _flpModules.WrapContents = false;
 
-            //  ClassFilesPage 
+            // ── ClassFilesPage ─────────────────────────────────────────────
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(245, 245, 248);

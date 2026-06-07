@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Windows.Forms;
+using PUPAcadPortal.Services;
 
 namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 {
@@ -13,6 +14,9 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 
         private readonly StudentActivityItem _activity;
         private readonly StudentCourse _course;
+        private readonly int _studentId;
+        private readonly IStudentCourseDbService _svc;
+        private readonly bool _useDb;
 
         // Quiz navigation state
         private int _currentQ = 0;
@@ -37,10 +41,25 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
         private buttonRounded _btnRemoveFile;
 
         public StudentActivitySubmit(StudentActivityItem activity, StudentCourse course)
+            : this(activity, course, 0, new NullStudentCourseDbService())
+        {
+        }
+
+        public StudentActivitySubmit(
+            StudentActivityItem activity,
+            StudentCourse course,
+            int studentId,
+            IStudentCourseDbService svc)
         {
             _activity = activity;
             _course = course;
+            _studentId = studentId;
+            _svc = svc ?? new NullStudentCourseDbService();
+            _useDb = studentId > 0 && !string.IsNullOrWhiteSpace(activity.ActivityId);
             _answers = new Dictionary<int, string>(activity.Answers ?? new());
+            _uploadedFilePath = activity.UploadedFilePath;
+            _uploadedFileName = activity.UploadedFileName;
+            _uploadedFileSize = activity.UploadedFileSize;
 
             InitializeComponent();
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
@@ -508,6 +527,27 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 _lblAutosave.Text = $"\uD83D\uDCBE  Draft autosaved at {DateTime.Now:h:mm:ss tt}";
         }
 
+        private bool SaveSubmissionToDb()
+        {
+            if (!_useDb)
+                return true;
+
+            try
+            {
+                _svc.SubmitActivity(_studentId, _activity);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Submission failed:\n{ex.Message}",
+                    "Database Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
         private void SubmitEssay_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(_txtEssay?.Text))
@@ -523,6 +563,9 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             _activity.EssayDraft = _txtEssay.Text;
             _activity.SubmissionStatus = "Submitted";
             _activity.SubmittedAt = DateTime.Now;
+
+            if (!SaveSubmissionToDb())
+                return;
 
             MessageBox.Show("Essay submitted successfully! \u2714", "Submitted",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -657,6 +700,9 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 _btnRemoveFile.Click += (s, e) =>
                 {
                     _uploadedFilePath = ""; _uploadedFileName = ""; _uploadedFileSize = 0;
+                    _activity.UploadedFilePath = "";
+                    _activity.UploadedFileName = "";
+                    _activity.UploadedFileSize = 0;
                     if (_lblFileName != null) { _lblFileName.Text = "No file selected."; _lblFileName.ForeColor = Color.Gray; }
                     if (_lblFileSize != null) _lblFileSize.Text = "";
                     _btnRemoveFile.Visible = false;
@@ -717,6 +763,8 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 _uploadedFileName = Path.GetFileName(dlg.FileName);
                 _uploadedFileSize = new FileInfo(dlg.FileName).Length;
                 _activity.UploadedFileName = _uploadedFileName;
+                _activity.UploadedFilePath = _uploadedFilePath;
+                _activity.UploadedFileSize = _uploadedFileSize;
 
                 if (_lblFileName != null) { _lblFileName.Text = $"\uD83D\uDCCE  {_uploadedFileName}"; _lblFileName.ForeColor = Color.FromArgb(0, 105, 0); }
                 if (_lblFileSize != null) _lblFileSize.Text = $"  ({FormatFileSize(_uploadedFileSize)})";
@@ -738,6 +786,9 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 
             _activity.SubmissionStatus = "Submitted";
             _activity.SubmittedAt = DateTime.Now;
+
+            if (!SaveSubmissionToDb())
+                return;
 
             MessageBox.Show("File uploaded and submitted successfully! \u2714", "Submitted",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -1104,6 +1155,9 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             _activity.SubmissionStatus = "Submitted";
             _activity.SubmittedAt = DateTime.Now;
 
+            if (!SaveSubmissionToDb())
+                return;
+
             MessageBox.Show("Quiz submitted successfully! \u2714", "Submitted",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
             OnBack?.Invoke();
@@ -1213,6 +1267,8 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 {
                     _activity.SubmissionStatus = "Submitted";
                     _activity.SubmittedAt = DateTime.Now;
+                    if (!SaveSubmissionToDb())
+                        return;
                     MessageBox.Show("Marked as attended!", "Done",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     OnBack?.Invoke();

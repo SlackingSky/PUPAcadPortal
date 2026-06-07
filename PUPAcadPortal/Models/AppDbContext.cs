@@ -53,6 +53,10 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<ProfessorAvailability> ProfessorAvailabilities { get; set; }
 
+    public virtual DbSet<QrScanLog> QrScanLogs { get; set; }
+
+    public virtual DbSet<QrSession> QrSessions { get; set; }
+
     public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<Room> Rooms { get; set; }
@@ -108,6 +112,9 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.ActivityId)
                 .HasMaxLength(50)
                 .HasColumnName("ActivityID");
+            entity.Property(e => e.ActivityType)
+                .HasMaxLength(20)
+                .HasDefaultValueSql("'Assignment'");
             entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
             entity.Property(e => e.Deadline).HasColumnType("datetime");
             entity.Property(e => e.Description).HasColumnType("text");
@@ -230,7 +237,11 @@ public partial class AppDbContext : DbContext
 
             entity.HasIndex(e => e.StudentId, "FK_Attendance_Student");
 
+            entity.HasIndex(e => e.QrNonce, "UQ_AttendanceRecord_QrNonce").IsUnique();
+
             entity.Property(e => e.AttendanceId).HasColumnName("AttendanceID");
+            entity.Property(e => e.QrNonce).HasMaxLength(64);
+            entity.Property(e => e.QrScannedAt).HasColumnType("datetime");
             entity.Property(e => e.Remarks).HasMaxLength(255);
             entity.Property(e => e.SessionId).HasColumnName("SessionID");
             entity.Property(e => e.Status).HasMaxLength(20);
@@ -319,6 +330,7 @@ public partial class AppDbContext : DbContext
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("datetime");
             entity.Property(e => e.Program).HasMaxLength(100);
+            entity.Property(e => e.RevisionYear).HasDefaultValueSql("'2026'");
             entity.Property(e => e.SubjectId)
                 .HasMaxLength(50)
                 .HasColumnName("SubjectID");
@@ -642,6 +654,67 @@ public partial class AppDbContext : DbContext
                 .HasConstraintName("FK_ProfAvail_Professor");
         });
 
+        modelBuilder.Entity<QrScanLog>(entity =>
+        {
+            entity.HasKey(e => e.LogId).HasName("PRIMARY");
+
+            entity.ToTable("QrScanLog");
+
+            entity.HasIndex(e => e.AttendanceId, "FK_QrLog_Attendance");
+
+            entity.HasIndex(e => e.StudentId, "FK_QrLog_Student");
+
+            entity.HasIndex(e => new { e.SessionId, e.StudentId }, "IX_QrScanLog_Session_Student");
+
+            entity.Property(e => e.LogId).HasColumnName("LogID");
+            entity.Property(e => e.AttemptedAt).HasColumnType("datetime");
+            entity.Property(e => e.AttendanceId).HasColumnName("AttendanceID");
+            entity.Property(e => e.Notes).HasMaxLength(255);
+            entity.Property(e => e.QrNonce).HasMaxLength(64);
+            entity.Property(e => e.SessionId).HasColumnName("SessionID");
+            entity.Property(e => e.StudentId).HasColumnName("StudentID");
+            entity.Property(e => e.ValidationResult).HasMaxLength(64);
+
+            entity.HasOne(d => d.Attendance).WithMany(p => p.QrScanLogs)
+                .HasForeignKey(d => d.AttendanceId)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("FK_QrLog_Attendance");
+
+            entity.HasOne(d => d.Session).WithMany(p => p.QrScanLogs)
+                .HasForeignKey(d => d.SessionId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_QrLog_Session");
+
+            entity.HasOne(d => d.Student).WithMany(p => p.QrScanLogs)
+                .HasForeignKey(d => d.StudentId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_QrLog_Student");
+        });
+
+        modelBuilder.Entity<QrSession>(entity =>
+        {
+            entity.HasKey(e => e.QrSessionId).HasName("PRIMARY");
+
+            entity.ToTable("QrSession");
+
+            entity.HasIndex(e => e.SessionId, "FK_QrSession_ClassSession");
+
+            entity.Property(e => e.QrSessionId).HasColumnName("QrSessionID");
+            entity.Property(e => e.ExpiresAt).HasColumnType("datetime");
+            entity.Property(e => e.GeneratedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("datetime");
+            entity.Property(e => e.IsActive)
+                .IsRequired()
+                .HasDefaultValueSql("'1'");
+            entity.Property(e => e.SessionId).HasColumnName("SessionID");
+            entity.Property(e => e.Token).HasMaxLength(500);
+
+            entity.HasOne(d => d.Session).WithMany(p => p.QrSessions)
+                .HasForeignKey(d => d.SessionId)
+                .HasConstraintName("FK_QrSession_ClassSession");
+        });
+
         modelBuilder.Entity<Role>(entity =>
         {
             entity.HasKey(e => e.RoleId).HasName("PRIMARY");
@@ -664,7 +737,7 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.Building)
                 .HasMaxLength(100)
                 .HasDefaultValueSql("'Main Building'");
-            entity.Property(e => e.Capacity).HasDefaultValueSql("'40'");
+            entity.Property(e => e.Capacity).HasDefaultValueSql("'50'");
             entity.Property(e => e.RoomName).HasMaxLength(50);
             entity.Property(e => e.RoomType)
                 .HasMaxLength(50)
@@ -716,9 +789,13 @@ public partial class AppDbContext : DbContext
             entity.HasIndex(e => e.StudentNumber, "StudentNumber").IsUnique();
 
             entity.Property(e => e.StudentId).HasColumnName("StudentID");
+            entity.Property(e => e.AcademicStanding)
+                .HasMaxLength(50)
+                .HasDefaultValueSql("'Regular'");
+            entity.Property(e => e.AdmissionType).HasMaxLength(50);
+            entity.Property(e => e.CurriculumYear).HasDefaultValueSql("'2026'");
             entity.Property(e => e.Program).HasMaxLength(100);
             entity.Property(e => e.StudentNumber).HasMaxLength(50);
-            entity.Property(e => e.StudentType).HasMaxLength(50);
             entity.Property(e => e.UserId).HasColumnName("UserID");
 
             entity.HasOne(d => d.User).WithMany(p => p.Students)
@@ -852,6 +929,7 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.AcademicPeriodId)
                 .HasMaxLength(50)
                 .HasColumnName("AcademicPeriodID");
+            entity.Property(e => e.MaxSlots).HasDefaultValueSql("'50'");
             entity.Property(e => e.ProfessorId).HasColumnName("ProfessorID");
             entity.Property(e => e.Section)
                 .HasMaxLength(50)
@@ -921,6 +999,10 @@ public partial class AppDbContext : DbContext
                 .HasMaxLength(50)
                 .HasColumnName("ActivityID");
             entity.Property(e => e.Grade).HasPrecision(5);
+            entity.Property(e => e.Remarks).HasMaxLength(20);
+            entity.Property(e => e.Status)
+                .HasMaxLength(20)
+                .HasDefaultValueSql("'Submitted'");
             entity.Property(e => e.StudentId).HasColumnName("StudentID");
             entity.Property(e => e.SubmissionDate)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
@@ -976,6 +1058,8 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.Region)
                 .HasMaxLength(100)
                 .HasDefaultValueSql("'N/A'");
+            entity.Property(e => e.ResetPasswordToken).HasMaxLength(255);
+            entity.Property(e => e.ResetTokenExpiry).HasColumnType("datetime");
             entity.Property(e => e.RoleId).HasColumnName("RoleID");
             entity.Property(e => e.Suffix).HasMaxLength(20);
             entity.Property(e => e.Username).HasMaxLength(50);

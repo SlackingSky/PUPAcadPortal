@@ -1,3 +1,5 @@
 <Solution>
+  <Folder Name="/Solution Items/" />
+  <Project Path="PUPAcadPortal.UnitTests/PUPAcadPortal.UnitTests.csproj" Id="a062408c-65b0-4dbe-a1b4-d1dddd15bd26" />
   <Project Path="PUPAcadPortal/PUPAcadPortal.csproj" />
 </Solution>

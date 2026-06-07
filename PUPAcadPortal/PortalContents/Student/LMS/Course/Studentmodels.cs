@@ -6,6 +6,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
         public class StudentCourse
     {
         public int Id { get; set; }
+        public string SubjectOfferingId { get; set; } = "";
         public string Name { get; set; } = "";
         public string Code { get; set; } = "";
         public string Instructor { get; set; } = "";
@@ -20,6 +21,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
     public class StudentActivityItem
     {
         public int Id { get; set; }
+        public string ActivityId { get; set; } = "";
         public string Title { get; set; } = "";
         public string Type { get; set; } = "";
         public string Instructions { get; set; } = "";
@@ -27,6 +29,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
         public int Points { get; set; }
 
         public string SubmissionStatus { get; set; } = "Pending";
+        public string SubmissionDbId { get; set; } = "";
         public DateTime? SubmittedAt { get; set; }
         public DateTime? ReturnedAt { get; set; }
 

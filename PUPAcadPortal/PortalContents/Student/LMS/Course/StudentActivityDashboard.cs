@@ -1,4 +1,5 @@
 ﻿using PUPAcadPortal.PortalContents.Student.LMS.Course;
+using PUPAcadPortal.Services;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -14,20 +15,48 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
         private List<StudentCourse> _courses = new();
         private List<StudentNotification> _notifications = new();
         private System.Windows.Forms.Timer _searchTimer;
+        private readonly int _studentId;
+        private readonly IStudentCourseDbService _svc;
+        private readonly string _studentName;
+        private readonly bool _useSampleData;
 
         public StudentActivityDashboard()
+            : this(0, new NullStudentCourseDbService(), "Juan Dela Cruz", true)
         {
+        }
+
+        public StudentActivityDashboard(
+            int studentId,
+            IStudentCourseDbService svc,
+            string studentName)
+            : this(studentId, svc, studentName, false)
+        {
+        }
+
+        private StudentActivityDashboard(
+            int studentId,
+            IStudentCourseDbService svc,
+            string studentName,
+            bool useSampleData)
+        {
+            _studentId = studentId;
+            _svc = svc ?? new NullStudentCourseDbService();
+            _studentName = studentName;
+            _useSampleData = useSampleData || studentId <= 0;
+
             InitializeComponent();
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
 
             _searchTimer = new System.Windows.Forms.Timer { Interval = 180 };
             _searchTimer.Tick += (s, e) => { _searchTimer.Stop(); RenderCards(); };
 
-            LoadSampleData();
+            LoadCourses();
             LoadSampleNotifications();
             UpdateStats();
 
-            lblStudentName.Text = "Juan Dela Cruz";
+            lblStudentName.Text = string.IsNullOrWhiteSpace(_studentName)
+                ? "Student"
+                : _studentName;
 
             this.Load += (s, e) => RenderCards();
             flpCards.SizeChanged += flpCards_SizeChanged;
@@ -55,6 +84,29 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                     Instructor="Prof. Leo Pascual", Schedule="MWF 3:00\u20134:30 PM",
                     ActivityCount=6, PendingCount=3, SubmittedCount=3, OverdueCount=0 },
             };
+        }
+
+        private void LoadCourses()
+        {
+            if (_useSampleData)
+            {
+                LoadSampleData();
+                return;
+            }
+
+            try
+            {
+                _courses = _svc.GetCoursesForStudent(_studentId);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Failed to load courses:\n{ex.Message}",
+                    "Database Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                _courses = new List<StudentCourse>();
+            }
         }
 
         private void LoadSampleNotifications()

@@ -21,7 +21,7 @@ namespace PUPAcadPortal.PortalForms
 {
     public partial class StudentPortal : Form
     {
-        private StudentLMSHost _studentLMSHost;
+        private PortalContents.Student.LMS.StudentLMSHost _studentLMSHost;
         private SubmenuAnim _submenuAnim;
 
         public StudentPortal()
