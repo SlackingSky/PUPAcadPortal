@@ -30,23 +30,17 @@
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             pnlCurriculumArchive = new Panel();
             pnlCurriculum = new Panel();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            label1 = new Label();
+            dtpRevisionYear = new DateTimePicker();
             lblCurriculumList = new Label();
             btnUpdateCurriculum = new Button();
             dgvCurriculum = new DataGridView();
-            CourseCode2 = new DataGridViewTextBoxColumn();
-            CourseTitle2 = new DataGridViewTextBoxColumn();
-            Lab2 = new DataGridViewTextBoxColumn();
-            Lec2 = new DataGridViewTextBoxColumn();
-            TotalUnits2 = new DataGridViewTextBoxColumn();
-            colProgram = new DataGridViewTextBoxColumn();
-            Year2 = new DataGridViewTextBoxColumn();
-            Semester1 = new DataGridViewTextBoxColumn();
-            colRevisionYear = new DataGridViewTextBoxColumn();
             pnlArchive = new Panel();
             dgvArchive = new DataGridView();
             Semester = new DataGridViewTextBoxColumn();
@@ -55,8 +49,18 @@
             panel14 = new Panel();
             btnArchive = new Button();
             btnCurriculum = new Button();
+            CourseCode2 = new DataGridViewComboBoxColumn();
+            CourseTitle2 = new DataGridViewTextBoxColumn();
+            Lab2 = new DataGridViewTextBoxColumn();
+            Lec2 = new DataGridViewTextBoxColumn();
+            TotalUnits2 = new DataGridViewTextBoxColumn();
+            colProgram = new DataGridViewComboBoxColumn();
+            Year2 = new DataGridViewComboBoxColumn();
+            Semester1 = new DataGridViewComboBoxColumn();
+            colRevisionYear = new DataGridViewTextBoxColumn();
             pnlCurriculumArchive.SuspendLayout();
             pnlCurriculum.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvCurriculum).BeginInit();
             pnlArchive.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvArchive).BeginInit();
@@ -71,21 +75,67 @@
             pnlCurriculumArchive.Controls.Add(panel14);
             pnlCurriculumArchive.Dock = DockStyle.Fill;
             pnlCurriculumArchive.Location = new Point(0, 0);
+            pnlCurriculumArchive.Margin = new Padding(3, 2, 3, 2);
             pnlCurriculumArchive.Name = "pnlCurriculumArchive";
-            pnlCurriculumArchive.Size = new Size(1701, 1324);
+            pnlCurriculumArchive.Size = new Size(1488, 993);
             pnlCurriculumArchive.TabIndex = 8;
             // 
             // pnlCurriculum
             // 
             pnlCurriculum.BackColor = Color.White;
+            pnlCurriculum.Controls.Add(tableLayoutPanel1);
             pnlCurriculum.Controls.Add(lblCurriculumList);
             pnlCurriculum.Controls.Add(btnUpdateCurriculum);
             pnlCurriculum.Controls.Add(dgvCurriculum);
             pnlCurriculum.Dock = DockStyle.Fill;
-            pnlCurriculum.Location = new Point(0, 48);
+            pnlCurriculum.Location = new Point(0, 36);
+            pnlCurriculum.Margin = new Padding(3, 2, 3, 2);
             pnlCurriculum.Name = "pnlCurriculum";
-            pnlCurriculum.Size = new Size(1701, 1276);
+            pnlCurriculum.Size = new Size(1488, 957);
             pnlCurriculum.TabIndex = 1;
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            tableLayoutPanel1.ColumnCount = 2;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.Controls.Add(label1, 0, 0);
+            tableLayoutPanel1.Controls.Add(dtpRevisionYear, 1, 0);
+            tableLayoutPanel1.Location = new Point(1224, 20);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 1;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.Size = new Size(220, 42);
+            tableLayoutPanel1.TabIndex = 14;
+            // 
+            // label1
+            // 
+            label1.Anchor = AnchorStyles.Right;
+            label1.AutoSize = true;
+            label1.BackColor = Color.White;
+            label1.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.ForeColor = SystemColors.ActiveCaptionText;
+            label1.Location = new Point(0, 11);
+            label1.Margin = new Padding(0);
+            label1.Name = "label1";
+            label1.Size = new Size(119, 19);
+            label1.TabIndex = 12;
+            label1.Text = "Revision Year:";
+            // 
+            // dtpRevisionYear
+            // 
+            dtpRevisionYear.Anchor = AnchorStyles.Left;
+            dtpRevisionYear.CalendarFont = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dtpRevisionYear.CustomFormat = "yyyy";
+            dtpRevisionYear.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dtpRevisionYear.Format = DateTimePickerFormat.Custom;
+            dtpRevisionYear.Location = new Point(122, 6);
+            dtpRevisionYear.MinDate = new DateTime(2005, 1, 1, 0, 0, 0, 0);
+            dtpRevisionYear.Name = "dtpRevisionYear";
+            dtpRevisionYear.ShowUpDown = true;
+            dtpRevisionYear.Size = new Size(95, 29);
+            dtpRevisionYear.TabIndex = 13;
             // 
             // lblCurriculumList
             // 
@@ -93,9 +143,9 @@
             lblCurriculumList.BackColor = Color.White;
             lblCurriculumList.Font = new Font("Arial", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblCurriculumList.ForeColor = SystemColors.ActiveCaptionText;
-            lblCurriculumList.Location = new Point(37, 32);
+            lblCurriculumList.Location = new Point(32, 24);
             lblCurriculumList.Name = "lblCurriculumList";
-            lblCurriculumList.Size = new Size(245, 35);
+            lblCurriculumList.Size = new Size(198, 29);
             lblCurriculumList.TabIndex = 11;
             lblCurriculumList.Text = "Curriculum List:";
             // 
@@ -105,9 +155,10 @@
             btnUpdateCurriculum.BackColor = Color.FromArgb(109, 0, 0);
             btnUpdateCurriculum.FlatStyle = FlatStyle.Flat;
             btnUpdateCurriculum.ForeColor = Color.White;
-            btnUpdateCurriculum.Location = new Point(1494, 779);
+            btnUpdateCurriculum.Location = new Point(1307, 584);
+            btnUpdateCurriculum.Margin = new Padding(3, 2, 3, 2);
             btnUpdateCurriculum.Name = "btnUpdateCurriculum";
-            btnUpdateCurriculum.Size = new Size(160, 36);
+            btnUpdateCurriculum.Size = new Size(140, 27);
             btnUpdateCurriculum.TabIndex = 11;
             btnUpdateCurriculum.Text = "Update Curriculum";
             btnUpdateCurriculum.UseVisualStyleBackColor = false;
@@ -142,89 +193,26 @@
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
             dgvCurriculum.DefaultCellStyle = dataGridViewCellStyle3;
             dgvCurriculum.EnableHeadersVisualStyles = false;
-            dgvCurriculum.Location = new Point(50, 91);
+            dgvCurriculum.Location = new Point(44, 68);
+            dgvCurriculum.Margin = new Padding(3, 2, 3, 2);
             dgvCurriculum.Name = "dgvCurriculum";
             dgvCurriculum.RowHeadersVisible = false;
             dgvCurriculum.RowHeadersWidth = 51;
             dgvCurriculum.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvCurriculum.ScrollBars = ScrollBars.Vertical;
             dgvCurriculum.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvCurriculum.Size = new Size(1600, 660);
+            dgvCurriculum.Size = new Size(1400, 495);
             dgvCurriculum.TabIndex = 0;
-            // 
-            // CourseCode2
-            // 
-            CourseCode2.FillWeight = 66.64282F;
-            CourseCode2.HeaderText = "Subject Code";
-            CourseCode2.MinimumWidth = 6;
-            CourseCode2.Name = "CourseCode2";
-            // 
-            // CourseTitle2
-            // 
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            CourseTitle2.DefaultCellStyle = dataGridViewCellStyle2;
-            CourseTitle2.FillWeight = 421.4435F;
-            CourseTitle2.HeaderText = "Subject Title";
-            CourseTitle2.MinimumWidth = 6;
-            CourseTitle2.Name = "CourseTitle2";
-            // 
-            // Lab2
-            // 
-            Lab2.FillWeight = 21.4395962F;
-            Lab2.HeaderText = "Lab";
-            Lab2.MinimumWidth = 6;
-            Lab2.Name = "Lab2";
-            // 
-            // Lec2
-            // 
-            Lec2.FillWeight = 23.9587688F;
-            Lec2.HeaderText = "Lec";
-            Lec2.MinimumWidth = 6;
-            Lec2.Name = "Lec2";
-            // 
-            // TotalUnits2
-            // 
-            TotalUnits2.FillWeight = 33.1515274F;
-            TotalUnits2.HeaderText = "Units";
-            TotalUnits2.MinimumWidth = 6;
-            TotalUnits2.Name = "TotalUnits2";
-            // 
-            // colProgram
-            // 
-            colProgram.FillWeight = 50F;
-            colProgram.HeaderText = "Program";
-            colProgram.MinimumWidth = 6;
-            colProgram.Name = "colProgram";
-            // 
-            // Year2
-            // 
-            Year2.FillWeight = 49.2699051F;
-            Year2.HeaderText = "Year";
-            Year2.MinimumWidth = 6;
-            Year2.Name = "Year2";
-            // 
-            // Semester1
-            // 
-            Semester1.FillWeight = 84.09402F;
-            Semester1.HeaderText = "Semester";
-            Semester1.MinimumWidth = 6;
-            Semester1.Name = "Semester1";
-            // 
-            // colRevisionYear
-            // 
-            colRevisionYear.FillWeight = 70F;
-            colRevisionYear.HeaderText = "Revision Year";
-            colRevisionYear.MinimumWidth = 6;
-            colRevisionYear.Name = "colRevisionYear";
             // 
             // pnlArchive
             // 
             pnlArchive.BackColor = Color.White;
             pnlArchive.Controls.Add(dgvArchive);
             pnlArchive.Dock = DockStyle.Fill;
-            pnlArchive.Location = new Point(0, 48);
+            pnlArchive.Location = new Point(0, 36);
+            pnlArchive.Margin = new Padding(3, 2, 3, 2);
             pnlArchive.Name = "pnlArchive";
-            pnlArchive.Size = new Size(1701, 1276);
+            pnlArchive.Size = new Size(1488, 957);
             pnlArchive.TabIndex = 12;
             // 
             // dgvArchive
@@ -256,14 +244,15 @@
             dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
             dgvArchive.DefaultCellStyle = dataGridViewCellStyle5;
             dgvArchive.EnableHeadersVisualStyles = false;
-            dgvArchive.Location = new Point(41, 91);
+            dgvArchive.Location = new Point(36, 68);
+            dgvArchive.Margin = new Padding(3, 2, 3, 2);
             dgvArchive.Name = "dgvArchive";
             dgvArchive.ReadOnly = true;
             dgvArchive.RowHeadersVisible = false;
             dgvArchive.RowHeadersWidth = 51;
             dgvArchive.ScrollBars = ScrollBars.Vertical;
             dgvArchive.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvArchive.Size = new Size(1627, 660);
+            dgvArchive.Size = new Size(1424, 495);
             dgvArchive.TabIndex = 0;
             // 
             // Semester
@@ -294,8 +283,9 @@
             panel14.Controls.Add(btnCurriculum);
             panel14.Dock = DockStyle.Top;
             panel14.Location = new Point(0, 0);
+            panel14.Margin = new Padding(3, 2, 3, 2);
             panel14.Name = "panel14";
-            panel14.Size = new Size(1701, 48);
+            panel14.Size = new Size(1488, 36);
             panel14.TabIndex = 0;
             // 
             // btnArchive
@@ -303,9 +293,10 @@
             btnArchive.BackColor = Color.Transparent;
             btnArchive.FlatAppearance.BorderSize = 0;
             btnArchive.FlatStyle = FlatStyle.Flat;
-            btnArchive.Location = new Point(136, 4);
+            btnArchive.Location = new Point(119, 3);
+            btnArchive.Margin = new Padding(3, 2, 3, 2);
             btnArchive.Name = "btnArchive";
-            btnArchive.Size = new Size(120, 40);
+            btnArchive.Size = new Size(105, 30);
             btnArchive.TabIndex = 1;
             btnArchive.TabStop = false;
             btnArchive.Text = "Archive";
@@ -317,26 +308,119 @@
             btnCurriculum.BackColor = Color.Transparent;
             btnCurriculum.FlatAppearance.BorderSize = 0;
             btnCurriculum.FlatStyle = FlatStyle.Flat;
-            btnCurriculum.Location = new Point(10, 4);
+            btnCurriculum.Location = new Point(9, 3);
+            btnCurriculum.Margin = new Padding(3, 2, 3, 2);
             btnCurriculum.Name = "btnCurriculum";
-            btnCurriculum.Size = new Size(120, 40);
+            btnCurriculum.Size = new Size(105, 30);
             btnCurriculum.TabIndex = 0;
             btnCurriculum.TabStop = false;
             btnCurriculum.Text = "Curriculum";
             btnCurriculum.UseVisualStyleBackColor = false;
             btnCurriculum.Click += btnCurriculum_Click;
             // 
+            // CourseCode2
+            // 
+            CourseCode2.DataPropertyName = "SubjectCode";
+            CourseCode2.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
+            CourseCode2.FillWeight = 66.64282F;
+            CourseCode2.HeaderText = "Subject Code";
+            CourseCode2.MinimumWidth = 6;
+            CourseCode2.Name = "CourseCode2";
+            CourseCode2.Resizable = DataGridViewTriState.True;
+            CourseCode2.SortMode = DataGridViewColumnSortMode.Automatic;
+            // 
+            // CourseTitle2
+            // 
+            CourseTitle2.DataPropertyName = "SubjectName";
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            CourseTitle2.DefaultCellStyle = dataGridViewCellStyle2;
+            CourseTitle2.FillWeight = 421.4435F;
+            CourseTitle2.HeaderText = "Subject Title";
+            CourseTitle2.MinimumWidth = 6;
+            CourseTitle2.Name = "CourseTitle2";
+            CourseTitle2.ReadOnly = true;
+            // 
+            // Lab2
+            // 
+            Lab2.DataPropertyName = "LabUnits";
+            Lab2.FillWeight = 21.4395962F;
+            Lab2.HeaderText = "Lab";
+            Lab2.MinimumWidth = 6;
+            Lab2.Name = "Lab2";
+            Lab2.ReadOnly = true;
+            // 
+            // Lec2
+            // 
+            Lec2.DataPropertyName = "LecUnits";
+            Lec2.FillWeight = 23.9587688F;
+            Lec2.HeaderText = "Lec";
+            Lec2.MinimumWidth = 6;
+            Lec2.Name = "Lec2";
+            Lec2.ReadOnly = true;
+            // 
+            // TotalUnits2
+            // 
+            TotalUnits2.DataPropertyName = "Units";
+            TotalUnits2.FillWeight = 33.1515274F;
+            TotalUnits2.HeaderText = "Units";
+            TotalUnits2.MinimumWidth = 6;
+            TotalUnits2.Name = "TotalUnits2";
+            TotalUnits2.ReadOnly = true;
+            // 
+            // colProgram
+            // 
+            colProgram.DataPropertyName = "Program";
+            colProgram.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
+            colProgram.FillWeight = 50F;
+            colProgram.HeaderText = "Program";
+            colProgram.MinimumWidth = 6;
+            colProgram.Name = "colProgram";
+            colProgram.Resizable = DataGridViewTriState.True;
+            colProgram.SortMode = DataGridViewColumnSortMode.Automatic;
+            // 
+            // Year2
+            // 
+            Year2.DataPropertyName = "YearLevel";
+            Year2.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
+            Year2.FillWeight = 49.2699051F;
+            Year2.HeaderText = "Year";
+            Year2.MinimumWidth = 6;
+            Year2.Name = "Year2";
+            Year2.Resizable = DataGridViewTriState.True;
+            Year2.SortMode = DataGridViewColumnSortMode.Automatic;
+            // 
+            // Semester1
+            // 
+            Semester1.DataPropertyName = "Semester";
+            Semester1.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
+            Semester1.FillWeight = 84.09402F;
+            Semester1.HeaderText = "Semester";
+            Semester1.MinimumWidth = 6;
+            Semester1.Name = "Semester1";
+            Semester1.Resizable = DataGridViewTriState.True;
+            Semester1.SortMode = DataGridViewColumnSortMode.Automatic;
+            // 
+            // colRevisionYear
+            // 
+            colRevisionYear.DataPropertyName = "RevisionYear";
+            colRevisionYear.FillWeight = 70F;
+            colRevisionYear.HeaderText = "Revision Year";
+            colRevisionYear.MinimumWidth = 6;
+            colRevisionYear.Name = "colRevisionYear";
+            colRevisionYear.ReadOnly = true;
+            // 
             // CurriculumArchiveContentAdmin
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(pnlCurriculumArchive);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "CurriculumArchiveContentAdmin";
-            Size = new Size(1701, 1324);
+            Size = new Size(1488, 993);
             pnlCurriculumArchive.ResumeLayout(false);
             pnlCurriculum.ResumeLayout(false);
             pnlCurriculum.PerformLayout();
+            tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvCurriculum).EndInit();
             pnlArchive.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvArchive).EndInit();
@@ -359,14 +443,17 @@
         private DataGridViewTextBoxColumn Semester;
         private DataGridViewTextBoxColumn SchoolYear;
         private DataGridViewTextBoxColumn blank;
-        private DataGridViewTextBoxColumn CourseCode2;
+        private Label label1;
+        private DateTimePicker dtpRevisionYear;
+        private TableLayoutPanel tableLayoutPanel1;
+        private DataGridViewComboBoxColumn CourseCode2;
         private DataGridViewTextBoxColumn CourseTitle2;
         private DataGridViewTextBoxColumn Lab2;
         private DataGridViewTextBoxColumn Lec2;
         private DataGridViewTextBoxColumn TotalUnits2;
-        private DataGridViewTextBoxColumn colProgram;
-        private DataGridViewTextBoxColumn Year2;
-        private DataGridViewTextBoxColumn Semester1;
+        private DataGridViewComboBoxColumn colProgram;
+        private DataGridViewComboBoxColumn Year2;
+        private DataGridViewComboBoxColumn Semester1;
         private DataGridViewTextBoxColumn colRevisionYear;
     }
 }

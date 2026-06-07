@@ -1,61 +1,176 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using PUPAcadPortal.Data;
+using PUPAcadPortal.Models;
+using PUPAcadPortal.Services;
+using PUPAcadPortal.Utils;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using PUPAcadPortal.Models;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace PUPAcadPortal.PortalContents.Admin.SubOffering
 {
     public partial class CurriculumArchiveContentAdmin : UserControl
     {
+        private CurriculumService _curriculumService = new();
+        private List<Subject> _subjects;
+
         public CurriculumArchiveContentAdmin()
         {
             InitializeComponent();
+            SetupComboBoxColumns();
             LoadCurriculum();
-            Blanks();
             dgvCurriculum.AllowUserToAddRows = true;
+            dgvCurriculum.EditMode = DataGridViewEditMode.EditOnEnter;
             dgvCurriculum.AllowUserToDeleteRows = true;
+            dtpRevisionYear.ValueChanged += DtpRevisionYear_ValueChanged;
+            dgvCurriculum.DefaultValuesNeeded += DgvCurriculum_DefaultValuesNeeded;
+            dgvCurriculum.DataError += DgvCurriculum_DataError;
+            dgvCurriculum.EditingControlShowing += DgvCurriculum_EditingControlShowing;
+            dgvCurriculum.CurrentCellDirtyStateChanged += DgvCurriculum_CurrentCellDirtyStateChanged;
+            dgvCurriculum.CellValueChanged += DgvCurriculum_CellValueChanged;
         }
 
-        private void LoadCurriculum()
+        private void DgvCurriculum_CurrentCellDirtyStateChanged(object sender, EventArgs e)
         {
-            dgvCurriculum.Rows.Clear();
-
-            using (var db = new AppDbContext())
+            if (dgvCurriculum.IsCurrentCellDirty && dgvCurriculum.CurrentCell.OwningColumn.Name == "CourseCode2")
             {
-                var list = db.Curricula
-                    .Include(c => c.Subject)
-                    .ToList();
+                dgvCurriculum.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            }
+        }
 
-                foreach (var c in list)
+        private void DgvCurriculum_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            if (dgvCurriculum.Columns[e.ColumnIndex].Name == "CourseCode2")
+            {
+                string selectedCode = dgvCurriculum.Rows[e.RowIndex].Cells["CourseCode2"].Value?.ToString();
+
+                if (!string.IsNullOrEmpty(selectedCode))
                 {
-                    int rowIndex = dgvCurriculum.Rows.Add();
+                    var subjectInfo = _subjects.FirstOrDefault(s => s.SubjectCode == selectedCode);
 
-                    dgvCurriculum.Rows[rowIndex].Cells["CourseCode2"].Value = c.Subject.SubjectCode;
-                    dgvCurriculum.Rows[rowIndex].Cells["CourseTitle2"].Value = c.Subject.SubjectName;
-                    dgvCurriculum.Rows[rowIndex].Cells["colProgram"].Value = c.Program;
-                    dgvCurriculum.Rows[rowIndex].Cells["Year2"].Value = c.YearLevel;
-                    dgvCurriculum.Rows[rowIndex].Cells["Semester1"].Value = c.SemesterIndex;
-                    dgvCurriculum.Rows[rowIndex].Cells["colRevisionYear"].Value = c.RevisionYear;
-                    dgvCurriculum.Rows[rowIndex].Cells["Lec2"].Value = c.Subject.LecUnits;
-                    dgvCurriculum.Rows[rowIndex].Cells["Lab2"].Value = c.Subject.LabUnits;
-                    dgvCurriculum.Rows[rowIndex].Cells["TotalUnits2"].Value = c.Subject.Units;
+                    if (subjectInfo != null)
+                    {
+                        dgvCurriculum.Rows[e.RowIndex].Cells["CourseTitle2"].Value = subjectInfo.SubjectName;
+                        dgvCurriculum.Rows[e.RowIndex].Cells["Lab2"].Value = subjectInfo.LabUnits;
+                        dgvCurriculum.Rows[e.RowIndex].Cells["Lec2"].Value = subjectInfo.LecUnits;
+                        dgvCurriculum.Rows[e.RowIndex].Cells["TotalUnits2"].Value = subjectInfo.Units;
+                    }
                 }
             }
         }
-        private void Blanks(int count = 20)
+
+
+        private void DgvCurriculum_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            for (int i = 0; i < count; i++)
+            if (e.Control is ComboBox combo)
             {
-                int rowIndex = dgvCurriculum.Rows.Add();
-                dgvCurriculum.Rows[rowIndex].Cells["CourseCode2"].Value = "";
-                dgvCurriculum.Rows[rowIndex].Cells["colProgram"].Value = "";
+                combo.MaxDropDownItems = 10;
+                combo.IntegralHeight = false;
+                combo.BeginInvoke(new Action(() =>
+                {
+                    combo.DroppedDown = true;
+                }));
             }
+        }
+
+        private void DgvCurriculum_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            e.ThrowException = false;
+        }
+
+        private void SetupComboBoxColumns()
+        {
+            if (dgvCurriculum.Columns["colProgram"] is DataGridViewComboBoxColumn programCol)
+            {
+                programCol.DataSource = new List<string> { "BSIT" };
+                programCol.DataPropertyName = "Program";
+            }
+
+            if (dgvCurriculum.Columns["Year2"] is DataGridViewComboBoxColumn yearCol)
+            {
+                var years = new[]
+                {
+            new { Value = 1, Display = "1st Year" },
+            new { Value = 2, Display = "2nd Year" },
+            new { Value = 3, Display = "3rd Year" },
+            new { Value = 4, Display = "4th Year" },
+            new { Value = 5, Display = "5th Year" }
+        }.ToList();
+
+                yearCol.DataSource = years;
+                yearCol.DisplayMember = "Display";
+                yearCol.ValueMember = "Value";
+                yearCol.DataPropertyName = "YearLevel";
+            }
+
+            if (dgvCurriculum.Columns["Semester1"] is DataGridViewComboBoxColumn semCol)
+            {
+                var semesters = new[]
+                {
+            new { Value = 1, Display = "First Semester" },
+            new { Value = 2, Display = "Second Semester" },
+            new { Value = 3, Display = "Summer" }
+        }.ToList();
+
+                semCol.DataSource = semesters;
+                semCol.DisplayMember = "Display";
+                semCol.ValueMember = "Value";
+                semCol.DataPropertyName = "Semester";
+            }
+        }
+
+        private void DgvCurriculum_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
+        {
+            e.Row.Cells["colRevisionYear"].Value = dtpRevisionYear.Value.Year;
+
+            e.Row.Cells["Year2"].Value = 1;
+            e.Row.Cells["Semester1"].Value = 1;
+
+            e.Row.Cells["colProgram"].Value = "BSIT";
+            e.Row.Cells["CourseCode2"].Value = "";
+        }
+
+        private async void DtpRevisionYear_ValueChanged(object? sender, EventArgs e)
+        {
+            LoadCurriculum();
+        }
+
+        private async void LoadCurriculum()
+        {
+            dgvCurriculum.DataSource = null;
+            dgvCurriculum.Rows.Clear();
+
+            _subjects = await _curriculumService.GetSubjects();
+            _subjects = [.. _subjects.OrderBy(s => s.SubjectCode)];
+
+            _subjects.Insert(0, new Subject
+            {
+                SubjectCode = "",
+                SubjectName = "",
+                LabUnits = 0,
+                LecUnits = 0,
+                Units = 0
+            });
+
+            if (dgvCurriculum.Columns["CourseCode2"] is DataGridViewComboBoxColumn subCode)
+            {
+                subCode.DataSource = _subjects;
+                subCode.DisplayMember = "SubjectCode";
+                subCode.ValueMember = "SubjectCode";
+                subCode.DataPropertyName = "SubjectCode";
+                subCode.MaxDropDownItems = 10;
+            }
+
+            List<CurriculumData> list = await _curriculumService.GetCurriculumAsync(dtpRevisionYear.Value.Year);
+            dgvCurriculum.AutoGenerateColumns = false;
+            dgvCurriculum.DataSource = new BindingList<CurriculumData>(list);
         }
         private void btnCurriculum_Click(object sender, EventArgs e)
         {
@@ -69,95 +184,40 @@ namespace PUPAcadPortal.PortalContents.Admin.SubOffering
             pnlCurriculum.Visible = false;
         }
 
-        private void btnUpdateCurriculum_Click(object sender, EventArgs e)
+        private async void btnUpdateCurriculum_Click(object sender, EventArgs e)
         {
-            using (var db = new AppDbContext())
+            dgvCurriculum.EndEdit();
+
+            var boundList = dgvCurriculum.DataSource as BindingList<CurriculumData>;
+            if (boundList == null) return;
+
+            try
             {
-                foreach (DataGridViewRow row in dgvCurriculum.Rows)
+                btnUpdateCurriculum.Enabled = false;
+                Application.UseWaitCursor = true;
+
+                int selectedYear = dtpRevisionYear.Value.Year;
+                await _curriculumService.UpdateCurriculumAsync(boundList.ToList(), selectedYear);
+
+                this.SafeUIUpdate(() =>
                 {
-                    if (row.IsNewRow)
-                        continue;
+                    MessageBox.Show("Curriculum saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    string subjectCode = row.Cells["CourseCode2"].Value?.ToString();
-                    string program = row.Cells["colProgram"].Value?.ToString();
-
-                    if (string.IsNullOrWhiteSpace(subjectCode))
-                        continue;
-
-                    if (!int.TryParse(row.Cells["Year2"].Value?.ToString(), out int year))
-                        continue;
-
-                    if (!int.TryParse(row.Cells["Semester1"].Value?.ToString(), out int semester))
-                        continue;
-
-                    if (!int.TryParse(row.Cells["colRevisionYear"].Value?.ToString(), out int revisionYear))
-                        continue;
-
-                    var subject = db.Subjects
-                        .FirstOrDefault(s => s.SubjectCode == subjectCode);
-
-                    if (subject == null)
-                        continue;
-
-                    var curriculum = db.Curricula.FirstOrDefault(c =>
-                        c.SubjectId == subject.SubjectId &&
-                        c.Program == program);
-
-                    if (curriculum == null)
-                    {
-                        curriculum = new Curriculum();
-                        db.Curricula.Add(curriculum);
-                    }
-
-                    curriculum.SubjectId = subject.SubjectId;
-                    curriculum.Program = program;
-                    curriculum.YearLevel = year;
-                    curriculum.SemesterIndex = semester;
-                    curriculum.RevisionYear = revisionYear;
-                }
-                var dbCurricula = db.Curricula
-                    .Include(c => c.Subject)
-                    .ToList();
-
-                foreach (var dbItem in dbCurricula)
-                {
-                    bool existsInGrid = false;
-
-                    foreach (DataGridViewRow row in dgvCurriculum.Rows)
-                    {
-                        if (row.IsNewRow) continue;
-
-                        string subjectCode = row.Cells["CourseCode2"].Value?.ToString();
-                        string program = row.Cells["colProgram"].Value?.ToString();
-
-                        if (string.IsNullOrWhiteSpace(subjectCode))
-                            continue;
-
-                        var subject = db.Subjects
-                            .FirstOrDefault(s => s.SubjectCode == subjectCode);
-
-                        if (subject == null)
-                            continue;
-
-                        if (dbItem.SubjectId == subject.SubjectId &&
-                            dbItem.Program == program)
-                        {
-                            existsInGrid = true;
-                            break;
-                        }
-                    }
-
-                    if (!existsInGrid)
-                    {
-                        db.Curricula.Remove(dbItem);
-                    }
-                }
-
-                db.SaveChanges();
+                    LoadCurriculum();
+                });
             }
-
-            MessageBox.Show("Curriculum saved successfully.");
-            LoadCurriculum();
+            catch (Exception ex)
+            {
+                this.SafeUIUpdate(() =>
+                {
+                    MessageBox.Show($"An error occurred while saving: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                });
+            }
+            finally
+            {
+                btnUpdateCurriculum.Enabled = true;
+                Application.UseWaitCursor = false;
+            }
         }
     }
 }

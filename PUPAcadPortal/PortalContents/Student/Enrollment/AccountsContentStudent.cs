@@ -232,6 +232,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             lblTAPeso.Text = $"₱{totalAssessment:N2}";
             lblTPPeso.Text = $"₱{totalPaid:N2}";
             lblBalancePeso.Text = $"₱{balance:N2}";
+            dgvAccounts.ClearSelection();
         }
 
         private void PopulateSemesterFilter()
