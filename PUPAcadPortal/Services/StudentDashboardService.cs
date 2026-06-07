@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using iTextSharp.text;
+using Microsoft.EntityFrameworkCore;
+using Mysqlx.Crud;
 using PUPAcadPortal.Models;
 using System;
 using System.Collections.Generic;
@@ -56,6 +58,46 @@ namespace PUPAcadPortal.Services
                     .CountAsync(h => h.StudentId == studentId && h.IsResolved == false);
 
                 return pendingEnrollments + activeHolds;
+            }
+        }
+
+        public async Task<List<Announcement>> GetAnnouncementsAsync(string role)
+        {
+            using (var context = new AppDbContext())
+            {
+                return await context.Announcements
+                    .Where(a => a.TargetRoles.Any(r => r.RoleName == role))
+                    .OrderByDescending(a => a.IsUrgent)
+                    .OrderByDescending(a => a.PostedDate)
+                    .ToListAsync();
+            }
+        }
+
+        public async Task<List<Models.CalendarEvent>> GetEventsAsync(int studentId)
+        {
+            using (var context = new AppDbContext())
+            {
+                DateTime today = DateTime.Today;
+
+                var student = await context.Students.FirstOrDefaultAsync(s => s.StudentId == studentId);
+                int userId = student?.UserId ?? 0;
+
+                var enrolledCourseIds = context.EnrollmentSubjects
+                    .Where(es => es.Enrollment.StudentId == studentId && es.SubjectStatus == "Officially Enrolled")
+                    .Select(es => es.SubjectOfferingId);
+
+                var upcomingEvents = await context.CalendarEvents
+                    .Where(e => e.EventDate>= today)
+                    .Where(e =>
+                        e.UserId == userId ||                                                                
+                        (e.SubjectOfferingId != null && enrolledCourseIds.Contains(e.SubjectOfferingId)) ||  
+                        e.EventType == "University"                                                          
+                    )
+                    .OrderBy(e => e.EventDate)
+                    .Take(5)
+                    .ToListAsync();
+
+                return upcomingEvents;
             }
         }
     }

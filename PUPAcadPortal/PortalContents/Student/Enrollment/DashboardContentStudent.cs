@@ -9,12 +9,13 @@ using PUPAcadPortal.Utils;
 using PUPAcadPortal.PortalContents.Student.Enrollment;
 using PUPAcadPortal.Data;
 using PUPAcadPortal.Services;
+using PUPAcadPortal.PortalContents.Instructor.Enrollment;
 
 namespace PUPAcadPortal.PortalContents.Student.Enrollment
 {
     public partial class DashboardContentStudent : UserControl
     {
-        StudentDashboardService studentDashboardService = new();
+        private StudentDashboardService _studentDashboardService = new();
         private int _studentId = UserSession.StudentID ?? 0;
         private string _academicPeriod = GlobalSession.ActiveAcademicPeriod ?? "";
 
@@ -44,6 +45,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             await LoadDashboardDataAsync();
             SetupQuickActionClicks();
         }
+
         private void ShowNotEnrolledState()
         {
 
@@ -65,14 +67,15 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
 
         private async Task LoadDashboardDataAsync()
         {
-            var enrolledUnits = await studentDashboardService.GetEnrolledUnits(_studentId, _academicPeriod);
-            var statusTask = studentDashboardService.GetEnrollmentStatusAsync(_studentId, _academicPeriod);
-            var semesterTask = studentDashboardService.GetCurrentSemesterAsync();
-            var pendingTask = studentDashboardService.GetPendingItemsCountAsync(_studentId);
+            this.DisableControls();
+            var enrolledUnits = await _studentDashboardService.GetEnrolledUnits(_studentId, _academicPeriod);
+            var statusTask = _studentDashboardService.GetEnrollmentStatusAsync(_studentId, _academicPeriod);
+            var semesterTask = _studentDashboardService.GetCurrentSemesterAsync();
+            var pendingTask = _studentDashboardService.GetPendingItemsCountAsync(_studentId);
+            var announcements = await _studentDashboardService.GetAnnouncementsAsync(UserSession.Role);
+            var upcomings = await _studentDashboardService.GetEventsAsync(UserSession.StudentID ?? 0);
 
             await Task.WhenAll(statusTask, semesterTask, pendingTask);
-
-            if (this.IsDisposed) return;
 
             this.SafeUIUpdate(async () =>
             {
@@ -80,6 +83,30 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
                 lblESRegistered.Text = await statusTask;
                 lblCurrentSemester.Text = await semesterTask;
                 lblPendingItems.Text = (await pendingTask).ToString();
+                this.EnableControls();
+
+                foreach (var item in upcomings)
+                {
+                    UpcomingEventReusable upcoming = new()
+                    {
+                        EventMonth = item.EventDate.Value.ToString("MMM"),
+                        EventDay = item.EventDate.Value.Day.ToString(),
+                        EventTime = $"{item.StartTime.ToShortTimeString()} - {item.EndTime.ToShortTimeString()}",
+                        EventTitle = item.Title
+                    };
+                    fpnlUpcoming.Controls.Add(upcoming);
+                }
+
+                foreach (var item in announcements)
+                {
+                    AnnouncementEnrollmentReusable reusable = new()
+                    {
+                        AnnounceTitle = item.Title,
+                        AnnounceDesc = item.Content,
+                        AnnounceDate = item.PostedDate.ToShortDateString()
+                    };
+                    fpnlAnnouncement.Controls.Add(reusable);
+                }
             });
         }
     }

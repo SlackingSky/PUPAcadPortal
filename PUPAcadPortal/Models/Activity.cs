@@ -23,7 +23,7 @@ public partial class Activity
 
     public string ActivityType { get; set; } = null!;
 
-    public ulong IsPublished { get; set; }
+    public bool IsPublished { get; set; }
 
     public virtual GradingCategory? Category { get; set; }
 

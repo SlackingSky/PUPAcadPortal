@@ -40,24 +40,7 @@
             label179 = new Label();
             lblESRegistered = new Label();
             pnlUpcomingEventsContainer = new Panel();
-            panel78 = new Panel();
-            label154 = new Label();
-            label155 = new Label();
-            panel79 = new Panel();
-            label156 = new Label();
-            label157 = new Label();
-            panel80 = new Panel();
-            label158 = new Label();
-            label159 = new Label();
-            panel81 = new Panel();
-            label160 = new Label();
-            label161 = new Label();
-            panel82 = new Panel();
-            label162 = new Label();
-            label163 = new Label();
-            panel83 = new Panel();
-            label164 = new Label();
-            label165 = new Label();
+            fpnlUpcoming = new FlowLayoutPanel();
             label166 = new Label();
             pnlCurrentSemesterCard = new Panel();
             pictureBox44 = new PictureBox();
@@ -90,16 +73,7 @@
             label173 = new Label();
             label174 = new Label();
             pnlAnnouncementsContainer = new Panel();
-            panel74 = new Panel();
-            label147 = new Label();
-            label148 = new Label();
-            panel75 = new Panel();
-            label149 = new Label();
-            panel76 = new Panel();
-            label150 = new Label();
-            label151 = new Label();
-            panel77 = new Panel();
-            label152 = new Label();
+            fpnlAnnouncement = new FlowLayoutPanel();
             label153 = new Label();
             pnlDashboardSpaceProvider = new Panel();
             pnlDashboardGreetingsContainer = new Panel();
@@ -120,12 +94,6 @@
             pnlEnrollmentStatusCard.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbEnrollmentStatusCard).BeginInit();
             pnlUpcomingEventsContainer.SuspendLayout();
-            panel78.SuspendLayout();
-            panel79.SuspendLayout();
-            panel80.SuspendLayout();
-            panel81.SuspendLayout();
-            panel82.SuspendLayout();
-            panel83.SuspendLayout();
             pnlCurrentSemesterCard.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox44).BeginInit();
             pnlEnrolleft.SuspendLayout();
@@ -137,8 +105,6 @@
             pnlQAPaymentStatus.SuspendLayout();
             pnlQAViewEnrollment.SuspendLayout();
             pnlAnnouncementsContainer.SuspendLayout();
-            panel74.SuspendLayout();
-            panel76.SuspendLayout();
             pnlDashboardGreetingsContainer.SuspendLayout();
             pnlViewDetails.SuspendLayout();
             SuspendLayout();
@@ -275,206 +241,22 @@
             pnlUpcomingEventsContainer.Anchor = AnchorStyles.None;
             pnlUpcomingEventsContainer.BackColor = SystemColors.ControlLightLight;
             pnlUpcomingEventsContainer.BorderStyle = BorderStyle.FixedSingle;
-            pnlUpcomingEventsContainer.Controls.Add(panel78);
-            pnlUpcomingEventsContainer.Controls.Add(panel80);
-            pnlUpcomingEventsContainer.Controls.Add(panel82);
+            pnlUpcomingEventsContainer.Controls.Add(fpnlUpcoming);
             pnlUpcomingEventsContainer.Controls.Add(label166);
-            pnlUpcomingEventsContainer.Location = new Point(987, 152);
+            pnlUpcomingEventsContainer.Location = new Point(984, 152);
             pnlUpcomingEventsContainer.Name = "pnlUpcomingEventsContainer";
-            pnlUpcomingEventsContainer.Size = new Size(368, 339);
+            pnlUpcomingEventsContainer.Size = new Size(371, 339);
             pnlUpcomingEventsContainer.TabIndex = 26;
             // 
-            // panel78
+            // fpnlUpcoming
             // 
-            panel78.Controls.Add(label154);
-            panel78.Controls.Add(label155);
-            panel78.Controls.Add(panel79);
-            panel78.Location = new Point(11, 226);
-            panel78.Name = "panel78";
-            panel78.Size = new Size(344, 80);
-            panel78.TabIndex = 21;
-            // 
-            // label154
-            // 
-            label154.AutoSize = true;
-            label154.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label154.ForeColor = Color.DimGray;
-            label154.Location = new Point(93, 38);
-            label154.Name = "label154";
-            label154.Size = new Size(62, 17);
-            label154.TabIndex = 19;
-            label154.Text = "11:59 PM";
-            // 
-            // label155
-            // 
-            label155.AutoSize = true;
-            label155.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label155.ForeColor = Color.DimGray;
-            label155.Location = new Point(86, 13);
-            label155.Name = "label155";
-            label155.Size = new Size(180, 21);
-            label155.TabIndex = 17;
-            label155.Text = "Add/Drop Period Ends";
-            // 
-            // panel79
-            // 
-            panel79.BackColor = Color.Maroon;
-            panel79.Controls.Add(label156);
-            panel79.Controls.Add(label157);
-            panel79.Location = new Point(3, 3);
-            panel79.Name = "panel79";
-            panel79.Size = new Size(70, 74);
-            panel79.TabIndex = 0;
-            // 
-            // label156
-            // 
-            label156.AutoSize = true;
-            label156.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label156.ForeColor = Color.White;
-            label156.Location = new Point(13, 14);
-            label156.Name = "label156";
-            label156.Size = new Size(46, 17);
-            label156.TabIndex = 19;
-            label156.Text = "March";
-            // 
-            // label157
-            // 
-            label157.AutoSize = true;
-            label157.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label157.ForeColor = Color.White;
-            label157.Location = new Point(16, 31);
-            label157.Name = "label157";
-            label157.Size = new Size(37, 30);
-            label157.TabIndex = 20;
-            label157.Text = "20";
-            // 
-            // panel80
-            // 
-            panel80.Controls.Add(label158);
-            panel80.Controls.Add(label159);
-            panel80.Controls.Add(panel81);
-            panel80.Location = new Point(11, 140);
-            panel80.Name = "panel80";
-            panel80.Size = new Size(344, 80);
-            panel80.TabIndex = 20;
-            // 
-            // label158
-            // 
-            label158.AutoSize = true;
-            label158.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label158.ForeColor = Color.DimGray;
-            label158.Location = new Point(93, 38);
-            label158.Name = "label158";
-            label158.Size = new Size(62, 17);
-            label158.TabIndex = 19;
-            label158.Text = "11:59 PM";
-            // 
-            // label159
-            // 
-            label159.AutoSize = true;
-            label159.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label159.ForeColor = Color.DimGray;
-            label159.Location = new Point(86, 13);
-            label159.Name = "label159";
-            label159.Size = new Size(112, 21);
-            label159.TabIndex = 17;
-            label159.Text = "Classes Begin";
-            // 
-            // panel81
-            // 
-            panel81.BackColor = Color.Maroon;
-            panel81.Controls.Add(label160);
-            panel81.Controls.Add(label161);
-            panel81.Location = new Point(3, 3);
-            panel81.Name = "panel81";
-            panel81.Size = new Size(70, 74);
-            panel81.TabIndex = 0;
-            // 
-            // label160
-            // 
-            label160.AutoSize = true;
-            label160.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label160.ForeColor = Color.White;
-            label160.Location = new Point(13, 14);
-            label160.Name = "label160";
-            label160.Size = new Size(46, 17);
-            label160.TabIndex = 19;
-            label160.Text = "March";
-            // 
-            // label161
-            // 
-            label161.AutoSize = true;
-            label161.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label161.ForeColor = Color.White;
-            label161.Location = new Point(16, 31);
-            label161.Name = "label161";
-            label161.Size = new Size(37, 30);
-            label161.TabIndex = 20;
-            label161.Text = "15";
-            // 
-            // panel82
-            // 
-            panel82.Controls.Add(label162);
-            panel82.Controls.Add(label163);
-            panel82.Controls.Add(panel83);
-            panel82.Location = new Point(11, 53);
-            panel82.Name = "panel82";
-            panel82.Size = new Size(344, 80);
-            panel82.TabIndex = 19;
-            // 
-            // label162
-            // 
-            label162.AutoSize = true;
-            label162.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label162.ForeColor = Color.DimGray;
-            label162.Location = new Point(93, 38);
-            label162.Name = "label162";
-            label162.Size = new Size(62, 17);
-            label162.TabIndex = 19;
-            label162.Text = "11:59 PM";
-            // 
-            // label163
-            // 
-            label163.AutoSize = true;
-            label163.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label163.ForeColor = Color.DimGray;
-            label163.Location = new Point(86, 13);
-            label163.Name = "label163";
-            label163.Size = new Size(189, 21);
-            label163.TabIndex = 17;
-            label163.Text = "Enrollment Period Ends";
-            // 
-            // panel83
-            // 
-            panel83.BackColor = Color.Maroon;
-            panel83.Controls.Add(label164);
-            panel83.Controls.Add(label165);
-            panel83.Location = new Point(3, 3);
-            panel83.Name = "panel83";
-            panel83.Size = new Size(70, 74);
-            panel83.TabIndex = 0;
-            // 
-            // label164
-            // 
-            label164.AutoSize = true;
-            label164.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label164.ForeColor = Color.White;
-            label164.Location = new Point(13, 14);
-            label164.Name = "label164";
-            label164.Size = new Size(46, 17);
-            label164.TabIndex = 19;
-            label164.Text = "March";
-            // 
-            // label165
-            // 
-            label165.AutoSize = true;
-            label165.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label165.ForeColor = Color.White;
-            label165.Location = new Point(16, 31);
-            label165.Name = "label165";
-            label165.Size = new Size(37, 30);
-            label165.TabIndex = 20;
-            label165.Text = "10";
+            fpnlUpcoming.AutoScroll = true;
+            fpnlUpcoming.FlowDirection = FlowDirection.TopDown;
+            fpnlUpcoming.Location = new Point(0, 50);
+            fpnlUpcoming.Name = "fpnlUpcoming";
+            fpnlUpcoming.Size = new Size(370, 288);
+            fpnlUpcoming.TabIndex = 19;
+            fpnlUpcoming.WrapContents = false;
             // 
             // label166
             // 
@@ -840,117 +622,22 @@
             pnlAnnouncementsContainer.Anchor = AnchorStyles.None;
             pnlAnnouncementsContainer.BackColor = SystemColors.ControlLightLight;
             pnlAnnouncementsContainer.BorderStyle = BorderStyle.FixedSingle;
-            pnlAnnouncementsContainer.Controls.Add(panel74);
-            pnlAnnouncementsContainer.Controls.Add(panel76);
+            pnlAnnouncementsContainer.Controls.Add(fpnlAnnouncement);
             pnlAnnouncementsContainer.Controls.Add(label153);
             pnlAnnouncementsContainer.Location = new Point(176, 512);
             pnlAnnouncementsContainer.Name = "pnlAnnouncementsContainer";
             pnlAnnouncementsContainer.Size = new Size(1178, 331);
             pnlAnnouncementsContainer.TabIndex = 27;
             // 
-            // panel74
+            // fpnlAnnouncement
             // 
-            panel74.Controls.Add(label147);
-            panel74.Controls.Add(label148);
-            panel74.Controls.Add(panel75);
-            panel74.Controls.Add(label149);
-            panel74.Location = new Point(20, 177);
-            panel74.Name = "panel74";
-            panel74.Size = new Size(1146, 100);
-            panel74.TabIndex = 19;
-            // 
-            // label147
-            // 
-            label147.AutoSize = true;
-            label147.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label147.ForeColor = Color.DimGray;
-            label147.Location = new Point(44, 67);
-            label147.Name = "label147";
-            label147.Size = new Size(446, 17);
-            label147.TabIndex = 19;
-            label147.Text = "Some class schedules have been updated. Please check your dashboard.";
-            // 
-            // label148
-            // 
-            label148.AutoSize = true;
-            label148.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label148.ForeColor = Color.DimGray;
-            label148.Location = new Point(44, 36);
-            label148.Name = "label148";
-            label148.Size = new Size(98, 17);
-            label148.TabIndex = 18;
-            label148.Text = "March 92, 2026";
-            // 
-            // panel75
-            // 
-            panel75.BackColor = Color.FromArgb(255, 193, 7);
-            panel75.Location = new Point(24, 8);
-            panel75.Name = "panel75";
-            panel75.Size = new Size(5, 80);
-            panel75.TabIndex = 17;
-            // 
-            // label149
-            // 
-            label149.AutoSize = true;
-            label149.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label149.ForeColor = Color.DimGray;
-            label149.Location = new Point(42, 15);
-            label149.Name = "label149";
-            label149.Size = new Size(222, 21);
-            label149.TabIndex = 16;
-            label149.Text = "Class Schedule Adjustments";
-            // 
-            // panel76
-            // 
-            panel76.Controls.Add(label150);
-            panel76.Controls.Add(label151);
-            panel76.Controls.Add(panel77);
-            panel76.Controls.Add(label152);
-            panel76.Location = new Point(20, 62);
-            panel76.Name = "panel76";
-            panel76.Size = new Size(1146, 100);
-            panel76.TabIndex = 18;
-            // 
-            // label150
-            // 
-            label150.AutoSize = true;
-            label150.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label150.ForeColor = Color.DimGray;
-            label150.Location = new Point(44, 67);
-            label150.Name = "label150";
-            label150.Size = new Size(512, 17);
-            label150.TabIndex = 19;
-            label150.Text = "Please review the updated enrollment procedures for the upcoming academic year.";
-            // 
-            // label151
-            // 
-            label151.AutoSize = true;
-            label151.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label151.ForeColor = Color.DimGray;
-            label151.Location = new Point(44, 36);
-            label151.Name = "label151";
-            label151.Size = new Size(98, 17);
-            label151.TabIndex = 18;
-            label151.Text = "March 62, 2026";
-            // 
-            // panel77
-            // 
-            panel77.BackColor = Color.FromArgb(255, 193, 7);
-            panel77.Location = new Point(24, 8);
-            panel77.Name = "panel77";
-            panel77.Size = new Size(5, 80);
-            panel77.TabIndex = 17;
-            // 
-            // label152
-            // 
-            label152.AutoSize = true;
-            label152.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label152.ForeColor = Color.DimGray;
-            label152.Location = new Point(42, 15);
-            label152.Name = "label152";
-            label152.Size = new Size(312, 21);
-            label152.TabIndex = 16;
-            label152.Text = "Enrollment Guidelines for AY 2025-2026";
+            fpnlAnnouncement.AutoScroll = true;
+            fpnlAnnouncement.FlowDirection = FlowDirection.TopDown;
+            fpnlAnnouncement.Location = new Point(6, 60);
+            fpnlAnnouncement.Name = "fpnlAnnouncement";
+            fpnlAnnouncement.Size = new Size(1170, 258);
+            fpnlAnnouncement.TabIndex = 18;
+            fpnlAnnouncement.WrapContents = false;
             // 
             // label153
             // 
@@ -1111,18 +798,6 @@
             ((System.ComponentModel.ISupportInitialize)pbEnrollmentStatusCard).EndInit();
             pnlUpcomingEventsContainer.ResumeLayout(false);
             pnlUpcomingEventsContainer.PerformLayout();
-            panel78.ResumeLayout(false);
-            panel78.PerformLayout();
-            panel79.ResumeLayout(false);
-            panel79.PerformLayout();
-            panel80.ResumeLayout(false);
-            panel80.PerformLayout();
-            panel81.ResumeLayout(false);
-            panel81.PerformLayout();
-            panel82.ResumeLayout(false);
-            panel82.PerformLayout();
-            panel83.ResumeLayout(false);
-            panel83.PerformLayout();
             pnlCurrentSemesterCard.ResumeLayout(false);
             pnlCurrentSemesterCard.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox44).EndInit();
@@ -1143,10 +818,6 @@
             pnlQAViewEnrollment.PerformLayout();
             pnlAnnouncementsContainer.ResumeLayout(false);
             pnlAnnouncementsContainer.PerformLayout();
-            panel74.ResumeLayout(false);
-            panel74.PerformLayout();
-            panel76.ResumeLayout(false);
-            panel76.PerformLayout();
             pnlDashboardGreetingsContainer.ResumeLayout(false);
             pnlDashboardGreetingsContainer.PerformLayout();
             pnlViewDetails.ResumeLayout(false);
@@ -1167,24 +838,6 @@
         private Label label179;
         private Label lblESRegistered;
         private Panel pnlUpcomingEventsContainer;
-        private Panel panel78;
-        private Label label154;
-        private Label label155;
-        private Panel panel79;
-        private Label label156;
-        private Label label157;
-        private Panel panel80;
-        private Label label158;
-        private Label label159;
-        private Panel panel81;
-        private Label label160;
-        private Label label161;
-        private Panel panel82;
-        private Label label162;
-        private Label label163;
-        private Panel panel83;
-        private Label label164;
-        private Label label165;
         private Label label166;
         private Panel pnlCurrentSemesterCard;
         private PictureBox pictureBox44;
@@ -1216,16 +869,6 @@
         private Label label173;
         private Label label174;
         private Panel pnlAnnouncementsContainer;
-        private Panel panel74;
-        private Label label147;
-        private Label label148;
-        private Panel panel75;
-        private Label label149;
-        private Panel panel76;
-        private Label label150;
-        private Label label151;
-        private Panel panel77;
-        private Label label152;
         private Label label153;
         private Panel pnlDashboardSpaceProvider;
         private Panel pnlDashboardGreetingsContainer;
@@ -1240,5 +883,7 @@
         private Button btnEnrollCloseDetails;
         private Label lblSubjectDetails;
         private Button btnDashboardGrades;
+        private FlowLayoutPanel fpnlAnnouncement;
+        private FlowLayoutPanel fpnlUpcoming;
     }
 }
