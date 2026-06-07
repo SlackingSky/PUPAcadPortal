@@ -142,6 +142,8 @@ namespace PUPAcadPortal
                 picFileIcon.Invalidate();
             }
 
+
+
             ReflowDescription();
             Refresh();
         }
