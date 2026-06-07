@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿/*using Microsoft.EntityFrameworkCore;
 
 namespace PUPAcadPortal.Models;
 
@@ -66,4 +66,4 @@ public partial class AppDbContext
                 .HasConstraintName("FK_QrSession_ClassSession");
         });
     }
-}
+}*/

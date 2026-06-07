@@ -11,11 +11,11 @@ namespace PUPAcadPortal
 {
     public partial class CourseManagementDashboard : UserControl
     {
-        // ── Events ────────────────────────────────────────────────────────────
+        //  Events 
         /// <summary>Raised when the user clicks "Open Course" to navigate into a course.</summary>
         public event Action<CourseDto>? OnOpenCourse;
 
-        // ── Services / state ──────────────────────────────────────────────────
+        //  Services / state 
         private readonly ICourseDbService _courseSvc;
         private readonly IActivityDbService _activitySvc;
         private readonly IModuleDbService _moduleSvc;
@@ -31,7 +31,7 @@ namespace PUPAcadPortal
         // ── DbContext factory (mirrors ActivityDashboard pattern) ─────────────
         private static AppDbContext CreateContext() => new AppDbContext();
 
-        // ── Full DB-backed constructor ────────────────────────────────────────
+        //  Full DB-backed constructor 
         public CourseManagementDashboard(
             int professorId,
             ICourseDbService courseSvc,
@@ -355,7 +355,7 @@ namespace PUPAcadPortal
             return card;
         }
 
-        // ── Empty state ───────────────────────────────────────────────────────
+        //  Empty state 
         private Panel BuildEmptyState()
         {
             int w = Math.Max(700, flpCourseCards.ClientSize.Width - 40);
@@ -392,28 +392,6 @@ namespace PUPAcadPortal
                 Location = new Point(0, 112)
             });
             return pnl;
-        }
-
-        // ── CRUD handlers ─────────────────────────────────────────────────────
-
-        private void BtnCreateCourse_Click(object? sender, EventArgs e)
-        {
-            using var dlg = new CourseFormDialog(_professorId, _courseSvc);
-            if (dlg.ShowDialog(this) != DialogResult.OK) return;
-
-            // Re-fetch from DB to get fully populated data
-            try
-            {
-                var fresh = _courseSvc.GetCourseById(dlg.Result.SubjectOfferingId);
-                if (fresh != null) _courses.Add(fresh);
-                else _courses.Add(dlg.Result);
-            }
-            catch
-            {
-                _courses.Add(dlg.Result);
-            }
-
-            RefreshDashboard();
         }
 
         private void EditCourse(CourseDto course)
@@ -468,7 +446,7 @@ namespace PUPAcadPortal
             }
         }
 
-        // ── Navigation ────────────────────────────────────────────────────────
+        //  Navigation 
         private void OpenCourse(CourseDto courseDto)
         {
             // Raise event if a parent has subscribed (host-level navigation)

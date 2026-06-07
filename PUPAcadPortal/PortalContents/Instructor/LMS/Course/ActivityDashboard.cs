@@ -20,10 +20,10 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         private readonly IActivityDbService _activitySvc;
         private readonly IModuleDbService _moduleSvc;
 
-        // ── Current child view 
+        // ─ Current child view 
         private Control? _current;
 
-        // ── DB context factory (mirrors CourseManagementDashboard pattern) ────
+        //  DB context factory (mirrors CourseManagementDashboard pattern) ────
         private static AppDbContext CreateContext() => new AppDbContext();
 
         // ── DB-backed constructor 
@@ -42,7 +42,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                    new NullModuleDbService())
         { }
 
-        // ── Private shared constructor ────────────────────────────────────────
+        //  Private shared constructor 
         public ActivityDashboard(
             int professorId,
             ICourseDbService courseSvc,
@@ -60,7 +60,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             ShowDashboard();
         }
 
-        // ── Navigation helpers ────────────────────────────────────────────────
+        // ── Navigation helpers 
 
         private void ShowDashboard()
         {
