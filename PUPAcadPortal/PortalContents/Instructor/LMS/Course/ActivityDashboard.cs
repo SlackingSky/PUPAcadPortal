@@ -14,19 +14,19 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
     /// </summary>
     public sealed class ActivityDashboard : UserControl
     {
-        // ── Services ─────────────────────────────────────────────────────────
+        // ── Services 
         private readonly int _professorId;
         private readonly ICourseDbService _courseSvc;
         private readonly IActivityDbService _activitySvc;
         private readonly IModuleDbService _moduleSvc;
 
-        // ── Current child view ────────────────────────────────────────────────
+        // ── Current child view 
         private Control? _current;
 
         // ── DB context factory (mirrors CourseManagementDashboard pattern) ────
         private static AppDbContext CreateContext() => new AppDbContext();
 
-        // ── DB-backed constructor ─────────────────────────────────────────────
+        // ── DB-backed constructor 
         public ActivityDashboard(int professorId)
             : this(professorId,
                    new CourseDbService(CreateContext),
@@ -105,7 +105,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             SwapView(filesPage);
         }
 
-        // ── View swapper ──────────────────────────────────────────────────────
+        // ── View swapper 
 
         private void SwapView(Control next)
         {

@@ -2,16 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using PUPAcadPortal.Models;
+using MySql.EntityFrameworkCore;
+using MySqlConnector;
 
 namespace PUPAcadPortal.Services
 {
-    /// <summary>
-    /// Full CRUD service for QrSession rows.
-    ///   CREATE  – issue a fresh token (deactivates the previous one)
-    ///   READ    – fetch the active token or full history for a session
-    ///   UPDATE  – soft-expire a token (IsActive = false)
-    ///   DELETE  – hard-delete all rows whose expiry has passed
-    /// </summary>
     public static class QrSessionService
     {
         private static AppDbContext CreateContext() => new AppDbContext();

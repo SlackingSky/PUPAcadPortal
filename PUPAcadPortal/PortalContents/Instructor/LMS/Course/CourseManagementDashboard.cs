@@ -143,7 +143,7 @@ namespace PUPAcadPortal
             ResizeCards();
         }
 
-        // ── Stats ─────────────────────────────────────────────────────────────
+        // ── Stats 
         private void UpdateStats()
         {
             lblTotalCourses.Text = _courses.Count.ToString();
@@ -152,7 +152,7 @@ namespace PUPAcadPortal
             lblTotalPending.Text = _courses.Sum(c => c.PendingSubmissions).ToString();
         }
 
-        // ── Card sizing ───────────────────────────────────────────────────────
+        // ── Card sizing 
         private void ResizeCards()
         {
             if (flpCourseCards.Controls.Count == 0) return;
@@ -187,7 +187,7 @@ namespace PUPAcadPortal
             }
         }
 
-        // ── Card builder ──────────────────────────────────────────────────────
+        // ── Card builder 
         private Panel BuildCourseCard(CourseDto course)
         {
             const int cardH = 196, statsY = 74, bottomY = 152;

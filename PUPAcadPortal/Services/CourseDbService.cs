@@ -248,7 +248,7 @@ namespace PUPAcadPortal.Services
                 .ToList();
         }
 
-        // ── Private helpers ───────────────────────────────────────────────────
+        //  Private helpers 
 
         private static CourseDto MapToDto(SubjectOffering o)
         {
