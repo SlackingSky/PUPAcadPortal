@@ -9,6 +9,8 @@ using PUPAcadPortal.PortalContents.Student.Enrollment;
 using PUPAcadPortal.Data;
 using Microsoft.EntityFrameworkCore;
 using PUPAcadPortal.Models;
+using System.Threading.Tasks;
+using System.Linq;
 
 
 namespace PUPAcadPortal.PortalContents.Student.Enrollment
@@ -16,6 +18,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
     public partial class AccountsContentStudent : UserControl
     {
         private StudentDataService _dataService;
+        private DataTable accountsTable;
 
         private const int SidePadding = 16;
         private const int CardGap = 10;
@@ -26,18 +29,14 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             if (EnrollmentContentStudent.dataService is null)
             {
                 EnrollmentContentStudent.dataService = new StudentDataService();
-                _dataService = EnrollmentContentStudent.dataService;
             }
-            else
-                _dataService = EnrollmentContentStudent.dataService;
+            _dataService = EnrollmentContentStudent.dataService;
         }
         // ─────────────────────────────────────────────────────────────────
         // ACCOUNTS – Using DataTable with existing columns
         // ─────────────────────────────────────────────────────────────────
 
-        private DataTable accountsTable;
-
-        private async void Accounts_Initialize()
+        private void Accounts_Initialize()
         {
             pnlAccountsContent.Visible = true;
             CreateAccountsTable();
@@ -45,6 +44,8 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             // Initially hide the enrollment status card
             pnlEnrollStatusCard.Visible = false;
             lblEnrollStatus.Visible = false;
+
+            SetupAccountsGridStyle();
 
             if (_dataService.IsStudentEnrolled())
             {
@@ -54,16 +55,10 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             {
                 ShowNotEnrolledState();
             }
-
-            SetupAccountsGridStyle();
-            UpdateAccountsSummary();
             PopulateSemesterFilter();
+            cmbSelectSem.SelectedIndexChanged -= cmbSelectSem_SelectedIndexChanged;
             cmbSelectSem.SelectedIndexChanged += cmbSelectSem_SelectedIndexChanged;
-
-            // Hide enrollment status card initially (student not yet enrolled)
-            pnlEnrollStatusCard.Visible = false;
-
-            lblEnrollStatus.Visible = false;
+            cmbSelectSem.SelectedIndex = 0;
         }
 
         private void CreateAccountsTable()
@@ -90,13 +85,12 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             dgvAccounts.Columns["colAccountsPaidDate"].DataPropertyName = "colAccountsPaidDate";
         }
 
-        //pagload ng data sa acc page
         private async Task LoadAccountsDataAsync(string selectedSemester = "All")
         {
             accountsTable.Rows.Clear();
+            int currentStudentId = UserSession.StudentID ?? 0;
 
-            // i dunno how to make it dynamic
-            int currentStudentId = 123456;
+            if (currentStudentId == 0) return;
 
             using (var context = new AppDbContext())
             {
@@ -105,7 +99,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
                     .Include(sa => sa.PaymentHistories)
                     .FirstOrDefaultAsync(sa => sa.StudentId == currentStudentId);
 
-                if (studentAccount == null) return;
+                if (studentAccount == null || studentAccount.PaymentHistories == null) return; // If no account or payment history, just return (table will be empty)
 
                 // filter the records based on the selected sem
                 var records = studentAccount.PaymentHistories.AsEnumerable();
@@ -117,7 +111,6 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
                                                  r.Description.IndexOf(selectedSemester, StringComparison.OrdinalIgnoreCase) >= 0);
                 }
 
-                // 3. Loop through the  database records 
                 foreach (var record in records)
                 {
                     accountsTable.Rows.Add(
@@ -173,6 +166,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             dgvAccounts.Columns["colAccountsRefID"].HeaderCell.Style.BackColor = Color.FromArgb(245, 247, 250);
             dgvAccounts.Columns["colAccountsRefID"].DefaultCellStyle.ForeColor = Color.Gray;
 
+            dgvAccounts.CellFormatting -= dgvAccounts_CellFormatting; // Prevent handler bundling duplicates
             dgvAccounts.CellFormatting += dgvAccounts_CellFormatting;
         }
 
@@ -221,10 +215,10 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
 
             foreach (DataRow row in dt.Rows)
             {
-                string amountStr = row["colAccountsAmount"].ToString();
-                string status = row["colAccountsStatus"].ToString();
+                string amountStr = row["colAccountsAmount"]?.ToString() ?? "";
+                string status = row["colAccountsStatus"]?.ToString() ?? "";
 
-                amountStr = amountStr.Replace("₱", "").Replace(",", "");
+                amountStr = amountStr.Replace("₱", "").Replace(",", "").Trim(); 
                 if (decimal.TryParse(amountStr, out decimal amount))
                 {
                     totalAssessment += amount;
@@ -245,50 +239,40 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             cmbSelectSem.Items.Clear();
             cmbSelectSem.Items.Add("All");
 
-            foreach (DataRow row in accountsTable.Rows)
+            int currentStudentId = UserSession.StudentID ?? 0;
+            if (currentStudentId == 0) return;
+
+            // Read directly from DB context instead of the empty table to fix startup population
+            using (var context = new AppDbContext())
             {
-                string description = row["colAccountsDescription"].ToString();
-                if (description.Contains("First Semester") && !cmbSelectSem.Items.Contains("First Semester"))
-                    cmbSelectSem.Items.Add("First Semester");
-                else if (description.Contains("Second Semester") && !cmbSelectSem.Items.Contains("Second Semester"))
-                    cmbSelectSem.Items.Add("Second Semester");
+                var studentAccount = context.StudentAccounts
+                    .Include(sa => sa.PaymentHistories)
+                    .FirstOrDefault(sa => sa.StudentId == currentStudentId);
+
+                if (studentAccount?.PaymentHistories == null) return;
+
+                foreach (var record in studentAccount.PaymentHistories)
+                {
+                    string description = record.Description ?? "";
+                    if (description.Contains("First Semester") && !cmbSelectSem.Items.Contains("First Semester"))
+                        cmbSelectSem.Items.Add("First Semester");
+                    else if (description.Contains("Second Semester") && !cmbSelectSem.Items.Contains("Second Semester"))
+                        cmbSelectSem.Items.Add("Second Semester");
+                }
             }
-            cmbSelectSem.SelectedIndex = 0;
         }
 
-        private void cmbSelectSem_SelectedIndexChanged(object sender, EventArgs e)
+        private async void cmbSelectSem_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string selected = cmbSelectSem.SelectedItem?.ToString();
+            string selected = cmbSelectSem.SelectedItem?.ToString() ?? "All";
 
             if (!_dataService.IsStudentEnrolled())
             {
-                // If not enrolled, just show placeholder
                 accountsTable.Rows.Clear();
                 accountsTable.Rows.Add("N/A", "Complete enrollment to view payment details.", "₱0.00", "", "Pending", "");
                 return;
             }
-
-            var records = _dataService.GetPaymentRecords(selected == "All" ? null : selected);
-
-            accountsTable.Rows.Clear();
-            foreach (var record in records)
-            {
-                accountsTable.Rows.Add(
-                    record.ReferenceId,
-                    record.Description,
-                    $"₱{record.Amount:N2}",
-                    record.DueDate?.ToString("MM/dd/yyyy") ?? "",
-                    record.Status,
-                    record.PaidDate?.ToString("MM/dd/yyyy") ?? ""
-                );
-            }
-
-            UpdateAccountsSummary();
-        }
-
-        private void btnAccountsDownloadStatement_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Statement of Account would be generated here (demo).", "Download", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            await LoadAccountsDataAsync(selected);
         }
 
 
@@ -365,14 +349,12 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             pnlSpaceProviderAccounts.Top = pnlEnrollStatusCard.Bottom + 20;
             pnlSpaceProviderAccounts.Height = 50;
         }
-        private async void ShowEnrolledState()
+
+        private void ShowEnrolledState()
         {
             // Show the enrollment status card
             pnlEnrollStatusCard.Visible = true;
             lblEnrollStatus.Visible = true;
-
-            // Load real data
-            await LoadAccountsDataAsync();
 
             // Enable enrollment-dependent features
             btnAccountsDownloadStatement.Enabled = true;
@@ -400,14 +382,12 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             lblBalancePeso.Text = "₱0.00";
         }
 
-        private async void RefreshAccountsAfterEnrollment()
+        private void btnAccountsDownloadStatement_Click(object sender, EventArgs e)
         {
-            await LoadAccountsDataAsync(); // This will now use the data service
-            UpdateAccountsSummary();
-            dgvAccounts.Refresh();
+            MessageBox.Show("Statement of Account would be generated here (demo).", "Download", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private async void AccountsContentStudent_Load(object sender, EventArgs e)
+        private void AccountsContentStudent_Load(object sender, EventArgs e)
         {
             Accounts_Initialize();
             if (EnrollmentContentStudent.isEnrolled)
@@ -417,14 +397,12 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
                 lblEnrollStatusDesc.Text = "You are now officially enrolled. Your subjects have been confirmed.";
                 pnlEnrollStatusCard.BackColor = Color.FromArgb(220, 255, 220);
                 pictureBox50.BackColor = Color.Green;
-                pnlEnrollStatusCard.Visible = true;
 
                 // 12. Show the enrollment status card on accounts page (was hidden before)
                 pnlEnrollStatusCard.Visible = true;
                 lblEnrollStatus.Visible = true;
 
-                lblEnrollStatus.Visible = true;
-                RefreshAccountsAfterEnrollment();
+                ShowEnrolledState();
             }
         }
     }

@@ -107,11 +107,19 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
 
                 studentList = students.Select(x => new string[]
                 {
-                    x.Detail != null ? x.Detail.UserId.ToString() : "N/A", // Uses UserId as fallback ID
+                    x.Detail != null ? x.Detail.StudentNumber : "N/A", // Uses UserId as fallback ID
                     $"{x.FirstName} {x.LastName}",
                     x.InstitutionalEmail,
-                    "BSIT", // Default fallback string matching your UI screenshot
-                    "2nd Year",
+                    x.Detail.Program, // Default fallback string matching your UI screenshot
+                    $"{x.Detail.YearLevel switch
+                    {
+                        1 => "1st",
+                        2 => "2nd",
+                        3 => "3rd",
+                        4 => "4th",
+                        5 => "5th",
+                        _ => "Unknown"
+                    }} Year",
                     (x.IsActive ?? true) ? "Enrolled" : "Inactive"
                 }).ToList();
             }
@@ -128,6 +136,8 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
                 // Fetch users who have professor records
                 var professors = await context.Users
                     .Where(u => u.Professors.Any())
+                    .Include(u => u.Professors)
+                        .ThenInclude(p => p.Department)
                     .Select(u => new
                     {
                         u.FirstName,
@@ -140,12 +150,12 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
 
                 professorList = professors.Select(x => new string[]
                 {
-                    x.Detail != null ? x.Detail.UserId.ToString() : "N/A",
+                    x.Detail != null ? x.Detail.EmployeeId : "N/A",
                     $"{x.FirstName} {x.LastName}",
                     x.InstitutionalEmail,
-                    "BSIT Dept.",
+                    $"{x.Detail.Department.DepartmentCode} Dept.",
                     "N/A",
-                    (x.IsActive ?? true) ? "Active" : "On Leave"
+                    x.Detail.EmploymentStatus
                 }).ToList();
             }
 
