@@ -109,7 +109,7 @@ namespace PUPAcadPortal
             lnkForgotPassword.Location = new Point(4, 178);
             lnkForgotPassword.Name = "lnkForgotPassword";
             lnkForgotPassword.Size = new Size(100, 15);
-            lnkForgotPassword.TabIndex = 0;
+            lnkForgotPassword.TabIndex = 99999999;
             lnkForgotPassword.TabStop = true;
             lnkForgotPassword.Text = "Forgot Password?";
             lnkForgotPassword.LinkClicked += lnkForgotPassword_LinkClicked;

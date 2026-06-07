@@ -194,6 +194,7 @@ namespace PUPAcadPortal
             this.Size = _usableScreenSize;
             this.Location = _usableScreenLoc;
             txtUsername.Select();
+            lnkForgotPassword.TabStop = false;
         }
 
         // This method is for testing purposes only. It allows you to add a user with a hashed password to the database. DO NOT USE. WAG GAMITIN.

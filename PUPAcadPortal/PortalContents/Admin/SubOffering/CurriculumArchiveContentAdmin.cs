@@ -33,6 +33,23 @@ namespace PUPAcadPortal.PortalContents.Admin.SubOffering
             dgvCurriculum.EditingControlShowing += DgvCurriculum_EditingControlShowing;
             dgvCurriculum.CurrentCellDirtyStateChanged += DgvCurriculum_CurrentCellDirtyStateChanged;
             dgvCurriculum.CellValueChanged += DgvCurriculum_CellValueChanged;
+            dgvCurriculum.CellClick += DgvCurriculum_CellClick;
+            btnLoadPrevious.Click += btnLoadPrevious_Click;
+        }
+
+        private void DgvCurriculum_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+
+            if (dgvCurriculum.Columns[e.ColumnIndex] is DataGridViewComboBoxColumn)
+            {
+                dgvCurriculum.BeginEdit(true);
+
+                if (dgvCurriculum.EditingControl is ComboBox combo)
+                {
+                    combo.DroppedDown = true;
+                }
+            }
         }
 
         private void DgvCurriculum_CurrentCellDirtyStateChanged(object sender, EventArgs e)
@@ -73,9 +90,13 @@ namespace PUPAcadPortal.PortalContents.Admin.SubOffering
             {
                 combo.MaxDropDownItems = 10;
                 combo.IntegralHeight = false;
+
                 combo.BeginInvoke(new Action(() =>
                 {
-                    combo.DroppedDown = true;
+                    if (combo.Parent != null && combo.Visible && dgvCurriculum.Focused)
+                    {
+                        combo.DroppedDown = true;
+                    }
                 }));
             }
         }
@@ -144,6 +165,7 @@ namespace PUPAcadPortal.PortalContents.Admin.SubOffering
 
         private async void LoadCurriculum()
         {
+            this.DisableControls();
             dgvCurriculum.DataSource = null;
             dgvCurriculum.Rows.Clear();
 
@@ -171,6 +193,8 @@ namespace PUPAcadPortal.PortalContents.Admin.SubOffering
             List<CurriculumData> list = await _curriculumService.GetCurriculumAsync(dtpRevisionYear.Value.Year);
             dgvCurriculum.AutoGenerateColumns = false;
             dgvCurriculum.DataSource = new BindingList<CurriculumData>(list);
+            dgvCurriculum.ClearSelection();
+            this.EnableControls();
         }
         private void btnCurriculum_Click(object sender, EventArgs e)
         {
@@ -186,6 +210,8 @@ namespace PUPAcadPortal.PortalContents.Admin.SubOffering
 
         private async void btnUpdateCurriculum_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("Are you sure you want to update the curriculum?", "Update Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                return;
             dgvCurriculum.EndEdit();
 
             var boundList = dgvCurriculum.DataSource as BindingList<CurriculumData>;
@@ -217,6 +243,69 @@ namespace PUPAcadPortal.PortalContents.Admin.SubOffering
             {
                 btnUpdateCurriculum.Enabled = true;
                 Application.UseWaitCursor = false;
+            }
+        }
+
+        private async void btnLoadPrevious_Click(object sender, EventArgs e)
+        {
+            int currentTargetYear = dtpRevisionYear.Value.Year;
+
+            var confirm = MessageBox.Show(
+                $"Are you sure you want to load the previous curriculum into {currentTargetYear}? This will append the subjects to the bottom of your current grid.",
+                "Confirm Append",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (confirm != DialogResult.Yes) return;
+
+            btnLoadPrevious.Enabled = false;
+
+            try
+            {
+                var previousData = await _curriculumService.GetPreviousCurriculumAsync(currentTargetYear);
+
+                if (this.IsDisposed) return;
+
+                if (previousData == null || previousData.Count == 0)
+                {
+                    MessageBox.Show("No previous curriculum was found in the database to copy from.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                var currentGridData = dgvCurriculum.DataSource as BindingList<CurriculumData>;
+
+                if (currentGridData == null)
+                {
+                    currentGridData = new BindingList<CurriculumData>();
+                    dgvCurriculum.DataSource = currentGridData;
+                }
+
+                int addedCount = 0;
+
+                foreach (var previousItem in previousData)
+                {
+                    bool alreadyInGrid = currentGridData.Any(c =>
+                        c.SubjectCode == previousItem.SubjectCode &&
+                        c.Program == previousItem.Program);
+
+                    if (!alreadyInGrid)
+                    {
+                        previousItem.RevisionYear = currentTargetYear;
+                        currentGridData.Add(previousItem);
+                        addedCount++;
+                    }
+                }
+
+                MessageBox.Show($"Successfully appended {addedCount} subjects from the previous revision!\n\n(Skipped {previousData.Count - addedCount} duplicates).", "Loaded Successfully", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                if (this.IsDisposed) return;
+                MessageBox.Show($"Error loading previous curriculum: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (!this.IsDisposed) btnLoadPrevious.Enabled = true;
             }
         }
     }

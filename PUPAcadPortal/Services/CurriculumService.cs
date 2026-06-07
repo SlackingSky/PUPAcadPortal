@@ -50,21 +50,24 @@ namespace PUPAcadPortal.Services
         }
 
 
-        public async Task UpdateCurriculumAsync(List<CurriculumData> gridData, int revisionYear)
+        public async Task UpdateCurriculumAsync(List<CurriculumData> rawGridData, int revisionYear)
         {
             using (var db = new AppDbContext())
             {
+                var cleanGridData = rawGridData
+                    .Where(d => !string.IsNullOrWhiteSpace(d.SubjectCode) && !string.IsNullOrWhiteSpace(d.Program))
+                    .GroupBy(d => new { d.Program, d.SubjectCode })
+                    .Select(group => group.First())
+                    .ToList();
+
                 var existingCurricula = await db.Curricula
                     .Where(c => c.RevisionYear == revisionYear)
                     .ToListAsync();
 
                 var allSubjects = await db.Subjects.ToListAsync();
 
-                foreach (var data in gridData)
+                foreach (var data in cleanGridData)
                 {
-                    if (string.IsNullOrWhiteSpace(data.SubjectCode) || string.IsNullOrWhiteSpace(data.Program))
-                        continue;
-
                     var subject = allSubjects.FirstOrDefault(s => s.SubjectCode == data.SubjectCode);
                     if (subject == null) continue;
 
@@ -98,6 +101,25 @@ namespace PUPAcadPortal.Services
                 }
 
                 await db.SaveChangesAsync();
+            }
+        }
+
+        public async Task<List<CurriculumData>> GetPreviousCurriculumAsync(int targetRevisionYear)
+        {
+            using (var db = new AppDbContext())
+            {
+                var previousYear = await db.Curricula
+                    .Where(c => c.RevisionYear < targetRevisionYear)
+                    .OrderByDescending(c => c.RevisionYear)
+                    .Select(c => c.RevisionYear)
+                    .FirstOrDefaultAsync();
+
+                if (previousYear == 0)
+                {
+                    return new List<CurriculumData>();
+                }
+
+                return await GetCurriculumAsync(previousYear);
             }
         }
     }
