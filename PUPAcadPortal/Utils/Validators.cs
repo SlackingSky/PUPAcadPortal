@@ -90,6 +90,11 @@ namespace PUPAcadPortal.Utils
                         registrationErrorProvider.SetError(cmb, "Please select an option from the dropdown.");
                         isValid = false;
                     }
+                    if (cmb.SelectedItem.ToString() == "None")
+                    {
+                        registrationErrorProvider.SetError(cmb, "You cannot register a student without a curriculum");
+                        isValid = false;
+                    }
                 }
                 else if (child is MaskedTextBox mtb)
                 {

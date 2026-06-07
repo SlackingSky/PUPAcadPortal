@@ -62,11 +62,11 @@
             pnlCurrentSemesterCard = new Panel();
             pictureBox44 = new PictureBox();
             label177 = new Label();
-            label178 = new Label();
+            lblCurrentSemester = new Label();
             pnlEnrolleft = new Panel();
             pictureBox43 = new PictureBox();
             label175 = new Label();
-            label176 = new Label();
+            lblPendingItems = new Label();
             pnlQuickActionsContainer = new Panel();
             pnlQACalendar = new Panel();
             btnDashboardCalendar = new Button();
@@ -218,9 +218,9 @@
             lblEnrolledUnits.ForeColor = Color.Black;
             lblEnrolledUnits.Location = new Point(8, 35);
             lblEnrolledUnits.Name = "lblEnrolledUnits";
-            lblEnrolledUnits.Size = new Size(51, 40);
+            lblEnrolledUnits.Size = new Size(34, 40);
             lblEnrolledUnits.TabIndex = 15;
-            lblEnrolledUnits.Text = "21";
+            lblEnrolledUnits.Text = "0";
             // 
             // pnlEnrollmentStatusCard
             // 
@@ -262,13 +262,13 @@
             // 
             lblESRegistered.AutoSize = true;
             lblESRegistered.BackColor = Color.Transparent;
-            lblESRegistered.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblESRegistered.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
             lblESRegistered.ForeColor = Color.Black;
             lblESRegistered.Location = new Point(5, 36);
             lblESRegistered.Name = "lblESRegistered";
-            lblESRegistered.Size = new Size(155, 37);
+            lblESRegistered.Size = new Size(93, 30);
             lblESRegistered.TabIndex = 17;
-            lblESRegistered.Text = "Registered";
+            lblESRegistered.Text = "Loading";
             // 
             // pnlUpcomingEventsContainer
             // 
@@ -494,7 +494,7 @@
             pnlCurrentSemesterCard.BorderStyle = BorderStyle.Fixed3D;
             pnlCurrentSemesterCard.Controls.Add(pictureBox44);
             pnlCurrentSemesterCard.Controls.Add(label177);
-            pnlCurrentSemesterCard.Controls.Add(label178);
+            pnlCurrentSemesterCard.Controls.Add(lblCurrentSemester);
             pnlCurrentSemesterCard.Location = new Point(781, 26);
             pnlCurrentSemesterCard.Margin = new Padding(3, 2, 3, 2);
             pnlCurrentSemesterCard.Name = "pnlCurrentSemesterCard";
@@ -523,17 +523,17 @@
             label177.TabIndex = 18;
             label177.Text = "Current Semester";
             // 
-            // label178
+            // lblCurrentSemester
             // 
-            label178.AutoSize = true;
-            label178.BackColor = Color.Transparent;
-            label178.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label178.ForeColor = Color.Black;
-            label178.Location = new Point(6, 35);
-            label178.Name = "label178";
-            label178.Size = new Size(128, 37);
-            label178.TabIndex = 19;
-            label178.Text = "2nd Sem";
+            lblCurrentSemester.AutoSize = true;
+            lblCurrentSemester.BackColor = Color.Transparent;
+            lblCurrentSemester.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold);
+            lblCurrentSemester.ForeColor = Color.Black;
+            lblCurrentSemester.Location = new Point(6, 35);
+            lblCurrentSemester.Name = "lblCurrentSemester";
+            lblCurrentSemester.Size = new Size(93, 30);
+            lblCurrentSemester.TabIndex = 19;
+            lblCurrentSemester.Text = "Loading";
             // 
             // pnlEnrolleft
             // 
@@ -542,7 +542,7 @@
             pnlEnrolleft.BorderStyle = BorderStyle.Fixed3D;
             pnlEnrolleft.Controls.Add(pictureBox43);
             pnlEnrolleft.Controls.Add(label175);
-            pnlEnrolleft.Controls.Add(label176);
+            pnlEnrolleft.Controls.Add(lblPendingItems);
             pnlEnrolleft.Location = new Point(1092, 26);
             pnlEnrolleft.Margin = new Padding(3, 2, 3, 2);
             pnlEnrolleft.Name = "pnlEnrolleft";
@@ -571,17 +571,17 @@
             label175.TabIndex = 18;
             label175.Text = "Pending Items";
             // 
-            // label176
+            // lblPendingItems
             // 
-            label176.AutoSize = true;
-            label176.BackColor = Color.Transparent;
-            label176.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label176.ForeColor = Color.Black;
-            label176.Location = new Point(13, 34);
-            label176.Name = "label176";
-            label176.Size = new Size(34, 40);
-            label176.TabIndex = 19;
-            label176.Text = "2";
+            lblPendingItems.AutoSize = true;
+            lblPendingItems.BackColor = Color.Transparent;
+            lblPendingItems.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblPendingItems.ForeColor = Color.Black;
+            lblPendingItems.Location = new Point(13, 34);
+            lblPendingItems.Name = "lblPendingItems";
+            lblPendingItems.Size = new Size(34, 40);
+            lblPendingItems.TabIndex = 19;
+            lblPendingItems.Text = "0";
             // 
             // pnlQuickActionsContainer
             // 
@@ -1189,11 +1189,11 @@
         private Panel pnlCurrentSemesterCard;
         private PictureBox pictureBox44;
         private Label label177;
-        private Label label178;
+        private Label lblCurrentSemester;
         private Panel pnlEnrolleft;
         private PictureBox pictureBox43;
         private Label label175;
-        private Label label176;
+        private Label lblPendingItems;
         private Panel pnlQuickActionsContainer;
         private Panel pnlQACalendar;
         private Button btnDashboardCalendar;

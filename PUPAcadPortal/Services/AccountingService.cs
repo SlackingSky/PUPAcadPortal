@@ -69,27 +69,82 @@ namespace PUPAcadPortal.Services
             }
         }
 
-        public async Task<bool> RecordPaymentAsync(int accountId, decimal amount, string referenceId, int adminUserId)
+        public async Task<(bool Success, string Message)> RecordPaymentAsync(int accountId, decimal amount, string referenceId, int adminUserId)
         {
             using (var context = new AppDbContext())
             {
-                var newPayment = new PaymentHistory
+                var strategy = context.Database.CreateExecutionStrategy();
+
+                return await strategy.ExecuteAsync(async () =>
                 {
-                    AccountId = accountId,
-                    Amount = amount,
-                    ReferenceId = referenceId,
-                    Description = "Counter Payment",
-                    DueDate = DateTime.Now,
-                    PaidDate = DateTime.Now,
-                    Status = "Paid",
-                    CreatedAt = DateTime.Now,
-                    UpdatedAt = DateTime.Now
-                };
+                    using (var transaction = await context.Database.BeginTransactionAsync())
+                    {
+                        try
+                        {
+                            var account = await context.StudentAccounts
+                                .FirstOrDefaultAsync(a => a.AccountId == accountId);
 
-                context.PaymentHistories.Add(newPayment);
-                await context.SaveChangesAsync();
+                            if (account == null) return (false, "Account not found.");
 
-                return true;
+                            var newPayment = new PaymentHistory
+                            {
+                                AccountId = accountId,
+                                Amount = amount,
+                                ReferenceId = referenceId,
+                                Description = "Counter Payment",
+                                DueDate = DateTime.Now,
+                                PaidDate = DateTime.Now,
+                                Status = "Paid",
+                                CreatedAt = DateTime.Now,
+                                UpdatedAt = DateTime.Now
+                            };
+
+                            context.PaymentHistories.Add(newPayment);
+
+                            decimal existingPayments = await context.PaymentHistories
+                                .Where(p => p.AccountId == accountId && p.Status == "Paid")
+                                .SumAsync(p => (decimal?)p.Amount) ?? 0m;
+
+                            decimal newTotalPaid = existingPayments + amount;
+                            decimal balance = account.TotalAssessment - newTotalPaid;
+
+                            if (balance <= 0)
+                            {
+                                var enrollment = await context.Enrollments
+                                    .Include(e => e.EnrollmentSubjects)
+                                    .FirstOrDefaultAsync(e => e.StudentId == account.StudentId
+                                                           && e.AcademicPeriodId == account.AcademicPeriodId);
+
+                                if (enrollment != null && enrollment.Status == "Pending Payment")
+                                {
+                                    enrollment.Status = "Officially Enrolled";
+
+                                    if (enrollment.EnrollmentSubjects != null)
+                                    {
+                                        foreach (var subject in enrollment.EnrollmentSubjects)
+                                        {
+                                            if (subject.SubjectStatus == "Pending Payment")
+                                            {
+                                                subject.SubjectStatus = "Officially Enrolled";
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            await context.SaveChangesAsync();
+                            await transaction.CommitAsync();
+
+                            return (true, "Payment recorded successfully.");
+                        }
+                        catch (Exception ex)
+                        {
+                            await transaction.RollbackAsync();
+                            context.ChangeTracker.Clear();
+                            return (false, $"Payment failed: {ex.Message}");
+                        }
+                    }
+                });
             }
         }
     }

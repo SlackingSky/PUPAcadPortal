@@ -95,9 +95,12 @@
             // 
             // dgvAccountingRecords
             // 
+            dgvAccountingRecords.AllowUserToAddRows = false;
+            dgvAccountingRecords.AllowUserToDeleteRows = false;
             dgvAccountingRecords.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvAccountingRecords.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvAccountingRecords.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
+            dgvAccountingRecords.BackgroundColor = Color.White;
             dgvAccountingRecords.CellBorderStyle = DataGridViewCellBorderStyle.RaisedHorizontal;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = SystemColors.Control;

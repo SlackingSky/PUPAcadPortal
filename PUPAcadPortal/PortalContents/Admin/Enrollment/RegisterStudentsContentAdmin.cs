@@ -18,6 +18,9 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
     {
         private PHAddressFields phAddressFields = new PHAddressFields();
         private ComboBox cmbSuffix;
+
+        private StudentRegistrationService _service = new();
+
         public RegisterStudentsContentAdmin()
         {
             InitializeComponent();
@@ -58,7 +61,6 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
 
         private async void btnStudentRegistration_Click(object sender, EventArgs e)
         {
-
             // Validate all required fields
             if (!pnlStudentRegistrationContainer.ValidateRegistration())
                 return;
@@ -111,7 +113,9 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
 
                 Program = program,
                 YearLevel = yearLevel,
-                StudentType = applicantType
+                AdmissionType = applicantType,
+                AcademicStanding = applicantType == "Regular" ? "Regular" : "Irregular",
+                CurriculumYear = (int)cmbCurriculumYear.SelectedItem
             };
 
             btnStudentRegistration.Enabled = false;
@@ -121,9 +125,7 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
 
             try
             {
-                var service = new StudentRegistrationService();
-
-                var registeredStudent = await service.RegisterSingleStudent(dto);
+                var registeredStudent = await _service.RegisterSingleStudent(dto);
 
                 this.SafeUIUpdate(() =>
                 {
@@ -217,6 +219,7 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             pnlStudentRegistrationContainer.Controls.Add(phAddressFields);
             phAddressFields.TabIndex = 7;
             AutoSetStudentId();
+            cmbProgram_SelectedIndexChanged(sender, e);
             mtbRSStudentPhoneNum.MakeCursorGotoStart();
             if (cmbRSEnrollmentStatus.Items.Count > 0) cmbRSEnrollmentStatus.SelectedIndex = 0;
             if (cmbRSYearLevel.Items.Count > 0) cmbRSYearLevel.SelectedIndex = 0;
@@ -291,6 +294,37 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
         {
             Services.StudentRegistrationService.IsTransferee = cmbRSEnrollmentStatus.SelectedItem != null && cmbRSEnrollmentStatus.SelectedItem.ToString() == "Transferee";
             await AutoSetStudentId();
+        }
+
+        private async void cmbProgram_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbRSStudentProgram.SelectedItem != null)
+            {
+                string selectedProgram = cmbRSStudentProgram.Text.Trim() switch
+                {
+                    "BS Information Technology" => "BSIT",
+                    _ => "No Program"
+                };
+
+                var activeYears = await _service.GetAvailableCurriculumYearsAsync(selectedProgram);
+
+                this.SafeUIUpdate(() =>
+                {
+                    cmbCurriculumYear.DataSource = activeYears;
+
+                    if (activeYears != null && activeYears.Count > 0)
+                    {
+                        cmbCurriculumYear.SelectedIndex = 0;
+                    }
+                    else
+                    {
+                        cmbCurriculumYear.DataSource = null;
+                        cmbCurriculumYear.Items.Add("None");
+                        cmbCurriculumYear.SelectedIndex = 0;
+                        cmbCurriculumYear.Enabled = false;
+                    }
+                });
+            }
         }
     }
 }

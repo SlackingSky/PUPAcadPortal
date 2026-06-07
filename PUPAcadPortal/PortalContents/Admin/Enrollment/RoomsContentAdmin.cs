@@ -22,6 +22,7 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             btnAddRoom.Click += btnAddRoom_Click;
 
             dgvRooms.CellDoubleClick += dgvRooms_CellDoubleClick;
+            dgvRooms.CellToolTipTextNeeded += dgvRooms_CellToolTipTextNeeded;
         }
 
         private async Task LoadRoomsAsync()
@@ -32,6 +33,7 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
 
                 dgvRooms.AutoGenerateColumns = false;
                 dgvRooms.DataSource = new BindingList<RoomData>(rooms);
+                dgvRooms.ClearSelection();
             }
             catch (Exception ex)
             {
@@ -64,6 +66,14 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
                 {
                     await LoadRoomsAsync();
                 }
+            }
+        }
+
+        private void dgvRooms_CellToolTipTextNeeded(object sender, DataGridViewCellToolTipTextNeededEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                e.ToolTipText = "Double-click anywhere on this row to manage the room";
             }
         }
     }

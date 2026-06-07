@@ -11,13 +11,15 @@ public partial class Student
 
     public string StudentNumber { get; set; } = null!;
 
-    public string StudentType { get; set; } = null!;
+    public string? AdmissionType { get; set; }
 
     public int YearLevel { get; set; }
 
     public string Program { get; set; } = null!;
 
     public int CurriculumYear { get; set; }
+
+    public string? AcademicStanding { get; set; }
 
     public virtual ICollection<AttendanceRecord> AttendanceRecords { get; set; } = new List<AttendanceRecord>();
 

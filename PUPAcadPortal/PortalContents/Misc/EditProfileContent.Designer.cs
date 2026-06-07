@@ -30,6 +30,7 @@
         {
             pnlEditProfileContent = new Panel();
             pnlStudentRegistrationContainer = new Panel();
+            txtIDNumber = new TextBox();
             btnShowConfirm = new Button();
             btnShowPass = new Button();
             btnVerify = new Button();
@@ -55,7 +56,6 @@
             label36 = new Label();
             pictureBox5 = new PictureBox();
             mySqlCommandBuilder1 = new MySqlConnector.MySqlCommandBuilder();
-            txtIDNumber = new TextBox();
             pnlEditProfileContent.SuspendLayout();
             pnlStudentRegistrationContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
@@ -108,6 +108,16 @@
             pnlStudentRegistrationContainer.Name = "pnlStudentRegistrationContainer";
             pnlStudentRegistrationContainer.Size = new Size(959, 841);
             pnlStudentRegistrationContainer.TabIndex = 9;
+            // 
+            // txtIDNumber
+            // 
+            txtIDNumber.Font = new Font("Segoe UI", 12F);
+            txtIDNumber.Location = new Point(26, 109);
+            txtIDNumber.Name = "txtIDNumber";
+            txtIDNumber.PlaceholderText = "ID Number";
+            txtIDNumber.Size = new Size(418, 29);
+            txtIDNumber.TabIndex = 64;
+            txtIDNumber.Tag = "disabled";
             // 
             // btnShowConfirm
             // 
@@ -396,15 +406,6 @@
             mySqlCommandBuilder1.DataAdapter = null;
             mySqlCommandBuilder1.QuotePrefix = "`";
             mySqlCommandBuilder1.QuoteSuffix = "`";
-            // 
-            // txtIDNumber
-            // 
-            txtIDNumber.Font = new Font("Segoe UI", 12F);
-            txtIDNumber.Location = new Point(26, 109);
-            txtIDNumber.Name = "txtIDNumber";
-            txtIDNumber.PlaceholderText = "ID Number";
-            txtIDNumber.Size = new Size(418, 29);
-            txtIDNumber.TabIndex = 64;
             // 
             // EditProfileContent
             // 

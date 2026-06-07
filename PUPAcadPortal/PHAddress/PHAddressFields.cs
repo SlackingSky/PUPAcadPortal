@@ -45,15 +45,23 @@ namespace PUPAcadPortal.PHAddress
 
         public PHAddressFields()
         {
-            this.AutoSize = true;
-            InitializeComponentLayout();
-            SetRegistrationFontsTo12pt();
+            InitializeComponent();            
+            try
+            {
+                // Loads addresses for dropdowns in Address Fields
+                AddToAddressCMB.LoadData();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to initialize geographic address databases: {ex.Message}",
+                                "System Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            this.Load += PHAddressFields_Load;
+
         }
 
         private void InitializeComponentLayout()
         {
-            this.Load += PHAddressFields_Load;
-
             // ===== DYNAMIC LAYOUT: TableLayoutPanel =====
             // This grid automatically adjusts heights when fonts change, preventing overlaps.
             TableLayoutPanel addressPanel = new TableLayoutPanel();
@@ -157,12 +165,21 @@ namespace PUPAcadPortal.PHAddress
             addressPanel.Controls.Add(cmbBarangays, 1, 6);
             addressPanel.SetColumnSpan(cmbBarangays, 3);
 
+            cmbProvinces.Tag = "disabled";
+            cmbCities.Tag = "disabled";
+            cmbBarangays.Tag = "disabled";
+
             this.Controls.Add(addressPanel);
         }
 
         private void PHAddressFields_Load(object sender, EventArgs e)
         {
             if (this.DesignMode) return;
+
+
+            this.AutoSize = true;
+            InitializeComponentLayout();
+            SetRegistrationFontsTo12pt();
 
             Action<ComboBox> configureAutoComplete = (cb) =>
             {

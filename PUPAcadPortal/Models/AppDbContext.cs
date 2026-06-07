@@ -792,10 +792,13 @@ public partial class AppDbContext : DbContext
             entity.HasIndex(e => e.StudentNumber, "StudentNumber").IsUnique();
 
             entity.Property(e => e.StudentId).HasColumnName("StudentID");
+            entity.Property(e => e.AcademicStanding)
+                .HasMaxLength(50)
+                .HasDefaultValueSql("'Regular'");
+            entity.Property(e => e.AdmissionType).HasMaxLength(50);
             entity.Property(e => e.CurriculumYear).HasDefaultValueSql("'2026'");
             entity.Property(e => e.Program).HasMaxLength(100);
             entity.Property(e => e.StudentNumber).HasMaxLength(50);
-            entity.Property(e => e.StudentType).HasMaxLength(50);
             entity.Property(e => e.UserId).HasColumnName("UserID");
 
             entity.HasOne(d => d.User).WithMany(p => p.Students)
@@ -1058,6 +1061,8 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.Region)
                 .HasMaxLength(100)
                 .HasDefaultValueSql("'N/A'");
+            entity.Property(e => e.ResetPasswordToken).HasMaxLength(255);
+            entity.Property(e => e.ResetTokenExpiry).HasColumnType("datetime");
             entity.Property(e => e.RoleId).HasColumnName("RoleID");
             entity.Property(e => e.Suffix).HasMaxLength(20);
             entity.Property(e => e.Username).HasMaxLength(50);

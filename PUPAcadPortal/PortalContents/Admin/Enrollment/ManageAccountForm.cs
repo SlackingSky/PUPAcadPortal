@@ -115,17 +115,17 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             {
                 btnSubmitPayment.Enabled = false;
 
-                bool success = await _accountingService.RecordPaymentAsync(_accountId, amount, reference, UserSession.UserID);
+                var result = await _accountingService.RecordPaymentAsync(_accountId, amount, reference, UserSession.UserID);
 
-                if (success)
+                if (result.Success)
                 {
-                    MessageBox.Show("Payment recorded successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(result.Message, "Payment Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.DialogResult = DialogResult.OK;
                     this.Close();
                 }
                 else
                 {
-                    MessageBox.Show("Failed to record payment.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(result.Message, "Payment Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     btnSubmitPayment.Enabled = true;
                 }
             }

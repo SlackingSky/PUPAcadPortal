@@ -23,6 +23,9 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
         {
             InitializeComponent();
 
+            // Apply the PUP Aesthetic immediately on initialization
+            ApplyPUPAesthetic(dgvAccountingRecords);
+
             pnlAccountingRecordsContent.Layout += (s, e) => ResizeAccountingRecordsContent();
             this.Load += AccountsContentAdmin_Load;
 
@@ -32,6 +35,36 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             dgvAccountingRecords.CellDoubleClick += dgvAccountingRecords_CellDoubleClick;
             dgvAccountingRecords.CellFormatting += dgvAccountingRecords_CellFormatting;
             dgvAccountingRecords.CellToolTipTextNeeded += dgvAccountingRecords_CellToolTipTextNeeded;
+        }
+
+        private void ApplyPUPAesthetic(DataGridView grid)
+        {
+            grid.BackgroundColor = Color.White;
+            grid.BorderStyle = BorderStyle.None;
+            grid.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            grid.GridColor = Color.FromArgb(220, 220, 220);
+            grid.RowHeadersVisible = false;
+            grid.AllowUserToAddRows = false;
+            grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            grid.EnableHeadersVisualStyles = false;
+            DataGridViewCellStyle headerStyle = new DataGridViewCellStyle();
+            headerStyle.BackColor = Color.FromArgb(128, 0, 0);
+            headerStyle.ForeColor = Color.White;
+            headerStyle.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
+            headerStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            grid.ColumnHeadersDefaultCellStyle = headerStyle;
+            grid.ColumnHeadersHeight = 45;
+            grid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+
+            grid.DefaultCellStyle.Font = new Font("Segoe UI", 11F);
+            grid.DefaultCellStyle.BackColor = Color.White;
+            grid.DefaultCellStyle.ForeColor = Color.Black;
+
+            grid.DefaultCellStyle.SelectionBackColor = Color.FromArgb(128, 0, 0);
+            grid.DefaultCellStyle.SelectionForeColor = Color.White;
+
+            grid.RowTemplate.Height = 40;
         }
 
         private async void AccountsContentAdmin_Load(object sender, EventArgs e)
@@ -48,8 +81,12 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
 
                 _allRecords = await _accountingService.GetStudentAccountingRecordsAsync(activePeriod);
 
-                UpdateSummaryCards(_allRecords);
-                BindGrid(_allRecords);
+                this.SafeUIUpdate(() =>
+                {
+                    UpdateSummaryCards(_allRecords);
+                    BindGrid(_allRecords);
+                    dgvAccountingRecords.ClearSelection();
+                });
             }
             catch (Exception ex)
             {
@@ -62,7 +99,7 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             decimal totalAssessed = records.Sum(r => r.TotalAmount);
             decimal totalPaid = records.Sum(r => r.PaidAmount);
             decimal totalUnpaid = records.Sum(r => r.UnpaidAmount);
-
+            
             lblTotalAmount.Text = $"₱{totalAssessed:N2}";
             lblPaid.Text = $"₱{totalPaid:N2}";
             lblUnpaid.Text = $"₱{totalUnpaid:N2}";
@@ -222,6 +259,8 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
 
                 if (rowData != null)
                 {
+                    e.CellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+
                     if (rowData.Status == "Pending Payment")
                     {
                         e.CellStyle.BackColor = Color.DarkOrange;
