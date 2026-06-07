@@ -72,10 +72,10 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             var statusTask = _studentDashboardService.GetEnrollmentStatusAsync(_studentId, _academicPeriod);
             var semesterTask = _studentDashboardService.GetCurrentSemesterAsync();
             var pendingTask = _studentDashboardService.GetPendingItemsCountAsync(_studentId);
-            var announcements = await _studentDashboardService.GetAnnouncementsAsync(UserSession.Role);
-            var upcomings = await _studentDashboardService.GetEventsAsync(UserSession.StudentID ?? 0);
+            var announcements =  _studentDashboardService.GetAnnouncementsAsync(UserSession.Role);
+            var upcomings =  _studentDashboardService.GetEventsAsync(UserSession.StudentID ?? 0);
 
-            await Task.WhenAll(statusTask, semesterTask, pendingTask);
+            await Task.WhenAll(statusTask, semesterTask, pendingTask, announcements, upcomings);
 
             this.SafeUIUpdate(async () =>
             {
@@ -85,7 +85,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
                 lblPendingItems.Text = (await pendingTask).ToString();
                 this.EnableControls();
 
-                foreach (var item in upcomings)
+                foreach (var item in await upcomings)
                 {
                     UpcomingEventReusable upcoming = new()
                     {
@@ -97,7 +97,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
                     fpnlUpcoming.Controls.Add(upcoming);
                 }
 
-                foreach (var item in announcements)
+                foreach (var item in await announcements)
                 {
                     AnnouncementEnrollmentReusable reusable = new()
                     {
