@@ -6,6 +6,10 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using PUPAcadPortal.Data;
+using System.Linq; 
+using System.Threading.Tasks; 
+using Microsoft.EntityFrameworkCore; 
+using PUPAcadPortal.Models;
 
 namespace PUPAcadPortal.PortalContents.Student.Enrollment
 {
@@ -26,7 +30,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
         // ─────────────────────────────────────────────────────────────────
         // ENROLLMENT
         // ─────────────────────────────────────────────────────────────────
-        private void Enrollment_Initialize()
+        private async void Enrollment_Initialize() 
         {
             if (isEnrolled)
             {
@@ -57,60 +61,44 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             ApplyStatusStyles();
         }
 
-        private void Enrollment_LoadData()
+        private async Task Enrollment_LoadData()
         {
             enrollmentData.Clear();
             dgvEnrollment.Rows.Clear();
 
-            // Define raw schedule entries (Day, StartTimes, EndTimes, CourseCode, CourseName)
-            // Each entry represents one meeting time for a course on a specific day.
-            var entries = new List<(string Day, string[] Starts, string[] Ends, string Code, string Name)>
-    {
-        // Monday
-        ("Monday", new[] { "10:30 AM" }, new[] { "1:30 PM" }, "ELEC IT-FE2", "BSIT Free Elective 2"),
-        ("Monday", new[] { "2:30 PM" }, new[] { "5:30 PM" }, "COMP 014", "Quantitative Methods with Modeling and Simulation"),
-
-        // Wednesday
-        ("Wednesday", new[] { "8:00 AM", "10:30 AM" }, new[] { "10:00 AM", "1:30 PM" }, "COMP 012", "Network Administration"),
-        ("Wednesday", new[] { "5:30 PM" }, new[] { "7:30 PM" }, "COMP 009", "Object Oriented Programming"),
-
-        // Thursday
-        ("Thursday", new[] { "10:30 AM" }, new[] { "1:30 PM" }, "COMP 009", "Object Oriented Programming"),
-        ("Thursday", new[] { "2:30 PM", "5:00 PM" }, new[] { "4:30 PM", "8:00 PM" }, "INTE 202", "Interactive Programming and Technologies 1"),
-
-        // Friday
-        ("Friday", new[] { "10:00 AM" }, new[] { "12:00 PM" }, "PATHFIT 4", "Physical Activity Towards Health and Fitness 4"),
-
-        // Saturday
-        ("Saturday", new[] { "7:30 AM" }, new[] { "10:30 AM" }, "COMP 013", "Human Computer Interaction"),
-        ("Saturday", new[] { "2:30 PM", "5:00 PM" }, new[] { "4:30 PM", "8:00 PM" }, "COMP 010", "Information Management")
-    };
-
-            // Group by course code (and name) to combine multiple days
-            var grouped = entries.GroupBy(e => new { e.Code, e.Name })
-                                 .Select(g => new
-                                 {
-                                     Code = g.Key.Code,
-                                     Name = g.Key.Name,
-                                     // Collect schedule lines for each day
-                                     ScheduleLines = g.Select(e =>
-                                     {
-                                         // Build time slots for that day
-                                         string times = string.Join(", ", e.Starts.Select((s, i) => $"{s} - {e.Ends[i]}"));
-                                         return $"{e.Day} {times}";
-                                     }).ToList()
-                                 });
-
-            int GetUnits(string courseCode) => courseCode == "PATHFIT 4" ? 2 : 3;
-
-            foreach (var course in grouped)
+            try
             {
-                // Combine all schedule lines with newline characters
-                string scheduleStr = string.Join(Environment.NewLine, course.ScheduleLines);
-                int units = GetUnits(course.Code);
-                string status = "Pending";
+                using (var context = new AppDbContext())
+                {
+                    
+                    var offerings = await context.SubjectOfferings
+                        .Where(so => so.Status == "Active")
+                        .ToListAsync();
 
-                enrollmentData.Add(new string[] { course.Code, course.Name, units.ToString(), scheduleStr, status });
+                    if (offerings.Count == 0)
+                    {
+                        MessageBox.Show("No available subject offerings found in the database.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+
+                    int GetUnits(string courseCode) => courseCode == "PATHFIT 4" ? 2 : 3;
+
+                    foreach (var off in offerings)
+                    {
+                        string code = off.SubjectId;
+                        string name = off.Subject != null ? off.Subject.SubjectName : off.SubjectId; 
+                        string scheduleStr = $"TBA (Sec {off.Section})";
+                        int units = GetUnits(code);
+                        string status = "Pending";
+
+                        enrollmentData.Add(new string[] { code, name, units.ToString(), scheduleStr, status });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to load data from database:\n{ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
             // Enable text wrapping in the schedule column to show multiple lines
@@ -346,7 +334,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
 
             MessageBox.Show("Subject dropped successfully.", "Dropped", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-        private void btnSaveAndAssess_Click(object sender, EventArgs e)
+        private async void btnSaveAndAssess_Click(object sender, EventArgs e) 
         {
             try
             {
@@ -384,6 +372,45 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
                     return;
                 }
 
+                // ----- CONNECT DATABASE & SAVE RECORDS  -----
+                if (UserSession.StudentID == null)
+                {
+                    MessageBox.Show("No active student session found.", "Session Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                int currentStudentId = UserSession.StudentID.Value;
+                btnSaveAndAssess.Enabled = false;
+
+                using (var context = new AppDbContext())
+                {
+                    var newEnrollment = new Models.Enrollment
+                    {
+                        StudentId = currentStudentId,
+                        AcademicPeriodId = "2026-1ST",
+                        Status = "Enrolled",
+                        EnrollmentDate = DateTime.Now
+                    };
+
+                    context.Enrollments.Add(newEnrollment);
+                    await context.SaveChangesAsync();
+
+                    foreach (var row in selectedRows)
+                    {
+                        var subjectItem = new Models.EnrollmentSubject
+                        {
+                            EnrollmentId = newEnrollment.EnrollmentId,
+                            SubjectOfferingId = row.Cells["colCode"]?.Value?.ToString(),
+                            Section = "1",
+                            SubjectStatus = "Enrolled",
+                            StatusDate = DateTime.Now,
+                            Remarks = "Officially Enrolled"
+                        };
+                        context.EnrollmentSubjects.Add(subjectItem);
+                    }
+                    await context.SaveChangesAsync();
+                }
+
                 // 4. Build DataTable for confirmed enrollment
                 DataTable confirmedTable = new DataTable();
                 confirmedTable.Columns.Add("Code", typeof(string));
@@ -392,13 +419,13 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
                 confirmedTable.Columns.Add("Schedule", typeof(string));
                 confirmedTable.Columns.Add("Status", typeof(string));
 
-                int totalUnits = 0;
+                totalUnits = 0;
                 foreach (DataGridViewRow row in selectedRows)
                 {
                     string unitsStr = row.Cells["colUnits"]?.Value?.ToString() ?? "0";
                     confirmedTable.Rows.Add(
                         row.Cells["colCode"]?.Value ?? "",
-                        row.Cells["colTitle"]?.Value ?? "",
+                        row.Cells["colTitle"]?.Value ?? "", 
                         unitsStr,
                         row.Cells["colSchedule"]?.Value ?? "",
                         "Enrolled"
@@ -407,6 +434,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
                         totalUnits += u;
                 }
 
+                lblTotalUnitsValue.Text = totalUnits.ToString();
                 // 5. Reposition the confirmed grid panel
                 pnlEnrollmentConfirmedDGV.Location = pnlContainerEnrollmentDGV.Location;
                 pnlEnrollmentConfirmedDGV.Size = pnlContainerEnrollmentDGV.Size;
@@ -481,7 +509,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
                 dgvEnrollmentConfirmed.Visible = true;
 
                 // 13. Save enrollment status
-                SetEnrollmentStatus(true);
+                await dataService.SetEnrollmentStatusAsync(true); 
 
                 //// 14. Refresh accounts data to show real payment information
                 //RefreshAccountsAfterEnrollment();
@@ -493,15 +521,12 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             catch (Exception ex)
             {
                 MessageBox.Show($"An error occurred:\n{ex.Message}\n\nPlease contact support.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                btnSaveAndAssess.Enabled = true;
             }
 
             // Enable COR download button after successful enrollment
             btnDownloadCOR.Enabled = true;
             btnDownloadCOR.BackColor = Color.Maroon;
-
-            // After successful enrollment confirmation
-            dataService.SetEnrollmentStatus(true);
-            //RefreshAccountsAfterEnrollment();
         }
 
         // ─────────────────────────────────────────────────────────────────
@@ -525,15 +550,20 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
         }
 
         // Method to save enrollment status after successful enrollment
-        private void SetEnrollmentStatus(bool enrolled)
+        private async void SetEnrollmentStatus(bool enrolled)
         {
-            dataService.SetEnrollmentStatus(enrolled);
+            await dataService.SetEnrollmentStatusAsync(enrolled);
         }
 
         private void EnrollmentContentStudent_Load(object sender, EventArgs e)
         {
-            Enrollment_Initialize();
-            SetupMaroonBorders();
+            {
+                InitializeComponent();
+                dataService = StudentDataService.Instance;
+
+                isEnrolled = dataService.IsStudentEnrolled();
+                btnSaveAndAssess.Click += btnSaveAndAssess_Click;
+            }
         }
 
         private void btnDownloadCOR_Click(object sender, EventArgs e)

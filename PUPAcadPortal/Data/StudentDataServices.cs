@@ -41,7 +41,7 @@ namespace PUPAcadPortal.Data
         }
 
         // Set enrollment status
-        public void SetEnrollmentStatus(bool enrolled)
+        public async Task SetEnrollmentStatusAsync(bool enrolled)
         {
             // TEMPORARY: Save to local file
             // FUTURE: This will update the database
@@ -49,16 +49,18 @@ namespace PUPAcadPortal.Data
 
             if (enrolled)
             {
-                File.WriteAllText(filePath, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                await File.WriteAllTextAsync(filePath, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                 _isEnrolled = true;
             }
             else
             {
                 if (File.Exists(filePath))
-                    File.Delete(filePath);
+                {
+                    File.Delete(filePath); 
+                }
                 _isEnrolled = false;
             }
-        }
+        }        
 
         // Get payment/assessment data
         public List<PaymentRecord> GetPaymentRecords(string semester = null)
