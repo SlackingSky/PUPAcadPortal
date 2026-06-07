@@ -198,7 +198,7 @@ namespace PUPAcadPortal.Services
                 .Include(es => es.SubjectOffering).ThenInclude(o => o.RoomSchedules).ThenInclude(rs => rs.Room)
                 .Include(es => es.SubjectOffering).ThenInclude(o => o.Activities).ThenInclude(a => a.Submissions)
                 .Where(es => es.Enrollment.StudentId == studentId
-                          && es.SubjectStatus == "Enrolled")
+                          && es.SubjectStatus == "Officially Enrolled")
                 .AsNoTracking()
                 .ToList();
 
@@ -256,7 +256,7 @@ namespace PUPAcadPortal.Services
             var subs = activities.SelectMany(a => a.Submissions ?? new List<Submission>()).ToList();
 
             int enrolled = o.EnrollmentSubjects?
-                .Count(es => es.SubjectStatus == "Enrolled") ?? 0;
+                .Count(es => es.SubjectStatus == "Officially Enrolled") ?? 0;
 
             return new CourseDto
             {

@@ -91,7 +91,7 @@ namespace PUPAcadPortal.Services
 
             int enrolled = ctx.EnrollmentSubjects
                 .Count(es => es.SubjectOfferingId == subjectOfferingId
-                          && es.SubjectStatus == "Enrolled");
+                          && es.SubjectStatus == "Officially Enrolled");
 
             return MapActivities(activities, enrolled);
         }
@@ -187,7 +187,7 @@ namespace PUPAcadPortal.Services
                     .ThenInclude(e => e.Student)
                         .ThenInclude(s => s.User)
                 .Where(es => es.SubjectOfferingId == activity.SubjectOfferingId
-                          && es.SubjectStatus == "Enrolled")
+                          && es.SubjectStatus == "Officially Enrolled")
                 .AsNoTracking()
                 .ToList();
 

@@ -65,6 +65,7 @@ namespace PUPAcadPortal
         // ── Data loading ──────────────────────────────────────────────────────
         private void LoadFromDb()
         {
+            lblPageTitle.Text = _studentId.ToString();
             try
             {
                 _courses = _courseSvc.GetCoursesForStudent(_studentId);
