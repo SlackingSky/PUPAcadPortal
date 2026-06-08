@@ -28,10 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            components = new System.ComponentModel.Container();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             pnlEditSchedule = new Panel();
             panel1 = new Panel();
+            cmbESRevYear = new ComboBox();
+            cmbESCurrentSem = new ComboBox();
+            label1 = new Label();
             btnClearSchedule = new Button();
             btnSaveSchedule = new Button();
             lblESYearLevel = new Label();
@@ -48,10 +52,14 @@
             ESStartTime = new DataGridViewTextBoxColumn();
             EsEndTime = new DataGridViewTextBoxColumn();
             ESRoom = new DataGridViewComboBoxColumn();
-            ESInstructor = new DataGridViewTextBoxColumn();
+            ESInstructor = new DataGridViewComboBoxColumn();
+            cms1 = new ContextMenuStrip(components);
+            DupeRowToolStripMenuItem = new ToolStripMenuItem();
+            Tip1 = new ToolTip(components);
             pnlEditSchedule.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEditSchedule).BeginInit();
+            cms1.SuspendLayout();
             SuspendLayout();
             // 
             // pnlEditSchedule
@@ -64,25 +72,58 @@
             pnlEditSchedule.Cursor = Cursors.Hand;
             pnlEditSchedule.Dock = DockStyle.Fill;
             pnlEditSchedule.Location = new Point(0, 0);
-            pnlEditSchedule.Margin = new Padding(3, 2, 3, 2);
             pnlEditSchedule.Name = "pnlEditSchedule";
-            pnlEditSchedule.Size = new Size(1488, 993);
+            pnlEditSchedule.Size = new Size(1701, 1324);
             pnlEditSchedule.TabIndex = 9;
             // 
             // panel1
             // 
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(cmbESRevYear);
+            panel1.Controls.Add(cmbESCurrentSem);
+            panel1.Controls.Add(label1);
             panel1.Controls.Add(btnClearSchedule);
             panel1.Controls.Add(btnSaveSchedule);
             panel1.Controls.Add(lblESYearLevel);
             panel1.Controls.Add(lblESCurrentSem);
             panel1.Controls.Add(cmbESYearLevel);
             panel1.Location = new Point(0, 0);
-            panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1471, 72);
+            panel1.Size = new Size(1681, 140);
             panel1.TabIndex = 7;
+            // 
+            // cmbESRevYear
+            // 
+            cmbESRevYear.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbESRevYear.FormattingEnabled = true;
+            cmbESRevYear.Items.AddRange(new object[] { "All", "1", "2", "3", "4" });
+            cmbESRevYear.Location = new Point(155, 101);
+            cmbESRevYear.Name = "cmbESRevYear";
+            cmbESRevYear.Size = new Size(79, 28);
+            cmbESRevYear.TabIndex = 10;
+            cmbESRevYear.SelectedIndexChanged += cmbESRevYear_SelectedIndexChanged;
+            // 
+            // cmbESCurrentSem
+            // 
+            cmbESCurrentSem.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbESCurrentSem.FormattingEnabled = true;
+            cmbESCurrentSem.Items.AddRange(new object[] { "All", "1", "2", "3", "4" });
+            cmbESCurrentSem.Location = new Point(302, 19);
+            cmbESCurrentSem.Name = "cmbESCurrentSem";
+            cmbESCurrentSem.Size = new Size(145, 28);
+            cmbESCurrentSem.TabIndex = 9;
+            cmbESCurrentSem.SelectedIndexChanged += cmbESCurrentSem_SelectedIndexChanged;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Arial", 12F);
+            label1.Location = new Point(18, 101);
+            label1.Name = "label1";
+            label1.Size = new Size(142, 23);
+            label1.TabIndex = 8;
+            label1.Text = "Revision Year: ";
             // 
             // btnClearSchedule
             // 
@@ -92,10 +133,9 @@
             btnClearSchedule.FlatAppearance.BorderSize = 0;
             btnClearSchedule.FlatStyle = FlatStyle.Flat;
             btnClearSchedule.ForeColor = Color.White;
-            btnClearSchedule.Location = new Point(1203, 36);
-            btnClearSchedule.Margin = new Padding(3, 2, 3, 2);
+            btnClearSchedule.Location = new Point(1375, 48);
             btnClearSchedule.Name = "btnClearSchedule";
-            btnClearSchedule.Size = new Size(122, 27);
+            btnClearSchedule.Size = new Size(139, 36);
             btnClearSchedule.TabIndex = 4;
             btnClearSchedule.Text = "Clear Schedule";
             btnClearSchedule.UseVisualStyleBackColor = false;
@@ -108,10 +148,9 @@
             btnSaveSchedule.FlatAppearance.BorderSize = 0;
             btnSaveSchedule.FlatStyle = FlatStyle.Flat;
             btnSaveSchedule.ForeColor = Color.White;
-            btnSaveSchedule.Location = new Point(1349, 36);
-            btnSaveSchedule.Margin = new Padding(3, 2, 3, 2);
+            btnSaveSchedule.Location = new Point(1542, 48);
             btnSaveSchedule.Name = "btnSaveSchedule";
-            btnSaveSchedule.Size = new Size(118, 27);
+            btnSaveSchedule.Size = new Size(135, 36);
             btnSaveSchedule.TabIndex = 3;
             btnSaveSchedule.Text = "Save Schedule";
             btnSaveSchedule.UseVisualStyleBackColor = false;
@@ -120,9 +159,9 @@
             // 
             lblESYearLevel.AutoSize = true;
             lblESYearLevel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblESYearLevel.Location = new Point(16, 41);
+            lblESYearLevel.Location = new Point(18, 55);
             lblESYearLevel.Name = "lblESYearLevel";
-            lblESYearLevel.Size = new Size(88, 18);
+            lblESYearLevel.Size = new Size(115, 23);
             lblESYearLevel.TabIndex = 1;
             lblESYearLevel.Text = "Year Level: ";
             // 
@@ -130,9 +169,9 @@
             // 
             lblESCurrentSem.AutoSize = true;
             lblESCurrentSem.Font = new Font("Arial", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblESCurrentSem.Location = new Point(16, 9);
+            lblESCurrentSem.Location = new Point(18, 12);
             lblESCurrentSem.Name = "lblESCurrentSem";
-            lblESCurrentSem.Size = new Size(219, 29);
+            lblESCurrentSem.Size = new Size(278, 35);
             lblESCurrentSem.TabIndex = 0;
             lblESCurrentSem.Text = "Current Semester:";
             // 
@@ -141,11 +180,11 @@
             cmbESYearLevel.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbESYearLevel.FormattingEnabled = true;
             cmbESYearLevel.Items.AddRange(new object[] { "All", "1", "2", "3", "4" });
-            cmbESYearLevel.Location = new Point(123, 41);
-            cmbESYearLevel.Margin = new Padding(3, 2, 3, 2);
+            cmbESYearLevel.Location = new Point(141, 55);
             cmbESYearLevel.Name = "cmbESYearLevel";
-            cmbESYearLevel.Size = new Size(70, 23);
+            cmbESYearLevel.Size = new Size(79, 28);
             cmbESYearLevel.TabIndex = 2;
+            cmbESYearLevel.SelectedIndexChanged += cmbESYearLevel_SelectedIndexChanged;
             // 
             // dgvEditSchedule
             // 
@@ -156,35 +195,35 @@
             dgvEditSchedule.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             dgvEditSchedule.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvEditSchedule.BackgroundColor = Color.White;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = Color.White;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle1.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = Color.White;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dgvEditSchedule.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.White;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = Color.White;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            dgvEditSchedule.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             dgvEditSchedule.ColumnHeadersHeight = 29;
             dgvEditSchedule.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dgvEditSchedule.Columns.AddRange(new DataGridViewColumn[] { ESCourseCode, ESCourseTitle, ESLab, ESLec, ESTotalUnits, ESSection, ESDay, ESStartTime, EsEndTime, ESRoom, ESInstructor });
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(255, 255, 128);
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dgvEditSchedule.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.Window;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(255, 255, 128);
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
+            dgvEditSchedule.DefaultCellStyle = dataGridViewCellStyle4;
             dgvEditSchedule.EnableHeadersVisualStyles = false;
-            dgvEditSchedule.Location = new Point(26, 89);
-            dgvEditSchedule.Margin = new Padding(3, 2, 3, 2);
+            dgvEditSchedule.Location = new Point(30, 146);
             dgvEditSchedule.Name = "dgvEditSchedule";
             dgvEditSchedule.RowHeadersVisible = false;
             dgvEditSchedule.RowHeadersWidth = 51;
             dgvEditSchedule.ScrollBars = ScrollBars.Vertical;
             dgvEditSchedule.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvEditSchedule.Size = new Size(1446, 495);
+            dgvEditSchedule.Size = new Size(1653, 660);
             dgvEditSchedule.TabIndex = 6;
+            dgvEditSchedule.CellContentClick += dgvEditSchedule_CellContentClick;
             // 
             // ESCourseCode
             // 
@@ -271,18 +310,36 @@
             ESInstructor.MinimumWidth = 6;
             ESInstructor.Name = "ESInstructor";
             ESInstructor.ReadOnly = true;
+            ESInstructor.Resizable = DataGridViewTriState.True;
+            ESInstructor.SortMode = DataGridViewColumnSortMode.Automatic;
+            // 
+            // cms1
+            // 
+            cms1.ImageScalingSize = new Size(20, 20);
+            cms1.Items.AddRange(new ToolStripItem[] { DupeRowToolStripMenuItem });
+            cms1.Name = "cmdDupeRow";
+            cms1.Size = new Size(211, 56);
+            // 
+            // DupeRowToolStripMenuItem
+            // 
+            DupeRowToolStripMenuItem.Name = "DupeRowToolStripMenuItem";
+            DupeRowToolStripMenuItem.Size = new Size(210, 24);
+            DupeRowToolStripMenuItem.Text = "Duplicate Row";
+            DupeRowToolStripMenuItem.Click += DupeRowToolStripMenuItem_Click;
             // 
             // EditScheduleContentAdmin
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(pnlEditSchedule);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "EditScheduleContentAdmin";
-            Size = new Size(1488, 993);
+            Size = new Size(1701, 1324);
             pnlEditSchedule.ResumeLayout(false);
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEditSchedule).EndInit();
+            cms1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -297,6 +354,9 @@
         private Label lblESCurrentSem;
         private ComboBox cmbESYearLevel;
         private DataGridView dgvEditSchedule;
+        private ComboBox cmbESRevYear;
+        private ComboBox cmbESCurrentSem;
+        private Label label1;
         private DataGridViewTextBoxColumn ESCourseCode;
         private DataGridViewTextBoxColumn ESCourseTitle;
         private DataGridViewTextBoxColumn ESLab;
@@ -307,6 +367,9 @@
         private DataGridViewTextBoxColumn ESStartTime;
         private DataGridViewTextBoxColumn EsEndTime;
         private DataGridViewComboBoxColumn ESRoom;
-        private DataGridViewTextBoxColumn ESInstructor;
+        private DataGridViewComboBoxColumn ESInstructor;
+        private ContextMenuStrip cms1;
+        private ToolStripMenuItem DupeRowToolStripMenuItem;
+        private ToolTip Tip1;
     }
 }
