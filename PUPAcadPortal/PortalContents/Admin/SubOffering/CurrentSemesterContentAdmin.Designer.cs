@@ -169,23 +169,22 @@
             // 
             // panel1
             // 
-            panel1.Anchor = AnchorStyles.Right;
             panel1.Controls.Add(btnInitialize);
             panel1.Controls.Add(btnSetCurrent);
-            panel1.Location = new Point(842, 36);
+            panel1.Dock = DockStyle.Right;
+            panel1.Location = new Point(838, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(410, 68);
+            panel1.Size = new Size(402, 132);
             panel1.TabIndex = 8;
             // 
             // btnInitialize
             // 
-            btnInitialize.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnInitialize.BackColor = Color.ForestGreen;
             btnInitialize.Enabled = false;
             btnInitialize.FlatAppearance.BorderSize = 0;
             btnInitialize.FlatStyle = FlatStyle.Flat;
             btnInitialize.ForeColor = Color.White;
-            btnInitialize.Location = new Point(18, 22);
+            btnInitialize.Location = new Point(10, 50);
             btnInitialize.Name = "btnInitialize";
             btnInitialize.Size = new Size(188, 27);
             btnInitialize.TabIndex = 7;
@@ -200,7 +199,7 @@
             btnSetCurrent.FlatAppearance.BorderSize = 0;
             btnSetCurrent.FlatStyle = FlatStyle.Flat;
             btnSetCurrent.ForeColor = Color.White;
-            btnSetCurrent.Location = new Point(220, 22);
+            btnSetCurrent.Location = new Point(216, 50);
             btnSetCurrent.Margin = new Padding(3, 2, 3, 2);
             btnSetCurrent.Name = "btnSetCurrent";
             btnSetCurrent.Size = new Size(177, 27);
