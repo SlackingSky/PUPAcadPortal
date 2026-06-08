@@ -149,5 +149,10 @@ namespace PUPAcadPortal
                 lblError.Text = $"⚠ {ex.Message}";
             }
         }
+
+        private void cmbSubject_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

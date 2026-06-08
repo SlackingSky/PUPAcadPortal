@@ -40,7 +40,18 @@ namespace PUPAcadPortal
             _dbModules = modules ?? new();
 
             InitializeComponent();
+            SetupBasicSectionLabels(); 
             PopulateForm();
+        }
+
+        private void SetupBasicSectionLabels()
+        {
+            SetupSectionLabel(lblSectionBasic, "📝 Activity Details", 18, 14, Color.FromArgb(63, 81, 181));
+            SetupFieldLabel(lblTitleLbl, "Activity Title *", 18, 40);
+            SetupFieldLabel(lblTypeLbl, "Activity Type", 18, 104);
+            SetupFieldLabel(lblDeadlineLbl, "Deadline", 238, 104);
+            SetupFieldLabel(lblPointsLbl, "Points", 578, 104);
+            SetupFieldLabel(lblDescLbl, "Description / Instructions", 18, 170);
         }
 
         //  Backward-compatible 3-arg overload 
@@ -304,7 +315,7 @@ namespace PUPAcadPortal
                             : Color.FromArgb(200, 200, 210),
                         ForeColor = Color.White,
                         BorderRadius = 5,
-                        Enabled = idx >= 4,   // A–D are permanent
+                        Enabled = idx >= 4,   
                         Font = new Font("Segoe UI", 9F, FontStyle.Bold)
                     };
                     btnRemChoice.Click += (s, e) =>
@@ -940,7 +951,21 @@ namespace PUPAcadPortal
 
         private void btnCancel_Click(object sender, EventArgs e) => OnCancel?.Invoke();
 
-        private void pnlQuizSection_SizeChanged(object sender, System.EventArgs e) { }
+        private void pnlQuizSection_SizeChanged(object sender, System.EventArgs e)
+        {
+            if (pnlQuizSection == null || flpQuestions == null) return;
+
+            int w = Math.Max(700, pnlQuizSection.Width - 36);
+            flpQuestions.Width = w;
+
+            foreach (Control row in flpQuestions.Controls)
+            {
+                if (row != null)
+                {
+                    row.Width = w - 8;
+                }
+            }
+        }
         private void pnlFilesSection_SizeChanged(object sender, System.EventArgs e) { }
 
         private static void SetCombo(ComboBox c, string val)

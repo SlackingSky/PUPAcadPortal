@@ -15,45 +15,51 @@
 
         private void InitializeComponent()
         {
-            pnlHeader = new System.Windows.Forms.Panel();
-            lblHeaderTitle = new System.Windows.Forms.Label();
-            body = new System.Windows.Forms.Panel();
-            lblSubjectLbl = new System.Windows.Forms.Label();
-            cmbSubject = new System.Windows.Forms.ComboBox();
-            lblPeriodLbl = new System.Windows.Forms.Label();
-            cmbPeriod = new System.Windows.Forms.ComboBox();
-            lblSectionLbl = new System.Windows.Forms.Label();
-            txtSection = new System.Windows.Forms.TextBox();
-            lblMaxSlotsLbl = new System.Windows.Forms.Label();
-            nudMaxSlots = new System.Windows.Forms.NumericUpDown();
-            lblStatusLbl = new System.Windows.Forms.Label();
-            cmbStatus = new System.Windows.Forms.ComboBox();
-            lblError = new System.Windows.Forms.Label();
-            divider = new System.Windows.Forms.Panel();
-            btnCancel = new System.Windows.Forms.Button();
-            btnSave = new System.Windows.Forms.Button();
-
+            pnlHeader = new Panel();
+            lblHeaderTitle = new Label();
+            body = new Panel();
+            lblSubjectLbl = new Label();
+            cmbSubject = new ComboBox();
+            lblPeriodLbl = new Label();
+            cmbPeriod = new ComboBox();
+            lblSectionLbl = new Label();
+            txtSection = new TextBox();
+            lblMaxSlotsLbl = new Label();
+            nudMaxSlots = new NumericUpDown();
+            lblStatusLbl = new Label();
+            cmbStatus = new ComboBox();
+            lblError = new Label();
+            divider = new Panel();
+            btnCancel = new Button();
+            btnSave = new Button();
             pnlHeader.SuspendLayout();
             body.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)nudMaxSlots).BeginInit();
             SuspendLayout();
-
-            // ── pnlHeader ──────────────────────────────────────────────────
-            pnlHeader.BackColor = System.Drawing.Color.FromArgb(128, 0, 0);
+            // 
+            // pnlHeader
+            // 
+            pnlHeader.BackColor = Color.FromArgb(128, 0, 0);
             pnlHeader.Controls.Add(lblHeaderTitle);
-            pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            pnlHeader.Size = new System.Drawing.Size(520, 54);
+            pnlHeader.Dock = DockStyle.Top;
+            pnlHeader.Location = new Point(0, 0);
             pnlHeader.Name = "pnlHeader";
-
-            lblHeaderTitle.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold);
-            lblHeaderTitle.ForeColor = System.Drawing.Color.White;
-            lblHeaderTitle.Location = new System.Drawing.Point(18, 14);
-            lblHeaderTitle.Size = new System.Drawing.Size(460, 26);
+            pnlHeader.Size = new Size(520, 54);
+            pnlHeader.TabIndex = 4;
+            // 
+            // lblHeaderTitle
+            // 
+            lblHeaderTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            lblHeaderTitle.ForeColor = Color.White;
+            lblHeaderTitle.Location = new Point(18, 14);
             lblHeaderTitle.Name = "lblHeaderTitle";
+            lblHeaderTitle.Size = new Size(460, 26);
+            lblHeaderTitle.TabIndex = 0;
             lblHeaderTitle.Text = "Create Course";
-
-            // ── body ───────────────────────────────────────────────────────
-            body.BackColor = System.Drawing.Color.White;
+            // 
+            // body
+            // 
+            body.BackColor = Color.White;
             body.Controls.Add(lblSubjectLbl);
             body.Controls.Add(cmbSubject);
             body.Controls.Add(lblPeriodLbl);
@@ -65,145 +71,183 @@
             body.Controls.Add(lblStatusLbl);
             body.Controls.Add(cmbStatus);
             body.Controls.Add(lblError);
-            body.Location = new System.Drawing.Point(0, 54);
-            body.Size = new System.Drawing.Size(520, 310);
+            body.Location = new Point(0, 54);
             body.Name = "body";
-
-            int labelX = 22, fieldX = 22, rowH = 50;
-
-            // Subject
-            lblSubjectLbl.Text = "Subject *";
-            lblSubjectLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            lblSubjectLbl.ForeColor = System.Drawing.Color.FromArgb(60, 60, 70);
-            lblSubjectLbl.Location = new System.Drawing.Point(labelX, 14);
+            body.Size = new Size(520, 310);
+            body.TabIndex = 3;
+            // 
+            // lblSubjectLbl
+            // 
             lblSubjectLbl.AutoSize = true;
+            lblSubjectLbl.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblSubjectLbl.ForeColor = Color.FromArgb(60, 60, 70);
+            lblSubjectLbl.Location = new Point(22, 14);
             lblSubjectLbl.Name = "lblSubjectLbl";
-
-            cmbSubject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            cmbSubject.Font = new System.Drawing.Font("Segoe UI", 10F);
-            cmbSubject.Location = new System.Drawing.Point(fieldX, 34);
-            cmbSubject.Size = new System.Drawing.Size(476, 26);
+            lblSubjectLbl.Size = new Size(57, 15);
+            lblSubjectLbl.TabIndex = 0;
+            lblSubjectLbl.Text = "Subject *";
+            // 
+            // cmbSubject
+            // 
+            cmbSubject.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbSubject.Font = new Font("Segoe UI", 10F);
+            cmbSubject.Location = new Point(22, 34);
             cmbSubject.Name = "cmbSubject";
-
-            // Period
-            lblPeriodLbl.Text = "Academic Period *";
-            lblPeriodLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            lblPeriodLbl.ForeColor = System.Drawing.Color.FromArgb(60, 60, 70);
-            lblPeriodLbl.Location = new System.Drawing.Point(labelX, 14 + rowH);
+            cmbSubject.Size = new Size(476, 25);
+            cmbSubject.TabIndex = 1;
+            cmbSubject.SelectedIndexChanged += cmbSubject_SelectedIndexChanged;
+            // 
+            // lblPeriodLbl
+            // 
             lblPeriodLbl.AutoSize = true;
+            lblPeriodLbl.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblPeriodLbl.ForeColor = Color.FromArgb(60, 60, 70);
+            lblPeriodLbl.Location = new Point(22, 14);
             lblPeriodLbl.Name = "lblPeriodLbl";
-
-            cmbPeriod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            cmbPeriod.Font = new System.Drawing.Font("Segoe UI", 10F);
-            cmbPeriod.Location = new System.Drawing.Point(fieldX, 34 + rowH);
-            cmbPeriod.Size = new System.Drawing.Size(476, 26);
+            lblPeriodLbl.Size = new Size(108, 15);
+            lblPeriodLbl.TabIndex = 2;
+            lblPeriodLbl.Text = "Academic Period *";
+            // 
+            // cmbPeriod
+            // 
+            cmbPeriod.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbPeriod.Font = new Font("Segoe UI", 10F);
+            cmbPeriod.Location = new Point(22, 34);
             cmbPeriod.Name = "cmbPeriod";
-
-            // Section + MaxSlots on same row
-            lblSectionLbl.Text = "Section *";
-            lblSectionLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            lblSectionLbl.ForeColor = System.Drawing.Color.FromArgb(60, 60, 70);
-            lblSectionLbl.Location = new System.Drawing.Point(labelX, 14 + rowH * 2);
+            cmbPeriod.Size = new Size(476, 25);
+            cmbPeriod.TabIndex = 3;
+            // 
+            // lblSectionLbl
+            // 
             lblSectionLbl.AutoSize = true;
+            lblSectionLbl.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblSectionLbl.ForeColor = Color.FromArgb(60, 60, 70);
+            lblSectionLbl.Location = new Point(22, 14);
             lblSectionLbl.Name = "lblSectionLbl";
-
-            txtSection.Font = new System.Drawing.Font("Segoe UI", 10.5F);
-            txtSection.Location = new System.Drawing.Point(fieldX, 34 + rowH * 2);
-            txtSection.Size = new System.Drawing.Size(260, 27);
+            lblSectionLbl.Size = new Size(57, 15);
+            lblSectionLbl.TabIndex = 4;
+            lblSectionLbl.Text = "Section *";
+            // 
+            // txtSection
+            // 
+            txtSection.Font = new Font("Segoe UI", 10.5F);
+            txtSection.Location = new Point(22, 34);
             txtSection.MaxLength = 50;
-            txtSection.PlaceholderText = "e.g. BSIT-2A";
             txtSection.Name = "txtSection";
-
-            lblMaxSlotsLbl.Text = "Max Slots";
-            lblMaxSlotsLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            lblMaxSlotsLbl.ForeColor = System.Drawing.Color.FromArgb(60, 60, 70);
-            lblMaxSlotsLbl.Location = new System.Drawing.Point(300, 14 + rowH * 2);
+            txtSection.PlaceholderText = "e.g. BSIT-2A";
+            txtSection.Size = new Size(260, 26);
+            txtSection.TabIndex = 5;
+            // 
+            // lblMaxSlotsLbl
+            // 
             lblMaxSlotsLbl.AutoSize = true;
+            lblMaxSlotsLbl.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblMaxSlotsLbl.ForeColor = Color.FromArgb(60, 60, 70);
+            lblMaxSlotsLbl.Location = new Point(300, 14);
             lblMaxSlotsLbl.Name = "lblMaxSlotsLbl";
-
-            nudMaxSlots.Font = new System.Drawing.Font("Segoe UI", 10F);
-            nudMaxSlots.Location = new System.Drawing.Point(300, 34 + rowH * 2);
-            nudMaxSlots.Size = new System.Drawing.Size(100, 27);
-            nudMaxSlots.Minimum = 1;
-            nudMaxSlots.Maximum = 500;
-            nudMaxSlots.Value = 40;
+            lblMaxSlotsLbl.Size = new Size(61, 15);
+            lblMaxSlotsLbl.TabIndex = 6;
+            lblMaxSlotsLbl.Text = "Max Slots";
+            // 
+            // nudMaxSlots
+            // 
+            nudMaxSlots.Font = new Font("Segoe UI", 10F);
+            nudMaxSlots.Location = new Point(300, 34);
+            nudMaxSlots.Maximum = new decimal(new int[] { 500, 0, 0, 0 });
+            nudMaxSlots.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             nudMaxSlots.Name = "nudMaxSlots";
-
-            // Status
-            lblStatusLbl.Text = "Status";
-            lblStatusLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            lblStatusLbl.ForeColor = System.Drawing.Color.FromArgb(60, 60, 70);
-            lblStatusLbl.Location = new System.Drawing.Point(labelX, 14 + rowH * 3);
+            nudMaxSlots.Size = new Size(100, 25);
+            nudMaxSlots.TabIndex = 7;
+            nudMaxSlots.Value = new decimal(new int[] { 40, 0, 0, 0 });
+            // 
+            // lblStatusLbl
+            // 
             lblStatusLbl.AutoSize = true;
+            lblStatusLbl.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblStatusLbl.ForeColor = Color.FromArgb(60, 60, 70);
+            lblStatusLbl.Location = new Point(22, 14);
             lblStatusLbl.Name = "lblStatusLbl";
-
-            cmbStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            cmbStatus.Font = new System.Drawing.Font("Segoe UI", 10F);
+            lblStatusLbl.Size = new Size(42, 15);
+            lblStatusLbl.TabIndex = 8;
+            lblStatusLbl.Text = "Status";
+            // 
+            // cmbStatus
+            // 
+            cmbStatus.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbStatus.Font = new Font("Segoe UI", 10F);
             cmbStatus.Items.AddRange(new object[] { "Active", "Ongoing", "Completed", "Archived" });
-            cmbStatus.Location = new System.Drawing.Point(fieldX, 34 + rowH * 3);
-            cmbStatus.Size = new System.Drawing.Size(200, 26);
-            cmbStatus.SelectedIndex = 0;
+            cmbStatus.Location = new Point(22, 34);
             cmbStatus.Name = "cmbStatus";
-
-            // Error label
-            lblError.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
-            lblError.ForeColor = System.Drawing.Color.Red;
-            lblError.Location = new System.Drawing.Point(fieldX, 260);
-            lblError.Size = new System.Drawing.Size(476, 36);
+            cmbStatus.Size = new Size(200, 25);
+            cmbStatus.TabIndex = 9;
+            // 
+            // lblError
+            // 
+            lblError.Font = new Font("Segoe UI", 9F, FontStyle.Italic);
+            lblError.ForeColor = Color.Red;
+            lblError.Location = new Point(22, 260);
             lblError.Name = "lblError";
-            lblError.Text = "";
-
-            // ── Divider ────────────────────────────────────────────────────
-            divider.BackColor = System.Drawing.Color.FromArgb(218, 218, 225);
-            divider.Location = new System.Drawing.Point(0, 364);
-            divider.Size = new System.Drawing.Size(520, 1);
+            lblError.Size = new Size(476, 36);
+            lblError.TabIndex = 10;
+            // 
+            // divider
+            // 
+            divider.BackColor = Color.FromArgb(218, 218, 225);
+            divider.Location = new Point(0, 364);
             divider.Name = "divider";
-
-            // ── Buttons ────────────────────────────────────────────────────
-            btnCancel.BackColor = System.Drawing.Color.White;
-            btnCancel.Cursor = System.Windows.Forms.Cursors.Hand;
-            btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            btnCancel.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
-            btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            btnCancel.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            btnCancel.ForeColor = System.Drawing.Color.FromArgb(100, 100, 110);
-            btnCancel.Location = new System.Drawing.Point(282, 376);
-            btnCancel.Size = new System.Drawing.Size(108, 36);
+            divider.Size = new Size(520, 1);
+            divider.TabIndex = 2;
+            // 
+            // btnCancel
+            // 
+            btnCancel.BackColor = Color.White;
+            btnCancel.Cursor = Cursors.Hand;
+            btnCancel.DialogResult = DialogResult.Cancel;
+            btnCancel.FlatAppearance.BorderColor = Color.Silver;
+            btnCancel.FlatStyle = FlatStyle.Flat;
+            btnCancel.Font = new Font("Segoe UI", 9.5F);
+            btnCancel.ForeColor = Color.FromArgb(100, 100, 110);
+            btnCancel.Location = new Point(282, 376);
             btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(108, 36);
+            btnCancel.TabIndex = 1;
             btnCancel.Text = "Cancel";
             btnCancel.UseVisualStyleBackColor = false;
-
-            btnSave.BackColor = System.Drawing.Color.FromArgb(128, 0, 0);
-            btnSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            // 
+            // btnSave
+            // 
+            btnSave.BackColor = Color.FromArgb(128, 0, 0);
+            btnSave.Cursor = Cursors.Hand;
             btnSave.FlatAppearance.BorderSize = 0;
-            btnSave.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
-            btnSave.ForeColor = System.Drawing.Color.White;
-            btnSave.Location = new System.Drawing.Point(398, 376);
-            btnSave.Size = new System.Drawing.Size(108, 36);
+            btnSave.FlatStyle = FlatStyle.Flat;
+            btnSave.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            btnSave.ForeColor = Color.White;
+            btnSave.Location = new Point(398, 376);
             btnSave.Name = "btnSave";
+            btnSave.Size = new Size(108, 36);
+            btnSave.TabIndex = 0;
             btnSave.Text = "Save";
             btnSave.UseVisualStyleBackColor = false;
             btnSave.Click += BtnSave_Click;
-
-            // ── Form ───────────────────────────────────────────────────────
+            // 
+            // CourseFormDialog
+            // 
             AcceptButton = btnSave;
-            BackColor = System.Drawing.Color.White;
+            BackColor = Color.White;
             CancelButton = btnCancel;
-            ClientSize = new System.Drawing.Size(520, 428);
+            ClientSize = new Size(520, 428);
             Controls.Add(btnSave);
             Controls.Add(btnCancel);
             Controls.Add(divider);
             Controls.Add(body);
             Controls.Add(pnlHeader);
-            Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            Font = new Font("Segoe UI", 9.5F);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "CourseFormDialog";
-            StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Course";
-
             pnlHeader.ResumeLayout(false);
             body.ResumeLayout(false);
             body.PerformLayout();

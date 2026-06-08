@@ -178,20 +178,17 @@ namespace PUPAcadPortal
                     }
                     else if (c.Tag?.ToString() == "STATS") c.Width = cardW - 24;
                     else if (c is buttonRounded btn && btn.Tag?.ToString() == "OPEN_BTN")
-                        btn.Location = new Point(cardW - 140, btn.Location.Y);
-                    else if (c is buttonRounded btnE && btnE.Tag?.ToString() == "EDIT_BTN")
-                        btnE.Location = new Point(cardW - 280, btnE.Location.Y);
-                    else if (c is buttonRounded btnD && btnD.Tag?.ToString() == "DEL_BTN")
-                        btnD.Location = new Point(cardW - 210, btnD.Location.Y);
+                        btn.Location = new Point(cardW - btn.Width - 12, btn.Location.Y);
                 }
                 card.Invalidate();
             }
         }
 
         // ── Card builder 
+        // ── Card builder 
         private Panel BuildCourseCard(CourseDto course)
         {
-            const int cardH = 196, statsY = 74, bottomY = 152;
+            const int cardH = 220, statsY = 92, bottomY = 160;
             int cardW = 430; // resized later
 
             var card = new Panel
@@ -208,7 +205,7 @@ namespace PUPAcadPortal
                 e.Graphics.DrawRectangle(pen, 0, 0, card.Width - 1, card.Height - 1);
             };
 
-            // Header strip
+            // Header strip (Height is 64)
             var hdr = new Panel
             {
                 Width = cardW,
@@ -255,7 +252,7 @@ namespace PUPAcadPortal
                 Font = new Font("Segoe UI", 7.5F, FontStyle.Bold),
                 BackColor = statusColor,
                 ForeColor = Color.White,
-                Location = new Point(12, statsY - 20),
+                Location = new Point(12, 70),
                 Size = new Size(72, 16),
                 TextAlign = ContentAlignment.MiddleCenter
             });
@@ -304,45 +301,16 @@ namespace PUPAcadPortal
                     Font = new Font("Segoe UI", 7.5F),
                     ForeColor = Color.FromArgb(100, 100, 110),
                     Location = new Point(14, bottomY + 20),
-                    AutoSize = true
+                    Width = cardW - 160,
+                    AutoEllipsis = true
                 });
 
-            // Action buttons
-            var btnEdit = new buttonRounded
-            {
-                Text = "✏ Edit",
-                Size = new Size(64, 28),
-                Location = new Point(cardW - 280, bottomY),
-                BackColor = Color.FromArgb(0, 130, 115),
-                ForeColor = Color.White,
-                BorderRadius = 8,
-                Cursor = Cursors.Hand,
-                Font = new Font("Segoe UI", 8F, FontStyle.Bold),
-                Tag = "EDIT_BTN"
-            };
-            btnEdit.Click += (s, e) => EditCourse(course);
-            card.Controls.Add(btnEdit);
-
-            var btnDelete = new buttonRounded
-            {
-                Text = "🗑 Delete",
-                Size = new Size(64, 28),
-                Location = new Point(cardW - 210, bottomY),
-                BackColor = Color.FromArgb(185, 50, 50),
-                ForeColor = Color.White,
-                BorderRadius = 8,
-                Cursor = Cursors.Hand,
-                Font = new Font("Segoe UI", 8F, FontStyle.Bold),
-                Tag = "DEL_BTN"
-            };
-            btnDelete.Click += (s, e) => DeleteCourse(course);
-            card.Controls.Add(btnDelete);
-
+            // Open Course button only (Edit/Delete removed per design update)
             var btnOpen = new buttonRounded
             {
                 Text = "Open Course",
-                Size = new Size(126, 30),
-                Location = new Point(cardW - 140, bottomY - 1),
+                Size = new Size(130, 32),
+                Location = new Point(cardW - 142, bottomY + 2),
                 BackColor = Color.FromArgb(128, 0, 0),
                 ForeColor = Color.White,
                 BorderRadius = 14,

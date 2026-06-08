@@ -157,41 +157,18 @@ namespace PUPAcadPortal
         private void ResizeModuleCards()
         {
             int w = Math.Max(700, _pnlScroll.ClientSize.Width - 48);
+            _flpModules.SuspendLayout();
+
             foreach (Control ctrl in _flpModules.Controls)
             {
-                if (ctrl is not Panel card || card.Tag is not CourseModule mod) continue;
-
-                card.Width = w;
-
-                foreach (Control c in card.Controls)
+                if (ctrl is Panel card && card.Tag is CourseModule mod)
                 {
-                    if (c is Panel hdr && hdr.Dock == DockStyle.Top)
-                    {
-                        foreach (Control h in hdr.Controls)
-                        {
-                            if (h is Label lbl)
-                            {
-                                if (lbl.Text == mod.Title)
-                                    lbl.Width = w - 300;
-                                else if (lbl.Text == mod.Description)
-                                    lbl.Width = w - 300;
-                                else if (lbl.Text.StartsWith("📎"))
-                                    lbl.Left = w - 210;
-                            }
-                            else if (h is Button btnExp)
-                                btnExp.Left = w - 40;
-                        }
-                    }
-                    else if (c is Panel pnlFiles && c.Visible)
-                    {
-                        pnlFiles.Width = w;
-                        foreach (Control fc in pnlFiles.Controls)
-                            fc.Width = w;
-                    }
+                    card.Width = w;
+                    card.Invalidate(); // Ensures the border repaints correctly
                 }
-
-                card.Invalidate();
             }
+
+            _flpModules.ResumeLayout(true);
         }
 
         // ══════════════════════════════════════════════════════════════════════
@@ -220,85 +197,93 @@ namespace PUPAcadPortal
             // ── Header row ─────────────────────────────────────────────────
             var hdr = new Panel
             {
-                Height = 52,
+                Height = 56,
                 BackColor = Color.White,
                 Dock = DockStyle.Top,
-                Cursor = Cursors.Hand,
+                Cursor = Cursors.Default,
             };
 
             var lblNum = new Label
             {
                 Text = mod.Id.ToString(),
+                Name = "lblNum",
                 Font = new Font("Segoe UI", 11F, FontStyle.Bold),
                 ForeColor = Color.White,
                 BackColor = Maroon,
                 TextAlign = ContentAlignment.MiddleCenter,
-                Location = new Point(14, 11),
+                Location = new Point(14, 13),
                 Size = new Size(30, 30),
             };
 
             var lblTitle = new Label
             {
                 Text = mod.Title,
+                Name = "lblTitle",
                 Font = new Font("Segoe UI", 10.5F, FontStyle.Bold),
                 ForeColor = Color.FromArgb(20, 20, 25),
                 AutoSize = false,
                 Location = new Point(54, 10),
-                Size = new Size(w - 300, 20),
+                Size = new Size(w - 320, 20),
                 AutoEllipsis = true,
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right // Let WinForms resize width
             };
 
             var lblDesc = new Label
             {
                 Text = mod.Description,
+                Name = "lblDesc",
                 Font = new Font("Segoe UI", 8.5F),
                 ForeColor = Color.Gray,
                 AutoSize = false,
-                Location = new Point(54, 30),
-                Size = new Size(w - 300, 16),
+                Location = new Point(54, 32),
+                Size = new Size(w - 320, 16),
                 AutoEllipsis = true,
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right // Let WinForms resize width
             };
 
             var lblFileCount = new Label
             {
                 Text = $"📎 {mod.Files.Count} file{(mod.Files.Count == 1 ? "" : "s")}",
+                Name = "lblFileCount",
                 Font = new Font("Segoe UI", 8.5F),
                 ForeColor = Color.FromArgb(100, 100, 110),
                 AutoSize = true,
-                Location = new Point(w - 210, 18),
+                Location = new Point(w - 220, 20),
+                Anchor = AnchorStyles.Top | AnchorStyles.Right // Locks to the right edge
             };
 
-            // ── Edit button ──────────────────────────────────────────────────
             var btnEdit = new buttonRounded
             {
                 Text = "✏ Edit",
+                Name = "btnEdit",
                 Font = new Font("Segoe UI", 7.5F, FontStyle.Bold),
                 BackColor = Color.FromArgb(0, 130, 115),
                 ForeColor = Color.White,
                 BorderRadius = 6,
-                Size = new Size(58, 24),
-                Location = new Point(w - 160, 14),
+                Size = new Size(58, 26),
+                Location = new Point(w - 168, 15),
                 Cursor = Cursors.Hand,
+                Anchor = AnchorStyles.Top | AnchorStyles.Right // Locks to the right edge
             };
             btnEdit.FlatAppearance.BorderSize = 0;
             btnEdit.Click += (s, e) => EditModule(mod, card, lblTitle, lblDesc);
 
-            // ── Delete button ────────────────────────────────────────────────
             var btnDelete = new buttonRounded
             {
-                Text = "🗑 Delete",
+                Text = "🗑 Del",
+                Name = "btnDelete",
                 Font = new Font("Segoe UI", 7.5F, FontStyle.Bold),
                 BackColor = Color.FromArgb(185, 50, 50),
                 ForeColor = Color.White,
                 BorderRadius = 6,
-                Size = new Size(68, 24),
-                Location = new Point(w - 96, 14),
+                Size = new Size(58, 26),
+                Location = new Point(w - 104, 15),
                 Cursor = Cursors.Hand,
+                Anchor = AnchorStyles.Top | AnchorStyles.Right // Locks to the right edge
             };
             btnDelete.FlatAppearance.BorderSize = 0;
             btnDelete.Click += (s, e) => DeleteModule(mod);
 
-            // ── Expand / collapse toggle ─────────────────────────────────────
             var btnExpand = new Button
             {
                 Text = expanded ? "▲" : "▼",
@@ -306,9 +291,10 @@ namespace PUPAcadPortal
                 ForeColor = Color.FromArgb(100, 100, 110),
                 BackColor = Color.Transparent,
                 FlatStyle = FlatStyle.Flat,
-                Size = new Size(28, 28),
-                Location = new Point(w - 40, 12),
+                Size = new Size(34, 34),
+                Location = new Point(w - 42, 11),
                 Cursor = Cursors.Hand,
+                Anchor = AnchorStyles.Top | AnchorStyles.Right // Locks to the right edge
             };
             btnExpand.FlatAppearance.BorderSize = 0;
 
@@ -318,9 +304,11 @@ namespace PUPAcadPortal
             // ── File list panel (collapsible) ────────────────────────────────
             var pnlFiles = new Panel
             {
+                Location = new Point(0, 56), // Starts right under the header
                 Width = w,
                 BackColor = Color.FromArgb(250, 250, 252),
                 Visible = expanded,
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right // Keeps it synced with card width
             };
 
             Action refreshFiles = null!;
@@ -329,29 +317,170 @@ namespace PUPAcadPortal
                 pnlFiles.SuspendLayout();
                 pnlFiles.Controls.Clear();
 
-                int fy = 10;
+                int curW = pnlFiles.Width; // Always pull dynamic current width
+
+                // ── Module info header ─────────────────────────────────────
+                var pnlInfo = new Panel
+                {
+                    Location = new Point(0, 0),
+                    Width = curW,
+                    Height = 52,
+                    BackColor = Color.FromArgb(245, 242, 255),
+                    Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
+                };
+                pnlInfo.Paint += (s, e) =>
+                {
+                    using var pen = new Pen(Color.FromArgb(220, 215, 235));
+                    e.Graphics.DrawLine(pen, 0, pnlInfo.Height - 1, pnlInfo.Width, pnlInfo.Height - 1);
+                    using var acc = new SolidBrush(Maroon);
+                    e.Graphics.FillRectangle(acc, 0, 0, 4, pnlInfo.Height);
+                };
+
+                pnlInfo.Controls.Add(new Label
+                {
+                    Text = mod.Title,
+                    Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+                    ForeColor = Color.FromArgb(20, 20, 30),
+                    Location = new Point(14, 6),
+                    Width = curW - 30,
+                    Height = 20,
+                    AutoEllipsis = true,
+                    BackColor = Color.Transparent,
+                    Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
+                });
+                pnlInfo.Controls.Add(new Label
+                {
+                    Text = string.IsNullOrWhiteSpace(mod.Description)
+                        ? "No description yet."
+                        : mod.Description,
+                    Font = new Font("Segoe UI", 8F, FontStyle.Italic),
+                    ForeColor = Color.FromArgb(100, 100, 115),
+                    Location = new Point(14, 28),
+                    Width = curW - 30,
+                    Height = 16,
+                    AutoEllipsis = true,
+                    BackColor = Color.Transparent,
+                    Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
+                });
+                pnlFiles.Controls.Add(pnlInfo);
+
+                int fy = 60;
+
                 foreach (var f in mod.Files)
                 {
-                    var fileRow = BuildFileRow(f, mod, w,
+                    var fileRow = BuildFileRow(f, mod, curW,
                         () => { refreshFiles(); RebuildCard(card, mod); });
                     fileRow.Location = new Point(0, fy);
                     pnlFiles.Controls.Add(fileRow);
                     fy += fileRow.Height + 4;
                 }
 
-                var btnUpload = new buttonRounded
+                // ── Drag-drop upload zone ──────────────────────────────────
+                int dropZoneH = 64;
+                var pnlDrop = new Panel
                 {
-                    Text = "+ Upload File",
+                    Location = new Point(14, fy + 6),
+                    Width = curW - 28, // Exact width to maintain 14px right margin
+                    Height = dropZoneH,
+                    BackColor = Color.FromArgb(246, 246, 252),
+                    Cursor = Cursors.Hand,
+                    AllowDrop = true,
+                    Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
+                };
+                pnlDrop.Paint += (s, e) =>
+                {
+                    var g = e.Graphics;
+                    g.SmoothingMode = SmoothingMode.AntiAlias;
+                    using var pen = new GraphicsPath();
+                    using var dashPen = new Pen(Color.FromArgb(180, 180, 210), 1.5f);
+                    dashPen.DashStyle = DashStyle.Dash;
+                    g.DrawRectangle(dashPen, 1, 1, pnlDrop.Width - 3, pnlDrop.Height - 3);
+                };
+
+                var lblDropIcon = new Label
+                {
+                    Text = "📎",
+                    Font = new Font("Segoe UI", 18F),
+                    Location = new Point(16, 10),
+                    AutoSize = true,
+                    BackColor = Color.Transparent,
+                };
+                var lblDropText = new Label
+                {
+                    Text = "Drop files here or click to browse",
                     Font = new Font("Segoe UI", 9F, FontStyle.Bold),
-                    BackColor = Color.FromArgb(55, 138, 221),
-                    ForeColor = Color.White,
-                    BorderRadius = 8,
-                    Size = new Size(120, 28),
-                    Location = new Point(14, fy),
+                    ForeColor = Color.FromArgb(90, 90, 115),
+                    Location = new Point(54, 12),
+                    AutoSize = true,
+                    BackColor = Color.Transparent,
                     Cursor = Cursors.Hand,
                 };
-                btnUpload.FlatAppearance.BorderSize = 0;
-                btnUpload.Click += (s, e) =>
+                var lblDropSub = new Label
+                {
+                    Text = "PDF, DOCX, PPTX, PNG, JPG — max 10 MB each",
+                    Font = new Font("Segoe UI", 7.5F, FontStyle.Italic),
+                    ForeColor = Color.Gray,
+                    Location = new Point(54, 34),
+                    AutoSize = true,
+                    BackColor = Color.Transparent,
+                    Cursor = Cursors.Hand,
+                };
+                var btnBrowse = new buttonRounded
+                {
+                    Text = "Browse",
+                    Font = new Font("Segoe UI", 8F, FontStyle.Bold),
+                    BackColor = Maroon,
+                    ForeColor = Color.White,
+                    BorderRadius = 6,
+                    Size = new Size(70, 26),
+                    Location = new Point(pnlDrop.Width - 84, 18),
+                    Cursor = Cursors.Hand,
+                    Anchor = AnchorStyles.Top | AnchorStyles.Right
+                };
+                btnBrowse.FlatAppearance.BorderSize = 0;
+
+                var btnSave = new buttonRounded
+                {
+                    Text = "Save",
+                    Font = new Font("Segoe UI", 8F, FontStyle.Bold),
+                    BackColor = Color.FromArgb(0, 130, 115), // Matches your Edit button green
+                    ForeColor = Color.White,
+                    BorderRadius = 6,
+                    Size = new Size(70, 26),
+                    Location = new Point(pnlDrop.Width - 162, 18), // Positioned to the left of Browse
+                    Cursor = Cursors.Hand,
+                    Anchor = AnchorStyles.Top | AnchorStyles.Right
+                };
+                btnSave.FlatAppearance.BorderSize = 0;
+
+                btnSave.Click += (s, e) =>
+                {
+                    if (mod.Files.Count == 0)
+                    {
+                        MessageBox.Show("No files to save.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+
+                    try
+                    {
+
+                        MessageBox.Show("Files saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Failed to save files:\n{ex.Message}", "Upload Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                };
+                // ───────────────────────────────────────────────────────────
+
+                // Add the new button to the panel
+                pnlDrop.Controls.AddRange(new Control[]
+                    { lblDropIcon, lblDropText, lblDropSub, btnSave, btnBrowse });
+
+                pnlDrop.Controls.AddRange(new Control[]
+                    { lblDropIcon, lblDropText, lblDropSub, btnBrowse });
+
+                Action doUpload = () =>
                 {
                     using var ofd = new OpenFileDialog
                     {
@@ -363,6 +492,12 @@ namespace PUPAcadPortal
                     foreach (var path in ofd.FileNames)
                     {
                         var fi = new FileInfo(path);
+                        if (fi.Length > 10_485_760)
+                        {
+                            MessageBox.Show($"\"{fi.Name}\" exceeds 10 MB and was skipped.",
+                                "File Too Large", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            continue;
+                        }
                         mod.Files.Add(new ModuleFile
                         {
                             Name = fi.Name,
@@ -373,15 +508,46 @@ namespace PUPAcadPortal
                     refreshFiles();
                     RebuildCard(card, mod);
                 };
-                pnlFiles.Controls.Add(btnUpload);
-                fy += 38;
+
+                pnlDrop.Click += (s, e) => doUpload();
+                lblDropText.Click += (s, e) => doUpload();
+                lblDropSub.Click += (s, e) => doUpload();
+                btnBrowse.Click += (s, e) => doUpload();
+
+                pnlDrop.DragEnter += (s, e) =>
+                {
+                    e.Effect = e.Data?.GetDataPresent(DataFormats.FileDrop) == true
+                        ? DragDropEffects.Copy : DragDropEffects.None;
+                    pnlDrop.BackColor = Color.FromArgb(235, 235, 250);
+                };
+                pnlDrop.DragLeave += (s, e) => pnlDrop.BackColor = Color.FromArgb(246, 246, 252);
+                pnlDrop.DragDrop += (s, e) =>
+                {
+                    pnlDrop.BackColor = Color.FromArgb(246, 246, 252);
+                    if (e.Data?.GetData(DataFormats.FileDrop) is not string[] paths) return;
+                    foreach (var path in paths)
+                    {
+                        var fi = new FileInfo(path);
+                        if (fi.Length > 10_485_760) continue;
+                        mod.Files.Add(new ModuleFile
+                        {
+                            Name = fi.Name,
+                            SizeBytes = fi.Length,
+                            Type = fi.Extension.TrimStart('.').ToUpper(),
+                        });
+                    }
+                    refreshFiles();
+                    RebuildCard(card, mod);
+                };
+
+                pnlFiles.Controls.Add(pnlDrop);
+                fy += dropZoneH + 14;
 
                 pnlFiles.Height = fy + 8;
                 pnlFiles.ResumeLayout();
                 RecalcCardHeight(card, hdr, pnlFiles);
             };
 
-            // Toggle expand / collapse
             EventHandler toggleExpand = (s, ev) =>
             {
                 mod.IsExpanded = !mod.IsExpanded;
@@ -390,10 +556,17 @@ namespace PUPAcadPortal
                 if (mod.IsExpanded) refreshFiles();
                 RecalcCardHeight(card, hdr, pnlFiles);
             };
-            hdr.Click += toggleExpand;
-            lblTitle.Click += toggleExpand;
-            lblNum.Click += toggleExpand;
             btnExpand.Click += toggleExpand;
+
+            lblNum.Cursor = Cursors.Hand;
+            lblNum.Click += toggleExpand;
+            hdr.Click += (s, ev) =>
+            {
+                var pos = hdr.PointToClient(Cursor.Position);
+                var hit = hdr.GetChildAtPoint(pos);
+                if (hit == null || hit == lblNum || hit == btnExpand)
+                    toggleExpand(s, ev);
+            };
 
             card.Controls.Add(pnlFiles);
             card.Controls.Add(hdr);
@@ -506,7 +679,13 @@ namespace PUPAcadPortal
 
         private static Panel BuildFileRow(ModuleFile f, CourseModule mod, int cardW, Action onRemove)
         {
-            var row = new Panel { Width = cardW, Height = 40, BackColor = Color.Transparent };
+            var row = new Panel
+            {
+                Width = cardW,
+                Height = 40,
+                BackColor = Color.Transparent,
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
+            };
             row.Paint += (s, e) =>
             {
                 using var pen = new Pen(Color.FromArgb(235, 235, 240));
@@ -530,6 +709,7 @@ namespace PUPAcadPortal
                 Location = new Point(20, 9),
                 BackColor = Color.Transparent,
             });
+
             row.Controls.Add(new Label
             {
                 Text = f.Name,
@@ -540,7 +720,9 @@ namespace PUPAcadPortal
                 Size = new Size(cardW - 260, 16),
                 AutoEllipsis = true,
                 BackColor = Color.Transparent,
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
             });
+
             row.Controls.Add(new Label
             {
                 Text = FormatBytes(f.SizeBytes),
@@ -563,9 +745,11 @@ namespace PUPAcadPortal
                 BorderRadius = 6,
                 Font = new Font("Segoe UI", 8F),
                 Cursor = Cursors.Hand,
+                Anchor = AnchorStyles.Top | AnchorStyles.Right
             };
             btnRemove.Click += (s, e) => { mod.Files.Remove(f); onRemove(); };
             row.Controls.Add(btnRemove);
+
             right -= 32;
 
             var btnDownload = new buttonRounded
@@ -578,6 +762,7 @@ namespace PUPAcadPortal
                 BorderRadius = 6,
                 Font = new Font("Segoe UI", 8F, FontStyle.Bold),
                 Cursor = Cursors.Hand,
+                Anchor = AnchorStyles.Top | AnchorStyles.Right
             };
             btnDownload.Click += (s, e) =>
                 MessageBox.Show($"Download: {f.Name}", "Download",
