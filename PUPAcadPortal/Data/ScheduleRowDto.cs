@@ -29,6 +29,7 @@ namespace PUPAcadPortal.Data
         public TimeSpan? EndTime { get; set; }
 
         public int? RoomId { get; set; }
+
         public int? ProfessorId { get; set; }
     }
 

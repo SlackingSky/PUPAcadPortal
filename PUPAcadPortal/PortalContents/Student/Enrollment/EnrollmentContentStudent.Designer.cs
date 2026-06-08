@@ -129,10 +129,10 @@
             // 
             panel3.Controls.Add(panel4);
             panel3.Controls.Add(btnSaveAndAssess);
-            panel3.Dock = DockStyle.Bottom;
-            panel3.Location = new Point(0, 869);
+            panel3.Dock = DockStyle.Top;
+            panel3.Location = new Point(0, 969);
             panel3.Name = "panel3";
-            panel3.Size = new Size(1648, 100);
+            panel3.Size = new Size(1631, 100);
             panel3.TabIndex = 27;
             // 
             // panel4
@@ -261,7 +261,7 @@
             btnSaveAndAssess.ForeColor = Color.White;
             btnSaveAndAssess.Image = Properties.Resources.save_16;
             btnSaveAndAssess.ImageAlign = ContentAlignment.MiddleRight;
-            btnSaveAndAssess.Location = new Point(1438, 18);
+            btnSaveAndAssess.Location = new Point(1421, 18);
             btnSaveAndAssess.Name = "btnSaveAndAssess";
             btnSaveAndAssess.Size = new Size(198, 35);
             btnSaveAndAssess.TabIndex = 22;
@@ -273,10 +273,11 @@
             // 
             pnlContainerEnrollmentDGV.AutoScroll = true;
             pnlContainerEnrollmentDGV.Controls.Add(dgvEnrollment);
-            pnlContainerEnrollmentDGV.Dock = DockStyle.Fill;
-            pnlContainerEnrollmentDGV.Location = new Point(0, 442);
+            pnlContainerEnrollmentDGV.Dock = DockStyle.Top;
+            pnlContainerEnrollmentDGV.Location = new Point(0, 396);
+            pnlContainerEnrollmentDGV.MinimumSize = new Size(0, 527);
             pnlContainerEnrollmentDGV.Name = "pnlContainerEnrollmentDGV";
-            pnlContainerEnrollmentDGV.Size = new Size(1648, 527);
+            pnlContainerEnrollmentDGV.Size = new Size(1631, 573);
             pnlContainerEnrollmentDGV.TabIndex = 20;
             // 
             // dgvEnrollment
@@ -300,10 +301,11 @@
             dgvEnrollment.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dgvEnrollment.ColumnHeadersHeight = 29;
             dgvEnrollment.Columns.AddRange(new DataGridViewColumn[] { colSelect, colCode, colTitle, colUnits, colSchedule, colStatus, colAction });
-            dgvEnrollment.Dock = DockStyle.Fill;
+            dgvEnrollment.Dock = DockStyle.Top;
             dgvEnrollment.EnableHeadersVisualStyles = false;
             dgvEnrollment.GridColor = Color.White;
             dgvEnrollment.Location = new Point(0, 0);
+            dgvEnrollment.MinimumSize = new Size(527, 0);
             dgvEnrollment.Name = "dgvEnrollment";
             dgvEnrollment.RowHeadersVisible = false;
             dgvEnrollment.RowHeadersWidth = 51;
@@ -311,7 +313,7 @@
             dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
             dgvEnrollment.RowsDefaultCellStyle = dataGridViewCellStyle8;
             dgvEnrollment.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvEnrollment.Size = new Size(1648, 527);
+            dgvEnrollment.Size = new Size(1614, 574);
             dgvEnrollment.TabIndex = 13;
             dgvEnrollment.CellPainting += dgvEnrollment_CellPainting;
             dgvEnrollment.SelectionChanged += dgvEnrollment_SelectionChanged;
@@ -414,7 +416,7 @@
             pnlOptOutWaiver.Dock = DockStyle.Top;
             pnlOptOutWaiver.Location = new Point(0, 179);
             pnlOptOutWaiver.Name = "pnlOptOutWaiver";
-            pnlOptOutWaiver.Size = new Size(1648, 263);
+            pnlOptOutWaiver.Size = new Size(1631, 217);
             pnlOptOutWaiver.TabIndex = 3;
             // 
             // btnDlOOWaiver
@@ -427,7 +429,7 @@
             btnDlOOWaiver.Font = new Font("Segoe UI", 9.6F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDlOOWaiver.ForeColor = Color.Maroon;
             btnDlOOWaiver.Image = Properties.Resources.download_2_16_maroon;
-            btnDlOOWaiver.Location = new Point(1268, 202);
+            btnDlOOWaiver.Location = new Point(1251, 152);
             btnDlOOWaiver.Name = "btnDlOOWaiver";
             btnDlOOWaiver.Size = new Size(367, 41);
             btnDlOOWaiver.TabIndex = 20;
@@ -495,7 +497,7 @@
             pnlRA10391.Dock = DockStyle.Top;
             pnlRA10391.Location = new Point(0, 100);
             pnlRA10391.Name = "pnlRA10391";
-            pnlRA10391.Size = new Size(1648, 79);
+            pnlRA10391.Size = new Size(1631, 79);
             pnlRA10391.TabIndex = 24;
             pnlRA10391.Visible = false;
             // 
@@ -530,7 +532,7 @@
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1648, 100);
+            panel1.Size = new Size(1631, 100);
             panel1.TabIndex = 26;
             // 
             // panel2
@@ -538,7 +540,7 @@
             panel2.Controls.Add(btnDownloadCOR);
             panel2.Controls.Add(pnlTotalUnits);
             panel2.Dock = DockStyle.Right;
-            panel2.Location = new Point(1126, 0);
+            panel2.Location = new Point(1109, 0);
             panel2.Name = "panel2";
             panel2.Size = new Size(522, 100);
             panel2.TabIndex = 24;

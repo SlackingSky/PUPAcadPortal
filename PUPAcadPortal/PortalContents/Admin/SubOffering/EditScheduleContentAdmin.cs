@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using PUPAcadPortal.Data;
 using PUPAcadPortal.Models;
@@ -41,34 +42,42 @@ namespace PUPAcadPortal.PortalContents.Admin.SubOffering
             btnClearSchedule.Click += btnClearSchedule_Click;
         }
 
-        private void EditScheduleContentAdmin_Load(object sender, EventArgs e)
+        private async void EditScheduleContentAdmin_Load(object sender, EventArgs e)
         {
-            // Rule 1: Auto-load period
-            var period = _scheduleService.GetLatestAcademicPeriod();
-            if (period != null)
+            try
             {
-                _activePeriodId = period.AcademicPeriodId;
-                lblYearLevel.Text = $"Year Level: {period.SchoolYear}";
-                lblCurrentSem.Text = $"Semester: {period.Semester}";
+                Application.UseWaitCursor = true;
 
-                _isPeriodActiveLock = (period.Status == "Current");
-                if (_isPeriodActiveLock)
+                var period = await _scheduleService.GetLatestAcademicPeriodAsync();
+                if (period != null)
                 {
-                    dgvEditSchedule.ReadOnly = true;
-                    btnSaveSchedule.Enabled = false;
-                    btnClearSchedule.Enabled = false;
-                    lblCurrentSem.Text += " (LOCKED - ONGOING PERIOD)";
-                }
-            }
+                    _activePeriodId = period.AcademicPeriodId;
+                    lblYearLevel.Text = $"Year Level: {period.SchoolYear}";
+                    lblCurrentSem.Text = $"Semester: {period.Semester}";
 
-            LoadMasterDropdowns();
-            RefreshGrid();
+                    _isPeriodActiveLock = (period.Status == "Current");
+                    if (_isPeriodActiveLock)
+                    {
+                        dgvEditSchedule.ReadOnly = true;
+                        btnSaveSchedule.Enabled = false;
+                        btnClearSchedule.Enabled = false;
+                        lblCurrentSem.Text += " (LOCKED - ONGOING PERIOD)";
+                    }
+                }
+
+                await LoadMasterDropdownsAsync();
+                await RefreshGridAsync();
+            }
+            finally
+            {
+                Application.UseWaitCursor = false;
+            }
         }
 
-        private void LoadMasterDropdowns()
+        private async Task LoadMasterDropdownsAsync()
         {
-            _masterRooms = _scheduleService.GetMasterRooms();
-            _masterProfessors = _scheduleService.GetMasterProfessors();
+            _masterRooms = await _scheduleService.GetMasterRoomsAsync();
+            _masterProfessors = await _scheduleService.GetMasterProfessorsAsync();
 
             if (dgvEditSchedule.Columns["ESRoom"] is DataGridViewComboBoxColumn roomCol)
             {
@@ -100,16 +109,18 @@ namespace PUPAcadPortal.PortalContents.Admin.SubOffering
             dgvEditSchedule.Columns["EsEndTime"].DefaultCellStyle.Format = "hh\\:mm";
         }
 
-        private void RefreshGrid()
+        private async Task RefreshGridAsync()
         {
             if (string.IsNullOrEmpty(_activePeriodId)) return;
-            var list = _scheduleService.GetAllSchedules(_activePeriodId);
+
+            var list = await _scheduleService.GetAllSchedulesAsync(_activePeriodId);
             _gridData = new BindingList<ScheduleRowDto>(list);
+
             dgvEditSchedule.AutoGenerateColumns = false;
             dgvEditSchedule.DataSource = _gridData;
         }
 
-        private void DgvEditSchedule_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        private async void DgvEditSchedule_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
             if (_isPeriodActiveLock) { e.Cancel = true; return; }
 
@@ -120,12 +131,12 @@ namespace PUPAcadPortal.PortalContents.Admin.SubOffering
             if (colName == "ESRoom")
             {
                 var cell = (DataGridViewComboBoxCell)dgvEditSchedule.Rows[e.RowIndex].Cells[e.ColumnIndex];
-                cell.DataSource = _scheduleService.GetValidRooms(row, _activePeriodId);
+                cell.DataSource = await _scheduleService.GetValidRoomsAsync(row, _activePeriodId);
             }
             else if (colName == "ESInstructor")
             {
                 var cell = (DataGridViewComboBoxCell)dgvEditSchedule.Rows[e.RowIndex].Cells[e.ColumnIndex];
-                cell.DataSource = _scheduleService.GetValidProfessors(row, _activePeriodId);
+                cell.DataSource = await _scheduleService.GetValidProfessorsAsync(row, _activePeriodId);
             }
         }
 
@@ -183,39 +194,74 @@ namespace PUPAcadPortal.PortalContents.Admin.SubOffering
             e.ThrowException = false;
         }
 
-        private void DupeRowToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void DupeRowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (_isPeriodActiveLock || dgvEditSchedule.CurrentRow == null) return;
             var row = dgvEditSchedule.CurrentRow.DataBoundItem as ScheduleRowDto;
             if (row == null) return;
 
-            _scheduleService.DuplicateSection(row.SubjectOfferingId);
-            RefreshGrid();
+            try
+            {
+                Application.UseWaitCursor = true;
+                await _scheduleService.DuplicateSectionAsync(row.SubjectOfferingId);
+                await RefreshGridAsync();
+            }
+            finally
+            {
+                Application.UseWaitCursor = false;
+            }
         }
 
-        private void AddSchedToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void AddSchedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (_isPeriodActiveLock || dgvEditSchedule.CurrentRow == null) return;
             var row = dgvEditSchedule.CurrentRow.DataBoundItem as ScheduleRowDto;
             if (row == null) return;
 
-            _scheduleService.AddScheduleBlock(row.SubjectOfferingId);
-            RefreshGrid();
+            try
+            {
+                Application.UseWaitCursor = true;
+                await _scheduleService.AddScheduleBlockAsync(row.SubjectOfferingId);
+                await RefreshGridAsync();
+            }
+            finally
+            {
+                Application.UseWaitCursor = false;
+            }
         }
 
-        private void btnSaveSchedule_Click(object sender, EventArgs e)
+        private async void btnSaveSchedule_Click(object sender, EventArgs e)
         {
             if (_isPeriodActiveLock) return;
+
             dgvEditSchedule.EndEdit();
-            _scheduleService.SaveChanges(_gridData.ToList());
-            MessageBox.Show("Schedules Saved Successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            RefreshGrid();
+
+            try
+            {
+                btnSaveSchedule.Enabled = false;
+                Application.UseWaitCursor = true;
+
+                await _scheduleService.SaveChangesAsync(_gridData.ToList());
+                MessageBox.Show("Schedules Saved Successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                await RefreshGridAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to save schedules: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                btnSaveSchedule.Enabled = true;
+                Application.UseWaitCursor = false;
+            }
         }
 
         private void btnClearSchedule_Click(object sender, EventArgs e)
         {
             if (_isPeriodActiveLock || dgvEditSchedule.CurrentRow == null) return;
             var row = dgvEditSchedule.CurrentRow.DataBoundItem as ScheduleRowDto;
+
             if (row != null)
             {
                 row.Day = null;
