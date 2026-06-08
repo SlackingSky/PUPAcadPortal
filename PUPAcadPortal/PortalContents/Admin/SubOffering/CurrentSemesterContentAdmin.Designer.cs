@@ -151,6 +151,7 @@
             // 
             // panel2
             // 
+            panel2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel2.BackColor = Color.White;
             panel2.Controls.Add(panel1);
             panel2.Controls.Add(lblSemesterSetup);
@@ -159,12 +160,11 @@
             panel2.Controls.Add(lblSY);
             panel2.Controls.Add(lblSem);
             panel2.Controls.Add(cmbSem);
-            panel2.Dock = DockStyle.Top;
             panel2.Location = new Point(0, 0);
             panel2.Margin = new Padding(3, 2, 3, 2);
             panel2.Name = "panel2";
             panel2.Padding = new Padding(18, 0, 18, 0);
-            panel2.Size = new Size(1258, 137);
+            panel2.Size = new Size(1258, 132);
             panel2.TabIndex = 8;
             // 
             // panel1
@@ -172,14 +172,16 @@
             panel1.Anchor = AnchorStyles.Right;
             panel1.Controls.Add(btnInitialize);
             panel1.Controls.Add(btnSetCurrent);
-            panel1.Location = new Point(842, 38);
+            panel1.Location = new Point(842, 36);
             panel1.Name = "panel1";
             panel1.Size = new Size(410, 68);
             panel1.TabIndex = 8;
             // 
             // btnInitialize
             // 
+            btnInitialize.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnInitialize.BackColor = Color.ForestGreen;
+            btnInitialize.Enabled = false;
             btnInitialize.FlatAppearance.BorderSize = 0;
             btnInitialize.FlatStyle = FlatStyle.Flat;
             btnInitialize.ForeColor = Color.White;
@@ -194,6 +196,7 @@
             // 
             btnSetCurrent.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnSetCurrent.BackColor = Color.FromArgb(109, 0, 0);
+            btnSetCurrent.Enabled = false;
             btnSetCurrent.FlatAppearance.BorderSize = 0;
             btnSetCurrent.FlatStyle = FlatStyle.Flat;
             btnSetCurrent.ForeColor = Color.White;

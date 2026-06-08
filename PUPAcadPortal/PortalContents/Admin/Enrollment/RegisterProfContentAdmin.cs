@@ -506,7 +506,7 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
                 Size = new Size(147, 40),
                 Location = new Point(pnlProfRegistrationContainer.Width - 400, yOffset)
             };
-            btnClear.Click += (s, e) =>
+            btnClear.Click += async (s, e) =>
             {
                 if (MessageBox.Show("Are you sure you want to clear this form?", "Confirm Clear", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 {
@@ -538,6 +538,9 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
                 //cmbSpecialization.SelectedIndex = 0;
                 //lblSpecialization.Visible = false;
                 //cmbSpecialization.Visible = false;
+
+                int sequence = await AutoGenerators.GetNextProfSequence(currentYear);
+                string employeeId = AutoGenerators.GenerateUniqueProfId(currentYear, sequence);
             };
             pnlProfRegistrationContainer.Controls.Add(btnClear);
 

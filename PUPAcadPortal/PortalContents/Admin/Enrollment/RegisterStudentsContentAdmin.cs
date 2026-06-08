@@ -242,7 +242,7 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             txtRSStudentID.Text = AutoGenerators.FormatPupStudentNumber(currentYear, sequence, Services.StudentRegistrationService.CampusBranch, Services.StudentRegistrationService.IsTransferee);
         }
 
-        private void btnStudentClearForm_Click(object sender, EventArgs e)
+        private async void btnStudentClearForm_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Are you sure you want to clear this form?", "Confirm Clear", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
             {
@@ -251,6 +251,7 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             Clear_Form(pnlStudentRegistrationContainer);
             phAddressFields.ClearAddressFields();
             Validators.ClearErrors();
+            AutoSetStudentId();
         }
 
         private void Clear_Form(Control control)
