@@ -28,13 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             pnlEnrolledStudentsContent = new Panel();
             pnlESGraduatedCard = new Panel();
             pictureBox18 = new PictureBox();
             label51 = new Label();
             lblESGraduatedValue = new Label();
             pnlERStudentListCOntainer = new Panel();
-            label57 = new Label();
+            dgvStudents = new DataGridView();
+            lblStudentList = new Label();
             pnlESFilterContainer = new Panel();
             tableLayoutPanel1 = new TableLayoutPanel();
             panel3 = new Panel();
@@ -67,6 +71,7 @@
             pnlESGraduatedCard.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox18).BeginInit();
             pnlERStudentListCOntainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvStudents).BeginInit();
             pnlESFilterContainer.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             panel3.SuspendLayout();
@@ -117,7 +122,6 @@
             // 
             pictureBox18.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             pictureBox18.BackColor = Color.Maroon;
-            pictureBox18.Image = Properties.Resources.graduation_cap_32;
             pictureBox18.Location = new Point(196, 8);
             pictureBox18.Name = "pictureBox18";
             pictureBox18.Size = new Size(66, 74);
@@ -152,23 +156,69 @@
             // 
             pnlERStudentListCOntainer.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pnlERStudentListCOntainer.BackColor = Color.White;
-            pnlERStudentListCOntainer.Controls.Add(label57);
+            pnlERStudentListCOntainer.Controls.Add(dgvStudents);
+            pnlERStudentListCOntainer.Controls.Add(lblStudentList);
             pnlERStudentListCOntainer.Location = new Point(31, 415);
             pnlERStudentListCOntainer.Margin = new Padding(3, 2, 3, 2);
             pnlERStudentListCOntainer.Name = "pnlERStudentListCOntainer";
             pnlERStudentListCOntainer.Size = new Size(1212, 304);
             pnlERStudentListCOntainer.TabIndex = 16;
             // 
-            // label57
+            // dgvStudents
             // 
-            label57.AutoSize = true;
-            label57.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label57.ForeColor = Color.Black;
-            label57.Location = new Point(22, 20);
-            label57.Name = "label57";
-            label57.Size = new Size(179, 32);
-            label57.TabIndex = 17;
-            label57.Text = "Student List (0)";
+            dgvStudents.AllowUserToAddRows = false;
+            dgvStudents.AllowUserToDeleteRows = false;
+            dgvStudents.AllowUserToResizeColumns = false;
+            dgvStudents.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(249, 249, 249);
+            dgvStudents.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dgvStudents.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvStudents.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvStudents.BackgroundColor = Color.White;
+            dgvStudents.BorderStyle = BorderStyle.None;
+            dgvStudents.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvStudents.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.Maroon;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.Padding = new Padding(10, 0, 0, 0);
+            dataGridViewCellStyle2.SelectionBackColor = Color.Maroon;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dgvStudents.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dgvStudents.ColumnHeadersHeight = 50;
+            dgvStudents.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = SystemColors.Window;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle3.Padding = new Padding(10, 0, 0, 0);
+            dataGridViewCellStyle3.SelectionBackColor = Color.White;
+            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            dgvStudents.DefaultCellStyle = dataGridViewCellStyle3;
+            dgvStudents.EnableHeadersVisualStyles = false;
+            dgvStudents.Location = new Point(22, 65);
+            dgvStudents.Name = "dgvStudents";
+            dgvStudents.ReadOnly = true;
+            dgvStudents.RowHeadersVisible = false;
+            dgvStudents.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dgvStudents.RowTemplate.Height = 45;
+            dgvStudents.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvStudents.Size = new Size(1168, 219);
+            dgvStudents.TabIndex = 18;
+            // 
+            // lblStudentList
+            // 
+            lblStudentList.AutoSize = true;
+            lblStudentList.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblStudentList.ForeColor = Color.Black;
+            lblStudentList.Location = new Point(22, 20);
+            lblStudentList.Name = "lblStudentList";
+            lblStudentList.Size = new Size(179, 32);
+            lblStudentList.TabIndex = 17;
+            lblStudentList.Text = "Student List (0)";
             // 
             // pnlESFilterContainer
             // 
@@ -225,6 +275,7 @@
             // cmbESYear
             // 
             cmbESYear.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            cmbESYear.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbESYear.FormattingEnabled = true;
             cmbESYear.Location = new Point(2, 26);
             cmbESYear.Margin = new Padding(3, 2, 3, 2);
@@ -256,8 +307,9 @@
             // cmbESEnrollmentStatus
             // 
             cmbESEnrollmentStatus.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            cmbESEnrollmentStatus.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbESEnrollmentStatus.FormattingEnabled = true;
-            cmbESEnrollmentStatus.Items.AddRange(new object[] { "All Stasuses", "Active", "Inactive", "Graduated ", "Withdrawn" });
+            cmbESEnrollmentStatus.Items.AddRange(new object[] { "All Statuses", "Active", "Inactive", "Graduated" });
             cmbESEnrollmentStatus.Location = new Point(2, 26);
             cmbESEnrollmentStatus.Margin = new Padding(3, 2, 3, 2);
             cmbESEnrollmentStatus.Name = "cmbESEnrollmentStatus";
@@ -309,7 +361,6 @@
             // 
             // pictureBox9
             // 
-            pictureBox9.Image = Properties.Resources.empty_filter_24;
             pictureBox9.Location = new Point(12, 10);
             pictureBox9.Margin = new Padding(3, 2, 3, 2);
             pictureBox9.Name = "pictureBox9";
@@ -335,7 +386,6 @@
             // 
             pictureBox21.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             pictureBox21.BackColor = Color.Maroon;
-            pictureBox21.Image = Properties.Resources.x_mark_3_32;
             pictureBox21.Location = new Point(201, 8);
             pictureBox21.Name = "pictureBox21";
             pictureBox21.Size = new Size(66, 74);
@@ -383,7 +433,6 @@
             // 
             pictureBox20.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             pictureBox20.BackColor = Color.Maroon;
-            pictureBox20.Image = Properties.Resources.ok_32;
             pictureBox20.Location = new Point(202, 7);
             pictureBox20.Name = "pictureBox20";
             pictureBox20.Size = new Size(66, 74);
@@ -431,7 +480,6 @@
             // 
             pictureBox19.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             pictureBox19.BackColor = Color.Maroon;
-            pictureBox19.Image = Properties.Resources.students_32;
             pictureBox19.Location = new Point(195, 8);
             pictureBox19.Name = "pictureBox19";
             pictureBox19.Size = new Size(66, 74);
@@ -489,7 +537,6 @@
             pictureBox8.BackColor = Color.Maroon;
             pictureBox8.BackgroundImageLayout = ImageLayout.Zoom;
             pictureBox8.BorderStyle = BorderStyle.FixedSingle;
-            pictureBox8.Image = Properties.Resources.enrolledstudents_32;
             pictureBox8.Location = new Point(32, 37);
             pictureBox8.Name = "pictureBox8";
             pictureBox8.Size = new Size(57, 60);
@@ -511,6 +558,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox18).EndInit();
             pnlERStudentListCOntainer.ResumeLayout(false);
             pnlERStudentListCOntainer.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvStudents).EndInit();
             pnlESFilterContainer.ResumeLayout(false);
             pnlESFilterContainer.PerformLayout();
             tableLayoutPanel1.ResumeLayout(false);
@@ -542,7 +590,8 @@
         private Label label51;
         private Label lblESGraduatedValue;
         private Panel pnlERStudentListCOntainer;
-        private Label label57;
+        private DataGridView dgvStudents;
+        private Label lblStudentList;
         private Panel pnlESFilterContainer;
         private ComboBox cmbESYear;
         private Label label56;
