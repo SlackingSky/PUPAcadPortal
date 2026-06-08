@@ -8,5 +8,9 @@ namespace PUPAcadPortal.Data
     {
         public static string ActiveAcademicPeriod { get; set; }
         public static int ActiveSemesterIndex { get; set; }
+
+        public static string ActiveSemesterName { get; set; }
+
+        public static string ActiveSchoolYear { get; set; }
     }
 }

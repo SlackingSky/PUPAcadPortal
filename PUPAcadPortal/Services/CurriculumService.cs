@@ -11,9 +11,9 @@ namespace PUPAcadPortal.Services
     {
         public async Task<List<CurriculumData>> GetCurriculumAsync(int revisionYear)
         {
-            using (var db = new AppDbContext())
+            using (var context = new AppDbContext())
             {
-                var curriculum = await db.Curricula
+                var curriculum = await context.Curricula
                     .Where(c => c.RevisionYear == revisionYear)
                     .Include(c => c.Subject)
                     .ToListAsync();
@@ -52,7 +52,7 @@ namespace PUPAcadPortal.Services
 
         public async Task UpdateCurriculumAsync(List<CurriculumData> rawGridData, int revisionYear)
         {
-            using (var db = new AppDbContext())
+            using (var context = new AppDbContext())
             {
                 var cleanGridData = rawGridData
                     .Where(d => !string.IsNullOrWhiteSpace(d.SubjectCode) && !string.IsNullOrWhiteSpace(d.Program))
@@ -60,11 +60,11 @@ namespace PUPAcadPortal.Services
                     .Select(group => group.First())
                     .ToList();
 
-                var existingCurricula = await db.Curricula
+                var existingCurricula = await context.Curricula
                     .Where(c => c.RevisionYear == revisionYear)
                     .ToListAsync();
 
-                var allSubjects = await db.Subjects.ToListAsync();
+                var allSubjects = await context.Subjects.ToListAsync();
 
                 foreach (var data in cleanGridData)
                 {
@@ -84,7 +84,7 @@ namespace PUPAcadPortal.Services
                     }
                     else
                     {
-                        db.Curricula.Add(new Curriculum
+                        context.Curricula.Add(new Curriculum
                         {
                             SubjectId = subject.SubjectId,
                             Program = data.Program,
@@ -97,18 +97,18 @@ namespace PUPAcadPortal.Services
 
                 if (existingCurricula.Any())
                 {
-                    db.Curricula.RemoveRange(existingCurricula);
+                    context.Curricula.RemoveRange(existingCurricula);
                 }
 
-                await db.SaveChangesAsync();
+                await context.SaveChangesAsync();
             }
         }
 
         public async Task<List<CurriculumData>> GetPreviousCurriculumAsync(int targetRevisionYear)
         {
-            using (var db = new AppDbContext())
+            using (var context = new AppDbContext())
             {
-                var previousYear = await db.Curricula
+                var previousYear = await context.Curricula
                     .Where(c => c.RevisionYear < targetRevisionYear)
                     .OrderByDescending(c => c.RevisionYear)
                     .Select(c => c.RevisionYear)
@@ -125,9 +125,9 @@ namespace PUPAcadPortal.Services
 
         public async Task<int> GetLatestRevisionYearAsync()
         {
-            using (var db = new AppDbContext())
+            using (var context = new AppDbContext())
             {
-                return await db.Curricula.MaxAsync(c => (int?)c.RevisionYear) ?? 0;
+                return await context.Curricula.MaxAsync(c => (int?)c.RevisionYear) ?? 0;
             }
         }
     }

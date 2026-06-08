@@ -55,10 +55,11 @@
             panel9 = new Panel();
             btnSubjectOffering = new Button();
             pnlsubofferingSubmenu = new FlowLayoutPanel();
-            btnSO_CurrentSemester = new Button();
-            btnSO_EditSchedule = new Button();
-            btnSO_Schedule = new Button();
+            btnManageSubs = new Button();
             btnSO_CurriculumArchive = new Button();
+            btnSO_EditSchedule = new Button();
+            btnSO_CurrentSemester = new Button();
+            btnSO_Schedule = new Button();
             panel12 = new Panel();
             panel13 = new Panel();
             btnLogout = new Button();
@@ -72,7 +73,6 @@
             label3 = new Label();
             label4 = new Label();
             pictureBox2 = new PictureBox();
-            btnManageSubs = new Button();
             pnlSidebar.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             panel7.SuspendLayout();
@@ -499,8 +499,8 @@
             pnlsubofferingSubmenu.BackColor = Color.FromArgb(128, 109, 0, 0);
             pnlsubofferingSubmenu.Controls.Add(btnManageSubs);
             pnlsubofferingSubmenu.Controls.Add(btnSO_CurriculumArchive);
-            pnlsubofferingSubmenu.Controls.Add(btnSO_EditSchedule);
             pnlsubofferingSubmenu.Controls.Add(btnSO_CurrentSemester);
+            pnlsubofferingSubmenu.Controls.Add(btnSO_EditSchedule);
             pnlsubofferingSubmenu.Controls.Add(btnSO_Schedule);
             pnlsubofferingSubmenu.FlowDirection = FlowDirection.TopDown;
             pnlsubofferingSubmenu.Location = new Point(0, 544);
@@ -511,68 +511,26 @@
             pnlsubofferingSubmenu.Visible = false;
             pnlsubofferingSubmenu.WrapContents = false;
             // 
-            // btnSO_CurrentSemester
+            // btnManageSubs
             // 
-            btnSO_CurrentSemester.BackColor = Color.Transparent;
-            btnSO_CurrentSemester.Cursor = Cursors.Hand;
-            btnSO_CurrentSemester.FlatAppearance.BorderSize = 0;
-            btnSO_CurrentSemester.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            btnSO_CurrentSemester.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            btnSO_CurrentSemester.FlatStyle = FlatStyle.Flat;
-            btnSO_CurrentSemester.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            btnSO_CurrentSemester.ForeColor = Color.White;
-            btnSO_CurrentSemester.Location = new Point(0, 144);
-            btnSO_CurrentSemester.Margin = new Padding(0);
-            btnSO_CurrentSemester.Name = "btnSO_CurrentSemester";
-            btnSO_CurrentSemester.Padding = new Padding(26, 0, 0, 0);
-            btnSO_CurrentSemester.Size = new Size(256, 48);
-            btnSO_CurrentSemester.TabIndex = 0;
-            btnSO_CurrentSemester.Text = " Current Semester";
-            btnSO_CurrentSemester.TextAlign = ContentAlignment.MiddleLeft;
-            btnSO_CurrentSemester.UseVisualStyleBackColor = false;
-            btnSO_CurrentSemester.Click += btnSO_CurrentSemester_Click;
-            // 
-            // btnSO_EditSchedule
-            // 
-            btnSO_EditSchedule.BackColor = Color.Transparent;
-            btnSO_EditSchedule.Cursor = Cursors.Hand;
-            btnSO_EditSchedule.FlatAppearance.BorderSize = 0;
-            btnSO_EditSchedule.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            btnSO_EditSchedule.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            btnSO_EditSchedule.FlatStyle = FlatStyle.Flat;
-            btnSO_EditSchedule.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            btnSO_EditSchedule.ForeColor = Color.White;
-            btnSO_EditSchedule.Location = new Point(0, 96);
-            btnSO_EditSchedule.Margin = new Padding(0);
-            btnSO_EditSchedule.Name = "btnSO_EditSchedule";
-            btnSO_EditSchedule.Padding = new Padding(26, 0, 0, 0);
-            btnSO_EditSchedule.Size = new Size(256, 48);
-            btnSO_EditSchedule.TabIndex = 1;
-            btnSO_EditSchedule.Text = " Edit Schedule";
-            btnSO_EditSchedule.TextAlign = ContentAlignment.MiddleLeft;
-            btnSO_EditSchedule.UseVisualStyleBackColor = false;
-            btnSO_EditSchedule.Click += btnSO_EditSchedule_Click;
-            // 
-            // btnSO_Schedule
-            // 
-            btnSO_Schedule.BackColor = Color.Transparent;
-            btnSO_Schedule.Cursor = Cursors.Hand;
-            btnSO_Schedule.FlatAppearance.BorderSize = 0;
-            btnSO_Schedule.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            btnSO_Schedule.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            btnSO_Schedule.FlatStyle = FlatStyle.Flat;
-            btnSO_Schedule.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            btnSO_Schedule.ForeColor = Color.White;
-            btnSO_Schedule.Location = new Point(0, 192);
-            btnSO_Schedule.Margin = new Padding(0);
-            btnSO_Schedule.Name = "btnSO_Schedule";
-            btnSO_Schedule.Padding = new Padding(26, 0, 0, 0);
-            btnSO_Schedule.Size = new Size(256, 48);
-            btnSO_Schedule.TabIndex = 2;
-            btnSO_Schedule.Text = " Schedule";
-            btnSO_Schedule.TextAlign = ContentAlignment.MiddleLeft;
-            btnSO_Schedule.UseVisualStyleBackColor = false;
-            btnSO_Schedule.Click += btnSO_Schedule_Click;
+            btnManageSubs.BackColor = Color.Transparent;
+            btnManageSubs.Cursor = Cursors.Hand;
+            btnManageSubs.FlatAppearance.BorderSize = 0;
+            btnManageSubs.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnManageSubs.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            btnManageSubs.FlatStyle = FlatStyle.Flat;
+            btnManageSubs.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            btnManageSubs.ForeColor = Color.White;
+            btnManageSubs.Location = new Point(0, 0);
+            btnManageSubs.Margin = new Padding(0);
+            btnManageSubs.Name = "btnManageSubs";
+            btnManageSubs.Padding = new Padding(26, 0, 0, 0);
+            btnManageSubs.Size = new Size(256, 48);
+            btnManageSubs.TabIndex = 4;
+            btnManageSubs.Text = " Manage Subjects";
+            btnManageSubs.TextAlign = ContentAlignment.MiddleLeft;
+            btnManageSubs.UseVisualStyleBackColor = false;
+            btnManageSubs.Click += btnManageSubs_Click;
             // 
             // btnSO_CurriculumArchive
             // 
@@ -594,6 +552,69 @@
             btnSO_CurriculumArchive.TextAlign = ContentAlignment.MiddleLeft;
             btnSO_CurriculumArchive.UseVisualStyleBackColor = false;
             btnSO_CurriculumArchive.Click += btnSO_CurriculumArchive_Click;
+            // 
+            // btnSO_EditSchedule
+            // 
+            btnSO_EditSchedule.BackColor = Color.Transparent;
+            btnSO_EditSchedule.Cursor = Cursors.Hand;
+            btnSO_EditSchedule.FlatAppearance.BorderSize = 0;
+            btnSO_EditSchedule.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnSO_EditSchedule.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            btnSO_EditSchedule.FlatStyle = FlatStyle.Flat;
+            btnSO_EditSchedule.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            btnSO_EditSchedule.ForeColor = Color.White;
+            btnSO_EditSchedule.Location = new Point(0, 144);
+            btnSO_EditSchedule.Margin = new Padding(0);
+            btnSO_EditSchedule.Name = "btnSO_EditSchedule";
+            btnSO_EditSchedule.Padding = new Padding(26, 0, 0, 0);
+            btnSO_EditSchedule.Size = new Size(256, 48);
+            btnSO_EditSchedule.TabIndex = 1;
+            btnSO_EditSchedule.Text = " Edit Schedule";
+            btnSO_EditSchedule.TextAlign = ContentAlignment.MiddleLeft;
+            btnSO_EditSchedule.UseVisualStyleBackColor = false;
+            btnSO_EditSchedule.Click += btnSO_EditSchedule_Click;
+            // 
+            // btnSO_CurrentSemester
+            // 
+            btnSO_CurrentSemester.BackColor = Color.Transparent;
+            btnSO_CurrentSemester.Cursor = Cursors.Hand;
+            btnSO_CurrentSemester.FlatAppearance.BorderSize = 0;
+            btnSO_CurrentSemester.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnSO_CurrentSemester.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            btnSO_CurrentSemester.FlatStyle = FlatStyle.Flat;
+            btnSO_CurrentSemester.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            btnSO_CurrentSemester.ForeColor = Color.White;
+            btnSO_CurrentSemester.Location = new Point(0, 96);
+            btnSO_CurrentSemester.Margin = new Padding(0);
+            btnSO_CurrentSemester.Name = "btnSO_CurrentSemester";
+            btnSO_CurrentSemester.Padding = new Padding(26, 0, 0, 0);
+            btnSO_CurrentSemester.Size = new Size(256, 48);
+            btnSO_CurrentSemester.TabIndex = 0;
+            btnSO_CurrentSemester.Text = " Current Semester";
+            btnSO_CurrentSemester.TextAlign = ContentAlignment.MiddleLeft;
+            btnSO_CurrentSemester.UseVisualStyleBackColor = false;
+            btnSO_CurrentSemester.Click += btnSO_CurrentSemester_Click;
+            // 
+            // btnSO_Schedule
+            // 
+            btnSO_Schedule.BackColor = Color.Transparent;
+            btnSO_Schedule.Cursor = Cursors.Hand;
+            btnSO_Schedule.FlatAppearance.BorderSize = 0;
+            btnSO_Schedule.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnSO_Schedule.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            btnSO_Schedule.FlatStyle = FlatStyle.Flat;
+            btnSO_Schedule.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            btnSO_Schedule.ForeColor = Color.White;
+            btnSO_Schedule.Location = new Point(0, 192);
+            btnSO_Schedule.Margin = new Padding(0);
+            btnSO_Schedule.Name = "btnSO_Schedule";
+            btnSO_Schedule.Padding = new Padding(26, 0, 0, 0);
+            btnSO_Schedule.Size = new Size(256, 48);
+            btnSO_Schedule.TabIndex = 2;
+            btnSO_Schedule.Text = " Schedule";
+            btnSO_Schedule.TextAlign = ContentAlignment.MiddleLeft;
+            btnSO_Schedule.UseVisualStyleBackColor = false;
+            btnSO_Schedule.Click += btnSO_Schedule_Click;
             // 
             // panel12
             // 
@@ -735,27 +756,6 @@
             pictureBox2.SizeMode = PictureBoxSizeMode.AutoSize;
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
-            // 
-            // btnManageSubs
-            // 
-            btnManageSubs.BackColor = Color.Transparent;
-            btnManageSubs.Cursor = Cursors.Hand;
-            btnManageSubs.FlatAppearance.BorderSize = 0;
-            btnManageSubs.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            btnManageSubs.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            btnManageSubs.FlatStyle = FlatStyle.Flat;
-            btnManageSubs.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            btnManageSubs.ForeColor = Color.White;
-            btnManageSubs.Location = new Point(0, 0);
-            btnManageSubs.Margin = new Padding(0);
-            btnManageSubs.Name = "btnManageSubs";
-            btnManageSubs.Padding = new Padding(26, 0, 0, 0);
-            btnManageSubs.Size = new Size(256, 48);
-            btnManageSubs.TabIndex = 4;
-            btnManageSubs.Text = " Manage Subjects";
-            btnManageSubs.TextAlign = ContentAlignment.MiddleLeft;
-            btnManageSubs.UseVisualStyleBackColor = false;
-            btnManageSubs.Click += btnManageSubs_Click;
             // 
             // AdminPortal
             // 

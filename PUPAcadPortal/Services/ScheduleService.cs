@@ -1,190 +1,223 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
-using PUPAcadPortal.Models;
 using Microsoft.EntityFrameworkCore;
+using PUPAcadPortal.Data;
+using PUPAcadPortal.Models;
 
 namespace PUPAcadPortal.Services
 {
-    internal class ScheduleService
+    public class ScheduleService
     {
-        private readonly AppDbContext _context = new AppDbContext();
-
-        //Dropdown sa grid
-
-        public List<Room> GetRooms()
+        public AcademicPeriod GetLatestAcademicPeriod()
         {
-            return _context.Rooms
+            using var db = new AppDbContext();
+            return db.AcademicPeriods.OrderByDescending(p => p.StartDate).FirstOrDefault();
+        }
+
+        public List<ScheduleRowDto> GetAllSchedules(string periodId)
+        {
+            using var db = new AppDbContext();
+
+            var offerings = db.SubjectOfferings
+                .Include(so => so.Subject)
+                .Include(so => so.RoomSchedules)
+                .Where(so => so.AcademicPeriodId == periodId)
+                .AsNoTracking()
+                .ToList();
+
+            var result = new List<ScheduleRowDto>();
+
+            foreach (var so in offerings)
+            {
+                if (so.RoomSchedules != null && so.RoomSchedules.Any())
+                {
+                    foreach (var rs in so.RoomSchedules)
+                    {
+                        result.Add(CreateScheduleDto(so, rs));
+                    }
+                }
+                else
+                {
+                    result.Add(CreateScheduleDto(so, null));
+                }
+            }
+
+            return result;
+        }
+
+        private ScheduleRowDto CreateScheduleDto(SubjectOffering so, RoomSchedule rs)
+        {
+            return new ScheduleRowDto
+            {
+                SubjectOfferingId = so.SubjectOfferingId,
+                ScheduleId = rs?.ScheduleId,
+                SubjectCode = so.Subject?.SubjectCode,
+                SubjectTitle = so.Subject?.SubjectName,
+                Lab = so.Subject?.LabUnits ?? 0,
+                Lec = so.Subject?.LecUnits ?? 0,
+                TotalUnits = so.Subject?.Units ?? 0,
+                Section = so.Section,
+                MaxSlots = so.MaxSlots,
+                Day = rs?.DayOfWeek,
+                StartTime = rs?.StartTime,
+                EndTime = rs?.EndTime,
+                RoomId = rs?.RoomId,
+                ProfessorId = so.ProfessorId
+            };
+        }
+
+        public List<RoomDto> GetMasterRooms()
+        {
+            using var db = new AppDbContext();
+            return db.Rooms
                 .Where(r => r.Status == "Available")
+                .Select(r => new RoomDto { RoomId = r.RoomId, RoomName = r.RoomName })
                 .ToList();
         }
 
-        public List<object> GetProfessors()
+        public List<ProfessorDto> GetMasterProfessors()
         {
-            return _context.Professors
+            using var db = new AppDbContext();
+            return db.Professors
                 .Include(p => p.User)
-                .Select(p => new
-                {
-                    p.ProfessorId,
-                    FullName = p.User.FirstName + " " + p.User.LastName
-                })
-                .ToList<object>();
+                .Select(p => new ProfessorDto { ProfessorId = p.ProfessorId, FullName = p.User.FirstName + " " + p.User.LastName })
+                .ToList();
         }
 
-        //Grid
-
-        public List<object> GetAllScheduleRows()
+        public List<RoomDto> GetValidRooms(ScheduleRowDto row, string periodId)
         {
-            var query =
-                from so in _context.SubjectOfferings
-                join s in _context.Subjects on so.SubjectId equals s.SubjectId
-                join rs in _context.RoomSchedules on so.SubjectOfferingId equals rs.SubjectOfferingId into rsGroup
-                from rs in rsGroup.DefaultIfEmpty()
+            using var db = new AppDbContext();
+            var allRooms = db.Rooms.Where(r => r.Status == "Available").ToList();
 
-                join r in _context.Rooms on rs.RoomId equals r.RoomId into roomGroup
-                from room in roomGroup.DefaultIfEmpty()
+            var validRooms = allRooms.Where(r => r.Capacity >= row.MaxSlots).ToList();
 
-                join p in _context.Professors on so.ProfessorId equals p.ProfessorId
-                join u in _context.Users on p.UserId equals u.UserId
+            if (row.StartTime.HasValue && row.EndTime.HasValue && !string.IsNullOrEmpty(row.Day))
+            {
+                var occupiedRoomIds = db.RoomSchedules
+                    .Where(rs => rs.SubjectOffering.AcademicPeriodId == periodId
+                              && rs.DayOfWeek == row.Day
+                              && rs.ScheduleId != row.ScheduleId
+                              && row.StartTime < rs.EndTime
+                              && row.EndTime > rs.StartTime)
+                    .Select(rs => rs.RoomId)
+                    .ToList();
 
-                select new
-                {
-                    s.SubjectCode,
-                    SubjectTitle = s.SubjectName,
-                    so.Section,
-                    rs.DayOfWeek,
-                    rs.StartTime,
-                    rs.EndTime,
-                    Room = room != null ? room.RoomName : "",
-                    Instructor = u.FirstName + " " + u.LastName
-                };
+                validRooms = validRooms.Where(r => !occupiedRoomIds.Contains(r.RoomId) || r.RoomId == row.RoomId).ToList();
+            }
 
-            return query.ToList<object>();
+            return validRooms.Select(r => new RoomDto { RoomId = r.RoomId, RoomName = r.RoomName }).ToList();
         }
 
-        public List<object> GetFilteredSchedule(int yearLevel, int semesterIndex, int revisionYear)
+        public List<ProfessorDto> GetValidProfessors(ScheduleRowDto row, string periodId)
         {
-            var query =
-                from c in _context.Curricula
-                join so in _context.SubjectOfferings on c.SubjectId equals so.SubjectId
-                join s in _context.Subjects on so.SubjectId equals s.SubjectId
-                join rs in _context.RoomSchedules on so.SubjectOfferingId equals rs.SubjectOfferingId into rsGroup
-                from rs in rsGroup.DefaultIfEmpty()
+            using var db = new AppDbContext();
+            var allProfs = db.Professors.Include(p => p.User).ToList();
+            var validProfs = new List<ProfessorDto>();
 
-                join r in _context.Rooms on rs.RoomId equals r.RoomId into roomGroup
-                from room in roomGroup.DefaultIfEmpty()
+            foreach (var prof in allProfs)
+            {
+                int currentUnits = db.SubjectOfferings
+                    .Where(so => so.AcademicPeriodId == periodId
+                              && so.ProfessorId == prof.ProfessorId
+                              && so.SubjectOfferingId != row.SubjectOfferingId)
+                    .Select(so => so.Subject.Units)
+                    .Sum();
 
-                join p in _context.Professors on so.ProfessorId equals p.ProfessorId
-                join u in _context.Users on p.UserId equals u.UserId
+                if (currentUnits + row.TotalUnits > prof.MaxLoad && prof.ProfessorId != row.ProfessorId)
+                    continue;
 
-                where c.YearLevel == yearLevel
-                   && c.SemesterIndex == semesterIndex
-                   && c.RevisionYear == revisionYear
-
-                select new
+                if (row.StartTime.HasValue && row.EndTime.HasValue && !string.IsNullOrEmpty(row.Day))
                 {
-                    s.SubjectCode,
-                    SubjectTitle = s.SubjectName,
-                    so.Section,
-                    rs.DayOfWeek,
-                    rs.StartTime,
-                    rs.EndTime,
-                    Room = room != null ? room.RoomName : "",
-                    Instructor = u.FirstName + " " + u.LastName
-                };
+                    bool isOccupied = db.RoomSchedules
+                        .Any(rs => rs.SubjectOffering.AcademicPeriodId == periodId
+                                && rs.SubjectOffering.ProfessorId == prof.ProfessorId
+                                && rs.DayOfWeek == row.Day
+                                && rs.ScheduleId != row.ScheduleId
+                                && row.StartTime < rs.EndTime
+                                && row.EndTime > rs.StartTime);
 
-            return query.ToList<object>();
+                    if (isOccupied && prof.ProfessorId != row.ProfessorId)
+                        continue;
+                }
+                validProfs.Add(new ProfessorDto { ProfessorId = prof.ProfessorId, FullName = prof.User.FirstName + " " + prof.User.LastName });
+            }
+            return validProfs;
         }
 
-        //duplication
-
-        public void DuplicateOffering(string subjectCode)
+        public void DuplicateSection(string subjectOfferingId)
         {
-            var subject = _context.Subjects
-                .FirstOrDefault(s => s.SubjectCode == subjectCode);
+            using var db = new AppDbContext();
+            var existing = db.SubjectOfferings.Find(subjectOfferingId);
+            if (existing == null) return;
 
-            if (subject == null) return;
-
-            var original = _context.SubjectOfferings
-                .FirstOrDefault(o => o.SubjectId == subject.SubjectId);
-
-            if (original == null) return;
-
-            int nextSection = GetNextSectionNumber(subjectCode);
+            int nextSec = db.SubjectOfferings.Count(so => so.SubjectId == existing.SubjectId && so.AcademicPeriodId == existing.AcademicPeriodId) + 1;
 
             var newOffering = new SubjectOffering
             {
-                SubjectOfferingId = Guid.NewGuid().ToString(),
-                SubjectId = original.SubjectId,
-                AcademicPeriodId = original.AcademicPeriodId,
-                ProfessorId = original.ProfessorId,
-                Section = $"Section {nextSection}",
-                Status = original.Status,
-                MaxSlots = original.MaxSlots
+                SubjectOfferingId = "SUB-OFF-" + Guid.NewGuid().ToString().Substring(0, 8).ToUpper(),
+                SubjectId = existing.SubjectId,
+                AcademicPeriodId = existing.AcademicPeriodId,
+                ProfessorId = existing.ProfessorId,
+                Section = nextSec.ToString(),
+                MaxSlots = existing.MaxSlots,
+                Status = existing.Status
             };
+            db.SubjectOfferings.Add(newOffering);
+            db.SaveChanges();
+        }
 
-            _context.SubjectOfferings.Add(newOffering);
-            _context.SaveChanges();
-
-            var schedules = _context.RoomSchedules
-                .Where(r => r.SubjectOfferingId == original.SubjectOfferingId)
-                .ToList();
-
-            foreach (var sched in schedules)
+        public void AddScheduleBlock(string subjectOfferingId)
+        {
+            using var db = new AppDbContext();
+            var newSched = new RoomSchedule
             {
-                _context.RoomSchedules.Add(new RoomSchedule
+                SubjectOfferingId = subjectOfferingId,
+                DayOfWeek = "Monday",
+                SessionType = "Lab",
+                StartTime = new TimeSpan(7, 0, 0),
+                EndTime = new TimeSpan(10, 0, 0)
+            };
+            db.RoomSchedules.Add(newSched);
+            db.SaveChanges();
+        }
+
+        public void SaveChanges(List<ScheduleRowDto> rows)
+        {
+            using var db = new AppDbContext();
+            foreach (var row in rows)
+            {
+                var offering = db.SubjectOfferings.Find(row.SubjectOfferingId);
+                if (offering != null)
                 {
-                    SubjectOfferingId = newOffering.SubjectOfferingId,
-                    RoomId = sched.RoomId,
-                    DayOfWeek = sched.DayOfWeek,
-                    StartTime = sched.StartTime,
-                    EndTime = sched.EndTime,
-                    SessionType = sched.SessionType
-                });
+                    offering.ProfessorId = row.ProfessorId ?? offering.ProfessorId;
+                }
+
+                if (row.ScheduleId.HasValue)
+                {
+                    var sched = db.RoomSchedules.Find(row.ScheduleId.Value);
+                    if (sched != null && !string.IsNullOrEmpty(row.Day) && row.StartTime.HasValue && row.EndTime.HasValue)
+                    {
+                        sched.DayOfWeek = row.Day;
+                        sched.StartTime = row.StartTime.Value;
+                        sched.EndTime = row.EndTime.Value;
+                        sched.RoomId = row.RoomId;
+                    }
+                }
+                else if (!string.IsNullOrEmpty(row.Day) && row.StartTime.HasValue && row.EndTime.HasValue)
+                {
+                    db.RoomSchedules.Add(new RoomSchedule
+                    {
+                        SubjectOfferingId = row.SubjectOfferingId,
+                        DayOfWeek = row.Day,
+                        SessionType = "Lecture",
+                        StartTime = row.StartTime.Value,
+                        EndTime = row.EndTime.Value,
+                        RoomId = row.RoomId
+                    });
+                }
             }
-
-            _context.SaveChanges();
-        }
-
-        public int GetNextSectionNumber(string subjectCode)
-        {
-            var subject = _context.Subjects
-                .FirstOrDefault(s => s.SubjectCode == subjectCode);
-
-            if (subject == null) return 1;
-
-            return _context.SubjectOfferings
-                .Count(o => o.SubjectId == subject.SubjectId) + 1;
-        }
-
-       //dito ung conflict system
-
-        public bool RoomConflict(int roomId, string day, TimeSpan start, TimeSpan end)
-        {
-            return _context.RoomSchedules
-                .Any(r =>
-                    r.RoomId == roomId &&
-                    r.DayOfWeek == day &&
-                    start < r.EndTime &&
-                    end > r.StartTime);
-        }
-
-        public bool HasProfessorConflict(int professorId, string day, TimeSpan start, TimeSpan end)
-        {
-            return _context.RoomSchedules
-                .Include(r => r.SubjectOffering)
-                .Any(r =>
-                    r.SubjectOffering.ProfessorId == professorId &&
-                    r.DayOfWeek == day &&
-                    start < r.EndTime &&
-                    end > r.StartTime);
-        }
-
-        public bool CanSchedule(int professorId, int roomId, string day, TimeSpan start, TimeSpan end)
-        {
-            return !RoomConflict(roomId, day, start, end)
-                && !HasProfessorConflict(professorId, day, start, end);
+            db.SaveChanges();
         }
     }
 }

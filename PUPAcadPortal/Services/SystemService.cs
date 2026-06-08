@@ -28,6 +28,10 @@ namespace PUPAcadPortal.Services
                 // 3. Inject the live database values into your Global Session memory
                 GlobalSession.ActiveAcademicPeriod = activePeriod.AcademicPeriodId; // e.g., "ACAD0001"
 
+                GlobalSession.ActiveSchoolYear = activePeriod.SchoolYear;
+
+                GlobalSession.ActiveSemesterName = activePeriod.Semester;
+
                 // 4. Map the text ("1st") to the Integer index (1) for the curriculum engine
                 GlobalSession.ActiveSemesterIndex = activePeriod.Semester switch
                 {

@@ -2,15 +2,8 @@
 {
     partial class CurrentSemesterContentAdmin
     {
-        /// <summary> 
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,10 +15,6 @@
 
         #region Component Designer generated code
 
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
@@ -39,6 +28,8 @@
             TotalUnits = new DataGridViewTextBoxColumn();
             Year = new DataGridViewTextBoxColumn();
             panel2 = new Panel();
+            panel1 = new Panel();
+            btnInitialize = new Button();
             btnSetCurrent = new Button();
             lblSemesterSetup = new Label();
             cmbSY = new ComboBox();
@@ -49,6 +40,7 @@
             pnlCurrentSemester.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvCurrentSemester).BeginInit();
             panel2.SuspendLayout();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // pnlCurrentSemester
@@ -160,7 +152,7 @@
             // panel2
             // 
             panel2.BackColor = Color.White;
-            panel2.Controls.Add(btnSetCurrent);
+            panel2.Controls.Add(panel1);
             panel2.Controls.Add(lblSemesterSetup);
             panel2.Controls.Add(cmbSY);
             panel2.Controls.Add(lblCourseList);
@@ -175,6 +167,29 @@
             panel2.Size = new Size(1258, 137);
             panel2.TabIndex = 8;
             // 
+            // panel1
+            // 
+            panel1.Anchor = AnchorStyles.Right;
+            panel1.Controls.Add(btnInitialize);
+            panel1.Controls.Add(btnSetCurrent);
+            panel1.Location = new Point(842, 38);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(410, 68);
+            panel1.TabIndex = 8;
+            // 
+            // btnInitialize
+            // 
+            btnInitialize.BackColor = Color.ForestGreen;
+            btnInitialize.FlatAppearance.BorderSize = 0;
+            btnInitialize.FlatStyle = FlatStyle.Flat;
+            btnInitialize.ForeColor = Color.White;
+            btnInitialize.Location = new Point(18, 22);
+            btnInitialize.Name = "btnInitialize";
+            btnInitialize.Size = new Size(188, 27);
+            btnInitialize.TabIndex = 7;
+            btnInitialize.Text = "1. Generate Classes (Draft)";
+            btnInitialize.UseVisualStyleBackColor = false;
+            // 
             // btnSetCurrent
             // 
             btnSetCurrent.Anchor = AnchorStyles.Top | AnchorStyles.Right;
@@ -182,21 +197,20 @@
             btnSetCurrent.FlatAppearance.BorderSize = 0;
             btnSetCurrent.FlatStyle = FlatStyle.Flat;
             btnSetCurrent.ForeColor = Color.White;
-            btnSetCurrent.Location = new Point(1064, 92);
+            btnSetCurrent.Location = new Point(220, 22);
             btnSetCurrent.Margin = new Padding(3, 2, 3, 2);
             btnSetCurrent.Name = "btnSetCurrent";
             btnSetCurrent.Size = new Size(177, 27);
             btnSetCurrent.TabIndex = 6;
-            btnSetCurrent.Text = "Set as Current Semester";
+            btnSetCurrent.Text = "2. Activate Semester (Lock)";
             btnSetCurrent.UseVisualStyleBackColor = false;
-            btnSetCurrent.Click += this.btnSetCurrent_Click;
             // 
             // lblSemesterSetup
             // 
             lblSemesterSetup.AutoSize = true;
             lblSemesterSetup.BackColor = Color.White;
             lblSemesterSetup.Font = new Font("Arial", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblSemesterSetup.Location = new Point(36, 13);
+            lblSemesterSetup.Location = new Point(36, 8);
             lblSemesterSetup.Name = "lblSemesterSetup";
             lblSemesterSetup.Size = new Size(193, 29);
             lblSemesterSetup.TabIndex = 0;
@@ -206,8 +220,8 @@
             // 
             cmbSY.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbSY.FormattingEnabled = true;
-            cmbSY.Items.AddRange(new object[] { "2025-2026", "2026-2027" });
-            cmbSY.Location = new Point(122, 44);
+            cmbSY.Items.AddRange(new object[] { "2025-2026", "2026-2027", "2027-2028" });
+            cmbSY.Location = new Point(138, 40);
             cmbSY.Margin = new Padding(3, 2, 3, 2);
             cmbSY.Name = "cmbSY";
             cmbSY.Size = new Size(158, 23);
@@ -227,7 +241,7 @@
             // 
             lblSY.AutoSize = true;
             lblSY.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblSY.Location = new Point(36, 46);
+            lblSY.Location = new Point(36, 42);
             lblSY.Name = "lblSY";
             lblSY.Size = new Size(99, 18);
             lblSY.TabIndex = 1;
@@ -248,7 +262,7 @@
             cmbSem.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbSem.FormattingEnabled = true;
             cmbSem.Items.AddRange(new object[] { "1", "2", "Summer" });
-            cmbSem.Location = new Point(122, 70);
+            cmbSem.Location = new Point(122, 68);
             cmbSem.Margin = new Padding(3, 2, 3, 2);
             cmbSem.Name = "cmbSem";
             cmbSem.Size = new Size(77, 23);
@@ -265,6 +279,7 @@
             ((System.ComponentModel.ISupportInitialize)dgvCurrentSemester).EndInit();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
+            panel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -280,11 +295,13 @@
         private DataGridViewTextBoxColumn Year;
         private Panel panel2;
         private Button btnSetCurrent;
+        private Button btnInitialize;
         private Label lblSemesterSetup;
         private ComboBox cmbSY;
         private Label lblCourseList;
         private Label lblSY;
         private Label lblSem;
         private ComboBox cmbSem;
+        private Panel panel1;
     }
 }
