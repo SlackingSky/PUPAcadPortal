@@ -32,14 +32,67 @@ namespace PUPAcadPortal.PortalContents.Admin.SubOffering
             dgvEditSchedule.DataError += DgvEditSchedule_DataError;
             dgvEditSchedule.CellValidating += DgvEditSchedule_CellValidating;
             dgvEditSchedule.CellValueChanged += DgvEditSchedule_CellValueChanged;
+            dgvEditSchedule.CellMouseUp += DgvEditSchedule_CellMouseUp;
 
             DupeRowToolStripMenuItem.Text = "Duplicate Section (New Class)";
             var addSchedItem = new ToolStripMenuItem("Add Schedule Block (e.g. Lab)");
             addSchedItem.Click += AddSchedToolStripMenuItem_Click;
             cms1.Items.Add(addSchedItem);
+            var deleteRowItem = new ToolStripMenuItem("Delete Row (Section/Schedule)");
+            deleteRowItem.Click += DeleteRowToolStripMenuItem_Click;
+            cms1.Items.Add(deleteRowItem);
 
             btnSaveSchedule.Click += btnSaveSchedule_Click;
             btnClearSchedule.Click += btnClearSchedule_Click;
+        }
+
+        private async void DeleteRowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_isPeriodActiveLock || dgvEditSchedule.CurrentRow == null) return;
+
+            var row = dgvEditSchedule.CurrentRow.DataBoundItem as ScheduleRowDto;
+            if (row == null) return;
+
+            var confirm = MessageBox.Show(
+                "Are you sure you want to delete this row?\n\nIf it has a schedule, only the schedule block will be removed. If it is an empty section, the entire class section will be permanently deleted.",
+                "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (confirm != DialogResult.Yes) return;
+
+            try
+            {
+                Application.UseWaitCursor = true;
+
+                await _scheduleService.DeleteRowAsync(row.SubjectOfferingId, row.ScheduleId);
+                await RefreshGridAsync();
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(ex.Message, "Action Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to delete row: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Application.UseWaitCursor = false;
+            }
+        }
+
+        private void DgvEditSchedule_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+                {
+                    dgvEditSchedule.ClearSelection();
+                    dgvEditSchedule.Rows[e.RowIndex].Selected = true;
+                    dgvEditSchedule.CurrentCell = dgvEditSchedule.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+                    cms1.Show(Cursor.Position);
+                }
+            }
         }
 
         private async void EditScheduleContentAdmin_Load(object sender, EventArgs e)
@@ -52,8 +105,8 @@ namespace PUPAcadPortal.PortalContents.Admin.SubOffering
                 if (period != null)
                 {
                     _activePeriodId = period.AcademicPeriodId;
-                    lblYearLevel.Text = $"Year Level: {period.SchoolYear}";
-                    lblCurrentSem.Text = $"Semester: {period.Semester}";
+                    lblYearLevel.Text = $"{period.SchoolYear}";
+                    lblCurrentSem.Text = $"{period.Semester} Semester";
 
                     _isPeriodActiveLock = (period.Status == "Current");
                     if (_isPeriodActiveLock)
@@ -241,10 +294,14 @@ namespace PUPAcadPortal.PortalContents.Admin.SubOffering
                 btnSaveSchedule.Enabled = false;
                 Application.UseWaitCursor = true;
 
-                await _scheduleService.SaveChangesAsync(_gridData.ToList());
-                MessageBox.Show("Schedules Saved Successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                await _scheduleService.SaveChangesAsync(_gridData.ToList(), _activePeriodId);
 
+                MessageBox.Show("Schedules Saved Successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 await RefreshGridAsync();
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(ex.Message, "Scheduling Conflict Detected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception ex)
             {

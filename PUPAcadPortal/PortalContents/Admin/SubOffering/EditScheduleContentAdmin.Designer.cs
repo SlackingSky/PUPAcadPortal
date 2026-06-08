@@ -33,11 +33,16 @@
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             pnlEditSchedule = new Panel();
             panel1 = new Panel();
+            lblYearLevel = new Label();
+            lblCurrentSem = new Label();
             btnClearSchedule = new Button();
             btnSaveSchedule = new Button();
             lblESYearLevel = new Label();
             lblESCurrentSem = new Label();
             dgvEditSchedule = new DataGridView();
+            cms1 = new ContextMenuStrip(components);
+            DupeRowToolStripMenuItem = new ToolStripMenuItem();
+            Tip1 = new ToolTip(components);
             ESCourseCode = new DataGridViewTextBoxColumn();
             ESCourseTitle = new DataGridViewTextBoxColumn();
             ESLab = new DataGridViewTextBoxColumn();
@@ -49,11 +54,6 @@
             EsEndTime = new DataGridViewTextBoxColumn();
             ESRoom = new DataGridViewComboBoxColumn();
             ESInstructor = new DataGridViewComboBoxColumn();
-            cms1 = new ContextMenuStrip(components);
-            DupeRowToolStripMenuItem = new ToolStripMenuItem();
-            Tip1 = new ToolTip(components);
-            lblCurrentSem = new Label();
-            lblYearLevel = new Label();
             pnlEditSchedule.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEditSchedule).BeginInit();
@@ -90,6 +90,26 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(1471, 105);
             panel1.TabIndex = 7;
+            // 
+            // lblYearLevel
+            // 
+            lblYearLevel.AutoSize = true;
+            lblYearLevel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblYearLevel.Location = new Point(102, 42);
+            lblYearLevel.Name = "lblYearLevel";
+            lblYearLevel.Size = new Size(65, 18);
+            lblYearLevel.TabIndex = 6;
+            lblYearLevel.Text = "Loading";
+            // 
+            // lblCurrentSem
+            // 
+            lblCurrentSem.AutoSize = true;
+            lblCurrentSem.Font = new Font("Arial", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblCurrentSem.Location = new Point(232, 10);
+            lblCurrentSem.Name = "lblCurrentSem";
+            lblCurrentSem.Size = new Size(108, 29);
+            lblCurrentSem.TabIndex = 5;
+            lblCurrentSem.Text = "Loading";
             // 
             // btnClearSchedule
             // 
@@ -182,6 +202,20 @@
             dgvEditSchedule.Size = new Size(1446, 495);
             dgvEditSchedule.TabIndex = 6;
             // 
+            // cms1
+            // 
+            cms1.ImageScalingSize = new Size(20, 20);
+            cms1.Items.AddRange(new ToolStripItem[] { DupeRowToolStripMenuItem });
+            cms1.Name = "cmdDupeRow";
+            cms1.Size = new Size(151, 26);
+            // 
+            // DupeRowToolStripMenuItem
+            // 
+            DupeRowToolStripMenuItem.Name = "DupeRowToolStripMenuItem";
+            DupeRowToolStripMenuItem.Size = new Size(150, 22);
+            DupeRowToolStripMenuItem.Text = "Duplicate Row";
+            DupeRowToolStripMenuItem.Click += DupeRowToolStripMenuItem_Click;
+            // 
             // ESCourseCode
             // 
             ESCourseCode.FillWeight = 97.12644F;
@@ -266,43 +300,8 @@
             ESInstructor.HeaderText = "Instructor";
             ESInstructor.MinimumWidth = 6;
             ESInstructor.Name = "ESInstructor";
-            ESInstructor.ReadOnly = true;
             ESInstructor.Resizable = DataGridViewTriState.True;
             ESInstructor.SortMode = DataGridViewColumnSortMode.Automatic;
-            // 
-            // cms1
-            // 
-            cms1.ImageScalingSize = new Size(20, 20);
-            cms1.Items.AddRange(new ToolStripItem[] { DupeRowToolStripMenuItem });
-            cms1.Name = "cmdDupeRow";
-            cms1.Size = new Size(151, 26);
-            // 
-            // DupeRowToolStripMenuItem
-            // 
-            DupeRowToolStripMenuItem.Name = "DupeRowToolStripMenuItem";
-            DupeRowToolStripMenuItem.Size = new Size(150, 22);
-            DupeRowToolStripMenuItem.Text = "Duplicate Row";
-            DupeRowToolStripMenuItem.Click += DupeRowToolStripMenuItem_Click;
-            // 
-            // lblCurrentSem
-            // 
-            lblCurrentSem.AutoSize = true;
-            lblCurrentSem.Font = new Font("Arial", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblCurrentSem.Location = new Point(232, 10);
-            lblCurrentSem.Name = "lblCurrentSem";
-            lblCurrentSem.Size = new Size(108, 29);
-            lblCurrentSem.TabIndex = 5;
-            lblCurrentSem.Text = "Loading";
-            // 
-            // lblYearLevel
-            // 
-            lblYearLevel.AutoSize = true;
-            lblYearLevel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblYearLevel.Location = new Point(102, 42);
-            lblYearLevel.Name = "lblYearLevel";
-            lblYearLevel.Size = new Size(65, 18);
-            lblYearLevel.TabIndex = 6;
-            lblYearLevel.Text = "Loading";
             // 
             // EditScheduleContentAdmin
             // 
@@ -329,6 +328,11 @@
         private Label lblESYearLevel;
         private Label lblESCurrentSem;
         private DataGridView dgvEditSchedule;
+        private ContextMenuStrip cms1;
+        private ToolStripMenuItem DupeRowToolStripMenuItem;
+        private ToolTip Tip1;
+        private Label lblYearLevel;
+        private Label lblCurrentSem;
         private DataGridViewTextBoxColumn ESCourseCode;
         private DataGridViewTextBoxColumn ESCourseTitle;
         private DataGridViewTextBoxColumn ESLab;
@@ -340,10 +344,5 @@
         private DataGridViewTextBoxColumn EsEndTime;
         private DataGridViewComboBoxColumn ESRoom;
         private DataGridViewComboBoxColumn ESInstructor;
-        private ContextMenuStrip cms1;
-        private ToolStripMenuItem DupeRowToolStripMenuItem;
-        private ToolTip Tip1;
-        private Label lblYearLevel;
-        private Label lblCurrentSem;
     }
 }

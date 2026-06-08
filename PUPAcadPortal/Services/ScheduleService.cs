@@ -55,7 +55,6 @@ namespace PUPAcadPortal.Services
                 ScheduleId = rs?.ScheduleId,
                 SubjectCode = so.Subject?.SubjectCode,
                 SubjectTitle = so.Subject?.SubjectName,
-                // Mapped precisely to your Subject table schema
                 Lab = so.Subject?.LabUnits ?? 0,
                 Lec = so.Subject?.LecUnits ?? 0,
                 TotalUnits = so.Subject?.Units ?? 0,
@@ -121,8 +120,6 @@ namespace PUPAcadPortal.Services
             using var db = new AppDbContext();
             var allProfs = await db.Professors.Include(p => p.User).ToListAsync();
 
-            // FIX: Because ProfessorID is 'int NOT NULL' in your DB, we remove the .Value check 
-            // to prevent the compile error, safely grouping by the exact integer.
             var profLoads = await db.SubjectOfferings
                 .Where(so => so.AcademicPeriodId == periodId && so.SubjectOfferingId != row.SubjectOfferingId)
                 .GroupBy(so => so.ProfessorId)
@@ -132,7 +129,7 @@ namespace PUPAcadPortal.Services
                 })
                 .ToDictionaryAsync(k => k.ProfessorId, v => v.TotalUnits);
 
-            List<int> occupiedProfIds = new List<int>(); // No longer nullable
+            List<int> occupiedProfIds = new List<int>();
             if (row.StartTime.HasValue && row.EndTime.HasValue && !string.IsNullOrEmpty(row.Day))
             {
                 occupiedProfIds = await db.RoomSchedules
@@ -174,13 +171,27 @@ namespace PUPAcadPortal.Services
             var existing = await db.SubjectOfferings.FindAsync(subjectOfferingId);
             if (existing == null) return;
 
-            int nextSec = await db.SubjectOfferings.CountAsync(so => so.SubjectId == existing.SubjectId && so.AcademicPeriodId == existing.AcademicPeriodId) + 1;
+            var existingSections = await db.SubjectOfferings
+                .Where(so => so.SubjectId == existing.SubjectId && so.AcademicPeriodId == existing.AcademicPeriodId)
+                .Select(so => so.Section)
+                .ToListAsync();
 
-            // FIX: Since your SubjectOfferingID is exactly VARCHAR(50), 
-            // we can safely use a 40-character GUID to guarantee zero collisions!
+            var sectionNumbers = existingSections
+                .Select(s => int.TryParse(s, out int n) ? n : 0)
+                .Where(n => n > 0)
+                .OrderBy(n => n)
+                .ToList();
+
+            int nextSec = 1;
+            foreach (var num in sectionNumbers)
+            {
+                if (num == nextSec) nextSec++;
+                else if (num > nextSec) break;
+            }
+
             var newOffering = new SubjectOffering
             {
-                SubjectOfferingId = "SUB-OFF-" + Guid.NewGuid().ToString("N").ToUpper(),
+                SubjectOfferingId = "SUB-" + Guid.NewGuid().ToString().ToUpper(),
                 SubjectId = existing.SubjectId,
                 AcademicPeriodId = existing.AcademicPeriodId,
                 ProfessorId = existing.ProfessorId,
@@ -188,6 +199,7 @@ namespace PUPAcadPortal.Services
                 MaxSlots = existing.MaxSlots,
                 Status = existing.Status
             };
+
             db.SubjectOfferings.Add(newOffering);
             await db.SaveChangesAsync();
         }
@@ -199,7 +211,7 @@ namespace PUPAcadPortal.Services
             {
                 SubjectOfferingId = subjectOfferingId,
                 DayOfWeek = "Monday",
-                SessionType = "Lab", // Mapped from your SessionType schema default
+                SessionType = "Lab",
                 StartTime = new TimeSpan(7, 0, 0),
                 EndTime = new TimeSpan(10, 0, 0)
             };
@@ -207,27 +219,54 @@ namespace PUPAcadPortal.Services
             await db.SaveChangesAsync();
         }
 
-        public async Task SaveChangesAsync(List<ScheduleRowDto> rows)
+        public async Task SaveChangesAsync(List<ScheduleRowDto> rows, string periodId)
         {
-            if (rows == null || !rows.Any()) return;
+            if (rows == null || !rows.Any() || string.IsNullOrEmpty(periodId)) return;
+
+            // --- PRE-SAVE CONFLICT CHECK ---
+            // Extract only rows that actually have a schedule being saved
+            var activeBlocks = rows
+                .Where(r => r.RoomId.HasValue && r.ProfessorId.HasValue && !string.IsNullOrEmpty(r.Day) && r.StartTime.HasValue && r.EndTime.HasValue)
+                .ToList();
+
+            // Check the grid against itself to prevent the admin from double-booking in a single save
+            for (int i = 0; i < activeBlocks.Count; i++)
+            {
+                var current = activeBlocks[i];
+                for (int j = i + 1; j < activeBlocks.Count; j++)
+                {
+                    var other = activeBlocks[j];
+
+                    // Do they overlap in time?
+                    bool timeOverlaps = current.Day == other.Day &&
+                                        current.StartTime < other.EndTime &&
+                                        current.EndTime > other.StartTime;
+
+                    if (timeOverlaps)
+                    {
+                        if (current.RoomId == other.RoomId)
+                            throw new InvalidOperationException($"Room Conflict: '{current.SubjectCode}' and '{other.SubjectCode}' are both assigned to the same room on {current.Day} at overlapping times.");
+
+                        if (current.ProfessorId == other.ProfessorId)
+                            throw new InvalidOperationException($"Instructor Conflict: The same professor is double-booked for '{current.SubjectCode}' and '{other.SubjectCode}' on {current.Day}.");
+                    }
+                }
+            }
 
             using var db = new AppDbContext();
 
-            var offeringIds = rows.Select(r => r.SubjectOfferingId).Distinct().ToList();
             var offerings = await db.SubjectOfferings
-                .Where(so => offeringIds.Contains(so.SubjectOfferingId))
+                .Where(so => so.AcademicPeriodId == periodId)
                 .ToDictionaryAsync(so => so.SubjectOfferingId);
 
-            var scheduleIds = rows.Where(r => r.ScheduleId.HasValue).Select(r => r.ScheduleId.Value).ToList();
             var schedules = await db.RoomSchedules
-                .Where(rs => scheduleIds.Contains(rs.ScheduleId))
+                .Where(rs => rs.SubjectOffering.AcademicPeriodId == periodId)
                 .ToDictionaryAsync(rs => rs.ScheduleId);
 
             foreach (var row in rows)
             {
                 if (offerings.TryGetValue(row.SubjectOfferingId, out var offering))
                 {
-                    // If UI sent null (cleared cell), fallback to the existing DB instructor (Because DB is NOT NULL)
                     offering.ProfessorId = row.ProfessorId ?? offering.ProfessorId;
                 }
 
@@ -235,7 +274,11 @@ namespace PUPAcadPortal.Services
                 {
                     if (schedules.TryGetValue(row.ScheduleId.Value, out var sched))
                     {
-                        if (!string.IsNullOrEmpty(row.Day) && row.StartTime.HasValue && row.EndTime.HasValue)
+                        if (string.IsNullOrEmpty(row.Day) || !row.StartTime.HasValue || !row.EndTime.HasValue)
+                        {
+                            db.RoomSchedules.Remove(sched);
+                        }
+                        else
                         {
                             sched.DayOfWeek = row.Day;
                             sched.StartTime = row.StartTime.Value;
@@ -258,6 +301,43 @@ namespace PUPAcadPortal.Services
                 }
             }
             await db.SaveChangesAsync();
+        }
+
+        public async Task DeleteRowAsync(string subjectOfferingId, int? scheduleId)
+        {
+            using var db = new AppDbContext();
+
+            if (scheduleId.HasValue)
+            {
+                var sched = await db.RoomSchedules.FindAsync(scheduleId.Value);
+                if (sched != null)
+                {
+                    db.RoomSchedules.Remove(sched);
+                    await db.SaveChangesAsync();
+                }
+            }
+            else
+            {
+                var offering = await db.SubjectOfferings
+                    .Include(so => so.Subject)
+                    .FirstOrDefaultAsync(so => so.SubjectOfferingId == subjectOfferingId);
+
+                if (offering != null)
+                {
+                    int sectionCount = await db.SubjectOfferings
+                        .CountAsync(so => so.SubjectId == offering.SubjectId && so.AcademicPeriodId == offering.AcademicPeriodId);
+
+                    if (sectionCount <= 1)
+                    {
+                        throw new InvalidOperationException(
+                            $"Deletion Blocked: '{offering.Subject.SubjectCode}' must have at least one active section. " +
+                            $"If you want to remove the time/room, use the 'Clear Schedule' button instead.");
+                    }
+
+                    db.SubjectOfferings.Remove(offering);
+                    await db.SaveChangesAsync();
+                }
+            }
         }
     }
 }
