@@ -383,7 +383,7 @@
             panel107.Margin = new Padding(3, 2, 3, 2);
             panel107.Name = "panel107";
             panel107.Padding = new Padding(10, 30, 30, 30);
-            panel107.Size = new Size(1640, 320);
+            panel107.Size = new Size(1616, 320);
             panel107.TabIndex = 8;
             // 
             // fpnlAnnouncement
@@ -392,7 +392,7 @@
             fpnlAnnouncement.Dock = DockStyle.Fill;
             fpnlAnnouncement.Location = new Point(10, 70);
             fpnlAnnouncement.Name = "fpnlAnnouncement";
-            fpnlAnnouncement.Size = new Size(1600, 220);
+            fpnlAnnouncement.Size = new Size(1576, 220);
             fpnlAnnouncement.TabIndex = 2;
             // 
             // panel1
@@ -401,7 +401,7 @@
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(10, 30);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1600, 40);
+            panel1.Size = new Size(1576, 40);
             panel1.TabIndex = 1;
             // 
             // label219
