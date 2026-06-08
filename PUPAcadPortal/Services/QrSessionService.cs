@@ -11,9 +11,7 @@ namespace PUPAcadPortal.Services
     {
         private static AppDbContext CreateContext() => new AppDbContext();
 
-        // ══════════════════════════════════════════════════════════════════════
         // CREATE
-        // ══════════════════════════════════════════════════════════════════════
         public static QrSession Create(
             int sessionId,
             string courseCode,
@@ -46,9 +44,7 @@ namespace PUPAcadPortal.Services
             return qr;
         }
 
-        // ══════════════════════════════════════════════════════════════════════
         // READ
-        // ══════════════════════════════════════════════════════════════════════
         /// <summary>
         /// Returns the active <see cref="QrSession"/> for the given ClassSession,
         /// or <c>null</c> if none exists.
@@ -75,9 +71,7 @@ namespace PUPAcadPortal.Services
                 .ToList();
         }
 
-        // ══════════════════════════════════════════════════════════════════════
         // UPDATE
-        // ══════════════════════════════════════════════════════════════════════
         /// <summary>
         /// Sets IsActive = false and stamps ExpiresAt = UTC now for a single row.
         /// </summary>
@@ -102,9 +96,7 @@ namespace PUPAcadPortal.Services
             ctx.SaveChanges();
         }
 
-        // ══════════════════════════════════════════════════════════════════════
         // DELETE
-        // ══════════════════════════════════════════════════════════════════════
         /// <summary>
         /// Hard-deletes every row where IsActive = false AND ExpiresAt &lt;= UTC now.
         /// Returns the number of rows removed.
@@ -137,9 +129,7 @@ namespace PUPAcadPortal.Services
             ctx.SaveChanges();
         }
 
-        // ══════════════════════════════════════════════════════════════════════
         // Private helpers
-        // ══════════════════════════════════════════════════════════════════════
         private static void DeactivateExisting(AppDbContext ctx, int sessionId)
         {
             var active = ctx.QrSessions

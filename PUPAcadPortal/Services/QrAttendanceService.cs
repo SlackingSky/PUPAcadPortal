@@ -5,9 +5,6 @@ using PUPAcadPortal.Models;
 
 namespace PUPAcadPortal.Services
 {
-
-    
-
     public sealed class QrAttendanceService
     {
         private readonly AppDbContext _ctx;

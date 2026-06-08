@@ -1,12 +1,12 @@
-﻿/*using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace PUPAcadPortal.Models;
 
 public partial class AppDbContext
 {
-
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder)
     {
+        //  Activity: ActivityType default + IsPublished flag 
         modelBuilder.Entity<Activity>(entity =>
         {
             entity.Property(e => e.ActivityType)
@@ -27,7 +27,7 @@ public partial class AppDbContext
                 .HasColumnName("Status");
 
             entity.Property(e => e.Remarks)
-                .HasMaxLength(20)
+                .HasMaxLength(500)   // was 20 — corrected to 500
                 .HasColumnName("Remarks");
         });
 
@@ -66,4 +66,4 @@ public partial class AppDbContext
                 .HasConstraintName("FK_QrSession_ClassSession");
         });
     }
-}*/
+}

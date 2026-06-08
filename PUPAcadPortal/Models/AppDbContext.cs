@@ -1095,7 +1095,7 @@ public partial class AppDbContext : DbContext
                 .HasColumnName("Remarks");
         });
 
-        modelBuilder.Entity<QrSession>(entity =>
+        /*modelBuilder.Entity<QrSession>(entity =>
         {
             entity.HasKey(e => e.QrSessionId).HasName("PRIMARY");
 
@@ -1128,15 +1128,10 @@ public partial class AppDbContext : DbContext
                 .HasForeignKey(d => d.SessionId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_QrSession_ClassSession");
-        });
+        });*/
 
-            //OnModelCreatingPartial(modelBuilder);
+            OnModelCreatingPartial(modelBuilder);
     }
 
-    /// <summary>
-    /// This method is called when the model for the context is being created.
-    /// </summary>
-    /// <param name="modelBuilder">The builder for configuring the model.</param>
-    /// <returns></returns>
-    //partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

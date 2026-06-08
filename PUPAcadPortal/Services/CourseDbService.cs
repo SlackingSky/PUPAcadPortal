@@ -61,7 +61,7 @@ namespace PUPAcadPortal.Services
             return o == null ? null : MapToDto(o);
         }
 
-        // ── Professor: write ──────────────────────────────────────────────────
+        //  Professor: write 
 
         public CourseDto CreateCourse(int professorId, CourseDto dto)
         {
@@ -184,7 +184,7 @@ namespace PUPAcadPortal.Services
                 .ToList();
         }
 
-        // ── Student: read ─────────────────────────────────────────────────────
+        //  Student: read 
 
         public List<CourseDto> GetCoursesForStudent(int studentId)
         {
