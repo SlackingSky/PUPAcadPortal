@@ -9,7 +9,6 @@ namespace PUPAcadPortal
 {
     public partial class AddModuleDialog : Form
     {
-        // ── Outputs ────────────────────────────────────────────────────────────
         public string ModuleTitle { get; private set; } = string.Empty;
         public string ModuleDescription { get; private set; } = string.Empty;
         public List<ModuleFile> InitialFiles { get; private set; } = new();
@@ -19,12 +18,10 @@ namespace PUPAcadPortal
         private static readonly Color BgGray = Color.FromArgb(248, 248, 250);
         private readonly int _moduleNumber;
         private readonly bool _isEditMode;
-
-        // ── CREATE constructor (original) ──────────────────────────────────────
         public AddModuleDialog(int nextModuleNumber)
             : this(nextModuleNumber, string.Empty, string.Empty, isEdit: false) { }
 
-        // ── EDIT constructor (new) ─────────────────────────────────────────────
+        // ── EDIT constructor ─────────────────────────────────────────────
         /// <param name="moduleNumber">Displayed in the default title field.</param>
         /// <param name="existingTitle">Pre-filled title text.</param>
         /// <param name="existingDescription">Pre-filled description text.</param>
@@ -155,6 +152,7 @@ namespace PUPAcadPortal
                     Name = fi.Name,
                     SizeBytes = fi.Length,
                     Type = fi.Extension.TrimStart('.').ToUpper(),
+                    LocalPath = path,   // retain local path so BtnAddModule_Click can upload
                 });
             }
 

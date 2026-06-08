@@ -4,6 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 using PUPAcadPortal.Models;
+using PUPAcadPortal.Services;
 
 namespace PUPAcadPortal.PortalContents.Instructor.LMS
 {
@@ -20,7 +21,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
         private const int EXPIRY_MINUTES = 10;
 
-        // ── Session data (new) ────────────────────────────────────────────────────
+        // ── Session data ──────────────────────────────────────────────────────────
         private readonly string _course;
         private readonly string _session;
         private readonly DateTime _date;
@@ -33,12 +34,10 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         private bool _isExpired;
         private int _animStep;
 
-        // Optional named reference to an embedded QrCodeAttendanceControl.
-        // Null when the designer did not add one to pnlQrCard; in that case the
-        // form falls back to rendering QR inline via _picQr.
+        // Named reference to the embedded QrCodeAttendanceControl (may be null
+        // when the designer did not add one; fallback path used in that case).
         private QrCodeAttendanceControl? _qrCodeControl = null;
 
-        // ── Constructor ───────────────────────────────────────────────────────────
         /// <summary>
         /// Opens the faculty QR attendance popup.
         /// </summary>
@@ -47,7 +46,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         /// <param name="date">Session date.</param>
         /// <param name="sessionId">ClassSession.SessionId – embedded in the QR token.</param>
         /// <param name="offeringId">SubjectOfferingId – embedded in the QR token.</param>
-        /// <param name="startTime">Session start time – defines the attendance window.</param>
+        /// <param name="startTime">Session start time – defines the attendance window open.</param>
         /// <param name="endTime">Session end time – QR expires after this + grace.</param>
         public QrCodePopupForm(
             string course,
@@ -68,20 +67,16 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             _startTime = startTime;
             _endTime = endTime;
 
-            // Header labels
             lblCourse.Text = $"Course  :  {_course}";
             lblSession.Text = $"Session  :  {_session}   |   {_date:MMMM dd, yyyy}";
 
-            // Button wiring
             _btnRefresh.Click += BtnRefresh_Click;
             btnDownload.Click += BtnDownload_Click;
             btnClose.Click += (_, __) => Close();
 
-            // Timers
             _tick.Tick += (_, __) => TickCountdown();
             anim.Tick += AnimTick;
 
-            // Paint events
             pnlQrCard.Paint += (s, e) =>
             {
                 e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
@@ -99,7 +94,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             pnlFooter.Paint += (s, e) =>
                 e.Graphics.DrawLine(new Pen(BorderColor), 0, 0, pnlFooter.Width, 0);
 
-            // Bind session data to QR control, then generate
             BindSessionToQrControl();
             GenerateNew();
             _tick.Start();
@@ -108,10 +102,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         // ── Bind session data to the embedded QR control ──────────────────────────
         private void BindSessionToQrControl()
         {
-            // The QR control lives inside pnlQrCard (added in InitializeComponent).
-            // Walk children to find it, or reference the named field directly if
-            // the designer created it as a named member.
-            QrCodeAttendanceControl? qrCtl = FindQrControl();
+            var qrCtl = FindQrControl();
             if (qrCtl == null) return;
 
             qrCtl.SessionId = _sessionId;
@@ -123,35 +114,31 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             qrCtl.ExpiryMinutes = EXPIRY_MINUTES;
         }
 
-        // ── Attempt to find the QrCodeAttendanceControl hosted in this popup ─────
+        // ── Find the QrCodeAttendanceControl hosted in this popup ─────────────────
         private QrCodeAttendanceControl? FindQrControl()
         {
-            // Try the named field first (if designer created it)
             if (_qrCodeControl != null) return _qrCodeControl;
-
-            // Otherwise walk pnlQrCard children
             foreach (Control c in pnlQrCard.Controls)
                 if (c is QrCodeAttendanceControl qrc) return qrc;
-
             return null;
         }
 
-        // ── Generate new QR ───────────────────────────────────────────────────────
+        // ── Generate / reuse QR ───────────────────────────────────────────────────
         public void GenerateNew()
         {
             _isExpired = false;
+            _generatedAt = DateTime.Now;
 
             var qrCtl = FindQrControl();
             if (qrCtl != null)
             {
-                BindSessionToQrControl();   // re-bind in case session changed
-                qrCtl.GenerateNew();
+                BindSessionToQrControl();
                 qrCtl.QrExpired -= OnQrControlExpired;
                 qrCtl.QrExpired += OnQrControlExpired;
+                qrCtl.GenerateNew();
             }
             else
             {
-                // Fallback path: render inline if no sub-control found
                 RenderQrFallback();
             }
 
@@ -164,17 +151,13 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             _isExpired = true;
             _tick.Stop();
             SetStatus("● Expired", ExpiredRed);
-            if (lblCountdown.InvokeRequired)
-                lblCountdown.Invoke(() =>
-                    lblCountdown.Text = "Code expired — click Refresh to generate a new one");
-            else
-                lblCountdown.Text = "Code expired — click Refresh to generate a new one";
+            SafeSetLabel(lblCountdown,
+                "Code expired — click Refresh to generate a new one");
         }
 
         // ── Fallback inline render (used when QrCodeAttendanceControl is absent) ──
         private void RenderQrFallback()
         {
-            // Build a signed token and render via ZXing into _picQr
             string token = QrTokenService.Build(
                 _sessionId, _offeringId, _date, _startTime, _endTime);
 
@@ -216,15 +199,24 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             }
         }
 
-        // Keep a local token reference for the download fallback path
         private string _currentToken = string.Empty;
 
-        // ── Status / countdown helpers (cosmetic — unchanged from original) ───────
+        // ── Status / countdown helpers ────────────────────────────────────────────
         private void SetStatus(string text, Color color)
         {
+            SafeSetLabel(lblStatus, text);
             if (lblStatus.InvokeRequired)
-                lblStatus.Invoke(() => { lblStatus.Text = text; lblStatus.ForeColor = color; });
-            else { lblStatus.Text = text; lblStatus.ForeColor = color; }
+                lblStatus.Invoke((Action)(() => lblStatus.ForeColor = color));
+            else
+                lblStatus.ForeColor = color;
+        }
+
+        private static void SafeSetLabel(Label lbl, string text)
+        {
+            if (lbl.InvokeRequired)
+                lbl.Invoke((Action)(() => lbl.Text = text));
+            else
+                lbl.Text = text;
         }
 
         private DateTime _generatedAt = DateTime.Now;
@@ -249,11 +241,8 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             _isExpired = true;
             _tick.Stop();
             SetStatus("● Expired", ExpiredRed);
-            if (lblCountdown.InvokeRequired)
-                lblCountdown.Invoke(() =>
-                    lblCountdown.Text = "Code expired — click Refresh to generate a new one");
-            else
-                lblCountdown.Text = "Code expired — click Refresh to generate a new one";
+            SafeSetLabel(lblCountdown,
+                "Code expired — click Refresh to generate a new one");
         }
 
         // ── Refresh button ────────────────────────────────────────────────────────
@@ -289,7 +278,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 return;
             }
 
-            // Try to get the bitmap from the sub-control first
             Bitmap? sourceBmp = FindQrControl()?.GetQrBitmap();
 
             using var sfd = new SaveFileDialog
@@ -303,18 +291,19 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             try
             {
                 const int SAVE = 560;
-
                 Bitmap saveBmp;
+
                 if (sourceBmp != null)
                 {
                     saveBmp = new Bitmap(sourceBmp, SAVE, SAVE);
                 }
                 else
                 {
-                    // Regenerate at save size from the token
-                    string token = string.IsNullOrEmpty(_currentToken)
-                        ? QrTokenService.Build(_sessionId, _offeringId, _date, _startTime, _endTime)
-                        : _currentToken;
+                    // Fallback: use the token from the sub-control or the local token
+                    string token = FindQrControl()?.GetCurrentToken()
+                                   ?? (string.IsNullOrEmpty(_currentToken)
+                                       ? QrTokenService.Build(_sessionId, _offeringId, _date, _startTime, _endTime)
+                                       : _currentToken);
 
                     var writer = new ZXing.BarcodeWriterPixelData
                     {
@@ -339,7 +328,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                     saveBmp.UnlockBits(bd);
                 }
 
-                // Footer stamp
                 using (var g = Graphics.FromImage(saveBmp))
                 using (var wf = new Font("Segoe UI", 12f, FontStyle.Bold))
                 {
@@ -352,12 +340,14 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
                 saveBmp.Save(sfd.FileName, ImageFormat.Png);
                 saveBmp.Dispose();
+                sourceBmp?.Dispose();
 
                 MessageBox.Show($"QR Code saved:\n{sfd.FileName}",
                     "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
+                sourceBmp?.Dispose();
                 MessageBox.Show($"Could not save: {ex.Message}", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

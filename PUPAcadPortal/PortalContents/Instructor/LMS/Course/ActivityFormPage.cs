@@ -1,10 +1,11 @@
-﻿using PUPAcadPortal.PortalContents.Instructor.LMS.Course;
+﻿using PUPAcadPortal.Models;
+using PUPAcadPortal.PortalContents.Instructor.LMS.Course;
+using PUPAcadPortal.Services;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using PUPAcadPortal.Models;
 
 namespace PUPAcadPortal
 {
@@ -40,18 +41,7 @@ namespace PUPAcadPortal
             _dbModules = modules ?? new();
 
             InitializeComponent();
-            SetupBasicSectionLabels(); 
             PopulateForm();
-        }
-
-        private void SetupBasicSectionLabels()
-        {
-            SetupSectionLabel(lblSectionBasic, "📝 Activity Details", 18, 14, Color.FromArgb(63, 81, 181));
-            SetupFieldLabel(lblTitleLbl, "Activity Title *", 18, 40);
-            SetupFieldLabel(lblTypeLbl, "Activity Type", 18, 104);
-            SetupFieldLabel(lblDeadlineLbl, "Deadline", 238, 104);
-            SetupFieldLabel(lblPointsLbl, "Points", 578, 104);
-            SetupFieldLabel(lblDescLbl, "Description / Instructions", 18, 170);
         }
 
         //  Backward-compatible 3-arg overload 
@@ -315,7 +305,7 @@ namespace PUPAcadPortal
                             : Color.FromArgb(200, 200, 210),
                         ForeColor = Color.White,
                         BorderRadius = 5,
-                        Enabled = idx >= 4,   
+                        Enabled = idx >= 4,   // A–D are permanent
                         Font = new Font("Segoe UI", 9F, FontStyle.Bold)
                     };
                     btnRemChoice.Click += (s, e) =>
@@ -820,21 +810,51 @@ namespace PUPAcadPortal
             };
             if (ofd.ShowDialog() != DialogResult.OK) return;
 
+            var errors = new System.Text.StringBuilder();
             foreach (var path in ofd.FileNames)
             {
                 var fi = new System.IO.FileInfo(path);
-                _files.Add(new CourseFileItem
+                if (fi.Length > 10_485_760)
+                {
+                    errors.AppendLine($"\"{fi.Name}\" exceeds 10 MB and was skipped.");
+                    continue;
+                }
+
+                // Stage immediately for display
+                var item = new CourseFileItem
                 {
                     FileId = _files.Count + 1,
                     FileName = fi.Name,
-                    FilePath = path,
+                    FilePath = path,          // local path while pending
                     FileType = fi.Extension.TrimStart('.').ToUpper(),
                     FileSizeBytes = fi.Length,
                     UploadedAt = DateTime.Now,
-                    CourseId = _course.CourseId
-                });
+                    CourseId = _course.CourseId,
+                };
+                _files.Add(item);
+                RefreshFilesPanel();   // show pending chip
+
+                // Upload to Cloudinary immediately
+                try
+                {
+                    string folder = $"activities/{_course.SubjectOfferingId}";
+                    string hint = System.IO.Path.GetFileNameWithoutExtension(fi.Name);
+                    string url = CloudinaryService.Instance.UploadFile(path, folder, hint);
+
+                    item.FilePath = url;    // replace local path with Cloudinary URL
+                }
+                catch (Exception ex)
+                {
+                    errors.AppendLine($"Upload failed for \"{fi.Name}\":\n{ex.Message}");
+                    // Keep item with local path — save will be attempted again on activity save
+                }
+
+                RefreshFilesPanel();   // refresh to show uploaded chip
             }
-            RefreshFilesPanel();
+
+            if (errors.Length > 0)
+                MessageBox.Show(errors.ToString().TrimEnd(),
+                    "Upload Warnings", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void RefreshFilesPanel()
@@ -849,6 +869,10 @@ namespace PUPAcadPortal
 
         private Panel BuildFileChip(CourseFileItem f)
         {
+            // Determine if already on Cloudinary (FilePath is a URL, not a local path)
+            bool isUploaded = f.FilePath.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
+                           || f.FilePath.StartsWith("https://", StringComparison.OrdinalIgnoreCase);
+
             var chip = new Panel
             {
                 Width = 248,
@@ -862,13 +886,65 @@ namespace PUPAcadPortal
                 e.Graphics.DrawRectangle(pen, 0, 0, chip.Width - 1, chip.Height - 1);
             };
 
-            chip.Controls.Add(new Label { Text = FileIcon(f.FileType), Font = new Font("Segoe UI", 14F), Location = new Point(6, 8), AutoSize = true });
-            chip.Controls.Add(new Label { Text = f.FileName, Font = new Font("Segoe UI", 8.5F, FontStyle.Bold), Location = new Point(36, 6), Width = 168, Height = 16, AutoEllipsis = true });
-            chip.Controls.Add(new Label { Text = FormatBytes(f.FileSizeBytes), Font = new Font("Segoe UI", 8F), ForeColor = Color.Gray, Location = new Point(36, 24), AutoSize = true });
+            chip.Controls.Add(new Label
+            {
+                Text = FileIcon(f.FileType),
+                Font = new Font("Segoe UI", 14F),
+                Location = new Point(6, 8),
+                AutoSize = true
+            });
+            chip.Controls.Add(new Label
+            {
+                Text = f.FileName,
+                Font = new Font("Segoe UI", 8.5F, FontStyle.Bold),
+                ForeColor = isUploaded ? Color.FromArgb(30, 30, 35) : Color.FromArgb(160, 100, 0),
+                Location = new Point(36, 6),
+                Width = 168,
+                Height = 16,
+                AutoEllipsis = true
+            });
+            chip.Controls.Add(new Label
+            {
+                Text = isUploaded ? FormatBytes(f.FileSizeBytes) : $"{FormatBytes(f.FileSizeBytes)}  ⏳",
+                Font = new Font("Segoe UI", 8F),
+                ForeColor = isUploaded ? Color.Gray : Color.FromArgb(160, 100, 0),
+                Location = new Point(36, 24),
+                AutoSize = true
+            });
 
             var captured = f;
-            var btnRm = new buttonRounded { Text = "✕", Size = new Size(22, 22), Location = new Point(chip.Width - 28, 11), BackColor = Color.FromArgb(200, 55, 55), ForeColor = Color.White, BorderRadius = 5, Font = new Font("Segoe UI", 8F) };
-            btnRm.Click += (s, e) => { _files.Remove(captured); RefreshFilesPanel(); };
+            var btnRm = new buttonRounded
+            {
+                Text = "✕",
+                Size = new Size(22, 22),
+                Location = new Point(chip.Width - 28, 11),
+                BackColor = Color.FromArgb(200, 55, 55),
+                ForeColor = Color.White,
+                BorderRadius = 5,
+                Font = new Font("Segoe UI", 8F)
+            };
+            btnRm.Click += (s, e) =>
+            {
+                // Delete from Cloudinary if the FilePath is a URL
+                if (isUploaded && !string.IsNullOrEmpty(captured.FilePath))
+                {
+                    try
+                    {
+                        bool raw = CloudinaryService.IsRawType(
+                            System.IO.Path.GetExtension(captured.FileName));
+                        CloudinaryService.Instance.DeleteByUrl(captured.FilePath, raw);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(
+                            $"Warning: could not delete \"{captured.FileName}\" from Cloudinary.\n{ex.Message}",
+                            "Cloudinary Warning",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                _files.Remove(captured);
+                RefreshFilesPanel();
+            };
             chip.Controls.Add(btnRm);
             return chip;
         }
@@ -951,21 +1027,7 @@ namespace PUPAcadPortal
 
         private void btnCancel_Click(object sender, EventArgs e) => OnCancel?.Invoke();
 
-        private void pnlQuizSection_SizeChanged(object sender, System.EventArgs e)
-        {
-            if (pnlQuizSection == null || flpQuestions == null) return;
-
-            int w = Math.Max(700, pnlQuizSection.Width - 36);
-            flpQuestions.Width = w;
-
-            foreach (Control row in flpQuestions.Controls)
-            {
-                if (row != null)
-                {
-                    row.Width = w - 8;
-                }
-            }
-        }
+        private void pnlQuizSection_SizeChanged(object sender, System.EventArgs e) { }
         private void pnlFilesSection_SizeChanged(object sender, System.EventArgs e) { }
 
         private static void SetCombo(ComboBox c, string val)

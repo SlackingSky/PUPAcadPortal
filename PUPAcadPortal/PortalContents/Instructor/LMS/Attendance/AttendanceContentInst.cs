@@ -15,35 +15,37 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 {
     public partial class AttendanceContentInst : UserControl
     {
+        // ── Runtime state ─────────────────────────────────────────────────────────
         private List<StudentAttendanceRecord> _allStudents = new();
         private List<CourseSection> _courseCatalogue = new();
         private List<SessionSlot> _sessionSlots = new();
 
-        private readonly Dictionary<(string OfferingId, DateTime Date),
-            List<PUPAcadPortal.Models.AttendanceRecord>> _dbCache = new();
-
         private int? _currentSessionId = null;
+
+        // RoomSchedule times for the selected course (used to build signed token)
+        private TimeSpan? _currentStartTime = null;
+        private TimeSpan? _currentEndTime = null;
 
         private SessionAttendanceControl _sessionCard = null!;
         private AttendanceGridControl _grid = null!;
-        private Panel? _qrOverlay = null;
-        private QrCodeAttendanceControl? _qrCard = null;
         private System.Windows.Forms.Timer _searchTimer = null!;
         private string _pendingSearch = "";
 
-        private AppDbContext CreateContext() => new AppDbContext();
+        // ── DB factory ────────────────────────────────────────────────────────────
+        private static AppDbContext CreateContext() => new AppDbContext();
 
-        public AttendanceContentInst()
-        {
-            InitializeComponent();
-        }
+        public AttendanceContentInst() => InitializeComponent();
 
+        // ── Load ─────────────────────────────────────────────────────────────────
         private void AttendanceContentInst_Load(object sender, EventArgs e)
         {
             try
             {
                 LayoutSummaryCards();
                 InitAttendance();
+
+                // Auto-expire stale QrSession rows on portal load
+                try { QrSessionService.ExpireAllStale(); } catch { /* best-effort */ }
             }
             catch (Exception ex)
             {
@@ -53,6 +55,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             }
         }
 
+        // ── Layout ────────────────────────────────────────────────────────────────
         private void PnlSummaryRow_SizeChanged(object sender, EventArgs e) => LayoutSummaryCards();
 
         private void Card_Paint(object sender, PaintEventArgs e)
@@ -100,10 +103,10 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             Place(pnlCardLastUpdate, cardW + (totalW - sessionW - cardW * 5 - PAD * 5));
         }
 
+        // ── Init ─────────────────────────────────────────────────────────────────
         private void InitAttendance()
         {
             LoadCoursesFromDb();
-            LoadSessionSlotsFromDb();
             PopulateDropdowns();
 
             _sessionCard = new SessionAttendanceControl { Dock = DockStyle.Fill };
@@ -128,23 +131,21 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
             LoadCurrentSession();
             _grid.LoadStudents(_allStudents);
-
             WireFilterBar();
             WireButtons();
             UpdateSummaryCards();
             UpdateLastUpdated();
         }
 
+        // ── Load courses from DB ──────────────────────────────────────────────────
         private void LoadCoursesFromDb()
         {
             try
             {
                 using var ctx = CreateContext();
-
-                // TODO: filter by currentProfessorId when auth is wired:
-                // .Where(so => so.ProfessorId == currentProfessorId)
                 var offerings = ctx.SubjectOfferings
                     .Include(so => so.Subject)
+                    .Include(so => so.RoomSchedules)
                     .OrderBy(so => so.Subject.SubjectCode)
                     .ThenBy(so => so.Section)
                     .ToList();
@@ -154,6 +155,9 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                     Code = so.SubjectOfferingId,
                     Title = so.Subject?.SubjectName ?? so.SubjectOfferingId,
                     Section = so.Section ?? string.Empty,
+                    // Resolve the first RoomSchedule time so the QR token window is real
+                    StartTime = so.RoomSchedules.FirstOrDefault()?.StartTime,
+                    EndTime = so.RoomSchedules.FirstOrDefault()?.EndTime,
                 }).ToList();
             }
             catch (Exception ex)
@@ -165,23 +169,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             }
         }
 
-        // ── Database: Load Session Slots ──────────────────────────────────────────
-        private void LoadSessionSlotsFromDb()
-        {
-            _sessionSlots = new List<SessionSlot>
-            {
-                new() { Label = "Morning (7:30 AM – 9:00 AM)"   },
-                new() { Label = "Morning (8:00 AM – 10:00 AM)"  },
-                new() { Label = "Morning (9:00 AM – 10:30 AM)"  },
-                new() { Label = "Midday  (10:30 AM – 12:00 PM)" },
-                new() { Label = "Midday  (11:00 AM – 12:30 PM)" },
-                new() { Label = "Afternoon (1:00 PM – 2:30 PM)" },
-                new() { Label = "Afternoon (2:30 PM – 4:00 PM)" },
-                new() { Label = "Evening  (5:00 PM – 7:00 PM)"  },
-                new() { Label = "Saturday (8:00 AM – 12:00 PM)" },
-            };
-        }
-
         private void PopulateDropdowns()
         {
             cmbCourse.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -190,34 +177,53 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 cmbCourse.Items.Add(c.DisplayName);
             if (cmbCourse.Items.Count > 0) cmbCourse.SelectedIndex = 0;
 
+            // Session slot dropdown is kept as a label-only selector;
+            // actual attendance window comes from RoomSchedule times.
             cmbSession.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbSession.Items.Clear();
-            foreach (var s in _sessionSlots)
-                cmbSession.Items.Add(s.Label);
+            var slots = new[]
+            {
+                "Morning (7:30 AM – 9:00 AM)",
+                "Morning (8:00 AM – 10:00 AM)",
+                "Morning (9:00 AM – 10:30 AM)",
+                "Midday (10:30 AM – 12:00 PM)",
+                "Midday (11:00 AM – 12:30 PM)",
+                "Afternoon (1:00 PM – 2:30 PM)",
+                "Afternoon (2:30 PM – 4:00 PM)",
+                "Evening (5:00 PM – 7:00 PM)",
+                "Saturday (8:00 AM – 12:00 PM)",
+            };
+            foreach (var s in slots) cmbSession.Items.Add(s);
             if (cmbSession.Items.Count > 1) cmbSession.SelectedIndex = 1;
         }
 
-        // ── Database: Load Current Session's Roster ───────────────────────────────
+        // ── Load / refresh current session roster from DB ─────────────────────────
         /// <summary>
         /// Finds (or creates) the ClassSession row, loads all enrolled students,
-        /// and maps their AttendanceRecords — including the IsQrVerified flag.
+        /// and maps their AttendanceRecords — including QR-verified lock state.
+        /// Also resolves the RoomSchedule start/end times for this offering so the
+        /// QR token embeds the correct attendance window.
         /// </summary>
         private void LoadCurrentSession()
         {
             if (_courseCatalogue.Count == 0) return;
 
-            int selectedIndex = cmbCourse.SelectedIndex;
-            if (selectedIndex < 0 || selectedIndex >= _courseCatalogue.Count) return;
+            int idx = cmbCourse.SelectedIndex;
+            if (idx < 0 || idx >= _courseCatalogue.Count) return;
 
-            var course = _courseCatalogue[selectedIndex];
+            var course = _courseCatalogue[idx];
             string offeringId = course.Code;
             DateTime date = dtpDate.Value.Date;
+
+            // Cache schedule times for the QR popup
+            _currentStartTime = course.StartTime;
+            _currentEndTime = course.EndTime;
 
             try
             {
                 using var ctx = CreateContext();
 
-                // 1. Find or create a ClassSession
+                // 1. Find or create the ClassSession
                 var session = ctx.ClassSessions
                     .FirstOrDefault(cs =>
                         cs.SubjectOfferingId == offeringId &&
@@ -229,6 +235,8 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                     {
                         SubjectOfferingId = offeringId,
                         SessionDate = date,
+                        StartTime = _currentStartTime,
+                        EndTime = _currentEndTime,
                         Topic = "—",
                     };
                     ctx.ClassSessions.Add(session);
@@ -237,14 +245,13 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
                 _currentSessionId = session.SessionId;
 
-                // 2. Load existing attendance records (now includes IsQrVerified)
+                // 2. Load existing AttendanceRecords for this session
                 var existingRecords = ctx.AttendanceRecords
-                    .Include(ar => ar.Student)
-                        .ThenInclude(st => st.User)
+                    .Include(ar => ar.Student).ThenInclude(st => st.User)
                     .Where(ar => ar.SessionId == session.SessionId)
                     .ToList();
 
-                // 3. Load enrolled students
+                // 3. Load enrolled students via EnrollmentSubject
                 var enrolledStudents = ctx.EnrollmentSubjects
                     .Include(es => es.Enrollment)
                         .ThenInclude(en => en.Student)
@@ -256,7 +263,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                     .ThenBy(st => st.User.FirstName)
                     .ToList();
 
-                // 4. Map to UI model — preserving QR lock state
+                // 4. Map to UI model
                 var list = new List<StudentAttendanceRecord>();
                 int row = 1;
 
@@ -273,15 +280,14 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                     {
                         AttendanceId = existing?.AttendanceId ?? 0,
                         StudentId = student.StudentId,
-
-                        // ── QR lock state ──────────────────────────────────────
                         IsQrVerified = existing?.IsQrVerified ?? false,
                         QrScannedAt = existing?.QrScannedAt,
-
                         RowNumber = row++,
                         LastName = student.User?.LastName ?? string.Empty,
                         FirstName = student.User?.FirstName ?? string.Empty,
-                        MiddleInitial = student.User?.MiddleName?.Substring(0, 1) ?? string.Empty,
+                        MiddleInitial = student.User?.MiddleName?.Length > 0
+                                            ? student.User.MiddleName.Substring(0, 1)
+                                            : string.Empty,
                         IdNumber = student.StudentNumber,
                         Status = status,
                         Remarks = existing?.Remarks ?? string.Empty,
@@ -298,15 +304,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             }
         }
 
-        // ── Session Key ───────────────────────────────────────────────────────────
-        private SessionKey CurrentKey() => new SessionKey
-        {
-            CourseDisplay = cmbCourse.Text,
-            SessionLabel = cmbSession.Text,
-            Date = dtpDate.Value.Date,
-        };
-
-        // ── Filter Bar ────────────────────────────────────────────────────────────
+        // ── Filter bar ────────────────────────────────────────────────────────────
         private void WireFilterBar()
         {
             cmbCourse.SelectedIndexChanged += (s, e) => ReloadAndRefresh();
@@ -342,7 +340,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             UpdateLastUpdated();
         }
 
-        // ── Button Wiring ─────────────────────────────────────────────────────────
+        // ── Button wiring ─────────────────────────────────────────────────────────
         private void WireButtons()
         {
             btnSaveAttendance.Click -= BtnSave_Click;
@@ -351,7 +349,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             btnRefresh.Click += (s, e) =>
             {
                 ReloadAndRefresh();
-                MessageBox.Show("Attendance refreshed.", "Refresh",
+                MessageBox.Show("Attendance refreshed from database.", "Refresh",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             };
 
@@ -362,33 +360,38 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             btnImportCSV.Click += (s, e) => ImportCsv();
         }
 
+        // ── QR popup ─────────────────────────────────────────────────────────────
         private void BtnQrCode_Click(object? sender, EventArgs e)
         {
-            if (_qrOverlay != null && !_qrOverlay.IsDisposed && _qrOverlay.Visible)
+            if (_currentSessionId == null || _currentSessionId <= 0)
             {
-                _qrCard?.GenerateNew();
-                _qrOverlay.BringToFront();
+                MessageBox.Show(
+                    "Please select a valid course and date before generating a QR code.",
+                    "No Session", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // ── Open the QR popup and bind the real session data ──────────────────
+            var course = _courseCatalogue.ElementAtOrDefault(cmbCourse.SelectedIndex);
+            if (course == null) return;
+
+            // Open the popup — QrCodePopupForm → QrCodeAttendanceControl →
+            // QrSessionService.CreateOrGetActive() handles duplicate prevention.
             using var dlg = new QrCodePopupForm(
                 course: cmbCourse.Text,
                 session: cmbSession.Text,
                 date: dtpDate.Value,
-                sessionId: _currentSessionId ?? 0,
-                offeringId: _courseCatalogue.ElementAtOrDefault(cmbCourse.SelectedIndex)?.Code ?? string.Empty,
-                startTime: null,   // TODO: wire from RoomSchedule if available
-                endTime: null);
+                sessionId: _currentSessionId.Value,
+                offeringId: course.Code,
+                startTime: _currentStartTime,
+                endTime: _currentEndTime);
+
             dlg.ShowDialog(this);
+
+            // Refresh the grid in case students scanned while the popup was open
+            ReloadAndRefresh();
         }
 
-        // ── Save Attendance to Database ───────────────────────────────────────────
-        /// <summary>
-        /// Saves manually-entered attendance.
-        /// QR-verified rows are skipped entirely — the DB record is already correct
-        /// and must not be overwritten by this method.
-        /// </summary>
+        // ── Save attendance (manual, skips QR-verified rows) ─────────────────────
         private void BtnSave_Click(object? sender, EventArgs e)
         {
             if (_currentSessionId == null)
@@ -412,19 +415,14 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
                 foreach (var ui in _allStudents)
                 {
-                    // ── Never overwrite a QR-verified record ──────────────────────
-                    if (ui.IsQrVerified)
-                    {
-                        skippedQr++;
-                        continue;
-                    }
+                    // Never overwrite a QR-verified record
+                    if (ui.IsQrVerified) { skippedQr++; continue; }
 
                     string statusStr = StatusString(ui.Status);
                     string remarks = ui.Remarks ?? string.Empty;
 
                     if (existingInDb.TryGetValue(ui.StudentId, out var dbRec))
                     {
-                        // Only update non-QR records
                         if (!dbRec.IsQrVerified)
                         {
                             dbRec.Status = statusStr;
@@ -449,15 +447,13 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
                 ctx.SaveChanges();
 
-                // Refresh IDs
+                // Refresh AttendanceIds from DB
                 var saved = ctx.AttendanceRecords
                     .Where(ar => ar.SessionId == _currentSessionId.Value)
                     .ToDictionary(ar => ar.StudentId);
                 foreach (var ui in _allStudents)
-                {
                     if (saved.TryGetValue(ui.StudentId, out var r))
                         ui.AttendanceId = r.AttendanceId;
-                }
 
                 UpdateLastUpdated();
                 UpdateSummaryCards();
@@ -492,7 +488,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             }
         }
 
-        // ── Summary Cards ─────────────────────────────────────────────────────────
+        // ── Summary cards ─────────────────────────────────────────────────────────
         private void UpdateSummaryCards()
         {
             int total = _allStudents.Count;
@@ -560,12 +556,9 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 {
                     var parts = line.Split(',');
                     if (parts.Length < 6) continue;
-                    if (!int.TryParse(parts[0], out int row)) continue;
-                    var rec = _allStudents.FirstOrDefault(s => s.RowNumber == row);
-                    if (rec == null) continue;
-
-                    // Never import over a QR-verified record
-                    if (rec.IsQrVerified) continue;
+                    if (!int.TryParse(parts[0], out int rowNum)) continue;
+                    var rec = _allStudents.FirstOrDefault(s => s.RowNumber == rowNum);
+                    if (rec == null || rec.IsQrVerified) continue;  // skip QR-locked rows
 
                     rec.Status = parts[5].Trim() switch
                     {

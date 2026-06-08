@@ -14,17 +14,13 @@ namespace PUPAcadPortal.Services
             _ctx = ctx ?? throw new ArgumentNullException(nameof(ctx));
         }
 
-        // ── Main entry point ──────────────────────────────────────────────────────
-        /// <summary>
-        /// Processes a raw QR scan for the given student.
-        /// Always writes a QrScanLog row (audit trail).
-        /// Returns a QrScanOutcome with Success = true on happy path.
-        /// </summary>
+        // Public entry point
+
         public QrScanOutcome ProcessScan(string rawQrText, int studentId)
         {
             var scanTime = DateTime.UtcNow;
 
-            // ── Step 1: Token validation (pure in-memory, no DB) ─────────────────
+            //Cryptographic token validation (pure in-memory) 
             var validation = QrTokenService.Validate(rawQrText);
 
             if (!validation.IsValid)
@@ -38,7 +34,7 @@ namespace PUPAcadPortal.Services
 
             var payload = validation.Payload!;
 
-            // ── Step 2: Verify ClassSession exists ────────────────────────────────
+            // ClassSession existence check 
             var session = _ctx.ClassSessions
                 .Include(cs => cs.SubjectOffering)
                     .ThenInclude(so => so.Subject)
@@ -50,21 +46,54 @@ namespace PUPAcadPortal.Services
                     scanTime, QrValidationResult.SessionNotFound.ToString(), null,
                     "ClassSession row not found.");
 
-                return QrScanOutcome.Fail("Session not found. The QR code may belong to a different system.");
+                return QrScanOutcome.Fail(
+                    "Session not found. This QR code may belong to a different system.");
             }
 
-            // Confirm offering ID matches (extra tamper check)
+            //  SubjectOfferingId tamper check 
             if (!string.Equals(session.SubjectOfferingId, payload.Oid,
                     StringComparison.OrdinalIgnoreCase))
             {
                 WriteLog(payload.Sid, studentId, payload.Nonce,
                     scanTime, QrValidationResult.InvalidSignature.ToString(), null,
-                    "SubjectOfferingId mismatch.");
+                    $"OfferingId mismatch: token={payload.Oid} session={session.SubjectOfferingId}");
 
-                return QrScanOutcome.Fail("QR code does not match this session.");
+                return QrScanOutcome.Fail(
+                    "QR code does not match this session. Please scan the correct code.");
             }
 
-            // ── Step 3: Student lookup ────────────────────────────────────────────
+            // Active QrSession existence + expiry check 
+            var now = DateTime.UtcNow;
+            var activeQrSession = _ctx.QrSessions
+                .Where(q => q.SessionId == payload.Sid
+                         && q.IsActive == true
+                         && q.ExpiresAt > now)
+                .OrderByDescending(q => q.GeneratedAt)
+                .FirstOrDefault();
+
+            if (activeQrSession == null)
+            {
+                // Auto-expire any stale rows while we are here
+                var stale = _ctx.QrSessions
+                    .Where(q => q.SessionId == payload.Sid
+                             && q.IsActive == true
+                             && q.ExpiresAt <= now)
+                    .ToList();
+                foreach (var s in stale) s.IsActive = false;
+                if (stale.Count > 0)
+                {
+                    try { _ctx.SaveChanges(); } catch { /* best-effort */ }
+                }
+
+                WriteLog(payload.Sid, studentId, payload.Nonce,
+                    scanTime, "NoActiveQrSession", null,
+                    "No active QrSession found for this ClassSession — may have been deactivated.");
+
+                return QrScanOutcome.Fail(
+                    "This QR code is no longer active. Ask your instructor to generate a new one.");
+            }
+
+            // Registered-student check 
             var student = _ctx.Students
                 .Include(s => s.User)
                 .FirstOrDefault(s => s.StudentId == studentId);
@@ -72,16 +101,35 @@ namespace PUPAcadPortal.Services
             if (student == null)
             {
                 WriteLog(payload.Sid, studentId, payload.Nonce,
-                    scanTime, "StudentNotFound", null, "Student row not found.");
+                    scanTime, "StudentNotFound", null,
+                    $"StudentId={studentId} not found in Students table.");
 
-                return QrScanOutcome.Fail("Student record not found. Please contact your registrar.");
+                return QrScanOutcome.Fail(
+                    "Your student record was not found. Please contact the registrar.");
             }
 
-            // ── Step 4: Duplicate nonce check (same token scanned twice) ──────────
-            bool nonceExists = _ctx.AttendanceRecords
+            // Enrollment check 
+            bool isEnrolled = _ctx.EnrollmentSubjects
+                .Include(es => es.Enrollment)
+                .Any(es => es.SubjectOfferingId == payload.Oid
+                        && es.Enrollment.StudentId == studentId);
+
+            if (!isEnrolled)
+            {
+                WriteLog(payload.Sid, studentId, payload.Nonce,
+                    scanTime, "NotEnrolled", null,
+                    $"Student {studentId} is not enrolled in offering {payload.Oid}.");
+
+                return QrScanOutcome.Fail(
+                    "You are not enrolled in this subject. "
+                    + "Please verify your enrollment or contact the registrar.");
+            }
+
+            // Duplicate nonce check (replay prevention) 
+            bool nonceUsed = _ctx.AttendanceRecords
                 .Any(ar => ar.QrNonce == payload.Nonce);
 
-            if (nonceExists)
+            if (nonceUsed)
             {
                 WriteLog(payload.Sid, studentId, payload.Nonce,
                     scanTime, "DuplicateNonce", null,
@@ -90,20 +138,21 @@ namespace PUPAcadPortal.Services
                 return QrScanOutcome.Fail("This QR code has already been used.");
             }
 
-            // ── Step 5: Duplicate session check (student already recorded) ────────
-            bool sessionRecordExists = _ctx.AttendanceRecords
+            // Duplicate session check (one record per student per session)
+            bool alreadyRecorded = _ctx.AttendanceRecords
                 .Any(ar => ar.SessionId == payload.Sid && ar.StudentId == studentId);
 
-            if (sessionRecordExists)
+            if (alreadyRecorded)
             {
                 WriteLog(payload.Sid, studentId, payload.Nonce,
                     scanTime, QrValidationResult.AlreadyRecorded.ToString(), null,
                     "Attendance already recorded for this session.");
 
-                return QrScanOutcome.Fail("Your attendance for this session has already been recorded.");
+                return QrScanOutcome.Fail(
+                    "Your attendance for this session has already been recorded.");
             }
 
-            // ── Step 6: Insert AttendanceRecord ───────────────────────────────────
+            //Insert AttendanceRecord 
             var record = new AttendanceRecord
             {
                 SessionId = payload.Sid,
@@ -123,23 +172,22 @@ namespace PUPAcadPortal.Services
             }
             catch (Exception ex)
             {
-                // Could be a UNIQUE constraint violation from a concurrent scan —
-                // treat as duplicate.
+                // UNIQUE constraint violation from a concurrent scan — treat as duplicate
                 WriteLog(payload.Sid, studentId, payload.Nonce,
                     scanTime, "DbInsertFailed", null,
                     $"SaveChanges failed: {ex.Message}");
 
                 return QrScanOutcome.Fail(
-                    "Attendance could not be saved. It may have already been recorded. " +
-                    "Please check your attendance history.");
+                    "Attendance could not be saved — it may have already been recorded. "
+                    + "Please check your attendance history.");
             }
 
-            // ── Step 7: Audit log (success) ───────────────────────────────────────
+            //Audit log (success) 
             WriteLog(payload.Sid, studentId, payload.Nonce,
                 scanTime, QrValidationResult.Valid.ToString(), record.AttendanceId,
                 "Attendance recorded successfully.");
 
-            // ── Step 8: Build rich outcome for UI display ─────────────────────────
+            // Build rich outcome 
             string fullName = student.User != null
                 ? $"{student.User.FirstName} {student.User.LastName}"
                 : $"Student #{studentId}";
@@ -167,7 +215,7 @@ namespace PUPAcadPortal.Services
             };
         }
 
-        // ── Audit log helper ──────────────────────────────────────────────────────
+
         private void WriteLog(
             int? sessionId,
             int studentId,
@@ -197,7 +245,6 @@ namespace PUPAcadPortal.Services
             }
         }
 
-        // ── Extract nonce from raw text even if token is invalid ──────────────────
         private static string ExtractNonce(string raw)
         {
             try
@@ -205,11 +252,15 @@ namespace PUPAcadPortal.Services
                 var parts = raw?.Split('.');
                 if (parts?.Length == 2)
                 {
-                    byte[] json = System.Convert.FromBase64String(
-                        parts[0].Replace('-', '+').Replace('_', '/').PadRight(
-                            parts[0].Length + (4 - parts[0].Length % 4) % 4, '='));
+                    string b64 = parts[0]
+                        .Replace('-', '+')
+                        .Replace('_', '/');
+                    int pad = (4 - b64.Length % 4) % 4;
+                    b64 += new string('=', pad);
+
+                    byte[] json = Convert.FromBase64String(b64);
                     var p = System.Text.Json.JsonSerializer
-                                .Deserialize<QrTokenPayload>(json);
+                        .Deserialize<QrTokenPayload>(json);
                     return p?.Nonce ?? "(none)";
                 }
             }
@@ -217,7 +268,6 @@ namespace PUPAcadPortal.Services
             return "(none)";
         }
 
-        // ── User-friendly error messages ──────────────────────────────────────────
         private static string FriendlyError(QrValidationResult r) => r switch
         {
             QrValidationResult.Expired
@@ -227,11 +277,13 @@ namespace PUPAcadPortal.Services
             QrValidationResult.SessionDateMismatch
                 => "This QR code is not for today's session.",
             QrValidationResult.InvalidSignature
-                => "Invalid QR code. Please make sure you are scanning the official attendance code.",
+                => "Invalid QR code. Ensure you are scanning the official attendance code.",
             QrValidationResult.AlreadyRecorded
                 => "Your attendance for this session has already been recorded.",
             QrValidationResult.MalformedToken
-                => "This QR code does not appear to be an attendance code.",
+                => "This does not appear to be a valid attendance QR code.",
+            QrValidationResult.SessionNotFound
+                => "Session not found. The QR code may belong to a different system.",
             _ => "QR code could not be validated. Please try again.",
         };
     }

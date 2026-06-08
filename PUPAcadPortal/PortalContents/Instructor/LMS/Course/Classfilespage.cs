@@ -51,11 +51,9 @@ namespace PUPAcadPortal
             this.nullModuleDbService = nullModuleDbService;
         }
 
-        // ══════════════════════════════════════════════════════════════════════
         //  WireDesignerControls
         //  Replaces the old Build() method. All controls already exist thanks to
         //  InitializeComponent(); we only need to set their content and events.
-        // ══════════════════════════════════════════════════════════════════════
         private void WireDesignerControls()
         {
             // ── Header labels ────────────────────────────────────────────────
@@ -93,15 +91,35 @@ namespace PUPAcadPortal
             try
             {
                 var dbModules = _svc.GetModulesForOffering(_course.SubjectOfferingId);
-                _modules = dbModules.Select((m, i) => new CourseModule
+                _modules = dbModules.Select((m, i) =>
                 {
-                    DbId = m.ModuleId,
-                    Id = i + 1,
-                    Title = m.Title,
-                    Description = m.ModuleDescription ?? "",
-                    FileUrl = m.FileUrl ?? "",
-                    IsExpanded = false,
-                    Files = new List<ModuleFile>(),
+                    // Restore any file that was previously uploaded to Cloudinary
+                    var files = new List<ModuleFile>();
+                    if (!string.IsNullOrWhiteSpace(m.FileUrl))
+                    {
+                        string fileName = System.IO.Path.GetFileName(m.FileUrl);
+                        if (string.IsNullOrWhiteSpace(fileName)) fileName = "file";
+                        string ext = System.IO.Path.GetExtension(fileName).TrimStart('.').ToUpper();
+
+                        files.Add(new ModuleFile
+                        {
+                            Name = fileName,
+                            Type = ext,
+                            CloudinaryUrl = m.FileUrl,
+                            CloudinaryPublicId = CloudinaryService.ExtractPublicIdFromUrl(m.FileUrl),
+                        });
+                    }
+
+                    return new CourseModule
+                    {
+                        DbId = m.ModuleId,
+                        Id = i + 1,
+                        Title = m.Title,
+                        Description = m.ModuleDescription ?? "",
+                        FileUrl = m.FileUrl ?? "",
+                        IsExpanded = false,
+                        Files = files,
+                    };
                 }).ToList();
             }
             catch (Exception ex)
@@ -157,18 +175,49 @@ namespace PUPAcadPortal
         private void ResizeModuleCards()
         {
             int w = Math.Max(700, _pnlScroll.ClientSize.Width - 48);
-            _flpModules.SuspendLayout();
-
             foreach (Control ctrl in _flpModules.Controls)
             {
-                if (ctrl is Panel card && card.Tag is CourseModule mod)
-                {
-                    card.Width = w;
-                    card.Invalidate(); // Ensures the border repaints correctly
-                }
-            }
+                if (ctrl is not Panel card || card.Tag is not CourseModule mod) continue;
 
-            _flpModules.ResumeLayout(true);
+                card.Width = w;
+
+                foreach (Control c in card.Controls)
+                {
+                    if (c is Panel hdr && hdr.Dock == DockStyle.Top)
+                    {
+                        hdr.Width = w;
+                        foreach (Control h in hdr.Controls)
+                        {
+                            if (h is Label lbl)
+                            {
+                                if (lbl.Name == "lblTitle")
+                                    lbl.Width = w - 320;
+                                else if (lbl.Name == "lblDesc")
+                                    lbl.Width = w - 320;
+                                else if (lbl.Name == "lblFileCount")
+                                    lbl.Left = w - 220;
+                            }
+                            else if (h is buttonRounded br)
+                            {
+                                if (br.Name == "btnEdit")
+                                    br.Location = new Point(w - 168, br.Location.Y);
+                                else if (br.Name == "btnDelete")
+                                    br.Location = new Point(w - 104, br.Location.Y);
+                            }
+                            else if (h is Button btnExp)
+                                btnExp.Left = w - 40;
+                        }
+                    }
+                    else if (c is Panel pnlFiles && c.Visible)
+                    {
+                        pnlFiles.Width = w;
+                        foreach (Control fc in pnlFiles.Controls)
+                            fc.Width = w;
+                    }
+                }
+
+                card.Invalidate();
+            }
         }
 
         // ══════════════════════════════════════════════════════════════════════
@@ -225,7 +274,6 @@ namespace PUPAcadPortal
                 Location = new Point(54, 10),
                 Size = new Size(w - 320, 20),
                 AutoEllipsis = true,
-                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right // Let WinForms resize width
             };
 
             var lblDesc = new Label
@@ -238,7 +286,6 @@ namespace PUPAcadPortal
                 Location = new Point(54, 32),
                 Size = new Size(w - 320, 16),
                 AutoEllipsis = true,
-                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right // Let WinForms resize width
             };
 
             var lblFileCount = new Label
@@ -249,9 +296,9 @@ namespace PUPAcadPortal
                 ForeColor = Color.FromArgb(100, 100, 110),
                 AutoSize = true,
                 Location = new Point(w - 220, 20),
-                Anchor = AnchorStyles.Top | AnchorStyles.Right // Locks to the right edge
             };
 
+            // ── Edit button ──────────────────────────────────────────────────
             var btnEdit = new buttonRounded
             {
                 Text = "✏ Edit",
@@ -263,11 +310,11 @@ namespace PUPAcadPortal
                 Size = new Size(58, 26),
                 Location = new Point(w - 168, 15),
                 Cursor = Cursors.Hand,
-                Anchor = AnchorStyles.Top | AnchorStyles.Right // Locks to the right edge
             };
             btnEdit.FlatAppearance.BorderSize = 0;
             btnEdit.Click += (s, e) => EditModule(mod, card, lblTitle, lblDesc);
 
+            // ── Delete button ────────────────────────────────────────────────
             var btnDelete = new buttonRounded
             {
                 Text = "🗑 Del",
@@ -279,11 +326,11 @@ namespace PUPAcadPortal
                 Size = new Size(58, 26),
                 Location = new Point(w - 104, 15),
                 Cursor = Cursors.Hand,
-                Anchor = AnchorStyles.Top | AnchorStyles.Right // Locks to the right edge
             };
             btnDelete.FlatAppearance.BorderSize = 0;
             btnDelete.Click += (s, e) => DeleteModule(mod);
 
+            // ── Expand / collapse toggle (chevron only) ──────────────────────
             var btnExpand = new Button
             {
                 Text = expanded ? "▲" : "▼",
@@ -294,7 +341,6 @@ namespace PUPAcadPortal
                 Size = new Size(34, 34),
                 Location = new Point(w - 42, 11),
                 Cursor = Cursors.Hand,
-                Anchor = AnchorStyles.Top | AnchorStyles.Right // Locks to the right edge
             };
             btnExpand.FlatAppearance.BorderSize = 0;
 
@@ -304,11 +350,9 @@ namespace PUPAcadPortal
             // ── File list panel (collapsible) ────────────────────────────────
             var pnlFiles = new Panel
             {
-                Location = new Point(0, 56), // Starts right under the header
                 Width = w,
                 BackColor = Color.FromArgb(250, 250, 252),
                 Visible = expanded,
-                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right // Keeps it synced with card width
             };
 
             Action refreshFiles = null!;
@@ -317,94 +361,44 @@ namespace PUPAcadPortal
                 pnlFiles.SuspendLayout();
                 pnlFiles.Controls.Clear();
 
-                int curW = pnlFiles.Width; // Always pull dynamic current width
-
-                // ── Module info header ─────────────────────────────────────
-                var pnlInfo = new Panel
-                {
-                    Location = new Point(0, 0),
-                    Width = curW,
-                    Height = 52,
-                    BackColor = Color.FromArgb(245, 242, 255),
-                    Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
-                };
-                pnlInfo.Paint += (s, e) =>
-                {
-                    using var pen = new Pen(Color.FromArgb(220, 215, 235));
-                    e.Graphics.DrawLine(pen, 0, pnlInfo.Height - 1, pnlInfo.Width, pnlInfo.Height - 1);
-                    using var acc = new SolidBrush(Maroon);
-                    e.Graphics.FillRectangle(acc, 0, 0, 4, pnlInfo.Height);
-                };
-
-                pnlInfo.Controls.Add(new Label
-                {
-                    Text = mod.Title,
-                    Font = new Font("Segoe UI", 10F, FontStyle.Bold),
-                    ForeColor = Color.FromArgb(20, 20, 30),
-                    Location = new Point(14, 6),
-                    Width = curW - 30,
-                    Height = 20,
-                    AutoEllipsis = true,
-                    BackColor = Color.Transparent,
-                    Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
-                });
-                pnlInfo.Controls.Add(new Label
-                {
-                    Text = string.IsNullOrWhiteSpace(mod.Description)
-                        ? "No description yet."
-                        : mod.Description,
-                    Font = new Font("Segoe UI", 8F, FontStyle.Italic),
-                    ForeColor = Color.FromArgb(100, 100, 115),
-                    Location = new Point(14, 28),
-                    Width = curW - 30,
-                    Height = 16,
-                    AutoEllipsis = true,
-                    BackColor = Color.Transparent,
-                    Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
-                });
-                pnlFiles.Controls.Add(pnlInfo);
-
-                int fy = 60;
-
+                int fy = 10;
                 foreach (var f in mod.Files)
                 {
-                    var fileRow = BuildFileRow(f, mod, curW,
+                    var fileRow = BuildFileRow(f, mod, w,
                         () => { refreshFiles(); RebuildCard(card, mod); });
                     fileRow.Location = new Point(0, fy);
                     pnlFiles.Controls.Add(fileRow);
                     fy += fileRow.Height + 4;
                 }
 
-                // ── Drag-drop upload zone ──────────────────────────────────
-                int dropZoneH = 64;
+                // ── Drag-and-drop upload zone ───────────────────────────────
+                int dropH = 64;
                 var pnlDrop = new Panel
                 {
                     Location = new Point(14, fy + 6),
-                    Width = curW - 28, // Exact width to maintain 14px right margin
-                    Height = dropZoneH,
+                    Width = w - 28,
+                    Height = dropH,
                     BackColor = Color.FromArgb(246, 246, 252),
                     Cursor = Cursors.Hand,
                     AllowDrop = true,
-                    Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
                 };
                 pnlDrop.Paint += (s, e) =>
                 {
                     var g = e.Graphics;
-                    g.SmoothingMode = SmoothingMode.AntiAlias;
-                    using var pen = new GraphicsPath();
+                    g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
                     using var dashPen = new Pen(Color.FromArgb(180, 180, 210), 1.5f);
-                    dashPen.DashStyle = DashStyle.Dash;
+                    dashPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
                     g.DrawRectangle(dashPen, 1, 1, pnlDrop.Width - 3, pnlDrop.Height - 3);
                 };
 
-                var lblDropIcon = new Label
+                pnlDrop.Controls.Add(new Label
                 {
                     Text = "📎",
                     Font = new Font("Segoe UI", 18F),
                     Location = new Point(16, 10),
                     AutoSize = true,
                     BackColor = Color.Transparent,
-                };
+                });
                 var lblDropText = new Label
                 {
                     Text = "Drop files here or click to browse",
@@ -435,51 +429,12 @@ namespace PUPAcadPortal
                     Size = new Size(70, 26),
                     Location = new Point(pnlDrop.Width - 84, 18),
                     Cursor = Cursors.Hand,
-                    Anchor = AnchorStyles.Top | AnchorStyles.Right
                 };
                 btnBrowse.FlatAppearance.BorderSize = 0;
-
-                var btnSave = new buttonRounded
-                {
-                    Text = "Save",
-                    Font = new Font("Segoe UI", 8F, FontStyle.Bold),
-                    BackColor = Color.FromArgb(0, 130, 115), // Matches your Edit button green
-                    ForeColor = Color.White,
-                    BorderRadius = 6,
-                    Size = new Size(70, 26),
-                    Location = new Point(pnlDrop.Width - 162, 18), // Positioned to the left of Browse
-                    Cursor = Cursors.Hand,
-                    Anchor = AnchorStyles.Top | AnchorStyles.Right
-                };
-                btnSave.FlatAppearance.BorderSize = 0;
-
-                btnSave.Click += (s, e) =>
-                {
-                    if (mod.Files.Count == 0)
-                    {
-                        MessageBox.Show("No files to save.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return;
-                    }
-
-                    try
-                    {
-
-                        MessageBox.Show("Files saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Failed to save files:\n{ex.Message}", "Upload Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                };
-                // ───────────────────────────────────────────────────────────
-
-                // Add the new button to the panel
                 pnlDrop.Controls.AddRange(new Control[]
-                    { lblDropIcon, lblDropText, lblDropSub, btnSave, btnBrowse });
+                    { lblDropText, lblDropSub, btnBrowse });
 
-                pnlDrop.Controls.AddRange(new Control[]
-                    { lblDropIcon, lblDropText, lblDropSub, btnBrowse });
-
+                // ── Shared upload-to-Cloudinary logic ───────────────────────
                 Action doUpload = () =>
                 {
                     using var ofd = new OpenFileDialog
@@ -489,26 +444,64 @@ namespace PUPAcadPortal
                         Multiselect = true,
                     };
                     if (ofd.ShowDialog() != DialogResult.OK) return;
-                    foreach (var path in ofd.FileNames)
+
+                    var errors = new System.Text.StringBuilder();
+                    foreach (var localPath in ofd.FileNames)
                     {
-                        var fi = new FileInfo(path);
+                        var fi = new FileInfo(localPath);
                         if (fi.Length > 10_485_760)
                         {
-                            MessageBox.Show($"\"{fi.Name}\" exceeds 10 MB and was skipped.",
-                                "File Too Large", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            errors.AppendLine($"\"{fi.Name}\" exceeds 10 MB and was skipped.");
                             continue;
                         }
-                        mod.Files.Add(new ModuleFile
+
+                        // Stage entry immediately so user sees it
+                        var mf = new ModuleFile
                         {
                             Name = fi.Name,
                             SizeBytes = fi.Length,
                             Type = fi.Extension.TrimStart('.').ToUpper(),
-                        });
+                            LocalPath = localPath,
+                        };
+                        mod.Files.Add(mf);
+                        refreshFiles();     // show pending state
+
+                        // Upload to Cloudinary
+                        try
+                        {
+                            string folder = $"modules/{(string.IsNullOrEmpty(mod.DbId) ? "new" : mod.DbId)}";
+                            string hint = $"{System.IO.Path.GetFileNameWithoutExtension(fi.Name)}";
+                            string url = CloudinaryService.Instance.UploadFile(localPath, folder, hint);
+                            string pubId = CloudinaryService.ExtractPublicIdFromUrl(url);
+
+                            mf.CloudinaryUrl = url;
+                            mf.CloudinaryPublicId = pubId;
+                            mf.LocalPath = "";   // clear local path — now on server
+
+                            // Persist the URL back to the DB module record
+                            // (stores the last uploaded file URL; multiple files share the module row)
+                            if (!string.IsNullOrEmpty(mod.DbId))
+                            {
+                                try { _svc.UpdateModule(mod.DbId, mod.Title, mod.Description, url); }
+                                catch { /* non-critical — URL stored in memory */ }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            errors.AppendLine($"Upload failed for \"{fi.Name}\":\n{ex.Message}");
+                            // Leave mf in list as pending so user can retry
+                        }
+
+                        refreshFiles();   // update to show uploaded / error state
+                        RebuildCard(card, mod);
                     }
-                    refreshFiles();
-                    RebuildCard(card, mod);
+
+                    if (errors.Length > 0)
+                        MessageBox.Show(errors.ToString().TrimEnd(),
+                            "Upload Warnings", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 };
 
+                // Wire click and drag-and-drop to doUpload
                 pnlDrop.Click += (s, e) => doUpload();
                 lblDropText.Click += (s, e) => doUpload();
                 lblDropSub.Click += (s, e) => doUpload();
@@ -520,34 +513,72 @@ namespace PUPAcadPortal
                         ? DragDropEffects.Copy : DragDropEffects.None;
                     pnlDrop.BackColor = Color.FromArgb(235, 235, 250);
                 };
-                pnlDrop.DragLeave += (s, e) => pnlDrop.BackColor = Color.FromArgb(246, 246, 252);
+                pnlDrop.DragLeave += (s, e) =>
+                    pnlDrop.BackColor = Color.FromArgb(246, 246, 252);
                 pnlDrop.DragDrop += (s, e) =>
                 {
                     pnlDrop.BackColor = Color.FromArgb(246, 246, 252);
                     if (e.Data?.GetData(DataFormats.FileDrop) is not string[] paths) return;
-                    foreach (var path in paths)
+
+                    var errors = new System.Text.StringBuilder();
+                    foreach (var localPath in paths)
                     {
-                        var fi = new FileInfo(path);
-                        if (fi.Length > 10_485_760) continue;
-                        mod.Files.Add(new ModuleFile
+                        var fi = new FileInfo(localPath);
+                        if (fi.Length > 10_485_760)
+                        {
+                            errors.AppendLine($"\"{fi.Name}\" exceeds 10 MB and was skipped.");
+                            continue;
+                        }
+
+                        var mf = new ModuleFile
                         {
                             Name = fi.Name,
                             SizeBytes = fi.Length,
                             Type = fi.Extension.TrimStart('.').ToUpper(),
-                        });
+                            LocalPath = localPath,
+                        };
+                        mod.Files.Add(mf);
+                        refreshFiles();
+
+                        try
+                        {
+                            string folder = $"modules/{(string.IsNullOrEmpty(mod.DbId) ? "new" : mod.DbId)}";
+                            string url = CloudinaryService.Instance.UploadFile(localPath, folder,
+                                               System.IO.Path.GetFileNameWithoutExtension(fi.Name));
+                            mf.CloudinaryUrl = url;
+                            mf.CloudinaryPublicId = CloudinaryService.ExtractPublicIdFromUrl(url);
+                            mf.LocalPath = "";
+
+                            if (!string.IsNullOrEmpty(mod.DbId))
+                            {
+                                try { _svc.UpdateModule(mod.DbId, mod.Title, mod.Description, url); }
+                                catch { }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            errors.AppendLine($"Upload failed for \"{fi.Name}\":\n{ex.Message}");
+                        }
+
+                        refreshFiles();
+                        RebuildCard(card, mod);
                     }
-                    refreshFiles();
-                    RebuildCard(card, mod);
+
+                    if (errors.Length > 0)
+                        MessageBox.Show(errors.ToString().TrimEnd(),
+                            "Upload Warnings", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 };
 
                 pnlFiles.Controls.Add(pnlDrop);
-                fy += dropZoneH + 14;
+                fy += dropH + 14;
 
                 pnlFiles.Height = fy + 8;
                 pnlFiles.ResumeLayout();
                 RecalcCardHeight(card, hdr, pnlFiles);
             };
 
+            // Toggle expand / collapse — only on chevron button and the header panel background
+            // (NOT on lblTitle or lblDesc which should not be clickable)
             EventHandler toggleExpand = (s, ev) =>
             {
                 mod.IsExpanded = !mod.IsExpanded;
@@ -558,10 +589,12 @@ namespace PUPAcadPortal
             };
             btnExpand.Click += toggleExpand;
 
+            // Only the number badge and the blank hdr area trigger expand (not title/desc)
             lblNum.Cursor = Cursors.Hand;
             lblNum.Click += toggleExpand;
             hdr.Click += (s, ev) =>
             {
+                // Only fire if click was on the bare panel, not child controls
                 var pos = hdr.PointToClient(Cursor.Position);
                 var hit = hdr.GetChildAtPoint(pos);
                 if (hit == null || hit == lblNum || hit == btnExpand)
@@ -589,12 +622,52 @@ namespace PUPAcadPortal
 
             try
             {
+                // Upload any files that were attached in the dialog
+                string? firstUrl = null;
+                var uploadedFiles = new List<ModuleFile>();
+                var uploadErrors = new System.Text.StringBuilder();
+
+                foreach (var mf in dlg.InitialFiles)
+                {
+                    if (string.IsNullOrEmpty(mf.LocalPath) || !File.Exists(mf.LocalPath))
+                    {
+                        uploadedFiles.Add(mf);   // already uploaded or no local path
+                        continue;
+                    }
+
+                    try
+                    {
+                        // We don't have a DbId yet — use a temp folder; will rename on first edit
+                        string folder = $"modules/new_{Guid.NewGuid():N[..8]}";
+                        string url = CloudinaryService.Instance.UploadFile(
+                            mf.LocalPath, folder,
+                            System.IO.Path.GetFileNameWithoutExtension(mf.Name));
+
+                        mf.CloudinaryUrl = url;
+                        mf.CloudinaryPublicId = CloudinaryService.ExtractPublicIdFromUrl(url);
+                        mf.LocalPath = "";
+                        firstUrl ??= url;
+                        uploadedFiles.Add(mf);
+                    }
+                    catch (Exception ex)
+                    {
+                        uploadErrors.AppendLine($"Upload failed for \"{mf.Name}\":\n{ex.Message}");
+                        uploadedFiles.Add(mf);   // keep as pending
+                    }
+                }
+
+                if (uploadErrors.Length > 0)
+                    MessageBox.Show(uploadErrors.ToString().TrimEnd(),
+                        "Upload Warnings", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                // Create the DB module record (optionally with the first file URL)
                 var created = _svc.CreateModule(
                     _course.SubjectOfferingId,
                     dlg.ModuleTitle,
                     string.IsNullOrWhiteSpace(dlg.ModuleDescription)
                         ? "No description yet."
-                        : dlg.ModuleDescription);
+                        : dlg.ModuleDescription,
+                    firstUrl);
 
                 _modules.Add(new CourseModule
                 {
@@ -603,7 +676,7 @@ namespace PUPAcadPortal
                     Title = created.Title,
                     Description = created.ModuleDescription ?? "",
                     FileUrl = created.FileUrl ?? "",
-                    Files = dlg.InitialFiles,
+                    Files = uploadedFiles,
                 });
 
                 RenderModules();
@@ -679,13 +752,7 @@ namespace PUPAcadPortal
 
         private static Panel BuildFileRow(ModuleFile f, CourseModule mod, int cardW, Action onRemove)
         {
-            var row = new Panel
-            {
-                Width = cardW,
-                Height = 40,
-                BackColor = Color.Transparent,
-                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
-            };
+            var row = new Panel { Width = cardW, Height = 40, BackColor = Color.Transparent };
             row.Paint += (s, e) =>
             {
                 using var pen = new Pen(Color.FromArgb(235, 235, 240));
@@ -710,24 +777,27 @@ namespace PUPAcadPortal
                 BackColor = Color.Transparent,
             });
 
-            row.Controls.Add(new Label
+            // Show upload-pending badge if not yet on Cloudinary
+            var lblName = new Label
             {
                 Text = f.Name,
                 Font = new Font("Segoe UI", 9F, FontStyle.Bold),
-                ForeColor = Color.FromArgb(30, 30, 35),
+                ForeColor = f.IsUploaded
+                    ? Color.FromArgb(30, 30, 35)
+                    : Color.FromArgb(160, 100, 0),
                 AutoSize = false,
                 Location = new Point(52, 8),
                 Size = new Size(cardW - 260, 16),
                 AutoEllipsis = true,
                 BackColor = Color.Transparent,
-                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
-            });
+            };
+            row.Controls.Add(lblName);
 
             row.Controls.Add(new Label
             {
-                Text = FormatBytes(f.SizeBytes),
+                Text = f.IsUploaded ? FormatBytes(f.SizeBytes) : $"{FormatBytes(f.SizeBytes)}  ⏳ pending upload",
                 Font = new Font("Segoe UI", 8F),
-                ForeColor = Color.Gray,
+                ForeColor = f.IsUploaded ? Color.Gray : Color.FromArgb(160, 100, 0),
                 AutoSize = true,
                 Location = new Point(52, 24),
                 BackColor = Color.Transparent,
@@ -735,6 +805,7 @@ namespace PUPAcadPortal
 
             int right = cardW - 10;
 
+            // ── Delete button — removes from Cloudinary then from list ───────
             var btnRemove = new buttonRounded
             {
                 Text = "✕",
@@ -745,28 +816,84 @@ namespace PUPAcadPortal
                 BorderRadius = 6,
                 Font = new Font("Segoe UI", 8F),
                 Cursor = Cursors.Hand,
-                Anchor = AnchorStyles.Top | AnchorStyles.Right
             };
-            btnRemove.Click += (s, e) => { mod.Files.Remove(f); onRemove(); };
+            btnRemove.Click += (s, e) =>
+            {
+                // Delete from Cloudinary if previously uploaded
+                if (f.IsUploaded)
+                {
+                    try
+                    {
+                        bool isRaw = CloudinaryService.IsRawType(
+                            System.IO.Path.GetExtension(f.Name));
+                        CloudinaryService.Instance.DeleteFile(f.CloudinaryPublicId, isRaw);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Non-blocking: warn but still remove locally
+                        MessageBox.Show(
+                            $"Warning: could not delete \"{f.Name}\" from Cloudinary.\n{ex.Message}",
+                            "Cloudinary Warning",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                mod.Files.Remove(f);
+                onRemove();
+            };
             row.Controls.Add(btnRemove);
-
             right -= 32;
 
+            // ── Download button — fetches from Cloudinary URL ─────────────────
             var btnDownload = new buttonRounded
             {
                 Text = "↓ Download",
                 Size = new Size(90, 26),
                 Location = new Point(right - 90, 7),
-                BackColor = Color.FromArgb(55, 138, 221),
+                BackColor = f.IsUploaded
+                    ? Color.FromArgb(55, 138, 221)
+                    : Color.FromArgb(170, 170, 180),
                 ForeColor = Color.White,
                 BorderRadius = 6,
                 Font = new Font("Segoe UI", 8F, FontStyle.Bold),
-                Cursor = Cursors.Hand,
-                Anchor = AnchorStyles.Top | AnchorStyles.Right
+                Cursor = f.IsUploaded ? Cursors.Hand : Cursors.Default,
+                Enabled = f.IsUploaded,
             };
             btnDownload.Click += (s, e) =>
-                MessageBox.Show($"Download: {f.Name}", "Download",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            {
+                if (!f.IsUploaded)
+                {
+                    MessageBox.Show("This file has not been uploaded to the server yet.",
+                        "Not Uploaded", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                try
+                {
+                    // Ask user where to save
+                    using var sfd = new SaveFileDialog
+                    {
+                        Title = "Save File As",
+                        FileName = f.Name,
+                        Filter = "All Files (*.*)|*.*",
+                    };
+                    if (sfd.ShowDialog() != DialogResult.OK) return;
+
+                    string tempPath = CloudinaryService.Instance.DownloadToTemp(
+                        f.CloudinaryUrl, f.Name);
+
+                    System.IO.File.Copy(tempPath, sfd.FileName, overwrite: true);
+                    try { System.IO.File.Delete(tempPath); } catch { }
+
+                    MessageBox.Show($"File saved to:\n{sfd.FileName}",
+                        "Download Complete",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Download failed:\n{ex.Message}",
+                        "Download Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            };
             row.Controls.Add(btnDownload);
 
             return row;
@@ -816,5 +943,17 @@ namespace PUPAcadPortal
         public string Name { get; set; } = "";
         public long SizeBytes { get; set; }
         public string Type { get; set; } = "";
+
+        /// <summary>Local filesystem path while the file is staged for upload.</summary>
+        public string LocalPath { get; set; } = "";
+
+        /// <summary>Cloudinary public_id after upload (e.g. "modules/MOD-xxx/filename").</summary>
+        public string CloudinaryPublicId { get; set; } = "";
+
+        /// <summary>Persistent HTTPS URL returned by Cloudinary. Stored in Module.FileUrl.</summary>
+        public string CloudinaryUrl { get; set; } = "";
+
+        /// <summary>True once the file has been uploaded to Cloudinary.</summary>
+        public bool IsUploaded => !string.IsNullOrEmpty(CloudinaryUrl);
     }
 }

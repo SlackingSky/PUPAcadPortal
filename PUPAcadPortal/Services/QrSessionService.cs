@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using PUPAcadPortal.Models;
-using MySql.EntityFrameworkCore;
-using MySqlConnector;
 
 namespace PUPAcadPortal.Services
 {
@@ -12,6 +10,70 @@ namespace PUPAcadPortal.Services
         private static AppDbContext CreateContext() => new AppDbContext();
 
         // CREATE
+
+        public static QrSession CreateOrGetActive(
+            int sessionId,
+            string subjectOfferingId,
+            DateTime sessionDate,
+            TimeSpan? startTime,
+            TimeSpan? endTime,
+            int expiryMinutes,
+            out bool alreadyActive)
+        {
+            if (sessionId <= 0)
+                throw new ArgumentOutOfRangeException(nameof(sessionId));
+            if (string.IsNullOrWhiteSpace(subjectOfferingId))
+                throw new ArgumentNullException(nameof(subjectOfferingId));
+            if (expiryMinutes < 1)
+                throw new ArgumentOutOfRangeException(nameof(expiryMinutes), "Expiry must be at least 1 minute.");
+
+            using var ctx = CreateContext();
+            var now = DateTime.UtcNow;
+
+            // Auto-expire stale rows
+            AutoExpireStale(ctx, sessionId, now);
+
+            //Return the still-valid active token if one exists
+            var existing = ctx.QrSessions
+                .Where(q => q.SessionId == sessionId
+                         && q.IsActive == true
+                         && q.ExpiresAt > now)
+                .OrderByDescending(q => q.GeneratedAt)
+                .FirstOrDefault();
+
+            if (existing != null)
+            {
+                alreadyActive = true;
+                return existing;
+            }
+
+            // Deactivate any remaining active rows (edge case: IsActive=true but ExpiresAt <= now already handled above)
+            DeactivateAll(ctx, sessionId, now);
+
+            // Step 4: Build a real signed token
+            string signedToken = QrTokenService.Build(
+                sessionId,
+                subjectOfferingId,
+                sessionDate,
+                startTime,
+                endTime);
+
+            var qr = new QrSession
+            {
+                SessionId = sessionId,
+                Token = signedToken,
+                GeneratedAt = now,
+                ExpiresAt = now.AddMinutes(expiryMinutes),
+                IsActive = true,
+            };
+
+            ctx.QrSessions.Add(qr);
+            ctx.SaveChanges();
+
+            alreadyActive = false;
+            return qr;
+        }
+
         public static QrSession Create(
             int sessionId,
             string courseCode,
@@ -21,14 +83,12 @@ namespace PUPAcadPortal.Services
             int expiryMinutes = 10)
         {
             using var ctx = CreateContext();
-
-            // Soft-deactivate old rows first (no separate SaveChanges needed —
-            // they are tracked by the same context instance)
-            DeactivateExisting(ctx, sessionId);
-
-            string guid = Guid.NewGuid().ToString("N");
-            string payload = $"{courseCode}|{courseName}|{period}|{sessionLabel}|{guid}";
             var now = DateTime.UtcNow;
+
+            AutoExpireStale(ctx, sessionId, now);
+            DeactivateAll(ctx, sessionId, now);
+
+            string payload = $"{courseCode}|{courseName}|{period}|{sessionLabel}|{Guid.NewGuid():N}";
 
             var qr = new QrSession
             {
@@ -45,23 +105,22 @@ namespace PUPAcadPortal.Services
         }
 
         // READ
-        /// <summary>
-        /// Returns the active <see cref="QrSession"/> for the given ClassSession,
-        /// or <c>null</c> if none exists.
-        /// </summary>
+
         public static QrSession? GetActive(int sessionId)
         {
             using var ctx = CreateContext();
+            var now = DateTime.UtcNow;
+            AutoExpireStale(ctx, sessionId, now);
+
             return ctx.QrSessions
-                .Where(q => q.SessionId == sessionId && q.IsActive == true)
+                .Where(q => q.SessionId == sessionId
+                         && q.IsActive == true
+                         && q.ExpiresAt > now)
                 .OrderByDescending(q => q.GeneratedAt)
                 .FirstOrDefault();
         }
 
-        /// <summary>
-        /// Returns all QrSession rows for a ClassSession, newest first.
-        /// Useful for audit / history display.
-        /// </summary>
+        /// <summary>Returns all QrSession rows for a ClassSession, newest first.</summary>
         public static List<QrSession> GetHistory(int sessionId)
         {
             using var ctx = CreateContext();
@@ -71,10 +130,24 @@ namespace PUPAcadPortal.Services
                 .ToList();
         }
 
-        // UPDATE
         /// <summary>
-        /// Sets IsActive = false and stamps ExpiresAt = UTC now for a single row.
+        /// Returns true when the given ClassSession has an active, unexpired token.
         /// </summary>
+        public static bool HasActiveToken(int sessionId)
+            => GetActive(sessionId) != null;
+
+        /// <summary>
+        /// Returns the remaining lifetime in seconds of the active token,
+        /// or 0 if no active token exists.
+        /// </summary>
+        public static double GetActiveRemainingSeconds(int sessionId)
+        {
+            var qr = GetActive(sessionId);
+            if (qr == null) return 0;
+            return Math.Max(0, (qr.ExpiresAt - DateTime.UtcNow).TotalSeconds);
+        }
+        // UPDATE
+
         public static void MarkExpired(int qrSessionId)
         {
             using var ctx = CreateContext();
@@ -86,21 +159,37 @@ namespace PUPAcadPortal.Services
             ctx.SaveChanges();
         }
 
-        /// <summary>
-        /// Soft-expires ALL active tokens for a ClassSession.
-        /// </summary>
+        /// <summary>Soft-expires ALL active tokens for a ClassSession.</summary>
         public static void DeactivateForSession(int sessionId)
         {
             using var ctx = CreateContext();
-            DeactivateExisting(ctx, sessionId);
+            var now = DateTime.UtcNow;
+            DeactivateAll(ctx, sessionId, now);
             ctx.SaveChanges();
         }
 
-        // DELETE
         /// <summary>
-        /// Hard-deletes every row where IsActive = false AND ExpiresAt &lt;= UTC now.
-        /// Returns the number of rows removed.
+        /// Scans ALL sessions and auto-expires rows whose ExpiresAt has passed.
+        /// Intended for a periodic background job (e.g. called on portal startup).
+        /// Returns the number of rows updated.
         /// </summary>
+        public static int ExpireAllStale()
+        {
+            using var ctx = CreateContext();
+            var now = DateTime.UtcNow;
+            var stale = ctx.QrSessions
+                .Where(q => q.IsActive == true && q.ExpiresAt <= now)
+                .ToList();
+
+            foreach (var q in stale)
+                q.IsActive = false;
+
+            ctx.SaveChanges();
+            return stale.Count;
+        }
+
+        // DELETE
+
         public static int PurgeExpired()
         {
             using var ctx = CreateContext();
@@ -115,9 +204,6 @@ namespace PUPAcadPortal.Services
             return rows.Count;
         }
 
-        /// <summary>
-        /// Hard-deletes ALL QrSession rows for a ClassSession regardless of state.
-        /// </summary>
         public static void DeleteForSession(int sessionId)
         {
             using var ctx = CreateContext();
@@ -129,8 +215,21 @@ namespace PUPAcadPortal.Services
             ctx.SaveChanges();
         }
 
-        // Private helpers
-        private static void DeactivateExisting(AppDbContext ctx, int sessionId)
+        private static void AutoExpireStale(AppDbContext ctx, int sessionId, DateTime now)
+        {
+            var stale = ctx.QrSessions
+                .Where(q => q.SessionId == sessionId
+                         && q.IsActive == true
+                         && q.ExpiresAt <= now)
+                .ToList();
+
+            foreach (var q in stale)
+                q.IsActive = false;
+
+            if (stale.Count > 0)
+                ctx.SaveChanges();
+        }
+        private static void DeactivateAll(AppDbContext ctx, int sessionId, DateTime now)
         {
             var active = ctx.QrSessions
                 .Where(q => q.SessionId == sessionId && q.IsActive == true)
@@ -139,9 +238,8 @@ namespace PUPAcadPortal.Services
             foreach (var q in active)
             {
                 q.IsActive = false;
-                q.ExpiresAt = DateTime.UtcNow;
+                q.ExpiresAt = now;
             }
-            // SaveChanges is the caller's responsibility.
         }
     }
 }

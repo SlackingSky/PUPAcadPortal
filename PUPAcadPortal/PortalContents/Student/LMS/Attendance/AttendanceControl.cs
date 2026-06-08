@@ -16,12 +16,9 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
 
     public partial class AttendanceControl : UserControl
     {
-        // ── Identity (set before the control is shown) ────────────────────────────
-        // e.g. attendanceCtl.CurrentStudentId = Session.CurrentUser.StudentId;
+        //  Identity (set from parent before control is shown) 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int CurrentStudentId { get; set; } = 0;
-
-        // ── Runtime state ─────────────────────────────────────────────────────────
         private List<SubjectMeta> _subjects = new();
         private Dictionary<string, List<AttRecord>> _records = new();
 
@@ -32,23 +29,18 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
         private const double REQUIRED_PCT = 80.0;
         private const int LATE_PER_ABS = 3;
 
-        // ── DB factory ────────────────────────────────────────────────────────────
+        //  DB factory 
         private static AppDbContext CreateContext() => new AppDbContext();
+        public AttendanceControl() => InitializeComponent();
 
-        // ── Constructor ───────────────────────────────────────────────────────────
-        public AttendanceControl()
-        {
-            InitializeComponent();
-        }
-
-        // ── Load ─────────────────────────────────────────────────────────────────
+        //  Load 
         private void AttendanceControl_Load(object sender, EventArgs e)
         {
             LoadFromDatabase();
             RefreshAll();
         }
 
-        // ── Load all attendance data from the DB for this student ─────────────────
+        //  Load all attendance data from DB for this student 
         private void LoadFromDatabase()
         {
             _subjects.Clear();
@@ -62,7 +54,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             {
                 using var ctx = CreateContext();
 
-                // 1. All EnrollmentSubjects for this student → unique SubjectOfferings
+                // All SubjectOfferings this student is enrolled in
                 var enrolledOfferings = ctx.EnrollmentSubjects
                     .Include(es => es.Enrollment)
                     .Include(es => es.SubjectOffering)
@@ -82,12 +74,12 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
                         Name = offering.Subject?.SubjectName ?? offering.SubjectOfferingId,
                         SubjectCode = offering.Subject?.SubjectCode ?? offering.SubjectOfferingId,
                         Units = offering.Subject?.LecUnits ?? 0,
-                        Schedule = string.Empty,  // populated below
+                        Schedule = string.Empty,
                     };
                     _subjects.Add(meta);
                     cmbCourse.Items.Add($"{meta.SubjectCode} – {meta.Name}");
 
-                    // 2. Load all AttendanceRecords for this student in this offering
+                    // Load all AttendanceRecords for this student in this offering
                     var rawRecords = ctx.AttendanceRecords
                         .Include(ar => ar.Session)
                         .Where(ar =>
@@ -100,8 +92,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
                     {
                         Date = ar.Session.SessionDate,
                         AcadYear = offering.AcademicPeriod?.SchoolYear ?? "—",
-                        Period = DerivePeriod(ar.Session.SessionDate,
-                                            offering.AcademicPeriod),
+                        Period = DerivePeriod(ar.Session.SessionDate, offering.AcademicPeriod),
                         Session = ar.Session.Topic ?? "Session",
                         Status = ar.Status,
                         Remarks = ar.Remarks ?? string.Empty,
@@ -124,7 +115,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             if (cmbCourse.Items.Count > 0) cmbCourse.SelectedIndex = 0;
         }
 
-        // ── Derive Prelim / Midterm / Final Term from session date + period ────────
+        // ── Derive Prelim / Midterm / Final Term from date + academic period ──────
         private static string DerivePeriod(DateTime date, AcademicPeriod? period)
         {
             if (period == null) return "—";
@@ -137,7 +128,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
                  : "Final Term";
         }
 
-        // ── Filter helper (unchanged logic) ──────────────────────────────────────
         private List<AttRecord> FilteredRecords(string code)
         {
             if (!_records.TryGetValue(code, out var all)) return new();
@@ -150,7 +140,8 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             if (course != "All Courses")
             {
                 string filtCode = course.Split('–')[0].Trim();
-                if (filtCode != code && filtCode != _subjects.FirstOrDefault(s => s.Code == code)?.SubjectCode)
+                var meta = _subjects.FirstOrDefault(s => s.Code == code);
+                if (filtCode != code && filtCode != meta?.SubjectCode)
                     return new();
             }
 
@@ -190,7 +181,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             RefreshQRGrid();
         }
 
-        // ── Summary Cards ─────────────────────────────────────────────────────────
+        //  Summary Cards 
         private void RefreshCards()
         {
             lblOverallPct.Text = $"{_pct}%";
@@ -230,7 +221,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
                 return p < REQUIRED_PCT;
             });
 
-        // ── Mini Stats ────────────────────────────────────────────────────────────
+        //  Mini Stats 
         private void RefreshMiniStats()
         {
             lblMiniPresent.Text = $"● Present: {_present}";
@@ -241,7 +232,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             pnlProgress?.Invalidate();
         }
 
-        // ── Segmented progress bar (unchanged paint) ──────────────────────────────
+        //  Segmented progress bar 
         private void DrawSegmentedProgress(object sender, PaintEventArgs e)
         {
             var g = e.Graphics;
@@ -270,7 +261,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             g.FillRectangle(bE, xP, 0, wE, h);
         }
 
-        // ── Subjects Grid ─────────────────────────────────────────────────────────
+        //  Subjects grid 
         private DataTable? _subjectsDT;
 
         private void RefreshSubjectsGrid()
@@ -341,11 +332,9 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
                         : Color.FromArgb(200, 40, 40);
                 }
             }
-            else if (col == "Absent" &&
-                     int.TryParse(e.Value.ToString(), out int ab) && ab > 0)
+            else if (col == "Absent" && int.TryParse(e.Value.ToString(), out int ab2) && ab2 > 0)
                 e.CellStyle.ForeColor = Color.FromArgb(200, 40, 40);
-            else if (col == "Late" &&
-                     int.TryParse(e.Value.ToString(), out int lt) && lt > 0)
+            else if (col == "Late" && int.TryParse(e.Value.ToString(), out int lt2) && lt2 > 0)
                 e.CellStyle.ForeColor = Color.FromArgb(180, 110, 0);
         }
 
@@ -353,7 +342,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
         {
             if (e.RowIndex < 0) return;
             string? code = dgvSubjects.Rows[e.RowIndex].Cells["Code"]?.Value?.ToString();
-            // Resolve display code back to offering id
             var match = _subjects.FirstOrDefault(s =>
                 s.SubjectCode == code || s.Code == code);
             _selectedCode = match?.Code;
@@ -363,7 +351,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             RefreshQRGrid();
         }
 
-        // ── Logs Grid (read-only — QR-verified rows marked) ───────────────────────
+        //  Attendance log grid 
         private DataTable? _logsDT;
 
         private void RefreshLogsGrid()
@@ -377,7 +365,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
                 _logsDT.Columns.Add("Period");
                 _logsDT.Columns.Add("Status");
                 _logsDT.Columns.Add("Remarks");
-                _logsDT.Columns.Add("Verified", typeof(bool));  // hidden column
+                _logsDT.Columns.Add("Verified", typeof(bool));
             }
             _logsDT.Rows.Clear();
 
@@ -401,7 +389,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
                         rec.IsQrVerified);
                 }
 
-            // Hide the "Verified" boolean column — it's just for row colouring
             dgvLogs.DataSource = _logsDT;
             if (dgvLogs.Columns.Contains("Verified"))
                 dgvLogs.Columns["Verified"].Visible = false;
@@ -412,7 +399,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
         {
             if (e.RowIndex < 0 || e.Value == null) return;
 
-            // Tint QR-verified rows
             var row = dgvLogs.Rows[e.RowIndex];
             bool isQr = false;
             if (dgvLogs.Columns.Contains("Verified"))
@@ -464,7 +450,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             }
         }
 
-        // ── QR Scan History Grid ──────────────────────────────────────────────────
+        //  QR scan history grid 
         private DataTable? _qrDT;
 
         private void RefreshQRGrid()
@@ -503,7 +489,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             dgvQR.DataSource = _qrDT;
         }
 
-        // ── At-Risk Popup ─────────────────────────────────────────────────────────
+        //  At-Risk popup 
         private void OnViewDetailsClick(object sender, EventArgs e)
         {
             var atRiskList = new List<AtRiskSubjectInfo>();
@@ -526,9 +512,17 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             AtRiskPopup.Show(this.FindForm(), atRiskList);
         }
 
-        // ── Scan QR Code button ───────────────────────────────────────────────────
+        //  Scan QR Code button 
         private void BtnScanQR_Click(object sender, EventArgs e)
         {
+            if (CurrentStudentId <= 0)
+            {
+                MessageBox.Show(
+                    "Student identity is not set. Please log out and log in again.",
+                    "Identity Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             using var frm = new Form
             {
                 Text = "Scan QR Attendance Code",
@@ -546,11 +540,11 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             var scanner = new QRScanControl
             {
                 Dock = DockStyle.Fill,
-                CurrentStudentId = CurrentStudentId,   // ← bind student identity
+                CurrentStudentId = CurrentStudentId,
             };
             frm.Controls.Add(scanner);
 
-            // On successful scan: reload attendance data from DB and close
+            // On successful scan: reload attendance from DB and close
             scanner.QRCodeScanned += (s2, result) =>
             {
                 LoadFromDatabase();
@@ -562,7 +556,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             frm.ShowDialog(this.FindForm());
         }
 
-        // ── Grid styling helpers ──────────────────────────────────────────────────
+        //  Grid styling helpers 
         private static void ApplyGridHeaderStyle(DataGridView dgv)
         {
             dgv.EnableHeadersVisualStyles = false;
@@ -579,10 +573,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             dgv.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(251, 251, 254);
         }
 
-        /// <summary>
-        /// Sizes a DataGridView to fit its content rows, capped at
-        /// <paramref name="maxHeight"/> pixels.  Called from DataBindingComplete.
-        /// </summary>
         internal static void AutoSizeGrid(DataGridView dgv, int maxHeight)
         {
             if (dgv == null) return;
@@ -592,11 +582,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             dgv.ScrollBars = desired > maxHeight ? ScrollBars.Vertical : ScrollBars.None;
         }
 
-        /// <summary>
-        /// Draws a single-pixel border around a card panel with a 4-pixel
-        /// accent bar on the left edge in <paramref name="accentColor"/>.
-        /// Called from Paint event handlers wired in the designer.
-        /// </summary>
         internal static void DrawCardBorder(
             System.Drawing.Graphics g,
             Panel card,
@@ -604,12 +589,11 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
         {
             using (var accentBrush = new SolidBrush(accentColor))
                 g.FillRectangle(accentBrush, 0, 0, 4, card.Height);
-
             using (var borderPen = new Pen(Color.FromArgb(225, 225, 235), 1f))
                 g.DrawRectangle(borderPen, 0, 0, card.Width - 1, card.Height - 1);
         }
 
-        // ── Inner models ──────────────────────────────────────────────────────────
+        //  Inner models 
         private class AttRecord
         {
             public DateTime Date { get; set; }

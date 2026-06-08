@@ -6,24 +6,18 @@ public partial class AppDbContext
 {
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder)
     {
-        //  Activity: ActivityType default + IsPublished flag
-        //  IMPORTANT: ValueGeneratedNever() tells EF Core that C# always owns
-        //  these values.  Without it, EF omits columns whose value matches the
-        //  DB default from the INSERT statement, causing the
-        //  "Could not save changes. Please configure your entity type accordingly."
-        //  error when HasDefaultValue/HasDefaultValueSql is also present.
+
         modelBuilder.Entity<Activity>(entity =>
         {
             entity.Property(e => e.ActivityType)
                 .HasMaxLength(20)
                 .HasDefaultValueSql("'Assignment'")
                 .HasColumnName("ActivityType")
-                .ValueGeneratedNever();     // ← always send the C# value
-
+                .ValueGeneratedNever();     
             entity.Property(e => e.IsPublished)
                 .HasDefaultValue(false)
                 .HasColumnName("IsPublished")
-                .ValueGeneratedNever();     // ← always send the C# value
+                .ValueGeneratedNever();    
         });
 
         modelBuilder.Entity<Submission>(entity =>
@@ -32,10 +26,9 @@ public partial class AppDbContext
                 .HasMaxLength(20)
                 .HasDefaultValueSql("'Submitted'")
                 .HasColumnName("Status")
-                .ValueGeneratedNever();     // ← always send the C# value
-
+                .ValueGeneratedNever();     
             entity.Property(e => e.Remarks)
-                .HasMaxLength(500)          // was 20 — corrected to 500
+                .HasMaxLength(500)         
                 .HasColumnName("Remarks");
         });
 
@@ -68,10 +61,18 @@ public partial class AppDbContext
                 .HasDefaultValueSql("'1'");
 
             entity.HasOne(d => d.Session)
-                .WithMany()
+                .WithMany(p => p.QrSessions)
                 .HasForeignKey(d => d.SessionId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_QrSession_ClassSession");
+        });
+        modelBuilder.Entity<QrScanLog>(entity =>
+        {
+            entity.HasOne(d => d.Session)
+                .WithMany(p => p.QrScanLogs)
+                .HasForeignKey(d => d.SessionId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_QrLog_Session");
         });
     }
 }

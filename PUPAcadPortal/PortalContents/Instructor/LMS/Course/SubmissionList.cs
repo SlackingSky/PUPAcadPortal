@@ -24,7 +24,7 @@ namespace PUPAcadPortal
         private System.Windows.Forms.Timer _searchTimer;
         private bool _initializing = true;
 
-        // ── NEW constructor — accepts real submissions + service ──
+        // accepts real submissions + service 
         public SubmissionList(
             ActivityItem activity,
             CourseActivity course,
@@ -47,7 +47,7 @@ namespace PUPAcadPortal
             this.Load += (s, e) => RefreshList();
         }
 
-        // ── Fallback constructor for backward compat (uses sample data) ──
+        //  Fallback constructor for backward compat (uses sample data) 
         public SubmissionList(ActivityItem activity, CourseActivity course)
             : this(activity, course, new List<StudentSubmission>(), null)
         {
@@ -68,7 +68,7 @@ namespace PUPAcadPortal
             _searchTimer.Tick += (s, e) => { _searchTimer.Stop(); RefreshList(); };
         }
 
-        // ── Sample data (only for the no-arg fallback) ────────
+        //  Sample data (only for the no-arg fallback) 
         private void LoadSampleSubmissions()
         {
             string[] names =
@@ -111,9 +111,7 @@ namespace PUPAcadPortal
             }
         }
 
-        // ════════════════════════════════════════════════════
-        //  RefreshList — unchanged logic
-        // ════════════════════════════════════════════════════
+        //  RefreshList
         private void RefreshList()
         {
             if (_initializing || _submissions == null) return;
@@ -156,9 +154,7 @@ namespace PUPAcadPortal
             flpSubmissions.ResumeLayout();
         }
 
-        // ════════════════════════════════════════════════════
         //  CreateRow — score save now persists to DB
-        // ════════════════════════════════════════════════════
         private Panel CreateRow(StudentSubmission sub)
         {
             int rowW = Math.Max(980, flpSubmissions.ClientSize.Width - 30);
@@ -252,7 +248,7 @@ namespace PUPAcadPortal
                     AutoEllipsis = true
                 });
 
-            // ── Right-side controls ───────────────────────────
+            //  Right-side controls 
             int right = rowW - 12;
             const int btnH = 30, gap = 6;
 
@@ -309,7 +305,7 @@ namespace PUPAcadPortal
 
             lblSaved.Location = new Point(scoreX, 62);
 
-            // ── Save score to DB ─────────────────────────────
+            //  Save score to DB 
             Action<bool> saveScore = (quiet) =>
             {
                 if (sub.IsChecked) return;
@@ -327,7 +323,7 @@ namespace PUPAcadPortal
                 int clamped = Math.Clamp(sc, 0, _activity.Points);
                 if (sc != clamped) { txtScore.Text = clamped.ToString(); sc = clamped; }
 
-                // ── Persist to DB ────────────────────────────
+                // ─ Persist to DB 
                 if (_svc != null && !string.IsNullOrEmpty(sub.SubmissionDbId))
                 {
                     try
@@ -385,15 +381,66 @@ namespace PUPAcadPortal
                 var btnDl = MakeBtn("Download", Color.FromArgb(34, 139, 34), 92, btnH, true);
                 right -= btnDl.Width; btnDl.Location = new Point(right, 28);
                 btnDl.Click += (s, e) =>
-                    MessageBox.Show("Download requires storage implementation.",
-                        "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                {
+                    // sub.EssayContent holds the Cloudinary URL for FileUpload activities
+                    // (StudentCourseDbService stores SubmittedFile in EssayContent via mapping)
+                    // Fall back to checking SubmissionDbId if direct URL is absent.
+                    string fileUrl = sub.EssayContent?.Trim() ?? "";
+
+                    // If EssayContent is not a URL, nothing useful to open
+                    bool isUrl = fileUrl.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
+                              || fileUrl.StartsWith("https://", StringComparison.OrdinalIgnoreCase);
+
+                    if (!isUrl || string.IsNullOrEmpty(fileUrl))
+                    {
+                        MessageBox.Show(
+                            "No downloadable file is associated with this submission.",
+                            "No File",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+
+                    try
+                    {
+                        string fileName = System.IO.Path.GetFileName(
+                            new Uri(fileUrl).LocalPath);
+                        if (string.IsNullOrWhiteSpace(fileName))
+                            fileName = $"submission_{sub.StudentId}";
+
+                        using var sfd = new SaveFileDialog
+                        {
+                            Title = "Save Submission File As",
+                            FileName = fileName,
+                            Filter = "All Files (*.*)|*.*",
+                        };
+                        if (sfd.ShowDialog() != DialogResult.OK) return;
+
+                        string tempPath = CloudinaryService.Instance.DownloadToTemp(
+                            fileUrl, fileName);
+
+                        System.IO.File.Copy(tempPath, sfd.FileName, overwrite: true);
+                        try { System.IO.File.Delete(tempPath); } catch { }
+
+                        MessageBox.Show(
+                            $"File saved to:\n{sfd.FileName}",
+                            "Download Complete",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(
+                            $"Download failed:\n{ex.Message}",
+                            "Download Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                };
                 row.Controls.Add(btnDl);
             }
 
             return row;
         }
 
-        // ── Return to student — calls DB ──────────────────────
+        //  Return to student — calls DB 
         private void ReturnSubmission(StudentSubmission sub, Panel row)
         {
             if (_svc != null && !string.IsNullOrEmpty(sub.SubmissionDbId))

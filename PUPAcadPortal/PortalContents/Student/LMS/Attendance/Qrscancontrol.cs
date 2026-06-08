@@ -16,10 +16,10 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
 
     public partial class QRScanControl : UserControl
     {
-        // ── Events ────────────────────────────────────────────────────────────────
+        //── Events 
         public event EventHandler<QRScanResult>? QRCodeScanned;
 
-        // ── Camera state ──────────────────────────────────────────────────────────
+        //  Camera state 
         private FilterInfoCollection? _videoDevices;
         private VideoCaptureDevice? _videoSource;
         private Bitmap? _currentFrame;
@@ -31,22 +31,20 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
         private DateTime _lastScanTime = DateTime.MinValue;
         private const int DEBOUNCE_MS = 2500;
 
-        // ── Current student identity ──────────────────────────────────────────────
-        // Set this before the control is shown:
-        //   scanner.CurrentStudentId = Session.CurrentUser.StudentId;
+        //  Student identity (must be set before showing the control) 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int CurrentStudentId { get; set; } = 0;
 
-        // ── Mode ──────────────────────────────────────────────────────────────────
+        // ─ Mode 
         private enum ScanMode { Upload, Camera }
         private ScanMode _mode = ScanMode.Upload;
 
         private System.Data.DataTable? _historyDT;
 
-        // ── DB context factory ────────────────────────────────────────────────────
+        //  context factory 
         private static AppDbContext CreateContext() => new AppDbContext();
 
-        // ── Constructor ───────────────────────────────────────────────────────────
+        //  Constructor 
         public QRScanControl()
         {
             InitializeComponent();
@@ -60,39 +58,48 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             LoadRealHistory();
         }
 
-        // ── Decode handler — called when ZXing finds a QR code ───────────────────
         /// <summary>
         /// Entry point for all decoded QR text (upload and camera modes).
-        /// Validates and persists through QrAttendanceService.
-        /// Students cannot bypass this path.
+        /// All validation and persistence is done through QrAttendanceService.
         /// </summary>
         private void HandleDecode(string raw)
         {
+            // Guard: student identity must be set
             if (CurrentStudentId <= 0)
             {
-                ShowResultError("Student identity not set. Please log in again.");
+                ShowResultError(
+                    "Student identity is not set. Please log out and log in again.");
                 return;
             }
 
-            using var ctx = CreateContext();
-            var svc = new QrAttendanceService(ctx);
-            var outcome = svc.ProcessScan(raw, CurrentStudentId);
+            QrScanOutcome outcome;
+            try
+            {
+                using var ctx = CreateContext();
+                var svc = new QrAttendanceService(ctx);
+                outcome = svc.ProcessScan(raw, CurrentStudentId);
+            }
+            catch (Exception ex)
+            {
+                ShowResultError(
+                    $"An unexpected error occurred while processing your scan.\n{ex.Message}");
+                return;
+            }
 
             if (outcome.Success)
             {
-                // ── Add to history grid ───────────────────────────────────────────
+                // Add to in-session history grid
                 _historyDT?.Rows.Add(
                     DateTime.Now.ToString("HH:mm:ss"),
                     outcome.CourseCode,
                     outcome.SubjectName,
-                    "—",           // period — can be read back from DB if needed
+                    "—",
                     "QR Scan",
                     "Present");
 
-                // ── Show success banner ───────────────────────────────────────────
                 ShowResultSuccess(outcome);
 
-                // ── Fire event for parent form to refresh the attendance list ─────
+                // Fire event so the parent AttendanceControl can reload from DB
                 var legacyResult = new QRScanResult
                 {
                     RawText = raw,
@@ -111,7 +118,8 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             }
         }
 
-        // ── History grid — loads real records from DB ─────────────────────────────
+        // History grid — loads real QrScanLog rows from DB
+
         private void LoadRealHistory()
         {
             if (_historyDT == null || CurrentStudentId <= 0) return;
@@ -141,17 +149,19 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             }
             catch
             {
-                // Graceful: if DB fails keep whatever is in memory
+                // Graceful: keep whatever is in memory on DB failure
             }
         }
 
-        // ── Success banner ────────────────────────────────────────────────────────
+        // Result banners
+
         private void ShowResultSuccess(QrScanOutcome outcome)
         {
             pnlResultAccent.BackColor = Color.FromArgb(0, 150, 70);
             lblResultStatus.Text = "✓  Attendance Successfully Recorded";
             lblResultStatus.ForeColor = Color.FromArgb(0, 120, 60);
-            lblResultCourse.Text = $"{outcome.CourseCode}  –  {outcome.SubjectName}  ({outcome.Section})";
+            lblResultCourse.Text =
+                $"{outcome.CourseCode}  –  {outcome.SubjectName}  ({outcome.Section})";
             lblResultDetail.Text =
                 $"Student : {outcome.StudentName}\n" +
                 $"Date    : {outcome.SessionDate}\n" +
@@ -162,7 +172,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             pnlResult.Visible = true;
         }
 
-        // ── Error banner ──────────────────────────────────────────────────────────
         private void ShowResultError(string msg)
         {
             pnlResultAccent.BackColor = Color.FromArgb(200, 40, 40);
@@ -181,11 +190,8 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             pnlResult.Height = 0;
         }
 
-        // ═════════════════════════════════════════════════════════════════════════
-        // All code below this line is UNCHANGED from the original QRScanControl
+        // All code below is UNCHANGED from the original QRScanControl
         // (camera, upload, ZXing decode, UI wiring, history grid setup).
-        // Only HandleDecode() and the success/error display methods above changed.
-        // ═════════════════════════════════════════════════════════════════════════
 
         private void MainAreaPanel_Resize(object sender, EventArgs e)
         {
@@ -233,9 +239,9 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
         {
             var pnl = (Panel)sender;
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            using (var path = RoundedRect(new Rectangle(0, 0, pnl.Width - 1, pnl.Height - 1), 8))
-            using (var b = new SolidBrush(Color.FromArgb(240, 240, 245)))
-                e.Graphics.FillPath(b, path);
+            using var path = RoundedRect(new Rectangle(0, 0, pnl.Width - 1, pnl.Height - 1), 8);
+            using var b = new SolidBrush(Color.FromArgb(240, 240, 245));
+            e.Graphics.FillPath(b, path);
         }
 
         private void Result_Paint(object sender, PaintEventArgs e)
@@ -256,8 +262,8 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
         private void PnlInfoSide_Paint(object sender, PaintEventArgs e)
         {
             var pnl = (Panel)sender;
-            using (var pen = new Pen(Color.FromArgb(220, 220, 235)))
-                e.Graphics.DrawRectangle(pen, 0, 0, pnl.Width - 1, pnl.Height - 1);
+            using var pen = new Pen(Color.FromArgb(220, 220, 235));
+            e.Graphics.DrawRectangle(pen, 0, 0, pnl.Width - 1, pnl.Height - 1);
         }
 
         private void PnlUpload_Paint(object sender, PaintEventArgs e)
@@ -267,35 +273,29 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             g.SmoothingMode = SmoothingMode.AntiAlias;
 
             bool hasImage = picQR.Image != null;
-            using (var borderPen = new Pen(
-                hasImage ? Color.FromArgb(128, 0, 0) : Color.FromArgb(200, 200, 215), 1.5f))
-            {
-                borderPen.DashStyle = hasImage ? DashStyle.Solid : DashStyle.Dash;
-                using (var path = RoundedRect(
-                    new Rectangle(1, 1, pan.Width - 3, pan.Height - 3), 10))
-                    g.DrawPath(borderPen, path);
-            }
+            using var borderPen = new Pen(
+                hasImage ? Color.FromArgb(128, 0, 0) : Color.FromArgb(200, 200, 215), 1.5f);
+            borderPen.DashStyle = hasImage ? DashStyle.Solid : DashStyle.Dash;
+            using var path = RoundedRect(new Rectangle(1, 1, pan.Width - 3, pan.Height - 3), 10);
+            g.DrawPath(borderPen, path);
 
             if (!hasImage)
             {
                 const string icon = "⊞";
-                using (var iconFont = new Font("Segoe UI", 36f))
-                {
-                    var iconSize = g.MeasureString(icon, iconFont);
-                    g.DrawString(icon, iconFont,
-                        new SolidBrush(Color.FromArgb(210, 210, 220)),
-                        (pan.Width - iconSize.Width) / 2f,
-                        (pan.Height - iconSize.Height) / 2f - 24f);
-                }
+                using var iconFont = new Font("Segoe UI", 36f);
+                var iconSize = g.MeasureString(icon, iconFont);
+                g.DrawString(icon, iconFont,
+                    new SolidBrush(Color.FromArgb(210, 210, 220)),
+                    (pan.Width - iconSize.Width) / 2f,
+                    (pan.Height - iconSize.Height) / 2f - 24f);
+
                 const string msg = "Drag & drop a QR image here\nor click \"Browse\"";
-                using (var msgFont = new Font("Segoe UI", 10f))
-                {
-                    var msgSize = g.MeasureString(msg, msgFont);
-                    g.DrawString(msg, msgFont,
-                        new SolidBrush(Color.FromArgb(160, 160, 180)),
-                        (pan.Width - msgSize.Width) / 2f,
-                        (pan.Height - msgSize.Height) / 2f + 30f);
-                }
+                using var msgFont = new Font("Segoe UI", 10f);
+                var msgSize = g.MeasureString(msg, msgFont);
+                g.DrawString(msg, msgFont,
+                    new SolidBrush(Color.FromArgb(160, 160, 180)),
+                    (pan.Width - msgSize.Width) / 2f,
+                    (pan.Height - msgSize.Height) / 2f + 30f);
             }
         }
 
@@ -310,20 +310,22 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
                 Dock = DockStyle.Top,
                 Height = 28,
             };
-            var sep1 = new Panel { Dock = DockStyle.Top, Height = 1, BackColor = Color.FromArgb(230, 230, 240) };
-            var steps = new Panel { Dock = DockStyle.Top, AutoSize = true, BackColor = Color.Transparent };
+            var sep1 = new Panel
+            { Dock = DockStyle.Top, Height = 1, BackColor = Color.FromArgb(230, 230, 240) };
+            var steps = new Panel
+            { Dock = DockStyle.Top, AutoSize = true, BackColor = Color.Transparent };
 
             var stepDefs = new[]
             {
                 ("1", "Upload Mode",
-                    "Click \"Browse\" or drag-and-drop a QR code image. " +
-                    "The scanner decodes it automatically."),
+                    "Click \"Browse\" or drag-and-drop a QR code image. "
+                    + "The scanner decodes it automatically."),
                 ("2", "Camera Mode",
-                    "Select your webcam and click \"Start Camera\". " +
-                    "Hold the QR code in front of the camera — detection is automatic."),
+                    "Select your webcam and click \"Start Camera\". "
+                    + "Hold the QR code in front of the camera — detection is automatic."),
                 ("3", "Attend",
-                    "If the QR code is valid and your attendance window is open, " +
-                    "your attendance is recorded automatically as Present."),
+                    "If the QR code is valid and the attendance window is open, "
+                    + "your attendance is recorded automatically as Present."),
             };
 
             int sy = 4;
@@ -362,7 +364,8 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             }
             steps.Height = sy + 4;
 
-            var sep2 = new Panel { Dock = DockStyle.Top, Height = 1, BackColor = Color.FromArgb(230, 230, 240) };
+            var sep2 = new Panel
+            { Dock = DockStyle.Top, Height = 1, BackColor = Color.FromArgb(230, 230, 240) };
             var noteHdr = new Label
             {
                 Text = "Important",
@@ -374,14 +377,16 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             };
             var noteTxt = new Label
             {
-                Text = "• Attendance is recorded automatically — you cannot mark yourself Present manually.\n" +
-                            "• Each QR code can only be used once per student per session.\n" +
-                            "• Records verified by QR cannot be edited by faculty or students.",
+                Text =
+                    "• You must be enrolled in the subject to scan.\n" +
+                    "• Each QR code can only be used once per session.\n" +
+                    "• Records verified by QR cannot be edited.\n" +
+                    "• The QR code must be active in the database.",
                 Font = new Font("Segoe UI", 8f),
                 ForeColor = Color.FromArgb(80, 80, 100),
                 AutoSize = false,
                 Dock = DockStyle.Top,
-                Height = 72,
+                Height = 80,
             };
             pnlInfoSide.Controls.AddRange(
                 new Control[] { noteTxt, noteHdr, sep2, steps, sep1, title });
@@ -467,6 +472,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
 
         private void BtnModeUpload_Click(object sender, EventArgs e)
             => SwitchMode(ScanMode.Upload);
+
         private void BtnModeCamera_Click(object sender, EventArgs e)
             => SwitchMode(ScanMode.Camera);
 
@@ -475,7 +481,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             _mode = mode;
             if (mode != ScanMode.Camera && _cameraRunning) StopCamera();
 
-            bool isUpload = (mode == ScanMode.Upload);
+            bool isUpload = mode == ScanMode.Upload;
             pnlUpload.Visible = isUpload;
             btnUpload.Visible = isUpload;
             btnClearImage.Visible = isUpload && picQR.Image != null;
@@ -541,10 +547,12 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
                 pnlUpload.Invalidate();
 
                 string? decoded = DecodeQR(bmp);
-                if (decoded != null) HandleDecode(decoded);
-                else ShowResultError(
-                    "No QR code detected in this image. " +
-                    "Try a clearer or higher-resolution photo.");
+                if (decoded != null)
+                    HandleDecode(decoded);
+                else
+                    ShowResultError(
+                        "No QR code was detected in this image. "
+                        + "Try a clearer or higher-resolution photo.");
             }
             catch (Exception ex)
             {
@@ -674,7 +682,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             }
         }
 
-        // ── ZXing decode ──────────────────────────────────────────────────────────
+        //  ZXing decode 
         private static string? DecodeQR(Bitmap bmp)
         {
             try
@@ -687,7 +695,8 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
                     src = new Bitmap(bmp.Width, bmp.Height,
                         System.Drawing.Imaging.PixelFormat.Format32bppArgb);
                     needDispose = true;
-                    using (var g = Graphics.FromImage(src)) g.DrawImage(bmp, 0, 0);
+                    using var g = Graphics.FromImage(src);
+                    g.DrawImage(bmp, 0, 0);
                 }
 
                 try
