@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using PUPAcadPortal.Models;
 using System.Threading.Tasks;
 using System.Linq;
+using PUPAcadPortal.Services;
 
 
 namespace PUPAcadPortal.PortalContents.Student.Enrollment
@@ -19,9 +20,12 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
     {
         private StudentDataService _dataService;
         private DataTable accountsTable;
+        private EnrollmentService _enrollService = new();
 
         private const int SidePadding = 16;
         private const int CardGap = 10;
+        private bool _isStudentIskolar;
+        private bool _isStudentEnrolled;
         public AccountsContentStudent()
         {
             InitializeComponent();
@@ -36,18 +40,22 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
         // ACCOUNTS – Using DataTable with existing columns
         // ─────────────────────────────────────────────────────────────────
 
-        private void Accounts_Initialize()
+        private async Task Accounts_Initialize()
         {
             pnlAccountsContent.Visible = true;
+            _isStudentIskolar = await _enrollService.IsStudentIskolar(UserSession.StudentID ?? 0);
+            _isStudentEnrolled = await _enrollService.IsStudentEnrolled(UserSession.StudentID ?? 0, GlobalSession.ActiveAcademicPeriod);
+
             CreateAccountsTable();
 
             // Initially hide the enrollment status card
             pnlEnrollStatusCard.Visible = false;
             lblEnrollStatus.Visible = false;
+            pnlAccountsFreeEd.Visible = _isStudentIskolar;
 
             SetupAccountsGridStyle();
 
-            if (_dataService.IsStudentEnrolled())
+            if (_isStudentEnrolled)
             {
                 ShowEnrolledState();
             }
@@ -351,7 +359,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             pnlSpaceProviderAccounts.Height = 50;
         }
 
-        private void ShowEnrolledState()
+        private async Task ShowEnrolledState()
         {
             // Show the enrollment status card
             pnlEnrollStatusCard.Visible = true;
@@ -388,7 +396,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             MessageBox.Show("Statement of Account would be generated here (demo).", "Download", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void AccountsContentStudent_Load(object sender, EventArgs e)
+        private async void AccountsContentStudent_Load(object sender, EventArgs e)
         {
             Accounts_Initialize();
             if (EnrollmentContentStudent.isEnrolled)

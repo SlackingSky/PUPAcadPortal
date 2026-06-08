@@ -75,6 +75,8 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
         {
             try
             {
+                this.DisableControls();
+                Application.UseWaitCursor = true;
                 if (!UserSession.StudentID.HasValue)
                 {
                     MessageBox.Show("Security Error: Only active students can access the enrollment module.", "Unauthorized", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -163,8 +165,13 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             {
                 dgvEnrollment.InvalidateColumn(dgvEnrollment.Columns["colSelect"].Index);
             });
+            Application.UseWaitCursor = false;
+            if (this != null)
+            {
+                this.EnableControls();
 
-            CheckGlobalEnrollmentStatus();
+                CheckGlobalEnrollmentStatus();
+            }
         }
 
         private void CheckGlobalEnrollmentStatus()
@@ -435,7 +442,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
 
         private void SetupMaroonBorders()
         {
-            foreach (Panel p in new[] { pnlEnrollLeftCard, pnlEnrollMiddleCard, pnlEnrollRightCard })
+            foreach (Panel p in new[] { pnlEnrollMiddleCard, pnlEnrollRightCard })
             {
                 p.BackColor = Color.White;
                 p.BorderStyle = BorderStyle.None;

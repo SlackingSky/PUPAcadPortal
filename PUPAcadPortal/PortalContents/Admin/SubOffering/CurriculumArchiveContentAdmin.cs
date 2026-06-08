@@ -17,7 +17,9 @@ namespace PUPAcadPortal.PortalContents.Admin.SubOffering
     public partial class CurriculumArchiveContentAdmin : UserControl
     {
         private CurriculumService _curriculumService = new();
-        private List<Subject> _subjects;
+        private List<Subject> _subjects; 
+        private ToolTip _archiveToolTip = new ToolTip();
+        private bool _hasShownArchiveTooltip = false;
 
         public CurriculumArchiveContentAdmin()
         {
@@ -194,7 +196,40 @@ namespace PUPAcadPortal.PortalContents.Admin.SubOffering
             dgvCurriculum.AutoGenerateColumns = false;
             dgvCurriculum.DataSource = new BindingList<CurriculumData>(list);
             dgvCurriculum.ClearSelection();
+
             this.EnableControls();
+
+            int latestYearInDb = await _curriculumService.GetLatestRevisionYearAsync();
+            int selectedYear = dtpRevisionYear.Value.Year;
+
+            bool isArchived = latestYearInDb > 0 && selectedYear < latestYearInDb;
+
+            if (isArchived)
+            {
+                lblCurriculumList.Text = "Archived Curriculum List";
+                btnUpdateCurriculum.Enabled = false;
+                btnLoadPrevious.Enabled = false;
+
+                dgvCurriculum.ReadOnly = true;
+                dgvCurriculum.AllowUserToAddRows = false;
+                dgvCurriculum.AllowUserToDeleteRows = false;
+            }
+            else
+            {
+                lblCurriculumList.Text = "Curriculum List";
+                btnUpdateCurriculum.Enabled = true;
+                btnLoadPrevious.Enabled = true;
+
+                dgvCurriculum.ReadOnly = false;
+                dgvCurriculum.AllowUserToAddRows = true;
+                dgvCurriculum.AllowUserToDeleteRows = true;
+
+                if (dgvCurriculum.Columns["CourseTitle2"] != null) dgvCurriculum.Columns["CourseTitle2"].ReadOnly = true;
+                if (dgvCurriculum.Columns["Lab2"] != null) dgvCurriculum.Columns["Lab2"].ReadOnly = true;
+                if (dgvCurriculum.Columns["Lec2"] != null) dgvCurriculum.Columns["Lec2"].ReadOnly = true;
+                if (dgvCurriculum.Columns["TotalUnits2"] != null) dgvCurriculum.Columns["TotalUnits2"].ReadOnly = true;
+                if (dgvCurriculum.Columns["colRevisionYear"] != null) dgvCurriculum.Columns["ColRevisionYear"].ReadOnly = true;
+            }
         }
         private void btnCurriculum_Click(object sender, EventArgs e)
         {

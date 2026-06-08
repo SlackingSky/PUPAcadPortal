@@ -117,13 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="label50.Text" xml:space="preserve">
-    <value>• Opting out is final and irrevocable for the semester. 
-• Submit the notarized waiver to the Accounting Department (Student Account Section) or email a scanned copy to accountingss@pup.edu.ph before the end of the adjustment period.
-• Once processed, you will be billed the full tuition and miscellaneous fees.
-
-</value>
-  </data>
   <metadata name="colSelect.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -145,6 +138,13 @@
   <metadata name="colAction.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="label50.Text" xml:space="preserve">
+    <value>• Opting out is final and irrevocable for the semester. 
+• Submit the notarized waiver to the Accounting Department (Student Account Section) or email a scanned copy to accountingss@pup.edu.ph before the end of the adjustment period.
+• Once processed, you will be billed the full tuition and miscellaneous fees.
+
+</value>
+  </data>
   <metadata name="cmsEnrollAction.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>

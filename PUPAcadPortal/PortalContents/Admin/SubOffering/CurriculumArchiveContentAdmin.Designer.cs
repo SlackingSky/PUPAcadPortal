@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             pnlCurriculumArchive = new Panel();
             pnlCurriculum = new Panel();
             btnLoadPrevious = new Button();
@@ -57,16 +57,12 @@
             Semester = new DataGridViewTextBoxColumn();
             SchoolYear = new DataGridViewTextBoxColumn();
             blank = new DataGridViewTextBoxColumn();
-            panel14 = new Panel();
-            btnArchive = new Button();
-            btnCurriculum = new Button();
             pnlCurriculumArchive.SuspendLayout();
             pnlCurriculum.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvCurriculum).BeginInit();
             pnlArchive.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvArchive).BeginInit();
-            panel14.SuspendLayout();
             SuspendLayout();
             // 
             // pnlCurriculumArchive
@@ -74,7 +70,6 @@
             pnlCurriculumArchive.BackColor = Color.White;
             pnlCurriculumArchive.Controls.Add(pnlCurriculum);
             pnlCurriculumArchive.Controls.Add(pnlArchive);
-            pnlCurriculumArchive.Controls.Add(panel14);
             pnlCurriculumArchive.Dock = DockStyle.Fill;
             pnlCurriculumArchive.Location = new Point(0, 0);
             pnlCurriculumArchive.Margin = new Padding(3, 2, 3, 2);
@@ -91,10 +86,10 @@
             pnlCurriculum.Controls.Add(btnUpdateCurriculum);
             pnlCurriculum.Controls.Add(dgvCurriculum);
             pnlCurriculum.Dock = DockStyle.Fill;
-            pnlCurriculum.Location = new Point(0, 36);
+            pnlCurriculum.Location = new Point(0, 0);
             pnlCurriculum.Margin = new Padding(3, 2, 3, 2);
             pnlCurriculum.Name = "pnlCurriculum";
-            pnlCurriculum.Size = new Size(1488, 957);
+            pnlCurriculum.Size = new Size(1488, 993);
             pnlCurriculum.TabIndex = 1;
             // 
             // btnLoadPrevious
@@ -104,7 +99,7 @@
             btnLoadPrevious.FlatStyle = FlatStyle.Flat;
             btnLoadPrevious.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnLoadPrevious.ForeColor = Color.White;
-            btnLoadPrevious.Location = new Point(1012, 832);
+            btnLoadPrevious.Location = new Point(1012, 868);
             btnLoadPrevious.Margin = new Padding(3, 2, 3, 2);
             btnLoadPrevious.Name = "btnLoadPrevious";
             btnLoadPrevious.Size = new Size(183, 46);
@@ -174,7 +169,7 @@
             btnUpdateCurriculum.FlatStyle = FlatStyle.Flat;
             btnUpdateCurriculum.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnUpdateCurriculum.ForeColor = Color.White;
-            btnUpdateCurriculum.Location = new Point(1212, 832);
+            btnUpdateCurriculum.Location = new Point(1212, 868);
             btnUpdateCurriculum.Margin = new Padding(3, 2, 3, 2);
             btnUpdateCurriculum.Name = "btnUpdateCurriculum";
             btnUpdateCurriculum.Size = new Size(183, 46);
@@ -193,25 +188,25 @@
             dgvCurriculum.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvCurriculum.BackgroundColor = Color.White;
             dgvCurriculum.BorderStyle = BorderStyle.None;
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = Color.White;
-            dataGridViewCellStyle7.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle7.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle7.SelectionBackColor = Color.White;
-            dataGridViewCellStyle7.SelectionForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
-            dgvCurriculum.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = Color.White;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle1.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = Color.White;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgvCurriculum.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dgvCurriculum.ColumnHeadersHeight = 29;
             dgvCurriculum.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dgvCurriculum.Columns.AddRange(new DataGridViewColumn[] { CourseCode2, CourseTitle2, Lab2, Lec2, TotalUnits2, colProgram, Year2, Semester1, colRevisionYear });
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = SystemColors.Window;
-            dataGridViewCellStyle9.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle9.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle9.SelectionBackColor = Color.FromArgb(255, 255, 128);
-            dataGridViewCellStyle9.SelectionForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.False;
-            dgvCurriculum.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = SystemColors.Window;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle3.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(255, 255, 128);
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            dgvCurriculum.DefaultCellStyle = dataGridViewCellStyle3;
             dgvCurriculum.EnableHeadersVisualStyles = false;
             dgvCurriculum.Location = new Point(44, 68);
             dgvCurriculum.Margin = new Padding(3, 2, 3, 2);
@@ -219,11 +214,11 @@
             dgvCurriculum.RowHeadersVisible = false;
             dgvCurriculum.RowHeadersWidth = 51;
             dgvCurriculum.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle10.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dgvCurriculum.RowsDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dgvCurriculum.RowsDefaultCellStyle = dataGridViewCellStyle4;
             dgvCurriculum.ScrollBars = ScrollBars.Vertical;
             dgvCurriculum.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvCurriculum.Size = new Size(1400, 746);
+            dgvCurriculum.Size = new Size(1400, 782);
             dgvCurriculum.TabIndex = 0;
             // 
             // CourseCode2
@@ -240,8 +235,8 @@
             // CourseTitle2
             // 
             CourseTitle2.DataPropertyName = "SubjectName";
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            CourseTitle2.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            CourseTitle2.DefaultCellStyle = dataGridViewCellStyle2;
             CourseTitle2.FillWeight = 421.4435F;
             CourseTitle2.HeaderText = "Subject Title";
             CourseTitle2.MinimumWidth = 6;
@@ -322,10 +317,10 @@
             pnlArchive.BackColor = Color.White;
             pnlArchive.Controls.Add(dgvArchive);
             pnlArchive.Dock = DockStyle.Fill;
-            pnlArchive.Location = new Point(0, 36);
+            pnlArchive.Location = new Point(0, 0);
             pnlArchive.Margin = new Padding(3, 2, 3, 2);
             pnlArchive.Name = "pnlArchive";
-            pnlArchive.Size = new Size(1488, 957);
+            pnlArchive.Size = new Size(1488, 993);
             pnlArchive.TabIndex = 12;
             // 
             // dgvArchive
@@ -338,24 +333,24 @@
             dgvArchive.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             dgvArchive.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvArchive.BackgroundColor = Color.White;
-            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = Color.White;
-            dataGridViewCellStyle11.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle11.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle11.SelectionBackColor = Color.White;
-            dataGridViewCellStyle11.SelectionForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle11.WrapMode = DataGridViewTriState.True;
-            dgvArchive.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = Color.White;
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle5.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = Color.White;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            dgvArchive.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             dgvArchive.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvArchive.Columns.AddRange(new DataGridViewColumn[] { Semester, SchoolYear, blank });
-            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle12.BackColor = SystemColors.Window;
-            dataGridViewCellStyle12.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle12.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle12.SelectionBackColor = Color.FromArgb(255, 255, 128);
-            dataGridViewCellStyle12.SelectionForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle12.WrapMode = DataGridViewTriState.False;
-            dgvArchive.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = SystemColors.Window;
+            dataGridViewCellStyle6.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle6.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(255, 255, 128);
+            dataGridViewCellStyle6.SelectionForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
+            dgvArchive.DefaultCellStyle = dataGridViewCellStyle6;
             dgvArchive.EnableHeadersVisualStyles = false;
             dgvArchive.Location = new Point(36, 68);
             dgvArchive.Margin = new Padding(3, 2, 3, 2);
@@ -389,48 +384,6 @@
             blank.Name = "blank";
             blank.ReadOnly = true;
             // 
-            // panel14
-            // 
-            panel14.BackColor = Color.White;
-            panel14.Controls.Add(btnArchive);
-            panel14.Controls.Add(btnCurriculum);
-            panel14.Dock = DockStyle.Top;
-            panel14.Location = new Point(0, 0);
-            panel14.Margin = new Padding(3, 2, 3, 2);
-            panel14.Name = "panel14";
-            panel14.Size = new Size(1488, 36);
-            panel14.TabIndex = 0;
-            // 
-            // btnArchive
-            // 
-            btnArchive.BackColor = Color.Transparent;
-            btnArchive.FlatAppearance.BorderSize = 0;
-            btnArchive.FlatStyle = FlatStyle.Flat;
-            btnArchive.Location = new Point(119, 3);
-            btnArchive.Margin = new Padding(3, 2, 3, 2);
-            btnArchive.Name = "btnArchive";
-            btnArchive.Size = new Size(105, 30);
-            btnArchive.TabIndex = 1;
-            btnArchive.TabStop = false;
-            btnArchive.Text = "Archive";
-            btnArchive.UseVisualStyleBackColor = false;
-            btnArchive.Click += btnArchive_Click;
-            // 
-            // btnCurriculum
-            // 
-            btnCurriculum.BackColor = Color.Transparent;
-            btnCurriculum.FlatAppearance.BorderSize = 0;
-            btnCurriculum.FlatStyle = FlatStyle.Flat;
-            btnCurriculum.Location = new Point(9, 3);
-            btnCurriculum.Margin = new Padding(3, 2, 3, 2);
-            btnCurriculum.Name = "btnCurriculum";
-            btnCurriculum.Size = new Size(105, 30);
-            btnCurriculum.TabIndex = 0;
-            btnCurriculum.TabStop = false;
-            btnCurriculum.Text = "Curriculum";
-            btnCurriculum.UseVisualStyleBackColor = false;
-            btnCurriculum.Click += btnCurriculum_Click;
-            // 
             // CurriculumArchiveContentAdmin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -446,7 +399,6 @@
             ((System.ComponentModel.ISupportInitialize)dgvCurriculum).EndInit();
             pnlArchive.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvArchive).EndInit();
-            panel14.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -457,9 +409,6 @@
         private Label lblCurriculumList;
         private Button btnUpdateCurriculum;
         private DataGridView dgvCurriculum;
-        private Panel panel14;
-        private Button btnArchive;
-        private Button btnCurriculum;
         private Panel pnlArchive;
         private DataGridView dgvArchive;
         private DataGridViewTextBoxColumn Semester;

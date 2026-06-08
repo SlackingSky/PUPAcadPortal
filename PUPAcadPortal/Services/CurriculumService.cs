@@ -122,5 +122,13 @@ namespace PUPAcadPortal.Services
                 return await GetCurriculumAsync(previousYear);
             }
         }
+
+        public async Task<int> GetLatestRevisionYearAsync()
+        {
+            using (var db = new AppDbContext())
+            {
+                return await db.Curricula.MaxAsync(c => (int?)c.RevisionYear) ?? 0;
+            }
+        }
     }
 }

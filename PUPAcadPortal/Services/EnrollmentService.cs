@@ -10,6 +10,15 @@ namespace PUPAcadPortal.Services
 {
     public class EnrollmentService
     {
+        public async Task<bool> IsStudentEnrolled(int studentID, string activePeriod)
+        {
+            using (var context = new AppDbContext())
+            {
+                if (await context.Enrollments.AllAsync(e => e.StudentId == studentID && e.AcademicPeriodId == activePeriod)) return true;
+                else return false;
+            }
+        }
+
         public async Task<Student> GetStudentProfileAsync(int studentId)
         {
             using (var context = new AppDbContext())
@@ -204,14 +213,14 @@ namespace PUPAcadPortal.Services
                             await transaction.CommitAsync();
 
                             return (true, "Enrollment successfully saved and assessed!");
-                        }
+                    }
                         catch (Exception ex)
                         {
-                            await transaction.RollbackAsync();
-                            context.ChangeTracker.Clear();
-                            return (false, $"Transaction failed. Error: {ex.Message}");
-                        }
+                        await transaction.RollbackAsync();
+                        context.ChangeTracker.Clear();
+                        return (false, $"Transaction failed. Error: {ex.Message}");
                     }
+                }
                 });
             }
         }
