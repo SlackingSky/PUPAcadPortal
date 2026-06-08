@@ -9,14 +9,19 @@ using System.Windows.Forms;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
+using PUPAcadPortal.Services;
+using PUPAcadPortal.ReusableUserControls;
 
 namespace PUPAcadPortal.PortalContents.Admin.Enrollment
 {
     public partial class DashboardContentAdmin : UserControl
     {
+        private DashboardService _dashboardService = new();
+
         public DashboardContentAdmin()
         {
             InitializeComponent();
+            DashboardService adminDashboardService = new();
             ToolTip toolTip = new ToolTip();
             toolTip.SetToolTip(pnlDashboardRegisterStudent, "Click to register a new student");
             toolTip.SetToolTip(pnlDashboardRegisterProfessor, "Click to register a new professor");
@@ -211,12 +216,26 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
                     .Where(u => u.IsActive == true)
                     .CountAsync();
 
+                var recentActivities = await _dashboardService.GetActivityLogsAsync(Data.UserSession.Role ?? "");
+
                 // --- UI CARD UPDATES ---
                 // Map the computed numerical numbers cleanly into your structural layout tracking label elements
                 lblTotalStudents.Text = totalStudents.ToString();
                 lblTotalProfessors.Text = totalProfessors.ToString();
                 lblTotalCourses.Text = totalCourses.ToString();
                 lblActiveUsers.Text = activeUsers.ToString();
+
+                foreach (var activity in recentActivities)
+                {
+                    var actPnl = new AdminRecentActivityReusable
+                    {
+                        ActivityTitle = activity.Action,
+                        ActivityTimeAgo = activity.Timestamp.ToString(),
+                        CreatedBy = $"{activity.User.LastName} {activity.User.FirstName}"
+                    };
+                    //actPnl.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+                    fpnlRecentAct.Controls.Add(actPnl);
+                }
             }
         }
 
