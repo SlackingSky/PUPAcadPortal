@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PUPAcadPortal.Dialogs;
+using PUPAcadPortal.Services;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -8,7 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using PUPAcadPortal.Dialogs;
+using MySqlConnector;
 
 namespace PUPAcadPortal.PortalContents.Instructor.LMS
 {
@@ -168,8 +170,10 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                      ControlStyles.UserPaint, true);
         }
 
-        private void GradesContentInst_Load(object sender, EventArgs e)
+        private async void GradesContentInst_Load(object sender, EventArgs e)
         {
+            await DBConnectService.GetDecryptedConnectionStringAsync();
+
             ApplyDoubleBuffer(this);
             SetupComboBoxes();
             SetupGrid();
@@ -470,6 +474,86 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             }
         }
 
+        private List<StudentGradeRecord> LoadGradesFromDatabase()
+        {
+            List<StudentGradeRecord> records = new();
+
+            using (MySqlConnection conn =
+                   new MySqlConnection(DBConnectService.ConnectionString))
+            {
+                conn.Open();
+
+                string query = "SELECT * FROM student_grades";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        records.Add(new StudentGradeRecord
+                        {
+                            StudentID = reader["StudentID"].ToString(),
+                            Name = reader["StudentName"].ToString(),
+                            Course = reader["SubjectCourse"].ToString(),
+                            Status = reader["GradeStatus"].ToString(),
+
+                            MT_Attendance = reader["MT_Attendance"] == DBNull.Value
+                                ? null
+                                : Convert.ToDouble(reader["MT_Attendance"]),
+
+                            MT_Recitation = reader["MT_Recitation"] == DBNull.Value
+                                ? null
+                                : Convert.ToDouble(reader["MT_Recitation"]),
+
+                            MT_Seatwork = reader["MT_Seatwork"] == DBNull.Value
+                                ? null
+                                : Convert.ToDouble(reader["MT_Seatwork"]),
+
+                            MT_Assignment = reader["MT_Assignment"] == DBNull.Value
+                                ? null
+                                : Convert.ToDouble(reader["MT_Assignment"]),
+
+                            MT_LongTests = reader["MT_LongTests"] == DBNull.Value
+                                ? null
+                                : Convert.ToDouble(reader["MT_LongTests"]),
+
+                            MT_MajorExam = reader["MT_MajorExam"] == DBNull.Value
+                                ? null
+                                : Convert.ToDouble(reader["MT_MajorExam"]),
+
+                            FT_Attendance = reader["FT_Attendance"] == DBNull.Value
+                                ? null
+                                : Convert.ToDouble(reader["FT_Attendance"]),
+
+                            FT_Recitation = reader["FT_Recitation"] == DBNull.Value
+                                ? null
+                                : Convert.ToDouble(reader["FT_Recitation"]),
+
+                            FT_Seatwork = reader["FT_Seatwork"] == DBNull.Value
+                                ? null
+                                : Convert.ToDouble(reader["FT_Seatwork"]),
+
+                            FT_Assignment = reader["FT_Assignment"] == DBNull.Value
+                                ? null
+                                : Convert.ToDouble(reader["FT_Assignment"]),
+
+                            FT_LongTests = reader["FT_LongTests"] == DBNull.Value
+                                ? null
+                                : Convert.ToDouble(reader["FT_LongTests"]),
+
+                            FT_MajorExam = reader["FT_MajorExam"] == DBNull.Value
+                                ? null
+                                : Convert.ToDouble(reader["FT_MajorExam"]),
+
+                            Released = Convert.ToBoolean(reader["Released"])
+                        });
+                    }
+                }
+            }
+
+            return records;
+        }
+
         private static void GradeCell_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsDigit(e.KeyChar) && e.KeyChar != '.' && e.KeyChar != '\b')
@@ -485,85 +569,11 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 tb.SelectionStart = tb.Text.Length;
             }
         }
-        private static List<StudentGradeRecord> BuildSeedData() => new()
-        {
-            new() { StudentID="2024-00001-SM-0", Name="Ablong, Adrian P.",       Course="IT 101",
-                MT_Attendance=90,MT_Recitation=85,MT_Seatwork=88,MT_Assignment=87,MT_LongTests=84,MT_MajorExam=86,
-                FT_Attendance=88,FT_Recitation=90,FT_Seatwork=85,FT_Assignment=89,FT_LongTests=88,FT_MajorExam=90, Status="Submitted" },
-            new() { StudentID="2024-00002-SM-0", Name="Alcaiz, Jared B.",        Course="IT 101",
-                MT_Attendance=78,MT_Recitation=72,MT_Seatwork=74,MT_Assignment=70,MT_LongTests=73,MT_MajorExam=75,
-                FT_Attendance=80,FT_Recitation=75,FT_Seatwork=76,FT_Assignment=72,FT_LongTests=78,FT_MajorExam=74, Status="Submitted" },
-            new() { StudentID="2024-00003-SM-0", Name="Amar, Charls Manuel C.",  Course="IT 101",
-                MT_Attendance=95,MT_Recitation=93,MT_Seatwork=94,MT_Assignment=92,MT_LongTests=95,MT_MajorExam=93,
-                FT_Attendance=96,FT_Recitation=95,FT_Seatwork=93,FT_Assignment=94,FT_LongTests=96,FT_MajorExam=94, Status="Submitted" },
-            new() { StudentID="2024-00004-SM-0", Name="Amen, Jessie C.",         Course="IT 101",
-                MT_Attendance=60,MT_Recitation=58,MT_Seatwork=62,MT_Assignment=55,MT_LongTests=60,MT_MajorExam=57,
-                FT_Attendance=62,FT_Recitation=60,FT_Seatwork=63,FT_Assignment=58,FT_LongTests=61,FT_MajorExam=59, Status="Submitted" },
-            new() { StudentID="2024-00005-SM-0", Name="Amolata, Jhayphee V.",    Course="IT 101",
-                MT_Attendance=82,MT_Recitation=80,MT_Seatwork=83,MT_Assignment=79,MT_LongTests=81,MT_MajorExam=82,
-                FT_Attendance=84,FT_Recitation=82,FT_Seatwork=80,FT_Assignment=83,FT_LongTests=83,FT_MajorExam=81, Status="Submitted" },
-            new() { StudentID="2024-00006-SM-0", Name="Antillon, Reijn C.",      Course="IT 101",
-                MT_Attendance=70,MT_Recitation=68,MT_Seatwork=71,MT_Assignment=67,MT_LongTests=69,MT_MajorExam=70,
-                FT_Attendance=72,FT_Recitation=70,FT_Seatwork=69,FT_Assignment=71,FT_LongTests=70,FT_MajorExam=68, Status="Submitted" },
-            new() { StudentID="2024-00007-SM-0", Name="Armada, Trisha Mariel D.",Course="IT 101",
-                MT_Attendance=98,MT_Recitation=96,MT_Seatwork=97,MT_Assignment=95,MT_LongTests=97,MT_MajorExam=96,
-                FT_Attendance=99,FT_Recitation=97,FT_Seatwork=98,FT_Assignment=96,FT_LongTests=98,FT_MajorExam=97, Status="Submitted" },
-            new() { StudentID="2024-00008-SM-0", Name="Asay, Claire Jade A.",    Course="IT 101",
-                MT_Attendance=87,MT_Recitation=85,MT_Seatwork=86,MT_Assignment=84,MT_LongTests=86,MT_MajorExam=85,
-                FT_Attendance=88,FT_Recitation=87,FT_Seatwork=85,FT_Assignment=86,FT_LongTests=87,FT_MajorExam=86, Status="Submitted" },
-            new() { StudentID="2024-00009-SM-0",  Name="Banting, Andrei J.",  Course="IT 101", Status="Pending" },
-            new() { StudentID="2024-00010-SM-0",  Name="Basilan, Hans L.",    Course="IT 101", Status="Pending" },
-            new() { StudentID="2024-00011-SM-0",  Name="Bauit, Clerkjustine N.",Course="IT 101", Status="Pending" },
-            new() { StudentID="2024-00012-SM-0",  Name="Celestino, Randel E.", Course="IT 101", Status="Pending" },
-            new() { StudentID="2024-00013-SM-0",  Name="Cruz, Alexander L.",   Course="IT 101", Status="Pending" },
-            new() { StudentID="2024-00016-SM-0", Name="Dizon, Patricia Mae S.",Course="CS 102",
-                MT_Attendance=92,MT_Recitation=90,MT_Seatwork=91,MT_Assignment=89,MT_LongTests=91,MT_MajorExam=90,
-                FT_Attendance=93,FT_Recitation=91,FT_Seatwork=92,FT_Assignment=90,FT_LongTests=92,FT_MajorExam=91, Status="Submitted" },
-            new() { StudentID="2024-00017-SM-0", Name="Espinosa, Marco Luis T.", Course="CS 102",
-                MT_Attendance=77,MT_Recitation=75,MT_Seatwork=78,MT_Assignment=74,MT_LongTests=76,MT_MajorExam=77,
-                FT_Attendance=79,FT_Recitation=77,FT_Seatwork=76,FT_Assignment=75,FT_LongTests=78,FT_MajorExam=76, Status="Submitted" },
-            new() { StudentID="2024-00018-SM-0", Name="Flores, Donna C.",     Course="CS 102",
-                MT_Attendance=84,MT_Recitation=83,MT_Seatwork=85,MT_Assignment=82,MT_LongTests=84,MT_MajorExam=84,
-                FT_Attendance=86,FT_Recitation=84,FT_Seatwork=83,FT_Assignment=85,FT_LongTests=85,FT_MajorExam=85, Status="Submitted" },
-            new() { StudentID="2024-00019-SM-0", Name="Garcia, Jose Miguel A.", Course="CS 102",
-                MT_Attendance=63,MT_Recitation=61,MT_Seatwork=64,MT_Assignment=60,MT_LongTests=62,MT_MajorExam=61,
-                FT_Attendance=65,FT_Recitation=63,FT_Seatwork=62,FT_Assignment=64,FT_LongTests=63,FT_MajorExam=62, Status="Submitted" },
-            new() { StudentID="2024-00020-SM-0", Name="Hernandez, Carina B.",  Course="CS 102",
-                MT_Attendance=98,MT_Recitation=97,MT_Seatwork=99,MT_Assignment=96,MT_LongTests=98,MT_MajorExam=97,
-                FT_Attendance=99,FT_Recitation=98,FT_Seatwork=98,FT_Assignment=97,FT_LongTests=99,FT_MajorExam=98, Status="Submitted" },
-            new() { StudentID="2024-00021-SM-0", Name="Ilagan, Francis John M.", Course="CS 102",
-                MT_Attendance=79,MT_Recitation=77,MT_Seatwork=80,MT_Assignment=76,MT_LongTests=78,MT_MajorExam=79,
-                FT_Attendance=81,FT_Recitation=79,FT_Seatwork=78,FT_Assignment=80,FT_LongTests=80,FT_MajorExam=77, Status="Submitted" },
-            new() { StudentID="2024-00022-SM-0", Name="Javier, Lorraine C.",   Course="CS 102",
-                MT_Attendance=56,MT_Recitation=54,MT_Seatwork=57,MT_Assignment=53,MT_LongTests=55,MT_MajorExam=54,
-                FT_Attendance=58,FT_Recitation=56,FT_Seatwork=55,FT_Assignment=57,FT_LongTests=57,FT_MajorExam=55, Status="Submitted" },
-            new() { StudentID="2024-00023-SM-0", Name="Lim, Kevin Paul D.",    Course="CS 102", Status="Pending" },
-            new() { StudentID="2024-00024-SM-0", Name="Lopez, Angela Rose V.", Course="CS 102", Status="Pending" },
-            new() { StudentID="2024-00028-SM-0", Name="Ocampo, Kristine Joy A.", Course="IS 103",
-                MT_Attendance=90,MT_Recitation=88,MT_Seatwork=91,MT_Assignment=87,MT_LongTests=90,MT_MajorExam=89,
-                FT_Attendance=92,FT_Recitation=90,FT_Seatwork=89,FT_Assignment=91,FT_LongTests=91,FT_MajorExam=90, Status="Submitted" },
-            new() { StudentID="2024-00029-SM-0", Name="Panganiban, Jose Luis R.", Course="IS 103",
-                MT_Attendance=73,MT_Recitation=71,MT_Seatwork=74,MT_Assignment=70,MT_LongTests=72,MT_MajorExam=72,
-                FT_Attendance=75,FT_Recitation=73,FT_Seatwork=72,FT_Assignment=74,FT_LongTests=74,FT_MajorExam=73, Status="Submitted" },
-            new() { StudentID="2024-00030-SM-0", Name="Quiambao, Rachel Ann T.", Course="IS 103",
-                MT_Attendance=95,MT_Recitation=94,MT_Seatwork=96,MT_Assignment=93,MT_LongTests=95,MT_MajorExam=95,
-                FT_Attendance=97,FT_Recitation=95,FT_Seatwork=94,FT_Assignment=96,FT_LongTests=96,FT_MajorExam=96, Status="Submitted" },
-            new() { StudentID="2024-00031-SM-0", Name="Ramos, Enrico Santos B.", Course="IS 103",
-                MT_Attendance=62,MT_Recitation=60,MT_Seatwork=63,MT_Assignment=59,MT_LongTests=61,MT_MajorExam=60,
-                FT_Attendance=64,FT_Recitation=62,FT_Seatwork=61,FT_Assignment=63,FT_LongTests=63,FT_MajorExam=61, Status="Submitted" },
-            new() { StudentID="2024-00032-SM-0", Name="Reyes, Maria Clara O.",  Course="IS 103",
-                MT_Attendance=88,MT_Recitation=86,MT_Seatwork=89,MT_Assignment=85,MT_LongTests=87,MT_MajorExam=87,
-                FT_Attendance=90,FT_Recitation=88,FT_Seatwork=87,FT_Assignment=89,FT_LongTests=89,FT_MajorExam=88, Status="Submitted" },
-            new() { StudentID="2024-00033-SM-0", Name="Santos, Bianca Nicole P.", Course="IS 103",
-                MT_Attendance=80,MT_Recitation=78,MT_Seatwork=81,MT_Assignment=77,MT_LongTests=79,MT_MajorExam=79,
-                FT_Attendance=82,FT_Recitation=80,FT_Seatwork=79,FT_Assignment=81,FT_LongTests=81,FT_MajorExam=80, Status="Submitted" },
-            new() { StudentID="2024-00034-SM-0", Name="Soriano, Aaron James V.", Course="IS 103", Status="Pending" },
-            new() { StudentID="2024-00035-SM-0", Name="Tan, Melissa Grace C.",  Course="IS 103", Status="Pending" },
-        };
+        
 
         private void LoadGradeData()
         {
-            _gradeRecords = BuildSeedData();
+            _gradeRecords = LoadGradesFromDatabase();
             _filteredRecords = new List<StudentGradeRecord>(_gradeRecords);
             _gradesLoaded = true;
             RefreshMidtermGrid();
@@ -786,6 +796,61 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
             RecalcRow(gridStudents, row, rec, _showingMidterm);
             UpdateStatus(rec);
+            SaveGradeToDatabase(rec);
+        }
+
+        private void SaveGradeToDatabase(StudentGradeRecord rec)
+        {
+            using (MySqlConnection conn = new MySqlConnection(DBConnectService.ConnectionString))
+            {
+                conn.Open();
+
+                string query = @"
+        UPDATE student_grades SET
+
+        MT_Attendance=@MT_Attendance,
+        MT_Recitation=@MT_Recitation,
+        MT_Seatwork=@MT_Seatwork,
+        MT_Assignment=@MT_Assignment,
+        MT_LongTests=@MT_LongTests,
+        MT_MajorExam=@MT_MajorExam,
+
+        FT_Attendance=@FT_Attendance,
+        FT_Recitation=@FT_Recitation,
+        FT_Seatwork=@FT_Seatwork,
+        FT_Assignment=@FT_Assignment,
+        FT_LongTests=@FT_LongTests,
+        FT_MajorExam=@FT_MajorExam,
+
+        GradeStatus=@Status,
+        Released=@Released
+
+        WHERE StudentID=@StudentID";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@StudentID", rec.StudentID);
+
+                    cmd.Parameters.AddWithValue("@MT_Attendance", rec.MT_Attendance);
+                    cmd.Parameters.AddWithValue("@MT_Recitation", rec.MT_Recitation);
+                    cmd.Parameters.AddWithValue("@MT_Seatwork", rec.MT_Seatwork);
+                    cmd.Parameters.AddWithValue("@MT_Assignment", rec.MT_Assignment);
+                    cmd.Parameters.AddWithValue("@MT_LongTests", rec.MT_LongTests);
+                    cmd.Parameters.AddWithValue("@MT_MajorExam", rec.MT_MajorExam);
+
+                    cmd.Parameters.AddWithValue("@FT_Attendance", rec.FT_Attendance);
+                    cmd.Parameters.AddWithValue("@FT_Recitation", rec.FT_Recitation);
+                    cmd.Parameters.AddWithValue("@FT_Seatwork", rec.FT_Seatwork);
+                    cmd.Parameters.AddWithValue("@FT_Assignment", rec.FT_Assignment);
+                    cmd.Parameters.AddWithValue("@FT_LongTests", rec.FT_LongTests);
+                    cmd.Parameters.AddWithValue("@FT_MajorExam", rec.FT_MajorExam);
+
+                    cmd.Parameters.AddWithValue("@Status", rec.Status);
+                    cmd.Parameters.AddWithValue("@Released", rec.Released);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         private void FinalTermGrid_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -812,6 +877,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
             RecalcRow(dataGridView1, row, rec, false);
             UpdateStatus(rec);
+            SaveGradeToDatabase(rec);
         }
 
         private static void RecalcRow(DataGridView dgv, DataGridViewRow row,
