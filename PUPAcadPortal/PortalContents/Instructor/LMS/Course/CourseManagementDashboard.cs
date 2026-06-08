@@ -1,4 +1,5 @@
-﻿using PUPAcadPortal.Models;
+﻿using PUPAcadPortal.Data;
+using PUPAcadPortal.Models;
 using PUPAcadPortal.PortalContents.Instructor.LMS.Course;
 using PUPAcadPortal.Services;
 using System;
@@ -52,7 +53,7 @@ namespace PUPAcadPortal
 
         /// <summary>Convenience constructor — creates all real services automatically.</summary>
         public CourseManagementDashboard(int professorId)
-            : this(professorId,
+            : this(UserSession.ProfessorID ?? 0,
                    new CourseDbService(CreateContext),
                    new ActivityDbService(CreateContext),
                    new ModuleDbService(CreateContext))
