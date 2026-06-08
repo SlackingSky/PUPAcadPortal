@@ -15,7 +15,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
 {
     public partial class DashboardContentStudent : UserControl
     {
-        private StudentDashboardService _studentDashboardService = new();
+        private DashboardService _studentDashboardService = new();
         private int _studentId = UserSession.StudentID ?? 0;
         private string _academicPeriod = GlobalSession.ActiveAcademicPeriod ?? "";
 
@@ -31,29 +31,9 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
         private async void DashboardContentStudent_Load(object sender, EventArgs e)
         {
             lblDashboardGreeting.Text = $"Welcome back, {UserSession.FullName}!";
-            //ShowNotEnrolledState();
-            //lblEnrolledUnits.Text = $"{EnrollmentContentStudent.totalUnits} Units";
-            //if (EnrollmentContentStudent.isEnrolled)
-            //{
-            //    // Update the dashboard card
-            //    lblESRegistered.Text = "Enrolled";
-            //    lblESRegistered.ForeColor = Color.Green;
-            //    pnlEnrollmentStatusCard.BackColor = Color.FromArgb(220, 255, 220);
-            //    pbEnrollmentStatusCard.BackColor = Color.Green;
-            //}
 
             await LoadDashboardDataAsync();
             SetupQuickActionClicks();
-        }
-
-        private void ShowNotEnrolledState()
-        {
-
-            // Update dashboard to show "Not Enrolled"
-            lblESRegistered.Text = "Not Enrolled";
-            lblESRegistered.ForeColor = Color.Orange;
-            pnlEnrollmentStatusCard.BackColor = SystemColors.ControlLightLight;
-            pbEnrollmentStatusCard.BackColor = Color.Maroon;
         }
 
         private void SetupQuickActionClicks()
@@ -72,10 +52,10 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             var statusTask = _studentDashboardService.GetEnrollmentStatusAsync(_studentId, _academicPeriod);
             var semesterTask = _studentDashboardService.GetCurrentSemesterAsync();
             var pendingTask = _studentDashboardService.GetPendingItemsCountAsync(_studentId);
-            var announcements =  _studentDashboardService.GetAnnouncementsAsync(UserSession.Role);
-            var upcomings =  _studentDashboardService.GetEventsAsync(UserSession.StudentID ?? 0);
+            var announcements =  await _studentDashboardService.GetAnnouncementsAsync(UserSession.Role ?? "");
+            var upcomings =  await _studentDashboardService.GetEventsAsync(UserSession.StudentID ?? 0, UserSession.UserID);
 
-            await Task.WhenAll(statusTask, semesterTask, pendingTask, announcements, upcomings);
+            await Task.WhenAll(statusTask, semesterTask, pendingTask);
 
             this.SafeUIUpdate(async () =>
             {
@@ -85,25 +65,55 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
                 lblPendingItems.Text = (await pendingTask).ToString();
                 this.EnableControls();
 
-                foreach (var item in await upcomings)
+                if (upcomings.Count > 0)
+                {
+                    fpnlUpcoming.Controls.Clear();
+                    foreach (var item in upcomings)
+                    {
+                        UpcomingEventReusable upcoming = new()
+                        {
+                            EventMonth = item.EventDate.Value.ToString("MMM"),
+                            EventDay = item.EventDate.Value.Day.ToString(),
+                            EventTime = $"{item.StartTime:t} - {item.EndTime:t}",
+                            EventTitle = item.Title
+                        };
+                        fpnlUpcoming.Controls.Add(upcoming);
+                    }
+                }
+                else
                 {
                     UpcomingEventReusable upcoming = new()
                     {
-                        EventMonth = item.EventDate.Value.ToString("MMM"),
-                        EventDay = item.EventDate.Value.Day.ToString(),
-                        EventTime = $"{item.StartTime.ToShortTimeString()} - {item.EndTime.ToShortTimeString()}",
-                        EventTitle = item.Title
+                        EventMonth = "",
+                        EventDay = "",
+                        EventTime = "",
+                        EventTitle = "No Upcoming Events"
                     };
                     fpnlUpcoming.Controls.Add(upcoming);
                 }
 
-                foreach (var item in await announcements)
+
+                if (announcements.Count > 0)
+                {
+                    fpnlAnnouncement.Controls.Clear();
+                    foreach (var item in announcements)
+                    {
+                        AnnouncementEnrollmentReusable reusable = new()
+                        {
+                            AnnounceTitle = item.Title,
+                            AnnounceDesc = item.Content,
+                            AnnounceDate = item.PostedDate.ToShortDateString()
+                        };
+                        fpnlAnnouncement.Controls.Add(reusable);
+                    }
+                }
+                else
                 {
                     AnnouncementEnrollmentReusable reusable = new()
                     {
-                        AnnounceTitle = item.Title,
-                        AnnounceDesc = item.Content,
-                        AnnounceDate = item.PostedDate.ToShortDateString()
+                        AnnounceTitle = "No Current Announcements",
+                        AnnounceDesc = "There are currently no announcements",
+                        AnnounceDate = ""
                     };
                     fpnlAnnouncement.Controls.Add(reusable);
                 }

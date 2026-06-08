@@ -8,7 +8,7 @@ using System.Text;
 
 namespace PUPAcadPortal.Services
 {
-    public class StudentDashboardService
+    public partial class DashboardService
     {
         public async Task<int> GetEnrolledUnits(int studentId, string academicPeriodId)
         {
@@ -69,18 +69,16 @@ namespace PUPAcadPortal.Services
                     .Where(a => a.TargetRoles.Any(r => r.RoleName == role))
                     .OrderByDescending(a => a.IsUrgent)
                     .OrderByDescending(a => a.PostedDate)
+                    .Take(5)
                     .ToListAsync();
             }
         }
 
-        public async Task<List<Models.CalendarEvent>> GetEventsAsync(int studentId)
+        public async Task<List<Models.CalendarEvent>> GetEventsAsync(int studentId, int userId)
         {
             using (var context = new AppDbContext())
             {
                 DateTime today = DateTime.Today;
-
-                var student = await context.Students.FirstOrDefaultAsync(s => s.StudentId == studentId);
-                int userId = student?.UserId ?? 0;
 
                 var enrolledCourseIds = context.EnrollmentSubjects
                     .Where(es => es.Enrollment.StudentId == studentId && es.SubjectStatus == "Officially Enrolled")
