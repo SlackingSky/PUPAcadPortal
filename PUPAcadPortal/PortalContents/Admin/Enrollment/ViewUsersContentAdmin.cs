@@ -43,6 +43,8 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
 
             await LoadStudentsAsync(); // show students by default
 
+            if (this.IsDisposed) return;
+
             UpdateUserTypeIndicator();
 
             // Set up placeholder text behavior for search box
@@ -166,6 +168,7 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
         private void ApplyFiltersAndRefresh()
         {
             // Search term – ignore placeholder
+            if (this.IsDisposed) return;
             string searchTerm = txtSearchViewAUs.Text.Trim();
             if (searchTerm == "Search here...") searchTerm = "";
             searchTerm = searchTerm.ToLower();
@@ -252,6 +255,7 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             cmbYear.Text = "Year";
             viewingStudents = true;
             await LoadStudentsAsync();   // this calls ApplyFiltersAndRefresh once
+            if (this.IsDisposed) return;
             UpdateUserTypeIndicator();
 
             // Re-attach event handler
@@ -264,6 +268,8 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
         {
             viewingStudents = true;
             await LoadStudentsAsync();
+
+            if (this.IsDisposed) return;
             UpdateUserTypeIndicator();
         }
 
@@ -271,6 +277,8 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
         {
             viewingStudents = false;
             await LoadProfessorsAsync();
+
+            if (this.IsDisposed) return;
             UpdateUserTypeIndicator();
         }
 

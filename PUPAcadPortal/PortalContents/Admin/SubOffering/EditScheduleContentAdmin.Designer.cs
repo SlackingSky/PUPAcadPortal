@@ -42,6 +42,9 @@
             lblESYearLevel = new Label();
             lblESCurrentSem = new Label();
             dgvEditSchedule = new DataGridView();
+            cms1 = new ContextMenuStrip(components);
+            DupeRowToolStripMenuItem = new ToolStripMenuItem();
+            Tip1 = new ToolTip(components);
             ESCourseCode = new DataGridViewTextBoxColumn();
             ESCourseTitle = new DataGridViewTextBoxColumn();
             ESLab = new DataGridViewTextBoxColumn();
@@ -53,9 +56,6 @@
             EsEndTime = new DataGridViewTextBoxColumn();
             ESRoom = new DataGridViewComboBoxColumn();
             ESInstructor = new DataGridViewComboBoxColumn();
-            cms1 = new ContextMenuStrip(components);
-            DupeRowToolStripMenuItem = new ToolStripMenuItem();
-            Tip1 = new ToolTip(components);
             pnlEditSchedule.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEditSchedule).BeginInit();
@@ -236,6 +236,20 @@
             dgvEditSchedule.Size = new Size(1446, 495);
             dgvEditSchedule.TabIndex = 6;
             // 
+            // cms1
+            // 
+            cms1.ImageScalingSize = new Size(20, 20);
+            cms1.Items.AddRange(new ToolStripItem[] { DupeRowToolStripMenuItem });
+            cms1.Name = "cmdDupeRow";
+            cms1.Size = new Size(151, 26);
+            // 
+            // DupeRowToolStripMenuItem
+            // 
+            DupeRowToolStripMenuItem.Name = "DupeRowToolStripMenuItem";
+            DupeRowToolStripMenuItem.Size = new Size(150, 22);
+            DupeRowToolStripMenuItem.Text = "Duplicate Row";
+            DupeRowToolStripMenuItem.Click += DupeRowToolStripMenuItem_Click;
+            // 
             // ESCourseCode
             // 
             ESCourseCode.FillWeight = 97.12644F;
@@ -286,6 +300,7 @@
             // 
             // ESDay
             // 
+            ESDay.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
             ESDay.FillWeight = 60.0069923F;
             ESDay.HeaderText = "Day";
             ESDay.Items.AddRange(new object[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" });
@@ -308,6 +323,7 @@
             // 
             // ESRoom
             // 
+            ESRoom.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
             ESRoom.FillWeight = 74.04477F;
             ESRoom.HeaderText = "Room";
             ESRoom.Items.AddRange(new object[] { "101", "102", "ComLab 1", "ComLab 2" });
@@ -316,26 +332,13 @@
             // 
             // ESInstructor
             // 
+            ESInstructor.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
             ESInstructor.FillWeight = 130.421341F;
             ESInstructor.HeaderText = "Instructor";
             ESInstructor.MinimumWidth = 6;
             ESInstructor.Name = "ESInstructor";
             ESInstructor.Resizable = DataGridViewTriState.True;
             ESInstructor.SortMode = DataGridViewColumnSortMode.Automatic;
-            // 
-            // cms1
-            // 
-            cms1.ImageScalingSize = new Size(20, 20);
-            cms1.Items.AddRange(new ToolStripItem[] { DupeRowToolStripMenuItem });
-            cms1.Name = "cmdDupeRow";
-            cms1.Size = new Size(151, 26);
-            // 
-            // DupeRowToolStripMenuItem
-            // 
-            DupeRowToolStripMenuItem.Name = "DupeRowToolStripMenuItem";
-            DupeRowToolStripMenuItem.Size = new Size(150, 22);
-            DupeRowToolStripMenuItem.Text = "Duplicate Row";
-            DupeRowToolStripMenuItem.Click += DupeRowToolStripMenuItem_Click;
             // 
             // EditScheduleContentAdmin
             // 
@@ -366,6 +369,9 @@
         private ToolStripMenuItem DupeRowToolStripMenuItem;
         private ToolTip Tip1;
         private Label lblCurrentSem;
+        private ComboBox cmbYearLevel;
+        private Button btnLoadPrevious;
+        private buttonRounded buttonRounded1;
         private DataGridViewTextBoxColumn ESCourseCode;
         private DataGridViewTextBoxColumn ESCourseTitle;
         private DataGridViewTextBoxColumn ESLab;
@@ -377,8 +383,5 @@
         private DataGridViewTextBoxColumn EsEndTime;
         private DataGridViewComboBoxColumn ESRoom;
         private DataGridViewComboBoxColumn ESInstructor;
-        private ComboBox cmbYearLevel;
-        private Button btnLoadPrevious;
-        private buttonRounded buttonRounded1;
     }
 }
