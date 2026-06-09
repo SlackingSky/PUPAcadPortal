@@ -4,13 +4,15 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
-using System.Xml.Linq;
+using PUPAcadPortal.Models; // Ensure this is included for AppDbContext
 
 namespace PUPAcadPortal
 {
     public partial class AnnouncementInbox : UserControl
     {
         public event EventHandler? CloseRequested;
+        private readonly int _currentUserId; // Added to track the role
+        private readonly int _currentUserRoleId; // The ID used to filter messages
 
         private static readonly Color Maroon = Color.FromArgb(139, 0, 0);
         private static readonly Color LightBg = Color.FromArgb(248, 248, 249);
@@ -31,51 +33,69 @@ namespace PUPAcadPortal
             ["Urgent"] = Color.FromArgb(255, 235, 235),
         };
 
-        private readonly List<InboxMessage> _messages;
+        private List<InboxMessage> _messages = new();
         private InboxMessage? _selected;
 
-        public AnnouncementInbox()
+        // UPDATED CONSTRUCTOR: Now requires the role of the user
+        public AnnouncementInbox(int userRoleId)
         {
             InitializeComponent();
+            _currentUserRoleId = userRoleId;
 
-            _messages = SeedMessages();
+            // Instead of seeding static data, we fetch from DB
+            FetchMessagesFromDb();
+
             RenderList();
             ShowEmptyDetail();
 
-            // Sync _flpList to fill left panel from the start
             _flpList.Size = new Size(_pnlLeft.Width, Math.Max(40, _pnlLeft.Height - 40));
-
-            // Apply starting region clips
             MakeRound(_lblUnreadBadge, 8);
         }
 
-        private static List<InboxMessage> SeedMessages() => new()
+        // NEW METHOD: This replaces SeedMessages()
+        private void FetchMessagesFromDb()
         {
-            new InboxMessage { Id=1, Subject="Faculty Meeting – June 5",
-                Body="All faculty members are required to attend the monthly faculty meeting on June 5, 2026 at 2:00 PM in Conference Room A. Agenda includes updates on academic calendar adjustments and enrolment statistics for S.Y. 2026–2027.",
-                SenderName="VP for Academic Affairs", SenderRole="Administrator",
-                ReceivedAt=DateTime.Now.AddHours(-1), Tag="General" },
-            new InboxMessage { Id=2, Subject="URGENT: Updated Grading Policy AY 2026",
-                Body="Effective immediately, all incomplete grades must be resolved within 30 days of the end of term. Instructors are required to submit a written justification for any INC grade given. Please review the updated Grading Manual attached to this notice.",
-                SenderName="Registrar's Office", SenderRole="Administrator",
-                ReceivedAt=DateTime.Now.AddHours(-4), Tag="Urgent", IsRead=false },
-            new InboxMessage { Id=3, Subject="Campus Shutdown – Typhoon Advisory",
-                Body="Due to Typhoon Warning Signal No. 2 raised over Metro Manila, all campus operations are suspended effective June 2, 2026. Online classes may proceed at the discretion of each instructor. Updates will be sent via official channels.",
-                SenderName="Office of the President", SenderRole="Administrator",
-                ReceivedAt=DateTime.Now.AddDays(-1), Tag="Urgent", IsRead=true },
-            new InboxMessage { Id=4, Subject="IT Infrastructure Upgrade – May 31",
-                Body="The CCIS server room will undergo scheduled maintenance on May 31, 2026 from 8:00 PM to 12:00 AM. The LMS, student portal, and all web-based systems will be temporarily unavailable. Please inform your students accordingly.",
-                SenderName="ICT Services", SenderRole="Administrator",
-                ReceivedAt=DateTime.Now.AddDays(-2), Tag="Policy", IsRead=true },
-            new InboxMessage { Id=5, Subject="Research Grant Application Open",
-                Body="Faculty members are invited to submit research proposals for the 2026 PUP Research Grant. Proposals must be submitted through the Research Management Office by June 15, 2026. Grants of up to PHP 100,000 are available for applied and basic research projects.",
-                SenderName="Research Management Office", SenderRole="Administrator",
-                ReceivedAt=DateTime.Now.AddDays(-3), Tag="Event", IsRead=true },
-            new InboxMessage { Id=6, Subject="Updated Leave Filing Procedure",
-                Body="As per HRMO Circular No. 2026-04, all leave applications must now be filed through the new HRIS portal at least 3 working days before the intended leave date. Manual leave forms will no longer be accepted starting June 1, 2026.",
-                SenderName="Human Resource Management Office", SenderRole="Administrator",
-                ReceivedAt=DateTime.Now.AddDays(-5), Tag="Policy", IsRead=true },
-        };
+            _messages.Clear();
+            try
+            {
+                using (var context = new AppDbContext())
+                {
+                    // DEBUG: See what role we are searching for
+                    System.Diagnostics.Debug.WriteLine($"[Inbox Debug] Searching for Role ID: {_currentUserRoleId}");
+
+                    var allAnnouncements = context.Announcements.ToList();
+                    System.Diagnostics.Debug.WriteLine($"[Inbox Debug] Total announcements in DB: {allAnnouncements.Count}");
+
+                    var dbAnnouncements = allAnnouncements
+                        .Where(a => a.TargetRoleId == _currentUserRoleId)
+                        .ToList();
+
+                    System.Diagnostics.Debug.WriteLine($"[Inbox Debug] Found {dbAnnouncements.Count} announcements matching role.");
+
+                    foreach (var ann in dbAnnouncements)
+                    {
+                        _messages.Add(new InboxMessage
+                        {
+                            Id = ann.AnnouncementId,
+                            TargetRoleId = ann.TargetRoleId,
+                            Subject = ann.Title,
+                            Body = ann.Content,
+                            SenderName = ann.CreatedByUser?.FirstName + " " + ann.CreatedByUser?.LastName ?? "Admin Office",
+                            SenderRole = "Administrator",
+                            ReceivedAt = ann.PostedDate,
+                            Tag = ann.Category,
+                            IsRead = false,
+                            IsStarred = false
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error fetching inbox: {ex.Message}");
+            }
+        }
+
 
         private void RenderList(string? search = null)
         {
@@ -201,11 +221,13 @@ namespace PUPAcadPortal
             return row;
         }
 
+        // ... (Keep ShowEmptyDetail, ShowDetail, UpdateUnreadBadge, and all other helper methods exactly as they were) ...
+
         private void ShowEmptyDetail()
         {
             _lblDetailSubject.Text = "Select a message to read";
             _lblDetailMeta.Text = "";
-            _lblDetailBody.Text = "Your admin inbox messages will appear here.\nClick any message on the left to view its contents.";
+            _lblDetailBody.Text = "Your inbox messages will appear here.\nClick any message on the left to view its contents.";
             _lblDetailTag.Visible = false;
             _btnStar.Enabled = _btnMarkRead.Enabled = _btnDelete.Enabled = false;
         }
@@ -237,15 +259,8 @@ namespace PUPAcadPortal
             _lblUnreadBadge.Visible = unread > 0;
         }
 
-        private void BtnClose_Click(object? sender, EventArgs e)
-        {
-            CloseRequested?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void TxtSearch_TextChanged(object? sender, EventArgs e)
-        {
-            RenderList(_txtSearch.Text);
-        }
+        private void BtnClose_Click(object? sender, EventArgs e) => CloseRequested?.Invoke(this, EventArgs.Empty);
+        private void TxtSearch_TextChanged(object? sender, EventArgs e) => RenderList(_txtSearch.Text);
 
         private void BtnStar_Click(object? sender, EventArgs e)
         {
@@ -267,9 +282,7 @@ namespace PUPAcadPortal
         private void BtnDelete_Click(object? sender, EventArgs e)
         {
             if (_selected == null) return;
-            var res = MessageBox.Show($"Delete \"{_selected.Subject}\"?", "Delete Message",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (res == DialogResult.Yes)
+            if (MessageBox.Show($"Delete \"{_selected.Subject}\"?", "Delete Message", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 _messages.Remove(_selected);
                 _selected = null;
@@ -281,7 +294,6 @@ namespace PUPAcadPortal
         private void AnnouncementInbox_Resize(object? sender, EventArgs e)
         {
             _flpList.Size = new Size(_pnlLeft.Width, Math.Max(40, _pnlLeft.Height - 40));
-
             if (_lblUnreadBadge.Visible) MakeRound(_lblUnreadBadge, 8);
             if (_lblDetailTag.Visible) MakeRound(_lblDetailTag, 10);
         }

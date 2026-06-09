@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PUPAcadPortal.Data;
 using PUPAcadPortal.Models;
 using PUPAcadPortal.PortalContents.Instructor.LMS.Course;
 using PUPAcadPortal.PortalContents.Misc.LMS;
@@ -61,6 +62,7 @@ namespace PUPAcadPortal
             public int TotalStudents { get; set; } = 40;
             public string? AttachedFile { get; set; }
             public string OriginalFileName { get; set; } = string.Empty; // ADDED THIS
+            public int TargetRoleId { get; set; }
 
             public bool NotifyStudents { get; set; } = false;
             public bool NotifyInstructors { get; set; } = false;
@@ -90,6 +92,7 @@ namespace PUPAcadPortal
 
             // Create Announcement overlay
             _createAnnouncementUC = new CreateAnnouncement { Visible = false, Anchor = AnchorStyles.None };
+            _createAnnouncementUC.TargetRoleId = 3;
             _createAnnouncementUC.AnnouncementPosted += OnAnnouncementPosted;
             _createAnnouncementUC.CloseRequested += (s, ev) => HideCreateAnnouncementUC();
             pnlAnnouncement.Controls.Add(_createAnnouncementUC);
@@ -102,7 +105,7 @@ namespace PUPAcadPortal
             pnlAnnouncement.Controls.Add(_viewAnnouncementUC);
 
             // Inbox overlay
-            _inboxUC = new AnnouncementInbox { Visible = false, Anchor = AnchorStyles.None };
+            _inboxUC = new AnnouncementInbox(1) { Visible = false, Anchor = AnchorStyles.None };
             _inboxUC.CloseRequested += (s, ev) => _inboxUC.Visible = false;
             pnlAnnouncement.Controls.Add(_inboxUC);
 
@@ -183,14 +186,19 @@ namespace PUPAcadPortal
                     announcements.Add(new Announcement
                     {
                         Id = ann.AnnouncementId,
-                        Title = ann.Title,
-                        Description = ann.Content,
-                        Category = ann.Category,
+                       
+                        Title = ann.Title ?? "No Title",
+                        Description = ann.Content ?? "",
+                        Category = ann.Category ?? "General",
                         Status = "active",
                         IsPinned = ann.IsPinned,
                         IsUrgent = ann.IsUrgent,
                         AttachedFile = ann.AttachedFile,
-                        OriginalFileName = ann.OriginalFileName, // ADDED THIS: Map from DB to Local Class
+
+                        
+                        OriginalFileName = ann.OriginalFileName ?? string.Empty,
+                        TargetRoleId = (ann.TargetRoleId == 0) ? 1 : ann.TargetRoleId,
+
                         Date = ann.PostedDate,
                         ViewedCount = 0,
                         TotalStudents = 0,
@@ -198,6 +206,7 @@ namespace PUPAcadPortal
                         NotifyInstructors = false
                     });
                 }
+
             }
         }
 

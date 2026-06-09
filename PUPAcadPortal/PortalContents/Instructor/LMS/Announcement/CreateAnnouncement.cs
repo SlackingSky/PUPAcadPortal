@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace PUPAcadPortal
 {
@@ -14,6 +15,8 @@ namespace PUPAcadPortal
         public DialogResult DialogResult { get; private set; } = DialogResult.Cancel;
         private string _attachedFilePath = string.Empty;
         private string _encryptedTempPath = string.Empty;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public int TargetRoleId { get; set; } = 1;
 
         private static readonly Color Maroon = Color.FromArgb(139, 0, 0);
         private static readonly Color PlaceholderGray = Color.FromArgb(160, 160, 160);
@@ -175,9 +178,7 @@ namespace PUPAcadPortal
             {
                 if (!string.IsNullOrEmpty(_encryptedTempPath) && File.Exists(_encryptedTempPath))
                 {
-                    // CAPTURE ORIGINAL NAME HERE
                     originalFileName = Path.GetFileName(_attachedFilePath);
-
                     var uploadService = new CloudinaryUploadService();
                     attachmentUrl = await UploadAlreadyEncryptedAsync(uploadService, _encryptedTempPath);
 
@@ -202,8 +203,9 @@ namespace PUPAcadPortal
                         IsUrgent = chkUrgent.Checked,
                         IsPinned = chkPinned.Checked,
                         AttachedFile = attachmentUrl,
-                        OriginalFileName = originalFileName, // SAVING TO DB
-                        PostedDate = dtpPostDate.Value
+                        OriginalFileName = originalFileName,
+                        PostedDate = dtpPostDate.Value,
+                        TargetRoleId = this.TargetRoleId
                     };
                     context.Announcements.Add(ann);
                     context.SaveChanges();
@@ -218,12 +220,14 @@ namespace PUPAcadPortal
                     IsUrgent = chkUrgent.Checked,
                     IsPinned = chkPinned.Checked,
                     AttachedFile = attachmentUrl ?? string.Empty,
-                    OriginalFileName = originalFileName // PASSING TO EVENT
+                    OriginalFileName = originalFileName,
+                    TargetRoleId = this.TargetRoleId
                 };
-                OnAnnouncementPosted(data);
+                
 
                 MessageBox.Show("Announcement posted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Hide();
+                OnAnnouncementPosted(data);
             }
             catch (Exception ex) { ShowError($"Error:\n{ex.Message}"); }
             finally { btnPost.Enabled = true; btnPost.Text = "Post"; }
@@ -287,7 +291,9 @@ namespace PUPAcadPortal
         public bool IsUrgent { get; set; }
         public bool IsPinned { get; set; }
         public string AttachedFile { get; set; } = string.Empty;
-        public string OriginalFileName { get; set; } = string.Empty; // ADDED THIS
+        public string OriginalFileName { get; set; } = string.Empty;
+        public int TargetRoleId { get; set; }
+
         public System.Collections.Generic.List<string> Courses { get; set; } = new();
     }
 }

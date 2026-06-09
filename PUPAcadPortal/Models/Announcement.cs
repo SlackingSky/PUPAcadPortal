@@ -11,11 +11,11 @@ public partial class Announcement
 
     public string? SubjectOfferingId { get; set; }
 
-    public string Title { get; set; } = null!;
+    public string? Title { get; set; } = null!;
 
-    public string Content { get; set; } = null!;
+    public string? Content { get; set; } = null!;
 
-    public string Category { get; set; } = null!;
+    public string? Category { get; set; } = null!;
 
     public bool IsUrgent { get; set; }
 
@@ -23,7 +23,8 @@ public partial class Announcement
 
     public string? AttachedFile { get; set; }
 
-    public string OriginalFileName { get; set; }
+    public string? OriginalFileName { get; set; }
+    public int TargetRoleId { get; set; }
 
     public DateTime PostedDate { get; set; }
 

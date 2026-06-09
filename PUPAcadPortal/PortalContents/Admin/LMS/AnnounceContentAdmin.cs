@@ -142,6 +142,7 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
 
             // Create + wire the CreateAnnouncement UC
             _createAnnouncementUC = new CreateAnnouncementAdmin { Visible = false, Anchor = AnchorStyles.None };
+            _createAnnouncementUC.TargetRoleId = 1;
             _createAnnouncementUC.AnnouncementPosted += OnAnnouncementPosted;
             _createAnnouncementUC.CloseRequested += (s, e) => HideCreateAnnouncementUC();
             pnlAnnouncement.Controls.Add(_createAnnouncementUC);
@@ -850,7 +851,6 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
 
                 if (!string.IsNullOrEmpty(data.AttachmentPath))
                 {
-                    // Capture the filename from the local path provided by the form
                     originalFileName = System.IO.Path.GetFileName(data.AttachmentPath);
                     var uploadService = new PUPAcadPortal.Services.CloudinaryUploadService();
                     attachmentUrl = await uploadService.UploadEncryptedFileAsync(data.AttachmentPath);
@@ -866,7 +866,10 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
                 {
                     if (editingAnnouncementId != -1)
                     {
-                        var dbAnnouncement = context.Announcements.FirstOrDefault(a => a.AnnouncementId == editingAnnouncementId);
+                        // ── Update existing ───────────────────────────────────────
+                        var dbAnnouncement = context.Announcements
+                            .FirstOrDefault(a => a.AnnouncementId == editingAnnouncementId);
+
                         if (dbAnnouncement != null)
                         {
                             dbAnnouncement.Title = data.Title;
@@ -876,18 +879,23 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
                             dbAnnouncement.IsUrgent = data.IsUrgent;
                             dbAnnouncement.IsPinned = data.IsPinned;
 
+                            // FIX 1: Update Role ID for existing announcements
+                            dbAnnouncement.TargetRoleId = 1;
+
                             if (!string.IsNullOrEmpty(attachmentUrl))
                             {
                                 dbAnnouncement.AttachedFile = attachmentUrl;
-                                dbAnnouncement.OriginalFileName = originalFileName; // SAVE TO DB
+                                dbAnnouncement.OriginalFileName = originalFileName;
                             }
                             context.Announcements.Update(dbAnnouncement);
                             context.SaveChanges();
-                            // ... update local list ...
+
+                            // ... update local list (announcements.Find...) ...
                         }
                     }
                     else
                     {
+                        // ── Create new ────────────────────────────────────────────
                         var newAnnouncement = new Announcement
                         {
                             Title = data.Title,
@@ -897,21 +905,32 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
                             IsUrgent = data.IsUrgent,
                             IsPinned = data.IsPinned,
                             AttachedFile = attachmentUrl,
-                            OriginalFileName = originalFileName, // SAVE TO DB
+                            OriginalFileName = originalFileName,
+
+                            // FIX 2: SET TARGET ROLE ID HERE (1 = Admin)
+                            TargetRoleId = 1,
+
                             CreatedByUserId = 1,
                             SubjectOfferingId = null,
                         };
+
                         context.Announcements.Add(newAnnouncement);
                         context.SaveChanges();
+
                         // ... add to local list ...
                     }
                 }
+
                 editingAnnouncementId = -1;
                 RenderAnnouncements();
                 MessageBox.Show("Announcement saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex) { MessageBox.Show("Error saving: " + ex.Message); }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An unexpected error occurred while savingS: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
 
 
         private void OnViewEdit(object sender, int id)
