@@ -6,10 +6,6 @@ using System.Linq;
 
 namespace PUPAcadPortal.Services
 {
-    /// <summary>
-    /// Full database-backed implementation of <see cref="ICourseDbService"/>.
-    /// All data originates from the MySQL database — no hardcoded or sample values.
-    /// </summary>
     public class CourseDbService : ICourseDbService
     {
         private readonly Func<AppDbContext> _ctxFactory;
@@ -20,7 +16,7 @@ namespace PUPAcadPortal.Services
                 ?? throw new ArgumentNullException(nameof(ctxFactory));
         }
 
-        // ── Professor: read ───────────────────────────────────────────────────
+        //  Professor: read 
 
         public List<CourseDto> GetCoursesForProfessor(int professorId)
         {
@@ -149,7 +145,6 @@ namespace PUPAcadPortal.Services
             ctx.SaveChanges();
         }
 
-        // ── Shared lookup helpers ─────────────────────────────────────────────
 
         public List<SubjectLookupDto> GetAllSubjects()
         {
@@ -197,8 +192,7 @@ namespace PUPAcadPortal.Services
                 .Include(es => es.SubjectOffering).ThenInclude(o => o.Professor).ThenInclude(p => p.User)
                 .Include(es => es.SubjectOffering).ThenInclude(o => o.RoomSchedules).ThenInclude(rs => rs.Room)
                 .Include(es => es.SubjectOffering).ThenInclude(o => o.Activities).ThenInclude(a => a.Submissions)
-                .Where(es => es.Enrollment.StudentId == studentId
-                          && es.SubjectStatus == "Officially Enrolled")
+                .Where(es => es.Enrollment.StudentId == studentId)
                 .AsNoTracking()
                 .ToList();
 
@@ -248,7 +242,6 @@ namespace PUPAcadPortal.Services
                 .ToList();
         }
 
-        //  Private helpers 
 
         private static CourseDto MapToDto(SubjectOffering o)
         {

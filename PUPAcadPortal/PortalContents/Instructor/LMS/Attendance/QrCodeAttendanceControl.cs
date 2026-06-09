@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Windows.Forms;
 using System.ComponentModel;
 using ZXing;
@@ -24,7 +25,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
         private const int DEFAULT_EXPIRY = 10; // minutes
 
-        // ── Session binding properties ────────────────────────────────────────────
+        //  Session binding properties 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int SessionId
         {
@@ -81,7 +82,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
         public event EventHandler? QrExpired;
 
-        // ── Private state ─────────────────────────────────────────────────────────
+        //  Private state 
         private string _session = "Morning";
         private DateTime _attendanceDate = DateTime.Today;
         private int _expiryMinutes = DEFAULT_EXPIRY;
@@ -97,9 +98,11 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         /// <summary>QrSession.QrSessionId of the currently active DB row (0 = none).</summary>
         private int _activeQrSessionDbId = 0;
 
+        private DateTime _expiresAtUtc = DateTime.UtcNow;
+
         private DateTime _generatedAt = DateTime.Now;
 
-        // ── Constructor ───────────────────────────────────────────────────────────
+        //  Constructor 
         public QrCodeAttendanceControl()
         {
             InitializeComponent();
@@ -112,18 +115,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             _countdownTimer.Start();
         }
 
-        // ── Core: Generate or reuse the active QR session from DB ─────────────────
-        /// <summary>
-        /// Persists (or reuses) a QrSession row in the database, then renders the
-        /// cryptographically signed token as a QR code image.
-        ///
-        /// If an active unexpired token already exists for this ClassSession:
-        ///   • The existing token is reused (no new DB row, no new QR image needed).
-        ///   • The UI countdown reflects the remaining time from the DB.
-        ///   • A "Reused existing QR" notice is shown briefly.
-        ///
-        /// If no active token exists a fresh one is created and saved.
-        /// </summary>
+        //  Core: Generate or reuse the active QR session from DB 
         public void GenerateNew()
         {
             _isExpired = false;
@@ -137,6 +129,8 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                     sessionDate: _attendanceDate,
                     startTime: _sessionStartTime,
                     endTime: _sessionEndTime);
+                _expiresAtUtc = DateTime.UtcNow.AddMinutes(_expiryMinutes);
+                _generatedAt = DateTime.Now;
                 RenderToken(_currentToken);
                 SetStatus(false, false);
                 UpdateCountdown();
@@ -158,20 +152,21 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 _activeQrSessionDbId = qrSession.QrSessionId;
                 _currentToken = qrSession.Token;
                 _generatedAt = qrSession.GeneratedAt.ToLocalTime();
+                _expiresAtUtc = qrSession.ExpiresAt;
 
                 RenderToken(_currentToken);
                 SetStatus(false, false);
                 UpdateCountdown();
 
                 // Start the expiry timer for the remaining time from the DB
-                double remainingSeconds = (qrSession.ExpiresAt - DateTime.UtcNow).TotalSeconds;
+                double remainingSeconds = (_expiresAtUtc - DateTime.UtcNow).TotalSeconds;
                 RestartExpiryTimer(Math.Max(1, (int)remainingSeconds));
 
                 if (reused)
                 {
                     // Briefly inform the instructor that the existing code is still valid
                     string origText = _lblStatus.Text;
-                    _lblStatus.Text = "● Reusing active QR";
+                    _lblStatus.Text = "● Resuming active QR";
                     _lblStatus.ForeColor = Color.FromArgb(0, 100, 180);
                     var t = new System.Windows.Forms.Timer { Interval = 2500 };
                     t.Tick += (s, e) =>
@@ -192,6 +187,8 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 _currentToken = QrTokenService.Build(
                     _sessionId, _subjectOfferingId, _attendanceDate,
                     _sessionStartTime, _sessionEndTime);
+                _expiresAtUtc = DateTime.UtcNow.AddMinutes(_expiryMinutes);
+                _generatedAt = DateTime.Now;
                 RenderToken(_currentToken);
                 SetStatus(false, false);
                 UpdateCountdown();
@@ -202,7 +199,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             }
         }
 
-        // ── Render helpers ────────────────────────────────────────────────────────
+        //  Render helpers 
         private void RenderToken(string token)
         {
             int sz = _picQr.Width > 0 ? _picQr.Width : 300;
@@ -260,7 +257,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             }
         }
 
-        // ── Layout / resize ───────────────────────────────────────────────────────
+        //  Layout / resize 
         private void QrCodeAttendanceControl_SizeChanged(object sender, EventArgs e)
             => Reposition();
 
@@ -309,7 +306,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             e.Graphics.DrawLine(p, 0, 0, ((Panel)sender).Width, 0);
         }
 
-        // ── Expired overlay ───────────────────────────────────────────────────────
+        //  Expired overlay 
         private static Bitmap RenderExpiredBitmap(int size)
         {
             var bmp = new Bitmap(size, size);
@@ -329,7 +326,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             return bmp;
         }
 
-        // ── Status / countdown helpers ────────────────────────────────────────────
+        //  Status / countdown helpers 
         private void SetStatus(bool expired, bool refreshing)
         {
             if (refreshing)
@@ -347,7 +344,8 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 _lblCountdown.Text = "Code expired — click Refresh";
                 return;
             }
-            var rem = TimeSpan.FromMinutes(_expiryMinutes) - (DateTime.Now - _generatedAt);
+
+            var rem = _expiresAtUtc - DateTime.UtcNow;
             if (rem.TotalSeconds <= 0) { ExpireCode(); return; }
             _lblCountdown.Text = $"Expires in {(int)rem.TotalMinutes:D2}:{rem.Seconds:D2}";
             _lblCountdown.ForeColor = rem.TotalMinutes < 2
@@ -403,7 +401,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             _countdownTimer?.Start();
         }
 
-        // ── Refresh button ────────────────────────────────────────────────────────
+        //  Refresh button 
         private void BtnRefresh_Click(object sender, EventArgs e)
         {
             _btnRefresh.Enabled = false;
@@ -420,7 +418,9 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             {
                 _animTimer.Stop();
                 _btnRefresh.Enabled = true;
-                // Force-expire the current DB row so CreateOrGetActive issues a new one
+                // Explicitly expire the current DB row so CreateOrGetActive
+                // issues a brand-new token on the next call.  This only runs
+                // when the professor intentionally clicked Refresh.
                 if (_activeQrSessionDbId > 0)
                 {
                     try { QrSessionService.MarkExpired(_activeQrSessionDbId); }
@@ -431,7 +431,16 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             }
         }
 
-        // ── Download button ───────────────────────────────────────────────────────
+        //  Download button 
+
+        private static string SanitizeFileName(string raw)
+        {
+            // Replace every invalid character with an underscore.
+            foreach (char c in Path.GetInvalidFileNameChars())
+                raw = raw.Replace(c, '_');
+            return raw;
+        }
+
         private void BtnDownload_Click(object sender, EventArgs e)
         {
             if (_isExpired || string.IsNullOrEmpty(_currentToken))
@@ -441,11 +450,12 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 return;
             }
 
+            string safeSession = SanitizeFileName(_session);
             using var sfd = new SaveFileDialog
             {
                 Title = "Save QR Code as PNG",
                 Filter = "PNG Image (*.png)|*.png",
-                FileName = $"QR_Attendance_{_attendanceDate:yyyyMMdd}_{_session.Replace(" ", "_")}.png",
+                FileName = $"QR_Attendance_{_attendanceDate:yyyyMMdd}_{safeSession}.png",
             };
             if (sfd.ShowDialog() != DialogResult.OK) return;
 
@@ -453,14 +463,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             {
                 const int SAVE_SZ = 480;
                 using var bmp = RenderQrBitmap(_currentToken, SAVE_SZ);
-
-                using var g = Graphics.FromImage(bmp);
-                using var wf = new Font("Segoe UI", 11f, FontStyle.Bold);
-                var sf = new StringFormat { Alignment = StringAlignment.Center };
-                g.DrawString(
-                    $"PUPAcadPortal  •  {_attendanceDate:MMM dd, yyyy}  •  {_session}",
-                    wf, new SolidBrush(Color.FromArgb(155, 155, 155)),
-                    new RectangleF(0, SAVE_SZ - 28, SAVE_SZ, 26), sf);
 
                 bmp.Save(sfd.FileName, ImageFormat.Png);
 

@@ -1,6 +1,7 @@
 ﻿using PUPAcadPortal.PortalContents.Student.LMS.Attendance;
 using PUPAcadPortal.Models;
 using PUPAcadPortal.Services;
+using PUPAcadPortal.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,9 +17,15 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
 
     public partial class AttendanceControl : UserControl
     {
-        //  Identity (set from parent before control is shown) 
+        //  Identity (set from parent before control is shown)
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public int CurrentStudentId { get; set; } = 0;
+        public int CurrentStudentId
+        {
+            get => _currentStudentId > 0 ? _currentStudentId
+                   : (UserSession.StudentID ?? 0);
+            set => _currentStudentId = value;
+        }
+        private int _currentStudentId = 0;
         private List<SubjectMeta> _subjects = new();
         private Dictionary<string, List<AttRecord>> _records = new();
 
@@ -115,7 +122,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             if (cmbCourse.Items.Count > 0) cmbCourse.SelectedIndex = 0;
         }
 
-        // ── Derive Prelim / Midterm / Final Term from date + academic period ──────
+        //  Derive Prelim / Midterm / Final Term from date + academic period 
         private static string DerivePeriod(DateTime date, AcademicPeriod? period)
         {
             if (period == null) return "—";
@@ -149,7 +156,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             return q.ToList();
         }
 
-        // ── Totals ────────────────────────────────────────────────────────────────
+        //  Totals 
         private void ComputeTotals()
         {
             _total = _present = _absent = _late = _excused = 0;

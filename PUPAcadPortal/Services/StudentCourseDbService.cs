@@ -36,8 +36,7 @@ namespace PUPAcadPortal.Services
                 .Include(es => es.SubjectOffering)
                     .ThenInclude(o => o.Activities)
                         .ThenInclude(a => a.Submissions)
-                .Where(es => es.Enrollment.StudentId == studentId
-                          && es.SubjectStatus == "Officially Enrolled")
+                .Where(es => es.Enrollment.StudentId == studentId)
                 .AsNoTracking()
                 .ToList();
 
@@ -95,6 +94,13 @@ namespace PUPAcadPortal.Services
                 .ToList();
         }
 
+        private static readonly string[] _activeEnrollmentStatuses = {
+            "Officially Enrolled",
+            "Pending Payment",
+            "Enrolled",
+            "Enrolled - For Assessment",
+        };
+
         public List<CourseStudentActivityItem> GetActivitiesForStudentOffering(
             string subjectOfferingId,
             int studentId)
@@ -103,11 +109,9 @@ namespace PUPAcadPortal.Services
                 return new List<CourseStudentActivityItem>();
 
             using var ctx = _ctxFactory();
-
             bool enrolled = ctx.EnrollmentSubjects
                 .Any(es => es.SubjectOfferingId == subjectOfferingId
-                        && es.Enrollment.StudentId == studentId
-                        && es.SubjectStatus == "Officially Enrolled");
+                        && es.Enrollment.StudentId == studentId);
 
             if (!enrolled)
                 return new List<CourseStudentActivityItem>();
@@ -120,10 +124,12 @@ namespace PUPAcadPortal.Services
                 .OrderBy(a => a.Deadline)
                 .ToList();
 
-            var activityIds = activities.Select(a => a.ActivityId).ToList();
+            if (activities.Count == 0)
+                return new List<CourseStudentActivityItem>();
+
             var submissions = ctx.Submissions
                 .Where(s => s.StudentId == studentId
-                         && activityIds.Contains(s.ActivityId))
+                         && s.Activity.SubjectOfferingId == subjectOfferingId)
                 .AsNoTracking()
                 .ToList()
                 .GroupBy(s => s.ActivityId)
@@ -184,8 +190,7 @@ namespace PUPAcadPortal.Services
 
             bool enrolled = ctx.EnrollmentSubjects
                 .Any(es => es.SubjectOfferingId == activity.SubjectOfferingId
-                        && es.Enrollment.StudentId == studentId
-                        && es.SubjectStatus == "Officially Enrolled");
+                        && es.Enrollment.StudentId == studentId);
 
             if (!enrolled)
                 throw new InvalidOperationException("The current student is not enrolled in this course.");

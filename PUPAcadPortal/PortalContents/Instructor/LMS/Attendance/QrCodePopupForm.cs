@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Windows.Forms;
 using PUPAcadPortal.Models;
 using PUPAcadPortal.Services;
@@ -11,7 +12,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
     public sealed partial class QrCodePopupForm : Form
     {
-        // ── Colours ───────────────────────────────────────────────────────────────
+        //  Colours 
         private static readonly Color Maroon = Color.FromArgb(106, 0, 0);
         private static readonly Color ActiveGreen = Color.FromArgb(34, 139, 34);
         private static readonly Color ExpiredRed = Color.FromArgb(200, 30, 30);
@@ -21,7 +22,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
         private const int EXPIRY_MINUTES = 10;
 
-        // ── Session data ──────────────────────────────────────────────────────────
+        //  Session data 
         private readonly string _course;
         private readonly string _session;
         private readonly DateTime _date;
@@ -30,24 +31,14 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         private readonly TimeSpan? _startTime;
         private readonly TimeSpan? _endTime;
 
-        // ── Internal state ────────────────────────────────────────────────────────
+        //  Internal state 
         private bool _isExpired;
         private int _animStep;
 
-        // Named reference to the embedded QrCodeAttendanceControl (may be null
-        // when the designer did not add one; fallback path used in that case).
         private QrCodeAttendanceControl? _qrCodeControl = null;
 
-        /// <summary>
-        /// Opens the faculty QR attendance popup.
-        /// </summary>
-        /// <param name="course">Display name of the course (shown in header).</param>
-        /// <param name="session">Session time-slot label (shown in header).</param>
-        /// <param name="date">Session date.</param>
-        /// <param name="sessionId">ClassSession.SessionId – embedded in the QR token.</param>
-        /// <param name="offeringId">SubjectOfferingId – embedded in the QR token.</param>
-        /// <param name="startTime">Session start time – defines the attendance window open.</param>
-        /// <param name="endTime">Session end time – QR expires after this + grace.</param>
+        private DateTime _expiresAtUtc = DateTime.UtcNow;
+
         public QrCodePopupForm(
             string course,
             string session,
@@ -99,7 +90,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             _tick.Start();
         }
 
-        // ── Bind session data to the embedded QR control ──────────────────────────
+        //  Bind session data to the embedded QR control 
         private void BindSessionToQrControl()
         {
             var qrCtl = FindQrControl();
@@ -114,7 +105,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             qrCtl.ExpiryMinutes = EXPIRY_MINUTES;
         }
 
-        // ── Find the QrCodeAttendanceControl hosted in this popup ─────────────────
+        //  Find the QrCodeAttendanceControl hosted in this popup 
         private QrCodeAttendanceControl? FindQrControl()
         {
             if (_qrCodeControl != null) return _qrCodeControl;
@@ -123,11 +114,10 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             return null;
         }
 
-        // ── Generate / reuse QR ───────────────────────────────────────────────────
+        //  Generate / reuse QR 
         public void GenerateNew()
         {
             _isExpired = false;
-            _generatedAt = DateTime.Now;
 
             var qrCtl = FindQrControl();
             if (qrCtl != null)
@@ -136,14 +126,36 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 qrCtl.QrExpired -= OnQrControlExpired;
                 qrCtl.QrExpired += OnQrControlExpired;
                 qrCtl.GenerateNew();
+
+                // Sync the popup-level expiry from the DB row so TickCountdown
+                // shows accurate remaining time even on reopen.
+                SyncExpiryFromDb();
             }
             else
             {
                 RenderQrFallback();
+                _expiresAtUtc = DateTime.UtcNow.AddMinutes(EXPIRY_MINUTES);
             }
 
             SetStatus("● Active", ActiveGreen);
             TickCountdown();
+        }
+
+        private void SyncExpiryFromDb()
+        {
+            if (_sessionId <= 0) return;
+            try
+            {
+                var active = QrSessionService.GetActive(_sessionId);
+                if (active != null)
+                    _expiresAtUtc = active.ExpiresAt;
+                else
+                    _expiresAtUtc = DateTime.UtcNow.AddMinutes(EXPIRY_MINUTES);
+            }
+            catch
+            {
+                _expiresAtUtc = DateTime.UtcNow.AddMinutes(EXPIRY_MINUTES);
+            }
         }
 
         private void OnQrControlExpired(object? sender, EventArgs e)
@@ -155,11 +167,35 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 "Code expired — click Refresh to generate a new one");
         }
 
-        // ── Fallback inline render (used when QrCodeAttendanceControl is absent) ──
+        //  Fallback inline render (used when QrCodeAttendanceControl is absent) 
         private void RenderQrFallback()
         {
-            string token = QrTokenService.Build(
-                _sessionId, _offeringId, _date, _startTime, _endTime);
+            string token;
+            bool builtInMemory = false;
+
+            try
+            {
+                var active = _sessionId > 0 ? QrSessionService.GetActive(_sessionId) : null;
+                if (active != null)
+                {
+                    token = active.Token;
+                    _expiresAtUtc = active.ExpiresAt;
+                }
+                else
+                {
+                    token = QrTokenService.Build(
+                        _sessionId, _offeringId, _date, _startTime, _endTime);
+                    _expiresAtUtc = DateTime.UtcNow.AddMinutes(EXPIRY_MINUTES);
+                    builtInMemory = true;
+                }
+            }
+            catch
+            {
+                token = QrTokenService.Build(
+                    _sessionId, _offeringId, _date, _startTime, _endTime);
+                _expiresAtUtc = DateTime.UtcNow.AddMinutes(EXPIRY_MINUTES);
+                builtInMemory = true;
+            }
 
             const int SZ = 260;
             try
@@ -201,7 +237,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
         private string _currentToken = string.Empty;
 
-        // ── Status / countdown helpers ────────────────────────────────────────────
+        //  Status / countdown helpers 
         private void SetStatus(string text, Color color)
         {
             SafeSetLabel(lblStatus, text);
@@ -228,7 +264,10 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 lblCountdown.Text = "Code has expired — click Refresh to generate a new one";
                 return;
             }
-            var remaining = TimeSpan.FromMinutes(EXPIRY_MINUTES) - (DateTime.Now - _generatedAt);
+
+            // Use the DB expiry time so the countdown is accurate even after
+            // the popup is closed and reopened mid-session.
+            var remaining = _expiresAtUtc - DateTime.UtcNow;
             if (remaining.TotalSeconds <= 0) { ExpireNow(); return; }
             lblCountdown.Text = $"Expires in  {(int)remaining.TotalMinutes:D2}:{remaining.Seconds:D2}";
             lblCountdown.ForeColor = remaining.TotalMinutes < 2
@@ -245,7 +284,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 "Code expired — click Refresh to generate a new one");
         }
 
-        // ── Refresh button ────────────────────────────────────────────────────────
+        //  Refresh button 
         private void BtnRefresh_Click(object? sender, EventArgs e)
         {
             _btnRefresh.Enabled = false;
@@ -268,7 +307,15 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             }
         }
 
-        // ── Download button ───────────────────────────────────────────────────────
+        //  Download button 
+
+        private static string SanitizeFileName(string raw)
+        {
+            foreach (char c in Path.GetInvalidFileNameChars())
+                raw = raw.Replace(c, '_');
+            return raw;
+        }
+
         private void BtnDownload_Click(object? sender, EventArgs e)
         {
             if (_isExpired)
@@ -280,11 +327,12 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
             Bitmap? sourceBmp = FindQrControl()?.GetQrBitmap();
 
+            string safeSession = SanitizeFileName(_session);
             using var sfd = new SaveFileDialog
             {
                 Title = "Save QR Code",
                 Filter = "PNG Image (*.png)|*.png",
-                FileName = $"QR_Attendance_{_date:yyyyMMdd}_{_session.Replace(" ", "_")}.png",
+                FileName = $"QR_Attendance_{_date:yyyyMMdd}_{safeSession}.png",
             };
             if (sfd.ShowDialog() != DialogResult.OK) return;
 
@@ -328,16 +376,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                     saveBmp.UnlockBits(bd);
                 }
 
-                using (var g = Graphics.FromImage(saveBmp))
-                using (var wf = new Font("Segoe UI", 12f, FontStyle.Bold))
-                {
-                    var sf = new StringFormat { Alignment = StringAlignment.Center };
-                    g.DrawString(
-                        $"PUPAcadPortal  •  {_date:MMM dd, yyyy}  •  {_session}",
-                        wf, new SolidBrush(Color.FromArgb(150, 150, 150)),
-                        new RectangleF(0, SAVE - 36, SAVE, 30), sf);
-                }
-
                 saveBmp.Save(sfd.FileName, ImageFormat.Png);
                 saveBmp.Dispose();
                 sourceBmp?.Dispose();
@@ -353,7 +391,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             }
         }
 
-        // ── Close ─────────────────────────────────────────────────────────────────
+        //  Close 
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
             _tick?.Stop(); _tick?.Dispose();

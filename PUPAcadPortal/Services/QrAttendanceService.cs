@@ -14,13 +14,11 @@ namespace PUPAcadPortal.Services
             _ctx = ctx ?? throw new ArgumentNullException(nameof(ctx));
         }
 
-        // Public entry point
 
         public QrScanOutcome ProcessScan(string rawQrText, int studentId)
         {
             var scanTime = DateTime.UtcNow;
 
-            //Cryptographic token validation (pure in-memory) 
             var validation = QrTokenService.Validate(rawQrText);
 
             if (!validation.IsValid)
@@ -33,8 +31,6 @@ namespace PUPAcadPortal.Services
             }
 
             var payload = validation.Payload!;
-
-            // ClassSession existence check 
             var session = _ctx.ClassSessions
                 .Include(cs => cs.SubjectOffering)
                     .ThenInclude(so => so.Subject)
@@ -50,7 +46,6 @@ namespace PUPAcadPortal.Services
                     "Session not found. This QR code may belong to a different system.");
             }
 
-            //  SubjectOfferingId tamper check 
             if (!string.Equals(session.SubjectOfferingId, payload.Oid,
                     StringComparison.OrdinalIgnoreCase))
             {
@@ -62,7 +57,6 @@ namespace PUPAcadPortal.Services
                     "QR code does not match this session. Please scan the correct code.");
             }
 
-            // Active QrSession existence + expiry check 
             var now = DateTime.UtcNow;
             var activeQrSession = _ctx.QrSessions
                 .Where(q => q.SessionId == payload.Sid
@@ -73,7 +67,6 @@ namespace PUPAcadPortal.Services
 
             if (activeQrSession == null)
             {
-                // Auto-expire any stale rows while we are here
                 var stale = _ctx.QrSessions
                     .Where(q => q.SessionId == payload.Sid
                              && q.IsActive == true
@@ -82,7 +75,7 @@ namespace PUPAcadPortal.Services
                 foreach (var s in stale) s.IsActive = false;
                 if (stale.Count > 0)
                 {
-                    try { _ctx.SaveChanges(); } catch { /* best-effort */ }
+                    try { _ctx.SaveChanges(); } catch {  }
                 }
 
                 WriteLog(payload.Sid, studentId, payload.Nonce,
@@ -93,7 +86,6 @@ namespace PUPAcadPortal.Services
                     "This QR code is no longer active. Ask your instructor to generate a new one.");
             }
 
-            // Registered-student check 
             var student = _ctx.Students
                 .Include(s => s.User)
                 .FirstOrDefault(s => s.StudentId == studentId);
@@ -108,7 +100,6 @@ namespace PUPAcadPortal.Services
                     "Your student record was not found. Please contact the registrar.");
             }
 
-            // Enrollment check 
             bool isEnrolled = _ctx.EnrollmentSubjects
                 .Include(es => es.Enrollment)
                 .Any(es => es.SubjectOfferingId == payload.Oid
@@ -125,7 +116,6 @@ namespace PUPAcadPortal.Services
                     + "Please verify your enrollment or contact the registrar.");
             }
 
-            // Duplicate nonce check (replay prevention) 
             bool nonceUsed = _ctx.AttendanceRecords
                 .Any(ar => ar.QrNonce == payload.Nonce);
 
@@ -138,7 +128,6 @@ namespace PUPAcadPortal.Services
                 return QrScanOutcome.Fail("This QR code has already been used.");
             }
 
-            // Duplicate session check (one record per student per session)
             bool alreadyRecorded = _ctx.AttendanceRecords
                 .Any(ar => ar.SessionId == payload.Sid && ar.StudentId == studentId);
 
@@ -214,8 +203,6 @@ namespace PUPAcadPortal.Services
                 SessionId = payload.Sid,
             };
         }
-
-
         private void WriteLog(
             int? sessionId,
             int studentId,
