@@ -9,6 +9,9 @@ public partial class QrSession
 
     public int SessionId { get; set; }
 
+    /// <summary>
+    /// &apos;Cryptographically signed JWT-style token (base64url.sig)&apos;
+    /// </summary>
     public string Token { get; set; } = null!;
 
     public DateTime GeneratedAt { get; set; }
