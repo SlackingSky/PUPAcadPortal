@@ -13,11 +13,11 @@ namespace PUPAcadPortal
     {
         public event Action OnBack;
 
-        private readonly CourseActivity     _course;
+        private readonly CourseActivity _course;
         private readonly IActivityDbService _svc;
 
-        private string _searchTerm  = "";
-        private string _filterType  = "All";
+        private string _searchTerm = "";
+        private string _filterType = "All";
         private System.Windows.Forms.Timer _searchTimer;
         private bool _initializing = true;
 
@@ -25,7 +25,7 @@ namespace PUPAcadPortal
         public AssignmentManagement(CourseActivity course, IActivityDbService svc)
         {
             _course = course;
-            _svc    = svc;
+            _svc = svc;
             InitializeComponent();
 
             _initializing = false;
@@ -106,16 +106,16 @@ namespace PUPAcadPortal
 
         private void UpdateSummaryBar(List<ActivityItem> list)
         {
-            int total   = list.Count;
+            int total = list.Count;
             int pending = list.Sum(a => a.PendingCount);
-            int chk     = list.Sum(a => a.CheckedCount);
+            int chk = list.Sum(a => a.CheckedCount);
             lblSummaryBar.Text =
                 $"Showing {total} of {_course.Activities.Count} activities  " +
                 $"·  {pending} pending checks  ·  {chk} checked";
         }
 
         // ════════════════════════════════════════════════════
-        //  Card + Empty state builders — UNCHANGED from original
+        //  Card + Empty state builders
         // ════════════════════════════════════════════════════
         private Panel BuildEmptyState()
         {
@@ -131,16 +131,22 @@ namespace PUPAcadPortal
                 Text = "📋  No activities found",
                 Font = new Font("Segoe UI", 13F, FontStyle.Bold),
                 ForeColor = Color.FromArgb(160, 160, 170),
-                AutoSize = false, Width = w, Height = 60,
-                TextAlign = ContentAlignment.BottomCenter, Location = new Point(0, 40)
+                AutoSize = false,
+                Width = w,
+                Height = 60,
+                TextAlign = ContentAlignment.BottomCenter,
+                Location = new Point(0, 40)
             });
             pnl.Controls.Add(new Label
             {
                 Text = "Create a new activity using the \"+ Create Activity\" button above.",
                 Font = new Font("Segoe UI", 9.5F),
                 ForeColor = Color.FromArgb(180, 180, 190),
-                AutoSize = false, Width = w, Height = 24,
-                TextAlign = ContentAlignment.MiddleCenter, Location = new Point(0, 102)
+                AutoSize = false,
+                Width = w,
+                Height = 24,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Location = new Point(0, 102)
             });
             return pnl;
         }
@@ -150,17 +156,18 @@ namespace PUPAcadPortal
             int w = Math.Max(700, flpActivities.ClientSize.Width - 40);
             var card = new Panel
             {
-                Width = w, Height = 100,
+                Width = w,
+                Height = 100,
                 BackColor = act.IsPublished ? Color.White : Color.FromArgb(250, 250, 252),
                 Margin = new Padding(0, 0, 0, 10)
             };
 
             Color typeColor = act.Type switch
             {
-                ActivityType.Quiz       => Color.FromArgb(63, 81, 181),
-                ActivityType.Essay      => Color.FromArgb(0, 150, 136),
+                ActivityType.Quiz => Color.FromArgb(63, 81, 181),
+                ActivityType.Essay => Color.FromArgb(0, 150, 136),
                 ActivityType.FileUpload => Color.FromArgb(76, 175, 80),
-                _                       => Color.FromArgb(128, 0, 0)
+                _ => Color.FromArgb(128, 0, 0)
             };
 
             card.Paint += (s, e) =>
@@ -174,17 +181,21 @@ namespace PUPAcadPortal
 
             string typeIcon = act.Type switch
             {
-                ActivityType.Quiz       => "❓ Quiz",
-                ActivityType.Essay      => "📝 Essay",
+                ActivityType.Quiz => "❓ Quiz",
+                ActivityType.Essay => "📝 Essay",
                 ActivityType.FileUpload => "📎 File Upload",
-                _                       => "📋 Assignment"
+                _ => "📋 Assignment"
             };
             card.Controls.Add(new Label
             {
-                Text = typeIcon, Font = new Font("Segoe UI", 7.5F, FontStyle.Bold),
-                BackColor = typeColor, ForeColor = Color.White,
-                Location = new Point(16, 8), AutoSize = false,
-                Size = new Size(92, 18), TextAlign = ContentAlignment.MiddleCenter
+                Text = typeIcon,
+                Font = new Font("Segoe UI", 7.5F, FontStyle.Bold),
+                BackColor = typeColor,
+                ForeColor = Color.White,
+                Location = new Point(16, 8),
+                AutoSize = false,
+                Size = new Size(92, 18),
+                TextAlign = ContentAlignment.MiddleCenter
             });
 
             // Category badge (NEW — shows DB-linked category)
@@ -197,7 +208,8 @@ namespace PUPAcadPortal
                     BackColor = Color.FromArgb(240, 230, 255),
                     ForeColor = Color.FromArgb(80, 0, 120),
                     Location = new Point(116, 8),
-                    AutoSize = false, Size = new Size(110, 18),
+                    AutoSize = false,
+                    Size = new Size(110, 18),
                     TextAlign = ContentAlignment.MiddleCenter
                 });
             }
@@ -210,15 +222,17 @@ namespace PUPAcadPortal
                     ? Color.FromArgb(30, 30, 35)
                     : Color.FromArgb(120, 120, 130),
                 Location = new Point(16, 30),
-                Width = w - 430, Height = 24, AutoEllipsis = true
+                Width = w - 430,
+                Height = 24,
+                AutoEllipsis = true
             });
 
             TimeSpan left = act.Deadline - DateTime.Now;
             string dlText = act.IsOverdue ? "⚠ Overdue"
-                         : left.Days == 0  ? "⏰ Due Today"
+                         : left.Days == 0 ? "⏰ Due Today"
                          : $"📅 {act.Deadline:MMM dd, yyyy}";
-            Color dlColor  = act.IsOverdue       ? Color.Red
-                         : left.Days <= 1         ? Color.OrangeRed
+            Color dlColor = act.IsOverdue ? Color.Red
+                         : left.Days <= 1 ? Color.OrangeRed
                          : Color.FromArgb(80, 80, 90);
             card.Controls.Add(new Label
             {
@@ -226,7 +240,8 @@ namespace PUPAcadPortal
                 Font = new Font("Segoe UI", 8.5F,
                                act.IsOverdue ? FontStyle.Bold : FontStyle.Regular),
                 ForeColor = dlColor,
-                Location = new Point(16, 58), AutoSize = true
+                Location = new Point(16, 58),
+                AutoSize = true
             });
 
             card.Controls.Add(new Label
@@ -234,7 +249,8 @@ namespace PUPAcadPortal
                 Text = $"🏆 {act.Points} pts",
                 Font = new Font("Segoe UI", 8.5F),
                 ForeColor = Color.FromArgb(100, 100, 110),
-                Location = new Point(180, 58), AutoSize = true
+                Location = new Point(180, 58),
+                AutoSize = true
             });
 
             // Module link badge (NEW)
@@ -245,7 +261,8 @@ namespace PUPAcadPortal
                     Text = $"📦 {act.LinkedModuleTitle}",
                     Font = new Font("Segoe UI", 7.5F, FontStyle.Italic),
                     ForeColor = Color.FromArgb(80, 80, 110),
-                    Location = new Point(280, 58), AutoSize = true
+                    Location = new Point(280, 58),
+                    AutoSize = true
                 });
             }
 
@@ -256,42 +273,50 @@ namespace PUPAcadPortal
                        $"·  ⏳ {act.PendingCount} pending",
                 Font = new Font("Segoe UI", 8F),
                 ForeColor = Color.FromArgb(100, 100, 110),
-                Location = new Point(16, 78), AutoSize = true
+                Location = new Point(16, 78),
+                AutoSize = true
             });
 
+            // --- Context Menu for Edit, Copy, Delete ---
+            var cms = new ContextMenuStrip();
+
+            var mnuEdit = new ToolStripMenuItem("Edit", null, (s, e) => OpenActivityForm(act));
+            var mnuCopy = new ToolStripMenuItem("Copy", null, (s, e) => ShowCopyDialog(act));
+            var mnuDelete = new ToolStripMenuItem("Delete", null, (s, e) => DeleteActivity(act));
+
+            cms.Items.Add(mnuEdit);
+            cms.Items.Add(mnuCopy);
+            cms.Items.Add(mnuDelete);
+
+            // Attach context menu to the card 
+            card.ContextMenuStrip = cms;
+
+            // Ensure right-clicking on any labels (like title or dates) also triggers the menu
+            foreach (Control c in card.Controls)
+            {
+                if (c is Label) c.ContextMenuStrip = cms;
+            }
+
+            // --- Visible Buttons (Check & Publish/Unpublish) ---
             int btnY = 32, right = w - 14;
             const int btnH = 28, gap = 6;
 
             var btnCheck = CardBtn("Check", Color.FromArgb(63, 81, 181), 80, btnH);
-            right -= btnCheck.Width; btnCheck.Location = new Point(right, btnY);
+            right -= btnCheck.Width;
+            btnCheck.Location = new Point(right, btnY);
             btnCheck.Click += (s, e) => OpenSubmissions(act);
             card.Controls.Add(btnCheck);
 
             right -= gap;
-            var btnEdit = CardBtn("Edit", Color.FromArgb(0, 130, 115), 60, btnH);
-            right -= btnEdit.Width; btnEdit.Location = new Point(right, btnY);
-            btnEdit.Click += (s, e) => OpenActivityForm(act);
-            card.Controls.Add(btnEdit);
 
-            right -= gap;
-            var btnCopy = CardBtn("Copy", Color.FromArgb(90, 90, 100), 60, btnH);
-            right -= btnCopy.Width; btnCopy.Location = new Point(right, btnY);
-            btnCopy.Click += (s, e) => ShowCopyDialog(act);
-            card.Controls.Add(btnCopy);
-
-            right -= gap;
-            var btnDel = CardBtn("Delete", Color.FromArgb(185, 50, 50), 68, btnH);
-            right -= btnDel.Width; btnDel.Location = new Point(right, btnY);
-            btnDel.Click += (s, e) => DeleteActivity(act);
-            card.Controls.Add(btnDel);
-
-            right -= gap;
             Color pubColor = act.IsPublished
                 ? Color.FromArgb(180, 100, 0)
                 : Color.FromArgb(22, 130, 60);
             string pubText = act.IsPublished ? "Unpublish" : "Publish";
+
             var btnPublish = CardBtn(pubText, pubColor, 90, btnH);
-            right -= btnPublish.Width; btnPublish.Location = new Point(right, btnY);
+            right -= btnPublish.Width;
+            btnPublish.Location = new Point(right, btnY);
             btnPublish.Click += (s, e) => TogglePublish(act);
             card.Controls.Add(btnPublish);
 
@@ -301,8 +326,10 @@ namespace PUPAcadPortal
         private static buttonRounded CardBtn(string text, Color bg, int w, int h)
             => new buttonRounded
             {
-                Text = text, Size = new Size(w, h),
-                BackColor = bg, ForeColor = Color.White,
+                Text = text,
+                Size = new Size(w, h),
+                BackColor = bg,
+                ForeColor = Color.White,
                 BorderRadius = 8,
                 Font = new Font("Segoe UI", 8.5F, FontStyle.Bold),
                 Cursor = Cursors.Hand
@@ -316,7 +343,7 @@ namespace PUPAcadPortal
 
             // Load dropdowns for the form
             var categories = _svc.GetCategoriesForOffering(_course.SubjectOfferingId);
-            var modules    = _svc.GetModulesForOffering(_course.SubjectOfferingId);
+            var modules = _svc.GetModulesForOffering(_course.SubjectOfferingId);
 
             var form = new ActivityFormPage(_course, existing, categories, modules);
             form.Dock = DockStyle.Fill;

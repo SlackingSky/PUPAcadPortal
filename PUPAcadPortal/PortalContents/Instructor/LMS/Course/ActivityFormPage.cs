@@ -41,6 +41,7 @@ namespace PUPAcadPortal
             _dbModules = modules ?? new();
 
             InitializeComponent();
+            AddMissingLabels();
             PopulateForm();
         }
 
@@ -104,6 +105,32 @@ namespace PUPAcadPortal
 
             if (cmbType.SelectedItem?.ToString() == "Quiz" && _questions.Count > 0)
                 nudPoints.Value = _questions.Sum(q => q.Points);
+        }
+
+        private void AddMissingLabels()
+        {
+            // Local helper to create and place a label directly above a target control
+            void InjectLabel(Control target, string text)
+            {
+                if (target.Parent == null) return;
+
+                var lbl = new Label
+                {
+                    Text = text,
+                    AutoSize = true,
+                    Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                    ForeColor = Color.FromArgb(80, 80, 80),
+                    Location = new Point(target.Left, target.Top - 18) // Places it 18px above the control
+                };
+                target.Parent.Controls.Add(lbl);
+            }
+
+            // Inject labels for the main input fields based on your existing variable names
+            InjectLabel(txtTitle, "Activity Title");
+            InjectLabel(cmbType, "Activity Type");
+            InjectLabel(dtpDeadline, "Deadline");
+            InjectLabel(nudPoints, "Points");
+            InjectLabel(txtDescription, "Description / Instructions");
         }
 
         private static readonly string[] ChoiceLetters = { "A", "B", "C", "D", "E", "F", "G", "H" };

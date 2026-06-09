@@ -295,14 +295,23 @@ namespace PUPAcadPortal
                 BackColor = sub.IsChecked ? Color.FromArgb(245, 245, 245) : Color.White
             };
 
+            // FIXED LAYOUT CALCULATIONS (Right-to-Left Sequential Alignment)
+            // 1. Position the "/ Max" divider label first
+            right -= lblDivider.Width;
+            lblDivider.Location = new Point(right, 33);
+
+            // 2. Add a tiny padding gap before the text box
+            right -= 4;
+
+            // 3. Position the input text box to the left of the divider
             right -= txtScore.Width;
             int scoreX = right;
             txtScore.Location = new Point(scoreX, 28);
 
-            right -= 4;
-            lblDivider.Location = new Point(right - 50, 34);
-            right -= 50 + gap;
+            // 4. Update bounds tracking for any further left-hand buttons (like Download)
+            right -= gap;
 
+            // 5. Place the "Saved" tracking text directly underneath the score text box
             lblSaved.Location = new Point(scoreX, 62);
 
             //  Save score to DB 
@@ -382,12 +391,8 @@ namespace PUPAcadPortal
                 right -= btnDl.Width; btnDl.Location = new Point(right, 28);
                 btnDl.Click += (s, e) =>
                 {
-                    // sub.EssayContent holds the Cloudinary URL for FileUpload activities
-                    // (StudentCourseDbService stores SubmittedFile in EssayContent via mapping)
-                    // Fall back to checking SubmissionDbId if direct URL is absent.
                     string fileUrl = sub.EssayContent?.Trim() ?? "";
 
-                    // If EssayContent is not a URL, nothing useful to open
                     bool isUrl = fileUrl.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
                               || fileUrl.StartsWith("https://", StringComparison.OrdinalIgnoreCase);
 
