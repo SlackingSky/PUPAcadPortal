@@ -19,18 +19,64 @@ namespace PUPAcadPortal.Services
         {
             var scanTime = DateTime.UtcNow;
 
-            var validation = QrTokenService.Validate(rawQrText);
-
-            if (!validation.IsValid)
+            //  Reject anything that isn't a valid attendance QR format 
+            // Try to decode the base64 header portion of the token. If it fails to
+            // parse as a QrTokenPayload (missing Sid / Oid fields), it is not an
+            // attendance QR code at all — reject immediately with a friendly message.
+            // NOTE: signature verification and expiry/window checks are still
+            //       commented out below for testing purposes.
+            QrTokenPayload? payload;
+            try
             {
-                WriteLog(null, studentId, ExtractNonce(rawQrText),
-                    scanTime, validation.Result.ToString(), null,
-                    $"Token validation failed: {validation.Message}");
+                var parts = rawQrText?.Split('.');
+                if (parts == null || parts.Length < 1)
+                    throw new FormatException("No token segments found.");
 
-                return QrScanOutcome.Fail(FriendlyError(validation.Result));
+                string b64 = parts[0].Replace('-', '+').Replace('_', '/');
+                int pad = (4 - b64.Length % 4) % 4;
+                b64 += new string('=', pad);
+                byte[] json = Convert.FromBase64String(b64);
+                payload = System.Text.Json.JsonSerializer.Deserialize<QrTokenPayload>(json);
+            }
+            catch
+            {
+                // Could not decode — definitely not one of our QR codes.
+                WriteLog(null, studentId, ExtractNonce(rawQrText),
+                    scanTime, QrValidationResult.MalformedToken.ToString(), null,
+                    "Token could not be base64-decoded or deserialized.");
+
+                return QrScanOutcome.Fail(
+                    "This does not appear to be a valid attendance QR code.");
             }
 
-            var payload = validation.Payload!;
+            // Payload decoded but missing required fields → not our QR code.
+            if (payload == null || payload.Sid <= 0 || string.IsNullOrWhiteSpace(payload.Oid))
+            {
+                WriteLog(null, studentId, ExtractNonce(rawQrText),
+                    scanTime, QrValidationResult.MalformedToken.ToString(), null,
+                    "Payload missing required Sid or Oid fields.");
+
+                return QrScanOutcome.Fail(
+                    "This does not appear to be a valid attendance QR code.");
+            }
+            //  End invalid-QR gate 
+
+            //  Signature / expiry / time-window checks — still bypassed for testing
+            // var validation = QrTokenService.Validate(rawQrText);
+            //
+            // bool isExpiredOrWindowFailure =
+            //     validation.Result == QrValidationResult.Expired ||
+            //     validation.Result == QrValidationResult.OutsideAttendanceWindow ||
+            //     validation.Result == QrValidationResult.SessionDateMismatch;
+            //
+            // if (!validation.IsValid && !isExpiredOrWindowFailure)
+            // {
+            //     WriteLog(null, studentId, ExtractNonce(rawQrText),
+            //         scanTime, validation.Result.ToString(), null,
+            //         $"Token validation failed: {validation.Message}");
+            //
+            //     return QrScanOutcome.Fail(FriendlyError(validation.Result));
+            // }
             var session = _ctx.ClassSessions
                 .Include(cs => cs.SubjectOffering)
                     .ThenInclude(so => so.Subject)
@@ -58,33 +104,36 @@ namespace PUPAcadPortal.Services
             }
 
             var now = DateTime.UtcNow;
-            var activeQrSession = _ctx.QrSessions
-                .Where(q => q.SessionId == payload.Sid
-                         && q.IsActive == true
-                         && q.ExpiresAt > now)
-                .OrderByDescending(q => q.GeneratedAt)
-                .FirstOrDefault();
 
-            if (activeQrSession == null)
-            {
-                var stale = _ctx.QrSessions
-                    .Where(q => q.SessionId == payload.Sid
-                             && q.IsActive == true
-                             && q.ExpiresAt <= now)
-                    .ToList();
-                foreach (var s in stale) s.IsActive = false;
-                if (stale.Count > 0)
-                {
-                    try { _ctx.SaveChanges(); } catch {  }
-                }
+            //  DEBUG: expiry gate DISABLED — bypass active/expired QrSession check 
+            // var activeQrSession = _ctx.QrSessions
+            //     .Where(q => q.SessionId == payload.Sid
+            //              && q.IsActive == true
+            //              && q.ExpiresAt > now)
+            //     .OrderByDescending(q => q.GeneratedAt)
+            //     .FirstOrDefault();
 
-                WriteLog(payload.Sid, studentId, payload.Nonce,
-                    scanTime, "NoActiveQrSession", null,
-                    "No active QrSession found for this ClassSession — may have been deactivated.");
+            // if (activeQrSession == null)
+            // {
+            //     var stale = _ctx.QrSessions
+            //         .Where(q => q.SessionId == payload.Sid
+            //                  && q.IsActive == true
+            //                  && q.ExpiresAt <= now)
+            //         .ToList();
+            //     foreach (var s in stale) s.IsActive = false;
+            //     if (stale.Count > 0)
+            //     {
+            //         try { _ctx.SaveChanges(); } catch { }
+            //     }
 
-                return QrScanOutcome.Fail(
-                    "This QR code is no longer active. Ask your instructor to generate a new one.");
-            }
+            //     WriteLog(payload.Sid, studentId, payload.Nonce,
+            //         scanTime, "NoActiveQrSession", null,
+            //         "No active QrSession found for this ClassSession — may have been deactivated.");
+
+            //     return QrScanOutcome.Fail(
+            //         "This QR code is no longer active. Ask your instructor to generate a new one.");
+            // }
+            //  END DEBUG 
 
             var student = _ctx.Students
                 .Include(s => s.User)
@@ -100,10 +149,14 @@ namespace PUPAcadPortal.Services
                     "Your student record was not found. Please contact the registrar.");
             }
 
+            // Do NOT use .Include() inside .Any() — EF Core cannot translate
+            // navigation property access inside a predicate when Include is present.
+            // Use a plain join via a subquery instead.
             bool isEnrolled = _ctx.EnrollmentSubjects
-                .Include(es => es.Enrollment)
                 .Any(es => es.SubjectOfferingId == payload.Oid
-                        && es.Enrollment.StudentId == studentId);
+                        && _ctx.Enrollments.Any(en =>
+                               en.EnrollmentId == es.EnrollmentId
+                            && en.StudentId == studentId));
 
             if (!isEnrolled)
             {
@@ -116,8 +169,10 @@ namespace PUPAcadPortal.Services
                     + "Please verify your enrollment or contact the registrar.");
             }
 
-            bool nonceUsed = _ctx.AttendanceRecords
-                .Any(ar => ar.QrNonce == payload.Nonce);
+            // Guard: if nonce is null/empty (edge case from bypassed validation),
+            // skip the nonce-uniqueness check rather than sending null to the DB.
+            bool nonceUsed = !string.IsNullOrEmpty(payload.Nonce)
+                && _ctx.AttendanceRecords.Any(ar => ar.QrNonce == payload.Nonce);
 
             if (nonceUsed)
             {

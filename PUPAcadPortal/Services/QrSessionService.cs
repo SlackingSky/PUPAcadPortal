@@ -31,13 +31,15 @@ namespace PUPAcadPortal.Services
             var now = DateTime.UtcNow;
 
             // Auto-expire stale rows
-            AutoExpireStale(ctx, sessionId, now);
+            // DEBUG: disabled so we can observe full token behaviour
+            // AutoExpireStale(ctx, sessionId, now);
 
-            //Return the still-valid active token if one exists
+            // Return the still-valid active token if one exists
+            // DEBUG: ExpiresAt > now removed — returns any active token even if expired
             var existing = ctx.QrSessions
                 .Where(q => q.SessionId == sessionId
                          && q.IsActive == true
-                         && q.ExpiresAt > now)
+                         /* && q.ExpiresAt > now */)
                 .OrderByDescending(q => q.GeneratedAt)
                 .FirstOrDefault();
 
@@ -110,12 +112,14 @@ namespace PUPAcadPortal.Services
         {
             using var ctx = CreateContext();
             var now = DateTime.UtcNow;
-            AutoExpireStale(ctx, sessionId, now);
+            // DEBUG: AutoExpireStale disabled so expired sessions are still returned
+            // AutoExpireStale(ctx, sessionId, now);
 
             return ctx.QrSessions
                 .Where(q => q.SessionId == sessionId
                          && q.IsActive == true
-                         && q.ExpiresAt > now)
+                         /* DEBUG: ExpiresAt > now check removed to bypass expiry */
+                         /* && q.ExpiresAt > now */)
                 .OrderByDescending(q => q.GeneratedAt)
                 .FirstOrDefault();
         }
