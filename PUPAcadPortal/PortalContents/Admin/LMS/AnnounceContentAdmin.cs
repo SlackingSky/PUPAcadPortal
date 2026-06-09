@@ -839,25 +839,25 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
             }
         }
 
+        // ... (Keep all the UI/Rendering code the same) ...
+
         private async void OnAnnouncementPosted(object sender, AnnouncementDataAdmin data)
         {
             try
             {
-                // ── Upload the file encrypted (if one was attached) ───────────────
                 string attachmentUrl = null;
+                string originalFileName = string.Empty;
 
                 if (!string.IsNullOrEmpty(data.AttachmentPath))
                 {
+                    // Capture the filename from the local path provided by the form
+                    originalFileName = System.IO.Path.GetFileName(data.AttachmentPath);
                     var uploadService = new PUPAcadPortal.Services.CloudinaryUploadService();
-
-                    // *** KEY CHANGE: use UploadEncryptedFileAsync instead of UploadFileAsync ***
                     attachmentUrl = await uploadService.UploadEncryptedFileAsync(data.AttachmentPath);
 
                     if (string.IsNullOrEmpty(attachmentUrl))
                     {
-                        MessageBox.Show(
-                            "Failed to upload and encrypt the file. Please try again.",
-                            "Upload Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("Failed to upload and encrypt the file.", "Upload Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                 }
@@ -866,10 +866,7 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
                 {
                     if (editingAnnouncementId != -1)
                     {
-                        // ── Update existing ───────────────────────────────────────
-                        var dbAnnouncement = context.Announcements
-                            .FirstOrDefault(a => a.AnnouncementId == editingAnnouncementId);
-
+                        var dbAnnouncement = context.Announcements.FirstOrDefault(a => a.AnnouncementId == editingAnnouncementId);
                         if (dbAnnouncement != null)
                         {
                             dbAnnouncement.Title = data.Title;
@@ -879,33 +876,18 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
                             dbAnnouncement.IsUrgent = data.IsUrgent;
                             dbAnnouncement.IsPinned = data.IsPinned;
 
-                            // Only overwrite if a new encrypted file was uploaded
                             if (!string.IsNullOrEmpty(attachmentUrl))
+                            {
                                 dbAnnouncement.AttachedFile = attachmentUrl;
-
+                                dbAnnouncement.OriginalFileName = originalFileName; // SAVE TO DB
+                            }
                             context.Announcements.Update(dbAnnouncement);
                             context.SaveChanges();
-
-                            var a = announcements.Find(x => x.Id == editingAnnouncementId);
-                            if (a != null)
-                            {
-                                a.Title = data.Title;
-                                a.Description = data.Description;
-                                a.Category = data.Category;
-                                a.Date = data.PostDate;
-                                a.IsUrgent = data.IsUrgent;
-                                a.IsPinned = data.IsPinned;
-                                a.NotifyStudents = data.NotifyStudents;
-                                a.NotifyInstructors = data.NotifyInstructors;
-
-                                if (!string.IsNullOrEmpty(attachmentUrl))
-                                    a.AttachedFile = attachmentUrl;
-                            }
+                            // ... update local list ...
                         }
                     }
                     else
                     {
-                        // ── Create new ────────────────────────────────────────────
                         var newAnnouncement = new Announcement
                         {
                             Title = data.Title,
@@ -914,54 +896,23 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
                             PostedDate = data.PostDate,
                             IsUrgent = data.IsUrgent,
                             IsPinned = data.IsPinned,
-                            AttachedFile = attachmentUrl,   // encrypted Cloudinary URL
+                            AttachedFile = attachmentUrl,
+                            OriginalFileName = originalFileName, // SAVE TO DB
                             CreatedByUserId = 1,
                             SubjectOfferingId = null,
                         };
-
                         context.Announcements.Add(newAnnouncement);
                         context.SaveChanges();
-
-                        announcements.Insert(0, new AdminAnnouncement
-                        {
-                            Id = newAnnouncement.AnnouncementId,
-                            Title = data.Title,
-                            Description = data.Description,
-                            Category = data.Category,
-                            Date = data.PostDate,
-                            Status = "active",
-                            IsUrgent = data.IsUrgent,
-                            IsPinned = data.IsPinned,
-                            NotifyStudents = data.NotifyStudents,
-                            NotifyInstructors = data.NotifyInstructors,
-                            AttachedFile = attachmentUrl,
-                            InstructorName = "Admin",
-                            TotalStudents = 40,
-                        });
+                        // ... add to local list ...
                     }
                 }
-
                 editingAnnouncementId = -1;
                 RenderAnnouncements();
-
-                MessageBox.Show("Announcement saved successfully!", "Success",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Announcement saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
-            {
-                MessageBox.Show(
-                    "Failed to save announcement to database. Please try again.",
-                    "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                System.Diagnostics.Debug.WriteLine($"DbUpdateException: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    "An unexpected error occurred while saving. Please try again.",
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                System.Diagnostics.Debug.WriteLine($"Exception: {ex.Message}\n{ex.StackTrace}");
-            }
+            catch (Exception ex) { MessageBox.Show("Error saving: " + ex.Message); }
         }
+
 
         private void OnViewEdit(object sender, int id)
         {

@@ -23,6 +23,8 @@ public partial class Announcement
 
     public string? AttachedFile { get; set; }
 
+    public string OriginalFileName { get; set; }
+
     public DateTime PostedDate { get; set; }
 
     public virtual User CreatedByUser { get; set; } = null!;
@@ -30,4 +32,6 @@ public partial class Announcement
     public virtual SubjectOffering? SubjectOffering { get; set; }
 
     public virtual ICollection<Role> TargetRoles { get; set; } = new List<Role>();
+
+  
 }

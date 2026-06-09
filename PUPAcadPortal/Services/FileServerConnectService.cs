@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Text;
+using System.Threading.Tasks;
 using PUPAcadPortal.Utils;
 
 namespace PUPAcadPortal.Services
@@ -13,18 +14,9 @@ namespace PUPAcadPortal.Services
         private static string _cloudSecret = ConfigurationManager.AppSettings["CloudinaryApiSecret"] ?? "None";
         private static bool _credentialsDecrypted = false;
 
-        public static string? CloudName 
-        { 
-            get; private set; 
-        }
-        public static string? CloudKey 
-        { 
-            get; private set; 
-        }
-        public static string? CloudSecret 
-        { 
-            get; private set; 
-        }
+        public static string? CloudName { get; private set; }
+        public static string? CloudKey { get; private set; }
+        public static string? CloudSecret { get; private set; }
 
         public async static Task GetDecryptedCredentialsAsync()
         {
@@ -42,8 +34,6 @@ namespace PUPAcadPortal.Services
         {
             return await Task.Run(() =>
             {
-                // Convert bytes to base64 string so we can use Encrypt(string)
-                // Dont remove this pls, it is necessary for the encryption and decryption to work properly
                 var plainBase64 = Convert.ToBase64String(fileData);
                 var encryptedString = Encryptor.Encrypt(plainBase64);
                 return Encoding.UTF8.GetBytes(encryptedString);
@@ -58,16 +48,6 @@ namespace PUPAcadPortal.Services
                 var plainBase64 = Encryptor.Decrypt(encryptedString);
                 return Convert.FromBase64String(plainBase64);
             });
-        }
-
-        public async static Task<string> EncryptFileNameAsync(string fileName)
-        {
-            return await Task.Run(() => Encryptor.Encrypt(fileName));
-        }
-
-        public async static Task<string> DecryptFileNameAsync(string encryptedName)
-        {
-            return await Task.Run(() => Encryptor.Decrypt(encryptedName));
         }
     }
 }

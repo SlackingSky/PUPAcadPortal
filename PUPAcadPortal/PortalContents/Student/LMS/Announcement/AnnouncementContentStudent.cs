@@ -47,6 +47,8 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             /// <summary>True when posted within the last 3 days and not yet read.</summary>
             public bool IsNew { get; set; }
             /// <summary>Simulated viewer count (out of TotalStudents).</summary>
+
+            public string OriginalFileName { get; set; } = string.Empty;
             public int ViewedCount { get; set; } = 0;
             public int TotalStudents { get; set; } = 40;
             public string Status { get; set; } = "active";
@@ -1149,13 +1151,28 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                             ViewedCount = 0,
                             TotalStudents = 40,
                             Status = "active",
+                            OriginalFileName = ann.OriginalFileName ?? string.Empty,
                             Attachments = new(),
                         };
 
-                        // Parse attachment if present
                         if (!string.IsNullOrWhiteSpace(ann.AttachedFile))
                         {
-                            string fileExt = System.IO.Path.GetExtension(ann.AttachedFile).ToLower().TrimStart('.');
+                            // --- FIX STARTS HERE ---
+                            string displayFileName;
+                            if (!string.IsNullOrWhiteSpace(ann.OriginalFileName))
+                            {
+                                displayFileName = ann.OriginalFileName;
+                            }
+                            else
+                            {
+                                // If we have no original name, get the extension from the URL 
+                                // and call it "downloaded_file" instead of using the URL string.
+                                string ext = System.IO.Path.GetExtension(ann.AttachedFile);
+                                displayFileName = "downloaded_file" + (string.IsNullOrEmpty(ext) ? ".dat" : ext);
+                            }
+                            // --- FIX ENDS HERE ---
+
+                            string fileExt = System.IO.Path.GetExtension(displayFileName).ToLower().TrimStart('.');
                             string fileType = fileExt switch
                             {
                                 "pdf" => "pdf",
@@ -1172,9 +1189,9 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
 
                             studentAnn.Attachments.Add(new AnnouncementAttachment
                             {
-                                FileName = ann.AttachedFile,
+                                FileName = displayFileName, // Now this is either the real name or "downloaded_file.ext"
                                 FileType = fileType,
-                                FilePath = ann.AttachedFile,
+                                FilePath = ann.AttachedFile, // Keep the URL here for the actual download
                                 FileSizeBytes = 0,
                             });
                         }
@@ -1185,9 +1202,10 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error loading announcements from database: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error loading announcements: {ex.Message}");
             }
         }
+
 
         //  SNAPSHOT  (for responsive scaling)
         private void SnapshotControls(Control.ControlCollection controls)

@@ -60,11 +60,11 @@ namespace PUPAcadPortal
             public int ViewedCount { get; set; }
             public int TotalStudents { get; set; } = 40;
             public string? AttachedFile { get; set; }
+            public string OriginalFileName { get; set; } = string.Empty; // ADDED THIS
 
             public bool NotifyStudents { get; set; } = false;
             public bool NotifyInstructors { get; set; } = false;
         }
-
         public AnnouncementContentInst()
         {
             InitializeComponent();
@@ -183,29 +183,18 @@ namespace PUPAcadPortal
                     announcements.Add(new Announcement
                     {
                         Id = ann.AnnouncementId,
-
                         Title = ann.Title,
-
                         Description = ann.Content,
-
                         Category = ann.Category,
-
                         Status = "active",
-
                         IsPinned = ann.IsPinned,
-
                         IsUrgent = ann.IsUrgent,
-
                         AttachedFile = ann.AttachedFile,
-
+                        OriginalFileName = ann.OriginalFileName, // ADDED THIS: Map from DB to Local Class
                         Date = ann.PostedDate,
-
                         ViewedCount = 0,
-
                         TotalStudents = 0,
-
                         NotifyStudents = false,
-
                         NotifyInstructors = false
                     });
                 }

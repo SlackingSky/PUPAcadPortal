@@ -9,16 +9,10 @@ using System.Windows.Forms;
 
 namespace PUPAcadPortal
 {
-    // This UserControl provides a form for instructors to create or edit announcements
-
     public partial class CreateAnnouncement : UserControl
     {
         public DialogResult DialogResult { get; private set; } = DialogResult.Cancel;
-
-        // Original path chosen by the user (for display only)
         private string _attachedFilePath = string.Empty;
-
-        // Path of the AES-encrypted temp copy — this is what gets uploaded
         private string _encryptedTempPath = string.Empty;
 
         private static readonly Color Maroon = Color.FromArgb(139, 0, 0);
@@ -32,35 +26,25 @@ namespace PUPAcadPortal
             RestoreAllPlaceholders();
         }
 
-        // ── Event wiring ──────────────────────────────────────────────────────
-
         private void WireEvents()
         {
             btnCancel.Click += (s, e) => ClosePanel();
-            btnPost.Click += BtnPost_ClickAsync;   // async handler (see below)
+            btnPost.Click += BtnPost_ClickAsync;
             btnBrowse.Click += BtnBrowse_ClickAsync;
-
             txtTitle.GotFocus += (s, e) => ClearPlaceholder(txtTitle, "Insert announcement title here...");
             txtTitle.LostFocus += (s, e) => RestorePlaceholder(txtTitle, "Insert announcement title here...");
-
             txtDescription.GotFocus += (s, e) => ClearPlaceholder(txtDescription, "Write your announcement details here...");
             txtDescription.LostFocus += (s, e) => RestorePlaceholder(txtDescription, "Write your announcement details here...");
-
             txtDescription.TextChanged += TxtDescription_TextChanged;
-
             pnlAttachment.Click += BtnBrowse_ClickAsync;
             lblAttachHint.Click += BtnBrowse_ClickAsync;
             lblAttachHint2.Click += BtnBrowse_ClickAsync;
             picAttachIcon.Click += BtnBrowse_ClickAsync;
-
             pnlAttachment.MouseEnter += (s, e) => pnlAttachment.BackColor = Color.FromArgb(245, 245, 245);
             pnlAttachment.MouseLeave += (s, e) => pnlAttachment.BackColor = Color.White;
-
             lnkSelectAll.LinkClicked += (s, e) => SetAllCourses(true);
             lnkClearAll.LinkClicked += (s, e) => SetAllCourses(false);
         }
-
-        // ── Close / placeholders ──────────────────────────────────────────────
 
         private void ClosePanel()
         {
@@ -75,20 +59,12 @@ namespace PUPAcadPortal
 
         private void ClearPlaceholder(TextBox tb, string placeholder)
         {
-            if (tb.Text == placeholder)
-            {
-                tb.Text = string.Empty;
-                tb.ForeColor = Color.Black;
-            }
+            if (tb.Text == placeholder) { tb.Text = string.Empty; tb.ForeColor = Color.Black; }
         }
 
         private void RestorePlaceholder(TextBox tb, string placeholder)
         {
-            if (string.IsNullOrWhiteSpace(tb.Text))
-            {
-                tb.Text = placeholder;
-                tb.ForeColor = PlaceholderGray;
-            }
+            if (string.IsNullOrWhiteSpace(tb.Text)) { tb.Text = placeholder; tb.ForeColor = PlaceholderGray; }
         }
 
         private void RestoreAllPlaceholders()
@@ -98,7 +74,6 @@ namespace PUPAcadPortal
         }
 
         private const int MaxDescChars = 500;
-
         private void TxtDescription_TextChanged(object sender, EventArgs e)
         {
             if (txtDescription.ForeColor == PlaceholderGray) return;
@@ -107,88 +82,61 @@ namespace PUPAcadPortal
             lblCharCount.ForeColor = remaining < 50 ? Color.Firebrick : Color.Gray;
         }
 
-        // ── Browse & Encrypt ──────────────────────────────────────────────────
-
         private async void BtnBrowse_ClickAsync(object sender, EventArgs e)
         {
             using var dlg = new OpenFileDialog
             {
                 Title = "Select Attachment",
-                Filter = "Documents (*.pdf;*.docx;*.pptx)|*.pdf;*.docx;*.pptx" +
-                         "|Images (*.png;*.jpg)|*.png;*.jpg" +
-                         "|All Files (*.*)|*.*"
+                Filter = "Documents (*.pdf;*.docx;*.pptx)|*.pdf;*.docx;*.pptx|Images (*.png;*.jpg)|*.png;*.jpg|All Files (*.*)|*.*"
             };
 
-            if (dlg.ShowDialog() != DialogResult.OK)
-                return;
+            if (dlg.ShowDialog() != DialogResult.OK) return;
 
             string chosenPath = dlg.FileName;
             string fileName = Path.GetFileName(chosenPath);
             long fileSize = new FileInfo(chosenPath).Length;
-            string sizeStr = fileSize >= 1_048_576
-                                    ? $"{fileSize / 1_048_576.0:F1} MB"
-                                    : $"{fileSize / 1024.0:F0} KB";
+            string sizeStr = fileSize >= 1_048_576 ? $"{fileSize / 1_048_576.0:F1} MB" : $"{fileSize / 1024.0:F0} KB";
 
-            // Show "encrypting…" feedback
             lblAttachHint.Text = $"{fileName}  (encrypting…)";
             lblAttachHint.ForeColor = Color.DimGray;
             lblAttachHint2.Text = sizeStr;
             lblAttachHint2.ForeColor = Color.Gray;
-            btnPost.Enabled = false;   // disable Post while encrypting
+            btnPost.Enabled = false;
 
             try
             {
-                // Delete any previous temp file
                 DeleteEncryptedTemp();
-
                 byte[] originalBytes = await File.ReadAllBytesAsync(chosenPath);
                 byte[] encryptedBytes = await FileServerConnectService.EncryptFileAsync(originalBytes);
-
                 string ext = Path.GetExtension(chosenPath);
-                _encryptedTempPath = Path.Combine(Path.GetTempPath(),
-                                            $"enc_{Guid.NewGuid():N}{ext}");
+                _encryptedTempPath = Path.Combine(Path.GetTempPath(), $"enc_{Guid.NewGuid():N}{ext}");
                 await File.WriteAllBytesAsync(_encryptedTempPath, encryptedBytes);
+                _attachedFilePath = chosenPath;
 
-                _attachedFilePath = chosenPath;   // keep for display / edit round-trip
-
-                // Success UI
                 lblAttachHint.Text = fileName;
                 lblAttachHint.ForeColor = Color.Black;
                 lblAttachHint2.Text = $"{sizeStr}  •  🔒 Encrypted";
                 lblAttachHint2.ForeColor = EncryptGreen;
                 btnRemoveAttach.Visible = true;
-
-                System.Diagnostics.Debug.WriteLine(
-                    $"File encrypted to temp: {_encryptedTempPath}");
             }
             catch (Exception ex)
             {
-                // Encryption failed — reset UI
                 _attachedFilePath = string.Empty;
                 _encryptedTempPath = string.Empty;
-
                 lblAttachHint.Text = "Encryption failed — please try again.";
                 lblAttachHint.ForeColor = Color.Firebrick;
                 lblAttachHint2.Text = ex.Message;
                 lblAttachHint2.ForeColor = Color.Gray;
                 btnRemoveAttach.Visible = false;
-
-                System.Diagnostics.Debug.WriteLine($"Encryption error: {ex.Message}");
             }
-            finally
-            {
-                btnPost.Enabled = true;
-            }
+            finally { btnPost.Enabled = true; }
         }
-
-        // ── Remove attachment ─────────────────────────────────────────────────
 
         private void BtnRemoveAttach_Click(object sender, EventArgs e)
         {
             DeleteEncryptedTemp();
             _attachedFilePath = string.Empty;
             _encryptedTempPath = string.Empty;
-
             lblAttachHint.Text = "Drag and drop a file here, or click Browse";
             lblAttachHint.ForeColor = Color.DimGray;
             lblAttachHint2.Text = "Supported: PDF, DOCX, PPTX, PNG, JPG  ·  Max 10 MB";
@@ -196,92 +144,52 @@ namespace PUPAcadPortal
             btnRemoveAttach.Visible = false;
         }
 
-        // ── Helpers ───────────────────────────────────────────────────────────
-
         private void SetAllCourses(bool check)
         {
-            for (int i = 0; i < clbCourses.Items.Count; i++)
-                clbCourses.SetItemChecked(i, check);
+            for (int i = 0; i < clbCourses.Items.Count; i++) clbCourses.SetItemChecked(i, check);
         }
 
-        private bool IsPlaceholder(TextBox tb, string placeholder) =>
-            tb.Text == placeholder || string.IsNullOrWhiteSpace(tb.Text);
+        private bool IsPlaceholder(TextBox tb, string placeholder) => tb.Text == placeholder || string.IsNullOrWhiteSpace(tb.Text);
 
-        /// <summary>Deletes the encrypted temp file if it exists.</summary>
         private void DeleteEncryptedTemp()
         {
             if (!string.IsNullOrEmpty(_encryptedTempPath) && File.Exists(_encryptedTempPath))
             {
-                try { File.Delete(_encryptedTempPath); }
-                catch { /* nothing lol */ }
+                try { File.Delete(_encryptedTempPath); } catch { }
             }
         }
 
-        // ── Post announcement ─────────────────────────────────────────────────
         private async void BtnPost_ClickAsync(object sender, EventArgs e)
         {
-            // ── Validation ────────────────────────────────────────────────────
-            if (IsPlaceholder(txtTitle, "Insert announcement title here..."))
-            {
-                ShowError("Please enter a title for the announcement.");
-                txtTitle.Focus();
-                return;
-            }
+            if (IsPlaceholder(txtTitle, "Insert announcement title here...")) { ShowError("Please enter a title."); return; }
+            if (IsPlaceholder(txtDescription, "Write your announcement details here...")) { ShowError("Please enter a description."); return; }
+            if (cmbCategory.SelectedIndex < 0) { ShowError("Please select a category."); return; }
+            if (clbCourses.CheckedItems.Count == 0) { ShowError("Please select at least one course."); return; }
 
-            if (IsPlaceholder(txtDescription, "Write your announcement details here..."))
-            {
-                ShowError("Please enter a description for the announcement.");
-                txtDescription.Focus();
-                return;
-            }
-
-            if (cmbCategory.SelectedIndex < 0)
-            {
-                ShowError("Please select a category.");
-                cmbCategory.Focus();
-                return;
-            }
-
-            if (clbCourses.CheckedItems.Count == 0)
-            {
-                ShowError("Please select at least one course.");
-                clbCourses.Focus();
-                return;
-            }
-
-            // ── Upload encrypted file (if any) ────────────────────────────────
             btnPost.Enabled = false;
             btnPost.Text = "Uploading…";
-
             string attachmentUrl = null;
+            string originalFileName = string.Empty;
 
             try
             {
-                if (!string.IsNullOrEmpty(_encryptedTempPath) &&
-                    File.Exists(_encryptedTempPath))
+                if (!string.IsNullOrEmpty(_encryptedTempPath) && File.Exists(_encryptedTempPath))
                 {
-                    // The temp file is already encrypted — upload it directly.
-                    // We use the raw UploadFileAsync here (no double-encryption)
-                    // because the bytes are already AES-encrypted.
-                    var uploadService = new CloudinaryUploadService();
+                    // CAPTURE ORIGINAL NAME HERE
+                    originalFileName = Path.GetFileName(_attachedFilePath);
 
-                    // Upload using the internal helper that skips re-encryption
-                    attachmentUrl = await UploadAlreadyEncryptedAsync(
-                                        uploadService, _encryptedTempPath);
+                    var uploadService = new CloudinaryUploadService();
+                    attachmentUrl = await UploadAlreadyEncryptedAsync(uploadService, _encryptedTempPath);
 
                     if (string.IsNullOrEmpty(attachmentUrl))
                     {
-                        ShowError("Failed to upload the encrypted file. " +
-                                  "Please check your connection and try again.");
+                        ShowError("Failed to upload encrypted file.");
                         return;
                     }
-
-                    // Clean up temp file after successful upload
                     DeleteEncryptedTemp();
                     _encryptedTempPath = string.Empty;
                 }
 
-                // ── Save to database ──────────────────────────────────────────
                 using (var context = new AppDbContext())
                 {
                     var ann = new Announcement
@@ -293,15 +201,14 @@ namespace PUPAcadPortal
                         Category = cmbCategory.Text,
                         IsUrgent = chkUrgent.Checked,
                         IsPinned = chkPinned.Checked,
-                        AttachedFile = attachmentUrl,   // encrypted Cloudinary URL
+                        AttachedFile = attachmentUrl,
+                        OriginalFileName = originalFileName, // SAVING TO DB
                         PostedDate = dtpPostDate.Value
                     };
-
                     context.Announcements.Add(ann);
                     context.SaveChanges();
                 }
 
-                // ── Raise event for parent container ──────────────────────────
                 var data = new AnnouncementData
                 {
                     Title = txtTitle.Text.Trim(),
@@ -311,127 +218,65 @@ namespace PUPAcadPortal
                     IsUrgent = chkUrgent.Checked,
                     IsPinned = chkPinned.Checked,
                     AttachedFile = attachmentUrl ?? string.Empty,
+                    OriginalFileName = originalFileName // PASSING TO EVENT
                 };
                 OnAnnouncementPosted(data);
 
-                MessageBox.Show("Announcement posted successfully!", "Success",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                MessageBox.Show("Announcement posted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Hide();
             }
-            catch (Exception ex)
-            {
-                ShowError($"An unexpected error occurred:\n{ex.Message}");
-                System.Diagnostics.Debug.WriteLine($"BtnPost_ClickAsync error: {ex}");
-            }
-            finally
-            {
-                btnPost.Enabled = true;
-                btnPost.Text = "Post";
-            }
+            catch (Exception ex) { ShowError($"Error:\n{ex.Message}"); }
+            finally { btnPost.Enabled = true; btnPost.Text = "Post"; }
         }
 
-        private static async Task<string> UploadAlreadyEncryptedAsync(
-            CloudinaryUploadService svc,
-            string encryptedTempPath)
+        private static async Task<string> UploadAlreadyEncryptedAsync(CloudinaryUploadService svc, string encryptedTempPath)
         {
-            // This helper uploads a file that is already encrypted, without trying
-
-            if (!File.Exists(encryptedTempPath))
-                return null;
-
+            if (!File.Exists(encryptedTempPath)) return null;
             try
             {
                 await FileServerConnectService.GetDecryptedCredentialsAsync();
-
-                string cloudName = FileServerConnectService.CloudName;
-                string apiKey = FileServerConnectService.CloudKey;
-                string apiSecret = FileServerConnectService.CloudSecret;
-
-                if (string.IsNullOrEmpty(cloudName) ||
-                    string.IsNullOrEmpty(apiKey) ||
-                    string.IsNullOrEmpty(apiSecret))
-                    return null;
-
-                var cloudinary = new CloudinaryDotNet.Cloudinary(
-                                    new CloudinaryDotNet.Account(cloudName, apiKey, apiSecret));
-
-                var uploadParams = new CloudinaryDotNet.Actions.RawUploadParams
-                {
-                    File = new CloudinaryDotNet.FileDescription(encryptedTempPath),
-                    Folder = "pup_announcements",
-                    Tags = "encrypted"
-                };
-
+                var cloudinary = new CloudinaryDotNet.Cloudinary(new CloudinaryDotNet.Account(FileServerConnectService.CloudName, FileServerConnectService.CloudKey, FileServerConnectService.CloudSecret));
+                var uploadParams = new CloudinaryDotNet.Actions.RawUploadParams { File = new CloudinaryDotNet.FileDescription(encryptedTempPath), Folder = "pup_announcements", Tags = "encrypted" };
                 var result = await cloudinary.UploadAsync(uploadParams);
-
-                return result.StatusCode == System.Net.HttpStatusCode.OK
-                    ? result.SecureUrl.AbsoluteUri
-                    : null;
+                return result.StatusCode == System.Net.HttpStatusCode.OK ? result.SecureUrl.AbsoluteUri : null;
             }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine(
-                    $"UploadAlreadyEncryptedAsync error: {ex.Message}");
-                return null;
-            }
+            catch (Exception ex) { return null; }
         }
 
-
         public event EventHandler<AnnouncementData> AnnouncementPosted;
-        protected virtual void OnAnnouncementPosted(AnnouncementData data) =>
-            AnnouncementPosted?.Invoke(this, data);
+        protected virtual void OnAnnouncementPosted(AnnouncementData data) => AnnouncementPosted?.Invoke(this, data);
 
-        /// <summary>Loads an existing announcement into the form for editing.</summary>
         public void LoadForEdit(AnnouncementData data)
         {
             txtTitle.Text = data.Title;
             txtTitle.ForeColor = Color.Black;
-
             txtDescription.Text = data.Description;
             txtDescription.ForeColor = Color.Black;
-
             int catIdx = cmbCategory.Items.IndexOf(data.Category);
             if (catIdx >= 0) cmbCategory.SelectedIndex = catIdx;
-
             dtpPostDate.Value = data.PostDate;
             chkUrgent.Checked = data.IsUrgent;
             chkPinned.Checked = data.IsPinned;
-
             SetAllCourses(false);
-            foreach (string course in data.Courses)
-            {
-                int idx = clbCourses.Items.IndexOf(course);
-                if (idx >= 0) clbCourses.SetItemChecked(idx, true);
-            }
+            foreach (string course in data.Courses) { int idx = clbCourses.Items.IndexOf(course); if (idx >= 0) clbCourses.SetItemChecked(idx, true); }
 
-            // Show existing attachment (already uploaded & encrypted in the cloud)
             if (!string.IsNullOrEmpty(data.AttachedFile))
             {
                 _attachedFilePath = data.AttachedFile;
-                _encryptedTempPath = string.Empty;   // already in cloud — no local temp
-
-                string displayName = Path.GetFileName(data.AttachedFile);
-                // If it's a URL, show a shorter label
-                if (data.AttachedFile.StartsWith("http", StringComparison.OrdinalIgnoreCase))
-                    displayName = "[Cloud file] " + displayName;
-
+                _encryptedTempPath = string.Empty;
+                string displayName = !string.IsNullOrEmpty(data.OriginalFileName) ? data.OriginalFileName : Path.GetFileName(data.AttachedFile);
                 lblAttachHint.Text = displayName;
                 lblAttachHint.ForeColor = Color.Black;
                 lblAttachHint2.Text = "🔒 Encrypted — stored in cloud";
                 lblAttachHint2.ForeColor = EncryptGreen;
                 btnRemoveAttach.Visible = true;
             }
-
             lblFormTitle.Text = "Edit Announcement";
             btnPost.Text = "Save Changes";
         }
 
-        private static void ShowError(string message) =>
-            MessageBox.Show(message, "Required Field",
-                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        private static void ShowError(string message) => MessageBox.Show(message, "Required Field", MessageBoxButtons.OK, MessageBoxIcon.Warning);
     }
-
 
     public class AnnouncementData
     {
@@ -442,6 +287,7 @@ namespace PUPAcadPortal
         public bool IsUrgent { get; set; }
         public bool IsPinned { get; set; }
         public string AttachedFile { get; set; } = string.Empty;
+        public string OriginalFileName { get; set; } = string.Empty; // ADDED THIS
         public System.Collections.Generic.List<string> Courses { get; set; } = new();
     }
 }
