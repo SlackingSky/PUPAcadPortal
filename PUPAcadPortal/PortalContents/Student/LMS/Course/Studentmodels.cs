@@ -3,15 +3,15 @@ using System.Collections.Generic;
 
 namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 {
-        public class StudentCourse
+    public class StudentCourse
     {
         public int Id { get; set; }
         public string SubjectOfferingId { get; set; } = "";
         public string Name { get; set; } = "";
         public string Code { get; set; } = "";
         public string Instructor { get; set; } = "";
-        public string Schedule { get; set; } = "";   
-        public string Room { get; set; } = "";   
+        public string Schedule { get; set; } = "";
+        public string Room { get; set; } = "";
         public int ActivityCount { get; set; }
         public int PendingCount { get; set; }
         public int SubmittedCount { get; set; }
@@ -54,14 +54,16 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
         // Instructor-provided reference files
         public List<ActivityAttachment> Attachments { get; set; } = new();
 
+        // ── FIX 2: Rubric criteria (populated from DB, shown before submission) ──
+        public List<ActivityRubricItem> RubricItems { get; set; } = new();
+
         public bool LockAfterDeadline { get; set; } = false;
 
-        // Computed helpers (safe to use in code-behind)
+        // Computed helpers
         public bool IsOverdue => Deadline < DateTime.Now && SubmissionStatus == "Pending";
         public string EffectiveStatus => IsOverdue ? "Overdue" : SubmissionStatus;
     }
 
-    
     public class ActivityQuestion
     {
         public int Number { get; set; }
@@ -72,15 +74,26 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
         public string CorrectAnswer { get; set; } = "";
     }
 
+    // ── FIX 2: Rubric item for student view ──────────────────────────────────
+    /// <summary>
+    /// Read-only rubric criterion shown to students before and after submission.
+    /// Populated from the RubricContent JSON column on the Activity row.
+    /// </summary>
+    public class ActivityRubricItem
+    {
+        public string Name { get; set; } = "";
+        public string Description { get; set; } = "";
+        public int MaxPoints { get; set; }
+    }
+
     //  Attachment 
     public class ActivityAttachment
     {
         public string FileName { get; set; } = "";
         public string FilePath { get; set; } = "";
-        public long FileSize { get; set; }       
-        public string FileType { get; set; } = "other"; //  pdf|docx|pptx|image|other
+        public long FileSize { get; set; }
+        public string FileType { get; set; } = "other"; // pdf|docx|pptx|image|other
 
-        // Computed helper — avoids referencing it in Designer
         public string FormattedSize =>
             FileSize >= 1_048_576 ? $"{FileSize / 1_048_576.0:F1} MB" :
             FileSize >= 1_024 ? $"{FileSize / 1_024.0:F0} KB" :

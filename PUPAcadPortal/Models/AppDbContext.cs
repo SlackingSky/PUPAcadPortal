@@ -123,6 +123,7 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.ModuleId)
                 .HasMaxLength(50)
                 .HasColumnName("ModuleID");
+            entity.Property(e => e.RubricContent).HasComment("JSON array of rubric criteria: [{name, description, maxPoints}]");
             entity.Property(e => e.SubjectOfferingId)
                 .HasMaxLength(50)
                 .HasColumnName("SubjectOfferingID");
@@ -194,12 +195,14 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.Category).HasMaxLength(100);
             entity.Property(e => e.Content).HasColumnType("text");
             entity.Property(e => e.CreatedByUserId).HasColumnName("CreatedByUserID");
+            entity.Property(e => e.OriginalFileName).HasMaxLength(255);
             entity.Property(e => e.PostedDate)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("datetime");
             entity.Property(e => e.SubjectOfferingId)
                 .HasMaxLength(50)
                 .HasColumnName("SubjectOfferingID");
+            entity.Property(e => e.TargetRoleId).HasDefaultValueSql("'1'");
             entity.Property(e => e.Title).HasMaxLength(255);
 
             entity.HasOne(d => d.CreatedByUser).WithMany(p => p.Announcements)
@@ -892,6 +895,7 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.FtRecitation).HasColumnName("FT_Recitation");
             entity.Property(e => e.FtSeatwork).HasColumnName("FT_Seatwork");
             entity.Property(e => e.GradeStatus).HasMaxLength(50);
+            entity.Property(e => e.InstructorUserId).HasColumnName("InstructorUserID");
             entity.Property(e => e.MtAssignment).HasColumnName("MT_Assignment");
             entity.Property(e => e.MtAttendance).HasColumnName("MT_Attendance");
             entity.Property(e => e.MtLongTests).HasColumnName("MT_LongTests");
@@ -903,6 +907,7 @@ public partial class AppDbContext : DbContext
                 .HasMaxLength(50)
                 .HasColumnName("StudentID");
             entity.Property(e => e.StudentName).HasMaxLength(150);
+            entity.Property(e => e.StudentUserId).HasColumnName("StudentUserID");
             entity.Property(e => e.SubjectCourse).HasMaxLength(100);
         });
 

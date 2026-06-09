@@ -40,4 +40,8 @@ public partial class StudentGrade
     public string? GradeStatus { get; set; }
 
     public int? Released { get; set; }
+
+    public int? StudentUserId { get; set; }
+
+    public int? InstructorUserId { get; set; }
 }

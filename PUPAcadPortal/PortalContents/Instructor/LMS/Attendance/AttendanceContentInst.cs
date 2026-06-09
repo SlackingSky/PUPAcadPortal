@@ -1,15 +1,16 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using PUPAcadPortal.Data;
+using PUPAcadPortal.Models;
+using PUPAcadPortal.Services;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.ComponentModel;
-using Microsoft.EntityFrameworkCore;
-using PUPAcadPortal.Models;
-using PUPAcadPortal.Services;
 
 namespace PUPAcadPortal.PortalContents.Instructor.LMS
 {
@@ -22,9 +23,22 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
         private int? _currentSessionId = null;
 
-        // RoomSchedule times for the selected course (used to build signed token)
+        // RoomSchedule times for the selected course (resolved from DB)
         private TimeSpan? _currentStartTime = null;
         private TimeSpan? _currentEndTime = null;
+
+        // ── Logged-in instructor ID ───────────────────────────────────────────────
+        // Set this from the parent form/page before the control is shown.
+        // Falls back to UserSession.InstructorID when not explicitly assigned.
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public int CurrentInstructorId
+        {
+            get => _currentInstructorId > 0
+                       ? _currentInstructorId
+                       : (UserSession.ProfessorID ?? 0);
+            set => _currentInstructorId = value;
+        }
+        private int _currentInstructorId = 0;
 
         private SessionAttendanceControl _sessionCard = null!;
         private AttendanceGridControl _grid = null!;
@@ -106,6 +120,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         // ── Init ─────────────────────────────────────────────────────────────────
         private void InitAttendance()
         {
+            // FIX: load only the courses assigned to the logged-in instructor
             LoadCoursesFromDb();
             PopulateDropdowns();
 
@@ -137,15 +152,38 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             UpdateLastUpdated();
         }
 
-        // ── Load courses from DB ──────────────────────────────────────────────────
+        // ── Load ONLY the courses assigned to the logged-in instructor ────────────
+        /// <summary>
+        /// Populates _courseCatalogue with SubjectOfferings whose InstructorId
+        /// matches the currently logged-in professor. Schedule times (StartTime /
+        /// EndTime) are resolved from the first matching RoomSchedule row so the
+        /// QR token embeds the correct attendance window without an extra round-trip.
+        /// </summary>
         private void LoadCoursesFromDb()
         {
+            _courseCatalogue = new List<CourseSection>();
+
+            int instructorId = CurrentInstructorId;
+            if (instructorId <= 0)
+            {
+                MessageBox.Show(
+                    "Instructor identity is not set. Please log out and log in again.",
+                    "Identity Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             try
             {
                 using var ctx = CreateContext();
+
+                // Only offerings assigned to this instructor.
+                // TODO: verify "InstructorId" matches the actual FK property name
+                //       on your SubjectOffering entity. Common alternatives:
+                //       FacultyId, TeacherId, UserId, InstructorUserId.
                 var offerings = ctx.SubjectOfferings
                     .Include(so => so.Subject)
                     .Include(so => so.RoomSchedules)
+                    .Where(so => so.ProfessorId == instructorId)
                     .OrderBy(so => so.Subject.SubjectCode)
                     .ThenBy(so => so.Section)
                     .ToList();
@@ -155,9 +193,11 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                     Code = so.SubjectOfferingId,
                     Title = so.Subject?.SubjectName ?? so.SubjectOfferingId,
                     Section = so.Section ?? string.Empty,
-                    // Resolve the first RoomSchedule time so the QR token window is real
+                    SubjectCode = so.Subject?.SubjectCode ?? string.Empty,
+                    // Resolve schedule from the first RoomSchedule row
                     StartTime = so.RoomSchedules.FirstOrDefault()?.StartTime,
                     EndTime = so.RoomSchedules.FirstOrDefault()?.EndTime,
+                    ScheduleDisplay = BuildScheduleDisplay(so.RoomSchedules.FirstOrDefault()),
                 }).ToList();
             }
             catch (Exception ex)
@@ -165,44 +205,131 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 MessageBox.Show(
                     $"Could not load courses from the database.\n\n{ex.Message}",
                     "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                _courseCatalogue = new List<CourseSection>();
             }
         }
 
+        /// <summary>
+        /// Builds a human-readable schedule string such as "MWF  08:00 AM – 10:00 AM"
+        /// from a RoomSchedule row.  Returns an em-dash when no schedule exists.
+        ///
+        /// NOTE: RoomSchedule.StartTime and EndTime are plain (non-nullable) TimeSpan.
+        ///       The day-of-week label is read via the Days / DayOfWeek / Schedule
+        ///       property — whichever your model actually exposes.  Adjust the
+        ///       property name below to match your RoomSchedule entity.
+        /// </summary>
+        private static string BuildScheduleDisplay(RoomSchedule? rs)
+        {
+            if (rs == null) return "—";
+
+            // ── Day label ────────────────────────────────────────────────────────
+            // TODO: replace "Days" with the actual property name on your
+            //       RoomSchedule entity (e.g. DayOfWeek, Schedule, Day, etc.).
+            //       Common options are shown; uncomment the one that matches.
+            //
+            // string dayLabel = rs.Days        ?? string.Empty;  // e.g. "MWF"
+            // string dayLabel = rs.DayOfWeek   ?? string.Empty;  // e.g. "Monday"
+            // string dayLabel = rs.Schedule    ?? string.Empty;  // generic label
+            //
+            // Safest fallback: use reflection so this compiles regardless of
+            // the actual property name.  Replace with the direct property access
+            // once you know the correct name.
+            string dayLabel = TryGetDayLabel(rs);
+
+            // ── Time range ───────────────────────────────────────────────────────
+            // StartTime / EndTime are non-nullable TimeSpan — no .HasValue needed.
+            string start = DateTime.Today.Add(rs.StartTime).ToString("hh:mm tt");
+            string end = DateTime.Today.Add(rs.EndTime).ToString("hh:mm tt");
+
+            return string.IsNullOrWhiteSpace(start)
+                ? dayLabel
+                : string.IsNullOrWhiteSpace(dayLabel)
+                    ? $"{start} – {end}"
+                    : $"{dayLabel}  {start} – {end}";
+        }
+
+        /// <summary>
+        /// Retrieves the day-label string from a RoomSchedule using reflection so
+        /// the code compiles even before you know the exact property name.
+        /// Replace this method body with a direct property access once confirmed,
+        /// e.g.: <c>return rs.Days ?? string.Empty;</c>
+        /// </summary>
+        private static string TryGetDayLabel(RoomSchedule rs)
+        {
+            // Try the most common property names in order.
+            var type = rs.GetType();
+            foreach (var name in new[] { "Days", "Day", "DayOfWeek", "Schedule", "DayLabel" })
+            {
+                var prop = type.GetProperty(name);
+                if (prop != null && prop.PropertyType == typeof(string))
+                    return (prop.GetValue(rs) as string) ?? string.Empty;
+            }
+            return string.Empty;
+        }
+
+        // ── Populate dropdowns ────────────────────────────────────────────────────
+        /// <summary>
+        /// Fills cmbCourse with the instructor's assigned subjects.
+        /// cmbSession is derived from the selected course's DB schedule and is
+        /// therefore read-only (DropDownStyle = DropDownList, populated from DB).
+        /// </summary>
         private void PopulateDropdowns()
         {
+            // Course combo — instructor's assigned subjects only
             cmbCourse.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbCourse.Items.Clear();
             foreach (var c in _courseCatalogue)
                 cmbCourse.Items.Add(c.DisplayName);
             if (cmbCourse.Items.Count > 0) cmbCourse.SelectedIndex = 0;
 
-            // Session slot dropdown is kept as a label-only selector;
-            // actual attendance window comes from RoomSchedule times.
+            // Session slot: built from the first selected course's DB schedule.
+            // The combo is read-only so the professor cannot change it.
             cmbSession.DropDownStyle = ComboBoxStyle.DropDownList;
+            PopulateSessionFromSelected();
+        }
+
+        /// <summary>
+        /// Rebuilds cmbSession from the RoomSchedule of the currently selected course.
+        /// Shows the DB-derived time range and marks the field as read-only.
+        /// </summary>
+        private void PopulateSessionFromSelected()
+        {
             cmbSession.Items.Clear();
-            var slots = new[]
+
+            int idx = cmbCourse.SelectedIndex;
+            var course = (idx >= 0 && idx < _courseCatalogue.Count)
+                ? _courseCatalogue[idx]
+                : null;
+
+            if (course != null && !string.IsNullOrEmpty(course.ScheduleDisplay)
+                                && course.ScheduleDisplay != "—")
             {
-                "Morning (7:30 AM – 9:00 AM)",
-                "Morning (8:00 AM – 10:00 AM)",
-                "Morning (9:00 AM – 10:30 AM)",
-                "Midday (10:30 AM – 12:00 PM)",
-                "Midday (11:00 AM – 12:30 PM)",
-                "Afternoon (1:00 PM – 2:30 PM)",
-                "Afternoon (2:30 PM – 4:00 PM)",
-                "Evening (5:00 PM – 7:00 PM)",
-                "Saturday (8:00 AM – 12:00 PM)",
-            };
-            foreach (var s in slots) cmbSession.Items.Add(s);
-            if (cmbSession.Items.Count > 1) cmbSession.SelectedIndex = 1;
+                // Show exactly what the DB says — no free-form editing
+                cmbSession.Items.Add(course.ScheduleDisplay);
+                cmbSession.SelectedIndex = 0;
+
+                // Mark read-only visually
+                cmbSession.Enabled = false;
+
+                // Update the cached start/end so QR tokens embed the correct window
+                _currentStartTime = course.StartTime;
+                _currentEndTime = course.EndTime;
+            }
+            else
+            {
+                // Offering has no RoomSchedule yet
+                cmbSession.Items.Add("(No schedule assigned)");
+                cmbSession.SelectedIndex = 0;
+                cmbSession.Enabled = false;
+                _currentStartTime = null;
+                _currentEndTime = null;
+            }
         }
 
         // ── Load / refresh current session roster from DB ─────────────────────────
         /// <summary>
-        /// Finds (or creates) the ClassSession row, loads all enrolled students,
-        /// and maps their AttendanceRecords — including QR-verified lock state.
-        /// Also resolves the RoomSchedule start/end times for this offering so the
-        /// QR token embeds the correct attendance window.
+        /// Finds (or creates) the ClassSession row for the selected course + date,
+        /// loads all enrolled students, and maps their AttendanceRecords including
+        /// QR-verified lock state.
         /// </summary>
         private void LoadCurrentSession()
         {
@@ -215,7 +342,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             string offeringId = course.Code;
             DateTime date = dtpDate.Value.Date;
 
-            // Cache schedule times for the QR popup
+            // Always resolve schedule times from the selected course
             _currentStartTime = course.StartTime;
             _currentEndTime = course.EndTime;
 
@@ -295,6 +422,10 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 }
 
                 _allStudents = list;
+
+                // FIX: update the schedule display label whenever the session reloads
+                // so the professor always sees the correct time block for this offering.
+                UpdateScheduleDisplay(course);
             }
             catch (Exception ex)
             {
@@ -304,11 +435,43 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             }
         }
 
+        /// <summary>
+        /// Writes the course's schedule information into the read-only display
+        /// label (lblScheduleDisplay) so the professor can see the assigned
+        /// subject, section, and time block at a glance.
+        /// </summary>
+        private void UpdateScheduleDisplay(CourseSection course)
+        {
+            // lblScheduleDisplay is a Label on the form that shows the locked
+            // schedule info.  Guard against designer-only scenarios.
+            if (cmbSession == null) return;
+
+            cmbSession.Text =
+                $"{course.SubjectCode}  –  {course.Title}" +
+                (string.IsNullOrEmpty(course.Section)
+                    ? string.Empty
+                    : $"  [{course.Section}]") +
+                "\n" +
+                (string.IsNullOrEmpty(course.ScheduleDisplay) || course.ScheduleDisplay == "—"
+                    ? "No schedule assigned"
+                    : course.ScheduleDisplay);
+        }
+
         // ── Filter bar ────────────────────────────────────────────────────────────
         private void WireFilterBar()
         {
-            cmbCourse.SelectedIndexChanged += (s, e) => ReloadAndRefresh();
+            cmbCourse.SelectedIndexChanged += (s, e) =>
+            {
+                // When the course changes, rebuild the session slot from the new
+                // course's DB schedule before reloading the roster.
+                PopulateSessionFromSelected();
+                ReloadAndRefresh();
+            };
+
+            // cmbSession is read-only, but still wire it so a programmatic change
+            // (e.g. after PopulateSessionFromSelected) triggers a reload.
             cmbSession.SelectedIndexChanged += (s, e) => ReloadAndRefresh();
+
             dtpDate.ValueChanged += (s, e) => ReloadAndRefresh();
 
             txtSearch.ForeColor = Color.Gray;
@@ -374,11 +537,20 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             var course = _courseCatalogue.ElementAtOrDefault(cmbCourse.SelectedIndex);
             if (course == null) return;
 
-            // Open the popup — QrCodePopupForm → QrCodeAttendanceControl →
+            if (!course.StartTime.HasValue || !course.EndTime.HasValue)
+            {
+                MessageBox.Show(
+                    "This course has no schedule assigned in the database.\n" +
+                    "A room schedule must be set before generating a QR attendance code.",
+                    "No Schedule", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // QrCodePopupForm → QrCodeAttendanceControl →
             // QrSessionService.CreateOrGetActive() handles duplicate prevention.
             using var dlg = new QrCodePopupForm(
-                course: cmbCourse.Text,
-                session: cmbSession.Text,
+                course: $"{course.SubjectCode}  –  {course.Title}",
+                session: course.ScheduleDisplay,
                 date: dtpDate.Value,
                 sessionId: _currentSessionId.Value,
                 offeringId: course.Code,
@@ -463,20 +635,22 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 int absent = _allStudents.Count(x => x.Status == AttendanceStatus.Absent);
                 int excused = _allStudents.Count(x => x.Status == AttendanceStatus.Excused);
 
+                var course = _courseCatalogue.ElementAtOrDefault(cmbCourse.SelectedIndex);
                 string qrNote = skippedQr > 0
                     ? $"\n\n🔒 {skippedQr} QR-verified record{(skippedQr > 1 ? "s" : "")} were not modified."
                     : string.Empty;
 
                 MessageBox.Show(
                     $"Attendance saved!\n\n" +
-                    $"Course   : {cmbCourse.Text}\n" +
-                    $"Date     : {dtpDate.Value:MMMM dd, yyyy}\n" +
-                    $"Session  : {cmbSession.Text}\n\n" +
-                    $"Present  : {present}\n" +
-                    $"Late     : {late}\n" +
-                    $"Absent   : {absent}\n" +
-                    $"Excused  : {excused}\n" +
-                    $"Total    : {_allStudents.Count}" +
+                    $"Course    : {cmbCourse.Text}\n" +
+                    $"Section   : {course?.Section ?? "—"}\n" +
+                    $"Schedule  : {course?.ScheduleDisplay ?? "—"}\n" +
+                    $"Date      : {dtpDate.Value:MMMM dd, yyyy}\n\n" +
+                    $"Present   : {present}\n" +
+                    $"Late      : {late}\n" +
+                    $"Absent    : {absent}\n" +
+                    $"Excused   : {excused}\n" +
+                    $"Total     : {_allStudents.Count}" +
                     qrNote,
                     "Attendance Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -519,10 +693,12 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         // ── Export / Import CSV ───────────────────────────────────────────────────
         private void ExportCsv()
         {
+            var course = _courseCatalogue.ElementAtOrDefault(cmbCourse.SelectedIndex);
+
             using var sfd = new SaveFileDialog
             {
                 Filter = "CSV files (*.csv)|*.csv",
-                FileName = $"Attendance_{dtpDate.Value:yyyyMMdd}.csv",
+                FileName = $"Attendance_{course?.SubjectCode ?? "Course"}_{dtpDate.Value:yyyyMMdd}.csv",
             };
             if (sfd.ShowDialog() != DialogResult.OK) return;
             try
@@ -558,7 +734,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                     if (parts.Length < 6) continue;
                     if (!int.TryParse(parts[0], out int rowNum)) continue;
                     var rec = _allStudents.FirstOrDefault(s => s.RowNumber == rowNum);
-                    if (rec == null || rec.IsQrVerified) continue;  // skip QR-locked rows
+                    if (rec == null || rec.IsQrVerified) continue; // skip QR-locked rows
 
                     rec.Status = parts[5].Trim() switch
                     {

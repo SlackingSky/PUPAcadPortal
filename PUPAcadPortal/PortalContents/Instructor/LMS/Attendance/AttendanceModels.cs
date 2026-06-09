@@ -4,9 +4,12 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 {
     /// <summary>
     /// Lightweight view-model representing a single SubjectOffering in the
-    /// instructor's course dropdown.  StartTime / EndTime are resolved from
-    /// the first RoomSchedule row for the offering so the QR token can embed
-    /// the correct attendance window without an extra DB round-trip.
+    /// instructor's course dropdown.  Only offerings assigned to the logged-in
+    /// instructor are loaded (filtered by SubjectOffering.InstructorId).
+    ///
+    /// StartTime / EndTime are resolved from the first RoomSchedule row for the
+    /// offering so the QR token embeds the correct attendance window without an
+    /// extra DB round-trip.
     /// </summary>
     public class CourseSection
     {
@@ -15,6 +18,9 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
         /// <summary>Subject.SubjectName.</summary>
         public string Title { get; set; } = string.Empty;
+
+        /// <summary>Subject.SubjectCode (e.g. "COMP 012").</summary>
+        public string SubjectCode { get; set; } = string.Empty;
 
         /// <summary>SubjectOffering.Section (e.g. "BSIT 2-1").</summary>
         public string Section { get; set; } = string.Empty;
@@ -32,23 +38,29 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         public TimeSpan? EndTime { get; set; }
 
         /// <summary>
+        /// Human-readable schedule label built from the first RoomSchedule row,
+        /// e.g. "MWF  08:00 AM – 10:00 AM".  Shown in cmbSession and the
+        /// schedule display label; the field is not user-editable.
+        /// </summary>
+        public string ScheduleDisplay { get; set; } = string.Empty;
+
+        /// <summary>
         /// Display string shown in the course combo-box:
         /// "COMP 012 – Network Administration  [BSIT 2-1]"
         /// </summary>
         public string DisplayName =>
             string.IsNullOrWhiteSpace(Section)
-                ? Title
-                : $"{Title}  [{Section}]";
+                ? $"{SubjectCode}  –  {Title}"
+                : $"{SubjectCode}  –  {Title}  [{Section}]";
     }
 
     // ─────────────────────────────────────────────────────────────────────────────
-    // SessionSlot — kept for the session combo-box labels
+    // SessionSlot — kept for backward compatibility
     // ─────────────────────────────────────────────────────────────────────────────
 
     /// <summary>
-    /// Represents a human-readable session time-slot label shown in the
-    /// session combo-box.  The actual attendance window is driven by
-    /// RoomSchedule, not by this label.
+    /// Represents a human-readable session time-slot label.
+    /// The actual attendance window is driven by RoomSchedule, not by this label.
     /// </summary>
     public class SessionSlot
     {
@@ -71,9 +83,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
         public override string ToString()
             => $"{CourseDisplay} | {SessionLabel} | {Date:yyyy-MM-dd}";
-
-
-       
     }
 
     // ─────────────────────────────────────────────────────────────────────────────

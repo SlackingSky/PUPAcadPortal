@@ -266,6 +266,27 @@ namespace PUPAcadPortal
                 });
             }
 
+            string typeInfo = act.Type switch
+            {
+                ActivityType.Quiz => $"❓ {act.Questions.Count} question{(act.Questions.Count == 1 ? "" : "s")}",
+                ActivityType.Essay => act.HasRubric
+                                               ? $"📊 Rubric: {act.RubricItems.Count} criteria"
+                                               : "📝 No rubric",
+                ActivityType.FileUpload => "📎 File submission",
+                _ => act.HasRubric
+                                               ? $"📊 Rubric: {act.RubricItems.Count} criteria"
+                                               : "📋 Text / file submission",
+            };
+
+            card.Controls.Add(new Label
+            {
+                Text = typeInfo,
+                Font = new Font("Segoe UI", 7.5F, FontStyle.Italic),
+                ForeColor = typeColor,
+                Location = new Point(16, 80),  // adjust Y as needed
+                AutoSize = true
+            });
+
             card.Controls.Add(new Label
             {
                 Text = $"✅ {act.SubmittedCount}/{act.TotalStudents} submitted  " +

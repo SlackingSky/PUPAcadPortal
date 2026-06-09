@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PUPAcadPortal.Models;
+using PUPAcadPortal.PortalContents.Student.LMS.Course;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,6 +19,27 @@ namespace PUPAcadPortal.Services
         public StudentCourseDbService(Func<AppDbContext> ctxFactory)
         {
             _ctxFactory = ctxFactory ?? throw new ArgumentNullException(nameof(ctxFactory));
+        }
+
+        private static List<ActivityRubricItem> DeserializeStudentRubric(string? json)
+        {
+            var result = new List<ActivityRubricItem>();
+            if (string.IsNullOrWhiteSpace(json)) return result;
+            try
+            {
+                using var doc = JsonDocument.Parse(json);
+                foreach (var el in doc.RootElement.EnumerateArray())
+                {
+                    result.Add(new ActivityRubricItem
+                    {
+                        Name = el.TryGetProperty("name", out var n) ? n.GetString() ?? "" : "",
+                        Description = el.TryGetProperty("description", out var d) ? d.GetString() ?? "" : "",
+                        MaxPoints = el.TryGetProperty("maxPoints", out var p) ? p.GetInt32() : 0,
+                    });
+                }
+            }
+            catch { }
+            return result;
         }
 
         public List<CourseStudentCourse> GetCoursesForStudent(int studentId)
@@ -170,6 +192,7 @@ namespace PUPAcadPortal.Services
                     Attachments = BuildAttachments(activity),
                     LockAfterDeadline = false,
                     Questions = DeserializeStudentQuestions(activity.QuizContent),
+                    RubricItems = DeserializeStudentRubric(activity.RubricContent),
                 });
             }
 
@@ -205,9 +228,20 @@ namespace PUPAcadPortal.Services
                 .FirstOrDefault(s => s.ActivityId == item.ActivityId
                                   && s.StudentId == studentId);
 
+
             var now = DateTime.Now;
             string status = now > activity.Deadline ? "Late" : "Submitted";
-            string? submittedFile = BuildSubmittedFileValue(item);
+
+            // Determine type before building submittedFile
+            bool isQuiz = string.Equals(activity.ActivityType, "Quiz",
+                StringComparison.OrdinalIgnoreCase);
+
+            // For quizzes, serialize the answers as JSON; otherwise use the uploaded file path
+            string? submittedFile;
+            if (isQuiz && item.Answers != null && item.Answers.Count > 0)
+                submittedFile = System.Text.Json.JsonSerializer.Serialize(item.Answers);
+            else
+                submittedFile = BuildSubmittedFileValue(item);
 
             if (submission == null)
             {
@@ -249,8 +283,59 @@ namespace PUPAcadPortal.Services
                 item.UploadedFileName = GetFileName(submittedFile);
             }
 
+            // Auto-score quiz submissions
+            if (isQuiz && item.Answers != null && item.Answers.Count > 0
+                && !string.IsNullOrWhiteSpace(activity.QuizContent))
+            {
+                var questions = DeserializeQuizForScoring(activity.QuizContent);
+                int totalPoints = questions.Sum(q => q.Points);
+                int earned = 0;
+
+                foreach (var q in questions)
+                {
+                    if (item.Answers.TryGetValue(q.Number, out string? studentAnswer)
+                        && !string.IsNullOrWhiteSpace(studentAnswer)
+                        && string.Equals(studentAnswer.Trim(), q.CorrectAnswer.Trim(),
+                           StringComparison.OrdinalIgnoreCase))
+                    {
+                        earned += q.Points;
+                    }
+                }
+
+                // Scale earned points to activity's MaxPoints
+                int scaledScore = totalPoints > 0
+                    ? (int)Math.Round((double)earned / totalPoints * activity.MaxPoints)
+                    : 0;
+
+                submission.Grade = scaledScore;
+                submission.Status = "Graded";
+                submission.SubmittedFile = submittedFile; // already serialized answers JSON above
+                ctx.SaveChanges();
+
+                item.Score = scaledScore;
+            }
+
             return item;
         }
+        private static List<(int Number, string CorrectAnswer, int Points)> DeserializeQuizForScoring(string json)
+        {
+            var result = new List<(int, string, int)>();
+            try
+            {
+                using var doc = System.Text.Json.JsonDocument.Parse(json);
+                foreach (var el in doc.RootElement.EnumerateArray())
+                {
+                    int num = el.TryGetProperty("number", out var n) ? n.GetInt32() : 0;
+                    string ans = el.TryGetProperty("answer", out var a) ? a.GetString() ?? "" : "";
+                    int pts = el.TryGetProperty("points", out var p) ? p.GetInt32() : 1;
+                    result.Add((num, ans, pts));
+                }
+            }
+            catch { }
+            return result;
+        }
+
+
 
         private static List<CourseActivityAttachment> BuildAttachments(Activity activity)
         {
@@ -272,15 +357,22 @@ namespace PUPAcadPortal.Services
         {
             string? value = null;
 
+            // Priority 1 — uploaded file URL (FileUpload / Assignment with file)
             if (!string.IsNullOrWhiteSpace(item.UploadedFilePath))
                 value = item.UploadedFilePath.Trim();
             else if (!string.IsNullOrWhiteSpace(item.UploadedFileName))
                 value = item.UploadedFileName.Trim();
 
+            // Priority 2 — essay text (Essay type stores draft text, not a file)
+            if (string.IsNullOrWhiteSpace(value) && !string.IsNullOrWhiteSpace(item.EssayDraft))
+                value = item.EssayDraft.Trim();
+
             if (string.IsNullOrWhiteSpace(value))
                 return null;
 
-            return value.Length <= 500 ? value : value[..500];
+            // SubmittedFile is now TEXT — no hard truncation needed.
+            // Apply a generous safety cap of 65535 chars (MySQL TEXT max).
+            return value.Length <= 65535 ? value : value[..65535];
         }
 
         private static string FormatProfessorName(Professor? professor)

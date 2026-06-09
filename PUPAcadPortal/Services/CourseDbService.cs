@@ -168,6 +168,7 @@ namespace PUPAcadPortal.Services
 
             return ctx.AcademicPeriods
                 .AsNoTracking()
+                .Where(p => !p.Semester.Equals("Prelim", StringComparison.OrdinalIgnoreCase)) 
                 .OrderByDescending(p => p.SchoolYear)
                 .ThenBy(p => p.Semester)
                 .Select(p => new AcademicPeriodLookupDto

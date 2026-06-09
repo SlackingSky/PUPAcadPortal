@@ -17,7 +17,7 @@ namespace PUPAcadPortal.Services
             _ctxFactory = ctxFactory ?? throw new ArgumentNullException(nameof(ctxFactory));
         }
 
-        //  Dashboard 
+        //  Dashboard
 
         public List<CourseActivity> GetCourseActivitiesForProfessor(int professorId)
         {
@@ -78,7 +78,7 @@ namespace PUPAcadPortal.Services
             return result;
         }
 
-        //  Activity list 
+        //  Activity list
 
         public List<ActivityItem> GetActivitiesForOffering(string subjectOfferingId)
         {
@@ -99,6 +99,7 @@ namespace PUPAcadPortal.Services
             return MapActivities(activities, enrolled);
         }
 
+        //  CRUD
 
         public ActivityItem CreateActivity(string subjectOfferingId, ActivityItem item)
         {
@@ -119,6 +120,7 @@ namespace PUPAcadPortal.Services
                 ModuleId = string.IsNullOrEmpty(item.LinkedModuleId) ? null : item.LinkedModuleId,
                 IsPublished = false,
                 QuizContent = SerializeQuestions(item.Questions),
+                RubricContent = SerializeRubric(item.RubricItems),
             };
 
             ctx.Activities.Add(entity);
@@ -146,6 +148,7 @@ namespace PUPAcadPortal.Services
             entity.CategoryId = item.LinkedCategoryId;
             entity.ModuleId = string.IsNullOrEmpty(item.LinkedModuleId) ? null : item.LinkedModuleId;
             entity.QuizContent = SerializeQuestions(item.Questions);
+            entity.RubricContent = SerializeRubric(item.RubricItems);   // ← FIX 1
 
             ctx.SaveChanges();
         }
@@ -173,6 +176,7 @@ namespace PUPAcadPortal.Services
             ctx.SaveChanges();
         }
 
+        //  Submissions
 
         public List<StudentSubmission> GetSubmissionsForActivity(string activityId)
         {
@@ -183,6 +187,12 @@ namespace PUPAcadPortal.Services
                 .FirstOrDefault(a => a.ActivityId == activityId)
                 ?? throw new InvalidOperationException(
                     $"Activity '{activityId}' not found.");
+
+            // Normalise type once for use in the loop below
+            string actType = activity.ActivityType?.ToLowerInvariant() ?? "assignment";
+            bool isQuiz = actType == "quiz" || actType == "longquiz";
+            bool isEssay = actType == "essay";
+            bool isFileUpload = actType is "fileupload" or "file upload";
 
             var enrolledStudents = ctx.EnrollmentSubjects
                 .Include(es => es.Enrollment)
@@ -215,6 +225,23 @@ namespace PUPAcadPortal.Services
                 string status = !hasSub ? "Missing" : sub!.Status ?? "Submitted";
                 bool isChecked = hasSub && sub!.Grade != null;
 
+                // SubmittedFile stores different things depending on activity type:
+                //   Quiz        → JSON-serialised answers dictionary
+                //   Essay       → plain essay text
+                //   FileUpload  → Cloudinary URL
+                //   Assignment  → Cloudinary URL or plain text
+                string submittedFile = hasSub ? (sub!.SubmittedFile ?? "") : "";
+
+                // EssayContent is what GradingInterface reads for quiz answers AND essay text
+                string essayContent = submittedFile;
+
+                // HasFile is true only when a real file URL was stored (FileUpload / Assignment)
+                bool hasFile = hasSub
+                    && !string.IsNullOrEmpty(submittedFile)
+                    && (isFileUpload || (!isQuiz && !isEssay))
+                    && (submittedFile.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
+                        || submittedFile.StartsWith("https://", StringComparison.OrdinalIgnoreCase));
+
                 result.Add(new StudentSubmission
                 {
                     StudentId = student.StudentNumber ?? student.StudentId.ToString(),
@@ -223,11 +250,14 @@ namespace PUPAcadPortal.Services
                     SubmissionTime = hasSub ? sub!.SubmissionDate : DateTime.MinValue,
                     Status = status,
                     Score = hasSub && sub!.Grade != null
-                                ? (int)Math.Round((double)sub!.Grade)
-                                : -1,
+                                        ? (int)Math.Round((double)sub!.Grade)
+                                        : -1,
                     IsChecked = isChecked,
                     Remarks = hasSub ? (sub!.Remarks ?? "") : "",
-                    HasFile = hasSub && !string.IsNullOrEmpty(sub!.SubmittedFile),
+                    // EssayContent carries quiz-answer JSON, essay text, or file URL
+                    EssayContent = essayContent,
+                    // HasFile signals the Download button in the grading UI
+                    HasFile = hasFile,
                     SubmissionDbId = hasSub ? sub!.SubmissionId : string.Empty
                 });
             }
@@ -245,7 +275,6 @@ namespace PUPAcadPortal.Services
 
             sub.Grade = score;
             sub.Status = "Graded";
-            // Truncate to 500 chars to match DB column length
             sub.Remarks = remarks?.Length > 500 ? remarks[..500] : remarks;
 
             ctx.SaveChanges();
@@ -263,6 +292,7 @@ namespace PUPAcadPortal.Services
             ctx.SaveChanges();
         }
 
+        //  Dropdowns
 
         public List<GradingCategory> GetCategoriesForOffering(string subjectOfferingId)
         {
@@ -285,6 +315,8 @@ namespace PUPAcadPortal.Services
                 .OrderBy(m => m.UploadDate)
                 .ToList();
         }
+
+        // ── Mapping ──────────────────────────────────────────────────────────
 
         private static List<ActivityItem> MapActivities(
             IEnumerable<Activity> activities,
@@ -310,6 +342,9 @@ namespace PUPAcadPortal.Services
                     _ => ActivityType.Assignment
                 };
 
+                var rubric = DeserializeRubric(a.RubricContent);   // ← FIX 1
+                bool hasRubric = rubric.Count > 0;
+
                 result.Add(new ActivityItem
                 {
                     Id = idx++,
@@ -331,6 +366,8 @@ namespace PUPAcadPortal.Services
                     LinkedModuleId = a.ModuleId,
                     LinkedModuleTitle = a.Module?.Title ?? "",
                     Questions = DeserializeQuestions(a.QuizContent),
+                    RubricItems = rubric,          // ← FIX 1
+                    HasRubric = hasRubric,       // ← FIX 1
                 });
             }
 
@@ -340,14 +377,12 @@ namespace PUPAcadPortal.Services
         private static string GenerateActivityId()
             => $"ACT-{DateTime.UtcNow:yyyyMMddHHmmss}-{Guid.NewGuid().ToString("N")[..6].ToUpper()}";
 
-        //  Quiz question JSON helpers 
+        // ── Quiz question JSON helpers ────────────────────────────────────────
 
         private static string? SerializeQuestions(List<QuizQuestion>? questions)
         {
             if (questions == null || questions.Count == 0) return null;
 
-            // Map to a simple anonymous DTO to avoid storing internal IDs that
-            // are irrelevant to the student-facing view.
             var dto = questions.Select((q, i) => new
             {
                 number = i + 1,
@@ -361,7 +396,6 @@ namespace PUPAcadPortal.Services
             return JsonSerializer.Serialize(dto);
         }
 
-        /// <summary>Deserializes JSON from DB back into instructor-side QuizQuestion list.</summary>
         private static List<QuizQuestion> DeserializeQuestions(string? json)
         {
             if (string.IsNullOrWhiteSpace(json)) return new List<QuizQuestion>();
@@ -394,6 +428,51 @@ namespace PUPAcadPortal.Services
             catch
             {
                 return new List<QuizQuestion>();
+            }
+        }
+
+        // ── Rubric JSON helpers ───────────────────────────────────────────────
+
+        /// <summary>Serializes rubric criteria list to JSON for DB storage.</summary>
+        private static string? SerializeRubric(List<RubricCriteria>? rubric)
+        {
+            if (rubric == null || rubric.Count == 0) return null;
+
+            var dto = rubric.Select(r => new
+            {
+                name = r.Name,
+                description = r.Description,
+                maxPoints = r.MaxPoints,
+            });
+
+            return JsonSerializer.Serialize(dto);
+        }
+
+        /// <summary>Deserializes rubric JSON from DB back into instructor-side RubricCriteria list.</summary>
+        private static List<RubricCriteria> DeserializeRubric(string? json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return new List<RubricCriteria>();
+
+            try
+            {
+                using var doc = JsonDocument.Parse(json);
+                var list = new List<RubricCriteria>();
+                int idx = 1;
+                foreach (var el in doc.RootElement.EnumerateArray())
+                {
+                    list.Add(new RubricCriteria
+                    {
+                        CriteriaId = idx++,
+                        Name = el.TryGetProperty("name", out var n) ? n.GetString() ?? "" : "",
+                        Description = el.TryGetProperty("description", out var d) ? d.GetString() ?? "" : "",
+                        MaxPoints = el.TryGetProperty("maxPoints", out var p) ? p.GetInt32() : 0,
+                    });
+                }
+                return list;
+            }
+            catch
+            {
+                return new List<RubricCriteria>();
             }
         }
     }

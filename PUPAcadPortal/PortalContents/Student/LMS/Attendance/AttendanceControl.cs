@@ -36,22 +36,31 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
         private const double REQUIRED_PCT = 80.0;
         private const int LATE_PER_ABS = 3;
 
-        //  DB factory 
+        //  DB factory
         private static AppDbContext CreateContext() => new AppDbContext();
         public AttendanceControl() => InitializeComponent();
 
-        //  Load 
+        //  Load
         private void AttendanceControl_Load(object sender, EventArgs e)
         {
             LoadFromDatabase();
             RefreshAll();
         }
 
-        //  Load all attendance data from DB for this student 
+        // ── Load all attendance data from DB for this student ──────────────────────
+        /// <summary>
+        /// Reloads subjects and attendance records from scratch.
+        /// IMPORTANT: clears both _subjects, _records, AND cmbCourse.Items before
+        /// rebuilding so that repeated calls (e.g. triggered by QR scan success)
+        /// never produce duplicate entries in the dropdown.
+        /// </summary>
         private void LoadFromDatabase()
         {
             _subjects.Clear();
             _records.Clear();
+
+            // Always clear the combo before rebuilding to prevent duplicates
+            // when this method is called more than once (e.g. after a QR scan).
             cmbCourse.Items.Clear();
             cmbCourse.Items.Add("All Courses");
 
@@ -86,9 +95,14 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
                     _subjects.Add(meta);
                     cmbCourse.Items.Add($"{meta.SubjectCode} – {meta.Name}");
 
-                    // Load all AttendanceRecords for this student in this offering
+                    // Load all AttendanceRecords for this student in this offering.
+                    // FIX: The JOIN goes through ClassSession → SubjectOffering so
+                    // QR-scanned records (which are inserted with SessionId only) are
+                    // picked up correctly — we no longer rely on a direct OfferingId
+                    // field on AttendanceRecord.
                     var rawRecords = ctx.AttendanceRecords
                         .Include(ar => ar.Session)
+                            .ThenInclude(cs => cs.SubjectOffering)
                         .Where(ar =>
                             ar.StudentId == CurrentStudentId &&
                             ar.Session.SubjectOfferingId == offering.SubjectOfferingId)
@@ -119,10 +133,11 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
                     "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
+            // Reset to "All Courses" after every reload
             if (cmbCourse.Items.Count > 0) cmbCourse.SelectedIndex = 0;
         }
 
-        //  Derive Prelim / Midterm / Final Term from date + academic period 
+        //  Derive Prelim / Midterm / Final Term from date + academic period
         private static string DerivePeriod(DateTime date, AcademicPeriod? period)
         {
             if (period == null) return "—";
@@ -156,7 +171,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             return q.ToList();
         }
 
-        //  Totals 
+        //  Totals
         private void ComputeTotals()
         {
             _total = _present = _absent = _late = _excused = 0;
@@ -188,7 +203,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             RefreshQRGrid();
         }
 
-        //  Summary Cards 
+        //  Summary Cards
         private void RefreshCards()
         {
             lblOverallPct.Text = $"{_pct}%";
@@ -228,7 +243,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
                 return p < REQUIRED_PCT;
             });
 
-        //  Mini Stats 
+        //  Mini Stats
         private void RefreshMiniStats()
         {
             lblMiniPresent.Text = $"● Present: {_present}";
@@ -239,7 +254,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             pnlProgress?.Invalidate();
         }
 
-        //  Segmented progress bar 
+        //  Segmented progress bar
         private void DrawSegmentedProgress(object sender, PaintEventArgs e)
         {
             var g = e.Graphics;
@@ -268,7 +283,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             g.FillRectangle(bE, xP, 0, wE, h);
         }
 
-        //  Subjects grid 
+        //  Subjects grid
         private DataTable? _subjectsDT;
 
         private void RefreshSubjectsGrid()
@@ -300,7 +315,10 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
 
                 int effAbs = ab + (lt / LATE_PER_ABS);
                 double p = n > 0 ? Math.Round(Math.Max(0, (n - effAbs) * 100.0 / n), 1) : 0;
-                string st = p >= 90 ? "Excellent" : p >= 80 ? "Good" : p >= 65 ? "At Risk" : "Dropped";
+                string st = p >= 90 ? "Excellent"
+                           : p >= 80 ? "Good"
+                           : p >= 65 ? "At Risk"
+                           : "Dropped";
 
                 _subjectsDT.Rows.Add(
                     meta.SubjectCode, meta.Name, meta.Schedule,
@@ -358,7 +376,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             RefreshQRGrid();
         }
 
-        //  Attendance log grid 
+        //  Attendance log grid
         private DataTable? _logsDT;
 
         private void RefreshLogsGrid()
@@ -384,7 +402,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
                 foreach (var rec in FilteredRecords(meta.Code).OrderByDescending(r => r.Date))
                 {
                     string statusDisplay = rec.IsQrVerified
-                        ? "🔒 Present (QR Verified)"
+                        ? "Present (QR Verified)"
                         : rec.Status;
                     _logsDT.Rows.Add(
                         rec.Date.ToString("MMM d, yyyy (ddd)"),
@@ -457,7 +475,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             }
         }
 
-        //  QR scan history grid 
+        //  QR scan history grid
         private DataTable? _qrDT;
 
         private void RefreshQRGrid()
@@ -496,7 +514,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             dgvQR.DataSource = _qrDT;
         }
 
-        //  At-Risk popup 
+        //  At-Risk popup
         private void OnViewDetailsClick(object sender, EventArgs e)
         {
             var atRiskList = new List<AtRiskSubjectInfo>();
@@ -519,7 +537,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             AtRiskPopup.Show(this.FindForm(), atRiskList);
         }
 
-        //  Scan QR Code button 
+        //  Scan QR Code button
         private void BtnScanQR_Click(object sender, EventArgs e)
         {
             if (CurrentStudentId <= 0)
@@ -551,19 +569,54 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             };
             frm.Controls.Add(scanner);
 
-            // On successful scan: reload attendance from DB and close
+            // FIX: on successful scan reload all data from DB and refresh every
+            // grid/card so the new attendance log entry appears immediately.
             scanner.QRCodeScanned += (s2, result) =>
             {
-                LoadFromDatabase();
-                RefreshAll();
+                // Always close the scanner window first
                 frm.DialogResult = DialogResult.OK;
                 frm.Close();
+
+                // Full reload from DB so the new AttendanceRecord created by
+                // QrAttendanceService is reflected in all views.
+                LoadFromDatabase();
+                RefreshAll();
             };
 
             frm.ShowDialog(this.FindForm());
+
+            // Safety net: reload even if the scanner was closed without firing the
+            // event (e.g. user closed the window after a successful scan).
+            LoadFromDatabase();
+            RefreshAll();
         }
 
-        //  Grid styling helpers 
+        //  Filter/combo change handlers ────────────────────────────────────────────
+        // These are wired in the designer; add them here if not already present
+        // so filter changes immediately refresh all views without a DB reload.
+        private void CmbCourse_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _selectedCode = null;
+            if (lblAttendanceLogTitle != null)
+                lblAttendanceLogTitle.Text = "Attendance Log";
+            ComputeTotals();
+            RefreshCards();
+            RefreshMiniStats();
+            RefreshSubjectsGrid();
+            RefreshLogsGrid();
+            RefreshQRGrid();
+        }
+
+        private void CmbPeriod_SelectedIndexChanged(object sender, EventArgs e)
+            => RefreshAll();
+
+        private void DtpFrom_ValueChanged(object sender, EventArgs e)
+            => RefreshAll();
+
+        private void DtpTo_ValueChanged(object sender, EventArgs e)
+            => RefreshAll();
+
+        //  Grid styling helpers
         private static void ApplyGridHeaderStyle(DataGridView dgv)
         {
             dgv.EnableHeadersVisualStyles = false;
@@ -600,7 +653,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
                 g.DrawRectangle(borderPen, 0, 0, card.Width - 1, card.Height - 1);
         }
 
-        //  Inner models 
+        //  Inner models
         private class AttRecord
         {
             public DateTime Date { get; set; }

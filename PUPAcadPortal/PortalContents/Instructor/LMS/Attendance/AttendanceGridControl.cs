@@ -169,7 +169,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                     // QR-verified rows show a padlock badge in the status cell
                     if (rec.IsQrVerified)
                     {
-                        e.Value = "🔒 Present";
+                        e.Value = "Present";
                         e.CellStyle.ForeColor = PresentGreen;
                         e.CellStyle.Font = new Font("Segoe UI", 8.75f, FontStyle.Bold);
                     }

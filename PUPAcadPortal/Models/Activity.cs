@@ -27,6 +27,11 @@ public partial class Activity
 
     public string? QuizContent { get; set; }
 
+    /// <summary>
+    /// JSON array of rubric criteria: [{name, description, maxPoints}]
+    /// </summary>
+    public string? RubricContent { get; set; }
+
     public virtual GradingCategory? Category { get; set; }
 
     public virtual Module? Module { get; set; }

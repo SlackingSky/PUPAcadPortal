@@ -4,6 +4,7 @@ using PUPAcadPortal.Services;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -24,9 +25,15 @@ namespace PUPAcadPortal
         private List<CourseFileItem> _files = new();
         private int _nextQId = 1, _nextRId = 1;
 
-        // DB-loaded dropdowns (populated when service is available)
+        // DB-loaded dropdowns
         private List<Models.GradingCategory> _dbCategories = new();
         private List<Models.Module> _dbModules = new();
+
+        // ── Per-type accent colours ──────────────────────────────────────────
+        private static readonly Color QuizAccent = Color.FromArgb(63, 81, 181);   // indigo
+        private static readonly Color EssayAccent = Color.FromArgb(0, 150, 136);   // teal
+        private static readonly Color AssignmentAccent = Color.FromArgb(128, 0, 0);     // maroon
+        private static readonly Color FileUploadAccent = Color.FromArgb(76, 175, 80);   // green
 
         public ActivityFormPage(
             CourseActivity course,
@@ -45,10 +52,12 @@ namespace PUPAcadPortal
             PopulateForm();
         }
 
-        //  Backward-compatible 3-arg overload 
         public ActivityFormPage(CourseActivity course, ActivityItem? editing, List<Models.GradingCategory> categories)
             : this(course, editing, categories, new List<Models.Module>()) { }
 
+        // ════════════════════════════════════════════════════════════════
+        //  FORM POPULATION
+        // ════════════════════════════════════════════════════════════════
         private void PopulateForm()
         {
             lblPageTitle.Text = _isNew ? "Create Activity" : "Edit Activity";
@@ -74,9 +83,62 @@ namespace PUPAcadPortal
             RefreshQuizPanel();
             RefreshRubricPanel();
             RefreshFilesPanel();
+            ApplyTypeTheme(cmbType.SelectedItem?.ToString() ?? "Assignment");
         }
 
-        private void cmbType_SelectedIndexChanged(object sender, EventArgs e) => RefreshTypePanel();
+        // ════════════════════════════════════════════════════════════════
+        //  TYPE THEME — visual identity per activity type
+        // ════════════════════════════════════════════════════════════════
+        private void ApplyTypeTheme(string activityType)
+        {
+            Color accent = activityType switch
+            {
+                "Quiz" => QuizAccent,
+                "Essay" => EssayAccent,
+                "FileUpload" => FileUploadAccent,
+                _ => AssignmentAccent,
+            };
+
+            // Update header accent bar color (pnlHeader has a Paint override)
+            if (pnlHeader != null)
+            {
+                pnlHeader.Tag = ColorTranslator.ToHtml(accent);
+                pnlHeader.Invalidate();
+            }
+
+            // Update save button color
+            if (btnSave != null)
+            {
+                btnSave.BackColor = accent;
+                btnSave.FlatAppearance.BorderColor = accent;
+            }
+
+            // Update section labels
+            UpdateSectionLabelColors(accent);
+        }
+
+        private void UpdateSectionLabelColors(Color accent)
+        {
+            // Walk controls and update any "section-label" tagged labels
+            foreach (Control ctrl in stackPanel.Controls)
+            {
+                if (ctrl is Panel panel)
+                {
+                    foreach (Control inner in panel.Controls)
+                    {
+                        if (inner is Label lbl && lbl.Tag?.ToString() == "section-label")
+                            lbl.ForeColor = accent;
+                    }
+                }
+            }
+        }
+
+        private void cmbType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string t = cmbType.SelectedItem?.ToString() ?? "Assignment";
+            RefreshTypePanel();
+            ApplyTypeTheme(t);
+        }
 
         private void RefreshTypePanel()
         {
@@ -85,10 +147,184 @@ namespace PUPAcadPortal
             pnlRubricSection.Visible = t is "Essay" or "Assignment";
             lblPointsNote.Text = t == "Quiz" ? "ℹ Points calculated from questions." : "";
 
+            // Show/hide student rubric preview banner
+            UpdateRubricPreviewBanner(t);
+
             if (pnlRubricSection.Visible && chkRubric.Checked)
                 ApplyRubricLayout();
         }
 
+        // ════════════════════════════════════════════════════════════════
+        //  STUDENT RUBRIC PREVIEW BANNER
+        //  Shows instructors exactly what students will see
+        // ════════════════════════════════════════════════════════════════
+        private Panel? _rubricPreviewBanner;
+
+        private void UpdateRubricPreviewBanner(string activityType)
+        {
+            // Remove existing banner
+            if (_rubricPreviewBanner != null)
+            {
+                _rubricPreviewBanner.Parent?.Controls.Remove(_rubricPreviewBanner);
+                _rubricPreviewBanner.Dispose();
+                _rubricPreviewBanner = null;
+            }
+
+            if (activityType is not ("Essay" or "Assignment")) return;
+            if (!chkRubric.Checked || _rubricItems.Count == 0) return;
+
+            _rubricPreviewBanner = BuildStudentRubricPreviewPanel();
+
+            // Insert after the rubric section inside stackPanel
+            int rubricIdx = -1;
+            for (int i = 0; i < stackPanel.Controls.Count; i++)
+                if (stackPanel.Controls[i] == pnlRubricSection) { rubricIdx = i; break; }
+
+            if (rubricIdx >= 0)
+                stackPanel.Controls.Add(_rubricPreviewBanner);
+        }
+
+        private Panel BuildStudentRubricPreviewPanel()
+        {
+            var pnl = new Panel
+            {
+                BackColor = Color.FromArgb(248, 250, 255),
+                Width = 900,
+                AutoSize = false,
+                Padding = new Padding(14, 12, 14, 14),
+                Tag = "rubric-student-preview"
+            };
+            pnl.Paint += (s, e) =>
+            {
+                using var pen = new Pen(Color.FromArgb(63, 81, 181), 1.5f);
+                e.Graphics.DrawRectangle(pen, 0, 0, pnl.Width - 1, pnl.Height - 1);
+                using var bar = new SolidBrush(Color.FromArgb(63, 81, 181));
+                e.Graphics.FillRectangle(bar, 0, 0, 4, pnl.Height);
+            };
+
+            int y = 10;
+
+            // Header
+            pnl.Controls.Add(new Label
+            {
+                Text = "👁  Student View Preview — Grading Rubric",
+                Font = new Font("Segoe UI", 9.5F, FontStyle.Bold),
+                ForeColor = Color.FromArgb(63, 81, 181),
+                Location = new Point(18, y),
+                AutoSize = true,
+            });
+            y += 26;
+
+            pnl.Controls.Add(new Label
+            {
+                Text = "Students will see this rubric before submitting. Criteria below are visible on their activity page.",
+                Font = new Font("Segoe UI", 8F, FontStyle.Italic),
+                ForeColor = Color.FromArgb(100, 100, 120),
+                Location = new Point(18, y),
+                AutoSize = true,
+            });
+            y += 22;
+
+            // Column headers
+            var pnlHeader = new Panel
+            {
+                Location = new Point(14, y),
+                BackColor = Color.FromArgb(63, 81, 181),
+                Height = 26,
+                Width = 800,
+            };
+            AddLabel(pnlHeader, "Criterion", new Point(10, 5), new Font("Segoe UI", 8.5F, FontStyle.Bold), Color.White);
+            AddLabel(pnlHeader, "Description", new Point(210, 5), new Font("Segoe UI", 8.5F, FontStyle.Bold), Color.White);
+            AddLabel(pnlHeader, "Max Points", new Point(580, 5), new Font("Segoe UI", 8.5F, FontStyle.Bold), Color.White);
+            pnl.Controls.Add(pnlHeader);
+            y += 28;
+
+            int total = 0;
+            bool odd = false;
+            foreach (var crit in _rubricItems)
+            {
+                odd = !odd;
+                var row = new Panel
+                {
+                    Location = new Point(14, y),
+                    BackColor = odd ? Color.White : Color.FromArgb(243, 243, 250),
+                    Height = 30,
+                    Width = 800,
+                };
+                row.Paint += (s, e) =>
+                {
+                    using var pen = new Pen(Color.FromArgb(225, 225, 235));
+                    e.Graphics.DrawLine(pen, 0, row.Height - 1, row.Width, row.Height - 1);
+                };
+
+                AddLabel(row, crit.Name,
+                    new Point(10, 7), new Font("Segoe UI", 8.5F, FontStyle.Bold),
+                    Color.FromArgb(30, 30, 40), new Size(195, 18));
+                AddLabel(row, crit.Description,
+                    new Point(210, 7), new Font("Segoe UI", 8.5F),
+                    Color.FromArgb(80, 80, 90), new Size(360, 18));
+
+                var ptsLabel = new Label
+                {
+                    Text = $"{crit.MaxPoints} pts",
+                    Font = new Font("Segoe UI", 8.5F, FontStyle.Bold),
+                    ForeColor = Color.FromArgb(63, 81, 181),
+                    Location = new Point(580, 7),
+                    Size = new Size(80, 18),
+                    TextAlign = ContentAlignment.MiddleLeft,
+                };
+                row.Controls.Add(ptsLabel);
+                pnl.Controls.Add(row);
+                y += 32;
+                total += crit.MaxPoints;
+            }
+
+            // Total row
+            var pnlTotal = new Panel
+            {
+                Location = new Point(14, y),
+                BackColor = Color.FromArgb(240, 245, 255),
+                Height = 30,
+                Width = 800,
+            };
+            pnlTotal.Paint += (s, e) =>
+            {
+                using var pen = new Pen(Color.FromArgb(63, 81, 181));
+                e.Graphics.DrawRectangle(pen, 0, 0, pnlTotal.Width - 1, pnlTotal.Height - 1);
+            };
+            AddLabel(pnlTotal, "TOTAL",
+                new Point(10, 7), new Font("Segoe UI", 8.5F, FontStyle.Bold),
+                Color.FromArgb(63, 81, 181));
+            AddLabel(pnlTotal, $"{total} pts",
+                new Point(580, 7), new Font("Segoe UI", 8.5F, FontStyle.Bold),
+                Color.FromArgb(63, 81, 181));
+            pnl.Controls.Add(pnlTotal);
+            y += 34;
+
+            pnl.Height = y + 12;
+            return pnl;
+        }
+
+        private static void AddLabel(Control parent, string text, Point loc,
+            Font font, Color foreColor, Size? size = null)
+        {
+            var lbl = new Label
+            {
+                Text = text,
+                Font = font,
+                ForeColor = foreColor,
+                Location = loc,
+                AutoSize = size == null,
+                AutoEllipsis = size != null,
+                BackColor = Color.Transparent,
+            };
+            if (size != null) lbl.Size = size.Value;
+            parent.Controls.Add(lbl);
+        }
+
+        // ════════════════════════════════════════════════════════════════
+        //  QUIZ SECTION
+        // ════════════════════════════════════════════════════════════════
         private void btnAddQuestion_Click(object sender, EventArgs e)
         {
             _questions.Add(new QuizQuestion { QuestionId = _nextQId++, QuestionType = "MultipleChoice", Points = 1 });
@@ -105,27 +341,82 @@ namespace PUPAcadPortal
 
             if (cmbType.SelectedItem?.ToString() == "Quiz" && _questions.Count > 0)
                 nudPoints.Value = _questions.Sum(q => q.Points);
+
+            // Quiz summary panel
+            UpdateQuizSummaryBadge();
         }
 
+        private void UpdateQuizSummaryBadge()
+        {
+            // Remove old badge
+            foreach (Control c in pnlQuizSection.Controls)
+                if (c.Tag?.ToString() == "quiz-summary") { pnlQuizSection.Controls.Remove(c); c.Dispose(); break; }
+
+            if (_questions.Count == 0) return;
+
+            int total = _questions.Sum(q => q.Points);
+            int mc = _questions.Count(q => q.QuestionType == "MultipleChoice");
+            int tf = _questions.Count(q => q.QuestionType == "TrueFalse");
+            int id = _questions.Count(q => q.QuestionType == "Identification");
+            int ess = _questions.Count(q => q.QuestionType == "Essay");
+
+            var badge = new Panel
+            {
+                BackColor = Color.FromArgb(235, 238, 255),
+                Height = 36,
+                Margin = new Padding(0, 0, 0, 8),
+                Tag = "quiz-summary",
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
+            };
+            badge.Paint += (s, e) =>
+            {
+                using var pen = new Pen(Color.FromArgb(63, 81, 181), 1f);
+                e.Graphics.DrawRectangle(pen, 0, 0, badge.Width - 1, badge.Height - 1);
+                using var bar = new SolidBrush(Color.FromArgb(63, 81, 181));
+                e.Graphics.FillRectangle(bar, 0, 0, 4, badge.Height);
+            };
+
+            var parts = new List<string>();
+            if (mc > 0) parts.Add($"{mc} MC");
+            if (tf > 0) parts.Add($"{tf} T/F");
+            if (id > 0) parts.Add($"{id} ID");
+            if (ess > 0) parts.Add($"{ess} Essay");
+
+            badge.Controls.Add(new Label
+            {
+                Text = $"❓  {_questions.Count} question{(_questions.Count == 1 ? "" : "s")}   ·   " +
+                             string.Join("  ·  ", parts) +
+                             $"   ·   Total: {total} pt{(total == 1 ? "" : "s")}",
+                Font = new Font("Segoe UI", 8.5F, FontStyle.Bold),
+                ForeColor = Color.FromArgb(40, 55, 160),
+                Location = new Point(14, 10),
+                AutoSize = true,
+                BackColor = Color.Transparent,
+            });
+
+            pnlQuizSection.Controls.Add(badge);
+            badge.BringToFront();
+        }
+
+        // ─────────────────────────────────────────────────────────────────────
+        //  Label injection helper
+        // ─────────────────────────────────────────────────────────────────────
         private void AddMissingLabels()
         {
-            // Local helper to create and place a label directly above a target control
             void InjectLabel(Control target, string text)
             {
                 if (target.Parent == null) return;
-
                 var lbl = new Label
                 {
                     Text = text,
                     AutoSize = true,
                     Font = new Font("Segoe UI", 9F, FontStyle.Bold),
                     ForeColor = Color.FromArgb(80, 80, 80),
-                    Location = new Point(target.Left, target.Top - 18) // Places it 18px above the control
+                    Location = new Point(target.Left, target.Top - 18),
                 };
                 target.Parent.Controls.Add(lbl);
             }
 
-            // Inject labels for the main input fields based on your existing variable names
             InjectLabel(txtTitle, "Activity Title");
             InjectLabel(cmbType, "Activity Type");
             InjectLabel(dtpDeadline, "Deadline");
@@ -133,14 +424,15 @@ namespace PUPAcadPortal
             InjectLabel(txtDescription, "Description / Instructions");
         }
 
+        // ─────────────────────────────────────────────────────────────────────
+        //  Question row builder (unchanged logic, improved visual layout)
+        // ─────────────────────────────────────────────────────────────────────
         private static readonly string[] ChoiceLetters = { "A", "B", "C", "D", "E", "F", "G", "H" };
 
         private Panel BuildQuestionRow(QuizQuestion q, int num)
         {
             if (q.QuestionType == "MultipleChoice" && q.Choices.Count < 4)
-            {
                 while (q.Choices.Count < 4) q.Choices.Add("");
-            }
 
             int rowW = Math.Max(700, flpQuestions.ClientSize.Width - 16);
             var row = new Panel
@@ -151,9 +443,9 @@ namespace PUPAcadPortal
             };
             row.Paint += (s, e) =>
             {
-                using var pen = new Pen(Color.FromArgb(225, 225, 235));
+                using var pen = new Pen(Color.FromArgb(220, 225, 248));
                 e.Graphics.DrawRectangle(pen, 0, 0, row.Width - 1, row.Height - 1);
-                using var accent = new SolidBrush(Color.FromArgb(63, 81, 181));
+                using var accent = new SolidBrush(QuizAccent);
                 e.Graphics.FillRectangle(accent, 0, 0, 4, row.Height);
             };
 
@@ -162,7 +454,7 @@ namespace PUPAcadPortal
                 Text = num.ToString(),
                 Font = new Font("Segoe UI", 10F, FontStyle.Bold),
                 ForeColor = Color.White,
-                BackColor = Color.FromArgb(63, 81, 181),
+                BackColor = QuizAccent,
                 TextAlign = ContentAlignment.MiddleCenter,
                 Location = new Point(12, 10),
                 Size = new Size(28, 28)
@@ -193,6 +485,7 @@ namespace PUPAcadPortal
                 q.Points = (int)nudPts.Value;
                 if (cmbType.SelectedItem?.ToString() == "Quiz")
                     nudPoints.Value = _questions.Sum(x => x.Points);
+                UpdateQuizSummaryBadge();
             };
 
             var btnDel = new buttonRounded
@@ -216,14 +509,11 @@ namespace PUPAcadPortal
                 Size = new Size(rowW - 20, 26)
             };
             txtQ.TextChanged += (s, e) => q.QuestionText = txtQ.Text;
+
             int splitX = (int)(rowW * 0.55);
             int rightW = rowW - splitX - 12;
 
-            var pnlChoices = new Panel
-            {
-                Location = new Point(12, 80),
-                BackColor = Color.Transparent
-            };
+            var pnlChoices = new Panel { Location = new Point(12, 80), BackColor = Color.Transparent };
             var pnlRight = new Panel
             {
                 Location = new Point(splitX, 80),
@@ -235,6 +525,7 @@ namespace PUPAcadPortal
                 using var pen = new Pen(Color.FromArgb(210, 210, 230));
                 e.Graphics.DrawRectangle(pen, 0, 0, pnlRight.Width - 1, pnlRight.Height - 1);
             };
+
             var lblCorrect = new Label
             {
                 Text = "✔  Correct Answer:",
@@ -243,7 +534,6 @@ namespace PUPAcadPortal
                 Location = new Point(10, 10),
                 AutoSize = true
             };
-
             var cmbCorrect = new ComboBox
             {
                 DropDownStyle = ComboBoxStyle.DropDownList,
@@ -252,7 +542,6 @@ namespace PUPAcadPortal
                 Location = new Point(10, 34),
                 Size = new Size(rightW - 20, 28)
             };
-
             var cmbTF = new ComboBox
             {
                 DropDownStyle = ComboBoxStyle.DropDownList,
@@ -263,6 +552,7 @@ namespace PUPAcadPortal
                 Visible = false
             };
             cmbTF.Items.AddRange(new object[] { "True", "False" });
+
             var txtOpenAns = new TextBox
             {
                 PlaceholderText = "Model answer / key phrase...",
@@ -276,12 +566,11 @@ namespace PUPAcadPortal
             pnlRight.Controls.AddRange(new Control[] { lblCorrect, cmbCorrect, cmbTF, txtOpenAns });
             cmbCorrect.SelectedIndexChanged += (s, e) =>
                 q.CorrectAnswer = cmbCorrect.SelectedItem?.ToString() ?? "";
+
             void SelectSavedAnswer()
             {
-                if (cmbCorrect.Items.Contains(q.CorrectAnswer))
-                    cmbCorrect.SelectedItem = q.CorrectAnswer;
-                else if (cmbCorrect.Items.Count > 0)
-                    cmbCorrect.SelectedIndex = 0;
+                if (cmbCorrect.Items.Contains(q.CorrectAnswer)) cmbCorrect.SelectedItem = q.CorrectAnswer;
+                else if (cmbCorrect.Items.Count > 0) cmbCorrect.SelectedIndex = 0;
             }
 
             void RebuildChoices()
@@ -290,21 +579,18 @@ namespace PUPAcadPortal
                 pnlChoices.Controls.Clear();
                 int choiceW = splitX - 20;
                 int y = 0;
-
                 for (int ci = 0; ci < q.Choices.Count; ci++)
                 {
                     int idx = ci;
                     string letter = idx < ChoiceLetters.Length ? ChoiceLetters[idx] : $"#{idx + 1}";
-
                     var lblLetter = new Label
                     {
                         Text = letter + ".",
                         Font = new Font("Segoe UI", 9.5F, FontStyle.Bold),
-                        ForeColor = Color.FromArgb(63, 81, 181),
+                        ForeColor = QuizAccent,
                         Location = new Point(0, y + 4),
                         Size = new Size(24, 22)
                     };
-
                     var txtChoice = new TextBox
                     {
                         Text = q.Choices[idx],
@@ -316,38 +602,25 @@ namespace PUPAcadPortal
                     int capturedIdx = idx;
                     txtChoice.TextChanged += (s, e) =>
                     {
-                        if (capturedIdx < q.Choices.Count)
-                            q.Choices[capturedIdx] = txtChoice.Text;
+                        if (capturedIdx < q.Choices.Count) q.Choices[capturedIdx] = txtChoice.Text;
                         RefreshCorrectAnswerCombo(q, cmbCorrect);
                         SelectSavedAnswer();
                     };
-
                     var btnRemChoice = new buttonRounded
                     {
                         Text = "−",
                         Size = new Size(26, 26),
                         Location = new Point(choiceW - 34, y),
-                        BackColor = idx >= 4
-                            ? Color.FromArgb(195, 55, 55)
-                            : Color.FromArgb(200, 200, 210),
+                        BackColor = idx >= 4 ? Color.FromArgb(195, 55, 55) : Color.FromArgb(200, 200, 210),
                         ForeColor = Color.White,
                         BorderRadius = 5,
-                        Enabled = idx >= 4,   // A–D are permanent
+                        Enabled = idx >= 4,
                         Font = new Font("Segoe UI", 9F, FontStyle.Bold)
                     };
-                    btnRemChoice.Click += (s, e) =>
-                    {
-                        if (q.Choices.Count > 4)
-                        {
-                            q.Choices.RemoveAt(idx);
-                            RebuildChoices();
-                        }
-                    };
-
+                    btnRemChoice.Click += (s, e) => { if (q.Choices.Count > 4) { q.Choices.RemoveAt(idx); RebuildChoices(); } };
                     pnlChoices.Controls.AddRange(new Control[] { lblLetter, txtChoice, btnRemChoice });
                     y += 32;
                 }
-
                 if (q.Choices.Count < ChoiceLetters.Length)
                 {
                     var btnAddChoice = new buttonRounded
@@ -355,30 +628,22 @@ namespace PUPAcadPortal
                         Text = $"+ Add {(q.Choices.Count < ChoiceLetters.Length ? ChoiceLetters[q.Choices.Count] : "?")} Choice",
                         Size = new Size(130, 26),
                         Location = new Point(28, y),
-                        BackColor = Color.FromArgb(63, 81, 181),
+                        BackColor = QuizAccent,
                         ForeColor = Color.White,
                         BorderRadius = 6,
                         Font = new Font("Segoe UI", 8.5F, FontStyle.Bold)
                     };
-                    btnAddChoice.Click += (s, e) =>
-                    {
-                        q.Choices.Add("");
-                        RebuildChoices();
-                    };
+                    btnAddChoice.Click += (s, e) => { q.Choices.Add(""); RebuildChoices(); };
                     pnlChoices.Controls.Add(btnAddChoice);
                     y += 32;
                 }
-
                 pnlChoices.Height = y + 4;
                 pnlChoices.Width = choiceW;
-
                 RefreshCorrectAnswerCombo(q, cmbCorrect);
                 SelectSavedAnswer();
-
                 pnlChoices.ResumeLayout();
                 pnlRight.Location = new Point(splitX, 80);
                 pnlRight.Height = Math.Max(pnlChoices.Height, 80);
-
                 row.Height = 80 + Math.Max(pnlChoices.Height, pnlRight.Height) + 12;
                 row.Invalidate();
             }
@@ -397,43 +662,27 @@ namespace PUPAcadPortal
 
                 if (isTF)
                 {
-                    string saved = q.CorrectAnswer;
-                    if (!string.IsNullOrEmpty(saved) && cmbTF.Items.Contains(saved))
-                        cmbTF.SelectedItem = saved;
+                    if (!string.IsNullOrEmpty(q.CorrectAnswer) && cmbTF.Items.Contains(q.CorrectAnswer))
+                        cmbTF.SelectedItem = q.CorrectAnswer;
                     else cmbTF.SelectedIndex = 0;
                 }
-
                 if (isOpen) txtOpenAns.Text = q.CorrectAnswer;
-
                 if (isMC) RebuildChoices();
-                else
-                {
-                    pnlRight.Height = 72;
-                    row.Height = 80 + pnlRight.Height + 12;
-                    row.Invalidate();
-                }
+                else { pnlRight.Height = 72; row.Height = 80 + pnlRight.Height + 12; row.Invalidate(); }
+
+                UpdateQuizSummaryBadge();
             }
 
             cmbTF.SelectedIndexChanged += (s, e) => q.CorrectAnswer = cmbTF.SelectedItem?.ToString() ?? "True";
-
-            cmbQType.SelectedIndexChanged += (s, e) =>
-            {
-                string qt = cmbQType.SelectedItem?.ToString() ?? "MultipleChoice";
-                ApplyQuestionType(qt);
-            };
+            cmbQType.SelectedIndexChanged += (s, e) => ApplyQuestionType(cmbQType.SelectedItem?.ToString() ?? "MultipleChoice");
 
             row.Controls.AddRange(new Control[] { lblNum, cmbQType, lblPts, nudPts, btnDel, txtQ, pnlChoices, pnlRight });
 
             void PositionDeleteBtn() => btnDel.Location = new Point(row.Width - 36, 10);
             PositionDeleteBtn();
-            row.SizeChanged += (s, e) =>
-            {
-                PositionDeleteBtn();
-                txtQ.Width = row.Width - 20;
-            };
+            row.SizeChanged += (s, e) => { PositionDeleteBtn(); txtQ.Width = row.Width - 20; };
 
             ApplyQuestionType(q.QuestionType);
-
             return row;
         }
 
@@ -448,51 +697,36 @@ namespace PUPAcadPortal
                 string display = string.IsNullOrEmpty(text) ? $"{letter}. (empty)" : $"{letter}. {text}";
                 cmb.Items.Add(display);
             }
-            // Restore selection by letter prefix
             for (int i = 0; i < cmb.Items.Count; i++)
-            {
-                if (cmb.Items[i].ToString()!.StartsWith(saved))
-                { cmb.SelectedIndex = i; return; }
-            }
+                if (cmb.Items[i].ToString()!.StartsWith(saved)) { cmb.SelectedIndex = i; return; }
             if (cmb.Items.Count > 0) cmb.SelectedIndex = 0;
         }
 
-        private static string GetAnswerHint(string type) => type switch
-        {
-            "TrueFalse" => "Answer key: True or False",
-            _ => "Answer key / model answer"
-        };
-
-        //  RUBRIC SECTION CONSTANTS
+        // ════════════════════════════════════════════════════════════════
+        //  RUBRIC SECTION
+        // ════════════════════════════════════════════════════════════════
         private const int SummaryPanelH = 370;
         private const int CriteriaMaxH = SummaryPanelH;
         private const int CriteriaRowH = 58;
 
-        //  Toggle rubric on/off 
         private void chkRubric_CheckedChanged(object sender, EventArgs e)
         {
             bool on = chkRubric.Checked;
-
-            // Show/hide criteria scroll and add-button
             pnlCriteriaScroll.Visible = on;
             btnAddCriteria.Visible = on;
             lblRubricNote.Visible = on;
-
-            // Show/hide summary panel
             pnlRubricSummary.Visible = on;
 
-            if (on)
-            {
-                RefreshRubricPanel();
-                ApplyRubricLayout();
-            }
+            if (on) { RefreshRubricPanel(); ApplyRubricLayout(); }
             else
             {
-                // Collapse to header-only height
                 pnlRubricLeft.Height = 46;
                 pnlRubricSummary.Height = 46;
                 pnlRubricSection.Height = 46;
             }
+
+            // Refresh student preview banner
+            UpdateRubricPreviewBanner(cmbType.SelectedItem?.ToString() ?? "Assignment");
         }
 
         private void btnAddCriteria_Click(object sender, EventArgs e)
@@ -501,10 +735,8 @@ namespace PUPAcadPortal
             RefreshRubricPanel();
         }
 
-        // ── Refresh criteria list + update all summary widgets 
         private void RefreshRubricPanel()
         {
-            // ── Rebuild criteria rows ────────────────────────────────────────
             flpRubric.SuspendLayout();
             flpRubric.Controls.Clear();
             int leftW = pnlCriteriaScroll.Width > 20 ? pnlCriteriaScroll.Width : 960;
@@ -512,7 +744,6 @@ namespace PUPAcadPortal
                 flpRubric.Controls.Add(BuildRubricRow(_rubricItems[i], i + 1, leftW));
             flpRubric.ResumeLayout();
 
-            // ── Compute stats ────────────────────────────────────────────────
             int count = _rubricItems.Count;
             int totalPts = _rubricItems.Sum(r => r.MaxPoints);
             int actPts = (int)nudPoints.Value;
@@ -525,24 +756,16 @@ namespace PUPAcadPortal
                 remaining = 0;
                 lblRubricNote.Text = $"Max score locked to rubric ({totalPts} pts)";
             }
-            else
-            {
-                remaining = Math.Max(0, actPts - totalPts);
-            }
+            else { remaining = Math.Max(0, actPts - totalPts); }
 
-            // ── Stat card values ────────────────────────────────────────────
             lblStatCriteriaVal.Text = count.ToString();
             lblStatTotalVal.Text = totalPts.ToString();
             lblStatRemainingVal.Text = remaining.ToString();
 
-            // Remaining color
             bool balanced = remaining == 0 && count > 0;
-            lblStatRemainingVal.ForeColor = balanced
-                ? Color.FromArgb(26, 128, 64)
-                : remaining == 0 ? Color.FromArgb(26, 128, 64)
-                : Color.OrangeRed;
+            lblStatRemainingVal.ForeColor = balanced ? Color.FromArgb(26, 128, 64)
+                : remaining == 0 ? Color.FromArgb(26, 128, 64) : Color.OrangeRed;
 
-            // Status card
             (string statusText, Color statusColor, string statusIcon) = count switch
             {
                 0 => ("Not\nConfigured", Color.FromArgb(130, 130, 140), "⚙"),
@@ -553,60 +776,48 @@ namespace PUPAcadPortal
             lblStatStatusVal.Text = statusText;
             lblStatStatusVal.ForeColor = statusColor;
             lblStatStatusIcon.Text = statusIcon;
-            // Refresh the status card accent color
             pnlStatStatus.Tag = ColorTranslator.ToHtml(statusColor);
             pnlStatStatus.Invalidate();
 
-            // ── Progress bar ────────────────────────────────────────────────
             int pct = actPts > 0 ? Math.Min(100, (int)Math.Round(totalPts * 100.0 / actPts)) : 0;
             int fillW = (int)(pnlProgressBg.Width * pct / 100.0);
             pnlProgressFill.Width = fillW;
             lblProgressPct.Text = $"{pct}%";
-            pnlProgressFill.BackColor = pct >= 100
-                ? Color.FromArgb(26, 128, 64)
+            pnlProgressFill.BackColor = pct >= 100 ? Color.FromArgb(26, 128, 64)
                 : pct >= 60 ? Color.FromArgb(255, 196, 0)
                 : Color.FromArgb(128, 0, 0);
 
-            // ── Validation message ──────────────────────────────────────────
             lblValidationMsg.Text = count == 0
                 ? "⚠  Add at least one criterion to enable rubric grading."
-                : count == 1
-                ? "ℹ  Consider adding more criteria for balanced grading."
-                : totalPts == 0
-                ? "⚠  All criteria have 0 points — please set point values."
-                : balanced
-                ? "✔  Rubric is complete and ready to use."
+                : count == 1 ? "ℹ  Consider adding more criteria for balanced grading."
+                : totalPts == 0 ? "⚠  All criteria have 0 points — please set point values."
+                : balanced ? "✔  Rubric is complete and ready to use."
                 : $"ℹ  Rubric total: {totalPts} pts (activity max set to match).";
             lblValidationMsg.ForeColor = count == 0 || totalPts == 0
                 ? Color.FromArgb(180, 60, 0)
                 : balanced ? Color.FromArgb(26, 128, 64)
                 : Color.FromArgb(100, 80, 0);
 
-            // ── Resize layout ────────────────────────────────────────────────
             ApplyRubricLayout();
+
+            // Refresh student rubric preview
+            UpdateRubricPreviewBanner(cmbType.SelectedItem?.ToString() ?? "Assignment");
         }
 
-        // ── Central layout engine for the rubric section ─────────────────────
         private void ApplyRubricLayout()
         {
             if (!chkRubric.Checked || pnlRubricSection == null) return;
 
-            // Total section width
             int secW = Math.Max(900, pnlRubricSection.Width);
-            int leftPad = 14;
-            int gap = 12;
-
-            // Left = ~70%, Right = ~30%, min 370px each
+            int leftPad = 14, gap = 12;
             int rightW = Math.Max(432, (int)(secW * 0.30));
             int leftW = Math.Max(460, secW - rightW - gap - leftPad);
 
-            // ── Position left column ─────────────────────────────────────────
             pnlRubricLeft.Location = new Point(leftPad, 0);
             pnlRubricLeft.Width = leftW;
             pnlRubricHeader.Width = leftW;
             btnAddCriteria.Location = new Point(leftW - btnAddCriteria.Width - 4, 9);
 
-            // Scrollable criteria area height: fits up to CriteriaMaxH
             int rowCount = _rubricItems.Count;
             int contentH = rowCount * (CriteriaRowH + 6) + 12;
             int criteriaH = rowCount == 0 ? 0 : Math.Min(contentH, CriteriaMaxH);
@@ -615,19 +826,15 @@ namespace PUPAcadPortal
             pnlCriteriaScroll.Height = criteriaH;
             flpRubric.Width = leftW - SystemInformation.VerticalScrollBarWidth - 2;
 
-            // Resize criteria row widths if width changed
             foreach (Control c in flpRubric.Controls)
                 if (c is Panel row) ResizeCriteriaRow(row, flpRubric.Width);
 
-            int leftH = 46 + criteriaH;
-            pnlRubricLeft.Height = leftH;
+            pnlRubricLeft.Height = 46 + criteriaH;
 
-            // ── Position right column ────────────────────────────────────────
             pnlRubricSummary.Location = new Point(leftPad + leftW + gap, 0);
             pnlRubricSummary.Width = rightW;
             pnlRubricSummary.Height = SummaryPanelH;
 
-            // Scale inner summary width items
             int innerW = rightW - 28;
             pnlSumDivider.Width = innerW;
             pnlStatCards.Width = innerW;
@@ -636,7 +843,6 @@ namespace PUPAcadPortal
             pnlGradeGuidelines.Width = innerW;
             pnlValidation.Width = innerW;
 
-            // Stat card widths (2 per row, with 8px gap)
             int cardW = (innerW - 8) / 2;
             pnlStatCriteria.Width = cardW;
             pnlStatTotalPts.Width = cardW;
@@ -645,47 +851,31 @@ namespace PUPAcadPortal
             pnlStatStatus.Width = cardW;
             pnlStatStatus.Left = cardW + 8;
 
-            // Progress bar width
             int progW = innerW - lblProgressPct.Width - 8;
             pnlProgressBg.Width = Math.Max(60, progW);
-
-            // Guideline panel text width
             lblGuidelineText.Width = innerW - 20;
 
-            // ── Section outer height ─────────────────────────────────────────
-            int sectionH = Math.Max(leftH, SummaryPanelH);
-            pnlRubricSection.Height = sectionH;
-
+            pnlRubricSection.Height = Math.Max(pnlRubricLeft.Height, SummaryPanelH);
             pnlRubricSection.Invalidate(true);
             pnlRubricSummary.Invalidate();
         }
 
-        // ── Paint handler for the summary panel border + accent bar ──────────
         private void pnlRubricSummary_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
             var g = e.Graphics;
-            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-
-            // Border
+            g.SmoothingMode = SmoothingMode.AntiAlias;
             using var borderPen = new Pen(Color.FromArgb(210, 200, 215), 1f);
             g.DrawRectangle(borderPen, 0, 0, pnlRubricSummary.Width - 1, pnlRubricSummary.Height - 1);
-
-            // Left accent bar (maroon)
             using var accentBrush = new SolidBrush(Color.FromArgb(128, 0, 0));
             g.FillRectangle(accentBrush, 0, 0, 4, pnlRubricSummary.Height);
         }
 
-        // ── Shared stat-card Paint: draws border + colored top accent bar ────
         private void StatCard_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
             var panel = (Panel)sender;
             var g = e.Graphics;
-
-            // Border
             using var pen = new Pen(Color.FromArgb(225, 220, 235), 1f);
             g.DrawRectangle(pen, 0, 0, panel.Width - 1, panel.Height - 1);
-
-            // Top accent bar using Tag color
             try
             {
                 string hex = panel.Tag?.ToString() ?? "#888888";
@@ -693,10 +883,9 @@ namespace PUPAcadPortal
                 using var bar = new SolidBrush(Color.FromArgb(220, c.R, c.G, c.B));
                 g.FillRectangle(bar, 1, 0, panel.Width - 2, 3);
             }
-            catch { /* ignore bad hex */ }
+            catch { }
         }
 
-        // ── Build a single criteria row ───────────────────────────────────────
         private Panel BuildRubricRow(RubricCriteria r, int rowNum, int rowW)
         {
             rowW = Math.Max(300, rowW);
@@ -712,12 +901,10 @@ namespace PUPAcadPortal
             {
                 using var pen = new Pen(Color.FromArgb(225, 218, 230), 1f);
                 e.Graphics.DrawRectangle(pen, 0, 0, row.Width - 1, row.Height - 1);
-                // Left accent
                 using var acc = new SolidBrush(Color.FromArgb(128, 0, 0));
                 e.Graphics.FillRectangle(acc, 0, 0, 3, row.Height);
             };
 
-            // Row number badge
             var lblNum = new Label
             {
                 Text = rowNum.ToString(),
@@ -730,7 +917,6 @@ namespace PUPAcadPortal
                 TabIndex = 0
             };
 
-            // Criteria name
             var txtName = new TextBox
             {
                 Text = r.Name,
@@ -742,7 +928,6 @@ namespace PUPAcadPortal
             };
             txtName.TextChanged += (s, e) => r.Name = txtName.Text;
 
-            // Description
             int descX = txtName.Right + 8;
             var txtDesc = new TextBox
             {
@@ -755,7 +940,6 @@ namespace PUPAcadPortal
             };
             txtDesc.TextChanged += (s, e) => r.Description = txtDesc.Text;
 
-            // Max pts label
             var lblPts = new Label
             {
                 Text = "pts:",
@@ -766,7 +950,6 @@ namespace PUPAcadPortal
                 TabIndex = 3
             };
 
-            // Max pts numeric
             var nudPts = new NumericUpDown
             {
                 Minimum = 1,
@@ -779,7 +962,6 @@ namespace PUPAcadPortal
             };
             nudPts.ValueChanged += (s, e) => { r.MaxPoints = (int)nudPts.Value; RefreshRubricPanel(); };
 
-            // Delete button
             var btnDel = new buttonRounded
             {
                 Text = "✕",
@@ -799,7 +981,6 @@ namespace PUPAcadPortal
             return row;
         }
 
-        // ── Resize a criteria row's fluid controls ────────────────────────────
         private static void ResizeCriteriaRow(Panel row, int newRowW)
         {
             if (newRowW < 200) return;
@@ -807,9 +988,8 @@ namespace PUPAcadPortal
             {
                 if (c is TextBox tb)
                 {
-                    if (tb.TabIndex == 1) // name
-                        tb.Width = Math.Max(80, (int)(newRowW * 0.32));
-                    else if (tb.TabIndex == 2) // description
+                    if (tb.TabIndex == 1) tb.Width = Math.Max(80, (int)(newRowW * 0.32));
+                    else if (tb.TabIndex == 2)
                     {
                         int descX = row.Controls.OfType<TextBox>()
                                        .FirstOrDefault(t => t.TabIndex == 1)?.Right + 8 ?? 200;
@@ -817,16 +997,16 @@ namespace PUPAcadPortal
                         tb.Width = Math.Max(60, newRowW - descX - 170);
                     }
                 }
-                else if (c is Label lbl && lbl.TabIndex == 3)
-                    lbl.Left = newRowW - 158;
-                else if (c is NumericUpDown nud)
-                    nud.Left = newRowW - 132;
-                else if (c is buttonRounded btn)
-                    btn.Left = newRowW - 40;
+                else if (c is Label lbl && lbl.TabIndex == 3) lbl.Left = newRowW - 158;
+                else if (c is NumericUpDown nud) nud.Left = newRowW - 132;
+                else if (c is buttonRounded btn) btn.Left = newRowW - 40;
             }
             row.Width = newRowW;
         }
 
+        // ════════════════════════════════════════════════════════════════
+        //  FILES SECTION
+        // ════════════════════════════════════════════════════════════════
         private void btnAttachFile_Click(object sender, EventArgs e)
         {
             using var ofd = new OpenFileDialog
@@ -846,57 +1026,50 @@ namespace PUPAcadPortal
                     errors.AppendLine($"\"{fi.Name}\" exceeds 10 MB and was skipped.");
                     continue;
                 }
-
-                // Stage immediately for display
                 var item = new CourseFileItem
                 {
                     FileId = _files.Count + 1,
                     FileName = fi.Name,
-                    FilePath = path,          // local path while pending
+                    FilePath = path,
                     FileType = fi.Extension.TrimStart('.').ToUpper(),
                     FileSizeBytes = fi.Length,
                     UploadedAt = DateTime.Now,
                     CourseId = _course.CourseId,
                 };
                 _files.Add(item);
-                RefreshFilesPanel();   // show pending chip
+                RefreshFilesPanel();
 
-                // Upload to Cloudinary immediately
                 try
                 {
                     string folder = $"activities/{_course.SubjectOfferingId}";
                     string hint = System.IO.Path.GetFileNameWithoutExtension(fi.Name);
                     string url = CloudinaryService.Instance.UploadFile(path, folder, hint);
-
-                    item.FilePath = url;    // replace local path with Cloudinary URL
+                    item.FilePath = url;
                 }
                 catch (Exception ex)
                 {
                     errors.AppendLine($"Upload failed for \"{fi.Name}\":\n{ex.Message}");
-                    // Keep item with local path — save will be attempted again on activity save
                 }
 
-                RefreshFilesPanel();   // refresh to show uploaded chip
+                RefreshFilesPanel();
             }
 
             if (errors.Length > 0)
-                MessageBox.Show(errors.ToString().TrimEnd(),
-                    "Upload Warnings", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(errors.ToString().TrimEnd(), "Upload Warnings",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void RefreshFilesPanel()
         {
             flpFiles.SuspendLayout();
             flpFiles.Controls.Clear();
-            foreach (var f in _files)
-                flpFiles.Controls.Add(BuildFileChip(f));
+            foreach (var f in _files) flpFiles.Controls.Add(BuildFileChip(f));
             lblNoFiles.Visible = _files.Count == 0;
             flpFiles.ResumeLayout();
         }
 
         private Panel BuildFileChip(CourseFileItem f)
         {
-            // Determine if already on Cloudinary (FilePath is a URL, not a local path)
             bool isUploaded = f.FilePath.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
                            || f.FilePath.StartsWith("https://", StringComparison.OrdinalIgnoreCase);
 
@@ -914,12 +1087,7 @@ namespace PUPAcadPortal
             };
 
             chip.Controls.Add(new Label
-            {
-                Text = FileIcon(f.FileType),
-                Font = new Font("Segoe UI", 14F),
-                Location = new Point(6, 8),
-                AutoSize = true
-            });
+            { Text = FileIcon(f.FileType), Font = new Font("Segoe UI", 14F), Location = new Point(6, 8), AutoSize = true });
             chip.Controls.Add(new Label
             {
                 Text = f.FileName,
@@ -952,7 +1120,6 @@ namespace PUPAcadPortal
             };
             btnRm.Click += (s, e) =>
             {
-                // Delete from Cloudinary if the FilePath is a URL
                 if (isUploaded && !string.IsNullOrEmpty(captured.FilePath))
                 {
                     try
@@ -963,10 +1130,8 @@ namespace PUPAcadPortal
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(
-                            $"Warning: could not delete \"{captured.FileName}\" from Cloudinary.\n{ex.Message}",
-                            "Cloudinary Warning",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show($"Warning: could not delete \"{captured.FileName}\" from Cloudinary.\n{ex.Message}",
+                            "Cloudinary Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
                 _files.Remove(captured);
@@ -976,6 +1141,9 @@ namespace PUPAcadPortal
             return chip;
         }
 
+        // ════════════════════════════════════════════════════════════════
+        //  SAVE
+        // ════════════════════════════════════════════════════════════════
         private void btnSave_Click(object sender, EventArgs e)
         {
             lblError.Text = "";
@@ -989,6 +1157,17 @@ namespace PUPAcadPortal
 
             if (type == "Quiz" && _questions.Count == 0)
             { lblError.Text = "⚠  Add at least one question for a Quiz."; return; }
+
+            // Warn if quiz has questions with empty text
+            if (type == "Quiz")
+            {
+                var emptyQs = _questions.Where(q => string.IsNullOrWhiteSpace(q.QuestionText)).ToList();
+                if (emptyQs.Count > 0)
+                {
+                    lblError.Text = $"⚠  {emptyQs.Count} question(s) have empty question text.";
+                    return;
+                }
+            }
 
             var act = _editing ?? new ActivityItem { CourseId = _course.CourseId };
             act.Title = txtTitle.Text.Trim();
@@ -1005,6 +1184,9 @@ namespace PUPAcadPortal
             OnSave?.Invoke(act);
         }
 
+        // ════════════════════════════════════════════════════════════════
+        //  EVENT HANDLERS (layout / resize)
+        // ════════════════════════════════════════════════════════════════
         private void pnlHeader_SizeChanged(object sender, System.EventArgs e)
         {
             if (btnSave != null && pnlHeader != null)
@@ -1013,8 +1195,7 @@ namespace PUPAcadPortal
 
         private void pnlRubricSection_SizeChanged(object sender, System.EventArgs e)
         {
-            if (chkRubric?.Checked == true)
-                ApplyRubricLayout();
+            if (chkRubric?.Checked == true) ApplyRubricLayout();
         }
 
         private void pnlScroll_SizeChanged(object sender, System.EventArgs e)
@@ -1029,8 +1210,7 @@ namespace PUPAcadPortal
                         if (inner is TextBox tb && (tb.Name == "txtTitle" || tb.Name == "txtDescription"))
                             tb.Width = w - 36;
             }
-            if (chkRubric?.Checked == true)
-                ApplyRubricLayout();
+            if (chkRubric?.Checked == true) ApplyRubricLayout();
         }
 
         private static void SetupSectionLabel(System.Windows.Forms.Label lbl, string text, int x, int y, System.Drawing.Color color)
@@ -1047,13 +1227,12 @@ namespace PUPAcadPortal
         {
             lbl.AutoSize = true;
             lbl.Font = new System.Drawing.Font("Segoe UI", 9F);
-            lbl.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            lbl.ForeColor = System.Drawing.Color.FromArgb(80, 80, 80);
             lbl.Location = new System.Drawing.Point(x, y);
             lbl.Text = text;
         }
 
         private void btnCancel_Click(object sender, EventArgs e) => OnCancel?.Invoke();
-
         private void pnlQuizSection_SizeChanged(object sender, System.EventArgs e) { }
         private void pnlFilesSection_SizeChanged(object sender, System.EventArgs e) { }
 
