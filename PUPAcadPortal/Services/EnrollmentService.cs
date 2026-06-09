@@ -55,21 +55,15 @@ namespace PUPAcadPortal.Services
                               && (es.SubjectStatus == "Officially Enrolled" || es.SubjectStatus == "Pending Payment"))
                     .ToDictionaryAsync(es => es.SubjectOfferingId, es => es.SubjectStatus);
 
-                var passedSubjectIdsList = await context.FinalCourseGrades
-                    .Where(f => f.EnrollmentSubj.Enrollment.StudentId == studentId
-                             && f.FinalRating <= 3.00m && f.FinalRating >= 1.00m)
-                    .Select(f => f.EnrollmentSubj.SubjectOffering.SubjectId)
-                    .ToListAsync();
-
                 var passedSubjectIdsQuery = context.FinalCourseGrades
                     .Where(f => f.EnrollmentSubj.Enrollment.StudentId == studentId
-                             && f.FinalRating <= 3.00m && f.FinalRating >= 1.00m)
+                                && f.FinalRating <= 3.00m && f.FinalRating >= 1.00m)
                     .Select(f => f.EnrollmentSubj.SubjectOffering.SubjectId);
 
-                var requiredSubjectIdsQuery = context.Curricula
+                var allowedSubjectIdsQuery = context.Curricula
                     .Where(c => c.Program == program
-                             && c.RevisionYear == student.CurriculumYear
-                             && ((c.YearLevel < yearLevel) || (c.YearLevel == yearLevel && c.SemesterIndex <= semesterIndex)))
+                        && c.RevisionYear == student.CurriculumYear
+                        && (c.YearLevel < yearLevel || (c.YearLevel == yearLevel && c.SemesterIndex <= semesterIndex)))
                     .Select(c => c.SubjectId)
                     .Distinct();
 
@@ -79,9 +73,16 @@ namespace PUPAcadPortal.Services
                             .ThenInclude(pr => pr.RequiredSubject)
                     .Include(so => so.RoomSchedules)
                     .Where(so => so.AcademicPeriodId == academicPeriodId
-                              && so.Status == "Active"
-                              && requiredSubjectIdsQuery.Contains(so.SubjectId)
-                              && !passedSubjectIdsQuery.Contains(so.SubjectId))
+                        && so.Status == "Active"
+                        && allowedSubjectIdsQuery.Contains(so.SubjectId)
+                        && !passedSubjectIdsQuery.Contains(so.SubjectId))
+                    .ToListAsync();
+
+                var passedSubjectIdsList = await passedSubjectIdsQuery.ToListAsync();
+
+                var curriculumMap = await context.Curricula
+                    .Where(c => c.Program == program && c.RevisionYear == student.CurriculumYear)
+                    .Select(c => new { c.SubjectId, c.YearLevel, c.SemesterIndex })
                     .ToListAsync();
 
                 return offerings.Select(so =>
@@ -89,30 +90,38 @@ namespace PUPAcadPortal.Services
                     bool isProcessed = existingEnrollments.ContainsKey(so.SubjectOfferingId);
                     string dbStatus = isProcessed ? existingEnrollments[so.SubjectOfferingId] : null;
 
-                    // Use the LOCAL LIST for the memory check
+                    var currInfo = curriculumMap.FirstOrDefault(c => c.SubjectId == so.SubjectId);
+                    bool isBackSubject = currInfo != null &&
+                                         (currInfo.YearLevel < yearLevel ||
+                                         (currInfo.YearLevel == yearLevel && currInfo.SemesterIndex < semesterIndex));
+
                     var missingPrereqs = so.Subject.SubjectPrerequisiteSubjects
                         .Where(pr => !passedSubjectIdsList.Contains(pr.RequiredSubjectId))
-                        .Select(pr => pr.RequiredSubject != null
-                            ? $"{pr.RequiredSubject.SubjectCode}"
-                            : "Unknown Subject")
+                        .Select(pr => pr.RequiredSubject != null ? $"{pr.RequiredSubject.SubjectCode}" : "Unknown Subject")
                         .ToList();
 
                     bool isEligible = !missingPrereqs.Any();
                     string rowStatus = isProcessed ? dbStatus : (isEligible ? "Pending" : "Locked");
+
+                    string displayTitle = so.Subject.SubjectName;
+                    if (isBackSubject && !isProcessed)
+                    {
+                        displayTitle = $"[BACK SUBJECT] {displayTitle}";
+                    }
 
                     return new EnrollmentData
                     {
                         SubjectOfferingID = so.SubjectOfferingId,
                         IsSelected = isProcessed,
                         Code = so.Subject.SubjectCode,
-                        CourseTitle = so.Subject.SubjectName,
+                        CourseTitle = displayTitle,
                         Units = so.Subject.Units,
                         Schedule = FormatSchedules(so.RoomSchedules),
                         Status = rowStatus,
                         IsEligible = isEligible,
                         PrerequisiteMessage = isEligible ? "" : $"Missing Prerequisite: {string.Join(", ", missingPrereqs)}"
                     };
-                }).ToList();
+                }).OrderBy(s => s.Status == "Locked").ThenBy(s => s.CourseTitle).ToList();
             }
         }
 

@@ -37,8 +37,48 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             dgvEnrollment.CellPainting += dgvEnrollment_CellPainting;
             dgvEnrollment.CellClick += dgvEnrollment_CellContentClick;
             dgvEnrollment.SelectionChanged += dgvEnrollment_SelectionChanged;
+            dgvEnrollment.CellFormatting += dgvEnrollment_CellFormatting;
             dgvEnrollment.CurrentCellDirtyStateChanged += dgvEnrollment_CurrentCellDirtyStateChanged;
             dgvEnrollment.CellValueChanged += dgvEnrollment_CellValueChanged;
+        }
+
+        private void dgvEnrollment_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.RowIndex < dgvEnrollment.Rows.Count)
+            {
+                var rowData = dgvEnrollment.Rows[e.RowIndex].DataBoundItem as EnrollmentData;
+                var statusRow = dgvEnrollment.Rows[e.RowIndex].Index;
+                var statusColumn = dgvEnrollment.Columns["colStatus"].Index;
+                if (rowData == null) return;
+
+                if (!rowData.IsEligible)
+                {
+                    //e.CellStyle.BackColor = Color.LightCoral;
+                    dgvEnrollment[statusColumn, statusRow].Style.ForeColor = ColorTranslator.FromHtml("#FDAE44");
+                    dgvEnrollment[statusColumn, statusRow].Style.Font = new Font(Font, FontStyle.Bold);
+                }
+                else if (rowData.Status == "Officially Enrolled")
+                {
+                    //e.CellStyle.BackColor = Color.SeaGreen;
+                    //e.CellStyle.ForeColor = Color.White;
+                    dgvEnrollment[statusColumn, statusRow].Style.ForeColor = ColorTranslator.FromHtml("#2E8B57");
+                    dgvEnrollment[statusColumn, statusRow].Style.Font = new Font(Font, FontStyle.Bold);
+                }
+                else if (rowData.Status == "Pending Payment")
+                {
+                    //e.CellStyle.BackColor = Color.DarkOrange;
+                    //e.CellStyle.ForeColor = Color.White;
+                    dgvEnrollment[statusColumn, statusRow].Style.ForeColor = ColorTranslator.FromHtml("#0041C2");
+                    dgvEnrollment[statusColumn, statusRow].Style.Font = new Font(Font, FontStyle.Bold);
+                }
+                else if (rowData.Status == "Pending")
+                {
+                    //e.CellStyle.BackColor = Color.Gold;
+                    //e.CellStyle.ForeColor = Color.Black;
+                    dgvEnrollment[statusColumn, statusRow].Style.ForeColor = ColorTranslator.FromHtml("#FFBD321");
+                    dgvEnrollment[statusColumn, statusRow].Style.Font = new Font(Font, FontStyle.Bold);
+                }
+            }
         }
 
         private void dgvEnrollment_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -155,6 +195,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             {
                 dgvEnrollment.Columns["colSchedule"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
                 dgvEnrollment.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+                dgvEnrollment.RowTemplate.MinimumHeight = 35;
                 dgvEnrollment.DataSource = new BindingList<EnrollmentData>(_liveSubjects);
             });
 
@@ -308,12 +349,12 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             if (dgvEnrollment == null) return;
 
             var colSelect = dgvEnrollment.Columns["colSelect"];
+
             if (e.RowIndex == -1 && colSelect != null && e.ColumnIndex == colSelect.Index)
             {
                 e.Paint(e.CellBounds, DataGridViewPaintParts.Background | DataGridViewPaintParts.Border);
                 int x = e.CellBounds.Left + (e.CellBounds.Width - 14) / 2;
                 int y = e.CellBounds.Top + (e.CellBounds.Height - 14) / 2;
-                e.Paint(e.CellBounds, DataGridViewPaintParts.Background | DataGridViewPaintParts.Border);
                 ButtonState state = _isAllSelected ? ButtonState.Checked : ButtonState.Normal;
                 Rectangle checkRect = new Rectangle(x, y, 14, 14);
                 ControlPaint.DrawCheckBox(e.Graphics, checkRect, state);
@@ -335,47 +376,9 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
                         e.Paint(e.CellBounds, DataGridViewPaintParts.Background |
                                               DataGridViewPaintParts.Border |
                                               DataGridViewPaintParts.SelectionBackground);
-
                         e.Handled = true;
                         return;
                     }
-                }
-            }
-
-            var colStatus = dgvEnrollment.Columns["colStatus"];
-            if (e.RowIndex >= 0 && colStatus != null && e.ColumnIndex == colStatus.Index)
-            {
-                if (e.RowIndex < dgvEnrollment.Rows.Count)
-                {
-                    var row = dgvEnrollment.Rows[e.RowIndex];
-                    var rowData = row.DataBoundItem as EnrollmentData;
-
-                    if (rowData == null) return;
-
-                    if (rowData.Status == "Officially Enrolled")
-                    {
-                        e.CellStyle.BackColor = Color.SeaGreen;
-                    }
-                    else if (rowData.Status == "Pending Payment")
-                    {
-                        e.CellStyle.BackColor = Color.DarkOrange;
-                    }
-                    else if (!rowData.IsEligible)
-                    {
-                        e.CellStyle.BackColor = Color.LightCoral;
-
-                        if (row.DefaultCellStyle.Font == null || row.DefaultCellStyle.Font.Style != FontStyle.Strikeout)
-                        {
-                            row.DefaultCellStyle.Font = new Font(dgvEnrollment.Font, FontStyle.Strikeout);
-                        }
-                    }
-                    else if (rowData.Status == "Pending")
-                    {
-                        e.CellStyle.BackColor = Color.Gold;
-                    }
-
-                    e.CellStyle.ForeColor = (rowData.Status == "Officially Enrolled" || rowData.Status == "Pending Payment" || !rowData.IsEligible)
-                                             ? Color.White : Color.Black;
                 }
             }
         }

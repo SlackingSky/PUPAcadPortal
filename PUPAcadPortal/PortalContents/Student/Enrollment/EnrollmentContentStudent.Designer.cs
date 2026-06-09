@@ -30,13 +30,14 @@
         {
             components = new System.ComponentModel.Container();
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnrollmentContentStudent));
             pnlEnrollContent = new Panel();
             panel3 = new Panel();
@@ -286,19 +287,21 @@
             dgvEnrollment.AllowUserToDeleteRows = false;
             dgvEnrollment.AllowUserToResizeColumns = false;
             dgvEnrollment.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dgvEnrollment.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dgvEnrollment.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvEnrollment.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
             dgvEnrollment.BackgroundColor = Color.White;
-            dgvEnrollment.CellBorderStyle = DataGridViewCellBorderStyle.None;
+            dgvEnrollment.CellBorderStyle = DataGridViewCellBorderStyle.SunkenHorizontal;
             dgvEnrollment.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = Color.Maroon;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dataGridViewCellStyle1.ForeColor = Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dgvEnrollment.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = Color.Maroon;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dgvEnrollment.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvEnrollment.ColumnHeadersHeight = 29;
             dgvEnrollment.Columns.AddRange(new DataGridViewColumn[] { colSelect, colCode, colTitle, colUnits, colSchedule, colStatus, colAction });
             dgvEnrollment.Dock = DockStyle.Top;
@@ -309,9 +312,9 @@
             dgvEnrollment.Name = "dgvEnrollment";
             dgvEnrollment.RowHeadersVisible = false;
             dgvEnrollment.RowHeadersWidth = 51;
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
-            dgvEnrollment.RowsDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
+            dgvEnrollment.RowsDefaultCellStyle = dataGridViewCellStyle9;
             dgvEnrollment.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvEnrollment.Size = new Size(1614, 574);
             dgvEnrollment.TabIndex = 13;
@@ -331,8 +334,8 @@
             // colCode
             // 
             colCode.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            colCode.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            colCode.DefaultCellStyle = dataGridViewCellStyle3;
             colCode.FillWeight = 92.978F;
             colCode.HeaderText = "Code";
             colCode.MinimumWidth = 6;
@@ -344,8 +347,8 @@
             // colTitle
             // 
             colTitle.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            colTitle.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            colTitle.DefaultCellStyle = dataGridViewCellStyle4;
             colTitle.FillWeight = 92.978F;
             colTitle.HeaderText = "Course Title";
             colTitle.MinimumWidth = 6;
@@ -357,9 +360,9 @@
             // colUnits
             // 
             colUnits.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            colUnits.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            colUnits.DefaultCellStyle = dataGridViewCellStyle5;
             colUnits.FillWeight = 92.978F;
             colUnits.HeaderText = "Units";
             colUnits.MinimumWidth = 6;
@@ -370,8 +373,8 @@
             // 
             // colSchedule
             // 
-            dataGridViewCellStyle5.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            colSchedule.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle6.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            colSchedule.DefaultCellStyle = dataGridViewCellStyle6;
             colSchedule.FillWeight = 92.978F;
             colSchedule.HeaderText = "Schedule";
             colSchedule.MinimumWidth = 6;
@@ -381,9 +384,9 @@
             // 
             // colStatus
             // 
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            colStatus.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            colStatus.DefaultCellStyle = dataGridViewCellStyle7;
             colStatus.FillWeight = 92.978F;
             colStatus.HeaderText = "Status";
             colStatus.MinimumWidth = 6;
@@ -394,10 +397,10 @@
             // colAction
             // 
             colAction.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.Font = new Font("Segoe UI", 12F, FontStyle.Underline);
-            dataGridViewCellStyle7.ForeColor = Color.Maroon;
-            colAction.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.Font = new Font("Segoe UI", 12F, FontStyle.Underline);
+            dataGridViewCellStyle8.ForeColor = Color.Maroon;
+            colAction.DefaultCellStyle = dataGridViewCellStyle8;
             colAction.HeaderText = "Action";
             colAction.MinimumWidth = 6;
             colAction.Name = "colAction";

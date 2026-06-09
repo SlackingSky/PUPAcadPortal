@@ -21,6 +21,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
         private StudentDataService _dataService;
         private DataTable accountsTable;
         private EnrollmentService _enrollService = new();
+        private AccountingService _accountingService = new();
 
         private const int SidePadding = 16;
         private const int CardGap = 10;
@@ -133,7 +134,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             }
 
             // Refresh the Total Assessment, Total Paid, and Balance boxes based on the visible rows
-            UpdateAccountsSummary();
+            await UpdateAccountsSummary();
         }
 
         private void SetupAccountsGridStyle()
@@ -212,34 +213,33 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             }
         }
 
-        private void UpdateAccountsSummary()
+        private async Task UpdateAccountsSummary()
         {
             decimal totalAssessment = 0;
             decimal totalPaid = 0;
 
-            // Use the DataTable's default view (respects filtering)
-            DataTable dt = (DataTable)dgvAccounts.DataSource;
-            if (dt == null) return;
-
-            foreach (DataRow row in dt.Rows)
+            using (var context = new AppDbContext())
             {
-                string amountStr = row["colAccountsAmount"]?.ToString() ?? "";
-                string status = row["colAccountsStatus"]?.ToString() ?? "";
+                totalAssessment = await context.StudentAccounts
+                    .Where(sa => sa.StudentId == UserSession.StudentID)
+                    .SumAsync(sa => (decimal?)sa.TotalAssessment) ?? 0;
 
-                amountStr = amountStr.Replace("₱", "").Replace(",", "").Trim(); 
-                if (decimal.TryParse(amountStr, out decimal amount))
-                {
-                    totalAssessment += amount;
-                    if (status.Equals("Paid", StringComparison.OrdinalIgnoreCase))
-                        totalPaid += amount;
-                }
+                totalPaid = await context.StudentAccounts
+                    .Where(sa => sa.StudentId == UserSession.StudentID)
+                    .Join(context.PaymentHistories,
+                          sa => sa.AccountId,
+                          ph => ph.AccountId,
+                          (sa, ph) => ph)
+                    .Where(ph => ph.Status == "Paid")
+                    .SumAsync(ph => (decimal?)ph.Amount) ?? 0;
             }
 
             decimal balance = totalAssessment - totalPaid;
 
-            lblTAPeso.Text = $"₱{totalAssessment:N2}";
+            lblTAPeso.Text = totalAssessment <= 0 ? "FREE" : $"₱{totalAssessment:N2}";
             lblTPPeso.Text = $"₱{totalPaid:N2}";
-            lblBalancePeso.Text = $"₱{balance:N2}";
+            lblBalancePeso.Text = $"₱{Math.Max(0, balance):N2}";
+
             dgvAccounts.ClearSelection();
         }
 
@@ -275,12 +275,12 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
         {
             string selected = cmbSelectSem.SelectedItem?.ToString() ?? "All";
 
-            if (!_dataService.IsStudentEnrolled())
-            {
-                accountsTable.Rows.Clear();
-                accountsTable.Rows.Add("N/A", "Complete enrollment to view payment details.", "₱0.00", "", "Pending", "");
-                return;
-            }
+            //if (!_dataService.IsStudentEnrolled())
+            //{
+            //    accountsTable.Rows.Clear();
+            //    accountsTable.Rows.Add("N/A", "Complete enrollment to view payment details.", "₱0.00", "", "Pending", "");
+            //    return;
+            //}
             await LoadAccountsDataAsync(selected);
         }
 
@@ -377,18 +377,8 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             pnlEnrollStatusCard.Visible = false;
             lblEnrollStatus.Visible = false;
 
-            // Clear or show placeholder in accounts table
-            accountsTable.Rows.Clear();
-            accountsTable.Rows.Add("N/A", "Complete enrollment to view payment details.", "₱0.00", "", "Pending", "");
-
-            // Disable enrollment-dependent features
             btnAccountsDownloadStatement.Enabled = false;
             btnAccountsDownloadStatement.BackColor = Color.DarkGray;
-
-            // Update summary to show zeros
-            lblTAPeso.Text = "₱0.00";
-            lblTPPeso.Text = "₱0.00";
-            lblBalancePeso.Text = "₱0.00";
         }
 
         private void btnAccountsDownloadStatement_Click(object sender, EventArgs e)
