@@ -38,6 +38,10 @@
     </PackageReference>
     <PackageReference Include="MySql.EntityFrameworkCore" Version="10.0.7" />
     <PackageReference Include="MySqlConnector" Version="2.5.0" />
+    <PackageReference Include="QRCoder" Version="1.8.0" />
+    <PackageReference Include="SkiaSharp" Version="3.119.4" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Win32" Version="3.119.4" />
+    <PackageReference Include="Svg.Skia" Version="5.0.0" />
     <PackageReference Include="ZXing.Net" Version="0.16.9" />
     <Resource Include="Resources\Roboto-VariableFont_wdth,wght.ttf" />
     <PackageReference Include="itextsharp.xfaworker" Version="5.5.13.2" />
@@ -75,6 +79,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\COG-MTECH.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\CorTemplate.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PUP.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

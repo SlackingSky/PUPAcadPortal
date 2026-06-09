@@ -455,24 +455,30 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             }
         }
 
-        private void btnDownloadCOR_Click(object sender, EventArgs e)
+        private async void btnDownloadCOR_Click(object sender, EventArgs e)
         {
-            try
+            string currentEnrollmentId = "ENR-ACAD0001-18";
+
+            await SafeUiRunner.ExecuteAsync(async () =>
             {
-                var img = Properties.Resources.CertificateOfRegistration;
-                if (img == null) throw new Exception("Certificate asset not found.");
-                using (SaveFileDialog sfd = new SaveFileDialog())
+                string tempFolder = Path.GetTempPath();
+                string fileName = $"COR_Preview_{DateTime.Now:yyyyMMddHHmmss}.pdf";
+                string tempFilePath = Path.Combine(tempFolder, fileName);
+
+                string outputPath = AppDomain.CurrentDomain.BaseDirectory;
+                string templatePath = Path.Combine(outputPath, "Resources/CorTemplate.svg");
+                string logoPath = Path.Combine(outputPath, "Resources/PUP.png");
+
+                var pdfService = new CorGenerationService();
+                await pdfService.GenerateCorPdfAsync(currentEnrollmentId, tempFilePath, templatePath, logoPath);
+
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
                 {
-                    sfd.Filter = "PNG Image|*.png";
-                    sfd.FileName = "Certificate_of_Registration.png";
-                    if (sfd.ShowDialog() == DialogResult.OK)
-                    {
-                        img.Save(sfd.FileName, System.Drawing.Imaging.ImageFormat.Png);
-                        MessageBox.Show("File saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                }
-            }
-            catch (Exception ex) { MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+                    FileName = tempFilePath,
+                    UseShellExecute = true
+                });
+
+            }, btnDownloadCOR);
         }
 
         private void Enrollment_ShowOverlay()
