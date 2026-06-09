@@ -33,16 +33,15 @@
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             pnlEditSchedule = new Panel();
             panel1 = new Panel();
-            lblYearLevel = new Label();
+            btnLoadPrevious = new Button();
+            buttonRounded1 = new buttonRounded();
+            cmbYearLevel = new ComboBox();
             lblCurrentSem = new Label();
             btnClearSchedule = new Button();
             btnSaveSchedule = new Button();
             lblESYearLevel = new Label();
             lblESCurrentSem = new Label();
             dgvEditSchedule = new DataGridView();
-            cms1 = new ContextMenuStrip(components);
-            DupeRowToolStripMenuItem = new ToolStripMenuItem();
-            Tip1 = new ToolTip(components);
             ESCourseCode = new DataGridViewTextBoxColumn();
             ESCourseTitle = new DataGridViewTextBoxColumn();
             ESLab = new DataGridViewTextBoxColumn();
@@ -54,6 +53,9 @@
             EsEndTime = new DataGridViewTextBoxColumn();
             ESRoom = new DataGridViewComboBoxColumn();
             ESInstructor = new DataGridViewComboBoxColumn();
+            cms1 = new ContextMenuStrip(components);
+            DupeRowToolStripMenuItem = new ToolStripMenuItem();
+            Tip1 = new ToolTip(components);
             pnlEditSchedule.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEditSchedule).BeginInit();
@@ -79,7 +81,9 @@
             // 
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.White;
-            panel1.Controls.Add(lblYearLevel);
+            panel1.Controls.Add(btnLoadPrevious);
+            panel1.Controls.Add(buttonRounded1);
+            panel1.Controls.Add(cmbYearLevel);
             panel1.Controls.Add(lblCurrentSem);
             panel1.Controls.Add(btnClearSchedule);
             panel1.Controls.Add(btnSaveSchedule);
@@ -91,15 +95,45 @@
             panel1.Size = new Size(1471, 105);
             panel1.TabIndex = 7;
             // 
-            // lblYearLevel
+            // btnLoadPrevious
             // 
-            lblYearLevel.AutoSize = true;
-            lblYearLevel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblYearLevel.Location = new Point(102, 42);
-            lblYearLevel.Name = "lblYearLevel";
-            lblYearLevel.Size = new Size(65, 18);
-            lblYearLevel.TabIndex = 6;
-            lblYearLevel.Text = "Loading";
+            btnLoadPrevious.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnLoadPrevious.BackColor = Color.Maroon;
+            btnLoadPrevious.Cursor = Cursors.Hand;
+            btnLoadPrevious.FlatAppearance.BorderSize = 0;
+            btnLoadPrevious.FlatStyle = FlatStyle.Flat;
+            btnLoadPrevious.ForeColor = Color.White;
+            btnLoadPrevious.Location = new Point(1040, 36);
+            btnLoadPrevious.Margin = new Padding(3, 2, 3, 2);
+            btnLoadPrevious.Name = "btnLoadPrevious";
+            btnLoadPrevious.Size = new Size(140, 27);
+            btnLoadPrevious.TabIndex = 8;
+            btnLoadPrevious.Text = "Load Previous Schedule";
+            btnLoadPrevious.UseVisualStyleBackColor = false;
+            // 
+            // buttonRounded1
+            // 
+            buttonRounded1.BackColor = Color.FromArgb(128, 0, 0);
+            buttonRounded1.BorderRadius = 20;
+            buttonRounded1.FlatAppearance.BorderSize = 0;
+            buttonRounded1.FlatStyle = FlatStyle.Flat;
+            buttonRounded1.ForeColor = Color.White;
+            buttonRounded1.Location = new Point(892, 84);
+            buttonRounded1.Name = "buttonRounded1";
+            buttonRounded1.Size = new Size(8, 8);
+            buttonRounded1.TabIndex = 7;
+            buttonRounded1.Text = "buttonRounded1";
+            buttonRounded1.UseVisualStyleBackColor = false;
+            // 
+            // cmbYearLevel
+            // 
+            cmbYearLevel.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbYearLevel.FormattingEnabled = true;
+            cmbYearLevel.Items.AddRange(new object[] { "All", "1st", "2nd", "3rd", "4th", "5th" });
+            cmbYearLevel.Location = new Point(102, 40);
+            cmbYearLevel.Name = "cmbYearLevel";
+            cmbYearLevel.Size = new Size(121, 23);
+            cmbYearLevel.TabIndex = 6;
             // 
             // lblCurrentSem
             // 
@@ -202,20 +236,6 @@
             dgvEditSchedule.Size = new Size(1446, 495);
             dgvEditSchedule.TabIndex = 6;
             // 
-            // cms1
-            // 
-            cms1.ImageScalingSize = new Size(20, 20);
-            cms1.Items.AddRange(new ToolStripItem[] { DupeRowToolStripMenuItem });
-            cms1.Name = "cmdDupeRow";
-            cms1.Size = new Size(151, 26);
-            // 
-            // DupeRowToolStripMenuItem
-            // 
-            DupeRowToolStripMenuItem.Name = "DupeRowToolStripMenuItem";
-            DupeRowToolStripMenuItem.Size = new Size(150, 22);
-            DupeRowToolStripMenuItem.Text = "Duplicate Row";
-            DupeRowToolStripMenuItem.Click += DupeRowToolStripMenuItem_Click;
-            // 
             // ESCourseCode
             // 
             ESCourseCode.FillWeight = 97.12644F;
@@ -303,6 +323,20 @@
             ESInstructor.Resizable = DataGridViewTriState.True;
             ESInstructor.SortMode = DataGridViewColumnSortMode.Automatic;
             // 
+            // cms1
+            // 
+            cms1.ImageScalingSize = new Size(20, 20);
+            cms1.Items.AddRange(new ToolStripItem[] { DupeRowToolStripMenuItem });
+            cms1.Name = "cmdDupeRow";
+            cms1.Size = new Size(151, 26);
+            // 
+            // DupeRowToolStripMenuItem
+            // 
+            DupeRowToolStripMenuItem.Name = "DupeRowToolStripMenuItem";
+            DupeRowToolStripMenuItem.Size = new Size(150, 22);
+            DupeRowToolStripMenuItem.Text = "Duplicate Row";
+            DupeRowToolStripMenuItem.Click += DupeRowToolStripMenuItem_Click;
+            // 
             // EditScheduleContentAdmin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -331,7 +365,6 @@
         private ContextMenuStrip cms1;
         private ToolStripMenuItem DupeRowToolStripMenuItem;
         private ToolTip Tip1;
-        private Label lblYearLevel;
         private Label lblCurrentSem;
         private DataGridViewTextBoxColumn ESCourseCode;
         private DataGridViewTextBoxColumn ESCourseTitle;
@@ -344,5 +377,8 @@
         private DataGridViewTextBoxColumn EsEndTime;
         private DataGridViewComboBoxColumn ESRoom;
         private DataGridViewComboBoxColumn ESInstructor;
+        private ComboBox cmbYearLevel;
+        private Button btnLoadPrevious;
+        private buttonRounded buttonRounded1;
     }
 }

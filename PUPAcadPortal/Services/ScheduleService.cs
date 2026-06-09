@@ -16,6 +16,76 @@ namespace PUPAcadPortal.Services
             return await db.AcademicPeriods.OrderByDescending(p => p.StartDate).FirstOrDefaultAsync();
         }
 
+        public async Task<(bool Success, string Message)> LoadPreviousYearScheduleAsync(string currentPeriodId)
+        {
+            using var db = new AppDbContext();
+
+            var currentPeriod = await db.AcademicPeriods.FindAsync(currentPeriodId);
+            if (currentPeriod == null) return (false, "Current academic period not found.");
+
+            if (!int.TryParse(currentPeriod.SchoolYear, out int currentSyInt))
+                return (false, "Invalid school year format.");
+
+            string prevSchoolYear = (currentSyInt - 101).ToString();
+
+            var prevPeriod = await db.AcademicPeriods
+                .FirstOrDefaultAsync(p => p.SchoolYear == prevSchoolYear && p.Semester == currentPeriod.Semester);
+
+            if (prevPeriod == null)
+            {
+                return (false, $"No previous schedule found. There is no existing record for {currentPeriod.Semester} Semester, SY 20{prevSchoolYear.Substring(0, 2)}-20{prevSchoolYear.Substring(2, 2)}.");
+            }
+
+            var currentOfferings = await db.SubjectOfferings
+                .Include(so => so.RoomSchedules)
+                .Where(so => so.AcademicPeriodId == currentPeriodId)
+                .ToListAsync();
+
+            var prevOfferings = await db.SubjectOfferings
+                .Include(so => so.RoomSchedules)
+                .Where(so => so.AcademicPeriodId == prevPeriod.AcademicPeriodId)
+                .ToListAsync();
+
+            int copiedCount = 0;
+
+            foreach (var curOff in currentOfferings)
+            {
+                if (curOff.RoomSchedules.Any()) continue;
+
+                var match = prevOfferings.FirstOrDefault(p => p.SubjectId == curOff.SubjectId && p.Section == curOff.Section);
+
+                if (match != null && match.RoomSchedules.Any())
+                {
+                    if (curOff.ProfessorId == null || curOff.ProfessorId == 1)
+                    {
+                        curOff.ProfessorId = match.ProfessorId;
+                    }
+
+                    foreach (var rs in match.RoomSchedules)
+                    {
+                        db.RoomSchedules.Add(new RoomSchedule
+                        {
+                            SubjectOfferingId = curOff.SubjectOfferingId,
+                            SessionType = rs.SessionType,
+                            DayOfWeek = rs.DayOfWeek,
+                            RoomId = rs.RoomId,
+                            StartTime = rs.StartTime,
+                            EndTime = rs.EndTime
+                        });
+                    }
+                    copiedCount++;
+                }
+            }
+
+            if (copiedCount == 0)
+            {
+                return (false, "Found the previous semester, but no schedules could be copied (either no schedules existed back then, or your current classes already have schedules).");
+            }
+
+            await db.SaveChangesAsync();
+            return (true, $"Success! Loaded {copiedCount} class schedules from the previous academic year.");
+        }
+
         public async Task<List<ScheduleRowDto>> GetAllSchedulesAsync(string periodId)
         {
             using var db = new AppDbContext();
@@ -27,27 +97,37 @@ namespace PUPAcadPortal.Services
                 .AsNoTracking()
                 .ToListAsync();
 
+            var yearLevels = await db.Curricula
+                    .Where(c => db.SubjectOfferings
+                                  .Where(so => so.AcademicPeriodId == periodId)
+                                  .Select(so => so.SubjectId)
+                                  .Contains(c.SubjectId))
+                    .GroupBy(c => c.SubjectId)
+                    .ToDictionaryAsync(g => g.Key, g => g.FirstOrDefault().YearLevel);
+
             var result = new List<ScheduleRowDto>();
 
             foreach (var so in offerings)
             {
+                yearLevels.TryGetValue(so.SubjectId, out int yl);
+
                 if (so.RoomSchedules != null && so.RoomSchedules.Any())
                 {
                     foreach (var rs in so.RoomSchedules)
                     {
-                        result.Add(CreateScheduleDto(so, rs));
+                        result.Add(CreateScheduleDto(so, rs, yl));
                     }
                 }
                 else
                 {
-                    result.Add(CreateScheduleDto(so, null));
+                    result.Add(CreateScheduleDto(so, null, yl));
                 }
             }
 
             return result;
         }
 
-        private ScheduleRowDto CreateScheduleDto(SubjectOffering so, RoomSchedule rs)
+        private ScheduleRowDto CreateScheduleDto(SubjectOffering so, RoomSchedule rs, int yearLevel)
         {
             return new ScheduleRowDto
             {
@@ -64,7 +144,8 @@ namespace PUPAcadPortal.Services
                 StartTime = rs?.StartTime,
                 EndTime = rs?.EndTime,
                 RoomId = rs?.RoomId,
-                ProfessorId = so.ProfessorId
+                ProfessorId = so.ProfessorId,
+                YearLevel = yearLevel
             };
         }
 
@@ -223,13 +304,10 @@ namespace PUPAcadPortal.Services
         {
             if (rows == null || !rows.Any() || string.IsNullOrEmpty(periodId)) return;
 
-            // --- PRE-SAVE CONFLICT CHECK ---
-            // Extract only rows that actually have a schedule being saved
             var activeBlocks = rows
                 .Where(r => r.RoomId.HasValue && r.ProfessorId.HasValue && !string.IsNullOrEmpty(r.Day) && r.StartTime.HasValue && r.EndTime.HasValue)
                 .ToList();
 
-            // Check the grid against itself to prevent the admin from double-booking in a single save
             for (int i = 0; i < activeBlocks.Count; i++)
             {
                 var current = activeBlocks[i];
@@ -237,7 +315,6 @@ namespace PUPAcadPortal.Services
                 {
                     var other = activeBlocks[j];
 
-                    // Do they overlap in time?
                     bool timeOverlaps = current.Day == other.Day &&
                                         current.StartTime < other.EndTime &&
                                         current.EndTime > other.StartTime;

@@ -172,9 +172,9 @@
             panel1.Controls.Add(btnInitialize);
             panel1.Controls.Add(btnSetCurrent);
             panel1.Dock = DockStyle.Right;
-            panel1.Location = new Point(838, 0);
+            panel1.Location = new Point(752, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(402, 132);
+            panel1.Size = new Size(488, 132);
             panel1.TabIndex = 8;
             // 
             // btnInitialize
@@ -186,7 +186,7 @@
             btnInitialize.ForeColor = Color.White;
             btnInitialize.Location = new Point(10, 50);
             btnInitialize.Name = "btnInitialize";
-            btnInitialize.Size = new Size(188, 27);
+            btnInitialize.Size = new Size(210, 27);
             btnInitialize.TabIndex = 7;
             btnInitialize.Text = "1. Generate Classes (Draft)";
             btnInitialize.UseVisualStyleBackColor = false;
@@ -199,10 +199,10 @@
             btnSetCurrent.FlatAppearance.BorderSize = 0;
             btnSetCurrent.FlatStyle = FlatStyle.Flat;
             btnSetCurrent.ForeColor = Color.White;
-            btnSetCurrent.Location = new Point(216, 50);
+            btnSetCurrent.Location = new Point(242, 50);
             btnSetCurrent.Margin = new Padding(3, 2, 3, 2);
             btnSetCurrent.Name = "btnSetCurrent";
-            btnSetCurrent.Size = new Size(177, 27);
+            btnSetCurrent.Size = new Size(237, 27);
             btnSetCurrent.TabIndex = 6;
             btnSetCurrent.Text = "2. Activate Semester (Lock)";
             btnSetCurrent.UseVisualStyleBackColor = false;

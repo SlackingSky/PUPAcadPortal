@@ -23,6 +23,8 @@ namespace PUPAcadPortal.Services
 
     public class SemesterSetupService
     {
+        private SystemService systemService = new();
+
         public bool IsAnySemesterActive()
         {
             using var db = new AppDbContext();
@@ -77,16 +79,16 @@ namespace PUPAcadPortal.Services
             using var db = new AppDbContext();
 
             var activePeriod = await db.AcademicPeriods.FirstOrDefaultAsync(p => p.Status == "Current");
-            bool draftExists = await db.AcademicPeriods.AllAsync(p => p.Status == "Inactive" && p.StartDate > activePeriod.StartDate);
-            if (draftExists)
-            {
-                return (false, "There is already a draft semester in the system. Please finalize or delete the existing draft before creating a new one.");
-            }
-
-            string semDb = semRaw == "1" ? "1st" : (semRaw == "2" ? "2nd" : "Summer");
 
             if (activePeriod != null)
             {
+                bool draftExists = await db.AcademicPeriods.AllAsync(p => p.Status == "Inactive" && p.StartDate > activePeriod.StartDate);
+                if (draftExists)
+                {
+                    return (false, "There is already a draft semester in the system. Please finalize or delete the existing draft before creating a new one.");
+                }
+
+                string semDb = semRaw == "1" ? "1st" : (semRaw == "2" ? "2nd" : "Summer");
                 int curSem = activePeriod.Semester.Contains("1") ? 1 : (activePeriod.Semester.Contains("2") ? 2 : 3);
                 int curYear = int.Parse(activePeriod.SchoolYear.Substring(0, 2));
 
@@ -181,6 +183,8 @@ namespace PUPAcadPortal.Services
                 p.Status = (p.AcademicPeriodId == periodId) ? "Current" : "Inactive";
             }
             await db.SaveChangesAsync();
+
+            await systemService.LoadCurrentAcademicPeriodAsync();
         }
 
         public async Task GenerateOfferingsFromCurriculumAsync(string periodId, string schoolYearFull, string semRaw)

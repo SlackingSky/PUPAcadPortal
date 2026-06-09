@@ -31,6 +31,7 @@ namespace PUPAcadPortal.Data
         public int? RoomId { get; set; }
 
         public int? ProfessorId { get; set; }
+        public int YearLevel { get; set; }
     }
 
     public class RoomDto

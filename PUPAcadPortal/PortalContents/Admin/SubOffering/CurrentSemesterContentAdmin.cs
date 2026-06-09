@@ -75,22 +75,28 @@ namespace PUPAcadPortal.PortalContents.Admin.SubOffering
             string semRaw = cmbSem.SelectedItem.ToString();
 
             string? periodId = await _setupService.GetAcademicPeriodIdAsync(syFull, semRaw);
+
             if (periodId == null)
             {
                 var previewData = await _setupService.GetCurriculumPreviewAsync(syFull, semRaw);
                 dgvCurrentSemester.DataSource = new BindingList<SemesterGridItem>(previewData);
 
                 btnSetCurrent.Enabled = false;
+
+                btnInitialize.Enabled = true;
+                btnInitialize.Text = "1. Generate Classes (Draft)";
+
                 return;
             }
 
             var data = await _setupService.GetOfferingsForGridAsync(periodId, syFull, semRaw);
-
             dgvCurrentSemester.DataSource = new BindingList<SemesterGridItem>(data);
-            string status = await _setupService.GetPeriodStatusAsync(syFull, semRaw);
-            bool isDraftable = (status == "Inactive");
-            btnInitialize.Enabled = isDraftable;
 
+            string status = await _setupService.GetPeriodStatusAsync(syFull, semRaw);
+
+            bool isDraftable = (status == "Inactive");
+
+            btnInitialize.Enabled = isDraftable;
             btnInitialize.Text = isDraftable ? "1. Generate Classes (Draft)" : "Class Generation Locked";
 
             bool hasGeneratedItems = data.Count > 0 && data[0].Status != "Draft (Not Generated)";

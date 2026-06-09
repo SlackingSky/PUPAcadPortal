@@ -13,32 +13,30 @@ namespace PUPAcadPortal.Services
         {
             using (var context = new AppDbContext())
             {
-                // 1. Query the database for the single row where Status is "Current"
                 var activePeriod = await context.AcademicPeriods
-                    .AsNoTracking() // AsNoTracking makes read-only queries much faster
+                    .AsNoTracking()
                     .FirstOrDefaultAsync(ap => ap.Status == "Current");
 
 
-                // 2. Safety Net: If the database is missing a current period, stop the app
                 if (activePeriod == null)
                 {
-                    throw new Exception("System Offline: No active academic period was found in the database. Please contact the Registrar.");
+                    MessageBox.Show("There are currently no active academic period, you may continue using the app but some features might not work");
+
+                    return;
                 }
 
-                // 3. Inject the live database values into your Global Session memory
-                GlobalSession.ActiveAcademicPeriod = activePeriod.AcademicPeriodId; // e.g., "ACAD0001"
+                GlobalSession.ActiveAcademicPeriod = activePeriod.AcademicPeriodId;
 
                 GlobalSession.ActiveSchoolYear = activePeriod.SchoolYear;
 
                 GlobalSession.ActiveSemesterName = activePeriod.Semester;
 
-                // 4. Map the text ("1st") to the Integer index (1) for the curriculum engine
                 GlobalSession.ActiveSemesterIndex = activePeriod.Semester switch
                 {
                     "1st" => 1,
                     "2nd" => 2,
                     "Summer" => 3,
-                    _ => 1 // Default fallback just in case
+                    _ => 1
                 };
             }
         }
