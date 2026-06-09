@@ -81,7 +81,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
                     ("Section",      outcome.Section),
                     ("Date",         outcome.SessionDate),
                     ("Time In",      outcome.TimeIn),
-                    ("Status",       "🔒  Present  (QR Verified)"),
+                    ("Status",       "Present  (QR Verified)"),
                     ("Record ID",    $"#{outcome.AttendanceId}"),
                 };
                 BuildDetailGrid(rows);

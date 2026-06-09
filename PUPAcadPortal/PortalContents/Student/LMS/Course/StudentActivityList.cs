@@ -18,7 +18,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
         private readonly int _studentId;
         private readonly IStudentCourseDbService _svc;
 
-        // ── Constructors 
+        //  Constructors 
 
        
         public StudentActivityList(StudentCourse course)
@@ -57,7 +57,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             flp.SizeChanged += flp_SizeChanged;
         }
 
-        // ── Data loading ─────────────────────────────────────────────────────
+        //  Data loading 
 
         
         private void LoadActivities()
@@ -85,8 +85,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             }
         }
 
-        // ── Summary pills ─────────────────────────────────────────────────────
-
+        //  Summary pills 
         private void RebuildSummaryPills()
         {
             pnlSummary.Controls.Clear();
@@ -125,8 +124,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             }
         }
 
-        // ── Render ────────────────────────────────────────────────────────────
-
+        //  Render 
         private void RenderRows()
         {
             if (flp.ClientSize.Width < 100) return;
@@ -174,8 +172,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             flp.ResumeLayout(true);
         }
 
-        // ── Row builder ───────────────────────────────────────────────────────
-
+        //  Row builder 
         private Panel BuildRow(StudentActivityItem act)
         {
             string effStatus = act.EffectiveStatus;
@@ -384,8 +381,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             return row;
         }
 
-        // ── Remarks dialog ────────────────────────────────────────────────────
-
+        //  Remarks dialog 
         private void ShowRemarksDialog(StudentActivityItem act)
         {
             using var dlg = new Form
@@ -466,8 +462,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             dlg.ShowDialog(this);
         }
 
-        // ── Helpers ───────────────────────────────────────────────────────────
-
+        //  Helpers 
         private static int MeasureTextHeight(string text, Font font, int maxWidth)
         {
             if (string.IsNullOrEmpty(text)) return 0;
@@ -475,8 +470,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 new Size(maxWidth, int.MaxValue), TextFormatFlags.WordBreak).Height;
         }
 
-        // ── Events ────────────────────────────────────────────────────────────
-
+        //  Events 
         private void btnBack_Click(object sender, EventArgs e) => OnBack?.Invoke();
         private void txtSearch_TextChanged(object sender, EventArgs e) { _searchTimer.Stop(); _searchTimer.Start(); }
         private void cmbFilter_SelectedIndexChanged(object sender, EventArgs e) => RenderRows();

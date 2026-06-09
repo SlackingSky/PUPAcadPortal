@@ -166,7 +166,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
                 $"Student : {outcome.StudentName}\n" +
                 $"Date    : {outcome.SessionDate}\n" +
                 $"Time In : {outcome.TimeIn}\n" +
-                $"Status  : Present  🔒 (QR Verified — cannot be changed)";
+                $"Status  : Present (QR Verified — cannot be changed)";
             lblRawPayload.Text = $"Record ID: #{outcome.AttendanceId}";
             pnlResult.Height = 130;
             pnlResult.Visible = true;

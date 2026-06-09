@@ -100,6 +100,7 @@ namespace PUPAcadPortal.Services
             "Enrolled",
             "Enrolled - For Assessment",
         };
+
         public List<CourseStudentActivityItem> GetActivitiesForStudentOffering(
             string subjectOfferingId,
             int studentId)
@@ -108,10 +109,10 @@ namespace PUPAcadPortal.Services
                 return new List<CourseStudentActivityItem>();
 
             using var ctx = _ctxFactory();
+
             bool enrolled = ctx.EnrollmentSubjects
                 .Any(es => es.SubjectOfferingId == subjectOfferingId
-                        && es.Enrollment.StudentId == studentId
-                        && es.SubjectStatus == "Officially Enrolled");
+                        && es.Enrollment.StudentId == studentId);
 
             if (!enrolled)
                 return new List<CourseStudentActivityItem>();
@@ -124,11 +125,11 @@ namespace PUPAcadPortal.Services
                 .OrderBy(a => a.Deadline)
                 .ToList();
 
-            var activityIds = activities.Select(a => a.ActivityId).ToList();
-
             var submissions = ctx.Submissions
                 .Where(s => s.StudentId == studentId
-                         && activityIds.Contains(s.ActivityId))
+                         && ctx.Activities.Any(a => a.ActivityId == s.ActivityId
+                                                 && a.SubjectOfferingId == subjectOfferingId
+                                                 && a.IsPublished))
                 .AsNoTracking()
                 .ToList()
                 .GroupBy(s => s.ActivityId)
@@ -329,8 +330,8 @@ namespace PUPAcadPortal.Services
                 "essay" => "Essay",
                 "fileupload" or "file upload" => "FileUpload",
                 "recitation" => "Recitation",
-                "lab" => "Assignment",  // Lab → Assignment (no dedicated Lab UI type)
-                _ => "Assignment",  // Assignment and any future values
+                "lab" => "Assignment",
+                _ => "Assignment",
             };
         }
 
