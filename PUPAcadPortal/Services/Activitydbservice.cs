@@ -16,7 +16,7 @@ namespace PUPAcadPortal.Services
             _ctxFactory = ctxFactory ?? throw new ArgumentNullException(nameof(ctxFactory));
         }
 
-        //  Dashboard
+        //  Dashboard 
 
         public List<CourseActivity> GetCourseActivitiesForProfessor(int professorId)
         {
@@ -35,17 +35,19 @@ namespace PUPAcadPortal.Services
 
             foreach (var offering in offerings)
             {
-                var activities = offering.Activities.ToList();
+                var activities = offering.Activities?.ToList() ?? new List<Activity>();
 
                 int totalAssignments = activities.Count(a =>
                     string.Equals(a.ActivityType, "Assignment", StringComparison.OrdinalIgnoreCase));
                 int totalQuizzes = activities.Count(a =>
                     string.Equals(a.ActivityType, "Quiz", StringComparison.OrdinalIgnoreCase));
 
-                int pending = activities.SelectMany(a => a.Submissions)
-                                         .Count(s => s.Grade == null);
-                int checked_ = activities.SelectMany(a => a.Submissions)
-                                         .Count(s => s.Grade != null);
+                int pending = activities
+                    .SelectMany(a => a.Submissions ?? new List<Submission>())
+                    .Count(s => s.Grade == null);
+                int checkedCount = activities
+                    .SelectMany(a => a.Submissions ?? new List<Submission>())
+                    .Count(s => s.Grade != null);
 
                 DateTime nearest = activities.Any(a => a.Deadline >= DateTime.Now)
                     ? activities.Where(a => a.Deadline >= DateTime.Now)
@@ -64,7 +66,7 @@ namespace PUPAcadPortal.Services
                     TotalAssignments = totalAssignments,
                     TotalQuizzes = totalQuizzes,
                     PendingSubmissions = pending,
-                    CheckedSubmissions = checked_,
+                    CheckedSubmissions = checkedCount,
                     NearestDeadline = nearest,
                     Status = offering.Status,
                     ActivityCount = activities.Count,
@@ -75,7 +77,7 @@ namespace PUPAcadPortal.Services
             return result;
         }
 
-        //  Activity list
+        //  Activity list 
 
         public List<ActivityItem> GetActivitiesForOffering(string subjectOfferingId)
         {
@@ -91,7 +93,7 @@ namespace PUPAcadPortal.Services
 
             int enrolled = ctx.EnrollmentSubjects
                 .Count(es => es.SubjectOfferingId == subjectOfferingId
-                          && es.SubjectStatus == "Officially Enrolled");
+                          && es.SubjectStatus == "Enrolled");
 
             return MapActivities(activities, enrolled);
         }
@@ -120,7 +122,6 @@ namespace PUPAcadPortal.Services
             ctx.Activities.Add(entity);
             ctx.SaveChanges();
 
-            // Return the item with DB-generated values filled in
             item.ActivityId = newId;
             item.SubjectOfferingId = subjectOfferingId;
             item.IsPublished = false;
@@ -169,7 +170,6 @@ namespace PUPAcadPortal.Services
             ctx.SaveChanges();
         }
 
-        //  Submissions
 
         public List<StudentSubmission> GetSubmissionsForActivity(string activityId)
         {
@@ -181,17 +181,15 @@ namespace PUPAcadPortal.Services
                 ?? throw new InvalidOperationException(
                     $"Activity '{activityId}' not found.");
 
-            // All enrolled students for this offering
             var enrolledStudents = ctx.EnrollmentSubjects
                 .Include(es => es.Enrollment)
                     .ThenInclude(e => e.Student)
                         .ThenInclude(s => s.User)
                 .Where(es => es.SubjectOfferingId == activity.SubjectOfferingId
-                          && es.SubjectStatus == "Officially Enrolled")
+                          && es.SubjectStatus == "Enrolled")
                 .AsNoTracking()
                 .ToList();
 
-            // Actual submissions keyed by StudentId for O(1) lookup
             var submissionMap = ctx.Submissions
                 .Where(s => s.ActivityId == activityId)
                 .AsNoTracking()
@@ -222,8 +220,8 @@ namespace PUPAcadPortal.Services
                     SubmissionTime = hasSub ? sub!.SubmissionDate : DateTime.MinValue,
                     Status = status,
                     Score = hasSub && sub!.Grade != null
-                                        ? (int)Math.Round((double)sub!.Grade)
-                                        : -1,
+                                ? (int)Math.Round((double)sub!.Grade)
+                                : -1,
                     IsChecked = isChecked,
                     Remarks = hasSub ? (sub!.Remarks ?? "") : "",
                     HasFile = hasSub && !string.IsNullOrEmpty(sub!.SubmittedFile),
@@ -262,7 +260,6 @@ namespace PUPAcadPortal.Services
             ctx.SaveChanges();
         }
 
-        //  Dropdowns
 
         public List<GradingCategory> GetCategoriesForOffering(string subjectOfferingId)
         {
@@ -286,7 +283,6 @@ namespace PUPAcadPortal.Services
                 .ToList();
         }
 
-
         private static List<ActivityItem> MapActivities(
             IEnumerable<Activity> activities,
             int enrolledCount = 0)
@@ -308,7 +304,7 @@ namespace PUPAcadPortal.Services
                     "quiz" => ActivityType.Quiz,
                     "essay" => ActivityType.Essay,
                     "fileupload" or "file upload" => ActivityType.FileUpload,
-                    _ => ActivityType.Assignment
+                    _ => ActivityType.Assignment  
                 };
 
                 result.Add(new ActivityItem

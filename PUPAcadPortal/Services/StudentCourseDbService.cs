@@ -36,7 +36,8 @@ namespace PUPAcadPortal.Services
                 .Include(es => es.SubjectOffering)
                     .ThenInclude(o => o.Activities)
                         .ThenInclude(a => a.Submissions)
-                .Where(es => es.Enrollment.StudentId == studentId)
+                .Where(es => es.Enrollment.StudentId == studentId
+                          && es.SubjectStatus == "Enrolled")
                 .AsNoTracking()
                 .ToList();
 
@@ -50,9 +51,7 @@ namespace PUPAcadPortal.Services
                     .Where(a => a.IsPublished)
                     .ToList();
 
-                int submitted = 0;
-                int pending = 0;
-                int overdue = 0;
+                int submitted = 0, pending = 0, overdue = 0;
 
                 foreach (var activity in activities)
                 {
@@ -100,7 +99,6 @@ namespace PUPAcadPortal.Services
             "Enrolled",
             "Enrolled - For Assessment",
         };
-
         public List<CourseStudentActivityItem> GetActivitiesForStudentOffering(
             string subjectOfferingId,
             int studentId)
@@ -111,7 +109,8 @@ namespace PUPAcadPortal.Services
             using var ctx = _ctxFactory();
             bool enrolled = ctx.EnrollmentSubjects
                 .Any(es => es.SubjectOfferingId == subjectOfferingId
-                        && es.Enrollment.StudentId == studentId);
+                        && es.Enrollment.StudentId == studentId
+                        && es.SubjectStatus == "Enrolled");
 
             if (!enrolled)
                 return new List<CourseStudentActivityItem>();
@@ -124,12 +123,11 @@ namespace PUPAcadPortal.Services
                 .OrderBy(a => a.Deadline)
                 .ToList();
 
-            if (activities.Count == 0)
-                return new List<CourseStudentActivityItem>();
+            var activityIds = activities.Select(a => a.ActivityId).ToList();
 
             var submissions = ctx.Submissions
                 .Where(s => s.StudentId == studentId
-                         && s.Activity.SubjectOfferingId == subjectOfferingId)
+                         && activityIds.Contains(s.ActivityId))
                 .AsNoTracking()
                 .ToList()
                 .GroupBy(s => s.ActivityId)
@@ -156,12 +154,14 @@ namespace PUPAcadPortal.Services
                     SubmissionDbId = submission?.SubmissionId ?? "",
                     SubmissionStatus = NormalizeSubmissionStatus(submission),
                     SubmittedAt = submission?.SubmissionDate,
-                    ReturnedAt = string.Equals(submission?.Status, "Returned", StringComparison.OrdinalIgnoreCase)
-                        ? submission?.SubmissionDate
-                        : null,
+                    ReturnedAt = string.Equals(
+                                           submission?.Status, "Returned",
+                                           StringComparison.OrdinalIgnoreCase)
+                                       ? submission?.SubmissionDate
+                                       : null,
                     Score = submission?.Grade.HasValue == true
-                        ? (int)Math.Round(submission.Grade.Value)
-                        : null,
+                                       ? (int)Math.Round(submission.Grade.Value)
+                                       : null,
                     Remarks = submission?.Remarks ?? "",
                     UploadedFilePath = submission?.SubmittedFile ?? "",
                     UploadedFileName = GetFileName(submission?.SubmittedFile),
@@ -186,14 +186,17 @@ namespace PUPAcadPortal.Services
             var activity = ctx.Activities
                 .AsNoTracking()
                 .FirstOrDefault(a => a.ActivityId == item.ActivityId)
-                ?? throw new InvalidOperationException($"Activity '{item.ActivityId}' not found.");
+                ?? throw new InvalidOperationException(
+                    $"Activity '{item.ActivityId}' not found.");
 
             bool enrolled = ctx.EnrollmentSubjects
                 .Any(es => es.SubjectOfferingId == activity.SubjectOfferingId
-                        && es.Enrollment.StudentId == studentId);
+                        && es.Enrollment.StudentId == studentId
+                        && es.SubjectStatus == "Enrolled");
 
             if (!enrolled)
-                throw new InvalidOperationException("The current student is not enrolled in this course.");
+                throw new InvalidOperationException(
+                    "The current student is not enrolled in this course.");
 
             var submission = ctx.Submissions
                 .FirstOrDefault(s => s.ActivityId == item.ActivityId
@@ -222,7 +225,8 @@ namespace PUPAcadPortal.Services
                     || string.Equals(submission.Status, "Returned", StringComparison.OrdinalIgnoreCase)
                     || string.Equals(submission.Status, "Graded", StringComparison.OrdinalIgnoreCase))
                 {
-                    throw new InvalidOperationException("This activity has already been checked by the instructor.");
+                    throw new InvalidOperationException(
+                        "This activity has already been checked by the instructor.");
                 }
 
                 submission.SubmissionDate = now;
@@ -323,7 +327,8 @@ namespace PUPAcadPortal.Services
                 "essay" => "Essay",
                 "fileupload" or "file upload" => "FileUpload",
                 "recitation" => "Recitation",
-                _ => "Essay",
+                "lab" => "Assignment",  // Lab → Assignment (no dedicated Lab UI type)
+                _ => "Assignment",  // Assignment and any future values
             };
         }
 
