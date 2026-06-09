@@ -38,7 +38,7 @@ namespace PUPAcadPortal.Services
                     .ThenInclude(o => o.Activities)
                         .ThenInclude(a => a.Submissions)
                 .Where(es => es.Enrollment.StudentId == studentId
-                          && es.SubjectStatus == "Enrolled")
+                          && es.SubjectStatus == "Officially Enrolled")
                 .AsNoTracking()
                 .ToList();
 
@@ -111,7 +111,7 @@ namespace PUPAcadPortal.Services
             bool enrolled = ctx.EnrollmentSubjects
                 .Any(es => es.SubjectOfferingId == subjectOfferingId
                         && es.Enrollment.StudentId == studentId
-                        && es.SubjectStatus == "Enrolled");
+                        && es.SubjectStatus == "Officially Enrolled");
 
             if (!enrolled)
                 return new List<CourseStudentActivityItem>();
@@ -194,7 +194,7 @@ namespace PUPAcadPortal.Services
             bool enrolled = ctx.EnrollmentSubjects
                 .Any(es => es.SubjectOfferingId == activity.SubjectOfferingId
                         && es.Enrollment.StudentId == studentId
-                        && es.SubjectStatus == "Enrolled");
+                        && es.SubjectStatus == "Officially Enrolled");
 
             if (!enrolled)
                 throw new InvalidOperationException(

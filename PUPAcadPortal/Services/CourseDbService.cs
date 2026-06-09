@@ -192,7 +192,8 @@ namespace PUPAcadPortal.Services
                 .Include(es => es.SubjectOffering).ThenInclude(o => o.Professor).ThenInclude(p => p.User)
                 .Include(es => es.SubjectOffering).ThenInclude(o => o.RoomSchedules).ThenInclude(rs => rs.Room)
                 .Include(es => es.SubjectOffering).ThenInclude(o => o.Activities).ThenInclude(a => a.Submissions)
-                .Where(es => es.Enrollment.StudentId == studentId)
+                .Where(es => es.Enrollment.StudentId == studentId
+                && es.SubjectStatus == "Officially Enrolled")
                 .AsNoTracking()
                 .ToList();
 
