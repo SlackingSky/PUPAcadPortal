@@ -63,10 +63,9 @@
             pnlSchedule.Dock = DockStyle.Fill;
             pnlSchedule.ForeColor = SystemColors.ControlText;
             pnlSchedule.Location = new Point(0, 0);
-            pnlSchedule.Margin = new Padding(3, 2, 3, 2);
             pnlSchedule.Name = "pnlSchedule";
-            pnlSchedule.Padding = new Padding(9, 0, 9, 0);
-            pnlSchedule.Size = new Size(1488, 993);
+            pnlSchedule.Padding = new Padding(10, 0, 10, 0);
+            pnlSchedule.Size = new Size(1701, 1324);
             pnlSchedule.TabIndex = 8;
             // 
             // dgvScheduleView
@@ -96,8 +95,7 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             dgvScheduleView.DefaultCellStyle = dataGridViewCellStyle2;
             dgvScheduleView.EnableHeadersVisualStyles = false;
-            dgvScheduleView.Location = new Point(35, 89);
-            dgvScheduleView.Margin = new Padding(3, 2, 3, 2);
+            dgvScheduleView.Location = new Point(40, 119);
             dgvScheduleView.Name = "dgvScheduleView";
             dgvScheduleView.ReadOnly = true;
             dgvScheduleView.RowHeadersVisible = false;
@@ -105,7 +103,7 @@
             dgvScheduleView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvScheduleView.ScrollBars = ScrollBars.Vertical;
             dgvScheduleView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvScheduleView.Size = new Size(1427, 495);
+            dgvScheduleView.Size = new Size(1631, 660);
             dgvScheduleView.TabIndex = 1;
             // 
             // CourseCode1
@@ -205,10 +203,9 @@
             panel10.Controls.Add(label6);
             panel10.Controls.Add(label5);
             panel10.Dock = DockStyle.Top;
-            panel10.Location = new Point(9, 0);
-            panel10.Margin = new Padding(3, 2, 3, 2);
+            panel10.Location = new Point(10, 0);
             panel10.Name = "panel10";
-            panel10.Size = new Size(1470, 72);
+            panel10.Size = new Size(1681, 96);
             panel10.TabIndex = 0;
             // 
             // btnExportExcel
@@ -217,13 +214,13 @@
             btnExportExcel.BackColor = Color.FromArgb(109, 0, 0);
             btnExportExcel.FlatStyle = FlatStyle.Flat;
             btnExportExcel.ForeColor = Color.White;
-            btnExportExcel.Location = new Point(1194, 34);
-            btnExportExcel.Margin = new Padding(3, 2, 3, 2);
+            btnExportExcel.Location = new Point(1366, 45);
             btnExportExcel.Name = "btnExportExcel";
-            btnExportExcel.Size = new Size(119, 28);
+            btnExportExcel.Size = new Size(136, 37);
             btnExportExcel.TabIndex = 9;
             btnExportExcel.Text = "Export to Excel";
             btnExportExcel.UseVisualStyleBackColor = false;
+            btnExportExcel.Click += btnExportExcel_Click;
             // 
             // btnExportPDF
             // 
@@ -231,23 +228,22 @@
             btnExportPDF.BackColor = Color.FromArgb(109, 0, 0);
             btnExportPDF.FlatStyle = FlatStyle.Flat;
             btnExportPDF.ForeColor = Color.White;
-            btnExportPDF.Location = new Point(1334, 34);
-            btnExportPDF.Margin = new Padding(3, 2, 3, 2);
+            btnExportPDF.Location = new Point(1526, 45);
             btnExportPDF.Name = "btnExportPDF";
-            btnExportPDF.Size = new Size(119, 28);
+            btnExportPDF.Size = new Size(136, 37);
             btnExportPDF.TabIndex = 8;
             btnExportPDF.Text = "Export to PDF";
             btnExportPDF.UseVisualStyleBackColor = false;
+            btnExportPDF.Click += btnExportPDF_Click;
             // 
             // cmbYearLevel
             // 
             cmbYearLevel.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbYearLevel.FormattingEnabled = true;
             cmbYearLevel.Items.AddRange(new object[] { "1", "2", "3", "4" });
-            cmbYearLevel.Location = new Point(122, 44);
-            cmbYearLevel.Margin = new Padding(3, 2, 3, 2);
+            cmbYearLevel.Location = new Point(139, 59);
             cmbYearLevel.Name = "cmbYearLevel";
-            cmbYearLevel.Size = new Size(70, 23);
+            cmbYearLevel.Size = new Size(79, 28);
             cmbYearLevel.TabIndex = 7;
             // 
             // label6
@@ -255,9 +251,9 @@
             label6.AutoSize = true;
             label6.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label6.ForeColor = SystemColors.ActiveCaptionText;
-            label6.Location = new Point(16, 48);
+            label6.Location = new Point(18, 64);
             label6.Name = "label6";
-            label6.Size = new Size(84, 18);
+            label6.Size = new Size(109, 23);
             label6.TabIndex = 7;
             label6.Text = "Year Level:";
             // 
@@ -267,19 +263,20 @@
             label5.BackColor = Color.White;
             label5.Font = new Font("Arial", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label5.ForeColor = SystemColors.ActiveCaptionText;
-            label5.Location = new Point(16, 10);
+            label5.Location = new Point(18, 13);
             label5.Name = "label5";
-            label5.Size = new Size(219, 29);
+            label5.Size = new Size(278, 35);
             label5.TabIndex = 7;
             label5.Text = "Current Semester:";
             // 
             // ScheduleContentAdmin
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(pnlSchedule);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "ScheduleContentAdmin";
-            Size = new Size(1488, 993);
+            Size = new Size(1701, 1324);
             pnlSchedule.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvScheduleView).EndInit();
             panel10.ResumeLayout(false);
