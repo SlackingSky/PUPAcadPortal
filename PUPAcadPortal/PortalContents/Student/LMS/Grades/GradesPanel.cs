@@ -5,6 +5,9 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
+using MySqlConnector;
+using PUPAcadPortal.Data;     // UserSession
+using PUPAcadPortal.Services; // DBConnectService
 
 namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
 {
@@ -146,6 +149,18 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
         private GradeEntry? _detailSubject = null;      // currently expanded row
         private readonly List<string> _notes = new List<string>();
 
+        // DB-loaded grade data keyed by (academicYear, semester, period)
+        // "period" is "MID" or "FINAL"
+        // The 8 separate lists become four pairs fetched from the DB.
+        private List<GradeEntry> _dbS1Mid = new List<GradeEntry>();
+        private List<GradeEntry> _dbS1Final = new List<GradeEntry>();
+        private List<GradeEntry> _dbS2Mid = new List<GradeEntry>();
+        private List<GradeEntry> _dbS2Final = new List<GradeEntry>();
+        private List<GradeEntry> _db2425S1Mid = new List<GradeEntry>();
+        private List<GradeEntry> _db2425S1Final = new List<GradeEntry>();
+        private List<GradeEntry> _db2425S2Mid = new List<GradeEntry>();
+        private List<GradeEntry> _db2425S2Final = new List<GradeEntry>();
+
         private DataTable _dtMid, _dtFinal, _dtMid2, _dtFinal2;
         private DataTable _dt2425s1Mid, _dt2425s1Final, _dt2425s2Mid, _dt2425s2Final;
 
@@ -158,11 +173,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             cmbSemester.SelectedIndex = 0;
             cmbAcYear.SelectedIndex = 1;   // default: 2025-2026
 
-            BuildDataTables();
-            BindGrids();
-            PopulateGradeScale();
-
-            // Wire events AFTER initial binding
+            // Wire events BEFORE loading so controls are ready
             cmbSemester.SelectedIndexChanged += CmbFilterChanged;
             cmbAcYear.SelectedIndexChanged += CmbFilterChanged;
 
@@ -173,21 +184,114 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             dgvMid.CellClick += DgGrades_CellClick;
             dgvFinal.CellClick += DgGrades_CellClick;
 
+            LoadGradesFromDatabase();   // FIX: populate from DB, fall back to sample data
+            BuildDataTables();
+            BindGrids();
+            PopulateGradeScale();
             RefreshAll();
+        }
+
+        // ── DB LOAD ─────────────────────────────────────────────────────────
+        // FIX: loads grades from the database for the current logged-in student.
+        // Expected table: student_grade_records
+        //   Columns: StudentID, AcademicYear (e.g. "2025-2026"), Semester (1|2),
+        //            Period ("MID"|"FINAL"), No, SubjectCode, SubjectTitle, Units,
+        //            Grade, Equivalent, Remarks, Activities, Quizzes, LongQuizzes,
+        //            Attendance, MajorAssessments, ScholasticStatus, InstructorFeedback
+        private void LoadGradesFromDatabase()
+        {
+            // Only attempt if a student is actually logged in
+            if (UserSession.StudentID == null) return;
+
+            try
+            {
+                using var conn = new MySqlConnection(DBConnectService.ConnectionString);
+                conn.Open();
+
+                const string sql = @"
+                    SELECT No, SubjectCode, SubjectTitle, Units,
+                           Grade, Equivalent, Remarks,
+                           Activities, Quizzes, LongQuizzes,
+                           Attendance, MajorAssessments,
+                           ScholasticStatus, InstructorFeedback,
+                           AcademicYear, Semester, Period
+                    FROM   student_grade_records
+                    WHERE  StudentID = @sid
+                    ORDER  BY AcademicYear, Semester, Period, No";
+
+                using var cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@sid", UserSession.StudentID.Value);
+
+                using var rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    var entry = new GradeEntry
+                    {
+                        No = rdr.IsDBNull(rdr.GetOrdinal("No")) ? 0 : rdr.GetInt32("No"),
+                        SubjectCode = rdr["SubjectCode"]?.ToString() ?? "",
+                        SubjectTitle = rdr["SubjectTitle"]?.ToString() ?? "",
+                        Units = rdr.IsDBNull(rdr.GetOrdinal("Units")) ? 0 : rdr.GetInt32("Units"),
+                        Grade = rdr.IsDBNull(rdr.GetOrdinal("Grade")) ? 0 : rdr.GetDouble("Grade"),
+                        Equivalent = rdr.IsDBNull(rdr.GetOrdinal("Equivalent")) ? 0 : rdr.GetDouble("Equivalent"),
+                        Remarks = rdr["Remarks"]?.ToString() ?? "",
+                        Activities = rdr.IsDBNull(rdr.GetOrdinal("Activities")) ? 0 : rdr.GetDouble("Activities"),
+                        Quizzes = rdr.IsDBNull(rdr.GetOrdinal("Quizzes")) ? 0 : rdr.GetDouble("Quizzes"),
+                        LongQuizzes = rdr.IsDBNull(rdr.GetOrdinal("LongQuizzes")) ? 0 : rdr.GetDouble("LongQuizzes"),
+                        Attendance = rdr.IsDBNull(rdr.GetOrdinal("Attendance")) ? 0 : rdr.GetDouble("Attendance"),
+                        MajorAssessments = rdr.IsDBNull(rdr.GetOrdinal("MajorAssessments")) ? 0 : rdr.GetDouble("MajorAssessments"),
+                        ScholasticStatus = rdr["ScholasticStatus"]?.ToString() ?? "Regular",
+                        InstructorFeedback = rdr["InstructorFeedback"]?.ToString() ?? ""
+                    };
+
+                    string ay = rdr["AcademicYear"]?.ToString() ?? "";
+                    int sem = rdr.IsDBNull(rdr.GetOrdinal("Semester")) ? 1 : rdr.GetInt32("Semester");
+                    string period = rdr["Period"]?.ToString()?.ToUpperInvariant() ?? "FINAL";
+
+                    bool is2425 = ay.StartsWith("2024");
+                    bool isMid = period == "MID";
+
+                    if (is2425)
+                    {
+                        if (sem == 1) { if (isMid) _db2425S1Mid.Add(entry); else _db2425S1Final.Add(entry); }
+                        else { if (isMid) _db2425S2Mid.Add(entry); else _db2425S2Final.Add(entry); }
+                    }
+                    else
+                    {
+                        if (sem == 1) { if (isMid) _dbS1Mid.Add(entry); else _dbS1Final.Add(entry); }
+                        else { if (isMid) _dbS2Mid.Add(entry); else _dbS2Final.Add(entry); }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // DB unavailable — fall back to embedded sample data silently
+                System.Diagnostics.Debug.WriteLine($"[GradesPanel] DB load failed: {ex.Message}");
+            }
+
+            // FIX: if DB returned nothing for a period, fall back to the matching sample list
+            if (_dbS1Mid.Count == 0) _dbS1Mid = _midterm;
+            if (_dbS1Final.Count == 0) _dbS1Final = _final;
+            if (_dbS2Mid.Count == 0) _dbS2Mid = _midterm2;
+            if (_dbS2Final.Count == 0) _dbS2Final = _final2;
+            if (_db2425S1Mid.Count == 0) _db2425S1Mid = _ay2425_sem1_mid;
+            if (_db2425S1Final.Count == 0) _db2425S1Final = _ay2425_sem1_final;
+            if (_db2425S2Mid.Count == 0) _db2425S2Mid = _ay2425_sem2_mid;
+            if (_db2425S2Final.Count == 0) _db2425S2Final = _ay2425_sem2_final;
         }
 
         //  DATA / BINDING
 
         private void BuildDataTables()
         {
-            _dtMid = CreateDT(_midterm);
-            _dtFinal = CreateDT(_final);
-            _dtMid2 = CreateDT(_midterm2);
-            _dtFinal2 = CreateDT(_final2);
-            _dt2425s1Mid = CreateDT(_ay2425_sem1_mid);
-            _dt2425s1Final = CreateDT(_ay2425_sem1_final);
-            _dt2425s2Mid = CreateDT(_ay2425_sem2_mid);
-            _dt2425s2Final = CreateDT(_ay2425_sem2_final);
+            // FIX: build DataTables from DB-loaded (or fallback sample) data
+            _dtMid = CreateDT(_dbS1Mid);
+            _dtFinal = CreateDT(_dbS1Final);
+            _dtMid2 = CreateDT(_dbS2Mid);
+            _dtFinal2 = CreateDT(_dbS2Final);
+            _dt2425s1Mid = CreateDT(_db2425S1Mid);
+            _dt2425s1Final = CreateDT(_db2425S1Final);
+            _dt2425s2Mid = CreateDT(_db2425S2Mid);
+            _dt2425s2Final = CreateDT(_db2425S2Final);
         }
 
         private static DataTable CreateDT(List<GradeEntry> src)
@@ -367,9 +471,9 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
         {
             bool is2nd = cmbSemester?.SelectedIndex == 1;
             bool is2425 = cmbAcYear?.SelectedIndex == 0;
-            if (is2425) return is2nd ? (_ay2425_sem2_mid, _ay2425_sem2_final)
-                                     : (_ay2425_sem1_mid, _ay2425_sem1_final);
-            return is2nd ? (_midterm2, _final2) : (_midterm, _final);
+            if (is2425) return is2nd ? (_db2425S2Mid, _db2425S2Final)
+                                     : (_db2425S1Mid, _db2425S1Final);
+            return is2nd ? (_dbS2Mid, _dbS2Final) : (_dbS1Mid, _dbS1Final);
         }
 
         private (DataTable mid, DataTable final) GetActiveTables()
@@ -764,7 +868,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
 
         private void BtnGenerateCOG_Click(object sender, EventArgs e)
         {
-            var (mid1, final1) = GetActiveData();
             bool is2425 = cmbAcYear?.SelectedIndex == 0;
             string ayLabel = is2425 ? "2024 – 2025" : "2025 – 2026";
 
@@ -782,40 +885,82 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
                 string logoPath = System.IO.Path.Combine(
                     Application.StartupPath, "Resources", "pup_logo.png");
 
-                // Map to CogGenerator.GradeEntry
+                // FIX: use logged-in student's name and program from UserSession
+                // Falls back to "STUDENT" / "PROGRAM" if session data is missing
+                string studentName = !string.IsNullOrWhiteSpace(UserSession.FullName)
+                    ? UserSession.FullName.ToUpperInvariant()
+                    : "STUDENT";
+
+                // Program name is not stored in UserSession — load from DB or use default
+                string programName = LoadStudentProgram() ?? "BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY";
+
+                // Map GradesPanel.GradeEntry → CogGenerator.GradeEntry
                 static List<CogGenerator.GradeEntry> Map(List<GradeEntry> src) =>
-                    src.Select(e => new CogGenerator.GradeEntry
+                    src.Select(entry => new CogGenerator.GradeEntry
                     {
-                        SubjectCode = e.SubjectCode,
-                        SubjectTitle = e.SubjectTitle,
-                        Units = e.Units,
-                        Equivalent = e.Equivalent,
-                        Remarks = e.Remarks,
-                        EnrollmentType = e.ScholasticStatus   // "Regular" | "Irregular"
+                        SubjectCode = entry.SubjectCode,
+                        SubjectTitle = entry.SubjectTitle,
+                        Units = entry.Units,
+                        Equivalent = entry.Equivalent,
+                        Remarks = entry.Remarks,
+                        EnrollmentType = entry.ScholasticStatus   // "Regular" | "Irregular"
                     }).ToList();
 
-                bool is2nd = cmbSemester?.SelectedIndex == 1;
-                List<GradeEntry> sem1Mid, sem1Final, sem2Mid, sem2Final;
-
+                // FIX: use DB-loaded data via GetActiveData for the chosen AY
+                // COG always uses final grades for both semesters of the chosen AY
+                List<GradeEntry> sem1Final, sem2Final;
                 if (is2425)
                 {
-                    sem1Mid = _ay2425_sem1_mid; sem1Final = _ay2425_sem1_final;
-                    sem2Mid = _ay2425_sem2_mid; sem2Final = _ay2425_sem2_final;
+                    sem1Final = _db2425S1Final;
+                    sem2Final = _db2425S2Final;
                 }
                 else
                 {
-                    sem1Mid = _midterm; sem1Final = _final;
-                    sem2Mid = _midterm2; sem2Final = _final2;
+                    sem1Final = _dbS1Final;
+                    sem2Final = _dbS2Final;
                 }
 
-                // Use final grades for COG
-                CogGenerator.Generate(sfd.FileName, logoPath, ayLabel, Map(sem1Final), Map(sem2Final));
+                // FIX: pass studentName and programName — signature now matches CogGenerator
+                CogGenerator.Generate(
+                    sfd.FileName, logoPath,
+                    studentName, programName,
+                    ayLabel,
+                    Map(sem1Final), Map(sem2Final));
+
                 ShowToast("COG generated successfully!");
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error generating COG:\n{ex.Message}", "Error",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Loads the logged-in student's program name from the database.
+        /// Returns null if the program cannot be determined.
+        /// </summary>
+        private string LoadStudentProgram()
+        {
+            if (UserSession.StudentID == null) return null;
+            try
+            {
+                using var conn = new MySqlConnection(DBConnectService.ConnectionString);
+                conn.Open();
+                const string sql = @"
+                    SELECT c.CourseTitle
+                    FROM   students s
+                    JOIN   courses  c ON c.CourseID = s.CourseID
+                    WHERE  s.StudentID = @sid
+                    LIMIT  1";
+                using var cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@sid", UserSession.StudentID.Value);
+                var result = cmd.ExecuteScalar();
+                return result?.ToString();
+            }
+            catch
+            {
+                return null;
             }
         }
 

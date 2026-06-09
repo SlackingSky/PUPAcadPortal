@@ -1,5 +1,6 @@
 ﻿using PUPAcadPortal.Dialogs;
 using PUPAcadPortal.Services;
+using PUPAcadPortal.Data;     // UserSession
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -182,6 +183,8 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             SetupLegend();
             WireEvents();
 
+            // FIX: populate course combo from DB for this professor, then load grades
+            LoadCourseComboBox();
             BeginInvoke(new Action(LoadGradeData));
         }
 
@@ -207,16 +210,61 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             cmbCourseSection.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbCourseSection.Items.Clear();
             cmbCourseSection.Items.Add("All Sections");
-            cmbCourseSection.Items.Add("IT 101 – Intro to Computing  |  BSIT 2-1");
-            cmbCourseSection.Items.Add("CS 102 – Data Structures  |  BSCS 2-2");
-            cmbCourseSection.Items.Add("IS 103 – Database Mgmt  |  BSIS 3-1");
-            cmbCourseSection.SelectedIndex = 0;
+            // FIX: course sections are populated from DB in LoadCourseComboBox()
+            // called at the end of GradesContentInst_Load after data is available.
+
             cmbStatusFilter.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbStatusFilter.Items.Clear();
             cmbStatusFilter.Items.Add("All Status");
             cmbStatusFilter.Items.Add("Submitted");
             cmbStatusFilter.Items.Add("Pending");
             cmbStatusFilter.SelectedIndex = 0;
+        }
+
+        // FIX: loads course-section items for the logged-in professor from the DB.
+        private void LoadCourseComboBox()
+        {
+            if (UserSession.ProfessorID == null)
+            {
+                // Fall back to demo items when no professor is logged in
+                if (cmbCourseSection.Items.Count <= 1)
+                {
+                    cmbCourseSection.Items.Add("IT 101 – Intro to Computing  |  BSIT 2-1");
+                    cmbCourseSection.Items.Add("CS 102 – Data Structures  |  BSCS 2-2");
+                    cmbCourseSection.Items.Add("IS 103 – Database Mgmt  |  BSIS 3-1");
+                }
+                cmbCourseSection.SelectedIndex = 0;
+                return;
+            }
+
+            try
+            {
+                using var conn = new MySqlConnection(DBConnectService.ConnectionString);
+                conn.Open();
+                // Expected schema: professor_subjects(ProfessorID, SubjectCode, SubjectTitle, Section)
+                const string sql = @"
+                    SELECT CONCAT(SubjectCode, ' – ', SubjectTitle, '  |  ', Section) AS Label
+                    FROM   professor_subjects
+                    WHERE  ProfessorID = @pid
+                    ORDER  BY SubjectCode";
+                using var cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@pid", UserSession.ProfessorID.Value);
+                using var rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                    cmbCourseSection.Items.Add(rdr["Label"].ToString());
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[GradesContentInst] Course combo load failed: {ex.Message}");
+                // Fall back to demo items on failure
+                if (cmbCourseSection.Items.Count <= 1)
+                {
+                    cmbCourseSection.Items.Add("IT 101 – Intro to Computing  |  BSIT 2-1");
+                    cmbCourseSection.Items.Add("CS 102 – Data Structures  |  BSCS 2-2");
+                    cmbCourseSection.Items.Add("IS 103 – Database Mgmt  |  BSIS 3-1");
+                }
+            }
+            cmbCourseSection.SelectedIndex = 0;
         }
 
         private void SetupGrid()
@@ -478,77 +526,75 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         {
             List<StudentGradeRecord> records = new();
 
-            using (MySqlConnection conn =
-                   new MySqlConnection(DBConnectService.ConnectionString))
+            try
             {
+                using var conn = new MySqlConnection(DBConnectService.ConnectionString);
                 conn.Open();
 
-                string query = "SELECT * FROM student_grades";
+                // FIX: filter by the logged-in professor's ID when available.
+                // Expected schema: student_grades has a ProfessorID column.
+                string query = UserSession.ProfessorID.HasValue
+                    ? "SELECT * FROM student_grades WHERE ProfessorID = @pid"
+                    : "SELECT * FROM student_grades";
 
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                using (MySqlDataReader reader = cmd.ExecuteReader())
+                using var cmd = new MySqlCommand(query, conn);
+                if (UserSession.ProfessorID.HasValue)
+                    cmd.Parameters.AddWithValue("@pid", UserSession.ProfessorID.Value);
+
+                using var reader = cmd.ExecuteReader();
+                while (reader.Read())
                 {
-                    while (reader.Read())
+                    // FIX: safe column reader — returns null if column does not exist
+                    double? SafeDouble(string col)
                     {
-                        records.Add(new StudentGradeRecord
+                        try
                         {
-                            StudentID = reader["StudentID"].ToString(),
-                            Name = reader["StudentName"].ToString(),
-                            Course = reader["SubjectCourse"].ToString(),
-                            Status = reader["GradeStatus"].ToString(),
-
-                            MT_Attendance = reader["MT_Attendance"] == DBNull.Value
-                                ? null
-                                : Convert.ToDouble(reader["MT_Attendance"]),
-
-                            MT_Recitation = reader["MT_Recitation"] == DBNull.Value
-                                ? null
-                                : Convert.ToDouble(reader["MT_Recitation"]),
-
-                            MT_Seatwork = reader["MT_Seatwork"] == DBNull.Value
-                                ? null
-                                : Convert.ToDouble(reader["MT_Seatwork"]),
-
-                            MT_Assignment = reader["MT_Assignment"] == DBNull.Value
-                                ? null
-                                : Convert.ToDouble(reader["MT_Assignment"]),
-
-                            MT_LongTests = reader["MT_LongTests"] == DBNull.Value
-                                ? null
-                                : Convert.ToDouble(reader["MT_LongTests"]),
-
-                            MT_MajorExam = reader["MT_MajorExam"] == DBNull.Value
-                                ? null
-                                : Convert.ToDouble(reader["MT_MajorExam"]),
-
-                            FT_Attendance = reader["FT_Attendance"] == DBNull.Value
-                                ? null
-                                : Convert.ToDouble(reader["FT_Attendance"]),
-
-                            FT_Recitation = reader["FT_Recitation"] == DBNull.Value
-                                ? null
-                                : Convert.ToDouble(reader["FT_Recitation"]),
-
-                            FT_Seatwork = reader["FT_Seatwork"] == DBNull.Value
-                                ? null
-                                : Convert.ToDouble(reader["FT_Seatwork"]),
-
-                            FT_Assignment = reader["FT_Assignment"] == DBNull.Value
-                                ? null
-                                : Convert.ToDouble(reader["FT_Assignment"]),
-
-                            FT_LongTests = reader["FT_LongTests"] == DBNull.Value
-                                ? null
-                                : Convert.ToDouble(reader["FT_LongTests"]),
-
-                            FT_MajorExam = reader["FT_MajorExam"] == DBNull.Value
-                                ? null
-                                : Convert.ToDouble(reader["FT_MajorExam"]),
-
-                            Released = Convert.ToBoolean(reader["Released"])
-                        });
+                            int ord = reader.GetOrdinal(col);
+                            return reader.IsDBNull(ord) ? (double?)null : reader.GetDouble(ord);
+                        }
+                        catch { return null; }
                     }
+                    bool SafeBool(string col)
+                    {
+                        try
+                        {
+                            int ord = reader.GetOrdinal(col);
+                            return !reader.IsDBNull(ord) && Convert.ToBoolean(reader[col]);
+                        }
+                        catch { return false; }
+                    }
+                    string SafeStr(string col)
+                    {
+                        try { return reader[col]?.ToString() ?? ""; }
+                        catch { return ""; }
+                    }
+
+                    records.Add(new StudentGradeRecord
+                    {
+                        StudentID = SafeStr("StudentID"),
+                        Name = SafeStr("StudentName"),
+                        Course = SafeStr("SubjectCourse"),
+                        Status = SafeStr("GradeStatus"),
+                        MT_Attendance = SafeDouble("MT_Attendance"),
+                        MT_Recitation = SafeDouble("MT_Recitation"),
+                        MT_Seatwork = SafeDouble("MT_Seatwork"),
+                        MT_Assignment = SafeDouble("MT_Assignment"),
+                        MT_LongTests = SafeDouble("MT_LongTests"),
+                        MT_MajorExam = SafeDouble("MT_MajorExam"),
+                        FT_Attendance = SafeDouble("FT_Attendance"),
+                        FT_Recitation = SafeDouble("FT_Recitation"),
+                        FT_Seatwork = SafeDouble("FT_Seatwork"),
+                        FT_Assignment = SafeDouble("FT_Assignment"),
+                        FT_LongTests = SafeDouble("FT_LongTests"),
+                        FT_MajorExam = SafeDouble("FT_MajorExam"),
+                        Released = SafeBool("Released")
+                    });
                 }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[GradesContentInst] LoadGradesFromDatabase failed: {ex.Message}");
+                ShowError($"Could not load grade data from the database.\n{ex.Message}", "Database Error");
             }
 
             return records;
@@ -569,16 +615,24 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 tb.SelectionStart = tb.Text.Length;
             }
         }
-        
+
 
         private void LoadGradeData()
         {
-            _gradeRecords = LoadGradesFromDatabase();
-            _filteredRecords = new List<StudentGradeRecord>(_gradeRecords);
-            _gradesLoaded = true;
-            RefreshMidtermGrid();
-            RefreshFinalTermGrid();
-            UpdateStatCards(_filteredRecords);
+            try
+            {
+                _gradeRecords = LoadGradesFromDatabase();
+                _filteredRecords = new List<StudentGradeRecord>(_gradeRecords);
+                _gradesLoaded = true;
+                RefreshMidtermGrid();
+                RefreshFinalTermGrid();
+                UpdateStatCards(_filteredRecords);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[GradesContentInst] LoadGradeData failed: {ex.Message}");
+                ShowError($"Failed to load grade data.\n{ex.Message}", "Load Error");
+            }
         }
 
         private void ApplyFilters()
@@ -793,6 +847,14 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 rec.MT_Seatwork = seat; rec.MT_Assignment = asgn;
                 rec.MT_LongTests = lt; rec.MT_MajorExam = mex;
             }
+            else
+            {
+                // FIX: was missing — the midterm grid can be edited even when the
+                // instructor has switched to the final-term tab, so we must handle both.
+                rec.MT_Attendance = att; rec.MT_Recitation = rcit;
+                rec.MT_Seatwork = seat; rec.MT_Assignment = asgn;
+                rec.MT_LongTests = lt; rec.MT_MajorExam = mex;
+            }
 
             RecalcRow(gridStudents, row, rec, _showingMidterm);
             UpdateStatus(rec);
@@ -801,55 +863,56 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
         private void SaveGradeToDatabase(StudentGradeRecord rec)
         {
-            using (MySqlConnection conn = new MySqlConnection(DBConnectService.ConnectionString))
+            try
             {
+                using var conn = new MySqlConnection(DBConnectService.ConnectionString);
                 conn.Open();
 
-                string query = @"
-        UPDATE student_grades SET
+                const string query = @"
+                    UPDATE student_grades SET
+                        MT_Attendance = @MT_Attendance,
+                        MT_Recitation = @MT_Recitation,
+                        MT_Seatwork   = @MT_Seatwork,
+                        MT_Assignment = @MT_Assignment,
+                        MT_LongTests  = @MT_LongTests,
+                        MT_MajorExam  = @MT_MajorExam,
+                        FT_Attendance = @FT_Attendance,
+                        FT_Recitation = @FT_Recitation,
+                        FT_Seatwork   = @FT_Seatwork,
+                        FT_Assignment = @FT_Assignment,
+                        FT_LongTests  = @FT_LongTests,
+                        FT_MajorExam  = @FT_MajorExam,
+                        GradeStatus   = @Status,
+                        Released      = @Released
+                    WHERE StudentID = @StudentID";
 
-        MT_Attendance=@MT_Attendance,
-        MT_Recitation=@MT_Recitation,
-        MT_Seatwork=@MT_Seatwork,
-        MT_Assignment=@MT_Assignment,
-        MT_LongTests=@MT_LongTests,
-        MT_MajorExam=@MT_MajorExam,
+                using var cmd = new MySqlCommand(query, conn);
 
-        FT_Attendance=@FT_Attendance,
-        FT_Recitation=@FT_Recitation,
-        FT_Seatwork=@FT_Seatwork,
-        FT_Assignment=@FT_Assignment,
-        FT_LongTests=@FT_LongTests,
-        FT_MajorExam=@FT_MajorExam,
+                cmd.Parameters.AddWithValue("@StudentID", rec.StudentID);
 
-        GradeStatus=@Status,
-        Released=@Released
+                // FIX: C# null is not valid for MySQL numeric columns.
+                // Cast to (object) so the ternary returns object, not double?.
+                cmd.Parameters.AddWithValue("@MT_Attendance", (object)rec.MT_Attendance ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@MT_Recitation", (object)rec.MT_Recitation ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@MT_Seatwork", (object)rec.MT_Seatwork ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@MT_Assignment", (object)rec.MT_Assignment ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@MT_LongTests", (object)rec.MT_LongTests ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@MT_MajorExam", (object)rec.MT_MajorExam ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@FT_Attendance", (object)rec.FT_Attendance ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@FT_Recitation", (object)rec.FT_Recitation ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@FT_Seatwork", (object)rec.FT_Seatwork ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@FT_Assignment", (object)rec.FT_Assignment ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@FT_LongTests", (object)rec.FT_LongTests ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@FT_MajorExam", (object)rec.FT_MajorExam ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@Status", rec.Status);
+                cmd.Parameters.AddWithValue("@Released", rec.Released);
 
-        WHERE StudentID=@StudentID";
-
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@StudentID", rec.StudentID);
-
-                    cmd.Parameters.AddWithValue("@MT_Attendance", rec.MT_Attendance);
-                    cmd.Parameters.AddWithValue("@MT_Recitation", rec.MT_Recitation);
-                    cmd.Parameters.AddWithValue("@MT_Seatwork", rec.MT_Seatwork);
-                    cmd.Parameters.AddWithValue("@MT_Assignment", rec.MT_Assignment);
-                    cmd.Parameters.AddWithValue("@MT_LongTests", rec.MT_LongTests);
-                    cmd.Parameters.AddWithValue("@MT_MajorExam", rec.MT_MajorExam);
-
-                    cmd.Parameters.AddWithValue("@FT_Attendance", rec.FT_Attendance);
-                    cmd.Parameters.AddWithValue("@FT_Recitation", rec.FT_Recitation);
-                    cmd.Parameters.AddWithValue("@FT_Seatwork", rec.FT_Seatwork);
-                    cmd.Parameters.AddWithValue("@FT_Assignment", rec.FT_Assignment);
-                    cmd.Parameters.AddWithValue("@FT_LongTests", rec.FT_LongTests);
-                    cmd.Parameters.AddWithValue("@FT_MajorExam", rec.FT_MajorExam);
-
-                    cmd.Parameters.AddWithValue("@Status", rec.Status);
-                    cmd.Parameters.AddWithValue("@Released", rec.Released);
-
-                    cmd.ExecuteNonQuery();
-                }
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[GradesContentInst] SaveGradeToDatabase failed: {ex.Message}");
+                ShowError($"Could not save grade changes to the database.\n{ex.Message}", "Save Error");
             }
         }
 

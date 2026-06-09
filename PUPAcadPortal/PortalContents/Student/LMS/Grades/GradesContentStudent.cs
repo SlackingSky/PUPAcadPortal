@@ -1,4 +1,5 @@
 ﻿using PUPAcadPortal.PortalContents.Student.LMS.Grades;
+using PUPAcadPortal.Data;     // FIX: UserSession
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -20,6 +21,19 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
 
         private void Grades_Initialize()
         {
+            // FIX: GradesPanel now reads UserSession.StudentID internally to load
+            // the correct student's grades from the database.  No extra wiring needed
+            // here — just ensure the user is logged in before this panel is shown.
+            if (UserSession.StudentID == null)
+            {
+                MessageBox.Show(
+                    "No student is currently logged in. Please log in first.",
+                    "Session Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
             var gradesPanel = new GradesPanel
             {
                 Dock = DockStyle.Fill

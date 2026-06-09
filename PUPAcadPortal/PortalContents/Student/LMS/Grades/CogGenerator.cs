@@ -17,6 +17,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
         private static readonly BaseColor MID_GRAY = new BaseColor(85, 85, 85);
         private static readonly BaseColor BORDER_GRAY = new BaseColor(170, 170, 170);
 
+        // ── Cambria font (lazy-loaded, cached) ────────────────────────────────
         private static BaseFont _cambriaBase;
         private static BaseFont CambriaBase
         {
@@ -24,7 +25,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             {
                 if (_cambriaBase != null) return _cambriaBase;
 
-                // Search common Windows font locations
                 string[] candidates =
                 {
                     Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "cambria.ttc,0"),
@@ -46,17 +46,15 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
                     }
                 }
 
-                // Fallback to Times Roman if Cambria is unavailable
                 _cambriaBase = BaseFont.CreateFont(BaseFont.TIMES_ROMAN, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
                 return _cambriaBase;
             }
         }
 
-        // Helper – create a Cambria PdfFont
         private static PdfFont Cambria(float size, int style, BaseColor color) =>
             new PdfFont(CambriaBase, size, style, color);
 
-        //  FONTS  (all Cambria)
+        // ── Font definitions ──────────────────────────────────────────────────
         private static PdfFont F_COUNTRY => Cambria(8.5f, PdfFont.NORMAL, DARK_GRAY);
         private static PdfFont F_UNIV => Cambria(11f, PdfFont.BOLD, DARK_GRAY);
         private static PdfFont F_CAMPUS => Cambria(8.5f, PdfFont.NORMAL, DARK_GRAY);
@@ -71,8 +69,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
         private static PdfFont F_PRIV => Cambria(8f, PdfFont.BOLD, MAROON);
         private static PdfFont F_SEM_LBL => Cambria(9f, PdfFont.BOLD, DARK_GRAY);
         private static PdfFont F_SEM_VAL => Cambria(9f, PdfFont.NORMAL, DARK_GRAY);
-        private static PdfFont F_SCHOL_L => Cambria(9f, PdfFont.BOLD, DARK_GRAY);
-        private static PdfFont F_SCHOL_V => Cambria(9f, PdfFont.NORMAL, DARK_GRAY);
 
         private const float MM = 2.835f;
         private const float LM = 15 * MM;
@@ -87,12 +83,25 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             public int Units;
             public double Equivalent;
             public string Remarks;
-            public string EnrollmentType;   // "Regular" | "Irregular"  (from PUPSIS)
+            public string EnrollmentType;   // "Regular" | "Irregular"
         }
 
+        // ── FIX 1: studentName and programName are now parameters instead of hardcoded ──
+        /// <summary>
+        /// Generates a Certificate of Grades PDF.
+        /// </summary>
+        /// <param name="outputPath">Destination file path.</param>
+        /// <param name="logoImagePath">Hint path for the university logo.</param>
+        /// <param name="studentName">Full name of the student (UPPER CASE).</param>
+        /// <param name="programName">Degree program (UPPER CASE).</param>
+        /// <param name="ayLabel">Academic year label, e.g. "2025 – 2026".</param>
+        /// <param name="sem1Subjects">First-semester grade entries.</param>
+        /// <param name="sem2Subjects">Second-semester grade entries.</param>
         public static void Generate(
             string outputPath,
             string logoImagePath,
+            string studentName,
+            string programName,
             string ayLabel,
             List<GradeEntry> sem1Subjects,
             List<GradeEntry> sem2Subjects)
@@ -135,12 +144,13 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             AddMaroonDivider(doc, contentWidth);
             doc.Add(Gap(5 * MM));
 
-            // ── Certification text ────────────────────────────────────
+            // ── Certification text (uses injected student name & program) ──
+            // FIX 1: uses studentName and programName parameters — no longer hardcoded
             var certPara = new Paragraph { Alignment = Element.ALIGN_CENTER, Leading = 16 };
             certPara.Add(new Chunk("This is to certify that ", F_CERT));
-            certPara.Add(new Chunk("JUAN SANTOS DELA CRUZ", F_CERT_B));
+            certPara.Add(new Chunk(studentName.ToUpperInvariant(), F_CERT_B));
             certPara.Add(new Chunk(", a ", F_CERT));
-            certPara.Add(new Chunk("BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY", F_CERT_B));
+            certPara.Add(new Chunk(programName.ToUpperInvariant(), F_CERT_B));
             certPara.Add(new Chunk(
                 " student, has completed and passed the following subjects listed below " +
                 "with the corresponding grades.", F_CERT));
@@ -171,6 +181,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             doc.Close();
         }
 
+        // ── Logo loader ───────────────────────────────────────────────────────
         private static PdfImage TryLoadLogo(string hint)
         {
             // 1. Try embedded resource
@@ -207,6 +218,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             return null;
         }
 
+        // ── Divider ───────────────────────────────────────────────────────────
         private static void AddMaroonDivider(Document doc, float contentWidth)
         {
             var tbl = new PdfPTable(new float[] { contentWidth })
@@ -229,6 +241,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             doc.Add(tbl);
         }
 
+        // ── Semester block ────────────────────────────────────────────────────
         private static void AddSemesterBlock(
             Document doc,
             float contentWidth,
@@ -240,10 +253,10 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             string semOrd = semNum == 1 ? "1st" : "2nd";
 
             float[] semColW = {
-                contentWidth * 0.14f,   // "Semester :"
-                contentWidth * 0.10f,   // "1st"
-                contentWidth * 0.16f,   // "School Year :"
-                contentWidth * 0.60f,   // AY value (fills rest)
+                contentWidth * 0.14f,
+                contentWidth * 0.10f,
+                contentWidth * 0.16f,
+                contentWidth * 0.60f,
             };
             var semTable = new PdfPTable(semColW)
             {
@@ -257,12 +270,11 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             semTable.AddCell(SemCell(ayLabel, F_SEM_VAL, Element.ALIGN_LEFT, true));
             doc.Add(semTable);
 
-            // Code No. | Descriptive Title | Credits | Grades
             float[] gradeColW = {
-                contentWidth * 0.16f,   // Code No.
-                contentWidth * 0.58f,   // Descriptive Title
-                contentWidth * 0.13f,   // Credits
-                contentWidth * 0.13f,   // Grades
+                contentWidth * 0.16f,
+                contentWidth * 0.58f,
+                contentWidth * 0.13f,
+                contentWidth * 0.13f,
             };
             var gradeTable = new PdfPTable(gradeColW)
             {
@@ -289,7 +301,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             }
             doc.Add(gradeTable);
 
-            //  GPA row 
+            // GPA row
             float[] gpaColW = { contentWidth * 0.87f, contentWidth * 0.13f };
             var gpaTable = new PdfPTable(gpaColW)
             {
@@ -304,7 +316,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             doc.Add(gpaTable);
         }
 
-        //  CELL HELPERS
+        // ── Cell helpers ──────────────────────────────────────────────────────
         private static PdfPCell SemCell(string text, PdfFont font, int align, bool lastCol) =>
             new PdfPCell(new Phrase(text, font))
             {
@@ -363,7 +375,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
                 BorderWidth = 1f,
             };
 
-        //  UTILITIES
+        // ── Utilities ─────────────────────────────────────────────────────────
         private static Paragraph CenterPara(string text, PdfFont font) =>
             new Paragraph(text, font) { Alignment = Element.ALIGN_CENTER };
 
@@ -375,17 +387,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Grades
             double tw = subjects.Where(e => e.Remarks == "PASSED").Sum(e => e.Equivalent * e.Units);
             int tu = subjects.Where(e => e.Remarks == "PASSED").Sum(e => e.Units);
             return tu > 0 ? Math.Round(tw / tu, 2) : 0;
-        }
-
-        private static string DeriveAcademicStanding(double gwa, int failedCount)
-        {
-            if (failedCount >= 3) return "Academic Dismissal";
-            if (failedCount > 0) return "Probationary";
-            if (gwa > 0 && gwa <= 1.45) return "University Scholar";
-            if (gwa > 0 && gwa <= 1.75) return "College Scholar";
-            if (gwa > 0 && gwa <= 2.00) return "Dean's List";
-            if (gwa > 0 && gwa <= 3.00) return "Good Standing";
-            return "Conditional";
         }
     }
 }
