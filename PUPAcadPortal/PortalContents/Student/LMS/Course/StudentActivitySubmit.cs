@@ -189,7 +189,12 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             switch (_activity.Type)
             {
                 case "Essay": BuildEssayView(); break;
-                case "Quiz": case "LongQuiz": BuildQuizView(); break;
+                case "Quiz":
+                case "LongQuiz":
+                    BuildQuizView();
+                    // Re-render once the scroll area has been measured (width was 0 at ctor time)
+                    _scrollArea.SizeChanged += OnScrollAreaFirstResize;
+                    break;
                 case "FileUpload": BuildFileUploadView(); break;
                 case "Recitation": BuildRecitationView(); break;
                 default: BuildEssayView(); break;
@@ -197,6 +202,21 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
         }
 
         // SHARED helpers — now add controls to _scrollArea, not pnlBody
+
+        /// <summary>
+        /// Called once when the scroll area gets its first real size.
+        /// Re-renders the quiz so all card widths are correct instead of using
+        /// the 0-width fallback that was active during construction.
+        /// </summary>
+        private void OnScrollAreaFirstResize(object? sender, EventArgs e)
+        {
+            if (_scrollArea.ClientSize.Width <= 0) return;
+            _scrollArea.SizeChanged -= OnScrollAreaFirstResize;
+
+            // Only re-render if this is still a quiz view
+            if (_activity.Type is "Quiz" or "LongQuiz")
+                BuildQuizView();
+        }
 
         private Panel BuildInstructionsPanel(int width)
         {
@@ -810,22 +830,71 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 
             if (_activity.Questions == null || _activity.Questions.Count == 0)
             {
-                _scrollArea.Controls.Add(new Label
+                // ── Friendly "no questions yet" state ──────────────────────
+                var pnlEmpty = new Panel
                 {
-                    Text = "No questions available.",
-                    Font = new Font("Segoe UI", 11F),
-                    ForeColor = Color.Gray,
+                    Dock = DockStyle.Fill,
+                    BackColor = Color.FromArgb(250, 250, 252),
+                };
+
+                var lblIcon = new Label
+                {
+                    Text = "📋",
+                    Font = new Font("Segoe UI", 36F),
+                    ForeColor = Color.FromArgb(200, 200, 210),
                     AutoSize = true,
-                    Location = new Point(20, 20)
-                });
+                    Location = new Point(0, 60),
+                    TextAlign = ContentAlignment.MiddleCenter
+                };
+
+                var lblMsg = new Label
+                {
+                    Text = "No questions have been added to this quiz yet.",
+                    Font = new Font("Segoe UI", 12F, FontStyle.Bold),
+                    ForeColor = Color.FromArgb(160, 160, 170),
+                    AutoSize = false,
+                    Height = 30,
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Location = new Point(0, 110)
+                };
+
+                var lblSub = new Label
+                {
+                    Text = "Your instructor has not set up any questions for this activity.\nPlease check back later or contact your instructor.",
+                    Font = new Font("Segoe UI", 9.5F),
+                    ForeColor = Color.FromArgb(180, 180, 190),
+                    AutoSize = false,
+                    Height = 44,
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Location = new Point(0, 148)
+                };
+
+                pnlEmpty.Controls.AddRange(new Control[] { lblIcon, lblMsg, lblSub });
+
+                // Center labels once the panel knows its width
+                pnlEmpty.SizeChanged += (s, e) =>
+                {
+                    lblIcon.Location = new Point((pnlEmpty.Width - lblIcon.Width) / 2, 60);
+                    lblMsg.Width = pnlEmpty.Width - 40;
+                    lblMsg.Location = new Point(20, 110);
+                    lblSub.Width = pnlEmpty.Width - 40;
+                    lblSub.Location = new Point(20, 148);
+                };
+
+                _scrollArea.Controls.Add(pnlEmpty);
                 return;
             }
 
             bool isSubm = _activity.SubmissionStatus is "Submitted" or "Returned";
             int totalQ = _activity.Questions.Count;
-            int w = Math.Max(640, _scrollArea.ClientSize.Width > 0
-                                         ? _scrollArea.ClientSize.Width - 40
-                                         : pnlBody.ClientSize.Width - 40);
+
+            // Width is calculated lazily because _scrollArea may not yet have a measured
+            // ClientSize at construction time.  A helper closure is used to recompute it.
+            int GetW() => Math.Max(640,
+                _scrollArea.ClientSize.Width > 40 ? _scrollArea.ClientSize.Width - 40 :
+                pnlBody.ClientSize.Width > 40 ? pnlBody.ClientSize.Width - 40 : 900);
+
+            int w = GetW();
             int y = 16;
 
             //  Instructions banner 

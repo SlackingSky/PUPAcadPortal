@@ -4,6 +4,7 @@ using PUPAcadPortal.PortalContents.Instructor.LMS.Course;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
 namespace PUPAcadPortal.Services
 {
@@ -116,7 +117,8 @@ namespace PUPAcadPortal.Services
                 ActivityType = item.TypeString,
                 CategoryId = item.LinkedCategoryId,
                 ModuleId = string.IsNullOrEmpty(item.LinkedModuleId) ? null : item.LinkedModuleId,
-                IsPublished = false
+                IsPublished = false,
+                QuizContent = SerializeQuestions(item.Questions),
             };
 
             ctx.Activities.Add(entity);
@@ -143,6 +145,7 @@ namespace PUPAcadPortal.Services
             entity.ActivityType = item.TypeString;
             entity.CategoryId = item.LinkedCategoryId;
             entity.ModuleId = string.IsNullOrEmpty(item.LinkedModuleId) ? null : item.LinkedModuleId;
+            entity.QuizContent = SerializeQuestions(item.Questions);
 
             ctx.SaveChanges();
         }
@@ -304,7 +307,7 @@ namespace PUPAcadPortal.Services
                     "quiz" => ActivityType.Quiz,
                     "essay" => ActivityType.Essay,
                     "fileupload" or "file upload" => ActivityType.FileUpload,
-                    _ => ActivityType.Assignment  
+                    _ => ActivityType.Assignment
                 };
 
                 result.Add(new ActivityItem
@@ -326,7 +329,8 @@ namespace PUPAcadPortal.Services
                     LinkedCategoryId = a.CategoryId,
                     LinkedCategoryName = a.Category?.CategoryName ?? "",
                     LinkedModuleId = a.ModuleId,
-                    LinkedModuleTitle = a.Module?.Title ?? ""
+                    LinkedModuleTitle = a.Module?.Title ?? "",
+                    Questions = DeserializeQuestions(a.QuizContent),
                 });
             }
 
@@ -335,5 +339,62 @@ namespace PUPAcadPortal.Services
 
         private static string GenerateActivityId()
             => $"ACT-{DateTime.UtcNow:yyyyMMddHHmmss}-{Guid.NewGuid().ToString("N")[..6].ToUpper()}";
+
+        //  Quiz question JSON helpers 
+
+        private static string? SerializeQuestions(List<QuizQuestion>? questions)
+        {
+            if (questions == null || questions.Count == 0) return null;
+
+            // Map to a simple anonymous DTO to avoid storing internal IDs that
+            // are irrelevant to the student-facing view.
+            var dto = questions.Select((q, i) => new
+            {
+                number = i + 1,
+                type = q.QuestionType,
+                text = q.QuestionText,
+                points = q.Points,
+                choices = q.Choices,
+                answer = q.CorrectAnswer
+            });
+
+            return JsonSerializer.Serialize(dto);
+        }
+
+        /// <summary>Deserializes JSON from DB back into instructor-side QuizQuestion list.</summary>
+        private static List<QuizQuestion> DeserializeQuestions(string? json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return new List<QuizQuestion>();
+
+            try
+            {
+                using var doc = JsonDocument.Parse(json);
+                var list = new List<QuizQuestion>();
+                int idx = 1;
+                foreach (var el in doc.RootElement.EnumerateArray())
+                {
+                    var choices = new List<string>();
+                    if (el.TryGetProperty("choices", out var choicesEl))
+                        foreach (var c in choicesEl.EnumerateArray())
+                            choices.Add(c.GetString() ?? "");
+
+                    list.Add(new QuizQuestion
+                    {
+                        QuestionId = idx,
+                        QuestionText = el.TryGetProperty("text", out var t) ? t.GetString() ?? "" : "",
+                        QuestionType = el.TryGetProperty("type", out var ty) ? ty.GetString() ?? "MultipleChoice" : "MultipleChoice",
+                        Points = el.TryGetProperty("points", out var p) ? p.GetInt32() : 1,
+                        Choices = choices,
+                        CorrectAnswer = el.TryGetProperty("answer", out var a) ? a.GetString() ?? "" : "",
+                    });
+                    idx++;
+                }
+                return list;
+            }
+            catch
+            {
+                return new List<QuizQuestion>();
+            }
+        }
     }
 }

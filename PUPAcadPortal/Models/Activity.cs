@@ -22,6 +22,7 @@ public partial class Activity
     public DateTime Deadline { get; set; }
 
     public string ActivityType { get; set; } = null!;
+    public string? QuizContent { get; set; }
 
     public bool IsPublished { get; set; }
 

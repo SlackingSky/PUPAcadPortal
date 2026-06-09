@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using CourseActivityAttachment = PUPAcadPortal.PortalContents.Student.LMS.Course.ActivityAttachment;
 using CourseStudentActivityItem = PUPAcadPortal.PortalContents.Student.LMS.Course.StudentActivityItem;
 using CourseStudentCourse = PUPAcadPortal.PortalContents.Student.LMS.Course.StudentCourse;
@@ -167,6 +168,7 @@ namespace PUPAcadPortal.Services
                     UploadedFileName = GetFileName(submission?.SubmittedFile),
                     Attachments = BuildAttachments(activity),
                     LockAfterDeadline = false,
+                    Questions = DeserializeStudentQuestions(activity.QuizContent),
                 });
             }
 
@@ -376,5 +378,44 @@ namespace PUPAcadPortal.Services
 
         private static string GenerateSubmissionId()
             => $"SUB-{DateTime.UtcNow:yyyyMMddHHmmss}-{Guid.NewGuid().ToString("N")[..6].ToUpper()}";
+
+        // ── Quiz question JSON deserializer (student-facing model) ────────────
+
+        private static List<PUPAcadPortal.PortalContents.Student.LMS.Course.ActivityQuestion>
+            DeserializeStudentQuestions(string? json)
+        {
+            var result = new List<PUPAcadPortal.PortalContents.Student.LMS.Course.ActivityQuestion>();
+            if (string.IsNullOrWhiteSpace(json)) return result;
+
+            try
+            {
+                using var doc = JsonDocument.Parse(json);
+                int idx = 1;
+                foreach (var el in doc.RootElement.EnumerateArray())
+                {
+                    var choices = new List<string>();
+                    if (el.TryGetProperty("choices", out var choicesEl))
+                        foreach (var c in choicesEl.EnumerateArray())
+                            choices.Add(c.GetString() ?? "");
+
+                    result.Add(new PUPAcadPortal.PortalContents.Student.LMS.Course.ActivityQuestion
+                    {
+                        Number = el.TryGetProperty("number", out var n) ? n.GetInt32() : idx,
+                        QuestionType = el.TryGetProperty("type", out var ty) ? ty.GetString() ?? "MultipleChoice" : "MultipleChoice",
+                        Text = el.TryGetProperty("text", out var t) ? t.GetString() ?? "" : "",
+                        Points = el.TryGetProperty("points", out var p) ? p.GetInt32() : 1,
+                        Choices = choices,
+                        CorrectAnswer = el.TryGetProperty("answer", out var a) ? a.GetString() ?? "" : "",
+                    });
+                    idx++;
+                }
+            }
+            catch
+            {
+                // Return whatever was parsed so far; corrupt JSON = no questions.
+            }
+
+            return result;
+        }
     }
 }
