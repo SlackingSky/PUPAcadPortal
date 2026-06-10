@@ -17,6 +17,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
         public static bool isEnrolled = false;
         public static int totalUnits = 0;
         public static StudentDataService dataService;
+        private Font _statusBoldFont;
 
         private List<EnrollmentData> _liveSubjects = new List<EnrollmentData>();
         private EnrollmentService _enrollmentService = new EnrollmentService();
@@ -34,6 +35,7 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             EnableDoubleBuffering(dgvEnrollment);
 
             btnSaveAndAssess.Click += btnSaveAndAssess_Click;
+            _statusBoldFont = new Font("Segoe UI", 12F, FontStyle.Bold);
             dgvEnrollment.CellPainting += dgvEnrollment_CellPainting;
             dgvEnrollment.CellClick += dgvEnrollment_CellContentClick;
             dgvEnrollment.SelectionChanged += dgvEnrollment_SelectionChanged;
@@ -47,36 +49,30 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             if (e.RowIndex >= 0 && e.RowIndex < dgvEnrollment.Rows.Count)
             {
                 var rowData = dgvEnrollment.Rows[e.RowIndex].DataBoundItem as EnrollmentData;
-                var statusRow = dgvEnrollment.Rows[e.RowIndex].Index;
                 var statusColumn = dgvEnrollment.Columns["colStatus"].Index;
+
                 if (rowData == null) return;
 
-                if (!rowData.IsEligible)
+                if (e.ColumnIndex == statusColumn)
                 {
-                    //e.CellStyle.BackColor = Color.LightCoral;
-                    dgvEnrollment[statusColumn, statusRow].Style.ForeColor = ColorTranslator.FromHtml("#FDAE44");
-                    dgvEnrollment[statusColumn, statusRow].Style.Font = new Font(Font, FontStyle.Bold);
-                }
-                else if (rowData.Status == "Officially Enrolled")
-                {
-                    //e.CellStyle.BackColor = Color.SeaGreen;
-                    //e.CellStyle.ForeColor = Color.White;
-                    dgvEnrollment[statusColumn, statusRow].Style.ForeColor = ColorTranslator.FromHtml("#2E8B57");
-                    dgvEnrollment[statusColumn, statusRow].Style.Font = new Font(Font, FontStyle.Bold);
-                }
-                else if (rowData.Status == "Pending Payment")
-                {
-                    //e.CellStyle.BackColor = Color.DarkOrange;
-                    //e.CellStyle.ForeColor = Color.White;
-                    dgvEnrollment[statusColumn, statusRow].Style.ForeColor = ColorTranslator.FromHtml("#0041C2");
-                    dgvEnrollment[statusColumn, statusRow].Style.Font = new Font(Font, FontStyle.Bold);
-                }
-                else if (rowData.Status == "Pending")
-                {
-                    //e.CellStyle.BackColor = Color.Gold;
-                    //e.CellStyle.ForeColor = Color.Black;
-                    dgvEnrollment[statusColumn, statusRow].Style.ForeColor = ColorTranslator.FromHtml("#FFBD321");
-                    dgvEnrollment[statusColumn, statusRow].Style.Font = new Font(Font, FontStyle.Bold);
+                    e.CellStyle.Font = _statusBoldFont;
+
+                    if (!rowData.IsEligible)
+                    {
+                        e.CellStyle.ForeColor = ColorTranslator.FromHtml("#C83F49");
+                    }
+                    else if (rowData.Status == "Officially Enrolled")
+                    {
+                        e.CellStyle.ForeColor = ColorTranslator.FromHtml("#2E8B57");
+                    }
+                    else if (rowData.Status == "Pending Payment")
+                    {
+                        e.CellStyle.ForeColor = ColorTranslator.FromHtml("#0041C2");
+                    }
+                    else if (rowData.Status == "Pending")
+                    {
+                        e.CellStyle.ForeColor = ColorTranslator.FromHtml("#FDAE44");
+                    }
                 }
             }
         }
@@ -194,9 +190,13 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             this.SafeUIUpdate(() =>
             {
                 dgvEnrollment.Columns["colSchedule"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-                dgvEnrollment.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+
+                dgvEnrollment.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
                 dgvEnrollment.RowTemplate.MinimumHeight = 35;
+
                 dgvEnrollment.DataSource = new BindingList<EnrollmentData>(_liveSubjects);
+
+                dgvEnrollment.AutoResizeRows(DataGridViewAutoSizeRowsMode.AllCells);
             });
 
             Enrollment_UpdateTotalUnits();
@@ -230,8 +230,8 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             }
             else
             {
+                btnDownloadCOR.BackColor = Color.Gray;
                 btnDownloadCOR.Enabled = false;
-                btnDownloadCOR.BackColor = Color.DarkGray;
             }
 
             btnSaveAndAssess.Visible = hasPendingEligibleSubjects;
@@ -460,10 +460,11 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
 
         private async void btnDownloadCOR_Click(object sender, EventArgs e)
         {
-            string currentEnrollmentId = "ENR-ACAD0001-18";
+            var pdfService = new CorGenerationService();
 
             await SafeUiRunner.ExecuteAsync(async () =>
             {
+                string currentEnrollmentId = await pdfService.GetEnrollmentId(UserSession.StudentID ?? 0, GlobalSession.ActiveAcademicPeriod) ?? string.Empty;
                 string tempFolder = Path.GetTempPath();
                 string fileName = $"COR_Preview_{DateTime.Now:yyyyMMddHHmmss}.pdf";
                 string tempFilePath = Path.Combine(tempFolder, fileName);
@@ -472,7 +473,6 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
                 string templatePath = Path.Combine(outputPath, "Resources/CorTemplate.svg");
                 string logoPath = Path.Combine(outputPath, "Resources/PUP.png");
 
-                var pdfService = new CorGenerationService();
                 await pdfService.GenerateCorPdfAsync(currentEnrollmentId, tempFilePath, templatePath, logoPath);
 
                 System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
@@ -561,6 +561,23 @@ namespace PUPAcadPortal.PortalContents.Student.Enrollment
             catch (Exception ex)
             {
                 MessageBox.Show($"Unable to open the document:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+
+            if (dgvEnrollment != null)
+            {
+                if (this.Width <= 0 || this.Height <= 0)
+                {
+                    dgvEnrollment.Visible = false;
+                }
+                else
+                {
+                    dgvEnrollment.Visible = true;
+                }
             }
         }
     }

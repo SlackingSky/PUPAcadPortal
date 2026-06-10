@@ -18,6 +18,24 @@ namespace PUPAcadPortal.Services
     {
         private string Escape(string text) => WebUtility.HtmlEncode(text ?? "");
 
+        public async Task<string> GetEnrollmentId(int studentId, string activePeriod)
+        {
+            if (activePeriod == null)
+                throw new ArgumentNullException(nameof(activePeriod), "There are no active period");
+            if (studentId == 0)
+                throw new ArgumentNullException(nameof(studentId), "Student ID not found");
+            using (var context = new AppDbContext())
+            {
+                string enrollmentId = await context.Enrollments.Where(e => e.StudentId == studentId && e.AcademicPeriodId == activePeriod).Select(e => e.EnrollmentId).FirstOrDefaultAsync();
+                if (enrollmentId == null)
+                {
+                    return "";
+                }
+                else
+                    return enrollmentId;
+            }
+        }
+
         public async Task<string> GenerateCorPdfAsync(string enrollmentId, string outputPath, string svgTemplatePath = "CorTemplate.svg", string logoImagePath = "pup_logo.png")
         {
             using var db = new AppDbContext();

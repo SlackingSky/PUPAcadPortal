@@ -290,7 +290,7 @@
             dataGridViewCellStyle1.BackColor = SystemColors.Control;
             dgvEnrollment.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dgvEnrollment.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvEnrollment.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
+            dgvEnrollment.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
             dgvEnrollment.BackgroundColor = Color.White;
             dgvEnrollment.CellBorderStyle = DataGridViewCellBorderStyle.SunkenHorizontal;
             dgvEnrollment.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
@@ -377,7 +377,7 @@
             colSchedule.DefaultCellStyle = dataGridViewCellStyle6;
             colSchedule.FillWeight = 92.978F;
             colSchedule.HeaderText = "Schedule";
-            colSchedule.MinimumWidth = 6;
+            colSchedule.MinimumWidth = 200;
             colSchedule.Name = "colSchedule";
             colSchedule.ReadOnly = true;
             colSchedule.Resizable = DataGridViewTriState.False;
@@ -389,7 +389,7 @@
             colStatus.DefaultCellStyle = dataGridViewCellStyle7;
             colStatus.FillWeight = 92.978F;
             colStatus.HeaderText = "Status";
-            colStatus.MinimumWidth = 6;
+            colStatus.MinimumWidth = 120;
             colStatus.Name = "colStatus";
             colStatus.ReadOnly = true;
             colStatus.Resizable = DataGridViewTriState.False;
