@@ -38,14 +38,10 @@
             pnlRegistrarFunctions = new Panel();
             btnRegistrarFunctions = new Button();
             pnlRegistrarSubmenu = new Panel();
-            pnlGradesManagement = new Panel();
-            btnGradesManagement = new Button();
-            panel8 = new Panel();
             pnlAccountingRecords = new Panel();
             btnAccountingRecords = new Button();
             pnlEnrolledStudents = new Panel();
             btnEnrolledStudents = new Button();
-            btnManageRooms = new Button();
             panel17 = new Panel();
             btnRegisterStudent = new Button();
             panel18 = new Panel();
@@ -55,6 +51,7 @@
             panel9 = new Panel();
             btnSubjectOffering = new Button();
             pnlsubofferingSubmenu = new FlowLayoutPanel();
+            btnManageRooms = new Button();
             btnManageSubs = new Button();
             btnSO_CurriculumArchive = new Button();
             btnSO_CurrentSemester = new Button();
@@ -79,7 +76,6 @@
             panel3.SuspendLayout();
             pnlRegistrarFunctions.SuspendLayout();
             pnlRegistrarSubmenu.SuspendLayout();
-            pnlGradesManagement.SuspendLayout();
             pnlAccountingRecords.SuspendLayout();
             pnlEnrolledStudents.SuspendLayout();
             panel17.SuspendLayout();
@@ -233,60 +229,20 @@
             // pnlRegistrarSubmenu
             // 
             pnlRegistrarSubmenu.BackColor = Color.FromArgb(128, 109, 0, 0);
-            pnlRegistrarSubmenu.Controls.Add(pnlGradesManagement);
             pnlRegistrarSubmenu.Controls.Add(pnlAccountingRecords);
             pnlRegistrarSubmenu.Controls.Add(pnlEnrolledStudents);
             pnlRegistrarSubmenu.Location = new Point(0, 160);
             pnlRegistrarSubmenu.Margin = new Padding(0);
             pnlRegistrarSubmenu.Name = "pnlRegistrarSubmenu";
-            pnlRegistrarSubmenu.Size = new Size(256, 144);
+            pnlRegistrarSubmenu.Size = new Size(256, 102);
             pnlRegistrarSubmenu.TabIndex = 7;
             pnlRegistrarSubmenu.Visible = false;
-            // 
-            // pnlGradesManagement
-            // 
-            pnlGradesManagement.BackColor = Color.Transparent;
-            pnlGradesManagement.Controls.Add(btnGradesManagement);
-            pnlGradesManagement.Controls.Add(panel8);
-            pnlGradesManagement.Location = new Point(0, 0);
-            pnlGradesManagement.Name = "pnlGradesManagement";
-            pnlGradesManagement.Size = new Size(256, 48);
-            pnlGradesManagement.TabIndex = 9;
-            // 
-            // btnGradesManagement
-            // 
-            btnGradesManagement.BackgroundImageLayout = ImageLayout.None;
-            btnGradesManagement.Cursor = Cursors.Hand;
-            btnGradesManagement.FlatAppearance.BorderSize = 0;
-            btnGradesManagement.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            btnGradesManagement.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            btnGradesManagement.FlatStyle = FlatStyle.Flat;
-            btnGradesManagement.Font = new Font("Arial", 16F, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            btnGradesManagement.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            btnGradesManagement.Image = Properties.Resources.books_16;
-            btnGradesManagement.Location = new Point(0, 0);
-            btnGradesManagement.Name = "btnGradesManagement";
-            btnGradesManagement.Padding = new Padding(16, 0, 0, 0);
-            btnGradesManagement.Size = new Size(256, 48);
-            btnGradesManagement.TabIndex = 5;
-            btnGradesManagement.Text = " Grades Management";
-            btnGradesManagement.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnGradesManagement.UseVisualStyleBackColor = true;
-            btnGradesManagement.Click += btnGradesManagement_Click;
-            // 
-            // panel8
-            // 
-            panel8.BackColor = Color.Transparent;
-            panel8.Location = new Point(8, 8);
-            panel8.Name = "panel8";
-            panel8.Size = new Size(256, 48);
-            panel8.TabIndex = 10;
             // 
             // pnlAccountingRecords
             // 
             pnlAccountingRecords.BackColor = Color.Transparent;
             pnlAccountingRecords.Controls.Add(btnAccountingRecords);
-            pnlAccountingRecords.Location = new Point(0, 48);
+            pnlAccountingRecords.Location = new Point(0, 0);
             pnlAccountingRecords.Name = "pnlAccountingRecords";
             pnlAccountingRecords.Size = new Size(256, 48);
             pnlAccountingRecords.TabIndex = 8;
@@ -316,7 +272,7 @@
             // 
             pnlEnrolledStudents.BackColor = Color.Transparent;
             pnlEnrolledStudents.Controls.Add(btnEnrolledStudents);
-            pnlEnrolledStudents.Location = new Point(0, 96);
+            pnlEnrolledStudents.Location = new Point(0, 49);
             pnlEnrolledStudents.Name = "pnlEnrolledStudents";
             pnlEnrolledStudents.Size = new Size(256, 48);
             pnlEnrolledStudents.TabIndex = 9;
@@ -342,32 +298,10 @@
             btnEnrolledStudents.UseVisualStyleBackColor = true;
             btnEnrolledStudents.Click += btnEnrolledStudents_Click;
             // 
-            // btnManageRooms
-            // 
-            btnManageRooms.BackgroundImageLayout = ImageLayout.None;
-            btnManageRooms.Cursor = Cursors.Hand;
-            btnManageRooms.FlatAppearance.BorderSize = 0;
-            btnManageRooms.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
-            btnManageRooms.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
-            btnManageRooms.FlatStyle = FlatStyle.Flat;
-            btnManageRooms.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            btnManageRooms.ForeColor = Color.FromArgb(179, 255, 255, 255);
-            btnManageRooms.ImageAlign = ContentAlignment.MiddleLeft;
-            btnManageRooms.Location = new Point(0, 0);
-            btnManageRooms.Margin = new Padding(0);
-            btnManageRooms.Name = "btnManageRooms";
-            btnManageRooms.Padding = new Padding(26, 0, 0, 0);
-            btnManageRooms.Size = new Size(256, 48);
-            btnManageRooms.TabIndex = 13;
-            btnManageRooms.Text = " Manage Rooms";
-            btnManageRooms.TextAlign = ContentAlignment.MiddleLeft;
-            btnManageRooms.UseVisualStyleBackColor = true;
-            btnManageRooms.Click += btnManageRooms_Click;
-            // 
             // panel17
             // 
             panel17.Controls.Add(btnRegisterStudent);
-            panel17.Location = new Point(0, 304);
+            panel17.Location = new Point(0, 262);
             panel17.Margin = new Padding(0);
             panel17.Name = "panel17";
             panel17.Size = new Size(256, 48);
@@ -399,7 +333,7 @@
             // panel18
             // 
             panel18.Controls.Add(btnRegisterProfessor);
-            panel18.Location = new Point(0, 352);
+            panel18.Location = new Point(0, 310);
             panel18.Margin = new Padding(0);
             panel18.Name = "panel18";
             panel18.Size = new Size(256, 48);
@@ -431,7 +365,7 @@
             // panel11
             // 
             panel11.Controls.Add(btnViewAllUsers);
-            panel11.Location = new Point(0, 400);
+            panel11.Location = new Point(0, 358);
             panel11.Margin = new Padding(0);
             panel11.Name = "panel11";
             panel11.Size = new Size(256, 48);
@@ -463,7 +397,7 @@
             // panel9
             // 
             panel9.Controls.Add(btnSubjectOffering);
-            panel9.Location = new Point(0, 448);
+            panel9.Location = new Point(0, 406);
             panel9.Margin = new Padding(0);
             panel9.Name = "panel9";
             panel9.Size = new Size(256, 48);
@@ -502,13 +436,35 @@
             pnlsubofferingSubmenu.Controls.Add(btnSO_EditSchedule);
             pnlsubofferingSubmenu.Controls.Add(btnSO_Schedule);
             pnlsubofferingSubmenu.FlowDirection = FlowDirection.TopDown;
-            pnlsubofferingSubmenu.Location = new Point(0, 496);
+            pnlsubofferingSubmenu.Location = new Point(0, 454);
             pnlsubofferingSubmenu.Margin = new Padding(0);
             pnlsubofferingSubmenu.Name = "pnlsubofferingSubmenu";
             pnlsubofferingSubmenu.Size = new Size(256, 292);
             pnlsubofferingSubmenu.TabIndex = 11;
             pnlsubofferingSubmenu.Visible = false;
             pnlsubofferingSubmenu.WrapContents = false;
+            // 
+            // btnManageRooms
+            // 
+            btnManageRooms.BackgroundImageLayout = ImageLayout.None;
+            btnManageRooms.Cursor = Cursors.Hand;
+            btnManageRooms.FlatAppearance.BorderSize = 0;
+            btnManageRooms.FlatAppearance.MouseDownBackColor = Color.FromArgb(109, 0, 0);
+            btnManageRooms.FlatAppearance.MouseOverBackColor = Color.FromArgb(109, 0, 0);
+            btnManageRooms.FlatStyle = FlatStyle.Flat;
+            btnManageRooms.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            btnManageRooms.ForeColor = Color.FromArgb(179, 255, 255, 255);
+            btnManageRooms.ImageAlign = ContentAlignment.MiddleLeft;
+            btnManageRooms.Location = new Point(0, 0);
+            btnManageRooms.Margin = new Padding(0);
+            btnManageRooms.Name = "btnManageRooms";
+            btnManageRooms.Padding = new Padding(26, 0, 0, 0);
+            btnManageRooms.Size = new Size(256, 48);
+            btnManageRooms.TabIndex = 13;
+            btnManageRooms.Text = " Manage Rooms";
+            btnManageRooms.TextAlign = ContentAlignment.MiddleLeft;
+            btnManageRooms.UseVisualStyleBackColor = true;
+            btnManageRooms.Click += btnManageRooms_Click;
             // 
             // btnManageSubs
             // 
@@ -773,7 +729,6 @@
             panel3.ResumeLayout(false);
             pnlRegistrarFunctions.ResumeLayout(false);
             pnlRegistrarSubmenu.ResumeLayout(false);
-            pnlGradesManagement.ResumeLayout(false);
             pnlAccountingRecords.ResumeLayout(false);
             pnlEnrolledStudents.ResumeLayout(false);
             panel17.ResumeLayout(false);
@@ -819,9 +774,6 @@
         private Panel pnlRegistrarFunctions;
         private Button btnRegistrarFunctions;
         private Panel pnlRegistrarSubmenu;
-        private Panel pnlGradesManagement;
-        private Button btnGradesManagement;
-        private Panel panel8;
         private Panel pnlAccountingRecords;
         private Button btnAccountingRecords;
         private Panel pnlEnrolledStudents;

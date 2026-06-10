@@ -109,11 +109,6 @@ namespace PUPAcadPortal.PortalForms
 
         // Submenu button event handlers
 
-        private void btnGradesManagement_Click(object sender, EventArgs e)
-        {
-            mainContentPanel.ShowView(new GradesMngContentAdmin());
-        }
-
         private void btnAccountingRecords_Click(object sender, EventArgs e)
         {
             mainContentPanel.ShowView(new AccountsContentAdmin());
