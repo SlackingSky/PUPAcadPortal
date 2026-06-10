@@ -99,11 +99,13 @@
             this.Size = new System.Drawing.Size(160, 110);
             this.Name = "UrDay";
             this.Load += new System.EventHandler(this.UrDay_Load);
-            this.Controls.Add(this.lblDay);
-            this.Controls.Add(this.chkSelect);
-            this.Controls.Add(this.lblNote);
-            this.Controls.Add(this.lblAnnouncement);
+            // panel1 must be added FIRST so it is lowest in the z-order
+            // (DockStyle.Fill would otherwise cover lblDay and hide the date number)
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.lblAnnouncement);
+            this.Controls.Add(this.lblNote);
+            this.Controls.Add(this.chkSelect);
+            this.Controls.Add(this.lblDay);
             this.ResumeLayout(false);
         }
 

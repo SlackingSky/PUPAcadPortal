@@ -34,8 +34,7 @@ namespace PUPAcadPortal
             {
                 if (_isSelected == value) return;
                 _isSelected = value;
-                Invalidate();
-                panel1?.Invalidate();
+                Invalidate(); // repaints via OnPaint
             }
         }
 
@@ -68,6 +67,12 @@ namespace PUPAcadPortal
         public UrDay(string day, int year, int month, bool isCurrentMonth,
                      string holiday = "", bool isStudent = false)
         {
+            // Enable custom painting with double-buffer so the transparent lblDay
+            // composites against our OnPaint background (including the today circle).
+            SetStyle(ControlStyles.AllPaintingInWmPaint |
+                     ControlStyles.OptimizedDoubleBuffer |
+                     ControlStyles.UserPaint, true);
+
             InitializeComponent();
 
             _isStudent = isStudent;
@@ -102,8 +107,14 @@ namespace PUPAcadPortal
             DragEnter += UrDay_DragEnter;
             DragDrop += UrDay_DragDrop;
 
-            // Ensure panel1 is on top so clicks are captured
-            panel1.BringToFront();
+            // Ensure lblDay is always visible on top
+            lblDay.BringToFront();
+
+            // Every part of the cell should fire DaySelected when clicked
+            this.Click += (s, e) => DaySelected?.Invoke(CellDate);
+            lblDay.Click += (s, e) => DaySelected?.Invoke(CellDate);
+            lblNote.Click += (s, e) => DaySelected?.Invoke(CellDate);
+            lblAnnouncement.Click += (s, e) => DaySelected?.Invoke(CellDate);
         }
 
         // ── Load ──────────────────────────────────────────────────────────────
@@ -120,19 +131,25 @@ namespace PUPAcadPortal
         }
 
         // ── Paint ─────────────────────────────────────────────────────────────
-        private void panel1_Paint(object sender, PaintEventArgs e)
+        // Draw everything on the UserControl surface directly so the maroon
+        // today-circle appears *beneath* lblDay (whose BackColor is Transparent
+        // and composites against its parent — the UC — not against panel1).
+        protected override void OnPaint(PaintEventArgs e)
         {
+            base.OnPaint(e);
             var g = e.Graphics;
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             var rc = new Rectangle(0, 0, Width - 1, Height - 1);
             bool isToday = CellDate == DateTime.Now.Date;
 
-            // Background
+            // Cell background
             Color bg = !IsCurrentMonth ? OtherMonth
                      : isToday ? TodayBg
                                       : Color.White;
             g.Clear(bg);
 
-            // Maroon circle behind the day number when today
+            // Maroon circle — drawn on the UC surface, so lblDay (Transparent)
+            // composites over it and shows the white "10" text correctly.
             if (isToday)
             {
                 int cx = lblDay.Left + lblDay.Width / 2;
@@ -154,6 +171,10 @@ namespace PUPAcadPortal
             using var pen = new Pen(GridLine);
             g.DrawRectangle(pen, rc);
         }
+
+        // panel1 is a transparent click-capture overlay only — painting is handled
+        // by OnPaint above, so this handler intentionally does nothing.
+        private void panel1_Paint(object sender, PaintEventArgs e) { }
 
         // ── Event pills ───────────────────────────────────────────────────────
         /// <summary>Re-reads event data and rebuilds the coloured pill indicators.</summary>
@@ -196,9 +217,8 @@ namespace PUPAcadPortal
                 y += PILL_H + PILL_GAP;
             }
 
-            // Bring day number on top; then keep panel1 on top for click hit-testing
+            // Bring day number on top so it's always readable
             lblDay.BringToFront();
-            panel1.BringToFront();
         }
 
         // Returns (displayText, dotColor, optionalFacultyEvent) for each pill.
