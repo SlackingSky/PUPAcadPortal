@@ -109,11 +109,6 @@ namespace PUPAcadPortal.PortalForms
 
         // Submenu button event handlers
 
-        private void btnGradesManagement_Click(object sender, EventArgs e)
-        {
-            mainContentPanel.ShowView(new GradesMngContentAdmin());
-        }
-
         private void btnAccountingRecords_Click(object sender, EventArgs e)
         {
             mainContentPanel.ShowView(new AccountsContentAdmin());
@@ -145,20 +140,21 @@ namespace PUPAcadPortal.PortalForms
 
         private void AdminPortal_Load(object sender, EventArgs e)
         {
-            try
-            {
-                // Loads addresses for dropdowns in Register Student/Professor forms
-                AddToAddressCMB.LoadData();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Failed to initialize geographic address databases: {ex.Message}",
-                                "System Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
             ButtonInteraction buttonInteraction = new ButtonInteraction();
             buttonInteraction.InitializeMyPanelEvents(flowLayoutPanel1);
 
             btnDashboard.PerformClick();
+        }
+
+        private void btnManageRooms_Click(object sender, EventArgs e)
+
+        {
+            mainContentPanel.ShowView(new RoomsContentAdmin());
+        }
+
+        private void btnManageSubs_Click(object sender, EventArgs e)
+        {
+            mainContentPanel.ShowView(new SubjectManagementContentAdmin());
         }
     }
 }

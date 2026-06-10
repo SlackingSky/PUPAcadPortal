@@ -13,7 +13,7 @@ namespace PUPAcadPortal
             ApplicationConfiguration.Initialize();
             //Application.Run(new StudentPortal());
             //Application.Run(new InstructorPortal());
-            //Application.Run(new AdminPortal());
+            //Application.Run(new PortalForms.AdminPortal());
             Application.Run(new SignIn());
         }
     }

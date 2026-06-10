@@ -31,13 +31,16 @@
             pnlRegisterStudentContent = new Panel();
             pnlSpaceProviderRS = new Panel();
             pnlStudentRegistrationContainer = new Panel();
+            label2 = new Label();
+            cmbCurriculumYear = new ComboBox();
+            btnBulkRegister = new Button();
             label1 = new Label();
             txtRSStudentID = new MaskedTextBox();
             btnStudentClearForm = new Button();
             btnStudentRegistration = new Button();
             cmbRSEnrollmentStatus = new ComboBox();
             label17 = new Label();
-            cmbRSStudentCourse = new ComboBox();
+            cmbRSStudentProgram = new ComboBox();
             cmbRSYearLevel = new ComboBox();
             label22 = new Label();
             label23 = new Label();
@@ -99,13 +102,16 @@
             pnlStudentRegistrationContainer.AutoScroll = true;
             pnlStudentRegistrationContainer.BackColor = Color.White;
             pnlStudentRegistrationContainer.BorderStyle = BorderStyle.FixedSingle;
+            pnlStudentRegistrationContainer.Controls.Add(label2);
+            pnlStudentRegistrationContainer.Controls.Add(cmbCurriculumYear);
+            pnlStudentRegistrationContainer.Controls.Add(btnBulkRegister);
             pnlStudentRegistrationContainer.Controls.Add(label1);
             pnlStudentRegistrationContainer.Controls.Add(txtRSStudentID);
             pnlStudentRegistrationContainer.Controls.Add(btnStudentClearForm);
             pnlStudentRegistrationContainer.Controls.Add(btnStudentRegistration);
             pnlStudentRegistrationContainer.Controls.Add(cmbRSEnrollmentStatus);
             pnlStudentRegistrationContainer.Controls.Add(label17);
-            pnlStudentRegistrationContainer.Controls.Add(cmbRSStudentCourse);
+            pnlStudentRegistrationContainer.Controls.Add(cmbRSStudentProgram);
             pnlStudentRegistrationContainer.Controls.Add(cmbRSYearLevel);
             pnlStudentRegistrationContainer.Controls.Add(label22);
             pnlStudentRegistrationContainer.Controls.Add(label23);
@@ -132,7 +138,48 @@
             pnlStudentRegistrationContainer.Location = new Point(112, 112);
             pnlStudentRegistrationContainer.Name = "pnlStudentRegistrationContainer";
             pnlStudentRegistrationContainer.Size = new Size(959, 990);
-            pnlStudentRegistrationContainer.TabIndex = 9;
+            pnlStudentRegistrationContainer.TabIndex = 0;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.ForeColor = Color.Black;
+            label2.Location = new Point(478, 831);
+            label2.Name = "label2";
+            label2.Size = new Size(89, 21);
+            label2.TabIndex = 62;
+            label2.Text = "Curriculum";
+            // 
+            // cmbCurriculumYear
+            // 
+            cmbCurriculumYear.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbCurriculumYear.Font = new Font("Segoe UI", 12F);
+            cmbCurriculumYear.FormattingEnabled = true;
+            cmbCurriculumYear.Location = new Point(478, 855);
+            cmbCurriculumYear.Name = "cmbCurriculumYear";
+            cmbCurriculumYear.Size = new Size(126, 29);
+            cmbCurriculumYear.TabIndex = 61;
+            // 
+            // btnBulkRegister
+            // 
+            btnBulkRegister.BackColor = Color.Maroon;
+            btnBulkRegister.Cursor = Cursors.Hand;
+            btnBulkRegister.FlatAppearance.BorderColor = Color.Maroon;
+            btnBulkRegister.FlatStyle = FlatStyle.Flat;
+            btnBulkRegister.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnBulkRegister.ForeColor = Color.White;
+            btnBulkRegister.Image = Properties.Resources.student_2_161;
+            btnBulkRegister.Location = new Point(674, 18);
+            btnBulkRegister.Name = "btnBulkRegister";
+            btnBulkRegister.Size = new Size(239, 37);
+            btnBulkRegister.TabIndex = 60;
+            btnBulkRegister.TabStop = false;
+            btnBulkRegister.Text = "Bulk Student Registration";
+            btnBulkRegister.TextAlign = ContentAlignment.MiddleRight;
+            btnBulkRegister.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnBulkRegister.UseVisualStyleBackColor = false;
+            btnBulkRegister.Click += btnBulkRegister_Click;
             // 
             // label1
             // 
@@ -153,11 +200,13 @@
             txtRSStudentID.Location = new Point(26, 109);
             txtRSStudentID.Mask = "0000-00000->LL-0";
             txtRSStudentID.Name = "txtRSStudentID";
+            txtRSStudentID.ReadOnly = true;
             txtRSStudentID.Size = new Size(396, 29);
             txtRSStudentID.TabIndex = 58;
             // 
             // btnStudentClearForm
             // 
+            btnStudentClearForm.Cursor = Cursors.Hand;
             btnStudentClearForm.FlatAppearance.BorderColor = Color.Gray;
             btnStudentClearForm.FlatStyle = FlatStyle.Flat;
             btnStudentClearForm.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -165,6 +214,7 @@
             btnStudentClearForm.Name = "btnStudentClearForm";
             btnStudentClearForm.Size = new Size(147, 37);
             btnStudentClearForm.TabIndex = 57;
+            btnStudentClearForm.TabStop = false;
             btnStudentClearForm.Text = "Clear Form";
             btnStudentClearForm.UseVisualStyleBackColor = true;
             btnStudentClearForm.Click += btnStudentClearForm_Click;
@@ -172,6 +222,7 @@
             // btnStudentRegistration
             // 
             btnStudentRegistration.BackColor = Color.Maroon;
+            btnStudentRegistration.Cursor = Cursors.Hand;
             btnStudentRegistration.FlatAppearance.BorderColor = Color.Maroon;
             btnStudentRegistration.FlatStyle = FlatStyle.Flat;
             btnStudentRegistration.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -180,7 +231,7 @@
             btnStudentRegistration.Location = new Point(702, 898);
             btnStudentRegistration.Name = "btnStudentRegistration";
             btnStudentRegistration.Size = new Size(215, 37);
-            btnStudentRegistration.TabIndex = 56;
+            btnStudentRegistration.TabIndex = 10;
             btnStudentRegistration.Text = "Register Student";
             btnStudentRegistration.TextAlign = ContentAlignment.MiddleRight;
             btnStudentRegistration.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -189,14 +240,15 @@
             // 
             // cmbRSEnrollmentStatus
             // 
+            cmbRSEnrollmentStatus.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbRSEnrollmentStatus.Font = new Font("Segoe UI", 12F);
             cmbRSEnrollmentStatus.FormattingEnabled = true;
-            cmbRSEnrollmentStatus.Items.AddRange(new object[] { "Select Applicant Type", "Regular Freshman", "Transferee", "Second Courser", "Returning Student", "Cross Enrollee", "Foreign Student" });
+            cmbRSEnrollmentStatus.Items.AddRange(new object[] { "Regular", "Transferee" });
             cmbRSEnrollmentStatus.Location = new Point(617, 855);
             cmbRSEnrollmentStatus.Name = "cmbRSEnrollmentStatus";
             cmbRSEnrollmentStatus.Size = new Size(294, 29);
-            cmbRSEnrollmentStatus.TabIndex = 55;
-            cmbRSEnrollmentStatus.Text = "Select Type of Applicant";
+            cmbRSEnrollmentStatus.TabIndex = 9;
+            cmbRSEnrollmentStatus.SelectedIndexChanged += cmbRSEnrollmentStatus_SelectedIndexChanged;
             // 
             // label17
             // 
@@ -209,35 +261,36 @@
             label17.TabIndex = 54;
             label17.Text = "Type of Applicant";
             // 
-            // cmbRSStudentCourse
+            // cmbRSStudentProgram
             // 
-            cmbRSStudentCourse.Enabled = false;
-            cmbRSStudentCourse.Font = new Font("Segoe UI", 12F);
-            cmbRSStudentCourse.FormattingEnabled = true;
-            cmbRSStudentCourse.Items.AddRange(new object[] { "Select Course", "BS Information Technology" });
-            cmbRSStudentCourse.Location = new Point(29, 855);
-            cmbRSStudentCourse.Name = "cmbRSStudentCourse";
-            cmbRSStudentCourse.Size = new Size(328, 29);
-            cmbRSStudentCourse.TabIndex = 50;
-            cmbRSStudentCourse.Text = "BS Information Technology";
+            cmbRSStudentProgram.Enabled = false;
+            cmbRSStudentProgram.Font = new Font("Segoe UI", 12F);
+            cmbRSStudentProgram.FormattingEnabled = true;
+            cmbRSStudentProgram.Items.AddRange(new object[] { "Select Course", "BS Information Technology" });
+            cmbRSStudentProgram.Location = new Point(29, 855);
+            cmbRSStudentProgram.Name = "cmbRSStudentProgram";
+            cmbRSStudentProgram.Size = new Size(303, 29);
+            cmbRSStudentProgram.TabIndex = 50;
+            cmbRSStudentProgram.Tag = "ignore";
+            cmbRSStudentProgram.Text = "BS Information Technology";
             // 
             // cmbRSYearLevel
             // 
+            cmbRSYearLevel.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbRSYearLevel.Font = new Font("Segoe UI", 12F);
             cmbRSYearLevel.FormattingEnabled = true;
-            cmbRSYearLevel.Items.AddRange(new object[] { "Select Year Level", "1st Year", "2nd Year", "3rd Year", "4th Year" });
-            cmbRSYearLevel.Location = new Point(363, 855);
+            cmbRSYearLevel.Items.AddRange(new object[] { "1st Year", "2nd Year", "3rd Year", "4th Year" });
+            cmbRSYearLevel.Location = new Point(340, 855);
             cmbRSYearLevel.Name = "cmbRSYearLevel";
-            cmbRSYearLevel.Size = new Size(246, 29);
-            cmbRSYearLevel.TabIndex = 49;
-            cmbRSYearLevel.Text = "Select Year Level";
+            cmbRSYearLevel.Size = new Size(128, 29);
+            cmbRSYearLevel.TabIndex = 8;
             // 
             // label22
             // 
             label22.AutoSize = true;
             label22.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label22.ForeColor = Color.Black;
-            label22.Location = new Point(362, 831);
+            label22.Location = new Point(338, 831);
             label22.Name = "label22";
             label22.Size = new Size(83, 21);
             label22.TabIndex = 43;
@@ -250,9 +303,9 @@
             label23.ForeColor = Color.Black;
             label23.Location = new Point(26, 831);
             label23.Name = "label23";
-            label23.Size = new Size(61, 21);
+            label23.Size = new Size(73, 21);
             label23.TabIndex = 41;
-            label23.Text = "Course";
+            label23.Text = "Program";
             // 
             // pnlStudentMaroonLine3
             // 
@@ -280,18 +333,19 @@
             dtpRSStudentBirthDate.Location = new Point(26, 231);
             dtpRSStudentBirthDate.Name = "dtpRSStudentBirthDate";
             dtpRSStudentBirthDate.Size = new Size(396, 29);
-            dtpRSStudentBirthDate.TabIndex = 37;
+            dtpRSStudentBirthDate.TabIndex = 4;
+            dtpRSStudentBirthDate.Tag = "student";
             dtpRSStudentBirthDate.Value = new DateTime(2026, 4, 4, 22, 34, 4, 0);
             // 
             // mtbRSStudentPhoneNum
             // 
             mtbRSStudentPhoneNum.BorderStyle = BorderStyle.FixedSingle;
             mtbRSStudentPhoneNum.Font = new Font("Segoe UI", 12F);
-            mtbRSStudentPhoneNum.Location = new Point(470, 363);
+            mtbRSStudentPhoneNum.Location = new Point(470, 361);
             mtbRSStudentPhoneNum.Mask = "(+63) 000-000-0000";
             mtbRSStudentPhoneNum.Name = "mtbRSStudentPhoneNum";
             mtbRSStudentPhoneNum.Size = new Size(437, 29);
-            mtbRSStudentPhoneNum.TabIndex = 34;
+            mtbRSStudentPhoneNum.TabIndex = 6;
             // 
             // label25
             // 
@@ -329,13 +383,13 @@
             // txtRSStudentEmailAdd
             // 
             txtRSStudentEmailAdd.BorderStyle = BorderStyle.FixedSingle;
-            txtRSStudentEmailAdd.CharacterCasing = CharacterCasing.Upper;
+            txtRSStudentEmailAdd.CharacterCasing = CharacterCasing.Lower;
             txtRSStudentEmailAdd.Font = new Font("Segoe UI", 12F);
             txtRSStudentEmailAdd.Location = new Point(26, 361);
             txtRSStudentEmailAdd.Name = "txtRSStudentEmailAdd";
-            txtRSStudentEmailAdd.PlaceholderText = " student@iskolarngbayan.pup.edu.ph";
-            txtRSStudentEmailAdd.Size = new Size(438, 29);
-            txtRSStudentEmailAdd.TabIndex = 27;
+            txtRSStudentEmailAdd.PlaceholderText = "Personal Email Address";
+            txtRSStudentEmailAdd.Size = new Size(408, 29);
+            txtRSStudentEmailAdd.TabIndex = 5;
             // 
             // pnlStudentMaroonLine2
             // 
@@ -376,8 +430,8 @@
             txtRSStudentLastName.Location = new Point(439, 173);
             txtRSStudentLastName.Name = "txtRSStudentLastName";
             txtRSStudentLastName.PlaceholderText = " Enter last name";
-            txtRSStudentLastName.Size = new Size(437, 29);
-            txtRSStudentLastName.TabIndex = 22;
+            txtRSStudentLastName.Size = new Size(393, 29);
+            txtRSStudentLastName.TabIndex = 2;
             // 
             // label30
             // 
@@ -399,7 +453,7 @@
             txtRSStudentFirstName.Name = "txtRSStudentFirstName";
             txtRSStudentFirstName.PlaceholderText = " Enter first name";
             txtRSStudentFirstName.Size = new Size(468, 29);
-            txtRSStudentFirstName.TabIndex = 20;
+            txtRSStudentFirstName.TabIndex = 0;
             // 
             // label31
             // 
@@ -432,7 +486,8 @@
             txtRSStudentMiddleName.Name = "txtRSStudentMiddleName";
             txtRSStudentMiddleName.PlaceholderText = " Enter middle name";
             txtRSStudentMiddleName.Size = new Size(396, 29);
-            txtRSStudentMiddleName.TabIndex = 14;
+            txtRSStudentMiddleName.TabIndex = 1;
+            txtRSStudentMiddleName.Tag = "optional";
             // 
             // label33
             // 
@@ -523,7 +578,7 @@
         private Button btnStudentRegistration;
         private ComboBox cmbRSEnrollmentStatus;
         private Label label17;
-        private ComboBox cmbRSStudentCourse;
+        private ComboBox cmbRSStudentProgram;
         private ComboBox cmbRSYearLevel;
         private Label label22;
         private Label label23;
@@ -552,5 +607,8 @@
         private PictureBox pictureBox5;
         private MaskedTextBox txtRSStudentID;
         private Label label1;
+        private Button btnBulkRegister;
+        private Label label2;
+        private ComboBox cmbCurriculumYear;
     }
 }

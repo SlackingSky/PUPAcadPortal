@@ -3,7 +3,10 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using System.IO;
+using System.Threading.Tasks;
 using PUPAcadPortal.PortalContents.Instructor.LMS;
+using PUPAcadPortal.Services;
 
 namespace PUPAcadPortal
 {
@@ -14,7 +17,6 @@ namespace PUPAcadPortal
         public event EventHandler CloseRequested;
 
         private int _currentId = -1;
-
         private static readonly Color Maroon = Color.FromArgb(139, 0, 0);
 
         private static readonly System.Collections.Generic.Dictionary<string, Color> CatIconColor =
@@ -41,7 +43,6 @@ namespace PUPAcadPortal
         {
             InitializeComponent();
             WireEvents();
-
             this.AutoScroll = false;
             this.HorizontalScroll.Enabled = false;
             this.HorizontalScroll.Visible = false;
@@ -55,8 +56,8 @@ namespace PUPAcadPortal
             btnClose.MouseLeave += (s, e) => btnClose.BackColor = Color.Transparent;
             btnEdit.Click += (s, e) => { if (_currentId >= 0) EditRequested?.Invoke(this, _currentId); };
             btnDelete.Click += (s, e) => ConfirmDelete();
-            btnOpenFile.Click += (s, e) => OpenAttachment();
-            btnEditFile.Click += (s, e) => EditAttachment();
+            btnOpenFile.Click += async (s, e) => await OpenAttachmentAsync();
+            btnEditFile.Click += async (s, e) => await EditAttachmentAsync();
             Paint += (s, e) => DrawBorder(e.Graphics);
         }
 
@@ -66,7 +67,6 @@ namespace PUPAcadPortal
             _currentId = a.Id;
 
             pnlHeader.BackColor = Maroon;
-
             Color iconCol = CatIconColor.ContainsKey(a.Category) ? CatIconColor[a.Category] : Color.Gray;
             Color iconBg = CatBgColor.ContainsKey(a.Category) ? CatBgColor[a.Category] : Color.WhiteSmoke;
 
@@ -102,15 +102,10 @@ namespace PUPAcadPortal
             lblDate.Text = "📅  " + a.Date.ToString("MMMM d, yyyy  •  h:mm tt");
             lblViewed.Text = $"👁  Viewed by {a.ViewedCount} of {a.TotalStudents} students";
 
-            int pct = a.TotalStudents > 0
-                ? (int)Math.Round(a.ViewedCount * 100.0 / a.TotalStudents)
-                : 0;
-
+            int pct = a.TotalStudents > 0 ? (int)Math.Round(a.ViewedCount * 100.0 / a.TotalStudents) : 0;
             lblProgressPct.Text = $"{pct}%";
             pnlProgressFill.Width = (int)(pnlProgressTrack.Width * pct / 100.0);
-            pnlProgressFill.BackColor = pct >= 75 ? Color.FromArgb(22, 163, 74)
-                                      : pct >= 40 ? Color.FromArgb(186, 117, 23)
-                                      : Maroon;
+            pnlProgressFill.BackColor = pct >= 75 ? Color.FromArgb(22, 163, 74) : pct >= 40 ? Color.FromArgb(186, 117, 23) : Maroon;
 
             bool hasFile = !string.IsNullOrWhiteSpace(a.AttachedFile);
             btnOpenFile.Tag = a.AttachedFile ?? string.Empty;
@@ -119,8 +114,13 @@ namespace PUPAcadPortal
 
             if (hasFile)
             {
-                string ext = System.IO.Path.GetExtension(a.AttachedFile ?? "").ToLower();
-                lblAttachName.Text = System.IO.Path.GetFileName(a.AttachedFile);
+                // FIX: Use OriginalFileName from database instead of the URL
+                string fileName = !string.IsNullOrWhiteSpace(a.OriginalFileName)
+                                  ? a.OriginalFileName
+                                  : Path.GetFileName(a.AttachedFile);
+
+                lblAttachName.Text = fileName;
+                string ext = Path.GetExtension(fileName).ToLower();
                 lblAttachType.Text = ext switch
                 {
                     ".pdf" => "PDF Document",
@@ -146,93 +146,84 @@ namespace PUPAcadPortal
             Refresh();
         }
 
+        private async Task<string> DownloadAndDecryptFile()
+        {
+            string url = btnOpenFile.Tag as string;
+            if (string.IsNullOrWhiteSpace(url)) return null;
+
+            // Use the filename displayed in the label
+            string fileName = lblAttachName.Text;
+            string tempPath = Path.Combine(Path.GetTempPath(), fileName);
+
+            bool success = await CloudinaryUploadService.DownloadDecryptedFileAsync(url, tempPath);
+            return success ? tempPath : null;
+        }
+
+        private async Task OpenAttachmentAsync()
+        {
+            string tempPath = await DownloadAndDecryptFile();
+            if (tempPath == null)
+            {
+                MessageBox.Show("Could not download or decrypt the file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try
+            {
+                Process.Start(new ProcessStartInfo { FileName = tempPath, UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error opening file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async Task EditAttachmentAsync()
+        {
+            string tempPath = await DownloadAndDecryptFile();
+            if (tempPath == null)
+            {
+                MessageBox.Show("Could not download or decrypt the file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try
+            {
+                Process.Start(new ProcessStartInfo { FileName = tempPath, UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error editing file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // ... (Keep the rest of the drawing and reflow methods the same) ...
         private void ReflowDescription()
         {
-            Size measured = TextRenderer.MeasureText(
-                lblDescription.Text,
-                lblDescription.Font,
-                new Size(lblDescription.Width, 0),
-                TextFormatFlags.WordBreak | TextFormatFlags.TextBoxControl);
-
+            Size measured = TextRenderer.MeasureText(lblDescription.Text, lblDescription.Font, new Size(lblDescription.Width, 0), TextFormatFlags.WordBreak | TextFormatFlags.TextBoxControl);
             lblDescription.Height = Math.Max(40, measured.Height + 10);
-
             lblAuthor.Top = lblDescription.Bottom + 20;
             lblDate.Top = lblAuthor.Top;
             lblViewed.Top = lblAuthor.Top;
-
             pnlProgressRow.Top = lblAuthor.Bottom + 12;
-
             int bottom = pnlProgressRow.Bottom + 20;
-
             if (pnlAttachment.Visible)
             {
                 pnlAttachment.Top = pnlProgressRow.Bottom + 16;
                 bottom = pnlAttachment.Bottom + 20;
             }
-
             this.Height = bottom;
-
             this.AutoScroll = false;
-
-            if (Parent != null)
-                Parent.PerformLayout();
+            if (Parent != null) Parent.PerformLayout();
         }
 
         private void ConfirmDelete()
         {
             if (_currentId < 0) return;
-            var result = MessageBox.Show(
-                $"Permanently delete this announcement?\n\nThis action cannot be undone.",
-                "Delete Announcement",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning);
-
-            if (result == DialogResult.Yes)
+            if (MessageBox.Show($"Permanently delete this announcement?\n\nThis action cannot be undone.", "Delete Announcement", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 DeleteRequested?.Invoke(this, _currentId);
                 ClosePanel();
-            }
-        }
-
-        private void OpenAttachment()
-        {
-            string path = btnOpenFile.Tag as string;
-            if (string.IsNullOrWhiteSpace(path)) return;
-            try
-            {
-                Process.Start(new ProcessStartInfo { FileName = path, UseShellExecute = true });
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Could not open the file:\n" + ex.Message,
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void EditAttachment()
-        {
-            string path = btnOpenFile.Tag as string;
-            if (string.IsNullOrWhiteSpace(path)) return;
-
-            string ext = System.IO.Path.GetExtension(path).ToLower();
-            if (ext == ".pdf")
-            {
-                var res = MessageBox.Show(
-                    "PDF files are typically read-only.\nDo you still want to open it for viewing?",
-                    "Edit File",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Information);
-                if (res != DialogResult.Yes) return;
-            }
-
-            try
-            {
-                Process.Start(new ProcessStartInfo { FileName = path, UseShellExecute = true });
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Could not open the file for editing:\n" + ex.Message,
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -256,55 +247,27 @@ namespace PUPAcadPortal
             Color iconCol = (Color)arr[0];
             Color iconBg = (Color)arr[1];
             string cat = arr[2] as string ?? "?";
-
             var g = e.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
-            using (var b = new SolidBrush(iconBg))
-                g.FillEllipse(b, 0, 0, picCategoryIcon.Width - 1, picCategoryIcon.Height - 1);
-
+            using (var b = new SolidBrush(iconBg)) g.FillEllipse(b, 0, 0, picCategoryIcon.Width - 1, picCategoryIcon.Height - 1);
             string letter = cat.Length > 0 ? cat[..1] : "?";
             using var font = new Font("Segoe UI", 16f, FontStyle.Bold);
             using var brush = new SolidBrush(iconCol);
-            var sf = new StringFormat
-            {
-                Alignment = StringAlignment.Center,
-                LineAlignment = StringAlignment.Center,
-            };
-            g.DrawString(letter, font, brush,
-                new RectangleF(0, 0, picCategoryIcon.Width, picCategoryIcon.Height), sf);
+            var sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
+            g.DrawString(letter, font, brush, new RectangleF(0, 0, picCategoryIcon.Width, picCategoryIcon.Height), sf);
         }
 
         internal void PicFileIcon_Paint(object sender, PaintEventArgs e)
         {
             string ext = picFileIcon.Tag as string ?? string.Empty;
-            string symbol = ext switch
-            {
-                ".pdf" => "PDF",
-                ".docx" => "DOC",
-                ".pptx" => "PPT",
-                ".png" => "IMG",
-                ".jpg" => "IMG",
-                ".jpeg" => "IMG",
-                _ => "FILE",
-            };
-            Color textCol = ext switch
-            {
-                ".pdf" => Color.FromArgb(200, 60, 30),
-                ".docx" => Color.FromArgb(30, 90, 200),
-                ".pptx" => Color.FromArgb(200, 90, 30),
-                _ => Color.FromArgb(80, 80, 80),
-            };
+            string symbol = ext switch { ".pdf" => "PDF", ".docx" => "DOC", ".pptx" => "PPT", ".png" => "IMG", ".jpg" => "IMG", ".jpeg" => "IMG", _ => "FILE" };
+            Color textCol = ext switch { ".pdf" => Color.FromArgb(200, 60, 30), ".docx" => Color.FromArgb(30, 90, 200), ".pptx" => Color.FromArgb(200, 90, 30), _ => Color.FromArgb(80, 80, 80) };
             var g = e.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
             using var font = new Font("Segoe UI", 8f, FontStyle.Bold);
             using var brush = new SolidBrush(textCol);
-            var sf = new StringFormat
-            {
-                Alignment = StringAlignment.Center,
-                LineAlignment = StringAlignment.Center,
-            };
-            g.DrawString(symbol, font, brush,
-                new RectangleF(0, 0, picFileIcon.Width, picFileIcon.Height), sf);
+            var sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
+            g.DrawString(symbol, font, brush, new RectangleF(0, 0, picFileIcon.Width, picFileIcon.Height), sf);
         }
 
         private static GraphicsPath RoundedRectPath(Rectangle r, int rad)

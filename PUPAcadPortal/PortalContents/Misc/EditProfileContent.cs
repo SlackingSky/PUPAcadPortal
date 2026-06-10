@@ -1,4 +1,6 @@
-﻿using PUPAcadPortal.Utils;
+﻿using Microsoft.EntityFrameworkCore;
+using PUPAcadPortal.Data;
+using PUPAcadPortal.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -33,8 +35,26 @@ namespace PUPAcadPortal.PortalContents.Misc
                     if (user != null)
                     {
                         var role = await context.Roles.FindAsync(user.RoleId);
-                        this.SafeUIUpdate(() =>
+                        string idNumber = user.RoleId switch
                         {
+                            1 => (await context.Admins
+                                     .Where(a => a.UserId == user.UserId)
+                                     .Select(a => (int?)a.AdminId)
+                                     .FirstOrDefaultAsync())?.ToString() ?? "No ID Found",
+
+                            2 => await context.Students
+                                     .Where(s => s.UserId == user.UserId)
+                                     .Select(s => s.StudentNumber)
+                                     .FirstOrDefaultAsync() ?? "No ID Found",
+                            3 => await context.Professors
+                                     .Where(p => p.UserId == user.UserId)
+                                     .Select(p => p.EmployeeId)
+                                     .FirstOrDefaultAsync() ?? "No ID Found",
+                            _ => "No ID Found"
+                        };
+                        this.SafeUIUpdate(async () =>
+                        {
+                            txtIDNumber.Text = idNumber;
                             txtUsername.Text = user.Username;
                             txtPassword.Text = user.PasswordHash != null ? "********" : "No password set";
                             txtPersonalEmail.Text = user.PersonalEmail ?? "No personal email set";
@@ -46,7 +66,7 @@ namespace PUPAcadPortal.PortalContents.Misc
                             phAddressFields1.CityComboBox.Text = user.CityMunicipality ?? "No city set";
                             phAddressFields1.BarangayComboBox.Text = user.Barangay ?? "No barangay set";
                             phAddressFields1.PostalTextBox.Text = user.PostalCode ?? "No postal code set";
-                            Data.UserSession.Login(user.Username, user.UserId, user.FirstName, user.LastName, role.RoleName);
+                            Data.UserSession.UpdateProfile(user.Username, user.UserId, user.FirstName, user.LastName, role.RoleName);
                             PUPAcadPortal.Events.InfoChangedEvent.RaiseInfoChanged();
                         });
                     }
@@ -145,11 +165,11 @@ namespace PUPAcadPortal.PortalContents.Misc
         {
             foreach (Control childControl in control.Controls)
             {
-                if (childControl.Name != "txtIDNumber")
+                if (childControl.Tag?.ToString() != "disabled")
                 {
                     childControl.Enabled = true;
                 }
-                if (childControl is TextBox textBox)
+                if (childControl is TextBox textBox && childControl.Tag?.ToString() != "disabled")
                 {
                     textBox.ReadOnly = false;
                 }
@@ -189,6 +209,7 @@ namespace PUPAcadPortal.PortalContents.Misc
                         MessageBox.Show("Verification successful! You can now edit your password.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         txtPassword.Clear();
                         txtConfirmPass.Clear();
+                        txtPassword.TextChanged += txtPassword_TextChanged;
                         txtPassword.PlaceholderText = "Enter new password";
                         txtConfirmPass.PlaceholderText = "Confirm new password";
                         btnVerify.Text = "Save";
@@ -205,6 +226,20 @@ namespace PUPAcadPortal.PortalContents.Misc
             }
         }
 
+        private void txtPassword_TextChanged(object sender, EventArgs e)
+        {
+            var validationResult = PasswordValidator.Validate(txtPassword.Text);
+
+            if (!validationResult.IsValid)
+            {
+                errorProvider1.SetError(txtPassword, validationResult.ErrorMessage);
+            }
+            else
+            {
+                errorProvider1.SetError(txtPassword, string.Empty);
+            }
+        }
+
         private async void SavePassword(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtPassword.Text) || string.IsNullOrWhiteSpace(txtConfirmPass.Text))
@@ -215,6 +250,14 @@ namespace PUPAcadPortal.PortalContents.Misc
             if (txtPassword.Text != txtConfirmPass.Text)
             {
                 MessageBox.Show("New password and confirmation do not match. Please try again.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            var validationResult = PasswordValidator.Validate(txtPassword.Text);
+
+            if (!validationResult.IsValid)
+            {
+                MessageBox.Show("Please fix the password errors before continuing.", "Invalid Password", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtPassword.Focus();
                 return;
             }
             using (var context = new Models.AppDbContext())

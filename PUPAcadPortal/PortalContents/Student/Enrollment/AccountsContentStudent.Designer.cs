@@ -212,6 +212,7 @@
             // btnAccountsDownloadStatement
             // 
             btnAccountsDownloadStatement.BackColor = Color.DarkRed;
+            btnAccountsDownloadStatement.Enabled = false;
             btnAccountsDownloadStatement.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnAccountsDownloadStatement.ForeColor = SystemColors.ControlLightLight;
             btnAccountsDownloadStatement.Image = Properties.Resources.download_2_16;
@@ -288,9 +289,9 @@
             lblBalancePeso.ForeColor = Color.Black;
             lblBalancePeso.Location = new Point(92, 54);
             lblBalancePeso.Name = "lblBalancePeso";
-            lblBalancePeso.Size = new Size(82, 37);
+            lblBalancePeso.Size = new Size(121, 37);
             lblBalancePeso.TabIndex = 6;
-            lblBalancePeso.Text = "₱750";
+            lblBalancePeso.Text = "Loading";
             // 
             // lblBalance
             // 
@@ -334,9 +335,9 @@
             lblTPPeso.ForeColor = Color.Black;
             lblTPPeso.Location = new Point(88, 59);
             lblTPPeso.Name = "lblTPPeso";
-            lblTPPeso.Size = new Size(82, 37);
+            lblTPPeso.Size = new Size(121, 37);
             lblTPPeso.TabIndex = 6;
-            lblTPPeso.Text = "₱750";
+            lblTPPeso.Text = "Loading";
             // 
             // lblTotalPaid
             // 
@@ -373,6 +374,7 @@
             pnlAccountsFreeEd.Name = "pnlAccountsFreeEd";
             pnlAccountsFreeEd.Size = new Size(1210, 135);
             pnlAccountsFreeEd.TabIndex = 7;
+            pnlAccountsFreeEd.Visible = false;
             // 
             // pbFreeEducProg
             // 
@@ -459,9 +461,9 @@
             lblTAPeso.ForeColor = Color.Black;
             lblTAPeso.Location = new Point(72, 58);
             lblTAPeso.Name = "lblTAPeso";
-            lblTAPeso.Size = new Size(82, 37);
+            lblTAPeso.Size = new Size(121, 37);
             lblTAPeso.TabIndex = 4;
-            lblTAPeso.Text = "₱750";
+            lblTAPeso.Text = "Loading";
             // 
             // lblTotalAssessment
             // 
