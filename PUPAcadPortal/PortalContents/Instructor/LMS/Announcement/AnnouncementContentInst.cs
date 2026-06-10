@@ -1,4 +1,8 @@
-﻿using PUPAcadPortal.PortalContents.Instructor.LMS.Course;
+﻿using Microsoft.EntityFrameworkCore;
+using PUPAcadPortal.Data;
+using PUPAcadPortal.Models;
+using PUPAcadPortal.PortalContents.Instructor.LMS.Course;
+using PUPAcadPortal.PortalContents.Misc.LMS;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -10,6 +14,7 @@ namespace PUPAcadPortal
 {
     public partial class AnnouncementContentInst : UserControl
     {
+
         private bool isEditing = false;
         private ActivityItem? currentEditingItem = null;
         private string tempAttachedPath = "";
@@ -56,11 +61,19 @@ namespace PUPAcadPortal
             public int ViewedCount { get; set; }
             public int TotalStudents { get; set; } = 40;
             public string? AttachedFile { get; set; }
-        }
+            public string OriginalFileName { get; set; } = string.Empty; // ADDED THIS
+            public int TargetRoleId { get; set; }
 
+            public bool NotifyStudents { get; set; } = false;
+            public bool NotifyInstructors { get; set; } = false;
+        }
         public AnnouncementContentInst()
         {
             InitializeComponent();
+
+            SeedSampleAnnouncements();
+
+            RenderAnnouncements();
         }
 
         //  Load 
@@ -79,6 +92,7 @@ namespace PUPAcadPortal
 
             // Create Announcement overlay
             _createAnnouncementUC = new CreateAnnouncement { Visible = false, Anchor = AnchorStyles.None };
+            _createAnnouncementUC.TargetRoleId = 3;
             _createAnnouncementUC.AnnouncementPosted += OnAnnouncementPosted;
             _createAnnouncementUC.CloseRequested += (s, ev) => HideCreateAnnouncementUC();
             pnlAnnouncement.Controls.Add(_createAnnouncementUC);
@@ -91,7 +105,7 @@ namespace PUPAcadPortal
             pnlAnnouncement.Controls.Add(_viewAnnouncementUC);
 
             // Inbox overlay
-            _inboxUC = new AnnouncementInbox { Visible = false, Anchor = AnchorStyles.None };
+            _inboxUC = new AnnouncementInbox(1) { Visible = false, Anchor = AnchorStyles.None };
             _inboxUC.CloseRequested += (s, ev) => _inboxUC.Visible = false;
             pnlAnnouncement.Controls.Add(_inboxUC);
 
@@ -157,59 +171,43 @@ namespace PUPAcadPortal
         }
 
         //  Seed data 
+
+
         private void SeedSampleAnnouncements()
         {
-            announcements.AddRange(new[]
+            announcements.Clear();
+
+            using (var context = new AppDbContext())
             {
-                new Announcement { Id=1,  Title="Midterm exam schedule released",
-                    Description="The official midterm examination schedule for all BSIT 2nd year subjects has been posted. Please check your respective rooms and ensure you bring your student IDs.",
-                    Category="Examinations", Status="active", IsPinned=true, IsUrgent=true,
-                    ViewedCount=28, TotalStudents=40, Date=DateTime.Now },
-                new Announcement { Id=2,  Title="Class suspension – May 12",
-                    Description="All classes on Monday, May 12 are suspended due to the declared public holiday. Make-up sessions will be announced separately by each faculty member.",
-                    Category="Schedule", Status="active", ViewedCount=35, TotalStudents=40, Date=DateTime.Now.AddHours(-5) },
-                new Announcement { Id=3,  Title="Programming 1 – lab activity this Friday",
-                    Description="Bring your laptops for the graded lab activity covering Modules 4 and 5. The activity will be conducted using Visual Studio 2022. No borrowing of equipment.",
-                    Category="Academic", Status="active", ViewedCount=22, TotalStudents=40, Date=DateTime.Now.AddDays(-2) },
-                new Announcement { Id=4,  Title="Campus foundation day celebration",
-                    Description="Join us for the PUP Foundation Day celebration on May 17. Activities include a student showcase, cultural performances, and a technology exhibit.",
-                    Category="Events", Status="inactive", ViewedCount=18, TotalStudents=40, Date=DateTime.Now.AddDays(-4) },
-                new Announcement { Id=5,  Title="Reminder: submit assignment outputs",
-                    Description="All pending assignment outputs for Information Management must be submitted via the LMS before May 15, 11:59 PM. Late submissions will not be accepted.",
-                    Category="General", Status="active", ViewedCount=30, TotalStudents=40, Date=DateTime.Now.AddDays(-5) },
-                new Announcement { Id=6,  Title="Final Exam Coverage – Programming 1",
-                    Description="The official final examination coverage for Introduction to Programming 1 has been posted on the LMS. The exam will cover Modules 1 through 8, with emphasis on loops, arrays, and object-oriented concepts. Review your past quizzes and lab activities as preparation.",
-                    Category="Examinations", Status="active", IsPinned=true,
-                    ViewedCount=32, TotalStudents=40, Date=DateTime.Now.AddHours(-2) },
-                new Announcement { Id=7,  Title="Graded Recitation – Information Management",
-                    Description="There will be a graded recitation next Wednesday covering database normalization and SQL joins. Come prepared with your notes. Recitation will be conducted individually and will account for 10% of your class standing.",
-                    Category="Academic", Status="active", ViewedCount=15, TotalStudents=40, Date=DateTime.Now.AddDays(-1) },
-                new Announcement { Id=8,  Title="Room Change – PATHFIT 4 Classes",
-                    Description="Effective May 13, 2026, all PATHFIT 4 classes will be moved from the covered court to the university gymnasium due to ongoing roof repairs. Please take note of this change and inform your classmates accordingly.",
-                    Category="Schedule", Status="active", ViewedCount=38, TotalStudents=40, Date=DateTime.Now.AddDays(-1).AddHours(-3) },
-                new Announcement { Id=9,  Title="IT Career Fair – Volunteer Marshals Needed",
-                    Description="The Career Services Office is looking for 15 student volunteers to serve as event marshals during the IT Career Fair on May 22. Volunteers will receive a certificate of appreciation and priority access to company booths.",
-                    Category="Events", Status="active", ViewedCount=20, TotalStudents=40, Date=DateTime.Now.AddDays(-2).AddHours(-1) },
-                new Announcement { Id=10, Title="Capstone Group Submissions – Revised Deadline",
-                    Description="The submission deadline for Capstone Project Chapter 3 has been moved to May 19, 2026 at 11:59 PM due to the university-wide system maintenance last week. All groups must submit their documents through the LMS. No hard copy will be accepted for this submission.",
-                    Category="Academic", Status="active", IsPinned=true, IsUrgent=true,
-                    ViewedCount=36, TotalStudents=40, Date=DateTime.Now.AddDays(-3) },
-                new Announcement { Id=11, Title="Classroom Conduct Reminder",
-                    Description="Students are reminded to observe proper classroom conduct at all times. Mobile phones must be on silent mode during lectures. Eating inside the air-conditioned classrooms is strictly prohibited.",
-                    Category="General", Status="active", ViewedCount=25, TotalStudents=40, Date=DateTime.Now.AddDays(-4).AddHours(-2) },
-                new Announcement { Id=12, Title="Make-Up Class – Human Computer Interaction",
-                    Description="A make-up class for Human Computer Interaction will be held on Saturday, May 17, 2026 from 8:00 AM to 10:00 AM at Room 305, CCIS Building. Attendance is required.",
-                    Category="Schedule", Status="active", ViewedCount=29, TotalStudents=40, Date=DateTime.Now.AddDays(-5).AddHours(-1) },
-                new Announcement { Id=13, Title="Department Research Colloquium – May 21",
-                    Description="The CCIS Department will be holding its annual Research Colloquium on May 21, 2026 from 1:00 PM to 5:00 PM at the Audio-Visual Room. All 4th-year students are required to attend and present a brief summary of their capstone projects.",
-                    Category="Events", Status="active", ViewedCount=12, TotalStudents=40, Date=DateTime.Now.AddDays(-6) },
-                new Announcement { Id=14, Title="Quiz 3 – Principles of Accounting",
-                    Description="Quiz 3 for Principles of Accounting will be administered on May 16, 2026 during the regular class schedule. Coverage includes Chapters 7 to 9. Open notes will NOT be allowed.",
-                    Category="Examinations", Status="inactive", ViewedCount=10, TotalStudents=40, Date=DateTime.Now.AddDays(-7) },
-                new Announcement { Id=15, Title="LMS Downtime – May 14 Maintenance Window",
-                    Description="The university Learning Management System will be unavailable on May 14, 2026 from 12:00 AM to 6:00 AM for scheduled maintenance and security updates. All assignment deadlines within this window have been automatically extended by 6 hours.",
-                    Category="General", Status="active", ViewedCount=40, TotalStudents=40, Date=DateTime.Now.AddDays(-8) },
-            });
+                var dbAnnouncements = context.Announcements.ToList();
+
+                foreach (var ann in dbAnnouncements)
+                {
+                    announcements.Add(new Announcement
+                    {
+                        Id = ann.AnnouncementId,
+                       
+                        Title = ann.Title ?? "No Title",
+                        Description = ann.Content ?? "",
+                        Category = ann.Category ?? "General",
+                        Status = "active",
+                        IsPinned = ann.IsPinned,
+                        IsUrgent = ann.IsUrgent,
+                        AttachedFile = ann.AttachedFile,
+
+                        
+                        OriginalFileName = ann.OriginalFileName ?? string.Empty,
+                        TargetRoleId = (ann.TargetRoleId == 0) ? 1 : ann.TargetRoleId,
+
+                        Date = ann.PostedDate,
+                        ViewedCount = 0,
+                        TotalStudents = 0,
+                        NotifyStudents = false,
+                        NotifyInstructors = false
+                    });
+                }
+
+            }
         }
 
         //  Category sidebar 
@@ -496,10 +494,49 @@ namespace PUPAcadPortal
             RenderAnnouncements();
         }
 
-        private void DeleteAnnouncement(int id)
+        private void DeleteAnnouncement(int announcementId)
         {
-            announcements.RemoveAll(x => x.Id == id);
-            RenderAnnouncements();
+            var result = MessageBox.Show(
+                "Are you sure you want to delete this announcement? This action cannot be undone.",
+                "Delete Announcement",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result != DialogResult.Yes)
+                return;
+
+            try
+            {
+                using (var context = new AppDbContext())
+                {
+                    var announcement = context.Announcements
+                        .FirstOrDefault(a => a.AnnouncementId == announcementId);
+
+                    if (announcement == null)
+                    {
+                        MessageBox.Show("Announcement not found.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+
+                    context.Announcements.Remove(announcement);
+                    context.SaveChanges();
+                }
+
+                announcements.RemoveAll(a => a.Id == announcementId);
+                RenderAnnouncements();
+
+                MessageBox.Show("Announcement deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (DbUpdateException ex)
+            {
+                MessageBox.Show("Failed to delete announcement from database. Please try again.", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Diagnostics.Debug.WriteLine($"DbUpdateException: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An unexpected error occurred. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Diagnostics.Debug.WriteLine($"Exception: {ex.Message}\n{ex.StackTrace}");
+            }
         }
 
         private void btnCreateAnnouncement_Click(object sender, EventArgs e)

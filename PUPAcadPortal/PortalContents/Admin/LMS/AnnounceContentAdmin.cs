@@ -1,4 +1,6 @@
-﻿using PUPAcadPortal.PortalContents.Misc.LMS;
+﻿using Microsoft.EntityFrameworkCore;
+using PUPAcadPortal.Models;
+using PUPAcadPortal.PortalContents.Misc.LMS;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -140,6 +142,7 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
 
             // Create + wire the CreateAnnouncement UC
             _createAnnouncementUC = new CreateAnnouncementAdmin { Visible = false, Anchor = AnchorStyles.None };
+            _createAnnouncementUC.TargetRoleId = 1;
             _createAnnouncementUC.AnnouncementPosted += OnAnnouncementPosted;
             _createAnnouncementUC.CloseRequested += (s, e) => HideCreateAnnouncementUC();
             pnlAnnouncement.Controls.Add(_createAnnouncementUC);
@@ -162,57 +165,32 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
         // ── Seed sample data ─────────────────────────────────────────────
         private void SeedAnnouncements()
         {
-            announcements.AddRange(new[]
+            announcements.Clear();
+
+            using (var context = new AppDbContext())
             {
-                new AdminAnnouncement { Id=1,  Title="Midterm exam schedule released",
-                    Description="The official midterm examination schedule for all BSIT 2nd year subjects has been posted. Please check your respective rooms and ensure you bring your student IDs.",
-                    Category="Academic", Status="active", IsPinned=true, IsUrgent=true,
-                    NotifyStudents=true, NotifyInstructors=true,
-                    ViewedCount=28, TotalStudents=40, Date=DateTime.Now },
-                new AdminAnnouncement { Id=2,  Title="Class suspension – May 12",
-                    Description="All classes on Monday, May 12 are suspended due to the declared public holiday.",
-                    Category="General", Status="active", ViewedCount=35, TotalStudents=40,
-                    NotifyStudents=true, Date=DateTime.Now.AddHours(-5) },
-                new AdminAnnouncement { Id=3,  Title="Programming 1 – lab activity this Friday",
-                    Description="Bring your laptops for the graded lab activity covering Modules 4 and 5.",
-                    Category="Academic", Status="active", ViewedCount=22, TotalStudents=40, Date=DateTime.Now.AddDays(-2) },
-                new AdminAnnouncement { Id=4,  Title="Campus foundation day celebration",
-                    Description="Join us for the PUP Foundation Day celebration on May 17.",
-                    Category="Events", Status="inactive", ViewedCount=18, TotalStudents=40, Date=DateTime.Now.AddDays(-4) },
-                new AdminAnnouncement { Id=5,  Title="Reminder: submit assignment outputs",
-                    Description="All pending assignment outputs must be submitted via the LMS before May 15, 11:59 PM.",
-                    Category="General", Status="active", ViewedCount=30, TotalStudents=40, Date=DateTime.Now.AddDays(-5) },
-                new AdminAnnouncement { Id=6,  Title="Final Exam Coverage – Programming 1",
-                    Description="The official final examination coverage for Introduction to Programming 1 has been posted.",
-                    Category="Academic", Status="active", IsPinned=true, ViewedCount=32, TotalStudents=40,
-                    NotifyStudents=true, NotifyInstructors=true, Date=DateTime.Now.AddHours(-2) },
-                new AdminAnnouncement { Id=7,  Title="Graded Recitation – Information Management",
-                    Description="There will be a graded recitation next Wednesday covering database normalization.",
-                    Category="Academic", Status="active", ViewedCount=15, TotalStudents=40, Date=DateTime.Now.AddDays(-1) },
-                new AdminAnnouncement { Id=8,  Title="Enrollment Period – 1st Semester 2026-2027",
-                    Description="Online enrollment for 1st Semester AY 2026-2027 opens on June 1. Please coordinate with your respective advisers for pre-enrollment clearance.",
-                    Category="Enrollment", Status="active", ViewedCount=38, TotalStudents=40,
-                    NotifyStudents=true, Date=DateTime.Now.AddDays(-1).AddHours(-3) },
-                new AdminAnnouncement { Id=9,  Title="IT Career Fair – Volunteer Marshals Needed",
-                    Description="The Career Services Office is looking for 15 student volunteers to serve as event marshals.",
-                    Category="Events", Status="active", ViewedCount=20, TotalStudents=40, Date=DateTime.Now.AddDays(-2) },
-                new AdminAnnouncement { Id=10, Title="Capstone Group Submissions – Revised Deadline",
-                    Description="The submission deadline for Capstone Project Chapter 3 has been moved to May 19.",
-                    Category="Academic", Status="active", IsPinned=true, IsUrgent=true, ViewedCount=36, TotalStudents=40,
-                    NotifyStudents=true, Date=DateTime.Now.AddDays(-3) },
-                new AdminAnnouncement { Id=11, Title="Enrollment Requirements Reminder",
-                    Description="All students must submit updated documents (medical certificate, good moral clearance) before enrollment. Incomplete requirements will not be processed.",
-                    Category="Enrollment", Status="active", ViewedCount=25, TotalStudents=40,
-                    NotifyStudents=true, NotifyInstructors=true, Date=DateTime.Now.AddDays(-4) },
-                new AdminAnnouncement { Id=12, Title="University Foundation Day – May 19",
-                    Description="All classes are suspended on May 19 in celebration of the University's Foundation Day.",
-                    Category="Events", Status="active", ViewedCount=29, TotalStudents=40, Date=DateTime.Now.AddDays(-5) },
-                new AdminAnnouncement { Id=13, Title="⚠ Campus Emergency Drill – May 20",
-                    Description="A mandatory earthquake and fire emergency drill will be conducted on May 20. All students and faculty must participate. Classes will be briefly suspended during the drill.",
-                    Category="Emergency", Status="active", IsPinned=true, IsUrgent=true,
-                    NotifyStudents=true, NotifyInstructors=true,
-                    ViewedCount=40, TotalStudents=40, Date=DateTime.Now.AddHours(-1) },
-            });
+                var dbAnnouncements = context.Announcements.ToList();
+
+                foreach (var ann in dbAnnouncements)
+                {
+                    announcements.Add(new AdminAnnouncement
+                    {
+                        Id = ann.AnnouncementId,
+                        Title = ann.Title,
+                        Description = ann.Content,
+                        Category = ann.Category,
+                        Status = "active",
+                        IsPinned = ann.IsPinned,
+                        IsUrgent = ann.IsUrgent,
+                        AttachedFile = ann.AttachedFile,
+                        Date = ann.PostedDate,
+                        ViewedCount = 0,
+                        TotalStudents = 0,
+                        NotifyStudents = false,
+                        NotifyInstructors = false
+                    });
+                }
+            }
         }
 
         // ── Render cards ─────────────────────────────────────────────────
@@ -817,55 +795,143 @@ namespace PUPAcadPortal.PortalContents.Admin.LMS
             ShowCreateAnnouncementUC();
         }
 
-        private void DeleteAnnouncement(int id)
+        private void DeleteAnnouncement(int announcementId)
         {
-            announcements.RemoveAll(x => x.Id == id);
-            RenderAnnouncements();
+            var result = MessageBox.Show(
+                "Are you sure you want to delete this announcement? This action cannot be undone.",
+                "Delete Announcement",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result != DialogResult.Yes)
+                return;
+
+            try
+            {
+                using (var context = new AppDbContext())
+                {
+                    var announcement = context.Announcements
+                        .FirstOrDefault(a => a.AnnouncementId == announcementId);
+
+                    if (announcement == null)
+                    {
+                        MessageBox.Show("Announcement not found.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+
+                    context.Announcements.Remove(announcement);
+                    context.SaveChanges();
+                }
+
+                announcements.RemoveAll(a => a.Id == announcementId);
+                RenderAnnouncements();
+
+                MessageBox.Show("Announcement deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (DbUpdateException ex)
+            {
+                MessageBox.Show("Failed to delete announcement from database. Please try again.", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Diagnostics.Debug.WriteLine($"DbUpdateException: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An unexpected error occurred. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Diagnostics.Debug.WriteLine($"Exception: {ex.Message}\n{ex.StackTrace}");
+            }
         }
 
-        private void OnAnnouncementPosted(object sender, AnnouncementDataAdmin data)
+        // ... (Keep all the UI/Rendering code the same) ...
+
+        private async void OnAnnouncementPosted(object sender, AnnouncementDataAdmin data)
         {
-            if (editingAnnouncementId != -1)
+            try
             {
-                var a = announcements.Find(x => x.Id == editingAnnouncementId);
-                if (a != null)
+                string attachmentUrl = null;
+                string originalFileName = string.Empty;
+
+                if (!string.IsNullOrEmpty(data.AttachmentPath))
                 {
-                    a.Title = data.Title;
-                    a.Description = data.Description;
-                    a.Category = data.Category;
-                    a.Date = data.PostDate;
-                    a.IsUrgent = data.IsUrgent;
-                    a.IsPinned = data.IsPinned;
-                    a.NotifyStudents = data.NotifyStudents;
-                    a.NotifyInstructors = data.NotifyInstructors;
-                    if (!string.IsNullOrEmpty(data.AttachmentPath))
-                        a.AttachedFile = System.IO.Path.GetFileName(data.AttachmentPath);
+                    originalFileName = System.IO.Path.GetFileName(data.AttachmentPath);
+                    var uploadService = new PUPAcadPortal.Services.CloudinaryUploadService();
+                    attachmentUrl = await uploadService.UploadEncryptedFileAsync(data.AttachmentPath);
+
+                    if (string.IsNullOrEmpty(attachmentUrl))
+                    {
+                        MessageBox.Show("Failed to upload and encrypt the file.", "Upload Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                 }
-            }
-            else
-            {
-                announcements.Insert(0, new AdminAnnouncement
+
+                using (var context = new AppDbContext())
                 {
-                    Id = DateTime.Now.Millisecond + new Random().Next(1000, 9999),
-                    Title = data.Title,
-                    Description = data.Description,
-                    Category = data.Category,
-                    Date = data.PostDate,
-                    Status = "active",
-                    IsUrgent = data.IsUrgent,
-                    IsPinned = data.IsPinned,
-                    NotifyStudents = data.NotifyStudents,
-                    NotifyInstructors = data.NotifyInstructors,
-                    AttachedFile = string.IsNullOrEmpty(data.AttachmentPath)
-                                        ? null
-                                        : System.IO.Path.GetFileName(data.AttachmentPath),
-                    InstructorName = "Admin",
-                    TotalStudents = 40,
-                });
+                    if (editingAnnouncementId != -1)
+                    {
+                        // ── Update existing ───────────────────────────────────────
+                        var dbAnnouncement = context.Announcements
+                            .FirstOrDefault(a => a.AnnouncementId == editingAnnouncementId);
+
+                        if (dbAnnouncement != null)
+                        {
+                            dbAnnouncement.Title = data.Title;
+                            dbAnnouncement.Content = data.Description;
+                            dbAnnouncement.Category = data.Category;
+                            dbAnnouncement.PostedDate = data.PostDate;
+                            dbAnnouncement.IsUrgent = data.IsUrgent;
+                            dbAnnouncement.IsPinned = data.IsPinned;
+
+                            // FIX 1: Update Role ID for existing announcements
+                            dbAnnouncement.TargetRoleId = 1;
+
+                            if (!string.IsNullOrEmpty(attachmentUrl))
+                            {
+                                dbAnnouncement.AttachedFile = attachmentUrl;
+                                dbAnnouncement.OriginalFileName = originalFileName;
+                            }
+                            context.Announcements.Update(dbAnnouncement);
+                            context.SaveChanges();
+
+                            // ... update local list (announcements.Find...) ...
+                        }
+                    }
+                    else
+                    {
+                        // ── Create new ────────────────────────────────────────────
+                        var newAnnouncement = new Announcement
+                        {
+                            Title = data.Title,
+                            Content = data.Description,
+                            Category = data.Category,
+                            PostedDate = data.PostDate,
+                            IsUrgent = data.IsUrgent,
+                            IsPinned = data.IsPinned,
+                            AttachedFile = attachmentUrl,
+                            OriginalFileName = originalFileName,
+
+                            // FIX 2: SET TARGET ROLE ID HERE (1 = Admin)
+                            TargetRoleId = 1,
+
+                            CreatedByUserId = 1,
+                            SubjectOfferingId = null,
+                        };
+
+                        context.Announcements.Add(newAnnouncement);
+                        context.SaveChanges();
+
+                        // ... add to local list ...
+                    }
+                }
+
+                editingAnnouncementId = -1;
+                RenderAnnouncements();
+                MessageBox.Show("Announcement saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            editingAnnouncementId = -1;
-            RenderAnnouncements();
+            catch (Exception ex)
+            {
+                MessageBox.Show("An unexpected error occurred while savingS: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
+
 
         private void OnViewEdit(object sender, int id)
         {
