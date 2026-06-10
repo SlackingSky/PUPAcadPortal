@@ -69,6 +69,8 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<StudentDiscount> StudentDiscounts { get; set; }
 
+    public virtual DbSet<StudentGrade> StudentGrades { get; set; }
+
     public virtual DbSet<StudentHold> StudentHolds { get; set; }
 
     public virtual DbSet<Subject> Subjects { get; set; }
@@ -121,6 +123,7 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.ModuleId)
                 .HasMaxLength(50)
                 .HasColumnName("ModuleID");
+            entity.Property(e => e.RubricContent).HasComment("JSON array of rubric criteria: [{name, description, maxPoints}]");
             entity.Property(e => e.SubjectOfferingId)
                 .HasMaxLength(50)
                 .HasColumnName("SubjectOfferingID");
@@ -192,12 +195,14 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.Category).HasMaxLength(100);
             entity.Property(e => e.Content).HasColumnType("text");
             entity.Property(e => e.CreatedByUserId).HasColumnName("CreatedByUserID");
+            entity.Property(e => e.OriginalFileName).HasMaxLength(255);
             entity.Property(e => e.PostedDate)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("datetime");
             entity.Property(e => e.SubjectOfferingId)
                 .HasMaxLength(50)
                 .HasColumnName("SubjectOfferingID");
+            entity.Property(e => e.TargetRoleId).HasDefaultValueSql("'1'");
             entity.Property(e => e.Title).HasMaxLength(255);
 
             entity.HasOne(d => d.CreatedByUser).WithMany(p => p.Announcements)
@@ -240,8 +245,13 @@ public partial class AppDbContext : DbContext
             entity.HasIndex(e => e.QrNonce, "UQ_AttendanceRecord_QrNonce").IsUnique();
 
             entity.Property(e => e.AttendanceId).HasColumnName("AttendanceID");
-            entity.Property(e => e.QrNonce).HasMaxLength(64);
-            entity.Property(e => e.QrScannedAt).HasColumnType("datetime");
+            entity.Property(e => e.IsQrVerified).HasComment("'1 = attendance recorded via QR scan; row is read-only'");
+            entity.Property(e => e.QrNonce)
+                .HasMaxLength(64)
+                .HasComment("'GUID nonce from the QR token — enforces single-use per token'");
+            entity.Property(e => e.QrScannedAt)
+                .HasComment("'UTC timestamp of the QR scan'")
+                .HasColumnType("datetime");
             entity.Property(e => e.Remarks).HasMaxLength(255);
             entity.Property(e => e.SessionId).HasColumnName("SessionID");
             entity.Property(e => e.Status).HasMaxLength(20);
@@ -659,9 +669,11 @@ public partial class AppDbContext : DbContext
         {
             entity.HasKey(e => e.LogId).HasName("PRIMARY");
 
-            entity.ToTable("QrScanLog");
+            entity.ToTable("QrScanLog", tb => tb.HasComment("Audit trail for every QR scan attempt (success and failure)."));
 
             entity.HasIndex(e => e.AttendanceId, "FK_QrLog_Attendance");
+
+            entity.HasIndex(e => e.SessionId, "FK_QrLog_Session");
 
             entity.HasIndex(e => e.StudentId, "FK_QrLog_Student");
 
@@ -669,12 +681,22 @@ public partial class AppDbContext : DbContext
 
             entity.Property(e => e.LogId).HasColumnName("LogID");
             entity.Property(e => e.AttemptedAt).HasColumnType("datetime");
-            entity.Property(e => e.AttendanceId).HasColumnName("AttendanceID");
+            entity.Property(e => e.AttendanceId)
+                .HasComment("FK → AttendanceRecord.AttendanceID; NULL on failure")
+                .HasColumnName("AttendanceID");
             entity.Property(e => e.Notes).HasMaxLength(255);
-            entity.Property(e => e.QrNonce).HasMaxLength(64);
-            entity.Property(e => e.SessionId).HasColumnName("SessionID");
-            entity.Property(e => e.StudentId).HasColumnName("StudentID");
-            entity.Property(e => e.ValidationResult).HasMaxLength(64);
+            entity.Property(e => e.QrNonce)
+                .HasMaxLength(64)
+                .HasDefaultValueSql("'(none)'");
+            entity.Property(e => e.SessionId)
+                .HasComment("FK → ClassSession.SessionID; NULL for pre-session failures")
+                .HasColumnName("SessionID");
+            entity.Property(e => e.StudentId)
+                .HasComment("FK → Student.StudentID")
+                .HasColumnName("StudentID");
+            entity.Property(e => e.ValidationResult)
+                .HasMaxLength(64)
+                .HasComment("e.g. Valid, Expired, AlreadyRecorded, NotEnrolled …");
 
             entity.HasOne(d => d.Attendance).WithMany(p => p.QrScanLogs)
                 .HasForeignKey(d => d.AttendanceId)
@@ -683,12 +705,11 @@ public partial class AppDbContext : DbContext
 
             entity.HasOne(d => d.Session).WithMany(p => p.QrScanLogs)
                 .HasForeignKey(d => d.SessionId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("FK_QrLog_Session");
 
             entity.HasOne(d => d.Student).WithMany(p => p.QrScanLogs)
                 .HasForeignKey(d => d.StudentId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_QrLog_Student");
         });
 
@@ -709,7 +730,9 @@ public partial class AppDbContext : DbContext
                 .IsRequired()
                 .HasDefaultValueSql("'1'");
             entity.Property(e => e.SessionId).HasColumnName("SessionID");
-            entity.Property(e => e.Token).HasMaxLength(500);
+            entity.Property(e => e.Token)
+                .HasMaxLength(500)
+                .HasComment("'Cryptographically signed JWT-style token (base64url.sig)'");
 
             entity.HasOne(d => d.Session).WithMany(p => p.QrSessions)
                 .HasForeignKey(d => d.SessionId)
@@ -857,6 +880,35 @@ public partial class AppDbContext : DbContext
                 .HasForeignKey(d => d.StudentId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Discount_Student");
+        });
+
+        modelBuilder.Entity<StudentGrade>(entity =>
+        {
+            entity.HasKey(e => e.GradeId).HasName("PRIMARY");
+
+            entity.ToTable("student_grades");
+
+            entity.Property(e => e.FtAssignment).HasColumnName("FT_Assignment");
+            entity.Property(e => e.FtAttendance).HasColumnName("FT_Attendance");
+            entity.Property(e => e.FtLongTests).HasColumnName("FT_LongTests");
+            entity.Property(e => e.FtMajorExam).HasColumnName("FT_MajorExam");
+            entity.Property(e => e.FtRecitation).HasColumnName("FT_Recitation");
+            entity.Property(e => e.FtSeatwork).HasColumnName("FT_Seatwork");
+            entity.Property(e => e.GradeStatus).HasMaxLength(50);
+            entity.Property(e => e.InstructorUserId).HasColumnName("InstructorUserID");
+            entity.Property(e => e.MtAssignment).HasColumnName("MT_Assignment");
+            entity.Property(e => e.MtAttendance).HasColumnName("MT_Attendance");
+            entity.Property(e => e.MtLongTests).HasColumnName("MT_LongTests");
+            entity.Property(e => e.MtMajorExam).HasColumnName("MT_MajorExam");
+            entity.Property(e => e.MtRecitation).HasColumnName("MT_Recitation");
+            entity.Property(e => e.MtSeatwork).HasColumnName("MT_Seatwork");
+            entity.Property(e => e.Released).HasDefaultValueSql("'0'");
+            entity.Property(e => e.StudentId)
+                .HasMaxLength(50)
+                .HasColumnName("StudentID");
+            entity.Property(e => e.StudentName).HasMaxLength(150);
+            entity.Property(e => e.StudentUserId).HasColumnName("StudentUserID");
+            entity.Property(e => e.SubjectCourse).HasMaxLength(100);
         });
 
         modelBuilder.Entity<StudentHold>(entity =>
