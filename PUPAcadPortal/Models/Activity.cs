@@ -23,7 +23,14 @@ public partial class Activity
 
     public string ActivityType { get; set; } = null!;
 
-    public ulong IsPublished { get; set; }
+    public bool IsPublished { get; set; }
+
+    public string? QuizContent { get; set; }
+
+    /// <summary>
+    /// JSON array of rubric criteria: [{name, description, maxPoints}]
+    /// </summary>
+    public string? RubricContent { get; set; }
 
     public virtual GradingCategory? Category { get; set; }
 
