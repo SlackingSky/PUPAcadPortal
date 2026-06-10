@@ -1,4 +1,5 @@
 ﻿using PUPAcadPortal.Services;
+using PUPAcadPortal.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,6 +22,23 @@ namespace PUPAcadPortal.SignInRelated.AccountRecovery
         public RecoveryResetting()
         {
             InitializeComponent();
+            txtPass.TextChanged += TxtPass_TextChanged;
+            btnShowPass.Click += ShowPass_Click;
+            btnShowPass1.Click += ShowPass_Click;
+        }
+
+        private void TxtPass_TextChanged(object? sender, EventArgs e)
+        {
+            var validationResult = PasswordValidator.Validate(txtPass.Text);
+
+            if (!validationResult.IsValid)
+            {
+                errorProvider1.SetError(txtPass, validationResult.ErrorMessage);
+            }
+            else
+            {
+                errorProvider1.SetError(txtPass, string.Empty);
+            }
         }
 
         private async void btnSave_Click(object sender, EventArgs e)
@@ -34,6 +52,15 @@ namespace PUPAcadPortal.SignInRelated.AccountRecovery
             if (txtPass.Text != txtConfirm.Text)
             {
                 MessageBox.Show("Passwords do not match.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var validationResult = PasswordValidator.Validate(txtPass.Text);
+
+            if (!validationResult.IsValid)
+            {
+                MessageBox.Show("Please fix the password errors before continuing.", "Invalid Password", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtPass.Focus();
                 return;
             }
 
@@ -62,6 +89,16 @@ namespace PUPAcadPortal.SignInRelated.AccountRecovery
             {
                 btnSave.Enabled = true;
                 btnSave.Text = "Save Password";
+            }
+        }
+
+        private void ShowPass_Click(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+            foreach (Control control in btn.Parent.Controls)
+            {
+                if (control is TextBox txt)
+                    txt.UseSystemPasswordChar = !txt.UseSystemPasswordChar;
             }
         }
     }
