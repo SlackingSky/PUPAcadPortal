@@ -16,7 +16,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 {
     public partial class AttendanceContentInst : UserControl
     {
-        // ── Runtime state ─────────────────────────────────────────────────────────
+        // ── Runtime state 
         private List<StudentAttendanceRecord> _allStudents = new();
         private List<CourseSection> _courseCatalogue = new();
         private List<SessionSlot> _sessionSlots = new();
@@ -27,7 +27,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         private TimeSpan? _currentStartTime = null;
         private TimeSpan? _currentEndTime = null;
 
-        // ── Logged-in instructor ID ───────────────────────────────────────────────
+        //  Logged-in instructor ID 
         // Set this from the parent form/page before the control is shown.
         // Falls back to UserSession.InstructorID when not explicitly assigned.
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -45,12 +45,12 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         private System.Windows.Forms.Timer _searchTimer = null!;
         private string _pendingSearch = "";
 
-        // ── DB factory ────────────────────────────────────────────────────────────
+        //  DB factory 
         private static AppDbContext CreateContext() => new AppDbContext();
 
         public AttendanceContentInst() => InitializeComponent();
 
-        // ── Load ─────────────────────────────────────────────────────────────────
+        //  Load 
         private void AttendanceContentInst_Load(object sender, EventArgs e)
         {
             try
@@ -69,7 +69,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             }
         }
 
-        // ── Layout ────────────────────────────────────────────────────────────────
+        //  Layout 
         private void PnlSummaryRow_SizeChanged(object sender, EventArgs e) => LayoutSummaryCards();
 
         private void Card_Paint(object sender, PaintEventArgs e)
@@ -117,7 +117,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             Place(pnlCardLastUpdate, cardW + (totalW - sessionW - cardW * 5 - PAD * 5));
         }
 
-        // ── Init ─────────────────────────────────────────────────────────────────
+        //  Init 
         private void InitAttendance()
         {
             // FIX: load only the courses assigned to the logged-in instructor
@@ -152,13 +152,12 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             UpdateLastUpdated();
         }
 
-        // ── Load ONLY the courses assigned to the logged-in instructor ────────────
+        //  Load ONLY the courses assigned to the logged-in instructor 
         /// <summary>
         /// Populates _courseCatalogue with SubjectOfferings whose InstructorId
         /// matches the currently logged-in professor. Schedule times (StartTime /
         /// EndTime) are resolved from the first matching RoomSchedule row so the
         /// QR token embeds the correct attendance window without an extra round-trip.
-        /// </summary>
         private void LoadCoursesFromDb()
         {
             _courseCatalogue = new List<CourseSection>();
@@ -177,9 +176,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 using var ctx = CreateContext();
 
                 // Only offerings assigned to this instructor.
-                // TODO: verify "InstructorId" matches the actual FK property name
-                //       on your SubjectOffering entity. Common alternatives:
-                //       FacultyId, TeacherId, UserId, InstructorUserId.
+                // TODO: verify "InstructorId" matches the actual FK property nameon your SubjectOffering entity. Common alternatives:FacultyId, TeacherId, UserId, InstructorUserId.
                 var offerings = ctx.SubjectOfferings
                     .Include(so => so.Subject)
                     .Include(so => so.RoomSchedules)
@@ -208,7 +205,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             }
         }
 
-        /// <summary>
         /// Builds a human-readable schedule string such as "MWF  08:00 AM – 10:00 AM"
         /// from a RoomSchedule row.  Returns an em-dash when no schedule exists.
         ///
@@ -221,21 +217,10 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         {
             if (rs == null) return "—";
 
-            // ── Day label ────────────────────────────────────────────────────────
-            // TODO: replace "Days" with the actual property name on your
-            //       RoomSchedule entity (e.g. DayOfWeek, Schedule, Day, etc.).
-            //       Common options are shown; uncomment the one that matches.
-            //
-            // string dayLabel = rs.Days        ?? string.Empty;  // e.g. "MWF"
-            // string dayLabel = rs.DayOfWeek   ?? string.Empty;  // e.g. "Monday"
-            // string dayLabel = rs.Schedule    ?? string.Empty;  // generic label
-            //
-            // Safest fallback: use reflection so this compiles regardless of
-            // the actual property name.  Replace with the direct property access
-            // once you know the correct name.
+
             string dayLabel = TryGetDayLabel(rs);
 
-            // ── Time range ───────────────────────────────────────────────────────
+            //  Time range 
             // StartTime / EndTime are non-nullable TimeSpan — no .HasValue needed.
             string start = DateTime.Today.Add(rs.StartTime).ToString("hh:mm tt");
             string end = DateTime.Today.Add(rs.EndTime).ToString("hh:mm tt");
@@ -252,7 +237,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         /// the code compiles even before you know the exact property name.
         /// Replace this method body with a direct property access once confirmed,
         /// e.g.: <c>return rs.Days ?? string.Empty;</c>
-        /// </summary>
         private static string TryGetDayLabel(RoomSchedule rs)
         {
             // Try the most common property names in order.
@@ -266,12 +250,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             return string.Empty;
         }
 
-        // ── Populate dropdowns ────────────────────────────────────────────────────
-        /// <summary>
-        /// Fills cmbCourse with the instructor's assigned subjects.
-        /// cmbSession is derived from the selected course's DB schedule and is
-        /// therefore read-only (DropDownStyle = DropDownList, populated from DB).
-        /// </summary>
         private void PopulateDropdowns()
         {
             // Course combo — instructor's assigned subjects only
@@ -325,12 +303,11 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             }
         }
 
-        // ── Load / refresh current session roster from DB ─────────────────────────
+        //  Load / refresh current session roster from DB 
         /// <summary>
         /// Finds (or creates) the ClassSession row for the selected course + date,
         /// loads all enrolled students, and maps their AttendanceRecords including
         /// QR-verified lock state.
-        /// </summary>
         private void LoadCurrentSession()
         {
             if (_courseCatalogue.Count == 0) return;
@@ -423,7 +400,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
                 _allStudents = list;
 
-                // FIX: update the schedule display label whenever the session reloads
                 // so the professor always sees the correct time block for this offering.
                 UpdateScheduleDisplay(course);
             }
@@ -439,7 +415,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         /// Writes the course's schedule information into the read-only display
         /// label (lblScheduleDisplay) so the professor can see the assigned
         /// subject, section, and time block at a glance.
-        /// </summary>
         private void UpdateScheduleDisplay(CourseSection course)
         {
             // lblScheduleDisplay is a Label on the form that shows the locked
@@ -457,7 +432,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                     : course.ScheduleDisplay);
         }
 
-        // ── Filter bar ────────────────────────────────────────────────────────────
+        //  Filter bar 
         private void WireFilterBar()
         {
             cmbCourse.SelectedIndexChanged += (s, e) =>
@@ -503,7 +478,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             UpdateLastUpdated();
         }
 
-        // ── Button wiring ─────────────────────────────────────────────────────────
+        //  Button wiring 
         private void WireButtons()
         {
             btnSaveAttendance.Click -= BtnSave_Click;
@@ -523,7 +498,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             btnImportCSV.Click += (s, e) => ImportCsv();
         }
 
-        // ── QR popup ─────────────────────────────────────────────────────────────
+        //  QR popup 
         private void BtnQrCode_Click(object? sender, EventArgs e)
         {
             if (_currentSessionId == null || _currentSessionId <= 0)
@@ -545,9 +520,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                     "No Schedule", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
-            // QrCodePopupForm → QrCodeAttendanceControl →
-            // QrSessionService.CreateOrGetActive() handles duplicate prevention.
             using var dlg = new QrCodePopupForm(
                 course: $"{course.SubjectCode}  –  {course.Title}",
                 session: course.ScheduleDisplay,
@@ -563,7 +535,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             ReloadAndRefresh();
         }
 
-        // ── Save attendance (manual, skips QR-verified rows) ─────────────────────
+        //  Save attendance (manual, skips QR-verified rows) 
         private void BtnSave_Click(object? sender, EventArgs e)
         {
             if (_currentSessionId == null)
@@ -662,7 +634,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             }
         }
 
-        // ── Summary cards ─────────────────────────────────────────────────────────
+        //  Summary cards 
         private void UpdateSummaryCards()
         {
             int total = _allStudents.Count;
@@ -690,7 +662,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             lblByInstructor.Text = "by Instructor";
         }
 
-        // ── Export / Import CSV ───────────────────────────────────────────────────
+        //  Export / Import CSV 
         private void ExportCsv()
         {
             var course = _courseCatalogue.ElementAtOrDefault(cmbCourse.SelectedIndex);
@@ -758,7 +730,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             }
         }
 
-        // ── Helpers ───────────────────────────────────────────────────────────────
         private static AttendanceStatus ParseStatus(string? s) => s switch
         {
             "Absent" => AttendanceStatus.Absent,

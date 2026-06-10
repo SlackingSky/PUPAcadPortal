@@ -14,22 +14,18 @@ namespace PUPAcadPortal
     {
         public event Action<ActivityItem> OnSave;
         public event Action OnCancel;
-
         private readonly CourseActivity _course;
         private readonly ActivityItem? _editing;
         private readonly bool _isNew;
-
-        // Working collections
         private List<QuizQuestion> _questions = new();
         private List<RubricCriteria> _rubricItems = new();
         private List<CourseFileItem> _files = new();
         private int _nextQId = 1, _nextRId = 1;
-
         // DB-loaded dropdowns
         private List<Models.GradingCategory> _dbCategories = new();
         private List<Models.Module> _dbModules = new();
 
-        // ── Per-type accent colours ──────────────────────────────────────────
+        //  Per-type accent colours 
         private static readonly Color QuizAccent = Color.FromArgb(63, 81, 181);   // indigo
         private static readonly Color EssayAccent = Color.FromArgb(0, 150, 136);   // teal
         private static readonly Color AssignmentAccent = Color.FromArgb(128, 0, 0);     // maroon
@@ -55,9 +51,6 @@ namespace PUPAcadPortal
         public ActivityFormPage(CourseActivity course, ActivityItem? editing, List<Models.GradingCategory> categories)
             : this(course, editing, categories, new List<Models.Module>()) { }
 
-        // ════════════════════════════════════════════════════════════════
-        //  FORM POPULATION
-        // ════════════════════════════════════════════════════════════════
         private void PopulateForm()
         {
             lblPageTitle.Text = _isNew ? "Create Activity" : "Edit Activity";
@@ -86,9 +79,7 @@ namespace PUPAcadPortal
             ApplyTypeTheme(cmbType.SelectedItem?.ToString() ?? "Assignment");
         }
 
-        // ════════════════════════════════════════════════════════════════
         //  TYPE THEME — visual identity per activity type
-        // ════════════════════════════════════════════════════════════════
         private void ApplyTypeTheme(string activityType)
         {
             Color accent = activityType switch
@@ -154,10 +145,8 @@ namespace PUPAcadPortal
                 ApplyRubricLayout();
         }
 
-        // ════════════════════════════════════════════════════════════════
         //  STUDENT RUBRIC PREVIEW BANNER
         //  Shows instructors exactly what students will see
-        // ════════════════════════════════════════════════════════════════
         private Panel? _rubricPreviewBanner;
 
         private void UpdateRubricPreviewBanner(string activityType)
@@ -322,9 +311,7 @@ namespace PUPAcadPortal
             parent.Controls.Add(lbl);
         }
 
-        // ════════════════════════════════════════════════════════════════
         //  QUIZ SECTION
-        // ════════════════════════════════════════════════════════════════
         private void btnAddQuestion_Click(object sender, EventArgs e)
         {
             _questions.Add(new QuizQuestion { QuestionId = _nextQId++, QuestionType = "MultipleChoice", Points = 1 });
@@ -341,8 +328,6 @@ namespace PUPAcadPortal
 
             if (cmbType.SelectedItem?.ToString() == "Quiz" && _questions.Count > 0)
                 nudPoints.Value = _questions.Sum(q => q.Points);
-
-            // Quiz summary panel
             UpdateQuizSummaryBadge();
         }
 
@@ -398,9 +383,7 @@ namespace PUPAcadPortal
             badge.BringToFront();
         }
 
-        // ─────────────────────────────────────────────────────────────────────
         //  Label injection helper
-        // ─────────────────────────────────────────────────────────────────────
         private void AddMissingLabels()
         {
             void InjectLabel(Control target, string text)
@@ -424,9 +407,7 @@ namespace PUPAcadPortal
             InjectLabel(txtDescription, "Description / Instructions");
         }
 
-        // ─────────────────────────────────────────────────────────────────────
-        //  Question row builder (unchanged logic, improved visual layout)
-        // ─────────────────────────────────────────────────────────────────────
+        //  Question row builder 
         private static readonly string[] ChoiceLetters = { "A", "B", "C", "D", "E", "F", "G", "H" };
 
         private Panel BuildQuestionRow(QuizQuestion q, int num)
@@ -702,9 +683,7 @@ namespace PUPAcadPortal
             if (cmb.Items.Count > 0) cmb.SelectedIndex = 0;
         }
 
-        // ════════════════════════════════════════════════════════════════
         //  RUBRIC SECTION
-        // ════════════════════════════════════════════════════════════════
         private const int SummaryPanelH = 370;
         private const int CriteriaMaxH = SummaryPanelH;
         private const int CriteriaRowH = 58;
@@ -1004,9 +983,7 @@ namespace PUPAcadPortal
             row.Width = newRowW;
         }
 
-        // ════════════════════════════════════════════════════════════════
         //  FILES SECTION
-        // ════════════════════════════════════════════════════════════════
         private void btnAttachFile_Click(object sender, EventArgs e)
         {
             using var ofd = new OpenFileDialog
@@ -1141,9 +1118,7 @@ namespace PUPAcadPortal
             return chip;
         }
 
-        // ════════════════════════════════════════════════════════════════
         //  SAVE
-        // ════════════════════════════════════════════════════════════════
         private void btnSave_Click(object sender, EventArgs e)
         {
             lblError.Text = "";
@@ -1184,9 +1159,7 @@ namespace PUPAcadPortal
             OnSave?.Invoke(act);
         }
 
-        // ════════════════════════════════════════════════════════════════
         //  EVENT HANDLERS (layout / resize)
-        // ════════════════════════════════════════════════════════════════
         private void pnlHeader_SizeChanged(object sender, System.EventArgs e)
         {
             if (btnSave != null && pnlHeader != null)

@@ -36,7 +36,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
         public event EventHandler? AttendanceChanged;
 
-        // ── Constructor ───────────────────────────────────────────────────────────
+        //  Constructor 
         public AttendanceGridControl()
         {
             InitializeComponent();
@@ -77,7 +77,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
         public DataGridView Grid => _dgv;
 
-        // ── Data loading ──────────────────────────────────────────────────────────
+        //  Data loading 
         public void LoadStudents(IEnumerable<StudentAttendanceRecord> students)
         {
             _source = students.OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
@@ -99,7 +99,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             RefreshView();
         }
 
-        // ── Layout ────────────────────────────────────────────────────────────────
+        //  Layout 
         private void PositionAll()
         {
             const int BULK_H = 38;
@@ -124,7 +124,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             _pnlPagination.Location = new Point(Width - _pnlPagination.Width - 6, barY);
         }
 
-        // ── Event wiring ──────────────────────────────────────────────────────────
+        //  Event wiring 
         private void WireEvents()
         {
             _dgv.CurrentCellDirtyStateChanged += (s, e) =>
@@ -223,7 +223,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 }
             };
 
-            // ── Block ALL edits on QR-verified rows ───────────────────────────────
+            //  Block ALL edits on QR-verified rows 
             _dgv.CellBeginEdit += (s, e) =>
             {
                 if (e.RowIndex < 0) return;
@@ -246,7 +246,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             };
         }
 
-        // ── Row colour helpers ────────────────────────────────────────────────────
+        //  Row colour helpers 
         private static void ApplyRemarksLock(DataGridViewRow row, AttendanceStatus status, bool isQr)
         {
             int ri = row.DataGridView?.Columns["colRemarks"]?.Index ?? -1;
@@ -309,7 +309,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 e.Bounds.Y + (e.Bounds.Height - f.Height) / 2);
         }
 
-        // ── Bulk mark (skips QR-verified rows) ────────────────────────────────────
+        //  Bulk mark (skips QR-verified rows) 
         private void BulkMark(AttendanceStatus status)
         {
             int skipped = 0;
@@ -342,7 +342,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             }
         }
 
-        // ── Pagination / view ─────────────────────────────────────────────────────
+        //  Pagination / view 
         private List<StudentAttendanceRecord> _allOnPage = new();
         private Button[] _pageButtons;
 
@@ -454,7 +454,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             RefreshView();
         }
 
-        // ── Static helpers ────────────────────────────────────────────────────────
+        //  Static helpers 
         private static AttendanceStatus ParseStatus(string? s) => s switch
         {
             "Absent" => AttendanceStatus.Absent,

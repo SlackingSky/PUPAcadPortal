@@ -12,16 +12,14 @@ namespace PUPAcadPortal
     public partial class AssignmentManagement : UserControl
     {
         public event Action OnBack;
-
         private readonly CourseActivity _course;
         private readonly IActivityDbService _svc;
-
         private string _searchTerm = "";
         private string _filterType = "All";
         private System.Windows.Forms.Timer _searchTimer;
         private bool _initializing = true;
 
-        // ── Constructor (DB-backed) ───────────────────────────
+        //  Constructor (DB-backed) 
         public AssignmentManagement(CourseActivity course, IActivityDbService svc)
         {
             _course = course;
@@ -114,9 +112,7 @@ namespace PUPAcadPortal
                 $"·  {pending} pending checks  ·  {chk} checked";
         }
 
-        // ════════════════════════════════════════════════════
         //  Card + Empty state builders
-        // ════════════════════════════════════════════════════
         private Panel BuildEmptyState()
         {
             int w = Math.Max(700, flpActivities.ClientSize.Width - 40);
@@ -298,7 +294,7 @@ namespace PUPAcadPortal
                 AutoSize = true
             });
 
-            // --- Context Menu for Edit, Copy, Delete ---
+            //  Context Menu for Edit, Copy, Delete 
             var cms = new ContextMenuStrip();
 
             var mnuEdit = new ToolStripMenuItem("Edit", null, (s, e) => OpenActivityForm(act));
@@ -318,7 +314,7 @@ namespace PUPAcadPortal
                 if (c is Label) c.ContextMenuStrip = cms;
             }
 
-            // --- Visible Buttons (Check & Publish/Unpublish) ---
+            //  Visible Buttons (Check & Publish/Unpublish) 
             int btnY = 32, right = w - 14;
             const int btnH = 28, gap = 6;
 
@@ -526,7 +522,7 @@ namespace PUPAcadPortal
             RefreshList();
         }
 
-        // ── Event handlers ────────────────────────────────────
+        //  Event handlers 
         private void btnBack_Click(object sender, EventArgs e)
         {
             if (OnBack != null) { OnBack.Invoke(); return; }

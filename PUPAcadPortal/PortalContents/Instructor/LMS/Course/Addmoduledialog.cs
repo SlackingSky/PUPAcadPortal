@@ -13,7 +13,7 @@ namespace PUPAcadPortal
         public string ModuleDescription { get; private set; } = string.Empty;
         public List<ModuleFile> InitialFiles { get; private set; } = new();
 
-        // ── Constants & State ──────────────────────────────────────────────────
+        //  Constants & State 
         private static readonly Color Maroon = Color.FromArgb(139, 0, 0);
         private static readonly Color BgGray = Color.FromArgb(248, 248, 250);
         private readonly int _moduleNumber;
@@ -21,14 +21,11 @@ namespace PUPAcadPortal
         public AddModuleDialog(int nextModuleNumber)
             : this(nextModuleNumber, string.Empty, string.Empty, isEdit: false) { }
 
-        // ── EDIT constructor ─────────────────────────────────────────────
-        /// <param name="moduleNumber">Displayed in the default title field.</param>
-        /// <param name="existingTitle">Pre-filled title text.</param>
-        /// <param name="existingDescription">Pre-filled description text.</param>
+        //  EDIT constructor 
         public AddModuleDialog(int moduleNumber, string existingTitle, string existingDescription)
             : this(moduleNumber, existingTitle, existingDescription, isEdit: true) { }
 
-        // ── Private shared constructor ─────────────────────────────────────────
+        //  Private shared constructor 
         private AddModuleDialog(
             int moduleNumber,
             string existingTitle,
@@ -60,7 +57,6 @@ namespace PUPAcadPortal
             };
         }
 
-        // ── Custom Paint Handlers ──────────────────────────────────────────────
         private void IconPanel_Paint(object sender, PaintEventArgs pe)
         {
             pe.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
@@ -100,7 +96,7 @@ namespace PUPAcadPortal
             g.DrawString("⬆", iconFont, iconBrush, new RectangleF(14, 0, 44, pnl.Height), sf);
         }
 
-        // ── Interaction & Logic ────────────────────────────────────────────────
+        //  & Logic 
         private void TxtTitle_Enter(object sender, EventArgs e)
         {
             if (_txtTitle.ForeColor == Color.FromArgb(30, 30, 35))

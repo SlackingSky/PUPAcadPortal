@@ -556,7 +556,7 @@ namespace PUPAcadPortal
             RefreshList();
         }
 
-        // ── Filter / search events ────────────────────────────
+        //  Filter / search events 
         private void txtSearchStudent_TextChanged(object sender, EventArgs e)
         {
             if (_initializing) return;

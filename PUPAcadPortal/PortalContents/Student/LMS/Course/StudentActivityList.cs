@@ -11,7 +11,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
     {
         public event Action OnBack;
         public event Action<StudentActivityItem> OnOpenActivity;
-
         private StudentCourse _course;
         private List<StudentActivityItem> _activities = new();
         private System.Windows.Forms.Timer _searchTimer;

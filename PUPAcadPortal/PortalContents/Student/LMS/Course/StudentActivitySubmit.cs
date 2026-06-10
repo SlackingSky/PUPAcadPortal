@@ -17,21 +17,13 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
         private readonly int _studentId;
         private readonly IStudentCourseDbService _svc;
         private readonly bool _useDb;
-
-        // Quiz navigation state
         private int _currentQ = 0;
         private Dictionary<int, string> _answers = new();
-
-        // Timers
         private System.Windows.Forms.Timer _countdownTimer;
         private System.Windows.Forms.Timer _autosaveTimer;
-
-        // File-upload runtime state
         private string _uploadedFilePath = "";
         private string _uploadedFileName = "";
         private long _uploadedFileSize = 0;
-
-        // Dynamic control references
         private Label _lblDeadlineTimer;
         private TextBox _txtEssay;
         private Label _lblWordCount;
@@ -40,7 +32,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
         private Label _lblFileSize;
         private buttonRounded _btnRemoveFile;
 
-        // ── Per-type accent colours (mirrors ActivityFormPage) ───────────────
+        // ── Per-type accent colours (mirrors ActivityFormPage) 
         private static readonly Color QuizAccent = Color.FromArgb(63, 81, 181);
         private static readonly Color EssayAccent = Color.FromArgb(0, 150, 136);
         private static readonly Color AssignmentAccent = Color.FromArgb(128, 0, 0);
@@ -55,7 +47,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             _ => AssignmentAccent,
         };
 
-        // ────────────────────────────────────────────────────────────────────
         public StudentActivitySubmit(StudentActivityItem activity, StudentCourse course)
             : this(activity, course, 0, new NullStudentCourseDbService()) { }
 
@@ -92,9 +83,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             StartCountdown();
         }
 
-        // ════════════════════════════════════════════════════════════════
         //  HEADER — type-aware colour strip
-        // ════════════════════════════════════════════════════════════════
         private void BuildHeader()
         {
             lblActivityTitle.Text = _activity.Title;
@@ -153,9 +142,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             pnlHeader.Controls.Add(badge);
         }
 
-        // ════════════════════════════════════════════════════════════════
         //  DEADLINE BAR
-        // ════════════════════════════════════════════════════════════════
         private void BuildDeadlineBar()
         {
             TimeSpan remaining = _activity.Deadline - DateTime.Now;
@@ -212,9 +199,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             return $"⚠  {ts.Minutes}m {ts.Seconds}s remaining — hurry!";
         }
 
-        // ════════════════════════════════════════════════════════════════
         //  CONTENT AREA
-        // ════════════════════════════════════════════════════════════════
         private Panel _scrollArea;
 
         private void BuildContentArea()
@@ -249,10 +234,8 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             if (_activity.Type is "Quiz" or "LongQuiz") BuildQuizView();
         }
 
-        // ════════════════════════════════════════════════════════════════
         //  RUBRIC PANEL (student-facing, read-only)
         //  Displayed for Essay and Assignment types before submission
-        // ════════════════════════════════════════════════════════════════
         private Panel BuildStudentRubricPanel(int w)
         {
             var rubricItems = _activity.RubricItems ?? new List<ActivityRubricItem>();
@@ -426,9 +409,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             public int MaxPoints { get; set; }
         }
 
-        // ════════════════════════════════════════════════════════════════
         //  SHARED HELPERS
-        // ════════════════════════════════════════════════════════════════
         private Panel BuildInstructionsPanel(int width)
         {
             var pnl = new Panel
@@ -598,9 +579,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             return pnl;
         }
 
-        // ════════════════════════════════════════════════════════════════
         //  ASSIGNMENT VIEW (distinct from essay)
-        // ════════════════════════════════════════════════════════════════
         private void BuildAssignmentView()
         {
             bool submitted = _activity.SubmissionStatus is "Submitted" or "Returned";
@@ -816,9 +795,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             }
         }
 
-        // ════════════════════════════════════════════════════════════════
         //  ESSAY VIEW (teal accent, rubric shown before submission)
-        // ════════════════════════════════════════════════════════════════
         private void BuildEssayView()
         {
             bool submitted = _activity.SubmissionStatus is "Submitted" or "Returned";
@@ -994,9 +971,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             }
         }
 
-        // ════════════════════════════════════════════════════════════════
         //  FILE UPLOAD VIEW (green accent)
-        // ════════════════════════════════════════════════════════════════
         private void BuildFileUploadView()
         {
             bool isSubm = _activity.SubmissionStatus is "Submitted" or "Returned";
@@ -1191,9 +1166,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             }
         }
 
-        // ════════════════════════════════════════════════════════════════
         //  QUIZ VIEW (indigo accent — all questions one page)
-        // ════════════════════════════════════════════════════════════════
         private void BuildQuizView()
         {
             _scrollArea.Controls.Clear();
@@ -1566,9 +1539,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             }
         }
 
-        // ════════════════════════════════════════════════════════════════
         //  RECITATION VIEW
-        // ════════════════════════════════════════════════════════════════
         private void BuildRecitationView()
         {
             bool isSubm = _activity.SubmissionStatus is "Submitted" or "Returned";
@@ -1676,9 +1647,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             }
         }
 
-        // ════════════════════════════════════════════════════════════════
         //  FILE BROWSE & SUBMIT
-        // ════════════════════════════════════════════════════════════════
         private void BrowseFile_Click(object sender, EventArgs e)
         {
             using var dlg = new OpenFileDialog

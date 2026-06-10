@@ -12,16 +12,11 @@ namespace PUPAcadPortal
 {
     public partial class CourseManagementDashboard : UserControl
     {
-        //  Events 
-        /// <summary>Raised when the user clicks "Open Course" to navigate into a course.</summary>
         public event Action<CourseDto>? OnOpenCourse;
-
-        //  Services / state 
         private readonly ICourseDbService _courseSvc;
         private readonly IActivityDbService _activitySvc;
         private readonly IModuleDbService _moduleSvc;
         private readonly int _professorId;
-
         private List<CourseDto> _courses = new();
         private string _searchTerm = string.Empty;
         private System.Windows.Forms.Timer _searchTimer = null!;
@@ -29,7 +24,7 @@ namespace PUPAcadPortal
         private NullActivityDbService nullActivityDbService;
         private NullModuleDbService nullModuleDbService;
 
-        // ── DbContext factory (mirrors ActivityDashboard pattern) ─────────────
+        // ─ DbContext factory 
         private static AppDbContext CreateContext() => new AppDbContext();
 
         //  Full DB-backed constructor 
@@ -51,7 +46,6 @@ namespace PUPAcadPortal
             this.Load += (s, e) => { LoadFromDb(); ResizeCards(); };
         }
 
-        /// <summary>Convenience constructor — creates all real services automatically.</summary>
         public CourseManagementDashboard(int professorId)
             : this(UserSession.ProfessorID ?? 0,
                    new CourseDbService(CreateContext),
@@ -59,7 +53,6 @@ namespace PUPAcadPortal
                    new ModuleDbService(CreateContext))
         { }
 
-        /// <summary>WinForms designer-only no-arg constructor (never shows real data).</summary>
         public CourseManagementDashboard()
             : this(0,
                    new NullCourseDbService(),
@@ -74,7 +67,6 @@ namespace PUPAcadPortal
             this.nullModuleDbService = nullModuleDbService;
         }
 
-        /// <summary>
         /// 3-argument constructor: professor ID + course service + activity service.
         /// Module service defaults to a real <see cref="ModuleDbService"/> instance.
         /// Resolves CS1729 when callers pass only three arguments.
@@ -184,8 +176,8 @@ namespace PUPAcadPortal
             }
         }
 
-        // ── Card builder 
-        // ── Card builder 
+        //  Card builder 
+        //  Card builder 
         private Panel BuildCourseCard(CourseDto course)
         {
             const int cardH = 220, statsY = 92, bottomY = 160;

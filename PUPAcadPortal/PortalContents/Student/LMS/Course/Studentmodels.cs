@@ -38,28 +38,22 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
         public string ScoreBreakdown { get; set; } = "";
         public string Suggestions { get; set; } = "";
 
-        // Essay
         public string EssayDraft { get; set; } = "";
 
-        // Quiz
         public List<ActivityQuestion> Questions { get; set; } = new();
         public Dictionary<int, string> Answers { get; set; } = new();
 
-        // File upload
         public string UploadedFileName { get; set; } = "";
         public string UploadedFilePath { get; set; } = "";
         public long UploadedFileSize { get; set; }
         public string SubmissionNote { get; set; } = "";
 
-        // Instructor-provided reference files
         public List<ActivityAttachment> Attachments { get; set; } = new();
 
-        // ── FIX 2: Rubric criteria (populated from DB, shown before submission) ──
         public List<ActivityRubricItem> RubricItems { get; set; } = new();
 
         public bool LockAfterDeadline { get; set; } = false;
 
-        // Computed helpers
         public bool IsOverdue => Deadline < DateTime.Now && SubmissionStatus == "Pending";
         public string EffectiveStatus => IsOverdue ? "Overdue" : SubmissionStatus;
     }
@@ -74,11 +68,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
         public string CorrectAnswer { get; set; } = "";
     }
 
-    // ── FIX 2: Rubric item for student view ──────────────────────────────────
-    /// <summary>
-    /// Read-only rubric criterion shown to students before and after submission.
-    /// Populated from the RubricContent JSON column on the Activity row.
-    /// </summary>
     public class ActivityRubricItem
     {
         public string Name { get; set; } = "";
@@ -86,7 +75,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
         public int MaxPoints { get; set; }
     }
 
-    //  Attachment 
     public class ActivityAttachment
     {
         public string FileName { get; set; } = "";
@@ -100,7 +88,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             FileSize > 0 ? $"{FileSize} B" : "";
     }
 
-    //  Notification 
     public class StudentNotification
     {
         public string Title { get; set; } = "";

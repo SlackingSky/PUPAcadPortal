@@ -4,29 +4,18 @@ using System.Windows.Forms;
 
 namespace PUPAcadPortal
 {
-    /// <summary>
-    /// Modal dialog for creating or editing a SubjectOffering (course).
-    /// All dropdown data (subjects, academic periods) is loaded from the database.
-    /// On OK, the validated DTO is written to the database via <see cref="ICourseDbService"/>.
-    /// </summary>
     public partial class CourseFormDialog : Form
     {
-        // ── Public output ─────────────────────────────────────────────────────
         public CourseDto Result { get; private set; } = new CourseDto();
-
-        // ── State ──────────────────────────────────────────────────────────────
         private readonly ICourseDbService _svc;
         private readonly int _professorId;
         private readonly CourseDto? _editing;   // null = create mode
-
         private System.Collections.Generic.List<SubjectLookupDto> _subjects = new();
         private System.Collections.Generic.List<AcademicPeriodLookupDto> _periods = new();
-
-        // ── Create constructor ────────────────────────────────────────────────
         public CourseFormDialog(int professorId, ICourseDbService svc)
             : this(professorId, null, svc) { }
 
-        // ── Edit constructor ──────────────────────────────────────────────────
+        //  Edit constructor 
         public CourseFormDialog(int professorId, CourseDto? existing, ICourseDbService svc)
         {
             _professorId = professorId;
@@ -41,7 +30,7 @@ namespace PUPAcadPortal
             this.Load += CourseFormDialog_Load;
         }
 
-        // ── Load ──────────────────────────────────────────────────────────────
+        //  Load 
         private void CourseFormDialog_Load(object? sender, EventArgs e)
         {
             LoadDropdowns();
@@ -103,7 +92,7 @@ namespace PUPAcadPortal
             cmbStatus.SelectedIndex = statusIdx >= 0 ? statusIdx : 0;
         }
 
-        // ── Save ──────────────────────────────────────────────────────────────
+        //  Save 
         private void BtnSave_Click(object? sender, EventArgs e)
         {
             lblError.Text = "";

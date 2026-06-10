@@ -110,8 +110,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             _lblClockVal.Text = DateTime.Now.ToString("hh:mm:ss tt");
 
             Reposition();
-            // Do NOT call GenerateNew() in the constructor — the parent form must
-            // set SessionId, SubjectOfferingId, and AttendanceDate first.
             _countdownTimer.Start();
         }
 

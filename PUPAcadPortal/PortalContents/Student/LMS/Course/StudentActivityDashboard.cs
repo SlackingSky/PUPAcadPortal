@@ -11,7 +11,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
     public partial class StudentActivityDashboard : UserControl
     {
         public event Action<StudentCourse> OnOpenCourse;
-
         private List<StudentCourse> _courses = new();
         private List<StudentNotification> _notifications = new();
         private System.Windows.Forms.Timer _searchTimer;
@@ -19,7 +18,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
         private readonly IStudentCourseDbService _svc;
         private readonly string _studentName;
 
-        // ── Constructors ─────────────────────────────────────────────────────
+        //  Constructors 
 
         /// <summary>WinForms designer constructor — shows empty state, no DB calls.</summary>
         public StudentActivityDashboard()
@@ -55,7 +54,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             flpCards.SizeChanged += flpCards_SizeChanged;
         }
 
-        // ── Data loading ─────────────────────────────────────────────────────
+        //  Data loading 
 
         
         private void LoadCourses()
@@ -90,7 +89,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             lblNotifCount.Visible = false;
         }
 
-        // ── Stats ─────────────────────────────────────────────────────────────
+        //  Stats 
 
         private void UpdateStats()
         {
@@ -108,7 +107,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             lblOverdueValue.Text = over.ToString();
         }
 
-        // ── Card rendering ────────────────────────────────────────────────────
+        //  Card rendering 
 
         private void RenderCards()
         {
@@ -147,7 +146,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             flpCards.ResumeLayout(true);
         }
 
-        // ── Empty state ───────────────────────────────────────────────────────
+        //  Empty state 
 
         private Panel BuildEmptyState(string search = "")
         {
@@ -202,7 +201,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             return pnl;
         }
 
-        // ── Course card ────────────────────────────────────────────────────────
+        //  Course card 
 
         private Panel BuildCourseCard(StudentCourse course, int cardW, int cardH)
         {
@@ -350,7 +349,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             return card;
         }
 
-        // ── Notification flyout ───────────────────────────────────────────────
+        //  Notification flyout 
 
         private void pnlNotifBadge_Click(object sender, EventArgs e)
         {
@@ -491,7 +490,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             flyout.Show(this);
         }
 
-        // ── Helpers ───────────────────────────────────────────────────────────
 
         private static string FormatTimeAgo(DateTime t)
         {

@@ -16,32 +16,22 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
 
     public partial class QRScanControl : UserControl
     {
-        //── Events 
         public event EventHandler<QRScanResult>? QRCodeScanned;
-
-        //  Camera state 
         private FilterInfoCollection? _videoDevices;
         private VideoCaptureDevice? _videoSource;
         private Bitmap? _currentFrame;
         private bool _cameraRunning = false;
         private readonly object _frameLock = new();
         private System.Windows.Forms.Timer? _scanTimer;
-
         private string? _lastRaw = null;
         private DateTime _lastScanTime = DateTime.MinValue;
         private const int DEBOUNCE_MS = 2500;
-
-        //  Student identity (must be set before showing the control) 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int CurrentStudentId { get; set; } = 0;
-
-        // ─ Mode 
         private enum ScanMode { Upload, Camera }
         private ScanMode _mode = ScanMode.Upload;
 
         private System.Data.DataTable? _historyDT;
-
-        //  context factory 
         private static AppDbContext CreateContext() => new AppDbContext();
 
         //  Constructor 
@@ -58,7 +48,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             LoadRealHistory();
         }
 
-        /// <summary>
         /// Entry point for all decoded QR text (upload and camera modes).
         /// All validation and persistence is done through QrAttendanceService.
         /// </summary>

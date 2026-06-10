@@ -2067,7 +2067,7 @@
             roundedPanel20.Size = new Size(588, 313);
             roundedPanel20.TabIndex = 19;
             // 
-            // InstructorPortal
+            // ProfessorPortal
             // 
             AutoScaleMode = AutoScaleMode.None;
             AutoScroll = true;
@@ -2075,9 +2075,10 @@
             Controls.Add(panel3);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
-            Name = "InstructorPortal";
+            Name = "ProfessorPortal";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Instructor Portal";
+            WindowState = FormWindowState.Maximized;
             Load += InstructorPortal_Load;
             pnlSidebar.ResumeLayout(false);
             flowLayoutPanel1.ResumeLayout(false);

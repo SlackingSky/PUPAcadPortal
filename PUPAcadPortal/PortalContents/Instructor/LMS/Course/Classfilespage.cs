@@ -15,17 +15,15 @@ namespace PUPAcadPortal
     {
         public event Action OnBack;
         public event Action<CourseActivity> OnOpenActivities;
-
         private static readonly Color Maroon = Color.FromArgb(128, 0, 0);
         private static readonly Color MaroonDark = Color.FromArgb(100, 0, 0);
         private static readonly Color LightBg = Color.FromArgb(245, 245, 248);
-
         private readonly CourseActivity _course;
         private readonly IModuleDbService _svc;
         private List<CourseModule> _modules = new();
         private NullModuleDbService nullModuleDbService;
 
-        // ── DB-backed constructor ──────────────────────────────────────────────
+        //  DB-backed constructor 
         public ClassFilesPage(CourseActivity course, IModuleDbService svc)
         {
             _course = course;
@@ -38,7 +36,7 @@ namespace PUPAcadPortal
             _pnlScroll.ClientSizeChanged += (s, e) => ResizeModuleCards();
         }
 
-        // ── Backward-compatible overload (no live DB) ──────────────────────────
+        //  Backward-compatible overload (no live DB) 
         public ClassFilesPage(CourseActivity course)
             : this(course, new NullModuleDbService())
         {
@@ -53,7 +51,7 @@ namespace PUPAcadPortal
 
         private void WireDesignerControls()
         {
-            // ── Header labels ────────────────────────────────────────────────
+            //  Header labels 
             lblCourse.Text = _course.CourseName;
 
             string section = string.IsNullOrWhiteSpace(_course.Section) ? "TBA" : _course.Section;
@@ -63,13 +61,12 @@ namespace PUPAcadPortal
             lblMeta.Text = string.IsNullOrWhiteSpace(schedule)
                 ? $"{_course.CourseCode}  ·  {instructor}   |   {section}"
                 : $"{_course.CourseCode}  ·  {instructor}   |   {section}   |   {schedule}";
-
-            // ── Button events ────────────────────────────────────────────────
+            //  Button events 
             btnBack.Click += (s, e) => OnBack?.Invoke();
             btnActivities.Click += (s, e) => OnOpenActivities?.Invoke(_course);
             btnAddModule.Click += BtnAddModule_Click;
 
-            // ── Reposition right-side buttons when header resizes ────────────
+            //  Reposition right-side buttons when header resizes 
             _pnlHeader.SizeChanged += (s, e) =>
             {
                 btnActivities.Location = new Point(_pnlHeader.Width - 150, 24);
@@ -77,9 +74,7 @@ namespace PUPAcadPortal
             };
         }
 
-        // ══════════════════════════════════════════════════════════════════════
         //  Data loading
-        // ══════════════════════════════════════════════════════════════════════
         private void LoadModulesFromDb()
         {
             try
@@ -135,9 +130,7 @@ namespace PUPAcadPortal
                 Description = "Hands-on application of theoretical concepts through lab exercises and case studies." },
         };
 
-        // ══════════════════════════════════════════════════════════════════════
         //  Render / resize
-        // ══════════════════════════════════════════════════════════════════════
         private void RenderModules()
         {
             _flpModules.SuspendLayout();
@@ -177,9 +170,7 @@ namespace PUPAcadPortal
             }
         }
 
-        // ══════════════════════════════════════════════════════════════════════
         //  Card builder
-        // ══════════════════════════════════════════════════════════════════════
         private Panel BuildModuleCard(CourseModule mod)
         {
             // Adjusted width calculation to bring controls into view
@@ -201,7 +192,7 @@ namespace PUPAcadPortal
                 e.Graphics.FillRectangle(accent, 0, 0, 4, card.Height);
             };
 
-            // ── Header row ─────────────────────────────────────────────────
+            //  Header row 
             var hdr = new Panel
             {
                 Height = 56,
@@ -306,7 +297,7 @@ namespace PUPAcadPortal
             };
             btnExpand.FlatAppearance.BorderSize = 0;
 
-            // ── Right-Click Context Menu for Deletion ────────────────────────
+            //  Right-Click Context Menu for Deletion 
             var rightClickMenu = new ContextMenuStrip();
             var deleteOption = new ToolStripMenuItem("🗑 Delete Module");
             deleteOption.ForeColor = Color.FromArgb(185, 50, 50);
@@ -318,12 +309,11 @@ namespace PUPAcadPortal
             lblTitle.ContextMenuStrip = rightClickMenu;
             lblDesc.ContextMenuStrip = rightClickMenu;
             lblNum.ContextMenuStrip = rightClickMenu;
-            // ─────────────────────────────────────────────────────────────────
 
             hdr.Controls.AddRange(new Control[]
                 { lblNum, lblTitle, lblDesc, lblFileCount, btnEdit, btnDelete, btnExpand });
 
-            // ── File list panel (collapsible) ────────────────────────────────
+            //  File list panel (collapsible) 
             var pnlFiles = new Panel
             {
                 Width = w,
@@ -352,7 +342,7 @@ namespace PUPAcadPortal
                     fy += fileRow.Height + 4;
                 }
 
-                // ── Drag-and-drop upload zone ───────────────────────────────
+                //  Drag-and-drop upload zone 
                 int dropH = 64;
                 var pnlDrop = new Panel
                 {
@@ -417,7 +407,7 @@ namespace PUPAcadPortal
                 pnlDrop.Controls.AddRange(new Control[]
                     { lblDropText, lblDropSub, btnBrowse });
 
-                // ── Shared upload-to-Cloudinary logic ───────────────────────
+                //  Shared upload-to-Cloudinary logic 
                 Action doUpload = () =>
                 {
                     using var ofd = new OpenFileDialog
@@ -585,9 +575,7 @@ namespace PUPAcadPortal
             return card;
         }
 
-        // ══════════════════════════════════════════════════════════════════════
         //  CRUD handlers
-        // ══════════════════════════════════════════════════════════════════════
         private void BtnAddModule_Click(object sender, EventArgs e)
         {
             using var dlg = new AddModuleDialog(_modules.Count + 1);
@@ -709,9 +697,7 @@ namespace PUPAcadPortal
             }
         }
 
-        // ══════════════════════════════════════════════════════════════════════
         //  Helpers
-        // ══════════════════════════════════════════════════════════════════════
 
         private void RenumberModules()
         {
@@ -883,9 +869,7 @@ namespace PUPAcadPortal
         }
     }
 
-    // ══════════════════════════════════════════════════════════════════════════
     //  Supporting data classes
-    // ══════════════════════════════════════════════════════════════════════════
 
     public class CourseModule
     {

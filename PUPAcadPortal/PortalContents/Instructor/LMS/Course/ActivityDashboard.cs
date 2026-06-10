@@ -7,23 +7,15 @@ using System.Windows.Forms;
 
 namespace PUPAcadPortal.PortalContents.Instructor.LMS
 {
-    /// <summary>
-    /// Top-level container shown under the "Courses" sidebar button.
-    /// Hosts <see cref="CourseManagementDashboard"/> and handles
-    /// sub-page navigation without requiring the parent form.
-    /// </summary>
     public sealed class ActivityDashboard : UserControl
     {
-        // ── Services 
         private readonly int _professorId;
         private readonly ICourseDbService _courseSvc;
         private readonly IActivityDbService _activitySvc;
         private readonly IModuleDbService _moduleSvc;
-
-        // ─ Current child view 
         private Control? _current;
 
-        //  DB context factory (mirrors CourseManagementDashboard pattern) ────
+        //  DB context factory (mirrors CourseManagementDashboard pattern) 
         private static AppDbContext CreateContext() => new AppDbContext();
 
         // ── DB-backed constructor 
@@ -59,9 +51,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
             ShowDashboard();
         }
-
-        // ── Navigation helpers 
-
         private void ShowDashboard()
         {
             var dashboard = new CourseManagementDashboard(
@@ -123,9 +112,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
             ResumeLayout(true);
         }
-
-        // ── DTO → CourseActivity converter (mirrors CourseManagementDashboard) ─
-
         private static CourseActivity DtoToCourseActivity(CourseDto dto) =>
             new CourseActivity
             {

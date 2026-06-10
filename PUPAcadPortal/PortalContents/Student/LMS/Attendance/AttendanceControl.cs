@@ -47,13 +47,10 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             RefreshAll();
         }
 
-        // ── Load all attendance data from DB for this student ──────────────────────
-        /// <summary>
-        /// Reloads subjects and attendance records from scratch.
+        //  Load all attendance data from DB for this student 
         /// IMPORTANT: clears both _subjects, _records, AND cmbCourse.Items before
         /// rebuilding so that repeated calls (e.g. triggered by QR scan success)
         /// never produce duplicate entries in the dropdown.
-        /// </summary>
         private void LoadFromDatabase()
         {
             _subjects.Clear();
@@ -95,8 +92,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
                     _subjects.Add(meta);
                     cmbCourse.Items.Add($"{meta.SubjectCode} – {meta.Name}");
 
-                    // Load all AttendanceRecords for this student in this offering.
-                    // FIX: The JOIN goes through ClassSession → SubjectOffering so
                     // QR-scanned records (which are inserted with SessionId only) are
                     // picked up correctly — we no longer rely on a direct OfferingId
                     // field on AttendanceRecord.
@@ -569,7 +564,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             };
             frm.Controls.Add(scanner);
 
-            // FIX: on successful scan reload all data from DB and refresh every
             // grid/card so the new attendance log entry appears immediately.
             scanner.QRCodeScanned += (s2, result) =>
             {
@@ -591,7 +585,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             RefreshAll();
         }
 
-        //  Filter/combo change handlers ────────────────────────────────────────────
+        //  Filter/combo change handlers 
         // These are wired in the designer; add them here if not already present
         // so filter changes immediately refresh all views without a DB reload.
         private void CmbCourse_SelectedIndexChanged(object sender, EventArgs e)

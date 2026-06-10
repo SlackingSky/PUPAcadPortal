@@ -66,6 +66,8 @@ namespace PUPAcadPortal
             SwapView(dashboard);
         }
 
+
+
         // ── Internal view-swap helper ─────────────────────────────────────────
         private void SwapView(UserControl next)
         {

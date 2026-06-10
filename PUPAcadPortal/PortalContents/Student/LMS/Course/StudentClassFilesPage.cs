@@ -1,94 +1,101 @@
 ﻿using PUPAcadPortal.Models;
-using PUPAcadPortal.PortalContents.Instructor.LMS.Course; 
+using PUPAcadPortal.PortalContents.Instructor.LMS.Course;
 using PUPAcadPortal.Services;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using PUPAcadPortal.PortalContents.Student.LMS.Course;
+
 
 namespace PUPAcadPortal
 {
     public partial class StudentClassFilesPage : UserControl
     {
+        // ── Events 
         public event Action OnBack;
-        public event Action<CourseActivity> OnOpenActivities;
 
+        /// <summary>Fired when the student clicks "View Activities" — goes to Activity List.</summary>
+        public event Action<StudentCourse> OnOpenActivities;
+
+        //  State 
         private static readonly Color Maroon = Color.FromArgb(128, 0, 0);
         private static readonly Color LightBg = Color.FromArgb(245, 245, 248);
+        private static readonly Color AccentBg = Color.FromArgb(252, 248, 248);
 
-        private readonly CourseActivity _course;
-        private readonly IModuleDbService _svc;
+        private readonly StudentCourse _course;
+        private readonly IModuleDbService _moduleSvc;
+        private readonly int _studentId;
         private List<CourseModule> _modules = new();
-        private NullModuleDbService nullModuleDbService;
 
-        // ── DB-backed constructor ──────────────────────────────────────────────
-        public StudentClassFilesPage(CourseActivity course, IModuleDbService svc)
+        public StudentClassFilesPage(
+            StudentCourse course,
+            IModuleDbService moduleSvc,
+            int studentId,
+            Services.IStudentCourseDbService courseSvc)
         {
-            _course = course;
-            _svc = svc;
+            _course = course ?? throw new ArgumentNullException(nameof(course));
+            _moduleSvc = moduleSvc ?? new NullModuleDbService();
+            _studentId = studentId;
 
             InitializeComponent();
-            WireDesignerControls();
+            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
+
+            WireHeader();
 
             this.Load += (s, e) => { LoadModulesFromDb(); RenderModules(); };
             _pnlScroll.ClientSizeChanged += (s, e) => ResizeModuleCards();
         }
 
-        //  Backward-compatible overload (no live DB) 
-        public StudentClassFilesPage(CourseActivity course)
-            : this(course, new NullModuleDbService())
-        {
-            _modules = SeedSampleModules();
-        }
+        /// <summary>WinForms designer no-arg constructor — no DB, empty state.</summary>
+        public StudentClassFilesPage()
+            : this(
+                new StudentCourse { Name = "Sample Course", Code = "SMPL 001" },
+                new NullModuleDbService(),
+                0,
+                new NullStudentCourseDbService())
+        { }
 
-        public StudentClassFilesPage(CourseActivity course, NullModuleDbService nullModuleDbService)
+        //  Header wiring 
+        private void WireHeader()
         {
-            _course = course;
-            this.nullModuleDbService = nullModuleDbService;
-        }
+            lblCourse.Text = _course.Name;
 
-        private void WireDesignerControls()
-        {
-            // ── Header labels ────────────────────────────────────────────────
-            lblCourse.Text = _course.CourseName;
-
-            string section = string.IsNullOrWhiteSpace(_course.Section) ? "TBA" : _course.Section;
             string schedule = string.IsNullOrWhiteSpace(_course.Schedule) ? "" : _course.Schedule;
-            string instructor = string.IsNullOrWhiteSpace(_course.InstructorName) ? "" : _course.InstructorName;
+            string instr = string.IsNullOrWhiteSpace(_course.Instructor) ? "" : _course.Instructor;
 
-            lblMeta.Text = string.IsNullOrWhiteSpace(schedule)
-                ? $"{_course.CourseCode}  ·  {instructor}   |   {section}"
-                : $"{_course.CourseCode}  ·  {instructor}   |   {section}   |   {schedule}";
+            var parts = new List<string>();
+            if (!string.IsNullOrWhiteSpace(_course.Code)) parts.Add(_course.Code);
+            if (!string.IsNullOrWhiteSpace(instr)) parts.Add(instr);
+            if (!string.IsNullOrWhiteSpace(schedule)) parts.Add(schedule);
+            if (!string.IsNullOrWhiteSpace(_course.Room)) parts.Add(_course.Room);
 
-            // ── Button events ────────────────────────────────────────────────
+            lblMeta.Text = string.Join("   |   ", parts);
+
             btnBack.Click += (s, e) => OnBack?.Invoke();
             btnActivities.Click += (s, e) => OnOpenActivities?.Invoke(_course);
 
-            // ── Reposition right-side buttons when header resizes ────────────
             _pnlHeader.SizeChanged += (s, e) =>
-            {
                 btnActivities.Location = new Point(_pnlHeader.Width - 160, 24);
-            };
         }
 
-        // ══════════════════════════════════════════════════════════════════════
         //  Data loading
-        // ══════════════════════════════════════════════════════════════════════
         private void LoadModulesFromDb()
         {
             try
             {
-                var dbModules = _svc.GetModulesForOffering(_course.SubjectOfferingId);
+                var dbModules = _moduleSvc.GetModulesForOffering(_course.SubjectOfferingId);
                 _modules = dbModules.Select((m, i) =>
                 {
                     var files = new List<ModuleFile>();
                     if (!string.IsNullOrWhiteSpace(m.FileUrl))
                     {
-                        string fileName = System.IO.Path.GetFileName(m.FileUrl);
-                        if (string.IsNullOrWhiteSpace(fileName)) fileName = "file";
-                        string ext = System.IO.Path.GetExtension(fileName).TrimStart('.').ToUpper();
+                        string fileName = Path.GetFileName(m.FileUrl);
+                        if (string.IsNullOrWhiteSpace(fileName)) fileName = m.Title;
+                        string ext = Path.GetExtension(fileName).TrimStart('.').ToUpper();
 
                         files.Add(new ModuleFile
                         {
@@ -114,45 +121,24 @@ namespace PUPAcadPortal
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    $"Failed to load modules:\n{ex.Message}",
+                    $"Failed to load course files:\n{ex.Message}",
                     "Database Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 _modules = new List<CourseModule>();
             }
         }
 
-        private static List<CourseModule> SeedSampleModules() => new()
-        {
-            new CourseModule { Id = 1, Title = "Module 1 – Introduction & Course Overview",
-                Description = "Covers course policies, expected outputs, grading criteria, and an overview of the subject matter." },
-            new CourseModule { Id = 2, Title = "Module 2 – Fundamentals",
-                Description = "Core concepts and foundational topics required for subsequent modules." }
-        };
-
-        // ══════════════════════════════════════════════════════════════════════
-        //  Render / resize
-        // ══════════════════════════════════════════════════════════════════════
+        //  Render
         private void RenderModules()
         {
             _flpModules.SuspendLayout();
             _flpModules.Controls.Clear();
 
             if (_modules.Count == 0)
-            {
-                _flpModules.Controls.Add(new Label
-                {
-                    Text = "No modules have been posted by your instructor yet.",
-                    Font = new Font("Segoe UI", 11F),
-                    ForeColor = Color.FromArgb(160, 160, 170),
-                    AutoSize = true,
-                    Margin = new Padding(10, 20, 0, 0),
-                });
-            }
+                _flpModules.Controls.Add(BuildEmptyState());
             else
-            {
                 foreach (var mod in _modules)
                     _flpModules.Controls.Add(BuildModuleCard(mod));
-            }
 
             _flpModules.ResumeLayout();
             ResizeModuleCards();
@@ -162,20 +148,57 @@ namespace PUPAcadPortal
         {
             int w = Math.Max(600, _pnlScroll.ClientSize.Width - 80);
             foreach (Control ctrl in _flpModules.Controls)
-            {
                 if (ctrl is Panel card)
-                {
                     card.Width = w;
-                }
-            }
         }
 
-        // ══════════════════════════════════════════════════════════════════════
-        //  Card builder (Student View - Read Only)
-        // ══════════════════════════════════════════════════════════════════════
+        //  Empty state 
+        private Panel BuildEmptyState()
+        {
+            int w = Math.Max(600, _pnlScroll.ClientSize.Width > 80
+                                        ? _pnlScroll.ClientSize.Width - 80 : 600);
+            var pnl = new Panel
+            {
+                Width = w,
+                Height = 200,
+                BackColor = Color.FromArgb(252, 252, 255),
+                Margin = new Padding(0, 20, 0, 0)
+            };
+            pnl.Paint += (s, e) =>
+            {
+                using var pen = new Pen(Color.FromArgb(218, 218, 228), 1.5f);
+                e.Graphics.DrawRectangle(pen, 1, 1, pnl.Width - 3, pnl.Height - 3);
+            };
+            pnl.Controls.Add(new Label
+            {
+                Text = "📂  No class files posted yet",
+                Font = new Font("Segoe UI", 13F, FontStyle.Bold),
+                ForeColor = Color.FromArgb(160, 160, 170),
+                AutoSize = false,
+                Width = w,
+                Height = 60,
+                TextAlign = ContentAlignment.BottomCenter,
+                Location = new Point(0, 50)
+            });
+            pnl.Controls.Add(new Label
+            {
+                Text = "Your instructor hasn't uploaded any course materials yet.\nCheck back later.",
+                Font = new Font("Segoe UI", 9.5F),
+                ForeColor = Color.FromArgb(180, 180, 190),
+                AutoSize = false,
+                Width = w,
+                Height = 36,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Location = new Point(0, 118)
+            });
+            return pnl;
+        }
+
+        //  Module card builder  (student view — read-only)
         private Panel BuildModuleCard(CourseModule mod)
         {
-            int w = Math.Max(600, _pnlScroll.ClientSize.Width > 80 ? _pnlScroll.ClientSize.Width - 80 : 600);
+            int w = Math.Max(600, _pnlScroll.ClientSize.Width > 80
+                                        ? _pnlScroll.ClientSize.Width - 80 : 600);
             bool expanded = mod.IsExpanded;
 
             var card = new Panel
@@ -188,12 +211,12 @@ namespace PUPAcadPortal
             card.Paint += (s, e) =>
             {
                 using var pen = new Pen(Color.FromArgb(220, 220, 228), 1f);
-                e.Graphics.DrawRectangle(pen, 0, 0, card.Width - 1, card.Height - 1);
                 using var accent = new SolidBrush(Maroon);
+                e.Graphics.DrawRectangle(pen, 0, 0, card.Width - 1, card.Height - 1);
                 e.Graphics.FillRectangle(accent, 0, 0, 4, card.Height);
             };
 
-            //  Header row 
+            //  Collapsed header row 
             var hdr = new Panel
             {
                 Height = 56,
@@ -205,7 +228,6 @@ namespace PUPAcadPortal
             var lblNum = new Label
             {
                 Text = mod.Id.ToString(),
-                Name = "lblNum",
                 Font = new Font("Segoe UI", 11F, FontStyle.Bold),
                 ForeColor = Color.White,
                 BackColor = Maroon,
@@ -217,38 +239,42 @@ namespace PUPAcadPortal
             var lblTitle = new Label
             {
                 Text = mod.Title,
-                Name = "lblTitle",
                 Font = new Font("Segoe UI", 10.5F, FontStyle.Bold),
                 ForeColor = Color.FromArgb(20, 20, 25),
                 AutoSize = false,
                 Location = new Point(54, 10),
-                Size = new Size(w - 200, 20), // Expanded width since no edit/delete buttons
+                Size = new Size(w - 200, 20),
                 AutoEllipsis = true,
-                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
             };
 
             var lblDesc = new Label
             {
                 Text = mod.Description,
-                Name = "lblDesc",
                 Font = new Font("Segoe UI", 8.5F),
                 ForeColor = Color.Gray,
                 AutoSize = false,
                 Location = new Point(54, 32),
                 Size = new Size(w - 200, 16),
                 AutoEllipsis = true,
-                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
             };
+
+            int fileCount = mod.Files.Count;
+            bool hasFiles = fileCount > 0;
+            Color pillBg = hasFiles ? Color.FromArgb(215, 245, 215) : Color.FromArgb(240, 240, 240);
+            Color pillFg = hasFiles ? Color.FromArgb(27, 110, 27) : Color.FromArgb(130, 130, 130);
 
             var lblFileCount = new Label
             {
-                Text = $"📎 {mod.Files.Count} file{(mod.Files.Count == 1 ? "" : "s")}",
-                Name = "lblFileCount",
-                Font = new Font("Segoe UI", 8.5F),
-                ForeColor = Color.FromArgb(100, 100, 110),
+                Text = hasFiles ? $"📎 {fileCount} file{(fileCount == 1 ? "" : "s")}" : "📂 No files",
+                Font = new Font("Segoe UI", 8.5F, hasFiles ? FontStyle.Bold : FontStyle.Regular),
+                ForeColor = pillFg,
+                BackColor = pillBg,
                 AutoSize = true,
-                Location = new Point(w - 120, 20),
-                Anchor = AnchorStyles.Top | AnchorStyles.Right
+                Location = new Point(w - 126, 18),
+                Padding = new Padding(6, 3, 6, 3),
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
             };
 
             var btnExpand = new Button
@@ -261,14 +287,13 @@ namespace PUPAcadPortal
                 Size = new Size(34, 34),
                 Location = new Point(w - 42, 11),
                 Cursor = Cursors.Hand,
-                Anchor = AnchorStyles.Top | AnchorStyles.Right
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
             };
             btnExpand.FlatAppearance.BorderSize = 0;
 
-            hdr.Controls.AddRange(new Control[]
-                { lblNum, lblTitle, lblDesc, lblFileCount, btnExpand });
+            hdr.Controls.AddRange(new Control[] { lblNum, lblTitle, lblDesc, lblFileCount, btnExpand });
 
-            //  File list panel (collapsible) 
+            //  Expandable file list 
             var pnlFiles = new Panel
             {
                 Width = w,
@@ -283,34 +308,33 @@ namespace PUPAcadPortal
                 pnlFiles.SuspendLayout();
                 pnlFiles.Controls.Clear();
 
-                int currentWidth = pnlFiles.Width;
+                int fw = pnlFiles.Width;
                 int fy = 10;
 
                 if (mod.Files.Count == 0)
                 {
-                    var lblEmpty = new Label
+                    pnlFiles.Controls.Add(new Label
                     {
-                        Text = "No files attached to this module.",
+                        Text = "No files have been attached to this module.",
                         Font = new Font("Segoe UI", 9F, FontStyle.Italic),
                         ForeColor = Color.Gray,
                         AutoSize = true,
-                        Location = new Point(14, fy)
-                    };
-                    pnlFiles.Controls.Add(lblEmpty);
-                    fy += 30;
+                        Location = new Point(20, fy),
+                    });
+                    fy += 34;
                 }
                 else
                 {
                     foreach (var f in mod.Files)
                     {
-                        var fileRow = BuildFileRow(f, currentWidth);
+                        var fileRow = BuildFileRow(f, fw);
                         fileRow.Location = new Point(0, fy);
                         pnlFiles.Controls.Add(fileRow);
                         fy += fileRow.Height + 4;
                     }
                 }
 
-                pnlFiles.Height = fy + 8;
+                pnlFiles.Height = fy + 10;
                 pnlFiles.ResumeLayout();
                 RecalcCardHeight(card, hdr, pnlFiles);
             };
@@ -320,6 +344,7 @@ namespace PUPAcadPortal
                 mod.IsExpanded = !mod.IsExpanded;
                 pnlFiles.Visible = mod.IsExpanded;
                 btnExpand.Text = mod.IsExpanded ? "▲" : "▼";
+                hdr.BackColor = mod.IsExpanded ? AccentBg : Color.White;
                 if (mod.IsExpanded) refreshFiles();
                 RecalcCardHeight(card, hdr, pnlFiles);
             };
@@ -329,7 +354,6 @@ namespace PUPAcadPortal
             lblNum.Click += toggleExpand;
             lblTitle.Cursor = Cursors.Hand;
             lblTitle.Click += toggleExpand;
-
             hdr.Click += (s, ev) =>
             {
                 var pos = hdr.PointToClient(Cursor.Position);
@@ -338,25 +362,26 @@ namespace PUPAcadPortal
                     toggleExpand(s, ev);
             };
 
+            hdr.MouseEnter += (s, e) => { if (!mod.IsExpanded) hdr.BackColor = Color.FromArgb(252, 248, 248); };
+            hdr.MouseLeave += (s, e) => { if (!mod.IsExpanded) hdr.BackColor = Color.White; };
+
             card.Controls.Add(pnlFiles);
             card.Controls.Add(hdr);
 
             if (expanded) refreshFiles();
             RecalcCardHeight(card, hdr, pnlFiles);
-
             return card;
         }
 
-        //  Helpers
-
+        //  File row  (student view — download only)
         private static Panel BuildFileRow(ModuleFile f, int cardW)
         {
             var row = new Panel
             {
                 Width = cardW,
-                Height = 40,
+                Height = 44,
                 BackColor = Color.Transparent,
-                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
             };
             row.Paint += (s, e) =>
             {
@@ -370,56 +395,97 @@ namespace PUPAcadPortal
                 "DOCX" or "DOC" => "📝",
                 "PPTX" or "PPT" => "📊",
                 "XLSX" or "XLS" => "📊",
+                "JPG" or "JPEG"
+                    or "PNG"
+                    or "GIF" => "🖼",
+                "ZIP" or "RAR"
+                    or "7Z" => "🗜",
                 _ => "📎",
             };
 
-            row.Controls.Add(new Label
+            Color badgeClr = f.Type switch
+            {
+                "PDF" => Color.FromArgb(220, 50, 50),
+                "DOCX" or "DOC" => Color.FromArgb(40, 100, 200),
+                "PPTX" or "PPT" => Color.FromArgb(200, 80, 20),
+                "XLSX" or "XLS" => Color.FromArgb(30, 140, 60),
+                _ => Color.FromArgb(100, 100, 120),
+            };
+
+            // Icon panel
+            var pnlIcon = new Panel
+            {
+                Size = new Size(44, 44),
+                Location = new Point(14, 0),
+                BackColor = Color.FromArgb(245, 245, 250),
+            };
+            pnlIcon.Controls.Add(new Label
             {
                 Text = icon,
-                Font = new Font("Segoe UI", 13F),
-                AutoSize = true,
-                Location = new Point(20, 9),
+                Font = new Font("Segoe UI", 14F),
+                Location = new Point(4, 4),
+                Size = new Size(36, 36),
+                TextAlign = ContentAlignment.MiddleCenter,
                 BackColor = Color.Transparent,
             });
+            row.Controls.Add(pnlIcon);
 
-            var lblName = new Label
+            // File name
+            row.Controls.Add(new Label
             {
                 Text = f.Name,
                 Font = new Font("Segoe UI", 9F, FontStyle.Bold),
                 ForeColor = Color.FromArgb(30, 30, 35),
                 AutoSize = false,
-                Location = new Point(52, 8),
-                Size = new Size(cardW - 180, 16),
+                Location = new Point(66, 6),
+                Size = new Size(cardW - 210, 18),
                 AutoEllipsis = true,
                 BackColor = Color.Transparent,
-                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
-            };
-            row.Controls.Add(lblName);
-
-            row.Controls.Add(new Label
-            {
-                Text = FormatBytes(f.SizeBytes),
-                Font = new Font("Segoe UI", 8F),
-                ForeColor = Color.Gray,
-                AutoSize = true,
-                Location = new Point(52, 24),
-                BackColor = Color.Transparent,
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
             });
 
-            int right = cardW - 10;
+            // File type badge
+            var meta = new Label
+            {
+                Font = new Font("Segoe UI", 7.5F, FontStyle.Bold),
+                ForeColor = Color.White,
+                BackColor = badgeClr,
+                Text = string.IsNullOrEmpty(f.Type) ? "FILE" : f.Type,
+                AutoSize = true,
+                Location = new Point(66, 26),
+                Padding = new Padding(4, 1, 4, 1),
+            };
+            row.Controls.Add(meta);
 
+            if (f.SizeBytes > 0)
+            {
+                row.Controls.Add(new Label
+                {
+                    Text = "  " + FormatBytes(f.SizeBytes),
+                    Font = new Font("Segoe UI", 7.5F),
+                    ForeColor = Color.Gray,
+                    AutoSize = true,
+                    Location = new Point(66 + meta.PreferredWidth + 2, 26),
+                    BackColor = Color.Transparent,
+                });
+            }
+
+            // Download button
             var btnDownload = new buttonRounded
             {
-                Text = "↓ Download",
-                Size = new Size(90, 26),
-                Location = new Point(right - 90, 7),
-                BackColor = Color.FromArgb(55, 138, 221),
+                Text = f.IsUploaded ? "↓  Download" : "Not Available",
+                Size = new Size(100, 28),
+                Location = new Point(cardW - 114, 8),
+                BackColor = f.IsUploaded ? Color.FromArgb(40, 110, 200) : Color.FromArgb(180, 180, 180),
                 ForeColor = Color.White,
                 BorderRadius = 6,
                 Font = new Font("Segoe UI", 8F, FontStyle.Bold),
-                Cursor = Cursors.Hand,
-                Anchor = AnchorStyles.Top | AnchorStyles.Right
+                Cursor = f.IsUploaded ? Cursors.Hand : Cursors.Default,
+                FlatStyle = FlatStyle.Flat,
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
+                Enabled = f.IsUploaded,
             };
+            btnDownload.FlatAppearance.BorderSize = 0;
 
             btnDownload.Click += (s, e) =>
             {
@@ -429,7 +495,6 @@ namespace PUPAcadPortal
                         "Not Available", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
-
                 try
                 {
                     using var sfd = new SaveFileDialog
@@ -441,14 +506,16 @@ namespace PUPAcadPortal
                     if (sfd.ShowDialog() != DialogResult.OK) return;
 
                     string tempPath = CloudinaryService.Instance.DownloadToTemp(f.CloudinaryUrl, f.Name);
-                    System.IO.File.Copy(tempPath, sfd.FileName, overwrite: true);
-                    try { System.IO.File.Delete(tempPath); } catch { }
+                    File.Copy(tempPath, sfd.FileName, overwrite: true);
+                    try { File.Delete(tempPath); } catch { }
 
-                    MessageBox.Show($"File saved to:\n{sfd.FileName}", "Download Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"File saved to:\n{sfd.FileName}",
+                        "Download Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Download failed:\n{ex.Message}", "Download Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Download failed:\n{ex.Message}",
+                        "Download Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             };
             row.Controls.Add(btnDownload);
@@ -457,14 +524,12 @@ namespace PUPAcadPortal
         }
 
         private static void RecalcCardHeight(Panel card, Panel hdr, Panel files)
-        {
-            card.Height = hdr.Height + (files.Visible ? files.Height : 0);
-        }
+            => card.Height = hdr.Height + (files.Visible ? files.Height : 0);
 
         private static string FormatBytes(long b)
         {
-            if (b < 1024) return $"{b} B";
-            if (b < 1_048_576) return $"{b / 1024.0:F1} KB";
+            if (b < 1_024) return $"{b} B";
+            if (b < 1_048_576) return $"{b / 1_024.0:F1} KB";
             return $"{b / 1_048_576.0:F1} MB";
         }
     }

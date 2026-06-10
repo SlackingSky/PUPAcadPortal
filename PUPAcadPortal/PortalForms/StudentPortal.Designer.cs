@@ -524,6 +524,7 @@
             Name = "StudentPortal";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "StudentPortal";
+            WindowState = FormWindowState.Maximized;
             Load += StudentPortal_Load;
             pnlSidebar.ResumeLayout(false);
             panel12.ResumeLayout(false);
