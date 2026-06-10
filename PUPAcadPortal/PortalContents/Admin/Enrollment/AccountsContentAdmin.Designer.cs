@@ -28,28 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AccountsContentAdmin));
             pnlAccountingRecordsContent = new Panel();
             pnlARResultContainer = new Panel();
+            dgvAccountingRecords = new DataGridView();
             btnARSearch = new Button();
             txtARSearchBar = new TextBox();
             pnlARUnpaidAmount = new Panel();
             pictureBox13 = new PictureBox();
             label60 = new Label();
-            label61 = new Label();
+            lblUnpaid = new Label();
             pnlARPaidAmount = new Panel();
             pictureBox12 = new PictureBox();
             label62 = new Label();
-            label63 = new Label();
+            lblPaid = new Label();
             pnlARTotalAmount = new Panel();
             pictureBox11 = new PictureBox();
             label64 = new Label();
-            label65 = new Label();
+            lblTotalAmount = new Label();
             label66 = new Label();
             label67 = new Label();
             pictureBox10 = new PictureBox();
             pnlAccountingRecordsContent.SuspendLayout();
             pnlARResultContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvAccountingRecords).BeginInit();
             pnlARUnpaidAmount.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox13).BeginInit();
             pnlARPaidAmount.SuspendLayout();
@@ -80,13 +84,50 @@
             // 
             pnlARResultContainer.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pnlARResultContainer.BackColor = Color.White;
+            pnlARResultContainer.Controls.Add(dgvAccountingRecords);
             pnlARResultContainer.Controls.Add(btnARSearch);
             pnlARResultContainer.Controls.Add(txtARSearchBar);
             pnlARResultContainer.Location = new Point(32, 250);
             pnlARResultContainer.Margin = new Padding(3, 2, 3, 2);
             pnlARResultContainer.Name = "pnlARResultContainer";
-            pnlARResultContainer.Size = new Size(1177, 292);
+            pnlARResultContainer.Size = new Size(1177, 444);
             pnlARResultContainer.TabIndex = 21;
+            // 
+            // dgvAccountingRecords
+            // 
+            dgvAccountingRecords.AllowUserToAddRows = false;
+            dgvAccountingRecords.AllowUserToDeleteRows = false;
+            dgvAccountingRecords.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvAccountingRecords.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvAccountingRecords.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
+            dgvAccountingRecords.BackgroundColor = Color.White;
+            dgvAccountingRecords.CellBorderStyle = DataGridViewCellBorderStyle.RaisedHorizontal;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgvAccountingRecords.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dgvAccountingRecords.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dgvAccountingRecords.DefaultCellStyle = dataGridViewCellStyle2;
+            dgvAccountingRecords.Location = new Point(14, 60);
+            dgvAccountingRecords.Name = "dgvAccountingRecords";
+            dgvAccountingRecords.ReadOnly = true;
+            dgvAccountingRecords.RowHeadersVisible = false;
+            dgvAccountingRecords.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dgvAccountingRecords.ScrollBars = ScrollBars.Vertical;
+            dgvAccountingRecords.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvAccountingRecords.Size = new Size(1146, 376);
+            dgvAccountingRecords.TabIndex = 2;
             // 
             // btnARSearch
             // 
@@ -95,7 +136,7 @@
             btnARSearch.FlatStyle = FlatStyle.Flat;
             btnARSearch.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnARSearch.ForeColor = Color.White;
-            btnARSearch.Location = new Point(1014, 17);
+            btnARSearch.Location = new Point(1018, 17);
             btnARSearch.Margin = new Padding(3, 2, 3, 2);
             btnARSearch.Name = "btnARSearch";
             btnARSearch.Size = new Size(144, 32);
@@ -107,7 +148,7 @@
             // 
             txtARSearchBar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtARSearchBar.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtARSearchBar.Location = new Point(6, 18);
+            txtARSearchBar.Location = new Point(12, 18);
             txtARSearchBar.Margin = new Padding(3, 2, 3, 2);
             txtARSearchBar.Name = "txtARSearchBar";
             txtARSearchBar.PlaceholderText = "Search by student name, ID, or transaction type...";
@@ -120,7 +161,7 @@
             pnlARUnpaidAmount.BorderStyle = BorderStyle.Fixed3D;
             pnlARUnpaidAmount.Controls.Add(pictureBox13);
             pnlARUnpaidAmount.Controls.Add(label60);
-            pnlARUnpaidAmount.Controls.Add(label61);
+            pnlARUnpaidAmount.Controls.Add(lblUnpaid);
             pnlARUnpaidAmount.Location = new Point(860, 119);
             pnlARUnpaidAmount.Margin = new Padding(3, 2, 3, 2);
             pnlARUnpaidAmount.Name = "pnlARUnpaidAmount";
@@ -152,17 +193,17 @@
             label60.TabIndex = 16;
             label60.Text = "Unpaid Amount";
             // 
-            // label61
+            // lblUnpaid
             // 
-            label61.AutoSize = true;
-            label61.BackColor = Color.Transparent;
-            label61.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label61.ForeColor = Color.Red;
-            label61.Location = new Point(3, 22);
-            label61.Name = "label61";
-            label61.Size = new Size(100, 65);
-            label61.TabIndex = 17;
-            label61.Text = " ₱0";
+            lblUnpaid.AutoSize = true;
+            lblUnpaid.BackColor = Color.Transparent;
+            lblUnpaid.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblUnpaid.ForeColor = Color.Red;
+            lblUnpaid.Location = new Point(3, 22);
+            lblUnpaid.Name = "lblUnpaid";
+            lblUnpaid.Size = new Size(100, 65);
+            lblUnpaid.TabIndex = 17;
+            lblUnpaid.Text = " ₱0";
             // 
             // pnlARPaidAmount
             // 
@@ -170,7 +211,7 @@
             pnlARPaidAmount.BorderStyle = BorderStyle.Fixed3D;
             pnlARPaidAmount.Controls.Add(pictureBox12);
             pnlARPaidAmount.Controls.Add(label62);
-            pnlARPaidAmount.Controls.Add(label63);
+            pnlARPaidAmount.Controls.Add(lblPaid);
             pnlARPaidAmount.Location = new Point(443, 119);
             pnlARPaidAmount.Margin = new Padding(3, 2, 3, 2);
             pnlARPaidAmount.Name = "pnlARPaidAmount";
@@ -202,17 +243,17 @@
             label62.TabIndex = 16;
             label62.Text = "Paid Amount";
             // 
-            // label63
+            // lblPaid
             // 
-            label63.AutoSize = true;
-            label63.BackColor = Color.Transparent;
-            label63.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label63.ForeColor = Color.LimeGreen;
-            label63.Location = new Point(3, 22);
-            label63.Name = "label63";
-            label63.Size = new Size(100, 65);
-            label63.TabIndex = 17;
-            label63.Text = " ₱0";
+            lblPaid.AutoSize = true;
+            lblPaid.BackColor = Color.Transparent;
+            lblPaid.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblPaid.ForeColor = Color.LimeGreen;
+            lblPaid.Location = new Point(3, 22);
+            lblPaid.Name = "lblPaid";
+            lblPaid.Size = new Size(100, 65);
+            lblPaid.TabIndex = 17;
+            lblPaid.Text = " ₱0";
             // 
             // pnlARTotalAmount
             // 
@@ -220,7 +261,7 @@
             pnlARTotalAmount.BorderStyle = BorderStyle.Fixed3D;
             pnlARTotalAmount.Controls.Add(pictureBox11);
             pnlARTotalAmount.Controls.Add(label64);
-            pnlARTotalAmount.Controls.Add(label65);
+            pnlARTotalAmount.Controls.Add(lblTotalAmount);
             pnlARTotalAmount.Location = new Point(32, 122);
             pnlARTotalAmount.Margin = new Padding(3, 2, 3, 2);
             pnlARTotalAmount.Name = "pnlARTotalAmount";
@@ -252,17 +293,17 @@
             label64.TabIndex = 15;
             label64.Text = "Total Amount";
             // 
-            // label65
+            // lblTotalAmount
             // 
-            label65.AutoSize = true;
-            label65.BackColor = Color.Transparent;
-            label65.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label65.ForeColor = Color.Black;
-            label65.Location = new Point(3, 22);
-            label65.Name = "label65";
-            label65.Size = new Size(100, 65);
-            label65.TabIndex = 15;
-            label65.Text = " ₱0";
+            lblTotalAmount.AutoSize = true;
+            lblTotalAmount.BackColor = Color.Transparent;
+            lblTotalAmount.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTotalAmount.ForeColor = Color.Black;
+            lblTotalAmount.Location = new Point(3, 22);
+            lblTotalAmount.Name = "lblTotalAmount";
+            lblTotalAmount.Size = new Size(100, 65);
+            lblTotalAmount.TabIndex = 15;
+            lblTotalAmount.Text = " ₱0";
             // 
             // label66
             // 
@@ -299,18 +340,19 @@
             pictureBox10.TabIndex = 15;
             pictureBox10.TabStop = false;
             // 
-            // AdminAccountsContent
+            // AccountsContentAdmin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(pnlAccountingRecordsContent);
-            Name = "AdminAccountsContent";
+            Name = "AccountsContentAdmin";
             Size = new Size(1254, 719);
             Resize += AdminAccountsContent_Resize;
             pnlAccountingRecordsContent.ResumeLayout(false);
             pnlAccountingRecordsContent.PerformLayout();
             pnlARResultContainer.ResumeLayout(false);
             pnlARResultContainer.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvAccountingRecords).EndInit();
             pnlARUnpaidAmount.ResumeLayout(false);
             pnlARUnpaidAmount.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox13).EndInit();
@@ -333,17 +375,18 @@
         private Panel pnlARUnpaidAmount;
         private PictureBox pictureBox13;
         private Label label60;
-        private Label label61;
+        private Label lblUnpaid;
         private Panel pnlARPaidAmount;
         private PictureBox pictureBox12;
         private Label label62;
-        private Label label63;
+        private Label lblPaid;
         private Panel pnlARTotalAmount;
         private PictureBox pictureBox11;
         private Label label64;
-        private Label label65;
+        private Label lblTotalAmount;
         private Label label66;
         private Label label67;
         private PictureBox pictureBox10;
+        private DataGridView dgvAccountingRecords;
     }
 }

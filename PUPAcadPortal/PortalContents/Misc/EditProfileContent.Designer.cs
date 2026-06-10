@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             pnlEditProfileContent = new Panel();
             pnlStudentRegistrationContainer = new Panel();
+            txtIDNumber = new TextBox();
             btnShowConfirm = new Button();
             btnShowPass = new Button();
             btnVerify = new Button();
@@ -55,10 +57,11 @@
             label36 = new Label();
             pictureBox5 = new PictureBox();
             mySqlCommandBuilder1 = new MySqlConnector.MySqlCommandBuilder();
-            txtIDNumber = new TextBox();
+            errorProvider1 = new ErrorProvider(components);
             pnlEditProfileContent.SuspendLayout();
             pnlStudentRegistrationContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             SuspendLayout();
             // 
             // pnlEditProfileContent
@@ -109,6 +112,16 @@
             pnlStudentRegistrationContainer.Size = new Size(959, 841);
             pnlStudentRegistrationContainer.TabIndex = 9;
             // 
+            // txtIDNumber
+            // 
+            txtIDNumber.Font = new Font("Segoe UI", 12F);
+            txtIDNumber.Location = new Point(26, 109);
+            txtIDNumber.Name = "txtIDNumber";
+            txtIDNumber.PlaceholderText = "ID Number";
+            txtIDNumber.Size = new Size(418, 29);
+            txtIDNumber.TabIndex = 64;
+            txtIDNumber.Tag = "disabled";
+            // 
             // btnShowConfirm
             // 
             btnShowConfirm.BackColor = Color.Transparent;
@@ -117,7 +130,7 @@
             btnShowConfirm.FlatStyle = FlatStyle.Flat;
             btnShowConfirm.ForeColor = SystemColors.ControlText;
             btnShowConfirm.Image = Properties.Resources.Eye;
-            btnShowConfirm.Location = new Point(416, 238);
+            btnShowConfirm.Location = new Point(418, 238);
             btnShowConfirm.Name = "btnShowConfirm";
             btnShowConfirm.Size = new Size(20, 20);
             btnShowConfirm.TabIndex = 63;
@@ -134,7 +147,7 @@
             btnShowPass.FlatStyle = FlatStyle.Flat;
             btnShowPass.ForeColor = SystemColors.ControlText;
             btnShowPass.Image = Properties.Resources.Eye;
-            btnShowPass.Location = new Point(206, 238);
+            btnShowPass.Location = new Point(192, 238);
             btnShowPass.Name = "btnShowPass";
             btnShowPass.Size = new Size(20, 20);
             btnShowPass.TabIndex = 62;
@@ -150,7 +163,7 @@
             btnVerify.FlatStyle = FlatStyle.Flat;
             btnVerify.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnVerify.ForeColor = Color.White;
-            btnVerify.Location = new Point(450, 235);
+            btnVerify.Location = new Point(462, 235);
             btnVerify.Name = "btnVerify";
             btnVerify.Size = new Size(66, 29);
             btnVerify.TabIndex = 61;
@@ -167,7 +180,7 @@
             txtPassword.Location = new Point(26, 235);
             txtPassword.Name = "txtPassword";
             txtPassword.PlaceholderText = " Enter current password";
-            txtPassword.Size = new Size(206, 29);
+            txtPassword.Size = new Size(190, 29);
             txtPassword.TabIndex = 60;
             txtPassword.UseSystemPasswordChar = true;
             // 
@@ -276,7 +289,7 @@
             label29.AutoSize = true;
             label29.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label29.ForeColor = Color.Black;
-            label29.Location = new Point(234, 211);
+            label29.Location = new Point(238, 211);
             label29.Name = "label29";
             label29.Size = new Size(142, 21);
             label29.TabIndex = 23;
@@ -287,10 +300,10 @@
             // 
             txtConfirmPass.BorderStyle = BorderStyle.FixedSingle;
             txtConfirmPass.Font = new Font("Segoe UI", 12F);
-            txtConfirmPass.Location = new Point(236, 235);
+            txtConfirmPass.Location = new Point(232, 235);
             txtConfirmPass.Name = "txtConfirmPass";
             txtConfirmPass.PlaceholderText = " Confirm current password";
-            txtConfirmPass.Size = new Size(206, 29);
+            txtConfirmPass.Size = new Size(210, 29);
             txtConfirmPass.TabIndex = 22;
             txtConfirmPass.UseSystemPasswordChar = true;
             txtConfirmPass.Visible = false;
@@ -397,14 +410,9 @@
             mySqlCommandBuilder1.QuotePrefix = "`";
             mySqlCommandBuilder1.QuoteSuffix = "`";
             // 
-            // txtIDNumber
+            // errorProvider1
             // 
-            txtIDNumber.Font = new Font("Segoe UI", 12F);
-            txtIDNumber.Location = new Point(26, 109);
-            txtIDNumber.Name = "txtIDNumber";
-            txtIDNumber.PlaceholderText = "ID Number";
-            txtIDNumber.Size = new Size(418, 29);
-            txtIDNumber.TabIndex = 64;
+            errorProvider1.ContainerControl = this;
             // 
             // EditProfileContent
             // 
@@ -419,6 +427,7 @@
             pnlStudentRegistrationContainer.ResumeLayout(false);
             pnlStudentRegistrationContainer.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
+            ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
             ResumeLayout(false);
         }
 
@@ -456,5 +465,6 @@
         private MySqlConnector.MySqlCommandBuilder mySqlCommandBuilder1;
         private Button btnShowConfirm;
         private TextBox txtIDNumber;
+        private ErrorProvider errorProvider1;
     }
 }

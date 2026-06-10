@@ -118,9 +118,6 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
             entity.Property(e => e.Deadline).HasColumnType("datetime");
             entity.Property(e => e.Description).HasColumnType("text");
-            entity.Property(e => e.IsPublished)
-                .HasDefaultValueSql("b'0'")
-                .HasColumnType("bit(1)");
             entity.Property(e => e.ModuleId)
                 .HasMaxLength(50)
                 .HasColumnName("ModuleID");
@@ -272,6 +269,7 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.EventId).HasColumnName("EventID");
             entity.Property(e => e.Description).HasColumnType("text");
             entity.Property(e => e.EndTime).HasColumnType("datetime");
+            entity.Property(e => e.EventDate).HasColumnType("datetime");
             entity.Property(e => e.EventType).HasMaxLength(100);
             entity.Property(e => e.IsPrivate)
                 .IsRequired()
@@ -1002,7 +1000,7 @@ public partial class AppDbContext : DbContext
                 .HasMaxLength(50)
                 .HasColumnName("ActivityID");
             entity.Property(e => e.Grade).HasPrecision(5);
-            entity.Property(e => e.Remarks).HasMaxLength(20);
+            entity.Property(e => e.Remarks).HasMaxLength(500);
             entity.Property(e => e.Status)
                 .HasMaxLength(20)
                 .HasDefaultValueSql("'Submitted'");

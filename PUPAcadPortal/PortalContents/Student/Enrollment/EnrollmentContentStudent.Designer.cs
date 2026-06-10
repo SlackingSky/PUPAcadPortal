@@ -29,45 +29,28 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnrollmentContentStudent));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnrollmentContentStudent));
             pnlEnrollContent = new Panel();
-            pnlRA10391 = new Panel();
-            pictureBox10 = new PictureBox();
-            label49 = new Label();
-            pnlOptOutWaiver = new Panel();
-            btnDlOOWaiver = new Button();
-            label53 = new Label();
-            label51 = new Label();
-            label50 = new Label();
-            label48 = new Label();
-            label47 = new Label();
-            pnlTotalUnits = new Panel();
-            lblTotalUnitsValue = new Label();
-            lblTotalUnitss = new Label();
+            panel3 = new Panel();
+            panel4 = new Panel();
+            pnlEnrollRightCard = new Panel();
+            tableLayoutPanel2 = new TableLayoutPanel();
+            lblScholasticStatus = new Label();
+            label183 = new Label();
+            pnlEnrollMiddleCard = new Panel();
+            tableLayoutPanel3 = new TableLayoutPanel();
+            lblMaximumUnits = new Label();
+            label184 = new Label();
             btnSaveAndAssess = new Button();
-            pnlEnrollmentConfirmedDGV = new Panel();
-            dgvEnrollmentConfirmed = new DataGridView();
-            colCode2 = new DataGridViewTextBoxColumn();
-            colCourseTitle2 = new DataGridViewTextBoxColumn();
-            colUnits2 = new DataGridViewTextBoxColumn();
-            colSchedule2 = new DataGridViewTextBoxColumn();
-            colStatus2 = new DataGridViewTextBoxColumn();
-            colAction2 = new DataGridViewTextBoxColumn();
-            btnDownloadCOR = new Button();
             pnlContainerEnrollmentDGV = new Panel();
             dgvEnrollment = new DataGridView();
             colSelect = new DataGridViewCheckBoxColumn();
@@ -77,16 +60,23 @@
             colSchedule = new DataGridViewTextBoxColumn();
             colStatus = new DataGridViewTextBoxColumn();
             colAction = new DataGridViewTextBoxColumn();
-            pnlEnrollRightCard = new Panel();
-            lblCurrentSectionIndicator = new Label();
-            label183 = new Label();
-            pnlEnrollMiddleCard = new Panel();
-            label184 = new Label();
-            lblMaximumUnitsValue = new Label();
-            pnlEnrollLeftCard = new Panel();
-            label185 = new Label();
-            label186 = new Label();
-            lblAcademicYear = new Label();
+            pnlOptOutWaiver = new Panel();
+            btnDlOOWaiver = new Button();
+            label53 = new Label();
+            label51 = new Label();
+            label50 = new Label();
+            label48 = new Label();
+            label47 = new Label();
+            pnlRA10391 = new Panel();
+            pictureBox10 = new PictureBox();
+            label49 = new Label();
+            panel1 = new Panel();
+            panel2 = new Panel();
+            btnDownloadCOR = new Button();
+            pnlTotalUnits = new Panel();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            lblTotalUnitss = new Label();
+            lblTotalUnitsValue = new Label();
             label188 = new Label();
             pnlViewDetails = new Panel();
             txtDetailSchedule = new TextBox();
@@ -100,17 +90,21 @@
             viewDetailsToolStripMenuItem = new ToolStripMenuItem();
             dropSubjectToolStripMenuItem = new ToolStripMenuItem();
             pnlEnrollContent.SuspendLayout();
-            pnlRA10391.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox10).BeginInit();
-            pnlOptOutWaiver.SuspendLayout();
-            pnlTotalUnits.SuspendLayout();
-            pnlEnrollmentConfirmedDGV.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvEnrollmentConfirmed).BeginInit();
+            panel3.SuspendLayout();
+            panel4.SuspendLayout();
+            pnlEnrollRightCard.SuspendLayout();
+            tableLayoutPanel2.SuspendLayout();
+            pnlEnrollMiddleCard.SuspendLayout();
+            tableLayoutPanel3.SuspendLayout();
             pnlContainerEnrollmentDGV.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEnrollment).BeginInit();
-            pnlEnrollRightCard.SuspendLayout();
-            pnlEnrollMiddleCard.SuspendLayout();
-            pnlEnrollLeftCard.SuspendLayout();
+            pnlOptOutWaiver.SuspendLayout();
+            pnlRA10391.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox10).BeginInit();
+            panel1.SuspendLayout();
+            panel2.SuspendLayout();
+            pnlTotalUnits.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
             pnlViewDetails.SuspendLayout();
             cmsEnrollAction.SuspendLayout();
             SuspendLayout();
@@ -119,346 +113,172 @@
             // 
             pnlEnrollContent.AutoScroll = true;
             pnlEnrollContent.BackColor = SystemColors.Control;
-            pnlEnrollContent.Controls.Add(pnlRA10391);
-            pnlEnrollContent.Controls.Add(pnlOptOutWaiver);
-            pnlEnrollContent.Controls.Add(pnlTotalUnits);
-            pnlEnrollContent.Controls.Add(btnSaveAndAssess);
-            pnlEnrollContent.Controls.Add(pnlEnrollmentConfirmedDGV);
-            pnlEnrollContent.Controls.Add(btnDownloadCOR);
+            pnlEnrollContent.Controls.Add(panel3);
             pnlEnrollContent.Controls.Add(pnlContainerEnrollmentDGV);
-            pnlEnrollContent.Controls.Add(pnlEnrollRightCard);
-            pnlEnrollContent.Controls.Add(pnlEnrollMiddleCard);
-            pnlEnrollContent.Controls.Add(pnlEnrollLeftCard);
-            pnlEnrollContent.Controls.Add(lblAcademicYear);
-            pnlEnrollContent.Controls.Add(label188);
+            pnlEnrollContent.Controls.Add(pnlOptOutWaiver);
+            pnlEnrollContent.Controls.Add(pnlRA10391);
+            pnlEnrollContent.Controls.Add(panel1);
             pnlEnrollContent.Controls.Add(pnlViewDetails);
             pnlEnrollContent.Dock = DockStyle.Fill;
             pnlEnrollContent.Location = new Point(0, 0);
             pnlEnrollContent.Margin = new Padding(0);
             pnlEnrollContent.Name = "pnlEnrollContent";
-            pnlEnrollContent.Size = new Size(1883, 1292);
+            pnlEnrollContent.Size = new Size(1648, 969);
             pnlEnrollContent.TabIndex = 39;
             // 
-            // pnlRA10391
+            // panel3
             // 
-            pnlRA10391.BackColor = Color.FromArgb(240, 255, 245);
-            pnlRA10391.BorderStyle = BorderStyle.Fixed3D;
-            pnlRA10391.Controls.Add(pictureBox10);
-            pnlRA10391.Controls.Add(label49);
-            pnlRA10391.Location = new Point(23, 125);
-            pnlRA10391.Margin = new Padding(3, 4, 3, 4);
-            pnlRA10391.Name = "pnlRA10391";
-            pnlRA10391.Size = new Size(1407, 104);
-            pnlRA10391.TabIndex = 24;
+            panel3.Controls.Add(panel4);
+            panel3.Controls.Add(btnSaveAndAssess);
+            panel3.Dock = DockStyle.Top;
+            panel3.Location = new Point(0, 969);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(1631, 100);
+            panel3.TabIndex = 27;
             // 
-            // pictureBox10
+            // panel4
             // 
-            pictureBox10.BackColor = Color.Transparent;
-            pictureBox10.BackgroundImageLayout = ImageLayout.None;
-            pictureBox10.Image = Properties.Resources.Check_icon;
-            pictureBox10.Location = new Point(19, 23);
-            pictureBox10.Margin = new Padding(3, 4, 3, 4);
-            pictureBox10.Name = "pictureBox10";
-            pictureBox10.Size = new Size(40, 52);
-            pictureBox10.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox10.TabIndex = 10;
-            pictureBox10.TabStop = false;
+            panel4.Controls.Add(pnlEnrollRightCard);
+            panel4.Controls.Add(pnlEnrollMiddleCard);
+            panel4.Dock = DockStyle.Left;
+            panel4.Location = new Point(0, 0);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(798, 100);
+            panel4.TabIndex = 23;
             // 
-            // label49
+            // pnlEnrollRightCard
             // 
-            label49.AutoSize = true;
-            label49.BackColor = Color.Transparent;
-            label49.Font = new Font("Segoe UI", 11.4000006F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label49.ForeColor = Color.Green;
-            label49.Location = new Point(69, 31);
-            label49.Name = "label49";
-            label49.Size = new Size(459, 28);
-            label49.TabIndex = 8;
-            label49.Text = "You are qualified to Free Higher Education Act!";
+            pnlEnrollRightCard.Anchor = AnchorStyles.Left;
+            pnlEnrollRightCard.BackColor = SystemColors.ControlLightLight;
+            pnlEnrollRightCard.BorderStyle = BorderStyle.Fixed3D;
+            pnlEnrollRightCard.Controls.Add(tableLayoutPanel2);
+            pnlEnrollRightCard.Location = new Point(18, 14);
+            pnlEnrollRightCard.MaximumSize = new Size(384, 70);
+            pnlEnrollRightCard.MinimumSize = new Size(384, 70);
+            pnlEnrollRightCard.Name = "pnlEnrollRightCard";
+            pnlEnrollRightCard.Size = new Size(384, 70);
+            pnlEnrollRightCard.TabIndex = 17;
             // 
-            // pnlOptOutWaiver
+            // tableLayoutPanel2
             // 
-            pnlOptOutWaiver.BackColor = SystemColors.Info;
-            pnlOptOutWaiver.Controls.Add(btnDlOOWaiver);
-            pnlOptOutWaiver.Controls.Add(label53);
-            pnlOptOutWaiver.Controls.Add(label51);
-            pnlOptOutWaiver.Controls.Add(label50);
-            pnlOptOutWaiver.Controls.Add(label48);
-            pnlOptOutWaiver.Controls.Add(label47);
-            pnlOptOutWaiver.Location = new Point(22, 247);
-            pnlOptOutWaiver.Margin = new Padding(3, 4, 3, 4);
-            pnlOptOutWaiver.Name = "pnlOptOutWaiver";
-            pnlOptOutWaiver.Size = new Size(1409, 351);
-            pnlOptOutWaiver.TabIndex = 3;
+            tableLayoutPanel2.ColumnCount = 1;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.Controls.Add(lblScholasticStatus, 0, 1);
+            tableLayoutPanel2.Controls.Add(label183, 0, 0);
+            tableLayoutPanel2.Dock = DockStyle.Fill;
+            tableLayoutPanel2.Location = new Point(0, 0);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 2;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.Size = new Size(380, 66);
+            tableLayoutPanel2.TabIndex = 0;
             // 
-            // btnDlOOWaiver
+            // lblScholasticStatus
             // 
-            btnDlOOWaiver.Anchor = AnchorStyles.Top;
-            btnDlOOWaiver.BackColor = Color.White;
-            btnDlOOWaiver.FlatAppearance.BorderColor = Color.Maroon;
-            btnDlOOWaiver.FlatAppearance.BorderSize = 2;
-            btnDlOOWaiver.FlatStyle = FlatStyle.Flat;
-            btnDlOOWaiver.Font = new Font("Segoe UI", 9.6F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnDlOOWaiver.ForeColor = Color.Maroon;
-            btnDlOOWaiver.Image = Properties.Resources.download_2_16_maroon;
-            btnDlOOWaiver.Location = new Point(959, 268);
-            btnDlOOWaiver.Margin = new Padding(3, 4, 3, 4);
-            btnDlOOWaiver.Name = "btnDlOOWaiver";
-            btnDlOOWaiver.Size = new Size(419, 55);
-            btnDlOOWaiver.TabIndex = 20;
-            btnDlOOWaiver.Text = " Download Opt-Out Waiver Form Here";
-            btnDlOOWaiver.TextAlign = ContentAlignment.MiddleRight;
-            btnDlOOWaiver.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnDlOOWaiver.UseVisualStyleBackColor = false;
+            lblScholasticStatus.Anchor = AnchorStyles.Top;
+            lblScholasticStatus.AutoSize = true;
+            lblScholasticStatus.Font = new Font("Segoe UI", 14.4000006F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblScholasticStatus.ForeColor = Color.Black;
+            lblScholasticStatus.Location = new Point(146, 33);
+            lblScholasticStatus.Name = "lblScholasticStatus";
+            lblScholasticStatus.Size = new Size(87, 28);
+            lblScholasticStatus.TabIndex = 1;
+            lblScholasticStatus.Text = "Loading";
             // 
-            // label53
+            // label183
             // 
-            label53.AutoSize = true;
-            label53.Font = new Font("Segoe UI", 9.6F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label53.Location = new Point(15, 88);
-            label53.Name = "label53";
-            label53.Size = new Size(91, 21);
-            label53.TabIndex = 4;
-            label53.Text = "Important:";
+            label183.Anchor = AnchorStyles.Bottom;
+            label183.AutoSize = true;
+            label183.BackColor = Color.Transparent;
+            label183.Font = new Font("Segoe UI Semibold", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label183.ForeColor = Color.Maroon;
+            label183.Location = new Point(144, 20);
+            label183.Name = "label183";
+            label183.Size = new Size(91, 13);
+            label183.TabIndex = 0;
+            label183.Text = "Scholastic Status";
             // 
-            // label51
+            // pnlEnrollMiddleCard
             // 
-            label51.AutoSize = true;
-            label51.Font = new Font("Segoe UI", 9.6F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label51.Location = new Point(30, 229);
-            label51.Name = "label51";
-            label51.Size = new Size(891, 21);
-            label51.TabIndex = 3;
-            label51.Text = "For voluntary contribution (partial payment while retaining free education), please contact the Accounting Department directly.";
+            pnlEnrollMiddleCard.Anchor = AnchorStyles.Right;
+            pnlEnrollMiddleCard.BackColor = SystemColors.ControlLightLight;
+            pnlEnrollMiddleCard.BorderStyle = BorderStyle.Fixed3D;
+            pnlEnrollMiddleCard.Controls.Add(tableLayoutPanel3);
+            pnlEnrollMiddleCard.Location = new Point(408, 13);
+            pnlEnrollMiddleCard.MaximumSize = new Size(384, 70);
+            pnlEnrollMiddleCard.MinimumSize = new Size(384, 70);
+            pnlEnrollMiddleCard.Name = "pnlEnrollMiddleCard";
+            pnlEnrollMiddleCard.Size = new Size(384, 70);
+            pnlEnrollMiddleCard.TabIndex = 16;
             // 
-            // label50
+            // tableLayoutPanel3
             // 
-            label50.Font = new Font("Segoe UI", 9.6F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label50.Location = new Point(15, 117);
-            label50.Name = "label50";
-            label50.Size = new Size(1285, 133);
-            label50.TabIndex = 2;
-            label50.Text = resources.GetString("label50.Text");
+            tableLayoutPanel3.ColumnCount = 1;
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel3.Controls.Add(lblMaximumUnits, 0, 1);
+            tableLayoutPanel3.Controls.Add(label184, 0, 0);
+            tableLayoutPanel3.Dock = DockStyle.Fill;
+            tableLayoutPanel3.Location = new Point(0, 0);
+            tableLayoutPanel3.Name = "tableLayoutPanel3";
+            tableLayoutPanel3.RowCount = 2;
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel3.Size = new Size(380, 66);
+            tableLayoutPanel3.TabIndex = 1;
             // 
-            // label48
+            // lblMaximumUnits
             // 
-            label48.AutoSize = true;
-            label48.Font = new Font("Segoe UI", 9.6F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label48.Location = new Point(15, 48);
-            label48.Name = "label48";
-            label48.Size = new Size(1025, 21);
-            label48.TabIndex = 1;
-            label48.Text = "If you are eligible for Free Higher Education but wish to voluntarily waive the subsidy for the current semester, download and accomplish this form.";
+            lblMaximumUnits.Anchor = AnchorStyles.Top;
+            lblMaximumUnits.AutoSize = true;
+            lblMaximumUnits.BackColor = Color.Transparent;
+            lblMaximumUnits.Font = new Font("Segoe UI", 14.4000006F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblMaximumUnits.ForeColor = Color.Black;
+            lblMaximumUnits.Location = new Point(146, 33);
+            lblMaximumUnits.Name = "lblMaximumUnits";
+            lblMaximumUnits.Size = new Size(87, 28);
+            lblMaximumUnits.TabIndex = 1;
+            lblMaximumUnits.Text = "Loading";
             // 
-            // label47
+            // label184
             // 
-            label47.AutoSize = true;
-            label47.Font = new Font("Segoe UI", 11.4000006F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label47.Location = new Point(10, 15);
-            label47.Name = "label47";
-            label47.Size = new Size(328, 28);
-            label47.TabIndex = 0;
-            label47.Text = "Opt-Out Waiver Form (RA 10931)";
-            // 
-            // pnlTotalUnits
-            // 
-            pnlTotalUnits.BackColor = Color.FromArgb(255, 193, 7);
-            pnlTotalUnits.BorderStyle = BorderStyle.Fixed3D;
-            pnlTotalUnits.Controls.Add(lblTotalUnitsValue);
-            pnlTotalUnits.Controls.Add(lblTotalUnitss);
-            pnlTotalUnits.Location = new Point(1309, 21);
-            pnlTotalUnits.Margin = new Padding(3, 4, 3, 4);
-            pnlTotalUnits.Name = "pnlTotalUnits";
-            pnlTotalUnits.Size = new Size(122, 85);
-            pnlTotalUnits.TabIndex = 23;
-            // 
-            // lblTotalUnitsValue
-            // 
-            lblTotalUnitsValue.AutoSize = true;
-            lblTotalUnitsValue.BackColor = Color.Transparent;
-            lblTotalUnitsValue.Font = new Font("Segoe UI", 14.4000006F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTotalUnitsValue.ForeColor = Color.Black;
-            lblTotalUnitsValue.Location = new Point(48, 29);
-            lblTotalUnitsValue.Name = "lblTotalUnitsValue";
-            lblTotalUnitsValue.Size = new Size(0, 35);
-            lblTotalUnitsValue.TabIndex = 2;
-            // 
-            // lblTotalUnitss
-            // 
-            lblTotalUnitss.AutoSize = true;
-            lblTotalUnitss.BackColor = Color.Transparent;
-            lblTotalUnitss.Font = new Font("Segoe UI Semibold", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTotalUnitss.ForeColor = SystemColors.ActiveCaptionText;
-            lblTotalUnitss.Location = new Point(2, 3);
-            lblTotalUnitss.Name = "lblTotalUnitss";
-            lblTotalUnitss.Size = new Size(72, 17);
-            lblTotalUnitss.TabIndex = 1;
-            lblTotalUnitss.Text = "Total Units";
+            label184.Anchor = AnchorStyles.Bottom;
+            label184.AutoSize = true;
+            label184.BackColor = Color.Transparent;
+            label184.Font = new Font("Segoe UI Semibold", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label184.ForeColor = Color.Maroon;
+            label184.Location = new Point(146, 20);
+            label184.Name = "label184";
+            label184.Size = new Size(87, 13);
+            label184.TabIndex = 0;
+            label184.Text = "Maximum Units";
             // 
             // btnSaveAndAssess
             // 
-            btnSaveAndAssess.Anchor = AnchorStyles.Top;
+            btnSaveAndAssess.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnSaveAndAssess.BackColor = Color.Maroon;
             btnSaveAndAssess.FlatStyle = FlatStyle.Flat;
             btnSaveAndAssess.Font = new Font("Segoe UI", 9.6F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSaveAndAssess.ForeColor = Color.White;
             btnSaveAndAssess.Image = Properties.Resources.save_16;
             btnSaveAndAssess.ImageAlign = ContentAlignment.MiddleRight;
-            btnSaveAndAssess.Location = new Point(1197, 1068);
-            btnSaveAndAssess.Margin = new Padding(3, 4, 3, 4);
+            btnSaveAndAssess.Location = new Point(1421, 18);
             btnSaveAndAssess.Name = "btnSaveAndAssess";
-            btnSaveAndAssess.Size = new Size(226, 47);
+            btnSaveAndAssess.Size = new Size(198, 35);
             btnSaveAndAssess.TabIndex = 22;
             btnSaveAndAssess.Text = " Save and Assess";
             btnSaveAndAssess.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnSaveAndAssess.UseVisualStyleBackColor = false;
             // 
-            // pnlEnrollmentConfirmedDGV
-            // 
-            pnlEnrollmentConfirmedDGV.AutoScroll = true;
-            pnlEnrollmentConfirmedDGV.Controls.Add(dgvEnrollmentConfirmed);
-            pnlEnrollmentConfirmedDGV.Location = new Point(21, 1288);
-            pnlEnrollmentConfirmedDGV.Margin = new Padding(3, 4, 3, 4);
-            pnlEnrollmentConfirmedDGV.Name = "pnlEnrollmentConfirmedDGV";
-            pnlEnrollmentConfirmedDGV.Size = new Size(1377, 400);
-            pnlEnrollmentConfirmedDGV.TabIndex = 21;
-            // 
-            // dgvEnrollmentConfirmed
-            // 
-            dgvEnrollmentConfirmed.AllowUserToAddRows = false;
-            dgvEnrollmentConfirmed.AllowUserToDeleteRows = false;
-            dgvEnrollmentConfirmed.AllowUserToResizeColumns = false;
-            dgvEnrollmentConfirmed.AllowUserToResizeRows = false;
-            dgvEnrollmentConfirmed.Anchor = AnchorStyles.None;
-            dgvEnrollmentConfirmed.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvEnrollmentConfirmed.BackgroundColor = Color.White;
-            dgvEnrollmentConfirmed.CellBorderStyle = DataGridViewCellBorderStyle.None;
-            dgvEnrollmentConfirmed.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = Color.Maroon;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dataGridViewCellStyle1.ForeColor = Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dgvEnrollmentConfirmed.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            dgvEnrollmentConfirmed.ColumnHeadersHeight = 29;
-            dgvEnrollmentConfirmed.Columns.AddRange(new DataGridViewColumn[] { colCode2, colCourseTitle2, colUnits2, colSchedule2, colStatus2, colAction2 });
-            dgvEnrollmentConfirmed.EnableHeadersVisualStyles = false;
-            dgvEnrollmentConfirmed.GridColor = Color.White;
-            dgvEnrollmentConfirmed.Location = new Point(0, 0);
-            dgvEnrollmentConfirmed.Margin = new Padding(3, 4, 3, 4);
-            dgvEnrollmentConfirmed.Name = "dgvEnrollmentConfirmed";
-            dgvEnrollmentConfirmed.RowHeadersVisible = false;
-            dgvEnrollmentConfirmed.RowHeadersWidth = 51;
-            dgvEnrollmentConfirmed.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvEnrollmentConfirmed.Size = new Size(1377, 400);
-            dgvEnrollmentConfirmed.TabIndex = 13;
-            dgvEnrollmentConfirmed.Visible = false;
-            // 
-            // colCode2
-            // 
-            colCode2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            colCode2.DefaultCellStyle = dataGridViewCellStyle2;
-            colCode2.FillWeight = 92.978F;
-            colCode2.HeaderText = "Code";
-            colCode2.MinimumWidth = 6;
-            colCode2.Name = "colCode2";
-            colCode2.ReadOnly = true;
-            colCode2.Resizable = DataGridViewTriState.False;
-            colCode2.Width = 120;
-            // 
-            // colCourseTitle2
-            // 
-            colCourseTitle2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 12F);
-            colCourseTitle2.DefaultCellStyle = dataGridViewCellStyle3;
-            colCourseTitle2.FillWeight = 92.978F;
-            colCourseTitle2.HeaderText = "Course Title";
-            colCourseTitle2.MinimumWidth = 6;
-            colCourseTitle2.Name = "colCourseTitle2";
-            colCourseTitle2.ReadOnly = true;
-            colCourseTitle2.Resizable = DataGridViewTriState.False;
-            colCourseTitle2.Width = 300;
-            // 
-            // colUnits2
-            // 
-            colUnits2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 12F);
-            colUnits2.DefaultCellStyle = dataGridViewCellStyle4;
-            colUnits2.FillWeight = 92.978F;
-            colUnits2.HeaderText = "Units";
-            colUnits2.MinimumWidth = 6;
-            colUnits2.Name = "colUnits2";
-            colUnits2.ReadOnly = true;
-            colUnits2.Resizable = DataGridViewTriState.False;
-            colUnits2.Width = 90;
-            // 
-            // colSchedule2
-            // 
-            dataGridViewCellStyle5.Font = new Font("Segoe UI", 12F);
-            colSchedule2.DefaultCellStyle = dataGridViewCellStyle5;
-            colSchedule2.FillWeight = 92.978F;
-            colSchedule2.HeaderText = "Schedule";
-            colSchedule2.MinimumWidth = 6;
-            colSchedule2.Name = "colSchedule2";
-            colSchedule2.ReadOnly = true;
-            colSchedule2.Resizable = DataGridViewTriState.False;
-            // 
-            // colStatus2
-            // 
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Font = new Font("Segoe UI", 12F);
-            colStatus2.DefaultCellStyle = dataGridViewCellStyle6;
-            colStatus2.FillWeight = 92.978F;
-            colStatus2.HeaderText = "Status";
-            colStatus2.MinimumWidth = 6;
-            colStatus2.Name = "colStatus2";
-            colStatus2.ReadOnly = true;
-            colStatus2.Resizable = DataGridViewTriState.False;
-            // 
-            // colAction2
-            // 
-            colAction2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.Font = new Font("Segoe UI", 12F, FontStyle.Underline);
-            dataGridViewCellStyle7.ForeColor = Color.Maroon;
-            colAction2.DefaultCellStyle = dataGridViewCellStyle7;
-            colAction2.HeaderText = "Action";
-            colAction2.MinimumWidth = 6;
-            colAction2.Name = "colAction2";
-            colAction2.ReadOnly = true;
-            colAction2.Width = 125;
-            // 
-            // btnDownloadCOR
-            // 
-            btnDownloadCOR.Anchor = AnchorStyles.Top;
-            btnDownloadCOR.BackColor = Color.DarkGray;
-            btnDownloadCOR.Font = new Font("Segoe UI", 9.6F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnDownloadCOR.ForeColor = SystemColors.ControlLightLight;
-            btnDownloadCOR.Image = Properties.Resources.download_2_16;
-            btnDownloadCOR.Location = new Point(913, 36);
-            btnDownloadCOR.Margin = new Padding(3, 4, 3, 4);
-            btnDownloadCOR.Name = "btnDownloadCOR";
-            btnDownloadCOR.Size = new Size(371, 55);
-            btnDownloadCOR.TabIndex = 19;
-            btnDownloadCOR.Text = " Certificate of Registration";
-            btnDownloadCOR.TextAlign = ContentAlignment.MiddleRight;
-            btnDownloadCOR.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnDownloadCOR.UseVisualStyleBackColor = false;
-            btnDownloadCOR.Click += btnDownloadCOR_Click;
-            // 
             // pnlContainerEnrollmentDGV
             // 
-            pnlContainerEnrollmentDGV.Anchor = AnchorStyles.Top;
             pnlContainerEnrollmentDGV.AutoScroll = true;
             pnlContainerEnrollmentDGV.Controls.Add(dgvEnrollment);
-            pnlContainerEnrollmentDGV.Location = new Point(16, 643);
-            pnlContainerEnrollmentDGV.Margin = new Padding(3, 4, 3, 4);
+            pnlContainerEnrollmentDGV.Dock = DockStyle.Top;
+            pnlContainerEnrollmentDGV.Location = new Point(0, 396);
+            pnlContainerEnrollmentDGV.MinimumSize = new Size(0, 527);
             pnlContainerEnrollmentDGV.Name = "pnlContainerEnrollmentDGV";
-            pnlContainerEnrollmentDGV.Size = new Size(1407, 400);
+            pnlContainerEnrollmentDGV.Size = new Size(1631, 573);
             pnlContainerEnrollmentDGV.TabIndex = 20;
             // 
             // dgvEnrollment
@@ -467,32 +287,37 @@
             dgvEnrollment.AllowUserToDeleteRows = false;
             dgvEnrollment.AllowUserToResizeColumns = false;
             dgvEnrollment.AllowUserToResizeRows = false;
-            dgvEnrollment.Anchor = AnchorStyles.None;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dgvEnrollment.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dgvEnrollment.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvEnrollment.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
             dgvEnrollment.BackgroundColor = Color.White;
-            dgvEnrollment.CellBorderStyle = DataGridViewCellBorderStyle.None;
+            dgvEnrollment.CellBorderStyle = DataGridViewCellBorderStyle.SunkenHorizontal;
             dgvEnrollment.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = Color.Maroon;
-            dataGridViewCellStyle8.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dataGridViewCellStyle8.ForeColor = Color.White;
-            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
-            dgvEnrollment.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = Color.Maroon;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dgvEnrollment.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvEnrollment.ColumnHeadersHeight = 29;
             dgvEnrollment.Columns.AddRange(new DataGridViewColumn[] { colSelect, colCode, colTitle, colUnits, colSchedule, colStatus, colAction });
+            dgvEnrollment.Dock = DockStyle.Top;
             dgvEnrollment.EnableHeadersVisualStyles = false;
             dgvEnrollment.GridColor = Color.White;
             dgvEnrollment.Location = new Point(0, 0);
-            dgvEnrollment.Margin = new Padding(3, 4, 3, 4);
+            dgvEnrollment.MinimumSize = new Size(527, 0);
             dgvEnrollment.Name = "dgvEnrollment";
             dgvEnrollment.RowHeadersVisible = false;
             dgvEnrollment.RowHeadersWidth = 51;
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
+            dgvEnrollment.RowsDefaultCellStyle = dataGridViewCellStyle9;
             dgvEnrollment.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvEnrollment.Size = new Size(1407, 400);
+            dgvEnrollment.Size = new Size(1614, 574);
             dgvEnrollment.TabIndex = 13;
-            dgvEnrollment.CellClick += dgvEnrollment_CellClick;
             dgvEnrollment.CellPainting += dgvEnrollment_CellPainting;
             dgvEnrollment.SelectionChanged += dgvEnrollment_SelectionChanged;
             // 
@@ -509,8 +334,8 @@
             // colCode
             // 
             colCode.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle9.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            colCode.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            colCode.DefaultCellStyle = dataGridViewCellStyle3;
             colCode.FillWeight = 92.978F;
             colCode.HeaderText = "Code";
             colCode.MinimumWidth = 6;
@@ -522,8 +347,8 @@
             // colTitle
             // 
             colTitle.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle10.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            colTitle.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            colTitle.DefaultCellStyle = dataGridViewCellStyle4;
             colTitle.FillWeight = 92.978F;
             colTitle.HeaderText = "Course Title";
             colTitle.MinimumWidth = 6;
@@ -535,9 +360,9 @@
             // colUnits
             // 
             colUnits.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            colUnits.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            colUnits.DefaultCellStyle = dataGridViewCellStyle5;
             colUnits.FillWeight = 92.978F;
             colUnits.HeaderText = "Units";
             colUnits.MinimumWidth = 6;
@@ -548,23 +373,23 @@
             // 
             // colSchedule
             // 
-            dataGridViewCellStyle12.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            colSchedule.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle6.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            colSchedule.DefaultCellStyle = dataGridViewCellStyle6;
             colSchedule.FillWeight = 92.978F;
             colSchedule.HeaderText = "Schedule";
-            colSchedule.MinimumWidth = 6;
+            colSchedule.MinimumWidth = 200;
             colSchedule.Name = "colSchedule";
             colSchedule.ReadOnly = true;
             colSchedule.Resizable = DataGridViewTriState.False;
             // 
             // colStatus
             // 
-            dataGridViewCellStyle13.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle13.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            colStatus.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            colStatus.DefaultCellStyle = dataGridViewCellStyle7;
             colStatus.FillWeight = 92.978F;
             colStatus.HeaderText = "Status";
-            colStatus.MinimumWidth = 6;
+            colStatus.MinimumWidth = 120;
             colStatus.Name = "colStatus";
             colStatus.ReadOnly = true;
             colStatus.Resizable = DataGridViewTriState.False;
@@ -572,151 +397,234 @@
             // colAction
             // 
             colAction.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle14.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle14.Font = new Font("Segoe UI", 12F, FontStyle.Underline);
-            dataGridViewCellStyle14.ForeColor = Color.Maroon;
-            colAction.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.Font = new Font("Segoe UI", 12F, FontStyle.Underline);
+            dataGridViewCellStyle8.ForeColor = Color.Maroon;
+            colAction.DefaultCellStyle = dataGridViewCellStyle8;
             colAction.HeaderText = "Action";
             colAction.MinimumWidth = 6;
             colAction.Name = "colAction";
             colAction.ReadOnly = true;
             colAction.Width = 125;
             // 
-            // pnlEnrollRightCard
+            // pnlOptOutWaiver
             // 
-            pnlEnrollRightCard.Anchor = AnchorStyles.None;
-            pnlEnrollRightCard.BackColor = SystemColors.ControlLightLight;
-            pnlEnrollRightCard.BorderStyle = BorderStyle.Fixed3D;
-            pnlEnrollRightCard.Controls.Add(lblCurrentSectionIndicator);
-            pnlEnrollRightCard.Controls.Add(label183);
-            pnlEnrollRightCard.Location = new Point(15, 1532);
-            pnlEnrollRightCard.Margin = new Padding(3, 4, 3, 4);
-            pnlEnrollRightCard.MaximumSize = new Size(438, 92);
-            pnlEnrollRightCard.MinimumSize = new Size(438, 92);
-            pnlEnrollRightCard.Name = "pnlEnrollRightCard";
-            pnlEnrollRightCard.Size = new Size(438, 92);
-            pnlEnrollRightCard.TabIndex = 17;
+            pnlOptOutWaiver.BackColor = SystemColors.Info;
+            pnlOptOutWaiver.Controls.Add(btnDlOOWaiver);
+            pnlOptOutWaiver.Controls.Add(label53);
+            pnlOptOutWaiver.Controls.Add(label51);
+            pnlOptOutWaiver.Controls.Add(label50);
+            pnlOptOutWaiver.Controls.Add(label48);
+            pnlOptOutWaiver.Controls.Add(label47);
+            pnlOptOutWaiver.Dock = DockStyle.Top;
+            pnlOptOutWaiver.Location = new Point(0, 179);
+            pnlOptOutWaiver.Name = "pnlOptOutWaiver";
+            pnlOptOutWaiver.Size = new Size(1631, 217);
+            pnlOptOutWaiver.TabIndex = 3;
             // 
-            // lblCurrentSectionIndicator
+            // btnDlOOWaiver
             // 
-            lblCurrentSectionIndicator.AutoSize = true;
-            lblCurrentSectionIndicator.Font = new Font("Segoe UI", 14.4000006F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblCurrentSectionIndicator.ForeColor = Color.Black;
-            lblCurrentSectionIndicator.Location = new Point(42, 31);
-            lblCurrentSectionIndicator.Name = "lblCurrentSectionIndicator";
-            lblCurrentSectionIndicator.Size = new Size(104, 35);
-            lblCurrentSectionIndicator.TabIndex = 1;
-            lblCurrentSectionIndicator.Text = "Regular";
+            btnDlOOWaiver.Anchor = AnchorStyles.Right;
+            btnDlOOWaiver.BackColor = Color.White;
+            btnDlOOWaiver.FlatAppearance.BorderColor = Color.Maroon;
+            btnDlOOWaiver.FlatAppearance.BorderSize = 2;
+            btnDlOOWaiver.FlatStyle = FlatStyle.Flat;
+            btnDlOOWaiver.Font = new Font("Segoe UI", 9.6F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnDlOOWaiver.ForeColor = Color.Maroon;
+            btnDlOOWaiver.Image = Properties.Resources.download_2_16_maroon;
+            btnDlOOWaiver.Location = new Point(1251, 152);
+            btnDlOOWaiver.Name = "btnDlOOWaiver";
+            btnDlOOWaiver.Size = new Size(367, 41);
+            btnDlOOWaiver.TabIndex = 20;
+            btnDlOOWaiver.Text = " Download Opt-Out Waiver Form Here";
+            btnDlOOWaiver.TextAlign = ContentAlignment.MiddleRight;
+            btnDlOOWaiver.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnDlOOWaiver.UseVisualStyleBackColor = false;
+            btnDlOOWaiver.Click += btnDlOOWaiver_Click;
             // 
-            // label183
+            // label53
             // 
-            label183.AutoSize = true;
-            label183.BackColor = Color.Transparent;
-            label183.Font = new Font("Segoe UI Semibold", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label183.ForeColor = Color.Maroon;
-            label183.Location = new Point(16, 9);
-            label183.Name = "label183";
-            label183.Size = new Size(109, 17);
-            label183.TabIndex = 0;
-            label183.Text = "Scholastic Status";
+            label53.AutoSize = true;
+            label53.Font = new Font("Segoe UI", 9.6F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label53.Location = new Point(13, 66);
+            label53.Name = "label53";
+            label53.Size = new Size(74, 17);
+            label53.TabIndex = 4;
+            label53.Text = "Important:";
             // 
-            // pnlEnrollMiddleCard
+            // label51
             // 
-            pnlEnrollMiddleCard.Anchor = AnchorStyles.None;
-            pnlEnrollMiddleCard.BackColor = SystemColors.ControlLightLight;
-            pnlEnrollMiddleCard.BorderStyle = BorderStyle.Fixed3D;
-            pnlEnrollMiddleCard.Controls.Add(label184);
-            pnlEnrollMiddleCard.Controls.Add(lblMaximumUnitsValue);
-            pnlEnrollMiddleCard.Location = new Point(499, 1532);
-            pnlEnrollMiddleCard.Margin = new Padding(3, 4, 3, 4);
-            pnlEnrollMiddleCard.MaximumSize = new Size(438, 92);
-            pnlEnrollMiddleCard.MinimumSize = new Size(438, 92);
-            pnlEnrollMiddleCard.Name = "pnlEnrollMiddleCard";
-            pnlEnrollMiddleCard.Size = new Size(438, 92);
-            pnlEnrollMiddleCard.TabIndex = 16;
+            label51.AutoSize = true;
+            label51.Font = new Font("Segoe UI", 9.6F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            label51.Location = new Point(26, 172);
+            label51.Name = "label51";
+            label51.Size = new Size(711, 17);
+            label51.TabIndex = 3;
+            label51.Text = "For voluntary contribution (partial payment while retaining free education), please contact the Accounting Department directly.";
             // 
-            // label184
+            // label50
             // 
-            label184.AutoSize = true;
-            label184.BackColor = Color.Transparent;
-            label184.Font = new Font("Segoe UI Semibold", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label184.ForeColor = Color.Maroon;
-            label184.Location = new Point(14, 9);
-            label184.Name = "label184";
-            label184.Size = new Size(104, 17);
-            label184.TabIndex = 0;
-            label184.Text = "Maximum Units";
+            label50.Font = new Font("Segoe UI", 9.6F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label50.Location = new Point(13, 88);
+            label50.Name = "label50";
+            label50.Size = new Size(1124, 100);
+            label50.TabIndex = 2;
+            label50.Text = resources.GetString("label50.Text");
             // 
-            // lblMaximumUnitsValue
+            // label48
             // 
-            lblMaximumUnitsValue.AutoSize = true;
-            lblMaximumUnitsValue.BackColor = Color.Transparent;
-            lblMaximumUnitsValue.Font = new Font("Segoe UI", 14.4000006F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblMaximumUnitsValue.ForeColor = Color.Black;
-            lblMaximumUnitsValue.Location = new Point(37, 29);
-            lblMaximumUnitsValue.Name = "lblMaximumUnitsValue";
-            lblMaximumUnitsValue.Size = new Size(111, 35);
-            lblMaximumUnitsValue.TabIndex = 1;
-            lblMaximumUnitsValue.Text = "23 Units";
+            label48.AutoSize = true;
+            label48.Font = new Font("Segoe UI", 9.6F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label48.Location = new Point(13, 36);
+            label48.Name = "label48";
+            label48.Size = new Size(864, 17);
+            label48.TabIndex = 1;
+            label48.Text = "If you are eligible for Free Higher Education but wish to voluntarily waive the subsidy for the current semester, download and accomplish this form.";
             // 
-            // pnlEnrollLeftCard
+            // label47
             // 
-            pnlEnrollLeftCard.Anchor = AnchorStyles.None;
-            pnlEnrollLeftCard.BackColor = SystemColors.ControlLightLight;
-            pnlEnrollLeftCard.BorderStyle = BorderStyle.Fixed3D;
-            pnlEnrollLeftCard.Controls.Add(label185);
-            pnlEnrollLeftCard.Controls.Add(label186);
-            pnlEnrollLeftCard.Location = new Point(984, 1532);
-            pnlEnrollLeftCard.Margin = new Padding(3, 4, 3, 4);
-            pnlEnrollLeftCard.MaximumSize = new Size(438, 92);
-            pnlEnrollLeftCard.MinimumSize = new Size(438, 92);
-            pnlEnrollLeftCard.Name = "pnlEnrollLeftCard";
-            pnlEnrollLeftCard.Size = new Size(438, 92);
-            pnlEnrollLeftCard.TabIndex = 15;
+            label47.AutoSize = true;
+            label47.Font = new Font("Segoe UI", 11.4000006F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label47.Location = new Point(9, 11);
+            label47.Name = "label47";
+            label47.Size = new Size(257, 21);
+            label47.TabIndex = 0;
+            label47.Text = "Opt-Out Waiver Form (RA 10931)";
             // 
-            // label185
+            // pnlRA10391
             // 
-            label185.AutoSize = true;
-            label185.BackColor = Color.Transparent;
-            label185.Font = new Font("Segoe UI Semibold", 7.8F, FontStyle.Bold);
-            label185.ForeColor = Color.Maroon;
-            label185.Location = new Point(17, 9);
-            label185.Name = "label185";
-            label185.Size = new Size(122, 17);
-            label185.TabIndex = 0;
-            label185.Text = "Adjustment Period";
+            pnlRA10391.BackColor = Color.FromArgb(240, 255, 245);
+            pnlRA10391.BorderStyle = BorderStyle.Fixed3D;
+            pnlRA10391.Controls.Add(pictureBox10);
+            pnlRA10391.Controls.Add(label49);
+            pnlRA10391.Dock = DockStyle.Top;
+            pnlRA10391.Location = new Point(0, 100);
+            pnlRA10391.Name = "pnlRA10391";
+            pnlRA10391.Size = new Size(1631, 79);
+            pnlRA10391.TabIndex = 24;
+            pnlRA10391.Visible = false;
             // 
-            // label186
+            // pictureBox10
             // 
-            label186.AutoSize = true;
-            label186.BackColor = Color.Transparent;
-            label186.Font = new Font("Segoe UI", 14.4000006F, FontStyle.Bold);
-            label186.ForeColor = Color.Black;
-            label186.Location = new Point(37, 29);
-            label186.Name = "label186";
-            label186.Size = new Size(270, 35);
-            label186.TabIndex = 1;
-            label186.Text = "February 1 - 11,  2026";
+            pictureBox10.BackColor = Color.Transparent;
+            pictureBox10.BackgroundImageLayout = ImageLayout.None;
+            pictureBox10.Image = Properties.Resources.Check_icon;
+            pictureBox10.Location = new Point(17, 17);
+            pictureBox10.Name = "pictureBox10";
+            pictureBox10.Size = new Size(35, 39);
+            pictureBox10.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox10.TabIndex = 10;
+            pictureBox10.TabStop = false;
             // 
-            // lblAcademicYear
+            // label49
             // 
-            lblAcademicYear.AutoSize = true;
-            lblAcademicYear.Font = new Font("Segoe UI", 7.20000029F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblAcademicYear.ForeColor = SystemColors.ControlDarkDark;
-            lblAcademicYear.Location = new Point(26, 72);
-            lblAcademicYear.Name = "lblAcademicYear";
-            lblAcademicYear.Size = new Size(249, 17);
-            lblAcademicYear.TabIndex = 7;
-            lblAcademicYear.Text = "Academic Year 2025-2026 | 2nd Semester";
+            label49.AutoSize = true;
+            label49.BackColor = Color.Transparent;
+            label49.Font = new Font("Segoe UI", 11.4000006F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label49.ForeColor = Color.Green;
+            label49.Location = new Point(60, 23);
+            label49.Name = "label49";
+            label49.Size = new Size(367, 21);
+            label49.TabIndex = 8;
+            label49.Text = "You are qualified to Free Higher Education Act!";
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(panel2);
+            panel1.Controls.Add(label188);
+            panel1.Dock = DockStyle.Top;
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(1631, 100);
+            panel1.TabIndex = 26;
+            // 
+            // panel2
+            // 
+            panel2.Controls.Add(btnDownloadCOR);
+            panel2.Controls.Add(pnlTotalUnits);
+            panel2.Dock = DockStyle.Right;
+            panel2.Location = new Point(1109, 0);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(522, 100);
+            panel2.TabIndex = 24;
+            // 
+            // btnDownloadCOR
+            // 
+            btnDownloadCOR.Anchor = AnchorStyles.Left;
+            btnDownloadCOR.BackColor = Color.DarkGray;
+            btnDownloadCOR.Font = new Font("Segoe UI", 9.6F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnDownloadCOR.ForeColor = SystemColors.ControlLightLight;
+            btnDownloadCOR.Image = Properties.Resources.download_2_16;
+            btnDownloadCOR.Location = new Point(22, 26);
+            btnDownloadCOR.Name = "btnDownloadCOR";
+            btnDownloadCOR.Size = new Size(325, 41);
+            btnDownloadCOR.TabIndex = 19;
+            btnDownloadCOR.Text = " Certificate of Registration";
+            btnDownloadCOR.TextAlign = ContentAlignment.MiddleRight;
+            btnDownloadCOR.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnDownloadCOR.UseVisualStyleBackColor = false;
+            btnDownloadCOR.Click += btnDownloadCOR_Click;
+            // 
+            // pnlTotalUnits
+            // 
+            pnlTotalUnits.Anchor = AnchorStyles.Right;
+            pnlTotalUnits.BackColor = Color.FromArgb(255, 193, 7);
+            pnlTotalUnits.BorderStyle = BorderStyle.Fixed3D;
+            pnlTotalUnits.Controls.Add(tableLayoutPanel1);
+            pnlTotalUnits.Location = new Point(368, 18);
+            pnlTotalUnits.Name = "pnlTotalUnits";
+            pnlTotalUnits.Size = new Size(107, 65);
+            pnlTotalUnits.TabIndex = 23;
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.ColumnCount = 1;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.Controls.Add(lblTotalUnitss, 0, 0);
+            tableLayoutPanel1.Controls.Add(lblTotalUnitsValue, 0, 1);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 2;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 42.62295F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 57.37705F));
+            tableLayoutPanel1.Size = new Size(103, 61);
+            tableLayoutPanel1.TabIndex = 26;
+            // 
+            // lblTotalUnitss
+            // 
+            lblTotalUnitss.Anchor = AnchorStyles.Bottom;
+            lblTotalUnitss.AutoSize = true;
+            lblTotalUnitss.BackColor = Color.Transparent;
+            lblTotalUnitss.Font = new Font("Segoe UI Semibold", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTotalUnitss.ForeColor = SystemColors.ActiveCaptionText;
+            lblTotalUnitss.Location = new Point(21, 13);
+            lblTotalUnitss.Name = "lblTotalUnitss";
+            lblTotalUnitss.Size = new Size(61, 13);
+            lblTotalUnitss.TabIndex = 1;
+            lblTotalUnitss.Text = "Total Units";
+            // 
+            // lblTotalUnitsValue
+            // 
+            lblTotalUnitsValue.Anchor = AnchorStyles.None;
+            lblTotalUnitsValue.AutoSize = true;
+            lblTotalUnitsValue.BackColor = Color.Transparent;
+            lblTotalUnitsValue.Font = new Font("Segoe UI", 14.4000006F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTotalUnitsValue.ForeColor = Color.Black;
+            lblTotalUnitsValue.Location = new Point(39, 29);
+            lblTotalUnitsValue.Name = "lblTotalUnitsValue";
+            lblTotalUnitsValue.Size = new Size(24, 28);
+            lblTotalUnitsValue.TabIndex = 2;
+            lblTotalUnitsValue.Text = "0";
             // 
             // label188
             // 
             label188.AutoSize = true;
             label188.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label188.ForeColor = Color.Maroon;
-            label188.Location = new Point(14, 23);
+            label188.Location = new Point(18, 18);
             label188.Name = "label188";
-            label188.Size = new Size(212, 38);
+            label188.Size = new Size(165, 30);
             label188.TabIndex = 6;
             label188.Text = "My Enrollment";
             // 
@@ -731,10 +639,9 @@
             pnlViewDetails.Controls.Add(lblDetailCode);
             pnlViewDetails.Controls.Add(btnEnrollCloseDetails);
             pnlViewDetails.Controls.Add(lblSubjectDetails);
-            pnlViewDetails.Location = new Point(657, 372);
-            pnlViewDetails.Margin = new Padding(3, 4, 3, 4);
+            pnlViewDetails.Location = new Point(575, 279);
             pnlViewDetails.Name = "pnlViewDetails";
-            pnlViewDetails.Size = new Size(569, 546);
+            pnlViewDetails.Size = new Size(498, 410);
             pnlViewDetails.TabIndex = 25;
             pnlViewDetails.Visible = false;
             // 
@@ -743,12 +650,11 @@
             txtDetailSchedule.BackColor = SystemColors.ControlLightLight;
             txtDetailSchedule.BorderStyle = BorderStyle.None;
             txtDetailSchedule.Font = new Font("Segoe UI", 9.6F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtDetailSchedule.Location = new Point(17, 285);
-            txtDetailSchedule.Margin = new Padding(3, 4, 3, 4);
+            txtDetailSchedule.Location = new Point(15, 214);
             txtDetailSchedule.Multiline = true;
             txtDetailSchedule.Name = "txtDetailSchedule";
             txtDetailSchedule.ReadOnly = true;
-            txtDetailSchedule.Size = new Size(509, 65);
+            txtDetailSchedule.Size = new Size(445, 49);
             txtDetailSchedule.TabIndex = 7;
             txtDetailSchedule.Text = "Schedule: ";
             // 
@@ -756,9 +662,9 @@
             // 
             lblDetailTitle.AutoSize = true;
             lblDetailTitle.Font = new Font("Segoe UI", 9.6F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblDetailTitle.Location = new Point(16, 132);
+            lblDetailTitle.Location = new Point(14, 99);
             lblDetailTitle.Name = "lblDetailTitle";
-            lblDetailTitle.Size = new Size(99, 21);
+            lblDetailTitle.Size = new Size(84, 17);
             lblDetailTitle.TabIndex = 6;
             lblDetailTitle.Text = "Course Title: ";
             // 
@@ -766,9 +672,9 @@
             // 
             lblDetailUnits.AutoSize = true;
             lblDetailUnits.Font = new Font("Segoe UI", 9.6F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblDetailUnits.Location = new Point(16, 179);
+            lblDetailUnits.Location = new Point(14, 134);
             lblDetailUnits.Name = "lblDetailUnits";
-            lblDetailUnits.Size = new Size(53, 21);
+            lblDetailUnits.Size = new Size(44, 17);
             lblDetailUnits.TabIndex = 5;
             lblDetailUnits.Text = "Units: ";
             // 
@@ -776,9 +682,9 @@
             // 
             lblDetailStatus.AutoSize = true;
             lblDetailStatus.Font = new Font("Segoe UI", 9.6F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblDetailStatus.Location = new Point(17, 229);
+            lblDetailStatus.Location = new Point(15, 172);
             lblDetailStatus.Name = "lblDetailStatus";
-            lblDetailStatus.Size = new Size(59, 21);
+            lblDetailStatus.Size = new Size(50, 17);
             lblDetailStatus.TabIndex = 3;
             lblDetailStatus.Text = "Status: ";
             // 
@@ -786,18 +692,17 @@
             // 
             lblDetailCode.AutoSize = true;
             lblDetailCode.Font = new Font("Segoe UI", 9.6F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblDetailCode.Location = new Point(16, 87);
+            lblDetailCode.Location = new Point(14, 65);
             lblDetailCode.Name = "lblDetailCode";
-            lblDetailCode.Size = new Size(53, 21);
+            lblDetailCode.Size = new Size(46, 17);
             lblDetailCode.TabIndex = 2;
             lblDetailCode.Text = "Code: ";
             // 
             // btnEnrollCloseDetails
             // 
-            btnEnrollCloseDetails.Location = new Point(470, 487);
-            btnEnrollCloseDetails.Margin = new Padding(3, 4, 3, 4);
+            btnEnrollCloseDetails.Location = new Point(411, 365);
             btnEnrollCloseDetails.Name = "btnEnrollCloseDetails";
-            btnEnrollCloseDetails.Size = new Size(86, 31);
+            btnEnrollCloseDetails.Size = new Size(75, 23);
             btnEnrollCloseDetails.TabIndex = 1;
             btnEnrollCloseDetails.Text = "Close";
             btnEnrollCloseDetails.UseVisualStyleBackColor = true;
@@ -806,59 +711,64 @@
             // 
             lblSubjectDetails.AutoSize = true;
             lblSubjectDetails.Font = new Font("Segoe UI", 12.8F, FontStyle.Bold);
-            lblSubjectDetails.Location = new Point(16, 28);
+            lblSubjectDetails.Location = new Point(14, 21);
             lblSubjectDetails.Name = "lblSubjectDetails";
-            lblSubjectDetails.Size = new Size(167, 30);
+            lblSubjectDetails.Size = new Size(138, 25);
             lblSubjectDetails.TabIndex = 0;
             lblSubjectDetails.Text = "Subject Details";
             // 
             // cmsEnrollAction
             // 
+            cmsEnrollAction.Enabled = false;
             cmsEnrollAction.ImageScalingSize = new Size(20, 20);
             cmsEnrollAction.Items.AddRange(new ToolStripItem[] { viewDetailsToolStripMenuItem, dropSubjectToolStripMenuItem });
             cmsEnrollAction.Name = "cmsAction";
-            cmsEnrollAction.Size = new Size(166, 52);
+            cmsEnrollAction.Size = new Size(143, 48);
             // 
             // viewDetailsToolStripMenuItem
             // 
+            viewDetailsToolStripMenuItem.Enabled = false;
             viewDetailsToolStripMenuItem.Name = "viewDetailsToolStripMenuItem";
-            viewDetailsToolStripMenuItem.Size = new Size(165, 24);
+            viewDetailsToolStripMenuItem.Size = new Size(142, 22);
             viewDetailsToolStripMenuItem.Text = "View Details";
             // 
             // dropSubjectToolStripMenuItem
             // 
+            dropSubjectToolStripMenuItem.Enabled = false;
             dropSubjectToolStripMenuItem.Name = "dropSubjectToolStripMenuItem";
-            dropSubjectToolStripMenuItem.Size = new Size(165, 24);
+            dropSubjectToolStripMenuItem.Size = new Size(142, 22);
             dropSubjectToolStripMenuItem.Text = "Drop Subject";
             // 
             // EnrollmentContentStudent
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(pnlEnrollContent);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "EnrollmentContentStudent";
-            Size = new Size(1883, 1292);
+            Size = new Size(1648, 969);
             Load += EnrollmentContentStudent_Load;
             pnlEnrollContent.ResumeLayout(false);
-            pnlEnrollContent.PerformLayout();
+            panel3.ResumeLayout(false);
+            panel4.ResumeLayout(false);
+            pnlEnrollRightCard.ResumeLayout(false);
+            tableLayoutPanel2.ResumeLayout(false);
+            tableLayoutPanel2.PerformLayout();
+            pnlEnrollMiddleCard.ResumeLayout(false);
+            tableLayoutPanel3.ResumeLayout(false);
+            tableLayoutPanel3.PerformLayout();
+            pnlContainerEnrollmentDGV.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvEnrollment).EndInit();
+            pnlOptOutWaiver.ResumeLayout(false);
+            pnlOptOutWaiver.PerformLayout();
             pnlRA10391.ResumeLayout(false);
             pnlRA10391.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox10).EndInit();
-            pnlOptOutWaiver.ResumeLayout(false);
-            pnlOptOutWaiver.PerformLayout();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            panel2.ResumeLayout(false);
             pnlTotalUnits.ResumeLayout(false);
-            pnlTotalUnits.PerformLayout();
-            pnlEnrollmentConfirmedDGV.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvEnrollmentConfirmed).EndInit();
-            pnlContainerEnrollmentDGV.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvEnrollment).EndInit();
-            pnlEnrollRightCard.ResumeLayout(false);
-            pnlEnrollRightCard.PerformLayout();
-            pnlEnrollMiddleCard.ResumeLayout(false);
-            pnlEnrollMiddleCard.PerformLayout();
-            pnlEnrollLeftCard.ResumeLayout(false);
-            pnlEnrollLeftCard.PerformLayout();
+            tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
             pnlViewDetails.ResumeLayout(false);
             pnlViewDetails.PerformLayout();
             cmsEnrollAction.ResumeLayout(false);
@@ -882,14 +792,6 @@
         private Label lblTotalUnitsValue;
         private Label lblTotalUnitss;
         private Button btnSaveAndAssess;
-        private Panel pnlEnrollmentConfirmedDGV;
-        private DataGridView dgvEnrollmentConfirmed;
-        private DataGridViewTextBoxColumn colCode2;
-        private DataGridViewTextBoxColumn colCourseTitle2;
-        private DataGridViewTextBoxColumn colUnits2;
-        private DataGridViewTextBoxColumn colSchedule2;
-        private DataGridViewTextBoxColumn colStatus2;
-        private DataGridViewTextBoxColumn colAction2;
         private Button btnDownloadCOR;
         private Panel pnlContainerEnrollmentDGV;
         private DataGridView dgvEnrollment;
@@ -901,15 +803,11 @@
         private DataGridViewTextBoxColumn colStatus;
         private DataGridViewTextBoxColumn colAction;
         private Panel pnlEnrollRightCard;
-        private Label lblCurrentSectionIndicator;
+        private Label lblScholasticStatus;
         private Label label183;
         private Panel pnlEnrollMiddleCard;
         private Label label184;
-        private Label lblMaximumUnitsValue;
-        private Panel pnlEnrollLeftCard;
-        private Label label185;
-        private Label label186;
-        private Label lblAcademicYear;
+        private Label lblMaximumUnits;
         private Label label188;
         private Panel pnlViewDetails;
         private TextBox txtDetailSchedule;
@@ -922,5 +820,12 @@
         private ContextMenuStrip cmsEnrollAction;
         private ToolStripMenuItem viewDetailsToolStripMenuItem;
         private ToolStripMenuItem dropSubjectToolStripMenuItem;
+        private TableLayoutPanel tableLayoutPanel1;
+        private TableLayoutPanel tableLayoutPanel2;
+        private TableLayoutPanel tableLayoutPanel3;
+        private Panel panel1;
+        private Panel panel2;
+        private Panel panel3;
+        private Panel panel4;
     }
 }

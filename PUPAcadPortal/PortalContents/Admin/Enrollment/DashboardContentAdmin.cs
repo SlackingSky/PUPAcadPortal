@@ -6,19 +6,28 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
+using PUPAcadPortal.Services;
+using PUPAcadPortal.ReusableUserControls;
 
 namespace PUPAcadPortal.PortalContents.Admin.Enrollment
 {
     public partial class DashboardContentAdmin : UserControl
     {
+        private DashboardService _dashboardService = new();
+
         public DashboardContentAdmin()
         {
             InitializeComponent();
+            DashboardService adminDashboardService = new();
             ToolTip toolTip = new ToolTip();
             toolTip.SetToolTip(pnlDashboardRegisterStudent, "Click to register a new student");
             toolTip.SetToolTip(pnlDashboardRegisterProfessor, "Click to register a new professor");
             toolTip.SetToolTip(pnlDashboardViewAllUsers, "Click to view all users");
         }
+
         private void FixDashboardLayoutCompletely()
         {
             if (!pnlDashboardContent.Visible) return;
@@ -44,11 +53,11 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
 
                 // Array of stat cards and their picture boxes
                 var statCards = new[] {
-            new { Card = pnlDashboardTotalStudents, PictureBox = pictureBox15, Label = label72, Value = lblTotalStudents },
-            new { Card = pnlDashboardTotalProfs, PictureBox = pictureBox14, Label = label70, Value = lblTotalProfessors },
-            new { Card = pnlDashboardTotalCoursess, PictureBox = pictureBox16, Label = label68, Value = lblTotalCourses },
-            new { Card = pnlDashboardActiveUsers, PictureBox = pictureBox17, Label = label58, Value = lblActiveUsers }
-        };
+                    new { Card = pnlDashboardTotalStudents, PictureBox = pictureBox15, Label = label72, Value = lblTotalStudents },
+                    new { Card = pnlDashboardTotalProfs, PictureBox = pictureBox14, Label = label70, Value = lblTotalProfessors },
+                    new { Card = pnlDashboardTotalCoursess, PictureBox = pictureBox16, Label = label68, Value = lblTotalCourses },
+                    new { Card = pnlDashboardActiveUsers, PictureBox = pictureBox17, Label = label58, Value = lblActiveUsers }
+                };
 
                 for (int i = 0; i < statCards.Length; i++)
                 {
@@ -102,7 +111,7 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
                   Title = label76, Desc = label82 },
             new { Panel = pnlDashboardViewAllUsers, Button = btnDashboardViewAllUsers,
                   Title = label77, Desc = label78 }
-        };
+                };
 
                 int quickActionsPanelWidth = availableWidth;
                 int quickActionsMargin = 20;  // Margin inside Quick Actions panel
@@ -174,11 +183,62 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             FixDashboardLayoutCompletely();
         }
 
-        private void AdminDashboardContent_Load(object sender, EventArgs e)
+        private async void AdminDashboardContent_Load(object sender, EventArgs e)
         {
-            pnlDashboardRegisterProfessor.BindClick();
-            pnlDashboardRegisterStudent.BindClick();
+            pnlDashboardRegisterProfessor.BindClick(); 
+            pnlDashboardRegisterStudent.BindClick(); 
             pnlDashboardViewAllUsers.BindClick();
+
+            await LoadAdminDashboardAsync();
+            FixDashboardLayoutCompletely();
         }
+
+        private async Task LoadAdminDashboardAsync()
+        {
+            using (var context = new Models.AppDbContext())
+            {
+                // Count all students in user table
+                int totalStudents = await context.Users
+                    .Where(u => u.Students.Any())
+                    .CountAsync();
+
+                // Count all professors in user table
+                int totalProfessors = await context.Users
+                    .Where(u => u.Professors.Any())
+                    .CountAsync();
+
+                // Count all courses in the system
+                int totalCourses = await context.Subjects
+                    .CountAsync();
+
+                // Count all active users in the system
+                int activeUsers = await context.Users
+                    .Where(u => u.IsActive == true)
+                    .CountAsync();
+
+                var recentActivities = await _dashboardService.GetActivityLogsAsync(Data.UserSession.Role ?? "");
+
+                // --- UI CARD UPDATES ---
+                // Map the computed numerical numbers cleanly into your structural layout tracking label elements
+                lblTotalStudents.Text = totalStudents.ToString();
+                lblTotalProfessors.Text = totalProfessors.ToString();
+                lblTotalCourses.Text = totalCourses.ToString();
+                lblActiveUsers.Text = activeUsers.ToString();
+
+                foreach (var activity in recentActivities)
+                {
+                    var actPnl = new AdminRecentActivityReusable
+                    {
+                        ActivityTitle = activity.Action,
+                        ActivityTimeAgo = activity.Timestamp.ToString(),
+                        CreatedBy = $"{activity.User.LastName} {activity.User.FirstName}"
+                    };
+                    //actPnl.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+                    fpnlRecentAct.Controls.Add(actPnl);
+                }
+            }
+        }
+
+
     }
 }

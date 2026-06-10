@@ -25,6 +25,8 @@ public partial class CalendarEvent
 
     public bool? IsPrivate { get; set; }
 
+    public DateTime? EventDate { get; set; }
+
     public virtual Room? Room { get; set; }
 
     public virtual SubjectOffering? SubjectOffering { get; set; }
