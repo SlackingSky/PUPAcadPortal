@@ -209,6 +209,7 @@ namespace PUPAcadPortal.PortalContents.Misc
                         MessageBox.Show("Verification successful! You can now edit your password.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         txtPassword.Clear();
                         txtConfirmPass.Clear();
+                        txtPassword.TextChanged += txtPassword_TextChanged;
                         txtPassword.PlaceholderText = "Enter new password";
                         txtConfirmPass.PlaceholderText = "Confirm new password";
                         btnVerify.Text = "Save";
@@ -225,6 +226,20 @@ namespace PUPAcadPortal.PortalContents.Misc
             }
         }
 
+        private void txtPassword_TextChanged(object sender, EventArgs e)
+        {
+            var validationResult = PasswordValidator.Validate(txtPassword.Text);
+
+            if (!validationResult.IsValid)
+            {
+                errorProvider1.SetError(txtPassword, validationResult.ErrorMessage);
+            }
+            else
+            {
+                errorProvider1.SetError(txtPassword, string.Empty);
+            }
+        }
+
         private async void SavePassword(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtPassword.Text) || string.IsNullOrWhiteSpace(txtConfirmPass.Text))
@@ -235,6 +250,14 @@ namespace PUPAcadPortal.PortalContents.Misc
             if (txtPassword.Text != txtConfirmPass.Text)
             {
                 MessageBox.Show("New password and confirmation do not match. Please try again.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            var validationResult = PasswordValidator.Validate(txtPassword.Text);
+
+            if (!validationResult.IsValid)
+            {
+                MessageBox.Show("Please fix the password errors before continuing.", "Invalid Password", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtPassword.Focus();
                 return;
             }
             using (var context = new Models.AppDbContext())
