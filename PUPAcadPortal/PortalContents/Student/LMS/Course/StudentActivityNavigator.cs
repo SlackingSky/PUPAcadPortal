@@ -1,81 +1,129 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using PUPAcadPortal.Data;
 using PUPAcadPortal.Models;
 using PUPAcadPortal.Services;
-using PUPAcadPortal.Data;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 {
     public sealed partial class StudentActivityNavigator : UserControl
     {
+        // --- Fields ---
         private readonly int _studentId;
         private readonly string _studentName;
         private readonly IStudentCourseDbService _courseSvc;
         private readonly IModuleDbService _moduleSvc;
 
-        public StudentActivityNavigator(int studentId, IStudentCourseDbService courseSvc, string studentName)
+        private Control _current;
+
+        // --- Constructors ---
+
+        // Parameterless constructor for WinForms Designer and default Session init
+        public StudentActivityNavigator()
+            : this(
+                UserSession.StudentID ?? 0,
+                new StudentCourseDbService(CreateContext),
+                UserSession.FullName)
+        {
+        }
+
+        public StudentActivityNavigator(
+            int studentId,
+            IStudentCourseDbService courseSvc,
+            string studentName)
         {
             _studentId = studentId;
-            _courseSvc = courseSvc ?? new NullStudentCourseDbService();
             _studentName = studentName;
+            _courseSvc = courseSvc ?? new NullStudentCourseDbService();
             _moduleSvc = studentId > 0
-                ? new ModuleDbService(() => new AppDbContext())
+                ? new ModuleDbService(CreateContext)
                 : new NullModuleDbService();
-            this.Dock = DockStyle.Fill;
+
+            InitializeComponent();
+            Dock = DockStyle.Fill;
+            BackColor = Color.FromArgb(245, 245, 245);
 
             ShowDashboard();
         }
 
-        private void LoadView(UserControl page)
-        {
-            for (int i = this.Controls.Count - 1; i >= 0; i--)
-            {
-                Control ctrl = this.Controls[i];
-                this.Controls.RemoveAt(i);
-                ctrl.Dispose();
-            }
+        private static AppDbContext CreateContext() => new AppDbContext();
 
-            page.Dock = DockStyle.Fill;
-            this.Controls.Add(page);
-        }
+        // --- Navigation Flow ---
 
         private void ShowDashboard()
         {
-            var dashboard = new StudentActivityDashboard(_studentId, _courseSvc, _studentName);
+            var dashboard = new StudentActivityDashboard(
+                _studentId,
+                _courseSvc,
+                _studentName)
+            { Dock = DockStyle.Fill };
 
-            dashboard.OnOpenCourse += (course) => ShowClassFiles(course);
+            dashboard.OnOpenCourse += ShowClassFiles;
 
-            LoadView(dashboard);
+            SwapView(dashboard);
         }
 
         private void ShowClassFiles(StudentCourse course)
         {
-            var classFiles = new StudentClassFilesPage(course, _moduleSvc, _studentId, _courseSvc);
+            var classFiles = new StudentClassFilesPage(
+                course,
+                _moduleSvc,
+                _studentId,
+                _courseSvc)
+            { Dock = DockStyle.Fill };
 
-            classFiles.OnBack += () => ShowDashboard();
-            classFiles.OnOpenActivities += (c) => ShowActivityList(c);
+            classFiles.OnBack += ShowDashboard;
+            classFiles.OnOpenActivities += ShowActivityList;
 
-            LoadView(classFiles);
+            SwapView(classFiles);
         }
 
         private void ShowActivityList(StudentCourse course)
         {
-            var activityList = new StudentActivityList(course, _studentId, _courseSvc);
+            var activityList = new StudentActivityList(
+                course,
+                _studentId,
+                _courseSvc)
+            { Dock = DockStyle.Fill };
 
             activityList.OnBack += () => ShowClassFiles(course);
-
             activityList.OnOpenActivity += (activityItem) => ShowActivityAssessment(course, activityItem);
 
-            LoadView(activityList);
+            SwapView(activityList);
         }
 
         private void ShowActivityAssessment(StudentCourse course, StudentActivityItem activity)
         {
-            var submitPage = new StudentActivitySubmit(activity, course, _studentId, _courseSvc);
+            var submitPage = new StudentActivitySubmit(
+                activity,
+                course,
+                _studentId,
+                _courseSvc)
+            { Dock = DockStyle.Fill };
 
             submitPage.OnBack += () => ShowActivityList(course);
 
-            LoadView(submitPage);
+            SwapView(submitPage);
+        }
+
+        // --- View Management ---
+
+        private void SwapView(Control next)
+        {
+            SuspendLayout();
+
+            if (_current != null)
+            {
+                Controls.Remove(_current);
+                _current.Dispose();
+            }
+
+            _current = next;
+            Controls.Add(next);
+            next.BringToFront();
+
+            ResumeLayout(true);
         }
     }
 }
