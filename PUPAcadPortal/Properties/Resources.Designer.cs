@@ -1181,6 +1181,16 @@ namespace PUPAcadPortal.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] OptOutWaiver {
+            get {
+                object obj = ResourceManager.GetObject("OptOutWaiver", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap paper {
@@ -1351,6 +1361,16 @@ namespace PUPAcadPortal.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap PUPemaillogo {
+            get {
+                object obj = ResourceManager.GetObject("PUPemaillogo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         public static System.Drawing.Icon PUPLogo {
@@ -1387,6 +1407,36 @@ namespace PUPAcadPortal.Properties {
             get {
                 object obj = ResourceManager.GetObject("Roboto-VariableFont_wdth,wght", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap room16 {
+            get {
+                object obj = ResourceManager.GetObject("room16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap room20 {
+            get {
+                object obj = ResourceManager.GetObject("room20", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap room24 {
+            get {
+                object obj = ResourceManager.GetObject("room24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

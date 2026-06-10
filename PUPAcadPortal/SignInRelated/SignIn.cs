@@ -172,6 +172,8 @@ namespace PUPAcadPortal
                  {
                     form.Size = _usableScreenSize;
                     form.Location = _usableScreenLoc;
+                    var systemService = new SystemService();
+                    await systemService.LoadCurrentAcademicPeriodAsync();
                     form.ShowDialog();
                     txtUsername.Clear();
                     txtPassword.Clear();
@@ -192,6 +194,7 @@ namespace PUPAcadPortal
             this.Size = _usableScreenSize;
             this.Location = _usableScreenLoc;
             txtUsername.Select();
+            lnkForgotPassword.TabStop = false;
         }
 
         // This method is for testing purposes only. It allows you to add a user with a hashed password to the database. DO NOT USE. WAG GAMITIN.
@@ -310,6 +313,14 @@ namespace PUPAcadPortal
         private void SignIn_Activated(object sender, EventArgs e)
         {
             txtUsername.Focus();
+        }
+
+        private void lnkForgotPassword_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            using (var recoveryForm = new PUPAcadPortal.SignInRelated.AccountRecovery.ForgotPasswordForm())
+            {
+                recoveryForm.ShowDialog();
+            }
         }
     }
 }

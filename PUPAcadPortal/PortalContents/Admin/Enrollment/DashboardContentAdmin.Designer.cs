@@ -30,18 +30,7 @@
         {
             pnlDashboardContent = new Panel();
             pnlDashboardContainerRecentAct = new Panel();
-            pnlDashboardRADummyDara3 = new Panel();
-            label87 = new Label();
-            panel48 = new Panel();
-            label84 = new Label();
-            pnlDashboardRADummyDara2 = new Panel();
-            label86 = new Label();
-            panel43 = new Panel();
-            label83 = new Label();
-            pnlDashboardRADummyDara1 = new Panel();
-            label85 = new Label();
-            panel46 = new Panel();
-            label88 = new Label();
+            fpnlRecentAct = new FlowLayoutPanel();
             label89 = new Label();
             panel45 = new Panel();
             pnlDashboardContainerQuickActions = new Panel();
@@ -78,9 +67,6 @@
             lblAdminDashboardDesc = new Label();
             pnlDashboardContent.SuspendLayout();
             pnlDashboardContainerRecentAct.SuspendLayout();
-            pnlDashboardRADummyDara3.SuspendLayout();
-            pnlDashboardRADummyDara2.SuspendLayout();
-            pnlDashboardRADummyDara1.SuspendLayout();
             pnlDashboardContainerQuickActions.SuspendLayout();
             pnlDashboardRegisterProfessor.SuspendLayout();
             pnlDashboardViewAllUsers.SuspendLayout();
@@ -118,9 +104,7 @@
             // pnlDashboardContainerRecentAct
             // 
             pnlDashboardContainerRecentAct.BackColor = SystemColors.ControlLightLight;
-            pnlDashboardContainerRecentAct.Controls.Add(pnlDashboardRADummyDara3);
-            pnlDashboardContainerRecentAct.Controls.Add(pnlDashboardRADummyDara2);
-            pnlDashboardContainerRecentAct.Controls.Add(pnlDashboardRADummyDara1);
+            pnlDashboardContainerRecentAct.Controls.Add(fpnlRecentAct);
             pnlDashboardContainerRecentAct.Controls.Add(label89);
             pnlDashboardContainerRecentAct.Location = new Point(31, 539);
             pnlDashboardContainerRecentAct.Margin = new Padding(3, 2, 3, 2);
@@ -128,125 +112,16 @@
             pnlDashboardContainerRecentAct.Size = new Size(1194, 325);
             pnlDashboardContainerRecentAct.TabIndex = 22;
             // 
-            // pnlDashboardRADummyDara3
+            // fpnlRecentAct
             // 
-            pnlDashboardRADummyDara3.Controls.Add(label87);
-            pnlDashboardRADummyDara3.Controls.Add(panel48);
-            pnlDashboardRADummyDara3.Controls.Add(label84);
-            pnlDashboardRADummyDara3.Location = new Point(28, 222);
-            pnlDashboardRADummyDara3.Name = "pnlDashboardRADummyDara3";
-            pnlDashboardRADummyDara3.Size = new Size(1146, 61);
-            pnlDashboardRADummyDara3.TabIndex = 27;
-            // 
-            // label87
-            // 
-            label87.AutoSize = true;
-            label87.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label87.ForeColor = Color.DimGray;
-            label87.Location = new Point(1057, 18);
-            label87.Name = "label87";
-            label87.Size = new Size(79, 17);
-            label87.TabIndex = 22;
-            label87.Text = "3 hours ago";
-            // 
-            // panel48
-            // 
-            panel48.BackColor = Color.FromArgb(255, 193, 7);
-            panel48.Location = new Point(24, 12);
-            panel48.Name = "panel48";
-            panel48.Size = new Size(5, 30);
-            panel48.TabIndex = 17;
-            // 
-            // label84
-            // 
-            label84.AutoSize = true;
-            label84.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label84.ForeColor = Color.DimGray;
-            label84.Location = new Point(42, 15);
-            label84.Name = "label84";
-            label84.Size = new Size(300, 21);
-            label84.TabIndex = 16;
-            label84.Text = "Marie Sarmiento registered as student";
-            // 
-            // pnlDashboardRADummyDara2
-            // 
-            pnlDashboardRADummyDara2.Controls.Add(label86);
-            pnlDashboardRADummyDara2.Controls.Add(panel43);
-            pnlDashboardRADummyDara2.Controls.Add(label83);
-            pnlDashboardRADummyDara2.Location = new Point(28, 145);
-            pnlDashboardRADummyDara2.Name = "pnlDashboardRADummyDara2";
-            pnlDashboardRADummyDara2.Size = new Size(1146, 61);
-            pnlDashboardRADummyDara2.TabIndex = 26;
-            // 
-            // label86
-            // 
-            label86.AutoSize = true;
-            label86.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label86.ForeColor = Color.DimGray;
-            label86.Location = new Point(1056, 19);
-            label86.Name = "label86";
-            label86.Size = new Size(79, 17);
-            label86.TabIndex = 21;
-            label86.Text = "3 hours ago";
-            // 
-            // panel43
-            // 
-            panel43.BackColor = Color.FromArgb(255, 193, 7);
-            panel43.Location = new Point(24, 12);
-            panel43.Name = "panel43";
-            panel43.Size = new Size(5, 30);
-            panel43.TabIndex = 17;
-            // 
-            // label83
-            // 
-            label83.AutoSize = true;
-            label83.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label83.ForeColor = Color.DimGray;
-            label83.Location = new Point(42, 15);
-            label83.Name = "label83";
-            label83.Size = new Size(311, 21);
-            label83.TabIndex = 16;
-            label83.Text = "Dr. Mario Santos registered as professor\r\n";
-            // 
-            // pnlDashboardRADummyDara1
-            // 
-            pnlDashboardRADummyDara1.Controls.Add(label85);
-            pnlDashboardRADummyDara1.Controls.Add(panel46);
-            pnlDashboardRADummyDara1.Controls.Add(label88);
-            pnlDashboardRADummyDara1.Location = new Point(28, 68);
-            pnlDashboardRADummyDara1.Name = "pnlDashboardRADummyDara1";
-            pnlDashboardRADummyDara1.Size = new Size(1146, 61);
-            pnlDashboardRADummyDara1.TabIndex = 25;
-            // 
-            // label85
-            // 
-            label85.AutoSize = true;
-            label85.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label85.ForeColor = Color.DimGray;
-            label85.Location = new Point(1057, 21);
-            label85.Name = "label85";
-            label85.Size = new Size(79, 17);
-            label85.TabIndex = 20;
-            label85.Text = "3 hours ago";
-            // 
-            // panel46
-            // 
-            panel46.BackColor = Color.FromArgb(255, 193, 7);
-            panel46.Location = new Point(24, 12);
-            panel46.Name = "panel46";
-            panel46.Size = new Size(5, 30);
-            panel46.TabIndex = 17;
-            // 
-            // label88
-            // 
-            label88.AutoSize = true;
-            label88.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label88.ForeColor = Color.DimGray;
-            label88.Location = new Point(42, 15);
-            label88.Name = "label88";
-            label88.Size = new Size(272, 21);
-            label88.TabIndex = 16;
-            label88.Text = "Maria Santos registered as student";
+            fpnlRecentAct.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            fpnlRecentAct.AutoScroll = true;
+            fpnlRecentAct.FlowDirection = FlowDirection.TopDown;
+            fpnlRecentAct.Location = new Point(8, 58);
+            fpnlRecentAct.Name = "fpnlRecentAct";
+            fpnlRecentAct.Size = new Size(1182, 252);
+            fpnlRecentAct.TabIndex = 25;
+            fpnlRecentAct.WrapContents = false;
             // 
             // label89
             // 
@@ -469,9 +344,9 @@
             lblActiveUsers.ForeColor = Color.Black;
             lblActiveUsers.Location = new Point(3, 22);
             lblActiveUsers.Name = "lblActiveUsers";
-            lblActiveUsers.Size = new Size(56, 65);
+            lblActiveUsers.Size = new Size(211, 65);
             lblActiveUsers.TabIndex = 17;
-            lblActiveUsers.Text = "0";
+            lblActiveUsers.Text = "Loading";
             // 
             // pnlDashboardTotalCoursess
             // 
@@ -516,9 +391,9 @@
             lblTotalCourses.ForeColor = Color.Black;
             lblTotalCourses.Location = new Point(3, 22);
             lblTotalCourses.Name = "lblTotalCourses";
-            lblTotalCourses.Size = new Size(56, 65);
+            lblTotalCourses.Size = new Size(211, 65);
             lblTotalCourses.TabIndex = 17;
-            lblTotalCourses.Text = "0";
+            lblTotalCourses.Text = "Loading";
             // 
             // pnlDashboardTotalProfs
             // 
@@ -563,9 +438,9 @@
             lblTotalProfessors.ForeColor = Color.Black;
             lblTotalProfessors.Location = new Point(3, 22);
             lblTotalProfessors.Name = "lblTotalProfessors";
-            lblTotalProfessors.Size = new Size(56, 65);
+            lblTotalProfessors.Size = new Size(211, 65);
             lblTotalProfessors.TabIndex = 17;
-            lblTotalProfessors.Text = "0";
+            lblTotalProfessors.Text = "Loading";
             // 
             // pnlDashboardTotalStudents
             // 
@@ -610,9 +485,9 @@
             lblTotalStudents.ForeColor = Color.Black;
             lblTotalStudents.Location = new Point(3, 22);
             lblTotalStudents.Name = "lblTotalStudents";
-            lblTotalStudents.Size = new Size(56, 65);
+            lblTotalStudents.Size = new Size(211, 65);
             lblTotalStudents.TabIndex = 15;
-            lblTotalStudents.Text = "0";
+            lblTotalStudents.Text = "Loading";
             // 
             // lblAdminDashboard
             // 
@@ -636,24 +511,18 @@
             lblAdminDashboardDesc.TabIndex = 15;
             lblAdminDashboardDesc.Text = "Welcome to the Polytechnic University of the Philippines - Sta. Maria, Bulacan Campus Admin Portal";
             // 
-            // AdminDashboardContent
+            // DashboardContentAdmin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(pnlDashboardContent);
-            Name = "AdminDashboardContent";
+            Name = "DashboardContentAdmin";
             Size = new Size(1272, 719);
             Load += AdminDashboardContent_Load;
             pnlDashboardContent.ResumeLayout(false);
             pnlDashboardContent.PerformLayout();
             pnlDashboardContainerRecentAct.ResumeLayout(false);
             pnlDashboardContainerRecentAct.PerformLayout();
-            pnlDashboardRADummyDara3.ResumeLayout(false);
-            pnlDashboardRADummyDara3.PerformLayout();
-            pnlDashboardRADummyDara2.ResumeLayout(false);
-            pnlDashboardRADummyDara2.PerformLayout();
-            pnlDashboardRADummyDara1.ResumeLayout(false);
-            pnlDashboardRADummyDara1.PerformLayout();
             pnlDashboardContainerQuickActions.ResumeLayout(false);
             pnlDashboardContainerQuickActions.PerformLayout();
             pnlDashboardRegisterProfessor.ResumeLayout(false);
@@ -681,18 +550,6 @@
 
         private Panel pnlDashboardContent;
         private Panel pnlDashboardContainerRecentAct;
-        private Panel pnlDashboardRADummyDara3;
-        private Label label87;
-        private Panel panel48;
-        private Label label84;
-        private Panel pnlDashboardRADummyDara2;
-        private Label label86;
-        private Panel panel43;
-        private Label label83;
-        private Panel pnlDashboardRADummyDara1;
-        private Label label85;
-        private Panel panel46;
-        private Label label88;
         private Label label89;
         private Panel panel45;
         private Panel pnlDashboardContainerQuickActions;
@@ -727,5 +584,6 @@
         private Label lblTotalStudents;
         private Label lblAdminDashboard;
         private Label lblAdminDashboardDesc;
+        private FlowLayoutPanel fpnlRecentAct;
     }
 }

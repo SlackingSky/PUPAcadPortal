@@ -63,6 +63,7 @@ namespace PUPAcadPortal
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SignIn));
+            lnkForgotPassword = new LinkLabel();
             panel1 = new Panel();
             panel9 = new Panel();
             label7 = new Label();
@@ -101,6 +102,17 @@ namespace PUPAcadPortal
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
+            // 
+            // lnkForgotPassword
+            // 
+            lnkForgotPassword.AutoSize = true;
+            lnkForgotPassword.Location = new Point(4, 178);
+            lnkForgotPassword.Name = "lnkForgotPassword";
+            lnkForgotPassword.Size = new Size(100, 15);
+            lnkForgotPassword.TabIndex = 99999999;
+            lnkForgotPassword.TabStop = true;
+            lnkForgotPassword.Text = "Forgot Password?";
+            lnkForgotPassword.LinkClicked += lnkForgotPassword_LinkClicked;
             // 
             // panel1
             // 
@@ -166,6 +178,7 @@ namespace PUPAcadPortal
             // 
             panel4.Anchor = AnchorStyles.None;
             panel4.BackColor = Color.Transparent;
+            panel4.Controls.Add(lnkForgotPassword);
             panel4.Controls.Add(btnSignIn);
             panel4.Controls.Add(panel6);
             panel4.Controls.Add(panel5);
@@ -423,6 +436,7 @@ namespace PUPAcadPortal
             panel9.ResumeLayout(false);
             panel3.ResumeLayout(false);
             panel4.ResumeLayout(false);
+            panel4.PerformLayout();
             panel6.ResumeLayout(false);
             panel6.PerformLayout();
             panel8.ResumeLayout(false);
@@ -466,5 +480,6 @@ namespace PUPAcadPortal
         private Panel panel7;
         private Label lblUsernameWarn;
         private Label lblPassWarn;
+        private LinkLabel lnkForgotPassword;
     }
 }

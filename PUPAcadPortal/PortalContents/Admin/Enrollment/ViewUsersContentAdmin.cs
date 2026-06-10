@@ -1,10 +1,12 @@
-﻿using System;
+﻿using PUPAcadPortal.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using Microsoft.EntityFrameworkCore;
 
 namespace PUPAcadPortal.PortalContents.Admin.Enrollment
 {
@@ -26,7 +28,7 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             cmbYear.SelectedIndexChanged += (s, e) => ApplyFiltersAndRefresh();
         }
 
-        private void ViewUsersContentAdmin_Load(object sender, EventArgs e)
+        private async void ViewUsersContentAdmin_Load(object sender, EventArgs e)
         {
             // Force refresh to display placeholder users
             ApplyFiltersAndRefresh();
@@ -39,7 +41,9 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             dgvUsers.DefaultCellStyle.SelectionForeColor = dgvUsers.DefaultCellStyle.ForeColor;
             dgvUsers.ClearSelection();
 
-            LoadStudentPlaceholders(); // show students by default
+            await LoadStudentsAsync(); // show students by default
+
+            if (this.IsDisposed) return;
 
             UpdateUserTypeIndicator();
 
@@ -84,27 +88,78 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             pnlUserTypeIndicator.Visible = true;
         }
 
-        private void LoadStudentPlaceholders()
+        // Data loading methods for students
+        private async Task LoadStudentsAsync()
         {
-            studentList.Clear();
-            studentList.Add(new string[] { "2024-00001-SM-0", "Juan dela Cruz", "juandc@iskolarngbayan.pup.edu.ph", "BSIT", "2nd Year", "Enrolled" });
-            studentList.Add(new string[] { "2024-00002-SM-0", "Maria Santos", "mariasantos@iskolarngbayan.pup.edu.ph", "BSIT", "2nd Year", "Enrolled" });
-            studentList.Add(new string[] { "2025-00003-SM-0", "Pedro Reyes", "pedror@iskolarngbayan.pup.edu.ph", "BSIT", "1st Year", "Enrolled" });
-            studentList.Add(new string[] { "2023-00004-SM-0", "Ana Gonzales", "anag@iskolarngbayan.pup.edu.ph", "BSIT", "3rd Year", "Enrolled" });
-            studentList.Add(new string[] { "2024-00005-SM-0", "Jose Garcia", "joseg@iskolarngbayan.pup.edu.ph", "BSIT", "2nd Year", "Enrolled" });
+            using (var context = new AppDbContext())
+            {
+                // Fetch users who have student records, including their student details
+                var students = await context.Users
+                    .Where(u => u.Students.Any())
+                    .Select(u => new
+                    {
+                        u.FirstName,
+                        u.LastName,
+                        u.InstitutionalEmail,
+                        u.IsActive,
+                        // Get the first student record associated with this user
+                        Detail = u.Students.FirstOrDefault()
+                    })
+                    .ToListAsync();
 
-            // Refresh the grid with current filters (if viewing students)
+                studentList = students.Select(x => new string[]
+                {
+                    x.Detail != null ? x.Detail.StudentNumber : "N/A", // Uses UserId as fallback ID
+                    $"{x.FirstName} {x.LastName}",
+                    x.InstitutionalEmail,
+                    x.Detail.Program, // Default fallback string matching your UI screenshot
+                    $"{x.Detail.YearLevel switch
+                    {
+                        1 => "1st",
+                        2 => "2nd",
+                        3 => "3rd",
+                        4 => "4th",
+                        5 => "5th",
+                        _ => "Unknown"
+                    }} Year",
+                    (x.IsActive ?? true) ? "Enrolled" : "Inactive"
+                }).ToList();
+            }
+
             if (viewingStudents)
                 ApplyFiltersAndRefresh();
         }
 
-        private void LoadProfessorPlaceholders()
+        // Data loading methods for professors
+        private async Task LoadProfessorsAsync()
         {
-            professorList.Clear();
-            professorList.Add(new string[] { "PROF-001", "Dr. Roberto Lim", "rlim@pup.edu.ph", "BSIT Dept.", "N/A", "Active" });
-            professorList.Add(new string[] { "PROF-002", "Prof. Carmen Reyes", "creyes@pup.edu.ph", "BSHM Dept.", "N/A", "Active" });
-            professorList.Add(new string[] { "PROF-003", "Dr. Antonio Cruz", "acruz@pup.edu.ph", "BSCpE Dept.", "N/A", "Active" });
-            professorList.Add(new string[] { "PROF-004", "Prof. Liza Ramos", "lramos@pup.edu.ph", "BSED Dept.", "N/A", "On Leave" });
+            using (var context = new AppDbContext())
+            {
+                // Fetch users who have professor records
+                var professors = await context.Users
+                    .Where(u => u.Professors.Any())
+                    .Include(u => u.Professors)
+                        .ThenInclude(p => p.Department)
+                    .Select(u => new
+                    {
+                        u.FirstName,
+                        u.LastName,
+                        u.InstitutionalEmail,
+                        u.IsActive,
+                        Detail = u.Professors.FirstOrDefault()
+                    })
+                    .ToListAsync();
+
+                professorList = professors.Select(x => new string[]
+                {
+                    x.Detail != null ? x.Detail.EmployeeId : "N/A",
+                    $"{x.FirstName} {x.LastName}",
+                    x.InstitutionalEmail,
+                    $"{x.Detail.Department.DepartmentCode} Dept.",
+                    "N/A",
+                    x.Detail.EmploymentStatus
+                }).ToList();
+            }
 
             if (!viewingStudents)
                 ApplyFiltersAndRefresh();
@@ -113,6 +168,7 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
         private void ApplyFiltersAndRefresh()
         {
             // Search term – ignore placeholder
+            if (this.IsDisposed) return;
             string searchTerm = txtSearchViewAUs.Text.Trim();
             if (searchTerm == "Search here...") searchTerm = "";
             searchTerm = searchTerm.ToLower();
@@ -186,7 +242,7 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             }
         }
 
-        private void ResetViewAllUsersPanel()
+        private async Task ResetViewAllUsersPanel()
         {
             // Temporarily remove event handler to avoid unnecessary filtering
             txtSearchViewAUs.TextChanged += txtSearchViewAUs_TextChanged;
@@ -198,7 +254,8 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
             cmbYear.SelectedIndex = -1;
             cmbYear.Text = "Year";
             viewingStudents = true;
-            LoadStudentPlaceholders();   // this calls ApplyFiltersAndRefresh once
+            await LoadStudentsAsync();   // this calls ApplyFiltersAndRefresh once
+            if (this.IsDisposed) return;
             UpdateUserTypeIndicator();
 
             // Re-attach event handler
@@ -207,17 +264,21 @@ namespace PUPAcadPortal.PortalContents.Admin.Enrollment
 
         //View All Users Submenu Toggle (Students/Professors)
 
-        private void btnViewStudents_Click(object sender, EventArgs e)
+        private async void btnViewStudents_Click(object sender, EventArgs e)
         {
             viewingStudents = true;
-            LoadStudentPlaceholders();
+            await LoadStudentsAsync();
+
+            if (this.IsDisposed) return;
             UpdateUserTypeIndicator();
         }
 
-        private void btnViewProf_Click(object sender, EventArgs e)
+        private async void btnViewProf_Click(object sender, EventArgs e)
         {
             viewingStudents = false;
-            LoadProfessorPlaceholders();
+            await LoadProfessorsAsync();
+
+            if (this.IsDisposed) return;
             UpdateUserTypeIndicator();
         }
 

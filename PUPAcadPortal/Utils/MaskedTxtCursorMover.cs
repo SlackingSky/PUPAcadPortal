@@ -6,9 +6,12 @@ namespace PUPAcadPortal.Utils
 {
     public static class MaskedTxtCursorMover
     {
-        private static void MakeCursosGotoStart(this MaskedTextBox maskedTextBox)
+        public static void MakeCursorGotoStart(this MaskedTextBox mtb)
         {
-            maskedTextBox.KeyDown += (s, e) =>
+            if (mtb.Tag?.ToString() == "CursorBound") return;
+            mtb.Tag = "CursorBound";
+
+            mtb.KeyDown += (s, e) =>
             {
                 if (e.KeyCode == Keys.Space)
                 {
@@ -17,13 +20,27 @@ namespace PUPAcadPortal.Utils
                 }
             };
 
-            maskedTextBox.KeyUp += (s, e) => EnforcePhoneCursor(maskedTextBox);
+            mtb.KeyUp += (s, e) => EnforcePhoneCursor(mtb);
 
-            maskedTextBox.Click += (s, e) => EnforcePhoneCursor(maskedTextBox);
+            mtb.Click += (s, e) =>
+            {
+                MoveMaskedCursorToStart(mtb);
+                EnforcePhoneCursor(mtb);
+            };
 
-            maskedTextBox.Enter += (s, e) => maskedTextBox.FindForm()?.BeginInvoke(new Action(() => EnforcePhoneCursor(maskedTextBox)));
-            maskedTextBox.Click += (s, e) => MoveMaskedCursorToStart(maskedTextBox);
-            maskedTextBox.Enter += (s, e) => MoveMaskedCursorToStart(maskedTextBox);
+            mtb.Enter += (s, e) =>
+            {
+                var form = mtb.FindForm();
+                if (form != null && !form.IsDisposed)
+                {
+                    form.BeginInvoke(new Action(() =>
+                    {
+                        if (mtb.IsDisposed) return;
+                        MoveMaskedCursorToStart(mtb);
+                        EnforcePhoneCursor(mtb);
+                    }));
+                }
+            };
         }
 
         private static void EnforcePhoneCursor(MaskedTextBox maskedTextBox)
