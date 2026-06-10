@@ -2,30 +2,17 @@
 {
     partial class ClassFilesPage
     {
-        /// <summary> 
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
-            {
                 components.Dispose();
-            }
             base.Dispose(disposing);
         }
 
         #region Component Designer generated code
 
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             _pnlHeader = new Panel();
@@ -36,12 +23,12 @@
             btnBack = new buttonRounded();
             _pnlScroll = new Panel();
             _flpModules = new FlowLayoutPanel();
+
             _pnlHeader.SuspendLayout();
             _pnlScroll.SuspendLayout();
             SuspendLayout();
-            // 
-            // _pnlHeader
-            // 
+
+            // ── _pnlHeader ─────────────────────────────────────────────────
             _pnlHeader.BackColor = Color.FromArgb(128, 0, 0);
             _pnlHeader.Controls.Add(btnActivities);
             _pnlHeader.Controls.Add(btnAddModule);
@@ -53,25 +40,45 @@
             _pnlHeader.Name = "_pnlHeader";
             _pnlHeader.Size = new Size(1680, 80);
             _pnlHeader.TabIndex = 0;
-            // 
-            // btnActivities
-            // 
-            btnActivities.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnActivities.BackColor = Color.FromArgb(255, 196, 0);
-            btnActivities.Cursor = Cursors.Hand;
-            btnActivities.FlatAppearance.BorderSize = 0;
-            btnActivities.FlatStyle = FlatStyle.Flat;
-            btnActivities.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            btnActivities.ForeColor = Color.Black;
-            btnActivities.Location = new Point(1516, 24);
-            btnActivities.Name = "btnActivities";
-            btnActivities.Size = new Size(140, 34);
-            btnActivities.TabIndex = 4;
-            btnActivities.Text = "📋  Activities";
-            btnActivities.UseVisualStyleBackColor = false;
-            // 
-            // btnAddModule
-            // 
+
+            // ── btnBack ────────────────────────────────────────────────────
+            btnBack.BackColor = Color.FromArgb(100, 0, 0);
+            btnBack.Cursor = Cursors.Hand;
+            btnBack.FlatAppearance.BorderSize = 0;
+            btnBack.FlatStyle = FlatStyle.Flat;
+            btnBack.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnBack.ForeColor = Color.White;
+            btnBack.Location = new Point(12, 24);
+            btnBack.Name = "btnBack";
+            btnBack.Size = new Size(82, 32);
+            btnBack.TabIndex = 0;
+            btnBack.Text = "← Back";
+            btnBack.UseVisualStyleBackColor = false;
+            // Click event wired in WireDesignerControls()
+
+            // ── lblCourse ──────────────────────────────────────────────────
+            lblCourse.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lblCourse.AutoEllipsis = true;
+            lblCourse.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            lblCourse.ForeColor = Color.White;
+            lblCourse.Location = new Point(108, 8);
+            lblCourse.Name = "lblCourse";
+            lblCourse.Size = new Size(1256, 28);
+            lblCourse.TabIndex = 1;
+            lblCourse.Text = "";   // populated in WireDesignerControls()
+
+            // ── lblMeta ────────────────────────────────────────────────────
+            lblMeta.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lblMeta.AutoEllipsis = true;
+            lblMeta.Font = new Font("Segoe UI", 8.5F);
+            lblMeta.ForeColor = Color.FromArgb(230, 185, 185);
+            lblMeta.Location = new Point(108, 40);
+            lblMeta.Name = "lblMeta";
+            lblMeta.Size = new Size(1256, 18);
+            lblMeta.TabIndex = 2;
+            lblMeta.Text = "";   // populated in WireDesignerControls()
+
+            // ── btnAddModule ───────────────────────────────────────────────
             btnAddModule.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnAddModule.BackColor = Color.FromArgb(46, 160, 67);
             btnAddModule.Cursor = Cursors.Hand;
@@ -85,48 +92,25 @@
             btnAddModule.TabIndex = 3;
             btnAddModule.Text = "+ Add Module";
             btnAddModule.UseVisualStyleBackColor = false;
-            // 
-            // lblMeta
-            // 
-            lblMeta.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            lblMeta.AutoEllipsis = true;
-            lblMeta.Font = new Font("Segoe UI", 8.5F);
-            lblMeta.ForeColor = Color.FromArgb(230, 185, 185);
-            lblMeta.Location = new Point(108, 40);
-            lblMeta.Name = "lblMeta";
-            lblMeta.Size = new Size(1256, 18);
-            lblMeta.TabIndex = 2;
-            lblMeta.Text = "Course Code · Instructor Name   |   Section   |   Schedule";
-            // 
-            // lblCourse
-            // 
-            lblCourse.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            lblCourse.AutoEllipsis = true;
-            lblCourse.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            lblCourse.ForeColor = Color.White;
-            lblCourse.Location = new Point(108, 8);
-            lblCourse.Name = "lblCourse";
-            lblCourse.Size = new Size(1256, 28);
-            lblCourse.TabIndex = 1;
-            lblCourse.Text = "Course Name";
-            // 
-            // btnBack
-            // 
-            btnBack.BackColor = Color.FromArgb(100, 0, 0);
-            btnBack.Cursor = Cursors.Hand;
-            btnBack.FlatAppearance.BorderSize = 0;
-            btnBack.FlatStyle = FlatStyle.Flat;
-            btnBack.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnBack.ForeColor = Color.White;
-            btnBack.Location = new Point(12, 24);
-            btnBack.Name = "btnBack";
-            btnBack.Size = new Size(82, 32);
-            btnBack.TabIndex = 0;
-            btnBack.Text = "← Back";
-            btnBack.UseVisualStyleBackColor = false;
-            // 
-            // _pnlScroll
-            // 
+            // Click event wired in WireDesignerControls()
+
+            // ── btnActivities ──────────────────────────────────────────────
+            btnActivities.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnActivities.BackColor = Color.FromArgb(255, 196, 0);
+            btnActivities.Cursor = Cursors.Hand;
+            btnActivities.FlatAppearance.BorderSize = 0;
+            btnActivities.FlatStyle = FlatStyle.Flat;
+            btnActivities.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            btnActivities.ForeColor = Color.Black;
+            btnActivities.Location = new Point(1516, 24);
+            btnActivities.Name = "btnActivities";
+            btnActivities.Size = new Size(140, 34);
+            btnActivities.TabIndex = 4;
+            btnActivities.Text = "📋  Activities";
+            btnActivities.UseVisualStyleBackColor = false;
+            // Click event wired in WireDesignerControls()
+
+            // ── _pnlScroll ─────────────────────────────────────────────────
             _pnlScroll.AutoScroll = true;
             _pnlScroll.BackColor = Color.FromArgb(245, 245, 248);
             _pnlScroll.Controls.Add(_flpModules);
@@ -136,9 +120,8 @@
             _pnlScroll.Padding = new Padding(24, 20, 24, 20);
             _pnlScroll.Size = new Size(1680, 909);
             _pnlScroll.TabIndex = 1;
-            // 
-            // _flpModules
-            // 
+
+            // ── _flpModules ────────────────────────────────────────────────
             _flpModules.AutoSize = true;
             _flpModules.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             _flpModules.BackColor = Color.FromArgb(245, 245, 248);
@@ -149,9 +132,8 @@
             _flpModules.Size = new Size(1632, 0);
             _flpModules.TabIndex = 0;
             _flpModules.WrapContents = false;
-            // 
-            // ClassFilesPage
-            // 
+
+            // ── ClassFilesPage ─────────────────────────────────────────────
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(245, 245, 248);
@@ -159,11 +141,11 @@
             Controls.Add(_pnlHeader);
             Name = "ClassFilesPage";
             Size = new Size(1680, 989);
+
             _pnlHeader.ResumeLayout(false);
             _pnlScroll.ResumeLayout(false);
             _pnlScroll.PerformLayout();
             ResumeLayout(false);
-
         }
 
         #endregion

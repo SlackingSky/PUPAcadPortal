@@ -1,56 +1,113 @@
-﻿using PUPAcadPortal.PortalContents.Student.LMS.Course;
+﻿using PUPAcadPortal.Data;
+using PUPAcadPortal.Models;
+using PUPAcadPortal.Services;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 {
-    public partial class StudentActivityNavigator : UserControl
+    public sealed partial class StudentActivityNavigator : UserControl
     {
-        // Keep references so we can pass state back on nav
-        private StudentActivityDashboard _dashboard;
-        private StudentActivityList _list;
-        private StudentActivitySubmit _submit;
-        private StudentCourse _currentCourse;
+        // --- Fields ---
+        private readonly int _studentId;
+        private readonly string _studentName;
+        private readonly IStudentCourseDbService _courseSvc;
+        private readonly IModuleDbService _moduleSvc;
 
         private Control _current;
 
+        // --- Constructors ---
+
+        // Parameterless constructor for WinForms Designer and default Session init
         public StudentActivityNavigator()
+            : this(
+                UserSession.StudentID ?? 0,
+                new StudentCourseDbService(CreateContext),
+                UserSession.FullName)
         {
+        }
+
+        public StudentActivityNavigator(
+            int studentId,
+            IStudentCourseDbService courseSvc,
+            string studentName)
+        {
+            _studentId = studentId;
+            _studentName = studentName;
+            _courseSvc = courseSvc ?? new NullStudentCourseDbService();
+            _moduleSvc = studentId > 0
+                ? new ModuleDbService(CreateContext)
+                : new NullModuleDbService();
+
             InitializeComponent();
             Dock = DockStyle.Fill;
             BackColor = Color.FromArgb(245, 245, 245);
+
             ShowDashboard();
         }
 
-        //  Navigation 
+        private static AppDbContext CreateContext() => new AppDbContext();
+
+        // --- Navigation Flow ---
 
         private void ShowDashboard()
         {
-            _dashboard = new StudentActivityDashboard { Dock = DockStyle.Fill };
-            _dashboard.OnOpenCourse += ShowList;
-            SwapView(_dashboard);
-        }
-
-        private void ShowList(StudentCourse course)
-        {
-            _currentCourse = course;
-
-            _list = new StudentActivityList(course) { Dock = DockStyle.Fill };
-            _list.OnBack += ShowDashboard;
-            _list.OnOpenActivity += ShowSubmit;
-            SwapView(_list);
-        }
-
-        private void ShowSubmit(StudentActivityItem activity)
-        {
-            _submit = new StudentActivitySubmit(activity, _currentCourse)
+            var dashboard = new StudentActivityDashboard(
+                _studentId,
+                _courseSvc,
+                _studentName)
             { Dock = DockStyle.Fill };
-            _submit.OnBack += () => ShowList(_currentCourse);
-            SwapView(_submit);
+
+            dashboard.OnOpenCourse += ShowClassFiles;
+
+            SwapView(dashboard);
         }
 
-        //  View swap 
+        private void ShowClassFiles(StudentCourse course)
+        {
+            var classFiles = new StudentClassFilesPage(
+                course,
+                _moduleSvc,
+                _studentId,
+                _courseSvc)
+            { Dock = DockStyle.Fill };
+
+            classFiles.OnBack += ShowDashboard;
+            classFiles.OnOpenActivities += ShowActivityList;
+
+            SwapView(classFiles);
+        }
+
+        private void ShowActivityList(StudentCourse course)
+        {
+            var activityList = new StudentActivityList(
+                course,
+                _studentId,
+                _courseSvc)
+            { Dock = DockStyle.Fill };
+
+            activityList.OnBack += () => ShowClassFiles(course);
+            activityList.OnOpenActivity += (activityItem) => ShowActivityAssessment(course, activityItem);
+
+            SwapView(activityList);
+        }
+
+        private void ShowActivityAssessment(StudentCourse course, StudentActivityItem activity)
+        {
+            var submitPage = new StudentActivitySubmit(
+                activity,
+                course,
+                _studentId,
+                _courseSvc)
+            { Dock = DockStyle.Fill };
+
+            submitPage.OnBack += () => ShowActivityList(course);
+
+            SwapView(submitPage);
+        }
+
+        // --- View Management ---
 
         private void SwapView(Control next)
         {

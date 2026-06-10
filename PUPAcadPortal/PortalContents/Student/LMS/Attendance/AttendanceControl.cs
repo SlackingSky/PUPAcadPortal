@@ -1,198 +1,172 @@
 ﻿using PUPAcadPortal.PortalContents.Student.LMS.Attendance;
+using PUPAcadPortal.Models;
+using PUPAcadPortal.Services;
+using PUPAcadPortal.Data;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
+using Microsoft.EntityFrameworkCore;
 
 namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
 {
+
     public partial class AttendanceControl : UserControl
     {
-        //  Runtime State 
+        //  Identity (set from parent before control is shown)
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public int CurrentStudentId
+        {
+            get => _currentStudentId > 0 ? _currentStudentId
+                   : (UserSession.StudentID ?? 0);
+            set => _currentStudentId = value;
+        }
+        private int _currentStudentId = 0;
         private List<SubjectMeta> _subjects = new();
         private Dictionary<string, List<AttRecord>> _records = new();
-        private string _selectedCode = null;
+
+        private string? _selectedCode;
         private int _total, _present, _absent, _late, _excused;
         private double _pct;
 
         private const double REQUIRED_PCT = 80.0;
         private const int LATE_PER_ABS = 3;
 
-        //  Constructor 
-        public AttendanceControl()
+        //  DB factory
+        private static AppDbContext CreateContext() => new AppDbContext();
+        public AttendanceControl() => InitializeComponent();
+
+        //  Load
+        private void AttendanceControl_Load(object sender, EventArgs e)
         {
-            InitializeComponent();
+            LoadFromDatabase();
+            RefreshAll();
         }
 
-
-
-
-
-        private static void DrawCardBorder(Graphics g, Panel card, Color accent)
+        //  Load all attendance data from DB for this student 
+        /// IMPORTANT: clears both _subjects, _records, AND cmbCourse.Items before
+        /// rebuilding so that repeated calls (e.g. triggered by QR scan success)
+        /// never produce duplicate entries in the dropdown.
+        private void LoadFromDatabase()
         {
-            using var pen = new Pen(Color.FromArgb(235, 235, 240), 1);
-            g.DrawRectangle(pen, 0, 0, card.Width - 1, card.Height - 1);
-        }
+            _subjects.Clear();
+            _records.Clear();
 
-
-
-        private void DrawSegmentedProgress(object sender, PaintEventArgs e)
-        {
-            var g = e.Graphics;
-            var pan = (Panel)sender;
-            int w = pan.Width;
-            int h = pan.Height;
-
-            // Background track
-            using var bg = new SolidBrush(Color.FromArgb(230, 230, 238));
-            g.FillRectangle(bg, 0, 0, w, h);
-
-            if (_total <= 0) return;
-
-            double pF = (double)_present / _total;
-            double lF = (double)_late / _total;
-            double aF = (double)_absent / _total;
-            double eF = (double)_excused / _total;
-
-            int xP = 0;
-            int wP = (int)(w * pF);
-            int wL = (int)(w * lF);
-            int wA = (int)(w * aF);
-            int wE = (int)(w * eF);
-
-            using var bP = new SolidBrush(Color.FromArgb(0, 160, 75));
-            using var bL = new SolidBrush(Color.FromArgb(220, 150, 0));
-            using var bA = new SolidBrush(Color.FromArgb(210, 45, 45));
-            using var bE = new SolidBrush(Color.FromArgb(60, 110, 210));
-
-            g.FillRectangle(bP, xP, 0, wP, h); xP += wP;
-            g.FillRectangle(bL, xP, 0, wL, h); xP += wL;
-            g.FillRectangle(bA, xP, 0, wA, h); xP += wA;
-            g.FillRectangle(bE, xP, 0, wE, h);
-        }
-
-
-
-
-
-        private static void AutoSizeGrid(DataGridView dgv, int maxH)
-        {
-            if (dgv == null) return;
-            int rowH = dgv.Rows.GetRowsHeight(DataGridViewElementStates.Visible);
-            int desired = dgv.ColumnHeadersHeight + rowH + 2;
-            dgv.Height = Math.Min(desired, maxH);
-            dgv.ScrollBars = desired > maxH ? ScrollBars.Vertical : ScrollBars.None;
-        }
-
-        private void SeedData()
-        {
-            var defs = new[]
-            {
-                (Code:"ELEC IT-FE2", Name:"BSIT Free Elective 2",                        Units:3, Sched:"Mon 10:30–1:30 PM",   Days:new[]{DayOfWeek.Monday}),
-                (Code:"COMP 014",    Name:"Quantitative Methods with Modeling",           Units:3, Sched:"Mon 2:30–5:30 PM",    Days:new[]{DayOfWeek.Monday}),
-                (Code:"COMP 012",    Name:"Network Administration",                       Units:3, Sched:"Wed 8:00–1:30 PM",    Days:new[]{DayOfWeek.Wednesday}),
-                (Code:"COMP 009",    Name:"Object Oriented Programming",                  Units:3, Sched:"Wed/Thu varied",      Days:new[]{DayOfWeek.Wednesday,DayOfWeek.Thursday}),
-                (Code:"INTE 202",    Name:"Interactive Programming & Technologies 1",     Units:3, Sched:"Thu 2:30–8:00 PM",    Days:new[]{DayOfWeek.Thursday}),
-                (Code:"PATHFIT 4",   Name:"Physical Activity Towards Health & Fitness 4", Units:2, Sched:"Fri 10:00–12:00 PM",  Days:new[]{DayOfWeek.Friday}),
-                (Code:"COMP 013",    Name:"Human Computer Interaction",                   Units:3, Sched:"Sat 7:30–10:30 AM",   Days:new[]{DayOfWeek.Saturday}),
-                (Code:"COMP 010",    Name:"Information Management",                       Units:3, Sched:"Sat 2:30–8:00 PM",    Days:new[]{DayOfWeek.Saturday}),
-            };
-
-            var statusPool = new[] { "Present","Present","Present","Present","Present",
-                                     "Late","Absent","Excused" };
-            var sessionPool = new[]
-            {
-                "Lecture 1","Lecture 2","Lab Session","Quiz Session",
-                "Recitation","Midterm Exam","Finals Review","Group Activity"
-            };
-            var rng = new Random(42);
-            var sem1Strt = new DateTime(2025, 8, 1);
-            var sem1End = new DateTime(2025, 12, 31);
-            var sem2Strt = new DateTime(2026, 2, 1);
-            var sem2End = new DateTime(2026, 5, 31);
-
+            // Always clear the combo before rebuilding to prevent duplicates
+            // when this method is called more than once (e.g. after a QR scan).
             cmbCourse.Items.Clear();
             cmbCourse.Items.Add("All Courses");
-            foreach (var d in defs)
+
+            if (CurrentStudentId <= 0) return;
+
+            try
             {
-                _subjects.Add(new SubjectMeta
-                {
-                    Code = d.Code,
-                    Name = d.Name,
-                    Units = d.Units,
-                    Schedule = d.Sched
-                });
-                cmbCourse.Items.Add($"{d.Code} – {d.Name}");
+                using var ctx = CreateContext();
 
-                var recs = new List<AttRecord>();
-                int sessionCounter = 1;
+                // All SubjectOfferings this student is enrolled in
+                var enrolledOfferings = ctx.EnrollmentSubjects
+                    .Include(es => es.Enrollment)
+                    .Include(es => es.SubjectOffering)
+                        .ThenInclude(so => so.Subject)
+                    .Include(es => es.SubjectOffering)
+                        .ThenInclude(so => so.AcademicPeriod)
+                    .Where(es => es.Enrollment.StudentId == CurrentStudentId)
+                    .Select(es => es.SubjectOffering)
+                    .Distinct()
+                    .ToList();
 
-                void AddPeriodRecords(DateTime start, DateTime end, string acadYear, bool isQR)
+                foreach (var offering in enrolledOfferings)
                 {
-                    for (var dt = start; dt <= end && dt.Date <= DateTime.Today; dt = dt.AddDays(1))
+                    var meta = new SubjectMeta
                     {
-                        if (!d.Days.Contains(dt.DayOfWeek)) continue;
-                        string st = statusPool[rng.Next(statusPool.Length)];
-                        string period = dt.Month <= 9 ? "Prelim"
-                                      : dt.Month <= 11 ? "Midterm"
-                                      : "Final Term";
-                        recs.Add(new AttRecord
-                        {
-                            Date = dt.Date,
-                            AcadYear = acadYear,
-                            Period = period,
-                            Session = sessionPool[(sessionCounter++ - 1) % sessionPool.Length],
-                            Status = st,
-                            Remarks = BuildRemark(st, rng),
-                            IsQR = isQR || rng.Next(3) == 0
-                        });
-                    }
+                        Code = offering.SubjectOfferingId,
+                        Name = offering.Subject?.SubjectName ?? offering.SubjectOfferingId,
+                        SubjectCode = offering.Subject?.SubjectCode ?? offering.SubjectOfferingId,
+                        Units = offering.Subject?.LecUnits ?? 0,
+                        Schedule = string.Empty,
+                    };
+                    _subjects.Add(meta);
+                    cmbCourse.Items.Add($"{meta.SubjectCode} – {meta.Name}");
+
+                    // QR-scanned records (which are inserted with SessionId only) are
+                    // picked up correctly — we no longer rely on a direct OfferingId
+                    // field on AttendanceRecord.
+                    var rawRecords = ctx.AttendanceRecords
+                        .Include(ar => ar.Session)
+                            .ThenInclude(cs => cs.SubjectOffering)
+                        .Where(ar =>
+                            ar.StudentId == CurrentStudentId &&
+                            ar.Session.SubjectOfferingId == offering.SubjectOfferingId)
+                        .OrderByDescending(ar => ar.Session.SessionDate)
+                        .ToList();
+
+                    var list = rawRecords.Select(ar => new AttRecord
+                    {
+                        Date = ar.Session.SessionDate,
+                        AcadYear = offering.AcademicPeriod?.SchoolYear ?? "—",
+                        Period = DerivePeriod(ar.Session.SessionDate, offering.AcademicPeriod),
+                        Session = ar.Session.Topic ?? "Session",
+                        Status = ar.Status,
+                        Remarks = ar.Remarks ?? string.Empty,
+                        IsQR = ar.IsQrVerified,
+                        IsQrVerified = ar.IsQrVerified,
+                        QrScannedAt = ar.QrScannedAt,
+                        AttendanceId = ar.AttendanceId,
+                    }).ToList();
+
+                    _records[meta.Code] = list;
                 }
-
-                AddPeriodRecords(sem1Strt, sem1End, "2025–2026", false);
-                AddPeriodRecords(sem2Strt, sem2End, "2025–2026", true);
-
-                _records[d.Code] = recs;
             }
-            cmbCourse.SelectedIndex = 0;
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Could not load attendance from the database.\n\n{ex.Message}",
+                    "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            // Reset to "All Courses" after every reload
+            if (cmbCourse.Items.Count > 0) cmbCourse.SelectedIndex = 0;
         }
 
-        private static string BuildRemark(string status, Random rng) => status switch
+        //  Derive Prelim / Midterm / Final Term from date + academic period
+        private static string DerivePeriod(DateTime date, AcademicPeriod? period)
         {
-            "Present" => "On Time",
-            "Late" => $"Late by {rng.Next(5, 30)} min",
-            "Excused" => "Medical certificate",
-            _ => "No excuse submitted"
-        };
+            if (period == null) return "—";
+            double total = (period.EndDate - period.StartDate).TotalDays;
+            if (total <= 0) return "—";
+            double elapsed = (date - period.StartDate).TotalDays;
+            double frac = elapsed / total;
+            return frac < 0.35 ? "Prelim"
+                 : frac < 0.70 ? "Midterm"
+                 : "Final Term";
+        }
 
         private List<AttRecord> FilteredRecords(string code)
         {
             if (!_records.TryGetValue(code, out var all)) return new();
             var q = all.AsEnumerable();
 
-            // Period filter
             string period = cmbPeriod.SelectedItem?.ToString() ?? "All Periods";
-            if (period != "All Periods")
-                q = q.Where(r => r.Period == period);
+            if (period != "All Periods") q = q.Where(r => r.Period == period);
 
-            // Course filter (skip when showing per-course subjects grid)
             string course = cmbCourse.SelectedItem?.ToString() ?? "All Courses";
             if (course != "All Courses")
             {
                 string filtCode = course.Split('–')[0].Trim();
-                if (filtCode != code) return new();
+                var meta = _subjects.FirstOrDefault(s => s.Code == code);
+                if (filtCode != code && filtCode != meta?.SubjectCode)
+                    return new();
             }
 
-            // Date range filter
             q = q.Where(r => r.Date >= dtpFrom.Value.Date && r.Date <= dtpTo.Value.Date);
-
             return q.ToList();
         }
 
-
+        //  Totals
         private void ComputeTotals()
         {
             _total = _present = _absent = _late = _excused = 0;
@@ -224,7 +198,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             RefreshQRGrid();
         }
 
-        //  REFRESH CARDS
+        //  Summary Cards
         private void RefreshCards()
         {
             lblOverallPct.Text = $"{_pct}%";
@@ -253,21 +227,18 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             }
         }
 
-        private int CountAtRiskSubjects()
-        {
-            return _subjects.Count(meta =>
+        private int CountAtRiskSubjects() =>
+            _subjects.Count(meta =>
             {
                 var r = FilteredRecords(meta.Code);
                 if (r.Count == 0) return false;
                 int lt = r.Count(x => x.Status == "Late");
                 int ab = r.Count(x => x.Status == "Absent");
-                int ea = ab + (lt / LATE_PER_ABS);
-                double p = Math.Max(0, (r.Count - ea) * 100.0 / r.Count);
+                double p = Math.Max(0, (r.Count - ab - lt / LATE_PER_ABS) * 100.0 / r.Count);
                 return p < REQUIRED_PCT;
             });
-        }
 
-        //  REFRESH MINI STATS
+        //  Mini Stats
         private void RefreshMiniStats()
         {
             lblMiniPresent.Text = $"● Present: {_present}";
@@ -278,8 +249,38 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             pnlProgress?.Invalidate();
         }
 
-        //  SUBJECTS GRID
-        private DataTable _subjectsDT;
+        //  Segmented progress bar
+        private void DrawSegmentedProgress(object sender, PaintEventArgs e)
+        {
+            var g = e.Graphics;
+            var pan = (Panel)sender;
+            int w = pan.Width;
+            int h = pan.Height;
+
+            using var bg = new SolidBrush(Color.FromArgb(230, 230, 238));
+            g.FillRectangle(bg, 0, 0, w, h);
+            if (_total <= 0) return;
+
+            int xP = 0;
+            int wP = (int)(w * (_present / (double)_total));
+            int wL = (int)(w * (_late / (double)_total));
+            int wA = (int)(w * (_absent / (double)_total));
+            int wE = (int)(w * (_excused / (double)_total));
+
+            using var bP = new SolidBrush(Color.FromArgb(0, 160, 75));
+            using var bL = new SolidBrush(Color.FromArgb(220, 150, 0));
+            using var bA = new SolidBrush(Color.FromArgb(210, 45, 45));
+            using var bE = new SolidBrush(Color.FromArgb(60, 110, 210));
+
+            g.FillRectangle(bP, xP, 0, wP, h); xP += wP;
+            g.FillRectangle(bL, xP, 0, wL, h); xP += wL;
+            g.FillRectangle(bA, xP, 0, wA, h); xP += wA;
+            g.FillRectangle(bE, xP, 0, wE, h);
+        }
+
+        //  Subjects grid
+        private DataTable? _subjectsDT;
+
         private void RefreshSubjectsGrid()
         {
             if (_subjectsDT == null)
@@ -309,23 +310,27 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
 
                 int effAbs = ab + (lt / LATE_PER_ABS);
                 double p = n > 0 ? Math.Round(Math.Max(0, (n - effAbs) * 100.0 / n), 1) : 0;
-                string st = p >= 90 ? "Excellent" : p >= 80 ? "Good" : p >= 65 ? "At Risk" : "Dropped";
+                string st = p >= 90 ? "Excellent"
+                           : p >= 80 ? "Good"
+                           : p >= 65 ? "At Risk"
+                           : "Dropped";
 
-                _subjectsDT.Rows.Add(meta.Code, meta.Name, meta.Schedule, n, pr, lt, ab, ex, $"{p}%", st);
+                _subjectsDT.Rows.Add(
+                    meta.SubjectCode, meta.Name, meta.Schedule,
+                    n, pr, lt, ab, ex, $"{p}%", st);
             }
             dgvSubjects.DataSource = _subjectsDT;
         }
 
-
-
-        private void DgvSubjects_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        private void DgvSubjects_CellFormatting(object sender,
+            DataGridViewCellFormattingEventArgs e)
         {
             if (e.RowIndex < 0 || e.Value == null) return;
             string col = dgvSubjects.Columns[e.ColumnIndex].Name;
 
             if (col == "Status")
             {
-                string s = e.Value.ToString();
+                string s = e.Value.ToString()!;
                 e.CellStyle.Font = new Font("Segoe UI", 8.5f, FontStyle.Bold);
                 e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 (e.CellStyle.ForeColor, e.CellStyle.BackColor) = s switch
@@ -333,12 +338,12 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
                     "Excellent" => (Color.FromArgb(0, 120, 60), Color.FromArgb(220, 255, 235)),
                     "Good" => (Color.FromArgb(0, 130, 70), Color.FromArgb(230, 255, 240)),
                     "At Risk" => (Color.FromArgb(180, 100, 0), Color.FromArgb(255, 243, 210)),
-                    _ => (Color.FromArgb(180, 30, 30), Color.FromArgb(255, 232, 232))
+                    _ => (Color.FromArgb(180, 30, 30), Color.FromArgb(255, 232, 232)),
                 };
             }
             else if (col == "Att%")
             {
-                if (double.TryParse(e.Value.ToString().Replace("%", ""), out double p))
+                if (double.TryParse(e.Value.ToString()!.Replace("%", ""), out double p))
                 {
                     e.CellStyle.Font = new Font("Segoe UI", 10f, FontStyle.Bold);
                     e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -347,26 +352,28 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
                         : Color.FromArgb(200, 40, 40);
                 }
             }
-            else if (col == "Absent" &&
-                     int.TryParse(e.Value.ToString(), out int ab) && ab > 0)
+            else if (col == "Absent" && int.TryParse(e.Value.ToString(), out int ab2) && ab2 > 0)
                 e.CellStyle.ForeColor = Color.FromArgb(200, 40, 40);
-            else if (col == "Late" &&
-                     int.TryParse(e.Value.ToString(), out int lt) && lt > 0)
+            else if (col == "Late" && int.TryParse(e.Value.ToString(), out int lt2) && lt2 > 0)
                 e.CellStyle.ForeColor = Color.FromArgb(180, 110, 0);
         }
 
         private void DgvSubjects_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
-            _selectedCode = dgvSubjects.Rows[e.RowIndex].Cells["Code"]?.Value?.ToString();
+            string? code = dgvSubjects.Rows[e.RowIndex].Cells["Code"]?.Value?.ToString();
+            var match = _subjects.FirstOrDefault(s =>
+                s.SubjectCode == code || s.Code == code);
+            _selectedCode = match?.Code;
             if (_selectedCode == null) return;
-            lblAttendanceLogTitle.Text = $"Attendance Log  –  {_selectedCode}";
+            lblAttendanceLogTitle.Text = $"Attendance Log  –  {code}";
             RefreshLogsGrid();
             RefreshQRGrid();
         }
 
-        //  LOGS GRID
-        private DataTable _logsDT;
+        //  Attendance log grid
+        private DataTable? _logsDT;
+
         private void RefreshLogsGrid()
         {
             if (_logsDT == null)
@@ -378,6 +385,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
                 _logsDT.Columns.Add("Period");
                 _logsDT.Columns.Add("Status");
                 _logsDT.Columns.Add("Remarks");
+                _logsDT.Columns.Add("Verified", typeof(bool));
             }
             _logsDT.Rows.Clear();
 
@@ -387,40 +395,69 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
 
             foreach (var meta in toShow)
                 foreach (var rec in FilteredRecords(meta.Code).OrderByDescending(r => r.Date))
+                {
+                    string statusDisplay = rec.IsQrVerified
+                        ? "Present (QR Verified)"
+                        : rec.Status;
                     _logsDT.Rows.Add(
                         rec.Date.ToString("MMM d, yyyy (ddd)"),
-                        meta.Code,
+                        meta.SubjectCode,
                         rec.Session,
                         rec.Period,
-                        rec.Status,
-                        rec.Remarks);
+                        statusDisplay,
+                        rec.Remarks,
+                        rec.IsQrVerified);
+                }
 
             dgvLogs.DataSource = _logsDT;
+            if (dgvLogs.Columns.Contains("Verified"))
+                dgvLogs.Columns["Verified"].Visible = false;
         }
 
-
-
-        private void DgvLogs_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        private void DgvLogs_CellFormatting(object sender,
+            DataGridViewCellFormattingEventArgs e)
         {
             if (e.RowIndex < 0 || e.Value == null) return;
-            string col = dgvLogs.Columns[e.ColumnIndex].Name;
 
+            var row = dgvLogs.Rows[e.RowIndex];
+            bool isQr = false;
+            if (dgvLogs.Columns.Contains("Verified"))
+            {
+                var v = row.Cells["Verified"].Value;
+                isQr = v is bool b && b;
+            }
+            if (isQr)
+            {
+                row.DefaultCellStyle.BackColor = Color.FromArgb(232, 248, 232);
+                row.DefaultCellStyle.SelectionBackColor = Color.FromArgb(210, 240, 210);
+            }
+
+            string col = dgvLogs.Columns[e.ColumnIndex].Name;
             if (col == "Status")
             {
-                string s = e.Value.ToString();
+                string s = e.Value.ToString()!;
                 e.CellStyle.Font = new Font("Segoe UI", 8.5f, FontStyle.Bold);
                 e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                (e.CellStyle.ForeColor, e.CellStyle.BackColor) = s switch
+
+                if (s.Contains("QR Verified"))
                 {
-                    "Present" => (Color.FromArgb(0, 130, 60), Color.FromArgb(220, 255, 235)),
-                    "Late" => (Color.FromArgb(180, 110, 0), Color.FromArgb(255, 243, 210)),
-                    "Excused" => (Color.FromArgb(50, 100, 200), Color.FromArgb(220, 235, 255)),
-                    _ => (Color.FromArgb(180, 30, 30), Color.FromArgb(255, 232, 232))
-                };
+                    e.CellStyle.ForeColor = Color.FromArgb(0, 120, 60);
+                    e.CellStyle.BackColor = Color.FromArgb(220, 255, 235);
+                }
+                else
+                {
+                    (e.CellStyle.ForeColor, e.CellStyle.BackColor) = s switch
+                    {
+                        "Present" => (Color.FromArgb(0, 130, 60), Color.FromArgb(220, 255, 235)),
+                        "Late" => (Color.FromArgb(180, 110, 0), Color.FromArgb(255, 243, 210)),
+                        "Excused" => (Color.FromArgb(50, 100, 200), Color.FromArgb(220, 235, 255)),
+                        _ => (Color.FromArgb(180, 30, 30), Color.FromArgb(255, 232, 232)),
+                    };
+                }
             }
             else if (col == "Period")
             {
-                string p = e.Value.ToString();
+                string p = e.Value.ToString()!;
                 e.CellStyle.Font = new Font("Segoe UI", 8f, FontStyle.Regular);
                 e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 (e.CellStyle.ForeColor, e.CellStyle.BackColor) = p switch
@@ -428,13 +465,14 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
                     "Prelim" => (Color.FromArgb(70, 70, 180), Color.FromArgb(230, 230, 255)),
                     "Midterm" => (Color.FromArgb(150, 80, 0), Color.FromArgb(255, 245, 220)),
                     "Final Term" => (Color.FromArgb(128, 0, 0), Color.FromArgb(255, 235, 235)),
-                    _ => (Color.FromArgb(80, 80, 80), Color.White)
+                    _ => (Color.FromArgb(80, 80, 80), Color.White),
                 };
             }
         }
 
-        //  QR GRID
-        private DataTable _qrDT;
+        //  QR scan history grid
+        private DataTable? _qrDT;
+
         private void RefreshQRGrid()
         {
             if (_qrDT == null)
@@ -448,7 +486,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             }
             _qrDT.Rows.Clear();
 
-            var rng = new Random(99);
             var toShow = _selectedCode != null
                 ? _subjects.Where(s => s.Code == _selectedCode)
                 : _subjects;
@@ -456,25 +493,23 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             foreach (var meta in toShow)
                 foreach (var rec in FilteredRecords(meta.Code)
                     .Where(r => r.IsQR)
-                    .OrderByDescending(r => r.Date)
-                    .Take(40))
+                    .OrderByDescending(r => r.Date))
                 {
-                    int h = rng.Next(7, 18);
-                    int m = rng.Next(0, 60);
+                    string scanTime = rec.QrScannedAt.HasValue
+                        ? rec.QrScannedAt.Value.ToLocalTime().ToString("HH:mm")
+                        : "—";
                     _qrDT.Rows.Add(
                         rec.Date.ToString("MMM d, yyyy (ddd)"),
-                        meta.Code,
+                        meta.SubjectCode,
                         rec.Session,
-                        $"{h:D2}:{m:D2}",
+                        scanTime,
                         rec.Status);
                 }
 
             dgvQR.DataSource = _qrDT;
         }
 
-
-
-        //  VIEW DETAILS POPUP
+        //  At-Risk popup
         private void OnViewDetailsClick(object sender, EventArgs e)
         {
             var atRiskList = new List<AtRiskSubjectInfo>();
@@ -484,19 +519,98 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
                 if (r.Count == 0) continue;
                 int lt = r.Count(x => x.Status == "Late");
                 int ab = r.Count(x => x.Status == "Absent");
-                int ea = ab + (lt / LATE_PER_ABS);
-                double p = Math.Max(0, (r.Count - ea) * 100.0 / r.Count);
+                double p = Math.Max(0, (r.Count - ab - lt / LATE_PER_ABS) * 100.0 / r.Count);
                 if (p < REQUIRED_PCT)
                     atRiskList.Add(new AtRiskSubjectInfo
                     {
-                        Code = meta.Code,
+                        Code = meta.SubjectCode,
                         Name = meta.Name,
                         Attendance = Math.Round(p, 1),
-                        Absent = ab
+                        Absent = ab,
                     });
             }
             AtRiskPopup.Show(this.FindForm(), atRiskList);
         }
+
+        //  Scan QR Code button
+        private void BtnScanQR_Click(object sender, EventArgs e)
+        {
+            if (CurrentStudentId <= 0)
+            {
+                MessageBox.Show(
+                    "Student identity is not set. Please log out and log in again.",
+                    "Identity Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using var frm = new Form
+            {
+                Text = "Scan QR Attendance Code",
+                Width = 960,
+                Height = 680,
+                MinimumSize = new Size(860, 580),
+                StartPosition = FormStartPosition.CenterParent,
+                BackColor = Color.FromArgb(245, 246, 250),
+                Font = new Font("Segoe UI", 9f),
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                MaximizeBox = false,
+                MinimizeBox = false,
+            };
+
+            var scanner = new QRScanControl
+            {
+                Dock = DockStyle.Fill,
+                CurrentStudentId = CurrentStudentId,
+            };
+            frm.Controls.Add(scanner);
+
+            // grid/card so the new attendance log entry appears immediately.
+            scanner.QRCodeScanned += (s2, result) =>
+            {
+                // Always close the scanner window first
+                frm.DialogResult = DialogResult.OK;
+                frm.Close();
+
+                // Full reload from DB so the new AttendanceRecord created by
+                // QrAttendanceService is reflected in all views.
+                LoadFromDatabase();
+                RefreshAll();
+            };
+
+            frm.ShowDialog(this.FindForm());
+
+            // Safety net: reload even if the scanner was closed without firing the
+            // event (e.g. user closed the window after a successful scan).
+            LoadFromDatabase();
+            RefreshAll();
+        }
+
+        //  Filter/combo change handlers 
+        // These are wired in the designer; add them here if not already present
+        // so filter changes immediately refresh all views without a DB reload.
+        private void CmbCourse_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _selectedCode = null;
+            if (lblAttendanceLogTitle != null)
+                lblAttendanceLogTitle.Text = "Attendance Log";
+            ComputeTotals();
+            RefreshCards();
+            RefreshMiniStats();
+            RefreshSubjectsGrid();
+            RefreshLogsGrid();
+            RefreshQRGrid();
+        }
+
+        private void CmbPeriod_SelectedIndexChanged(object sender, EventArgs e)
+            => RefreshAll();
+
+        private void DtpFrom_ValueChanged(object sender, EventArgs e)
+            => RefreshAll();
+
+        private void DtpTo_ValueChanged(object sender, EventArgs e)
+            => RefreshAll();
+
+        //  Grid styling helpers
         private static void ApplyGridHeaderStyle(DataGridView dgv)
         {
             dgv.EnableHeadersVisualStyles = false;
@@ -513,97 +627,48 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Attendance
             dgv.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(251, 251, 254);
         }
 
-        //  INNER MODELS
+        internal static void AutoSizeGrid(DataGridView dgv, int maxHeight)
+        {
+            if (dgv == null) return;
+            int rowsH = dgv.Rows.GetRowsHeight(DataGridViewElementStates.Visible);
+            int desired = dgv.ColumnHeadersHeight + rowsH + 2;
+            dgv.Height = Math.Min(desired, maxHeight);
+            dgv.ScrollBars = desired > maxHeight ? ScrollBars.Vertical : ScrollBars.None;
+        }
+
+        internal static void DrawCardBorder(
+            System.Drawing.Graphics g,
+            Panel card,
+            Color accentColor)
+        {
+            using (var accentBrush = new SolidBrush(accentColor))
+                g.FillRectangle(accentBrush, 0, 0, 4, card.Height);
+            using (var borderPen = new Pen(Color.FromArgb(225, 225, 235), 1f))
+                g.DrawRectangle(borderPen, 0, 0, card.Width - 1, card.Height - 1);
+        }
+
+        //  Inner models
         private class AttRecord
         {
             public DateTime Date { get; set; }
-            public string AcadYear { get; set; }
-            public string Period { get; set; }   // Prelim / Midterm / Final Term
-            public string Session { get; set; }
-            public string Status { get; set; }
-            public string Remarks { get; set; }
+            public string AcadYear { get; set; } = string.Empty;
+            public string Period { get; set; } = string.Empty;
+            public string Session { get; set; } = string.Empty;
+            public string Status { get; set; } = string.Empty;
+            public string Remarks { get; set; } = string.Empty;
             public bool IsQR { get; set; }
+            public bool IsQrVerified { get; set; }
+            public DateTime? QrScannedAt { get; set; }
+            public int AttendanceId { get; set; }
         }
 
         private class SubjectMeta
         {
-            public string Code { get; set; }
-            public string Name { get; set; }
+            public string Code { get; set; } = string.Empty;
+            public string SubjectCode { get; set; } = string.Empty;
+            public string Name { get; set; } = string.Empty;
             public int Units { get; set; }
-            public string Schedule { get; set; }
-        }
-
-        public void RecordQRAttendance(QRScanResult result)
-        {
-            if (result == null || string.IsNullOrWhiteSpace(result.CourseCode)) return;
-
-            // Find a matching subject (case-insensitive prefix match)
-            SubjectMeta match = _subjects.FirstOrDefault(s =>
-                s.Code.Equals(result.CourseCode, StringComparison.OrdinalIgnoreCase))
-                ?? _subjects.FirstOrDefault(s =>
-                    s.Code.Replace(" ", "").Equals(
-                        result.CourseCode.Replace(" ", ""),
-                        StringComparison.OrdinalIgnoreCase));
-
-            if (match == null) return;   // unknown course – silently ignore
-
-            if (!_records.TryGetValue(match.Code, out var list))
-            {
-                list = new List<AttRecord>();
-                _records[match.Code] = list;
-            }
-
-            list.Add(new AttRecord
-            {
-                Date = result.ScanTime.Date,
-                AcadYear = "2025–2026",
-                Period = string.IsNullOrWhiteSpace(result.Period) ? "Unknown" : result.Period,
-                Session = string.IsNullOrWhiteSpace(result.Session) ? "QR Scan" : result.Session,
-                Status = "Present",
-                Remarks = "Recorded via QR scan",
-                IsQR = true
-            });
-
-            // Live-refresh everything
-            RefreshAll();
-        }
-
-        //  SCAN / UPLOAD QR BUTTON
-        private void BtnScanQR_Click(object sender, EventArgs e)
-        {
-            using var frm = new Form
-            {
-                Text = "Scan / Upload QR Attendance",
-                Width = 960,
-                Height = 680,
-                MinimumSize = new Size(860, 580),
-                StartPosition = FormStartPosition.CenterParent,
-                BackColor = Color.FromArgb(245, 246, 250),
-                Font = new Font("Segoe UI", 9f),
-                FormBorderStyle = FormBorderStyle.FixedDialog,
-                MaximizeBox = false,
-                MinimizeBox = false,
-            };
-
-            var scanner = new QRScanControl { Dock = DockStyle.Fill };
-            frm.Controls.Add(scanner);
-
-            // Wire the confirmed scan → record attendance and close
-            scanner.QRCodeScanned += (s2, result) =>
-            {
-                RecordQRAttendance(result);
-                frm.DialogResult = DialogResult.OK;
-                frm.Close();
-            };
-
-            frm.ShowDialog(this.FindForm());
-        }
-
-        //  LOAD
-        private void AttendanceControl_Load(object sender, EventArgs e)
-        {
-            SeedData();
-            RefreshAll();
+            public string Schedule { get; set; } = string.Empty;
         }
     }
 }

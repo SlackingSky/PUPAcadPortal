@@ -1,4 +1,5 @@
 ﻿using PUPAcadPortal.PortalContents.Instructor.LMS.Course;
+using PUPAcadPortal.Services;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -10,8 +11,11 @@ namespace PUPAcadPortal
     public partial class SubmissionList : UserControl
     {
         public event Action OnBack;
+
         private readonly ActivityItem _activity;
         private readonly CourseActivity _course;
+        private readonly IActivityDbService _svc;
+
         private List<StudentSubmission> _submissions = new();
 
         private string _sortMode = "Name";
@@ -20,22 +24,35 @@ namespace PUPAcadPortal
         private System.Windows.Forms.Timer _searchTimer;
         private bool _initializing = true;
 
-        public SubmissionList(ActivityItem activity, CourseActivity course)
+        // accepts real submissions + service 
+        public SubmissionList(
+            ActivityItem activity,
+            CourseActivity course,
+            List<StudentSubmission> submissions,
+            IActivityDbService svc)
         {
             _activity = activity;
             _course = course;
+            _submissions = submissions;
+            _svc = svc;
 
             InitializeComponent();
-
             _initializing = false;
 
             SetupDebounce();
             PopulateHeader();
-            LoadSampleSubmissions();
             RefreshList();
 
             flpSubmissions.SizeChanged += (s, e) => RefreshList();
             this.Load += (s, e) => RefreshList();
+        }
+
+        //  Fallback constructor for backward compat (uses sample data) 
+        public SubmissionList(ActivityItem activity, CourseActivity course)
+            : this(activity, course, new List<StudentSubmission>(), null)
+        {
+            LoadSampleSubmissions();
+            RefreshList();
         }
 
         private void PopulateHeader()
@@ -48,24 +65,21 @@ namespace PUPAcadPortal
         private void SetupDebounce()
         {
             _searchTimer = new System.Windows.Forms.Timer { Interval = 200 };
-            _searchTimer.Tick += (s, e) =>
-            {
-                _searchTimer.Stop();
-                RefreshList();
-            };
+            _searchTimer.Tick += (s, e) => { _searchTimer.Stop(); RefreshList(); };
         }
 
+        //  Sample data (only for the no-arg fallback) 
         private void LoadSampleSubmissions()
         {
             string[] names =
             {
-                "ABLONG, ADRIAN PLATINO",    "BAUTISTA, CARLO SANTOS",
-                "CASTRO, DIANA REYES",       "DELA CRUZ, EDUARDO MANUEL",
-                "ESPIRITU, FIONA GRACE",     "FLORES, GABRIEL JOSE",
-                "GARCIA, HANNAH MAE",        "HERNANDEZ, IAN CARLO",
-                "IGNACIO, JESSICA ANNE",     "JIMENEZ, KENNETH RAY",
-                "LOPEZ, MARIA CLARA",        "MENDOZA, PAULO REYES",
-                "RAMOS, ANGELICA JOY",       "SANTOS, CHRISTIAN PAUL",
+                "ABLONG, ADRIAN PLATINO",  "BAUTISTA, CARLO SANTOS",
+                "CASTRO, DIANA REYES",     "DELA CRUZ, EDUARDO MANUEL",
+                "ESPIRITU, FIONA GRACE",   "FLORES, GABRIEL JOSE",
+                "GARCIA, HANNAH MAE",      "HERNANDEZ, IAN CARLO",
+                "IGNACIO, JESSICA ANNE",   "JIMENEZ, KENNETH RAY",
+                "LOPEZ, MARIA CLARA",      "MENDOZA, PAULO REYES",
+                "RAMOS, ANGELICA JOY",     "SANTOS, CHRISTIAN PAUL",
                 "TORRES, JENNA MAE"
             };
 
@@ -91,14 +105,13 @@ namespace PUPAcadPortal
                     Remarks = submitted && i < 5 ? "Good work! Keep it up." : "",
                     HasFile = submitted && _activity.Type == ActivityType.FileUpload,
                     EssayContent = submitted
-                        ? "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
-                          "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " +
-                          "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris."
+                        ? "Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
                         : ""
                 });
             }
         }
 
+        //  RefreshList
         private void RefreshList()
         {
             if (_initializing || _submissions == null) return;
@@ -109,8 +122,8 @@ namespace PUPAcadPortal
             var filtered = _submissions.FindAll(s =>
             {
                 bool statusOk = _filterStatus == "All" ||
-                                string.Equals(s.Status, _filterStatus,
-                                              StringComparison.OrdinalIgnoreCase);
+                    string.Equals(s.Status, _filterStatus,
+                                  StringComparison.OrdinalIgnoreCase);
                 bool searchOk = string.IsNullOrEmpty(_searchTerm)
                     || s.StudentName.IndexOf(_searchTerm, StringComparison.OrdinalIgnoreCase) >= 0
                     || s.StudentId.IndexOf(_searchTerm, StringComparison.OrdinalIgnoreCase) >= 0;
@@ -141,24 +154,16 @@ namespace PUPAcadPortal
             flpSubmissions.ResumeLayout();
         }
 
-        // ─────────────────────────────────────────────────────────────────────
-        //  CreateRow  –  Save button REMOVED.
-        //  Score textbox now saves automatically when:
-        //    • user presses Enter / Tab while focused on the score box
-        //    • user leaves the score box (LostFocus)
-        //  A subtle status label ("✓ Saved") appears inline to confirm.
-        // ─────────────────────────────────────────────────────────────────────
+        //  CreateRow — score save now persists to DB
         private Panel CreateRow(StudentSubmission sub)
         {
             int rowW = Math.Max(980, flpSubmissions.ClientSize.Width - 30);
-
             var row = new Panel
             {
                 Width = rowW,
                 Height = 88,
                 BackColor = Color.White,
-                Margin = new Padding(5, 4, 5, 0),
-                BorderStyle = BorderStyle.None,
+                Margin = new Padding(5, 4, 5, 0)
             };
             row.Paint += (s, e) =>
             {
@@ -166,23 +171,16 @@ namespace PUPAcadPortal
                 e.Graphics.DrawRectangle(pen, 0, 0, row.Width - 1, row.Height - 1);
             };
 
-            // ── status accent bar ────────────────────────────────────────────
             Color statusColor = sub.Status switch
             {
                 "Submitted" => Color.FromArgb(46, 160, 67),
                 "Late" => Color.OrangeRed,
                 "Missing" => Color.FromArgb(185, 50, 50),
                 "Returned" => Color.FromArgb(90, 90, 100),
-                _ => Color.Gray,
+                _ => Color.Gray
             };
-            row.Controls.Add(new Panel
-            {
-                Width = 5,
-                Dock = DockStyle.Left,
-                BackColor = statusColor,
-            });
+            row.Controls.Add(new Panel { Width = 5, Dock = DockStyle.Left, BackColor = statusColor });
 
-            // ── avatar initials ──────────────────────────────────────────────
             row.Controls.Add(new Label
             {
                 Text = GetInitials(sub.StudentName),
@@ -191,10 +189,9 @@ namespace PUPAcadPortal
                 BackColor = Color.FromArgb(128, 0, 0),
                 TextAlign = ContentAlignment.MiddleCenter,
                 Location = new Point(14, 20),
-                Size = new Size(46, 46),
+                Size = new Size(46, 46)
             });
 
-            // ── name + ID ────────────────────────────────────────────────────
             row.Controls.Add(new Label
             {
                 Text = sub.StudentName,
@@ -203,7 +200,7 @@ namespace PUPAcadPortal
                 Location = new Point(70, 8),
                 Width = 260,
                 Height = 22,
-                AutoEllipsis = true,
+                AutoEllipsis = true
             });
             row.Controls.Add(new Label
             {
@@ -212,10 +209,9 @@ namespace PUPAcadPortal
                 ForeColor = Color.Gray,
                 Location = new Point(70, 30),
                 Width = 200,
-                Height = 18,
+                Height = 18
             });
 
-            // ── status pill ──────────────────────────────────────────────────
             row.Controls.Add(new Label
             {
                 Text = sub.IsChecked ? "✅ " + sub.Status : sub.Status,
@@ -224,10 +220,9 @@ namespace PUPAcadPortal
                 Font = new Font("Segoe UI", 7.5F, FontStyle.Bold),
                 Location = new Point(70, 55),
                 Size = new Size(sub.IsChecked ? 100 : 78, 20),
-                TextAlign = ContentAlignment.MiddleCenter,
+                TextAlign = ContentAlignment.MiddleCenter
             });
 
-            // ── submission time ──────────────────────────────────────────────
             string timeText = sub.SubmissionTime == DateTime.MinValue
                 ? "Not submitted"
                 : sub.SubmissionTime.ToString("MMM dd, hh:mm tt");
@@ -238,10 +233,9 @@ namespace PUPAcadPortal
                 ForeColor = Color.Gray,
                 Location = new Point(360, 34),
                 Width = 200,
-                Height = 18,
+                Height = 18
             });
 
-            // ── remarks snippet ──────────────────────────────────────────────
             if (!string.IsNullOrEmpty(sub.Remarks))
                 row.Controls.Add(new Label
                 {
@@ -251,38 +245,26 @@ namespace PUPAcadPortal
                     Location = new Point(360, 56),
                     Width = 240,
                     Height = 18,
-                    AutoEllipsis = true,
+                    AutoEllipsis = true
                 });
 
-            // ─────────────────────────────────────────────────────────────────
-            //  RIGHT-SIDE CONTROLS (built right-to-left)
-            // ─────────────────────────────────────────────────────────────────
+            //  Right-side controls 
             int right = rowW - 12;
             const int btnH = 30, gap = 6;
 
-            // ── Return button ────────────────────────────────────────────────
             var btnReturn = MakeBtn("Return", Color.DarkOrange, 76, btnH, sub.IsChecked);
-            right -= btnReturn.Width;
-            btnReturn.Location = new Point(right, 28);
-            btnReturn.Click += (s, e) =>
-            {
-                sub.Status = "Returned";
-                sub.IsChecked = false;
-                RefreshList();
-            };
+            right -= btnReturn.Width; btnReturn.Location = new Point(right, 28);
+            btnReturn.Click += (s, e) => ReturnSubmission(sub, row);
             row.Controls.Add(btnReturn);
             right -= gap;
 
-            // ── Check button (opens GradingInterface) ────────────────────────
             var btnCheck = MakeBtn("Check", Color.FromArgb(63, 81, 181), 68, btnH,
                                    sub.Status != "Missing");
-            right -= btnCheck.Width;
-            btnCheck.Location = new Point(right, 28);
+            right -= btnCheck.Width; btnCheck.Location = new Point(right, 28);
             btnCheck.Click += (s, e) => OpenGrading(sub);
             row.Controls.Add(btnCheck);
             right -= gap;
 
-            // ── " / pts" label ───────────────────────────────────────────────
             var lblDivider = new Label
             {
                 Text = $"/ {_activity.Points}",
@@ -290,20 +272,18 @@ namespace PUPAcadPortal
                 ForeColor = Color.Gray,
                 Width = 46,
                 Height = 20,
-                TextAlign = ContentAlignment.MiddleLeft,
+                TextAlign = ContentAlignment.MiddleLeft
             };
 
-            // ── Inline "saved" status label ──────────────────────────────────
             var lblSaved = new Label
             {
                 Text = "",
                 Font = new Font("Segoe UI", 7.5F, FontStyle.Italic),
                 ForeColor = Color.FromArgb(46, 160, 67),
                 AutoSize = true,
-                BackColor = Color.Transparent,
+                BackColor = Color.Transparent
             };
 
-            // ── Score textbox (NO Save button) ───────────────────────────────
             var txtScore = new TextBox
             {
                 Text = sub.Score >= 0 ? sub.Score.ToString() : "",
@@ -312,28 +292,34 @@ namespace PUPAcadPortal
                 PlaceholderText = "—",
                 TextAlign = HorizontalAlignment.Center,
                 Enabled = !sub.IsChecked,
-                BackColor = sub.IsChecked ? Color.FromArgb(245, 245, 245) : Color.White,
+                BackColor = sub.IsChecked ? Color.FromArgb(245, 245, 245) : Color.White
             };
 
-            // Position score textbox
+            // FIXED LAYOUT CALCULATIONS (Right-to-Left Sequential Alignment)
+            // 1. Position the "/ Max" divider label first
+            right -= lblDivider.Width;
+            lblDivider.Location = new Point(right, 33);
+
+            // 2. Add a tiny padding gap before the text box
+            right -= 4;
+
+            // 3. Position the input text box to the left of the divider
             right -= txtScore.Width;
             int scoreX = right;
             txtScore.Location = new Point(scoreX, 28);
 
-            // Position the "/ pts" label just after the score box
-            right -= 4;
-            lblDivider.Location = new Point(right - 50, 34);
-            right -= 50 + gap;
+            // 4. Update bounds tracking for any further left-hand buttons (like Download)
+            right -= gap;
 
-            // Position the saved label below the score box
-            lblSaved.Location = new Point(scoreX, 60);
+            // 5. Place the "Saved" tracking text directly underneath the score text box
+            lblSaved.Location = new Point(scoreX, 62);
 
-            // ── Save logic: triggered by Enter, Tab, or LostFocus ────────────
+            //  Save score to DB 
             Action<bool> saveScore = (quiet) =>
             {
-                if (sub.IsChecked) return;                   // already locked
+                if (sub.IsChecked) return;
                 string raw = txtScore.Text.Trim();
-                if (string.IsNullOrEmpty(raw)) return;       // nothing typed yet
+                if (string.IsNullOrEmpty(raw)) return;
 
                 if (!int.TryParse(raw, out int sc))
                 {
@@ -344,10 +330,21 @@ namespace PUPAcadPortal
                 }
 
                 int clamped = Math.Clamp(sc, 0, _activity.Points);
-                if (sc != clamped)
+                if (sc != clamped) { txtScore.Text = clamped.ToString(); sc = clamped; }
+
+                // ─ Persist to DB 
+                if (_svc != null && !string.IsNullOrEmpty(sub.SubmissionDbId))
                 {
-                    txtScore.Text = clamped.ToString();
-                    sc = clamped;
+                    try
+                    {
+                        _svc.SaveGrade(sub.SubmissionDbId, sc, sub.Remarks);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Grade save failed:\n{ex.Message}",
+                            "DB Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
 
                 sub.Score = sc;
@@ -355,15 +352,14 @@ namespace PUPAcadPortal
                 txtScore.Enabled = false;
                 txtScore.BackColor = Color.FromArgb(245, 245, 245);
 
-                // Show brief confirmation
                 lblSaved.Text = $"✓ Saved  {sc}/{_activity.Points}";
                 var timer = new System.Windows.Forms.Timer { Interval = 2500 };
                 timer.Tick += (tt, ee) => { lblSaved.Text = ""; timer.Stop(); timer.Dispose(); };
                 timer.Start();
 
-                // Update status pill
                 foreach (Control c in row.Controls)
-                    if (c is Label lbl && (lbl.Text == sub.Status || lbl.Text.StartsWith("✅")))
+                    if (c is Label lbl &&
+                        (lbl.Text == sub.Status || lbl.Text.StartsWith("✅")))
                     {
                         lbl.Text = "✅ " + sub.Status;
                         lbl.Size = new Size(100, 20);
@@ -381,10 +377,7 @@ namespace PUPAcadPortal
             txtScore.KeyDown += (s, e) =>
             {
                 if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
-                {
-                    saveScore(false);
-                    e.SuppressKeyPress = true;
-                }
+                { saveScore(false); e.SuppressKeyPress = true; }
             };
             txtScore.LostFocus += (s, e) => saveScore(true);
 
@@ -392,22 +385,84 @@ namespace PUPAcadPortal
             row.Controls.Add(lblDivider);
             row.Controls.Add(lblSaved);
 
-            // ── Download button (FileUpload activities) ──────────────────────
             if (_activity.Type == ActivityType.FileUpload && sub.HasFile)
             {
                 var btnDl = MakeBtn("Download", Color.FromArgb(34, 139, 34), 92, btnH, true);
-                right -= btnDl.Width;
-                btnDl.Location = new Point(right, 28);
+                right -= btnDl.Width; btnDl.Location = new Point(right, 28);
                 btnDl.Click += (s, e) =>
-                    MessageBox.Show("Download requires storage implementation.",
-                        "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                {
+                    string fileUrl = sub.EssayContent?.Trim() ?? "";
+
+                    bool isUrl = fileUrl.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
+                              || fileUrl.StartsWith("https://", StringComparison.OrdinalIgnoreCase);
+
+                    if (!isUrl || string.IsNullOrEmpty(fileUrl))
+                    {
+                        MessageBox.Show(
+                            "No downloadable file is associated with this submission.",
+                            "No File",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+
+                    try
+                    {
+                        string fileName = System.IO.Path.GetFileName(
+                            new Uri(fileUrl).LocalPath);
+                        if (string.IsNullOrWhiteSpace(fileName))
+                            fileName = $"submission_{sub.StudentId}";
+
+                        using var sfd = new SaveFileDialog
+                        {
+                            Title = "Save Submission File As",
+                            FileName = fileName,
+                            Filter = "All Files (*.*)|*.*",
+                        };
+                        if (sfd.ShowDialog() != DialogResult.OK) return;
+
+                        string tempPath = CloudinaryService.Instance.DownloadToTemp(
+                            fileUrl, fileName);
+
+                        System.IO.File.Copy(tempPath, sfd.FileName, overwrite: true);
+                        try { System.IO.File.Delete(tempPath); } catch { }
+
+                        MessageBox.Show(
+                            $"File saved to:\n{sfd.FileName}",
+                            "Download Complete",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(
+                            $"Download failed:\n{ex.Message}",
+                            "Download Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                };
                 row.Controls.Add(btnDl);
             }
 
             return row;
         }
 
-        // Helper: refresh the stats bar without full re-render
+        //  Return to student — calls DB 
+        private void ReturnSubmission(StudentSubmission sub, Panel row)
+        {
+            if (_svc != null && !string.IsNullOrEmpty(sub.SubmissionDbId))
+            {
+                try { _svc.ReturnSubmission(sub.SubmissionDbId); }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Return failed:\n{ex.Message}",
+                        "DB Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+            sub.Status = "Returned";
+            sub.IsChecked = false;
+            RefreshList();
+        }
+
         private void UpdateStats()
         {
             int totalSubmitted = _submissions.Count(s => s.Status != "Missing");
@@ -430,7 +485,7 @@ namespace PUPAcadPortal
                 BorderRadius = 8,
                 Enabled = enabled,
                 Font = new Font("Segoe UI", 8.5F, FontStyle.Bold),
-                Cursor = Cursors.Hand,
+                Cursor = Cursors.Hand
             };
 
         private void OpenGrading(StudentSubmission sub)
@@ -440,7 +495,7 @@ namespace PUPAcadPortal
 
             int idx = _submissions.IndexOf(sub);
 
-            var gi = new GradingInterface(sub, _activity, _submissions, idx);
+            var gi = new GradingInterface(sub, _activity, _submissions, idx, _svc);
             gi.Dock = DockStyle.Fill;
 
             gi.OnBack += () =>
@@ -460,11 +515,7 @@ namespace PUPAcadPortal
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            if (OnBack != null)
-            {
-                OnBack.Invoke();
-                return;
-            }
+            if (OnBack != null) { OnBack.Invoke(); return; }
             Control container = this.Parent;
             if (container == null) return;
             container.Controls.Remove(this);
@@ -484,17 +535,28 @@ namespace PUPAcadPortal
                 $"Return all {checked_.Count} checked submission(s) to students?",
                 "Confirm Return All", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            if (confirm == DialogResult.Yes)
+            if (confirm != DialogResult.Yes) return;
+
+            var errors = new List<string>();
+            foreach (var s in checked_)
             {
-                foreach (var s in checked_)
+                if (_svc != null && !string.IsNullOrEmpty(s.SubmissionDbId))
                 {
-                    s.Status = "Returned";
-                    s.IsChecked = false;
+                    try { _svc.ReturnSubmission(s.SubmissionDbId); }
+                    catch (Exception ex) { errors.Add($"{s.StudentName}: {ex.Message}"); }
                 }
-                RefreshList();
+                s.Status = "Returned";
+                s.IsChecked = false;
             }
+
+            if (errors.Count > 0)
+                MessageBox.Show($"Some returns failed:\n{string.Join("\n", errors)}",
+                    "Partial Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+            RefreshList();
         }
 
+        //  Filter / search events 
         private void txtSearchStudent_TextChanged(object sender, EventArgs e)
         {
             if (_initializing) return;
@@ -522,10 +584,8 @@ namespace PUPAcadPortal
             var parts = name.Split(',');
             if (parts.Length >= 2)
             {
-                string ln = parts[0].Trim();
-                string fn = parts[1].Trim();
-                char first = fn.Length > 0 ? fn[0] : '?';
-                char last = ln.Length > 0 ? ln[0] : '?';
+                char first = parts[1].Trim().FirstOrDefault();
+                char last = parts[0].Trim().FirstOrDefault();
                 return $"{first}{last}";
             }
             return name.Length > 0 ? name[0].ToString() : "?";

@@ -8,12 +8,14 @@ using System.ComponentModel;
 
 namespace PUPAcadPortal.PortalContents.Instructor.LMS
 {
+
     public partial class AttendanceGridControl : UserControl
     {
         private const int PAGE_SIZE = 15;
         private const int ROW_H = 46;
         private const int HEADER_H = 40;
         private const int BOTTOM_BAR_H = 48;
+
         private static readonly Color Maroon = Color.FromArgb(106, 0, 0);
         private static readonly Color MaroonDark = Color.FromArgb(80, 0, 0);
         private static readonly Color RowAlt = Color.FromArgb(252, 252, 252);
@@ -22,12 +24,19 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         private static readonly Color LateOrange = Color.FromArgb(200, 110, 0);
         private static readonly Color AbsentRed = Color.Firebrick;
         private static readonly Color ExcusedGold = Color.DarkGoldenrod;
+
+        // Tint applied to QR-verified rows so they stand out visually.
+        private static readonly Color QrVerifiedTint = Color.FromArgb(232, 248, 232);  // soft green
+        private static readonly Color QrVerifiedSelect = Color.FromArgb(210, 240, 210);
+
         private List<StudentAttendanceRecord> _source = new();
         private List<StudentAttendanceRecord> _filtered = new();
         private int _currentPage = 1;
         private int _totalPages = 1;
+
         public event EventHandler? AttendanceChanged;
 
+        //  Constructor 
         public AttendanceGridControl()
         {
             InitializeComponent();
@@ -35,10 +44,20 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             _pageButtons = new[] { btnPage1, btnPage2, btnPage3 };
             _dgv.Columns["colRemarks"].DefaultCellStyle.ForeColor = Color.Gray;
 
+            // Tooltip for locked rows
+            var tip = new ToolTip();
+            _dgv.CellToolTipTextNeeded += (s, e) =>
+            {
+                if (e.RowIndex < 0 || e.RowIndex >= _dgv.Rows.Count) return;
+                if (_dgv.Rows[e.RowIndex].Tag is StudentAttendanceRecord r && r.IsQrVerified)
+                    e.ToolTipText = "QR-verified — editing is not permitted for this record.";
+            };
+
             btnMarkPresent.Click += (_, __) => BulkMark(AttendanceStatus.Present);
             btnMarkLate.Click += (_, __) => BulkMark(AttendanceStatus.Late);
             btnMarkAbsent.Click += (_, __) => BulkMark(AttendanceStatus.Absent);
             btnMarkExcused.Click += (_, __) => BulkMark(AttendanceStatus.Excused);
+
             _btnFirst.Click += (_, __) => GoToPage(1);
             _btnPrev.Click += (_, __) => GoToPage(_currentPage - 1);
             _btnNext.Click += (_, __) => GoToPage(_currentPage + 1);
@@ -58,6 +77,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
         public DataGridView Grid => _dgv;
 
+        //  Data loading 
         public void LoadStudents(IEnumerable<StudentAttendanceRecord> students)
         {
             _source = students.OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
@@ -78,6 +98,8 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             _currentPage = 1;
             RefreshView();
         }
+
+        //  Layout 
         private void PositionAll()
         {
             const int BULK_H = 38;
@@ -102,6 +124,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             _pnlPagination.Location = new Point(Width - _pnlPagination.Width - 6, barY);
         }
 
+        //  Event wiring 
         private void WireEvents()
         {
             _dgv.CurrentCellDirtyStateChanged += (s, e) =>
@@ -115,13 +138,14 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 if (e.RowIndex < 0) return;
                 var row = _dgv.Rows[e.RowIndex];
                 if (row.Tag is not StudentAttendanceRecord rec) return;
+                if (rec.IsQrVerified) return;   // ← QR-locked: ignore change
 
                 if (e.ColumnIndex == _dgv.Columns["colStatus"]?.Index)
                 {
                     string val = row.Cells["colStatus"].Value?.ToString() ?? "Present";
                     rec.Status = ParseStatus(val);
-                    ApplyRemarksLock(row, rec.Status);
-                    ApplyRowColor(row, rec.Status);
+                    ApplyRemarksLock(row, rec.Status, rec.IsQrVerified);
+                    ApplyRowColor(row, rec.Status, rec.IsQrVerified);
                     _dgv.InvalidateRow(e.RowIndex);
                     AttendanceChanged?.Invoke(this, EventArgs.Empty);
                 }
@@ -142,16 +166,35 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 int statusIdx = _dgv.Columns["colStatus"]?.Index ?? -1;
                 if (e.ColumnIndex == statusIdx && e.Value != null)
                 {
-                    e.CellStyle.ForeColor = StatusForeColor(rec.Status);
-                    e.CellStyle.Font = new Font("Segoe UI", 8.75f, FontStyle.Bold);
+                    // QR-verified rows show a padlock badge in the status cell
+                    if (rec.IsQrVerified)
+                    {
+                        e.Value = "Present";
+                        e.CellStyle.ForeColor = PresentGreen;
+                        e.CellStyle.Font = new Font("Segoe UI", 8.75f, FontStyle.Bold);
+                    }
+                    else
+                    {
+                        e.CellStyle.ForeColor = StatusForeColor(rec.Status);
+                        e.CellStyle.Font = new Font("Segoe UI", 8.75f, FontStyle.Bold);
+                    }
                 }
 
                 int remarksIdx = _dgv.Columns["colRemarks"]?.Index ?? -1;
-                if (e.ColumnIndex == remarksIdx && rec.Status != AttendanceStatus.Excused)
+                if (e.ColumnIndex == remarksIdx)
                 {
-                    e.CellStyle.BackColor = Color.FromArgb(245, 245, 245);
-                    e.CellStyle.ForeColor = Color.FromArgb(160, 160, 160);
-                    e.CellStyle.SelectionBackColor = Color.FromArgb(235, 235, 235);
+                    if (rec.IsQrVerified)
+                    {
+                        e.Value = "Attendance Verified via QR Code";
+                        e.CellStyle.ForeColor = Color.FromArgb(0, 120, 60);
+                        e.CellStyle.Font = new Font("Segoe UI", 8.5f, FontStyle.Italic);
+                    }
+                    else if (rec.Status != AttendanceStatus.Excused)
+                    {
+                        e.CellStyle.BackColor = Color.FromArgb(245, 245, 245);
+                        e.CellStyle.ForeColor = Color.FromArgb(160, 160, 160);
+                        e.CellStyle.SelectionBackColor = Color.FromArgb(235, 235, 235);
+                    }
                 }
             };
 
@@ -160,9 +203,9 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 if (e.RowIndex < 0 || e.RowIndex >= _dgv.Rows.Count) return;
                 var row = _dgv.Rows[e.RowIndex];
                 if (row.Tag is StudentAttendanceRecord rec)
-                    ApplyRowColor(row, rec.Status);
+                    ApplyRowColor(row, rec.Status, rec.IsQrVerified);
                 else
-                    row.DefaultCellStyle.BackColor = (e.RowIndex % 2 == 0) ? Color.White : RowAlt;
+                    row.DefaultCellStyle.BackColor = e.RowIndex % 2 == 0 ? Color.White : RowAlt;
             };
 
             _dgv.EditingControlShowing += (s, e) =>
@@ -180,22 +223,44 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 }
             };
 
+            //  Block ALL edits on QR-verified rows 
             _dgv.CellBeginEdit += (s, e) =>
             {
                 if (e.RowIndex < 0) return;
                 var row = _dgv.Rows[e.RowIndex];
-                if (row.Tag is not StudentAttendanceRecord rec) return;
-                int remarksIdx = _dgv.Columns["colRemarks"]?.Index ?? -1;
-                if (e.ColumnIndex == remarksIdx && rec.Status != AttendanceStatus.Excused)
+
+                // Block if QR-verified
+                if (row.Tag is StudentAttendanceRecord rec && rec.IsQrVerified)
+                {
                     e.Cancel = true;
+                    return;
+                }
+
+                // Original: block remarks unless Excused
+                if (row.Tag is StudentAttendanceRecord rec2)
+                {
+                    int ri = _dgv.Columns["colRemarks"]?.Index ?? -1;
+                    if (e.ColumnIndex == ri && rec2.Status != AttendanceStatus.Excused)
+                        e.Cancel = true;
+                }
             };
         }
 
-        private void ApplyRemarksLock(DataGridViewRow row, AttendanceStatus status)
+        //  Row colour helpers 
+        private static void ApplyRemarksLock(DataGridViewRow row, AttendanceStatus status, bool isQr)
         {
-            int ri = _dgv.Columns["colRemarks"]?.Index ?? -1;
+            int ri = row.DataGridView?.Columns["colRemarks"]?.Index ?? -1;
             if (ri < 0) return;
             var cell = row.Cells[ri];
+
+            if (isQr)
+            {
+                cell.ReadOnly = true;
+                cell.Style.BackColor = QrVerifiedTint;
+                cell.Style.SelectionBackColor = QrVerifiedSelect;
+                return;
+            }
+
             bool editable = status == AttendanceStatus.Excused;
             cell.ReadOnly = !editable;
             cell.Style.BackColor = editable ? Color.Empty : Color.FromArgb(245, 245, 245);
@@ -203,18 +268,30 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             cell.Style.SelectionBackColor = editable ? Color.Empty : Color.FromArgb(235, 235, 235);
         }
 
-        private static void ApplyRowColor(DataGridViewRow row, AttendanceStatus status)
+        private static void ApplyRowColor(DataGridViewRow row, AttendanceStatus status, bool isQr)
         {
-            Color bg = status switch
+            Color bg;
+            if (isQr)
             {
-                AttendanceStatus.Absent => Color.FromArgb(255, 244, 244),
-                AttendanceStatus.Late => Color.FromArgb(255, 250, 235),
-                AttendanceStatus.Excused => Color.FromArgb(255, 253, 230),
-                _ => Color.White,
-            };
+                bg = QrVerifiedTint;
+            }
+            else
+            {
+                bg = status switch
+                {
+                    AttendanceStatus.Absent => Color.FromArgb(255, 244, 244),
+                    AttendanceStatus.Late => Color.FromArgb(255, 250, 235),
+                    AttendanceStatus.Excused => Color.FromArgb(255, 253, 230),
+                    _ => Color.White,
+                };
+            }
             row.DefaultCellStyle.BackColor = bg;
-            row.DefaultCellStyle.SelectionBackColor = bg;
+            row.DefaultCellStyle.SelectionBackColor = isQr ? QrVerifiedSelect : bg;
         }
+
+        // Overload kept for callers that do not know IsQrVerified
+        private static void ApplyRowColor(DataGridViewRow row, AttendanceStatus status)
+            => ApplyRowColor(row, status, false);
 
         private void StatusCombo_DrawItem(object? sender, DrawItemEventArgs e)
         {
@@ -231,26 +308,44 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             e.Graphics.DrawString(item, f, fb, e.Bounds.X + 4,
                 e.Bounds.Y + (e.Bounds.Height - f.Height) / 2);
         }
+
+        //  Bulk mark (skips QR-verified rows) 
         private void BulkMark(AttendanceStatus status)
         {
+            int skipped = 0;
             foreach (var rec in _allOnPage)
+            {
+                if (rec.IsQrVerified) { skipped++; continue; }
                 rec.Status = status;
+            }
 
             _dgv.SuspendLayout();
             foreach (DataGridViewRow row in _dgv.Rows)
             {
                 if (row.Tag is not StudentAttendanceRecord rec) continue;
+                if (rec.IsQrVerified) continue;   // do not overwrite QR-locked rows
                 row.Cells["colStatus"].Value = StatusString(status);
-                ApplyRemarksLock(row, status);
-                ApplyRowColor(row, status);
+                ApplyRemarksLock(row, status, false);
+                ApplyRowColor(row, status, false);
             }
             _dgv.ResumeLayout();
             _dgv.Invalidate();
             AttendanceChanged?.Invoke(this, EventArgs.Empty);
+
+            if (skipped > 0)
+            {
+                // Inform faculty without interrupting workflow
+                var tip = new ToolTip();
+                tip.Show(
+                    $"{skipped} QR-verified record{(skipped > 1 ? "s" : "")} were not changed.",
+                    this, Width / 2, Height - 20, 3000);
+            }
         }
 
+        //  Pagination / view 
         private List<StudentAttendanceRecord> _allOnPage = new();
         private Button[] _pageButtons;
+
         private void RefreshView()
         {
             _totalPages = Math.Max(1, (int)Math.Ceiling(_filtered.Count / (double)PAGE_SIZE));
@@ -271,6 +366,14 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 if (i < page.Count)
                 {
                     var s = page[i];
+
+                    // Remarks column: QR-verified rows show the verification label
+                    string remarksDisplay = s.IsQrVerified
+                        ? "Attendance Verified via QR Code"
+                        : string.IsNullOrWhiteSpace(s.Remarks)
+                            ? "Optional remarks"
+                            : s.Remarks;
+
                     int idx = _dgv.Rows.Add(
                         s.RowNumber,
                         s.LastName,
@@ -278,12 +381,16 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                         s.MiddleInitial,
                         s.IdNumber,
                         StatusString(s.Status),
-                        string.IsNullOrWhiteSpace(s.Remarks) ? "Optional remarks" : s.Remarks);
+                        remarksDisplay);
 
                     var row = _dgv.Rows[idx];
                     row.Tag = s;
-                    ApplyRemarksLock(row, s.Status);
-                    ApplyRowColor(row, s.Status);
+
+                    // Lock the entire row if QR-verified
+                    row.ReadOnly = s.IsQrVerified;
+
+                    ApplyRemarksLock(row, s.Status, s.IsQrVerified);
+                    ApplyRowColor(row, s.Status, s.IsQrVerified);
                 }
                 else
                 {
@@ -301,6 +408,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             UpdateShowingLabel();
             PositionAll();
         }
+
         private void UpdatePagination()
         {
             int[] vis = GetVisiblePages();
@@ -345,6 +453,8 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             _currentPage = page;
             RefreshView();
         }
+
+        //  Static helpers 
         private static AttendanceStatus ParseStatus(string? s) => s switch
         {
             "Absent" => AttendanceStatus.Absent,
@@ -368,15 +478,5 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             AttendanceStatus.Excused => ExcusedGold,
             _ => PresentGreen,
         };
-
-        private static Color StatusBgColor(AttendanceStatus s) => s switch
-        {
-            AttendanceStatus.Absent => Color.FromArgb(252, 228, 228),
-            AttendanceStatus.Late => Color.FromArgb(255, 243, 210),
-            AttendanceStatus.Excused => Color.FromArgb(255, 250, 210),
-            _ => Color.FromArgb(220, 248, 220),
-        };
-
-        
     }
 }

@@ -119,7 +119,7 @@ namespace PUPAcadPortal.PortalForms
 
         private void btnCoursesIns_Click(object sender, EventArgs e)
         {
-            mainContentPanel.ShowView(new ActivityDashboard());
+            mainContentPanel.ShowView(new CourseManagementDashboard());
         }
 
         private void btnAttendanceIns_Click(object sender, EventArgs e)

@@ -1,38 +1,65 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using PUPAcadPortal.Data;
+using PUPAcadPortal.Models;
+using PUPAcadPortal.Services;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.ComponentModel;
 
 namespace PUPAcadPortal.PortalContents.Instructor.LMS
 {
     public partial class AttendanceContentInst : UserControl
     {
+        // ── Runtime state 
         private List<StudentAttendanceRecord> _allStudents = new();
         private List<CourseSection> _courseCatalogue = new();
         private List<SessionSlot> _sessionSlots = new();
-        private Dictionary<SessionKey, List<StudentAttendanceRecord>> _snapshots = new();
+
+        private int? _currentSessionId = null;
+
+        // RoomSchedule times for the selected course (resolved from DB)
+        private TimeSpan? _currentStartTime = null;
+        private TimeSpan? _currentEndTime = null;
+
+        //  Logged-in instructor ID 
+        // Set this from the parent form/page before the control is shown.
+        // Falls back to UserSession.InstructorID when not explicitly assigned.
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public int CurrentInstructorId
+        {
+            get => _currentInstructorId > 0
+                       ? _currentInstructorId
+                       : (UserSession.ProfessorID ?? 0);
+            set => _currentInstructorId = value;
+        }
+        private int _currentInstructorId = 0;
+
         private SessionAttendanceControl _sessionCard = null!;
         private AttendanceGridControl _grid = null!;
-        private Panel? _qrOverlay = null;
-        private QrCodeAttendanceControl? _qrCard = null;
         private System.Windows.Forms.Timer _searchTimer = null!;
         private string _pendingSearch = "";
-        public AttendanceContentInst()
-        {
-            InitializeComponent();
-        }
 
+        //  DB factory 
+        private static AppDbContext CreateContext() => new AppDbContext();
 
+        public AttendanceContentInst() => InitializeComponent();
+
+        //  Load 
         private void AttendanceContentInst_Load(object sender, EventArgs e)
         {
             try
             {
                 LayoutSummaryCards();
                 InitAttendance();
+
+                // Auto-expire stale QrSession rows on portal load
+                try { QrSessionService.ExpireAllStale(); } catch { /* best-effort */ }
             }
             catch (Exception ex)
             {
@@ -42,10 +69,8 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             }
         }
 
-        private void PnlSummaryRow_SizeChanged(object sender, EventArgs e)
-        {
-            LayoutSummaryCards();
-        }
+        //  Layout 
+        private void PnlSummaryRow_SizeChanged(object sender, EventArgs e) => LayoutSummaryCards();
 
         private void Card_Paint(object sender, PaintEventArgs e)
         {
@@ -77,7 +102,6 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 p.Location = new Point(x, y);
                 p.Size = new Size(w, H);
                 x += w + PAD;
-
                 if (p == pnlCardSession)
                 {
                     panel21.Location = new Point(4, 22);
@@ -93,12 +117,12 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             Place(pnlCardLastUpdate, cardW + (totalW - sessionW - cardW * 5 - PAD * 5));
         }
 
+        //  Init 
         private void InitAttendance()
         {
-            BuildCourseCatalogue();
-            BuildSessionSlots();
+            // FIX: load only the courses assigned to the logged-in instructor
+            LoadCoursesFromDb();
             PopulateDropdowns();
-            SeedAllSnapshots();
 
             _sessionCard = new SessionAttendanceControl { Dock = DockStyle.Fill };
             panel21.Controls.Clear();
@@ -122,161 +146,307 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
 
             LoadCurrentSession();
             _grid.LoadStudents(_allStudents);
-
             WireFilterBar();
             WireButtons();
             UpdateSummaryCards();
             UpdateLastUpdated();
         }
 
-        private void BuildCourseCatalogue()
+        //  Load ONLY the courses assigned to the logged-in instructor 
+        /// <summary>
+        /// Populates _courseCatalogue with SubjectOfferings whose InstructorId
+        /// matches the currently logged-in professor. Schedule times (StartTime /
+        /// EndTime) are resolved from the first matching RoomSchedule row so the
+        /// QR token embeds the correct attendance window without an extra round-trip.
+        private void LoadCoursesFromDb()
         {
-            _courseCatalogue = new List<CourseSection>
+            _courseCatalogue = new List<CourseSection>();
+
+            int instructorId = CurrentInstructorId;
+            if (instructorId <= 0)
             {
-                new() { Code="IT 101", Title="Introduction to Programming 1", Section="BSIT 1-1" },
-                new() { Code="IT 101", Title="Introduction to Programming 1", Section="BSIT 1-2" },
-                new() { Code="IT 102", Title="Introduction to Programming 2", Section="BSIT 1-1" },
-                new() { Code="CS 201", Title="Data Structures & Algorithms",  Section="BSCS 2-1" },
-                new() { Code="CS 202", Title="Object-Oriented Programming",   Section="BSCS 2-2" },
-                new() { Code="IS 301", Title="Database Management Systems",   Section="BSIS 3-1" },
-                new() { Code="IS 302", Title="Systems Analysis & Design",     Section="BSIS 3-2" },
-                new() { Code="IT 401", Title="Capstone Project 1",            Section="BSIT 4-1" },
-            };
+                MessageBox.Show(
+                    "Instructor identity is not set. Please log out and log in again.",
+                    "Identity Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                using var ctx = CreateContext();
+
+                // Only offerings assigned to this instructor.
+                // TODO: verify "InstructorId" matches the actual FK property nameon your SubjectOffering entity. Common alternatives:FacultyId, TeacherId, UserId, InstructorUserId.
+                var offerings = ctx.SubjectOfferings
+                    .Include(so => so.Subject)
+                    .Include(so => so.RoomSchedules)
+                    .Where(so => so.ProfessorId == instructorId)
+                    .OrderBy(so => so.Subject.SubjectCode)
+                    .ThenBy(so => so.Section)
+                    .ToList();
+
+                _courseCatalogue = offerings.Select(so => new CourseSection
+                {
+                    Code = so.SubjectOfferingId,
+                    Title = so.Subject?.SubjectName ?? so.SubjectOfferingId,
+                    Section = so.Section ?? string.Empty,
+                    SubjectCode = so.Subject?.SubjectCode ?? string.Empty,
+                    // Resolve schedule from the first RoomSchedule row
+                    StartTime = so.RoomSchedules.FirstOrDefault()?.StartTime,
+                    EndTime = so.RoomSchedules.FirstOrDefault()?.EndTime,
+                    ScheduleDisplay = BuildScheduleDisplay(so.RoomSchedules.FirstOrDefault()),
+                }).ToList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Could not load courses from the database.\n\n{ex.Message}",
+                    "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
-        private void BuildSessionSlots()
+        /// Builds a human-readable schedule string such as "MWF  08:00 AM – 10:00 AM"
+        /// from a RoomSchedule row.  Returns an em-dash when no schedule exists.
+        ///
+        /// NOTE: RoomSchedule.StartTime and EndTime are plain (non-nullable) TimeSpan.
+        ///       The day-of-week label is read via the Days / DayOfWeek / Schedule
+        ///       property — whichever your model actually exposes.  Adjust the
+        ///       property name below to match your RoomSchedule entity.
+        /// </summary>
+        private static string BuildScheduleDisplay(RoomSchedule? rs)
         {
-            _sessionSlots = new List<SessionSlot>
+            if (rs == null) return "—";
+
+
+            string dayLabel = TryGetDayLabel(rs);
+
+            //  Time range 
+            // StartTime / EndTime are non-nullable TimeSpan — no .HasValue needed.
+            string start = DateTime.Today.Add(rs.StartTime).ToString("hh:mm tt");
+            string end = DateTime.Today.Add(rs.EndTime).ToString("hh:mm tt");
+
+            return string.IsNullOrWhiteSpace(start)
+                ? dayLabel
+                : string.IsNullOrWhiteSpace(dayLabel)
+                    ? $"{start} – {end}"
+                    : $"{dayLabel}  {start} – {end}";
+        }
+
+        /// <summary>
+        /// Retrieves the day-label string from a RoomSchedule using reflection so
+        /// the code compiles even before you know the exact property name.
+        /// Replace this method body with a direct property access once confirmed,
+        /// e.g.: <c>return rs.Days ?? string.Empty;</c>
+        private static string TryGetDayLabel(RoomSchedule rs)
+        {
+            // Try the most common property names in order.
+            var type = rs.GetType();
+            foreach (var name in new[] { "Days", "Day", "DayOfWeek", "Schedule", "DayLabel" })
             {
-                new() { Label = "Morning (7:30 AM - 9:00 AM)"    },
-                new() { Label = "Morning (8:00 AM - 10:00 AM)"   },
-                new() { Label = "Morning (9:00 AM - 10:30 AM)"   },
-                new() { Label = "Midday  (10:30 AM - 12:00 PM)"  },
-                new() { Label = "Midday  (11:00 AM - 12:30 PM)"  },
-                new() { Label = "Afternoon (1:00 PM - 2:30 PM)"  },
-                new() { Label = "Afternoon (2:30 PM - 4:00 PM)"  },
-                new() { Label = "Evening  (5:00 PM - 7:00 PM)"   },
-                new() { Label = "Saturday (8:00 AM - 12:00 PM)"  },
-            };
+                var prop = type.GetProperty(name);
+                if (prop != null && prop.PropertyType == typeof(string))
+                    return (prop.GetValue(rs) as string) ?? string.Empty;
+            }
+            return string.Empty;
         }
 
         private void PopulateDropdowns()
         {
+            // Course combo — instructor's assigned subjects only
             cmbCourse.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbCourse.Items.Clear();
             foreach (var c in _courseCatalogue)
                 cmbCourse.Items.Add(c.DisplayName);
             if (cmbCourse.Items.Count > 0) cmbCourse.SelectedIndex = 0;
 
+            // Session slot: built from the first selected course's DB schedule.
+            // The combo is read-only so the professor cannot change it.
             cmbSession.DropDownStyle = ComboBoxStyle.DropDownList;
+            PopulateSessionFromSelected();
+        }
+
+        /// <summary>
+        /// Rebuilds cmbSession from the RoomSchedule of the currently selected course.
+        /// Shows the DB-derived time range and marks the field as read-only.
+        /// </summary>
+        private void PopulateSessionFromSelected()
+        {
             cmbSession.Items.Clear();
-            foreach (var s in _sessionSlots)
-                cmbSession.Items.Add(s.Label);
-            if (cmbSession.Items.Count > 1) cmbSession.SelectedIndex = 1;
-        }
 
-        private void SeedAllSnapshots()
-        {
-            var rng = new Random(42);
-            foreach (var course in _courseCatalogue.Take(4))
-                foreach (var slot in _sessionSlots)
-                    for (int d = -3; d <= 3; d++)
-                    {
-                        var key = new SessionKey
-                        {
-                            CourseDisplay = course.DisplayName,
-                            SessionLabel = slot.Label,
-                            Date = DateTime.Today.AddDays(d),
-                        };
-                        _snapshots[key] = BuildRoster(course, rng);
-                    }
-        }
+            int idx = cmbCourse.SelectedIndex;
+            var course = (idx >= 0 && idx < _courseCatalogue.Count)
+                ? _courseCatalogue[idx]
+                : null;
 
-        private static List<StudentAttendanceRecord> BuildRoster(CourseSection course, Random rng)
-        {
-            var pool = new (string Last, string First, string MI)[]
+            if (course != null && !string.IsNullOrEmpty(course.ScheduleDisplay)
+                                && course.ScheduleDisplay != "—")
             {
-                ("Abad","Leonora","Y"),("Aguilar","Dominador","S"),("Aquino","Carlo","B"),
-                ("Bautista","Fernando","K"),("Basilan","Hans Louie","L"),("Castillo","Ronnie","G"),
-                ("Concepcion","Salvador","F"),("Cruz","Kevin James","P"),("Cruz","Nestor","O"),
-                ("Dela Cruz","Alice","M"),("Dela Torre","Aurelio","Q"),("Dizon","Orlando","B"),
-                ("Domingo","Rosario","E"),("Espinosa","Paz","C"),("Fernandez","Hermogenes","U"),
-                ("Flores","Joy","E"),("Garcia","Ramon","F"),("Gutierrez","Jacinta","W"),
-                ("Hernandez","Felicitas","T"),("Lopez","Ana","C"),("Manalo","Kapitan","X"),
-                ("Mendoza","Gloria","J"),("Mercado","Quezon","D"),("Navarro","Erlinda","P"),
-                ("Ocampo","Mateo","Z"),("Pascual","Natividad","A"),("Perez","Consolacion","R"),
-                ("Peralta","Trinidad","G"),("Ramos","Andres","M"),("Reyes","Maria Angela","R"),
-                ("Reyes","Ernesto","I"),("Rivera","Mark","D"),("Santiago","Consuelo","L"),
-                ("Santos","John Doe","S"),("Santos","Trisha","M"),("Soberano","Liza","M"),
-                ("Soriano","Isagani","V"),("Torres","Patricia","H"),("Villanueva","Ericka Mae","T"),
-                ("Villanueva","Teresita","N"),("Abella","Rosemarie","D"),("Alcantara","Rogelio","F"),
-                ("Antiporda","Lorena","B"),("Bacungan","Manuel","A"),("Baluyot","Cecilia","G"),
-            };
+                // Show exactly what the DB says — no free-form editing
+                cmbSession.Items.Add(course.ScheduleDisplay);
+                cmbSession.SelectedIndex = 0;
 
-            var picked = pool.OrderBy(_ => rng.Next()).Take(40).ToList();
-            int idBase = rng.Next(1000, 9999);
-            var list = new List<StudentAttendanceRecord>();
+                // Mark read-only visually
+                cmbSession.Enabled = false;
 
-            for (int i = 0; i < picked.Count; i++)
-            {
-                var (last, first, mi) = picked[i];
-                int roll = rng.Next(100);
-                AttendanceStatus status;
-                string remarks = "";
-
-                if (roll < 72) status = AttendanceStatus.Present;
-                else if (roll < 82) status = AttendanceStatus.Late;
-                else if (roll < 92) status = AttendanceStatus.Absent;
-                else
-                {
-                    status = AttendanceStatus.Excused;
-                    remarks = _excuseRemarks[rng.Next(_excuseRemarks.Length)];
-                }
-
-                list.Add(new StudentAttendanceRecord
-                {
-                    RowNumber = i + 1,
-                    LastName = last,
-                    FirstName = first,
-                    MiddleInitial = mi,
-                    IdNumber = $"2024-{(idBase + i):D5}-SM-0",
-                    Status = status,
-                    Remarks = remarks,
-                });
+                // Update the cached start/end so QR tokens embed the correct window
+                _currentStartTime = course.StartTime;
+                _currentEndTime = course.EndTime;
             }
-            return list;
+            else
+            {
+                // Offering has no RoomSchedule yet
+                cmbSession.Items.Add("(No schedule assigned)");
+                cmbSession.SelectedIndex = 0;
+                cmbSession.Enabled = false;
+                _currentStartTime = null;
+                _currentEndTime = null;
+            }
         }
 
-        private static readonly string[] _excuseRemarks =
-        {
-            "Medical Certificate", "Family Emergency", "Hospital Admission",
-            "Approved Leave of Absence", "OJT Duty", "University Event",
-            "Athletic Competition", "Approved Field Trip",
-        };
-
+        //  Load / refresh current session roster from DB 
+        /// <summary>
+        /// Finds (or creates) the ClassSession row for the selected course + date,
+        /// loads all enrolled students, and maps their AttendanceRecords including
+        /// QR-verified lock state.
         private void LoadCurrentSession()
         {
-            var key = CurrentKey();
-            if (!_snapshots.TryGetValue(key, out var snap))
+            if (_courseCatalogue.Count == 0) return;
+
+            int idx = cmbCourse.SelectedIndex;
+            if (idx < 0 || idx >= _courseCatalogue.Count) return;
+
+            var course = _courseCatalogue[idx];
+            string offeringId = course.Code;
+            DateTime date = dtpDate.Value.Date;
+
+            // Always resolve schedule times from the selected course
+            _currentStartTime = course.StartTime;
+            _currentEndTime = course.EndTime;
+
+            try
             {
-                snap = BuildRoster(_courseCatalogue.First(),
-                           new Random(key.GetHashCode()));
-                _snapshots[key] = snap;
+                using var ctx = CreateContext();
+
+                // 1. Find or create the ClassSession
+                var session = ctx.ClassSessions
+                    .FirstOrDefault(cs =>
+                        cs.SubjectOfferingId == offeringId &&
+                        cs.SessionDate.Date == date);
+
+                if (session == null)
+                {
+                    session = new PUPAcadPortal.Models.ClassSession
+                    {
+                        SubjectOfferingId = offeringId,
+                        SessionDate = date,
+                        StartTime = _currentStartTime,
+                        EndTime = _currentEndTime,
+                        Topic = "—",
+                    };
+                    ctx.ClassSessions.Add(session);
+                    ctx.SaveChanges();
+                }
+
+                _currentSessionId = session.SessionId;
+
+                // 2. Load existing AttendanceRecords for this session
+                var existingRecords = ctx.AttendanceRecords
+                    .Include(ar => ar.Student).ThenInclude(st => st.User)
+                    .Where(ar => ar.SessionId == session.SessionId)
+                    .ToList();
+
+                // 3. Load enrolled students via EnrollmentSubject
+                var enrolledStudents = ctx.EnrollmentSubjects
+                    .Include(es => es.Enrollment)
+                        .ThenInclude(en => en.Student)
+                            .ThenInclude(st => st.User)
+                    .Where(es => es.SubjectOfferingId == offeringId)
+                    .Select(es => es.Enrollment.Student)
+                    .Distinct()
+                    .OrderBy(st => st.User.LastName)
+                    .ThenBy(st => st.User.FirstName)
+                    .ToList();
+
+                // 4. Map to UI model
+                var list = new List<StudentAttendanceRecord>();
+                int row = 1;
+
+                foreach (var student in enrolledStudents)
+                {
+                    var existing = existingRecords
+                        .FirstOrDefault(ar => ar.StudentId == student.StudentId);
+
+                    AttendanceStatus status = existing == null
+                        ? AttendanceStatus.Present
+                        : ParseStatus(existing.Status);
+
+                    list.Add(new StudentAttendanceRecord
+                    {
+                        AttendanceId = existing?.AttendanceId ?? 0,
+                        StudentId = student.StudentId,
+                        IsQrVerified = existing?.IsQrVerified ?? false,
+                        QrScannedAt = existing?.QrScannedAt,
+                        RowNumber = row++,
+                        LastName = student.User?.LastName ?? string.Empty,
+                        FirstName = student.User?.FirstName ?? string.Empty,
+                        MiddleInitial = student.User?.MiddleName?.Length > 0
+                                            ? student.User.MiddleName.Substring(0, 1)
+                                            : string.Empty,
+                        IdNumber = student.StudentNumber,
+                        Status = status,
+                        Remarks = existing?.Remarks ?? string.Empty,
+                    });
+                }
+
+                _allStudents = list;
+
+                // so the professor always sees the correct time block for this offering.
+                UpdateScheduleDisplay(course);
             }
-            _allStudents = snap;
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Could not load session roster from database.\n\n{ex.Message}",
+                    "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
-        private SessionKey CurrentKey() => new SessionKey
+        /// <summary>
+        /// Writes the course's schedule information into the read-only display
+        /// label (lblScheduleDisplay) so the professor can see the assigned
+        /// subject, section, and time block at a glance.
+        private void UpdateScheduleDisplay(CourseSection course)
         {
-            CourseDisplay = cmbCourse.Text,
-            SessionLabel = cmbSession.Text,
-            Date = dtpDate.Value.Date,
-        };
+            // lblScheduleDisplay is a Label on the form that shows the locked
+            // schedule info.  Guard against designer-only scenarios.
+            if (cmbSession == null) return;
 
+            cmbSession.Text =
+                $"{course.SubjectCode}  –  {course.Title}" +
+                (string.IsNullOrEmpty(course.Section)
+                    ? string.Empty
+                    : $"  [{course.Section}]") +
+                "\n" +
+                (string.IsNullOrEmpty(course.ScheduleDisplay) || course.ScheduleDisplay == "—"
+                    ? "No schedule assigned"
+                    : course.ScheduleDisplay);
+        }
+
+        //  Filter bar 
         private void WireFilterBar()
         {
-            cmbCourse.SelectedIndexChanged += (s, e) => ReloadAndRefresh();
+            cmbCourse.SelectedIndexChanged += (s, e) =>
+            {
+                // When the course changes, rebuild the session slot from the new
+                // course's DB schedule before reloading the roster.
+                PopulateSessionFromSelected();
+                ReloadAndRefresh();
+            };
+
+            // cmbSession is read-only, but still wire it so a programmatic change
+            // (e.g. after PopulateSessionFromSelected) triggers a reload.
             cmbSession.SelectedIndexChanged += (s, e) => ReloadAndRefresh();
+
             dtpDate.ValueChanged += (s, e) => ReloadAndRefresh();
 
             txtSearch.ForeColor = Color.Gray;
@@ -308,6 +478,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             UpdateLastUpdated();
         }
 
+        //  Button wiring 
         private void WireButtons()
         {
             btnSaveAttendance.Click -= BtnSave_Click;
@@ -316,7 +487,7 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             btnRefresh.Click += (s, e) =>
             {
                 ReloadAndRefresh();
-                MessageBox.Show("Attendance refreshed.", "Refresh",
+                MessageBox.Show("Attendance refreshed from database.", "Refresh",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             };
 
@@ -327,19 +498,143 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             btnImportCSV.Click += (s, e) => ImportCsv();
         }
 
+        //  QR popup 
         private void BtnQrCode_Click(object? sender, EventArgs e)
         {
-            if (_qrOverlay != null && !_qrOverlay.IsDisposed && _qrOverlay.Visible)
+            if (_currentSessionId == null || _currentSessionId <= 0)
             {
-                _qrCard?.GenerateNew();
-                _qrOverlay.BringToFront();
+                MessageBox.Show(
+                    "Please select a valid course and date before generating a QR code.",
+                    "No Session", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            using var dlg = new QrCodePopupForm(cmbCourse.Text, cmbSession.Text, dtpDate.Value);
+            var course = _courseCatalogue.ElementAtOrDefault(cmbCourse.SelectedIndex);
+            if (course == null) return;
+
+            if (!course.StartTime.HasValue || !course.EndTime.HasValue)
+            {
+                MessageBox.Show(
+                    "This course has no schedule assigned in the database.\n" +
+                    "A room schedule must be set before generating a QR attendance code.",
+                    "No Schedule", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            using var dlg = new QrCodePopupForm(
+                course: $"{course.SubjectCode}  –  {course.Title}",
+                session: course.ScheduleDisplay,
+                date: dtpDate.Value,
+                sessionId: _currentSessionId.Value,
+                offeringId: course.Code,
+                startTime: _currentStartTime,
+                endTime: _currentEndTime);
+
             dlg.ShowDialog(this);
+
+            // Refresh the grid in case students scanned while the popup was open
+            ReloadAndRefresh();
         }
 
+        //  Save attendance (manual, skips QR-verified rows) 
+        private void BtnSave_Click(object? sender, EventArgs e)
+        {
+            if (_currentSessionId == null)
+            {
+                MessageBox.Show(
+                    "No active session to save. Please select a valid course and date.",
+                    "Save Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                using var ctx = CreateContext();
+
+                var existingInDb = ctx.AttendanceRecords
+                    .Where(ar => ar.SessionId == _currentSessionId.Value)
+                    .ToDictionary(ar => ar.StudentId);
+
+                int savedCount = 0;
+                int skippedQr = 0;
+
+                foreach (var ui in _allStudents)
+                {
+                    // Never overwrite a QR-verified record
+                    if (ui.IsQrVerified) { skippedQr++; continue; }
+
+                    string statusStr = StatusString(ui.Status);
+                    string remarks = ui.Remarks ?? string.Empty;
+
+                    if (existingInDb.TryGetValue(ui.StudentId, out var dbRec))
+                    {
+                        if (!dbRec.IsQrVerified)
+                        {
+                            dbRec.Status = statusStr;
+                            dbRec.Remarks = remarks;
+                            savedCount++;
+                        }
+                        else skippedQr++;
+                    }
+                    else
+                    {
+                        ctx.AttendanceRecords.Add(new PUPAcadPortal.Models.AttendanceRecord
+                        {
+                            SessionId = _currentSessionId.Value,
+                            StudentId = ui.StudentId,
+                            Status = statusStr,
+                            Remarks = remarks,
+                            IsQrVerified = false,
+                        });
+                        savedCount++;
+                    }
+                }
+
+                ctx.SaveChanges();
+
+                // Refresh AttendanceIds from DB
+                var saved = ctx.AttendanceRecords
+                    .Where(ar => ar.SessionId == _currentSessionId.Value)
+                    .ToDictionary(ar => ar.StudentId);
+                foreach (var ui in _allStudents)
+                    if (saved.TryGetValue(ui.StudentId, out var r))
+                        ui.AttendanceId = r.AttendanceId;
+
+                UpdateLastUpdated();
+                UpdateSummaryCards();
+
+                int present = _allStudents.Count(x => x.Status == AttendanceStatus.Present);
+                int late = _allStudents.Count(x => x.Status == AttendanceStatus.Late);
+                int absent = _allStudents.Count(x => x.Status == AttendanceStatus.Absent);
+                int excused = _allStudents.Count(x => x.Status == AttendanceStatus.Excused);
+
+                var course = _courseCatalogue.ElementAtOrDefault(cmbCourse.SelectedIndex);
+                string qrNote = skippedQr > 0
+                    ? $"\n\n🔒 {skippedQr} QR-verified record{(skippedQr > 1 ? "s" : "")} were not modified."
+                    : string.Empty;
+
+                MessageBox.Show(
+                    $"Attendance saved!\n\n" +
+                    $"Course    : {cmbCourse.Text}\n" +
+                    $"Section   : {course?.Section ?? "—"}\n" +
+                    $"Schedule  : {course?.ScheduleDisplay ?? "—"}\n" +
+                    $"Date      : {dtpDate.Value:MMMM dd, yyyy}\n\n" +
+                    $"Present   : {present}\n" +
+                    $"Late      : {late}\n" +
+                    $"Absent    : {absent}\n" +
+                    $"Excused   : {excused}\n" +
+                    $"Total     : {_allStudents.Count}" +
+                    qrNote,
+                    "Attendance Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Failed to save attendance to the database.\n\n{ex.Message}",
+                    "Save Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        //  Summary cards 
         private void UpdateSummaryCards()
         {
             int total = _allStudents.Count;
@@ -366,44 +661,26 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             lblDateTime.Text = DateTime.Now.ToString("MMMM dd, yyyy hh:mm tt");
             lblByInstructor.Text = "by Instructor";
         }
-        private void BtnSave_Click(object? sender, EventArgs e)
-        {
-            int present = _allStudents.Count(x => x.Status == AttendanceStatus.Present);
-            int late = _allStudents.Count(x => x.Status == AttendanceStatus.Late);
-            int absent = _allStudents.Count(x => x.Status == AttendanceStatus.Absent);
-            int excused = _allStudents.Count(x => x.Status == AttendanceStatus.Excused);
 
-            UpdateLastUpdated();
-            UpdateSummaryCards();
-
-            MessageBox.Show(
-                $"Attendance saved!\n\n" +
-                $"Course  : {cmbCourse.Text}\n" +
-                $"Date    : {dtpDate.Value:MMMM dd, yyyy}\n" +
-                $"Session : {cmbSession.Text}\n\n" +
-                $"Present : {present}\n" +
-                $"Late    : {late}\n" +
-                $"Absent  : {absent}\n" +
-                $"Excused : {excused}\n" +
-                $"Total   : {_allStudents.Count}",
-                "Attendance Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
+        //  Export / Import CSV 
         private void ExportCsv()
         {
+            var course = _courseCatalogue.ElementAtOrDefault(cmbCourse.SelectedIndex);
+
             using var sfd = new SaveFileDialog
             {
                 Filter = "CSV files (*.csv)|*.csv",
-                FileName = $"Attendance_{dtpDate.Value:yyyyMMdd}.csv",
+                FileName = $"Attendance_{course?.SubjectCode ?? "Course"}_{dtpDate.Value:yyyyMMdd}.csv",
             };
             if (sfd.ShowDialog() != DialogResult.OK) return;
             try
             {
                 var lines = new List<string>
-                    { "Row,Last Name,First Name,MI,ID Number,Status,Remarks" };
+                    { "Row,Last Name,First Name,MI,ID Number,Status,Remarks,QR Verified" };
                 foreach (var s in _allStudents)
-                    lines.Add($"{s.RowNumber},{s.LastName},{s.FirstName},{s.MiddleInitial}," +
-                              $"{s.IdNumber},{s.Status},{s.Remarks}");
+                    lines.Add(
+                        $"{s.RowNumber},{s.LastName},{s.FirstName},{s.MiddleInitial}," +
+                        $"{s.IdNumber},{s.Status},{s.Remarks},{s.IsQrVerified}");
                 File.WriteAllLines(sfd.FileName, lines);
                 MessageBox.Show("Exported successfully!", "Export",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -427,9 +704,10 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 {
                     var parts = line.Split(',');
                     if (parts.Length < 6) continue;
-                    if (!int.TryParse(parts[0], out int row)) continue;
-                    var rec = _allStudents.FirstOrDefault(s => s.RowNumber == row);
-                    if (rec == null) continue;
+                    if (!int.TryParse(parts[0], out int rowNum)) continue;
+                    var rec = _allStudents.FirstOrDefault(s => s.RowNumber == rowNum);
+                    if (rec == null || rec.IsQrVerified) continue; // skip QR-locked rows
+
                     rec.Status = parts[5].Trim() switch
                     {
                         "Absent" => AttendanceStatus.Absent,
@@ -451,5 +729,21 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private static AttendanceStatus ParseStatus(string? s) => s switch
+        {
+            "Absent" => AttendanceStatus.Absent,
+            "Late" => AttendanceStatus.Late,
+            "Excused" => AttendanceStatus.Excused,
+            _ => AttendanceStatus.Present,
+        };
+
+        private static string StatusString(AttendanceStatus s) => s switch
+        {
+            AttendanceStatus.Absent => "Absent",
+            AttendanceStatus.Late => "Late",
+            AttendanceStatus.Excused => "Excused",
+            _ => "Present",
+        };
     }
 }

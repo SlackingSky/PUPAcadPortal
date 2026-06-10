@@ -1,20 +1,59 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Windows.Forms;
 using System.ComponentModel;
+using ZXing;
+using ZXing.Common;
+using ZXing.QrCode;
+using ZXing.QrCode.Internal;
+using PUPAcadPortal.Models;
+using PUPAcadPortal.Services;
 
 namespace PUPAcadPortal.PortalContents.Instructor.LMS
 {
+
     public partial class QrCodeAttendanceControl : UserControl
     {
+        //  Colours 
         private static readonly Color ActiveGreen = Color.FromArgb(34, 139, 34);
         private static readonly Color ExpiredRed = Color.FromArgb(200, 30, 30);
         private static readonly Color OrangeAnim = Color.FromArgb(220, 120, 0);
         private static readonly Color BorderGray = Color.FromArgb(220, 220, 220);
         private static readonly Color LabelGray = Color.FromArgb(90, 90, 90);
-        private const int DEFAULT_EXPIRY = 10;
-        private const int QR_MODULES = 25;
+
+        private const int DEFAULT_EXPIRY = 10; // minutes
+
+        //  Session binding properties 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public int SessionId
+        {
+            get => _sessionId;
+            set => _sessionId = value;
+        }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string SubjectOfferingId
+        {
+            get => _subjectOfferingId;
+            set => _subjectOfferingId = value;
+        }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public TimeSpan? SessionStartTime
+        {
+            get => _sessionStartTime;
+            set => _sessionStartTime = value;
+        }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public TimeSpan? SessionEndTime
+        {
+            get => _sessionEndTime;
+            set => _sessionEndTime = value;
+        }
+
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string Session
         {
@@ -26,24 +65,44 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         public DateTime AttendanceDate
         {
             get => _attendanceDate;
-            set { _attendanceDate = value; if (_lblDateVal != null) _lblDateVal.Text = value.ToString("MMMM dd, yyyy"); }
+            set
+            {
+                _attendanceDate = value;
+                if (_lblDateVal != null)
+                    _lblDateVal.Text = value.ToString("MMMM dd, yyyy");
+            }
         }
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int ExpiryMinutes
         {
             get => _expiryMinutes;
-            set { _expiryMinutes = Math.Max(1, value); RestartExpiry(); }
+            set => _expiryMinutes = Math.Max(1, value);
         }
 
         public event EventHandler? QrExpired;
+
+        //  Private state 
         private string _session = "Morning";
         private DateTime _attendanceDate = DateTime.Today;
         private int _expiryMinutes = DEFAULT_EXPIRY;
-        private int _seed;
-        private DateTime _generatedAt;
+        private int _sessionId = 0;
+        private string _subjectOfferingId = string.Empty;
+        private TimeSpan? _sessionStartTime;
+        private TimeSpan? _sessionEndTime;
         private bool _isExpired;
         private int _animStep;
+        private string _currentToken = string.Empty;
+        private Bitmap? _qrBitmap;
+
+        /// <summary>QrSession.QrSessionId of the currently active DB row (0 = none).</summary>
+        private int _activeQrSessionDbId = 0;
+
+        private DateTime _expiresAtUtc = DateTime.UtcNow;
+
+        private DateTime _generatedAt = DateTime.Now;
+
+        //  Constructor 
         public QrCodeAttendanceControl()
         {
             InitializeComponent();
@@ -51,23 +110,154 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             _lblClockVal.Text = DateTime.Now.ToString("hh:mm:ss tt");
 
             Reposition();
-            GenerateNew();
             _countdownTimer.Start();
         }
+
+        //  Core: Generate or reuse the active QR session from DB 
         public void GenerateNew()
         {
-            _seed = unchecked((int)(DateTime.Now.Ticks & 0x7FFFFFFF));
-            _generatedAt = DateTime.Now;
             _isExpired = false;
-            DrawQr();
-            SetStatus(false, false);
-            UpdateCountdown();
-            RestartExpiry();
+
+            // Design-time / demo guard
+            if (_sessionId <= 0 || string.IsNullOrWhiteSpace(_subjectOfferingId))
+            {
+                _currentToken = QrTokenService.Build(
+                    sessionId: -1,
+                    subjectOfferingId: "DEMO",
+                    sessionDate: _attendanceDate,
+                    startTime: _sessionStartTime,
+                    endTime: _sessionEndTime);
+                _expiresAtUtc = DateTime.UtcNow.AddMinutes(_expiryMinutes);
+                _generatedAt = DateTime.Now;
+                RenderToken(_currentToken);
+                SetStatus(false, false);
+                UpdateCountdown();
+                RestartExpiryTimer(_expiryMinutes * 60);
+                return;
+            }
+
+            try
+            {
+                var qrSession = QrSessionService.CreateOrGetActive(
+                    sessionId: _sessionId,
+                    subjectOfferingId: _subjectOfferingId,
+                    sessionDate: _attendanceDate,
+                    startTime: _sessionStartTime,
+                    endTime: _sessionEndTime,
+                    expiryMinutes: _expiryMinutes,
+                    alreadyActive: out bool reused);
+
+                _activeQrSessionDbId = qrSession.QrSessionId;
+                _currentToken = qrSession.Token;
+                _generatedAt = qrSession.GeneratedAt.ToLocalTime();
+                _expiresAtUtc = qrSession.ExpiresAt;
+
+                RenderToken(_currentToken);
+                SetStatus(false, false);
+                UpdateCountdown();
+
+                // Start the expiry timer for the remaining time from the DB
+                double remainingSeconds = (_expiresAtUtc - DateTime.UtcNow).TotalSeconds;
+                RestartExpiryTimer(Math.Max(1, (int)remainingSeconds));
+
+                if (reused)
+                {
+                    // Briefly inform the instructor that the existing code is still valid
+                    string origText = _lblStatus.Text;
+                    _lblStatus.Text = "● Resuming active QR";
+                    _lblStatus.ForeColor = Color.FromArgb(0, 100, 180);
+                    var t = new System.Windows.Forms.Timer { Interval = 2500 };
+                    t.Tick += (s, e) =>
+                    {
+                        t.Stop(); t.Dispose();
+                        if (!_lblStatus.IsDisposed)
+                        {
+                            _lblStatus.Text = "● Active";
+                            _lblStatus.ForeColor = ActiveGreen;
+                        }
+                    };
+                    t.Start();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Graceful fallback: generate an in-memory token so the UI stays functional
+                _currentToken = QrTokenService.Build(
+                    _sessionId, _subjectOfferingId, _attendanceDate,
+                    _sessionStartTime, _sessionEndTime);
+                _expiresAtUtc = DateTime.UtcNow.AddMinutes(_expiryMinutes);
+                _generatedAt = DateTime.Now;
+                RenderToken(_currentToken);
+                SetStatus(false, false);
+                UpdateCountdown();
+                RestartExpiryTimer(_expiryMinutes * 60);
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"[QrCodeAttendanceControl] DB write failed, using in-memory token: {ex.Message}");
+            }
         }
-        private void QrCodeAttendanceControl_SizeChanged(object sender, EventArgs e)
+
+        //  Render helpers 
+        private void RenderToken(string token)
         {
-            Reposition();
+            int sz = _picQr.Width > 0 ? _picQr.Width : 300;
+            _qrBitmap?.Dispose();
+            _qrBitmap = RenderQrBitmap(token, sz);
+            _picQr.Image = _qrBitmap;
         }
+
+        private static Bitmap RenderQrBitmap(string content, int sizePixels)
+        {
+            try
+            {
+                var writer = new BarcodeWriterPixelData
+                {
+                    Format = BarcodeFormat.QR_CODE,
+                    Options = new QrCodeEncodingOptions
+                    {
+                        Width = sizePixels,
+                        Height = sizePixels,
+                        Margin = 1,
+                        ErrorCorrection = ErrorCorrectionLevel.M,
+                        CharacterSet = "UTF-8",
+                    },
+                };
+
+                var pixelData = writer.Write(content);
+                var bmp = new Bitmap(pixelData.Width, pixelData.Height,
+                    System.Drawing.Imaging.PixelFormat.Format32bppRgb);
+
+                var bmpData = bmp.LockBits(
+                    new Rectangle(0, 0, bmp.Width, bmp.Height),
+                    System.Drawing.Imaging.ImageLockMode.WriteOnly,
+                    System.Drawing.Imaging.PixelFormat.Format32bppRgb);
+
+                try
+                {
+                    System.Runtime.InteropServices.Marshal.Copy(
+                        pixelData.Pixels, 0, bmpData.Scan0, pixelData.Pixels.Length);
+                }
+                finally
+                {
+                    bmp.UnlockBits(bmpData);
+                }
+
+                return bmp;
+            }
+            catch
+            {
+                var fallback = new Bitmap(sizePixels, sizePixels);
+                using var g = Graphics.FromImage(fallback);
+                g.Clear(Color.White);
+                using var f = new Font("Segoe UI", 9f);
+                g.DrawString("QR unavailable", f, Brushes.Red, 4, 4);
+                return fallback;
+            }
+        }
+
+        //  Layout / resize 
+        private void QrCodeAttendanceControl_SizeChanged(object sender, EventArgs e)
+            => Reposition();
 
         private void Reposition()
         {
@@ -98,7 +288,14 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             _btnDownload.Size = new Size(dW, 34);
             _btnDownload.Location = new Point(M + rW + gap, 5);
 
-            DrawQr();
+            if (!string.IsNullOrEmpty(_currentToken) && _picQr.Width > 0)
+            {
+                _qrBitmap?.Dispose();
+                _qrBitmap = _isExpired
+                    ? RenderExpiredBitmap(_picQr.Width)
+                    : RenderQrBitmap(_currentToken, _picQr.Width);
+                _picQr.Image = _qrBitmap;
+            }
         }
 
         private void infoBar_Paint(object sender, PaintEventArgs e)
@@ -106,76 +303,52 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             using var p = new Pen(BorderGray);
             e.Graphics.DrawLine(p, 0, 0, ((Panel)sender).Width, 0);
         }
-        private void DrawQr()
+
+        //  Expired overlay 
+        private static Bitmap RenderExpiredBitmap(int size)
         {
-            if (_picQr == null || _picQr.Width == 0) return;
-            int sz = Math.Max(_picQr.Width, 80);
-            var bmp = new Bitmap(sz, sz);
+            var bmp = new Bitmap(size, size);
             using var g = Graphics.FromImage(bmp);
-            g.Clear(Color.White);
-
-            if (_isExpired) { DrawExpiredOverlay(g, sz); _picQr.Image = bmp; return; }
-
-            var rng = new Random(_seed);
-            float cell = sz / (float)QR_MODULES;
-
-            for (int r = 0; r < QR_MODULES; r++)
-                for (int c = 0; c < QR_MODULES; c++)
-                {
-                    bool tl = r < 8 && c < 8, tr = r < 8 && c >= QR_MODULES - 8, bl = r >= QR_MODULES - 8 && c < 8;
-                    if (tl || tr || bl) continue;
-                    if (r == 6 || c == 6) { if ((r + c) % 2 == 0) g.FillRectangle(Brushes.Black, c * cell, r * cell, cell - 0.5f, cell - 0.5f); continue; }
-                    if (rng.NextDouble() > 0.52)
-                        g.FillRectangle(Brushes.Black, c * cell, r * cell, cell - 0.5f, cell - 0.5f);
-                }
-
-            Finder(g, cell, 0, 0);
-            Finder(g, cell, QR_MODULES - 7, 0);
-            Finder(g, cell, 0, QR_MODULES - 7);
-
-            _picQr.Image = bmp;
-        }
-
-        private static void Finder(Graphics g, float s, int col, int row)
-        {
-            float x = col * s, y = row * s;
-            g.FillRectangle(Brushes.Black, x, y, 7 * s, 7 * s);
-            g.FillRectangle(Brushes.White, x + s, y + s, 5 * s, 5 * s);
-            g.FillRectangle(Brushes.Black, x + 2 * s, y + 2 * s, 3 * s, 3 * s);
-        }
-
-        private static void DrawExpiredOverlay(Graphics g, int sz)
-        {
-            using var grey = new SolidBrush(Color.FromArgb(200, 200, 200));
-            var rng = new Random(1);
-            float c = sz / (float)QR_MODULES;
-            for (int r = 0; r < QR_MODULES; r++)
-                for (int col = 0; col < QR_MODULES; col++)
-                    if (rng.NextDouble() > 0.55) g.FillRectangle(grey, col * c, r * c, c - 0.5f, c - 0.5f);
-
-            g.FillRectangle(new SolidBrush(Color.FromArgb(180, 255, 255, 255)), 0, 0, sz, sz);
+            g.Clear(Color.FromArgb(240, 240, 240));
+            g.FillRectangle(new SolidBrush(Color.FromArgb(180, 255, 255, 255)), 0, 0, size, size);
             using var rb = new SolidBrush(Color.FromArgb(200, 30, 30));
-            using var fnt = new Font("Segoe UI", sz * 0.09f, FontStyle.Bold);
-            using var pen = new Pen(Color.FromArgb(80, 200, 30, 30), sz * 0.006f);
-            var rect = new RectangleF(sz * 0.12f, sz * 0.40f, sz * 0.76f, sz * 0.20f);
-            g.DrawRectangle(pen, rect.X, rect.Y, rect.Width, rect.Height);
-            var sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
-            g.DrawString("EXPIRED", fnt, rb, new RectangleF(0, 0, sz, sz), sf);
+            using var fnt = new Font("Segoe UI", size * 0.09f, FontStyle.Bold);
+            var sf = new StringFormat
+            {
+                Alignment = StringAlignment.Center,
+                LineAlignment = StringAlignment.Center,
+            };
+            using var pen = new System.Drawing.Pen(Color.FromArgb(80, 200, 30, 30), size * 0.006f);
+            g.DrawRectangle(pen, size * 0.12f, size * 0.40f, size * 0.76f, size * 0.20f);
+            g.DrawString("EXPIRED", fnt, rb, new RectangleF(0, 0, size, size), sf);
+            return bmp;
         }
+
+        //  Status / countdown helpers 
         private void SetStatus(bool expired, bool refreshing)
         {
-            if (refreshing) { _lblStatus.Text = "● Refreshing…"; _lblStatus.ForeColor = OrangeAnim; }
-            else if (expired) { _lblStatus.Text = "● Expired"; _lblStatus.ForeColor = ExpiredRed; }
-            else { _lblStatus.Text = "● Active"; _lblStatus.ForeColor = ActiveGreen; }
+            if (refreshing)
+            { _lblStatus.Text = "● Refreshing…"; _lblStatus.ForeColor = OrangeAnim; }
+            else if (expired)
+            { _lblStatus.Text = "● Expired"; _lblStatus.ForeColor = ExpiredRed; }
+            else
+            { _lblStatus.Text = "● Active"; _lblStatus.ForeColor = ActiveGreen; }
         }
 
         private void UpdateCountdown()
         {
-            if (_isExpired) { _lblCountdown.Text = "Code expired — click Refresh"; return; }
-            var rem = TimeSpan.FromMinutes(_expiryMinutes) - (DateTime.Now - _generatedAt);
+            if (_isExpired)
+            {
+                _lblCountdown.Text = "Code expired — click Refresh";
+                return;
+            }
+
+            var rem = _expiresAtUtc - DateTime.UtcNow;
             if (rem.TotalSeconds <= 0) { ExpireCode(); return; }
             _lblCountdown.Text = $"Expires in {(int)rem.TotalMinutes:D2}:{rem.Seconds:D2}";
-            _lblCountdown.ForeColor = rem.TotalMinutes < 2 ? Color.FromArgb(200, 100, 0) : LabelGray;
+            _lblCountdown.ForeColor = rem.TotalMinutes < 2
+                ? Color.FromArgb(200, 100, 0)
+                : LabelGray;
         }
 
         private void ExpireCode()
@@ -183,11 +356,24 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             _isExpired = true;
             SetStatus(true, false);
             _lblCountdown.Text = "Code expired — click Refresh";
-            DrawQr();
+
+            _qrBitmap?.Dispose();
+            _qrBitmap = RenderExpiredBitmap(_picQr.Width > 0 ? _picQr.Width : 300);
+            _picQr.Image = _qrBitmap;
+
             _expiryTimer?.Stop();
             _countdownTimer?.Stop();
+
+            // Sync the DB row
+            if (_activeQrSessionDbId > 0)
+            {
+                try { QrSessionService.MarkExpired(_activeQrSessionDbId); }
+                catch { /* best-effort */ }
+            }
+
             QrExpired?.Invoke(this, EventArgs.Empty);
         }
+
         private void CountdownTimer_Tick(object sender, EventArgs e)
         {
             UpdateCountdown();
@@ -201,16 +387,19 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
             ExpireCode();
         }
 
-        private void RestartExpiry()
+        private void RestartExpiryTimer(int remainingSeconds)
         {
             _expiryTimer?.Stop();
             if (_expiryTimer != null)
             {
-                _expiryTimer.Interval = Math.Max(100, _expiryMinutes * 60 * 1000);
+                int ms = Math.Max(100, remainingSeconds * 1000);
+                _expiryTimer.Interval = ms;
                 _expiryTimer.Start();
             }
             _countdownTimer?.Start();
         }
+
+        //  Refresh button 
         private void BtnRefresh_Click(object sender, EventArgs e)
         {
             _btnRefresh.Enabled = false;
@@ -223,46 +412,58 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
         {
             _animStep++;
             _lblStatus.Text = _animStep % 2 == 0 ? "● Refreshing…" : "○ Refreshing…";
-            if (_animStep >= 3) { _animTimer.Stop(); _btnRefresh.Enabled = true; GenerateNew(); }
+            if (_animStep >= 3)
+            {
+                _animTimer.Stop();
+                _btnRefresh.Enabled = true;
+                // Explicitly expire the current DB row so CreateOrGetActive
+                // issues a brand-new token on the next call.  This only runs
+                // when the professor intentionally clicked Refresh.
+                if (_activeQrSessionDbId > 0)
+                {
+                    try { QrSessionService.MarkExpired(_activeQrSessionDbId); }
+                    catch { /* best-effort */ }
+                }
+                _activeQrSessionDbId = 0;
+                GenerateNew();
+            }
         }
+
+        //  Download button 
+
+        private static string SanitizeFileName(string raw)
+        {
+            // Replace every invalid character with an underscore.
+            foreach (char c in Path.GetInvalidFileNameChars())
+                raw = raw.Replace(c, '_');
+            return raw;
+        }
+
         private void BtnDownload_Click(object sender, EventArgs e)
         {
-            if (_picQr?.Image == null) return;
+            if (_isExpired || string.IsNullOrEmpty(_currentToken))
+            {
+                MessageBox.Show("QR code has expired. Please refresh first.",
+                    "Expired", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string safeSession = SanitizeFileName(_session);
             using var sfd = new SaveFileDialog
             {
                 Title = "Save QR Code as PNG",
                 Filter = "PNG Image (*.png)|*.png",
-                FileName = $"QR_Attendance_{_attendanceDate:yyyyMMdd}_{_session.Replace(" ", "_")}.png",
+                FileName = $"QR_Attendance_{_attendanceDate:yyyyMMdd}_{safeSession}.png",
             };
             if (sfd.ShowDialog() != DialogResult.OK) return;
+
             try
             {
-                const int SZ = 480;
-                var bmp = new Bitmap(SZ, SZ);
-                using (var g = Graphics.FromImage(bmp))
-                {
-                    g.Clear(Color.White);
-                    float cell = SZ / (float)QR_MODULES;
-                    var rng = new Random(_seed);
-                    for (int r = 0; r < QR_MODULES; r++)
-                        for (int c = 0; c < QR_MODULES; c++)
-                        {
-                            bool tl = r < 8 && c < 8, tr = r < 8 && c >= QR_MODULES - 8, bl = r >= QR_MODULES - 8 && c < 8;
-                            if (tl || tr || bl) continue;
-                            if (r == 6 || c == 6) { if ((r + c) % 2 == 0) g.FillRectangle(Brushes.Black, c * cell, r * cell, cell - 1, cell - 1); continue; }
-                            if (rng.NextDouble() > 0.52) g.FillRectangle(Brushes.Black, c * cell, r * cell, cell - 1, cell - 1);
-                        }
-                    Finder(g, cell, 0, 0);
-                    Finder(g, cell, QR_MODULES - 7, 0);
-                    Finder(g, cell, 0, QR_MODULES - 7);
+                const int SAVE_SZ = 480;
+                using var bmp = RenderQrBitmap(_currentToken, SAVE_SZ);
 
-                    using var wf = new Font("Segoe UI", 11f, FontStyle.Bold);
-                    var sf = new StringFormat { Alignment = StringAlignment.Center };
-                    g.DrawString($"PUPAcadPortal  •  {_attendanceDate:MMM dd, yyyy}  •  {_session}",
-                        wf, new SolidBrush(Color.FromArgb(155, 155, 155)),
-                        new RectangleF(0, SZ - 28, SZ, 26), sf);
-                }
                 bmp.Save(sfd.FileName, ImageFormat.Png);
+
                 string orig = _btnDownload.Text;
                 _btnDownload.Text = "✓  Saved!";
                 _btnDownload.BackColor = Color.FromArgb(34, 139, 34);
@@ -271,13 +472,16 @@ namespace PUPAcadPortal.PortalContents.Instructor.LMS
                 {
                     t.Stop(); t.Dispose();
                     if (!_btnDownload.IsDisposed)
-                    { _btnDownload.Text = orig; _btnDownload.BackColor = Color.FromArgb(40, 100, 180); }
+                    {
+                        _btnDownload.Text = orig;
+                        _btnDownload.BackColor = Color.FromArgb(40, 100, 180);
+                    }
                 };
                 t.Start();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Could not save:\n" + ex.Message, "Error",
+                MessageBox.Show($"Could not save:\n{ex.Message}", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }

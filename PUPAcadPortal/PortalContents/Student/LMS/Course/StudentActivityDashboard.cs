@@ -1,4 +1,5 @@
 ﻿using PUPAcadPortal.PortalContents.Student.LMS.Course;
+using PUPAcadPortal.Services;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -10,67 +11,82 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
     public partial class StudentActivityDashboard : UserControl
     {
         public event Action<StudentCourse> OnOpenCourse;
-
         private List<StudentCourse> _courses = new();
         private List<StudentNotification> _notifications = new();
         private System.Windows.Forms.Timer _searchTimer;
+        private readonly int _studentId;
+        private readonly IStudentCourseDbService _svc;
+        private readonly string _studentName;
 
+        //  Constructors 
+
+        /// <summary>WinForms designer constructor — shows empty state, no DB calls.</summary>
         public StudentActivityDashboard()
+            : this(0, new NullStudentCourseDbService(), "Student")
         {
+        }
+
+        /// <summary>DB-backed constructor used at runtime.</summary>
+        public StudentActivityDashboard(
+            int studentId,
+            IStudentCourseDbService svc,
+            string studentName)
+        {
+            _studentId = studentId;
+            _svc = svc ?? new NullStudentCourseDbService();
+            _studentName = studentName;
+
             InitializeComponent();
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
 
             _searchTimer = new System.Windows.Forms.Timer { Interval = 180 };
             _searchTimer.Tick += (s, e) => { _searchTimer.Stop(); RenderCards(); };
 
-            LoadSampleData();
-            LoadSampleNotifications();
+            LoadCourses();
+            InitNotifications();
             UpdateStats();
 
-            lblStudentName.Text = "Juan Dela Cruz";
+            lblStudentName.Text = string.IsNullOrWhiteSpace(_studentName)
+                ? "Student"
+                : _studentName;
 
             this.Load += (s, e) => RenderCards();
             flpCards.SizeChanged += flpCards_SizeChanged;
         }
 
-        //  Sample data 
+        //  Data loading 
 
-        private void LoadSampleData()
+        
+        private void LoadCourses()
         {
-            _courses = new List<StudentCourse>
+            if (_studentId <= 0)
             {
-                new StudentCourse { Id=1, Name="Introduction to Programming 1", Code="ITP 101",
-                    Instructor="Prof. Juan dela Cruz", Schedule="MWF 7:30\u20139:00 AM",
-                    ActivityCount=8, PendingCount=2, SubmittedCount=5, OverdueCount=1 },
-                new StudentCourse { Id=2, Name="Principles of Accounting", Code="ACC 201",
-                    Instructor="Prof. Maria Santos", Schedule="TTH 10:00\u201311:30 AM",
-                    ActivityCount=5, PendingCount=1, SubmittedCount=4, OverdueCount=0 },
-                new StudentCourse { Id=3, Name="Human Computer Interactions", Code="HCI 301",
-                    Instructor="Prof. Ana Reyes", Schedule="MWF 1:00\u20132:30 PM",
-                    ActivityCount=5, PendingCount=1, SubmittedCount=4, OverdueCount=0 },
-                new StudentCourse { Id=4, Name="Programming and Technologies 1", Code="PT 101",
-                    Instructor="Prof. Carlos Bautista", Schedule="TTH 1:00\u20132:30 PM",
-                    ActivityCount=10, PendingCount=1, SubmittedCount=8, OverdueCount=1 },
-                new StudentCourse { Id=5, Name="Data Structures and Algorithms", Code="DSA 201",
-                    Instructor="Prof. Leo Pascual", Schedule="MWF 3:00\u20134:30 PM",
-                    ActivityCount=6, PendingCount=3, SubmittedCount=3, OverdueCount=0 },
-            };
+                // Designer / no-session context — return empty list without hitting DB.
+                _courses = new List<StudentCourse>();
+                return;
+            }
+
+            try
+            {
+                _courses = _svc.GetCoursesForStudent(_studentId);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Failed to load courses:\n{ex.Message}",
+                    "Database Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                _courses = new List<StudentCourse>();
+            }
         }
 
-        private void LoadSampleNotifications()
+        
+        private void InitNotifications()
         {
-            _notifications = new List<StudentNotification>
-            {
-                new StudentNotification { Kind="returned",     Title="Activity Returned",
-                    Body="Prof. Santos returned 'Integrating Methodologies' with remarks.",
-                    Time=DateTime.Now.AddMinutes(-12) },
-                new StudentNotification { Kind="deadline",     Title="Deadline Reminder",
-                    Body="'Programming Lab Activity 1' is due tomorrow.", Time=DateTime.Now.AddHours(-2) },
-                new StudentNotification { Kind="new_activity", Title="New Activity Posted",
-                    Body="Prof. Pascual posted 'Sorting Algorithms Quiz'.", Time=DateTime.Now.AddHours(-5) },
-            };
-            lblNotifCount.Text = _notifications.Count.ToString();
-            lblNotifCount.Visible = _notifications.Count > 0;
+            _notifications = new List<StudentNotification>();
+            lblNotifCount.Text = "0";
+            lblNotifCount.Visible = false;
         }
 
         //  Stats 
@@ -104,11 +120,13 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 
             int pad = flpCards.Padding.Left + flpCards.Padding.Right;
             int cols = flpCards.ClientSize.Width >= 1300 ? 3
-                       : flpCards.ClientSize.Width >= 800 ? 2 : 1;
+                        : flpCards.ClientSize.Width >= 800 ? 2 : 1;
             int gap = 14;
             int avail = flpCards.ClientSize.Width - pad - (gap * 2 * cols) - 4;
             int cardW = Math.Max(300, avail / cols);
             int cardH = 240;
+
+            bool anyVisible = false;
 
             foreach (var c in _courses)
             {
@@ -119,10 +137,71 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                     continue;
 
                 flpCards.Controls.Add(BuildCourseCard(c, cardW, cardH));
+                anyVisible = true;
             }
+
+            if (!anyVisible)
+                flpCards.Controls.Add(BuildEmptyState(search));
 
             flpCards.ResumeLayout(true);
         }
+
+        //  Empty state 
+
+        private Panel BuildEmptyState(string search = "")
+        {
+            int w = Math.Max(600, flpCards.ClientSize.Width - 40);
+
+            var pnl = new Panel
+            {
+                Width = w,
+                Height = 220,
+                BackColor = Color.FromArgb(252, 252, 255),
+                Margin = new Padding(10)
+            };
+            pnl.Paint += (s, e) =>
+            {
+                using var pen = new Pen(Color.FromArgb(218, 218, 228), 1.5f);
+                e.Graphics.DrawRectangle(pen, 1, 1, pnl.Width - 3, pnl.Height - 3);
+            };
+
+            string title = string.IsNullOrEmpty(search)
+                ? "📚  No enrolled courses found"
+                : $"📚  No courses matching \"{search}\"";
+
+            string body = string.IsNullOrEmpty(search)
+                ? "You are not enrolled in any active courses this semester.\n"
+                  + "Contact the Registrar or your Department for assistance."
+                : "Try a different search term.";
+
+            pnl.Controls.Add(new Label
+            {
+                Text = title,
+                Font = new Font("Segoe UI", 13F, FontStyle.Bold),
+                ForeColor = Color.FromArgb(160, 160, 170),
+                AutoSize = false,
+                Width = w,
+                Height = 55,
+                TextAlign = ContentAlignment.BottomCenter,
+                Location = new Point(0, 55)
+            });
+
+            pnl.Controls.Add(new Label
+            {
+                Text = body,
+                Font = new Font("Segoe UI", 9.5F),
+                ForeColor = Color.FromArgb(180, 180, 190),
+                AutoSize = false,
+                Width = w,
+                Height = 50,
+                TextAlign = ContentAlignment.TopCenter,
+                Location = new Point(0, 118)
+            });
+
+            return pnl;
+        }
+
+        //  Course card 
 
         private Panel BuildCourseCard(StudentCourse course, int cardW, int cardH)
         {
@@ -143,14 +222,13 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 g.DrawRectangle(pen, 0, 0, card.Width - 1, card.Height - 1);
             };
 
-            //  Maroon header strip 
+            // Maroon header strip
             var pnlTop = new Panel
             {
                 Location = new Point(0, 0),
                 Size = new Size(cardW, 76),
                 BackColor = Color.Maroon
             };
-
             pnlTop.Paint += (s, e) =>
             {
                 using var brush = new LinearGradientBrush(
@@ -208,9 +286,10 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 Size = new Size(cardW - 24, 18)
             };
 
+            // Statistics row
             var statsData = new (string val, string label, Color clr)[]
             {
-                (course.ActivityCount.ToString(),  "Activities", Color.FromArgb(128, 0,   0)),
+                (course.ActivityCount.ToString(),  "Activities", Color.FromArgb(128,   0,   0)),
                 (course.PendingCount.ToString(),   "Pending",    Color.OrangeRed),
                 (course.SubmittedCount.ToString(), "Submitted",  Color.ForestGreen),
             };
@@ -271,10 +350,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
         }
 
         //  Notification flyout 
-        // Position the flyout relative to the Form's screen
-        //   coordinates so it appears correctly below the bell, anchored to
-        //   the right edge.  The flyout now also has a maroon header with the
-        //   bell icon and a proper scrollable list area.
 
         private void pnlNotifBadge_Click(object sender, EventArgs e)
         {
@@ -283,33 +358,26 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
 
         private void ShowNotificationFlyout()
         {
-            //  Build flyout 
             var flyout = new Form
             {
                 Text = "",
-                Size = new Size(420, Math.Min(400, 60 + _notifications.Count * 80)),
+                Size = new Size(420, Math.Max(120, 60 + Math.Max(1, _notifications.Count) * 80)),
                 FormBorderStyle = FormBorderStyle.None,
                 StartPosition = FormStartPosition.Manual,
                 BackColor = Color.White,
                 ShowInTaskbar = false,
                 TopMost = true
             };
-
-            // Thin border
             flyout.Paint += (s, e) =>
             {
                 using var pen = new Pen(Color.FromArgb(200, 200, 200));
                 e.Graphics.DrawRectangle(pen, 0, 0, flyout.Width - 1, flyout.Height - 1);
             };
 
-            //  Position: bottom-left corner of the bell icon 
-            // Convert the badge panel's screen position so the flyout appears
-            // directly below the bell regardless of where the window is.
             var bellScreen = pnlNotifBadge.PointToScreen(
                 new Point(pnlNotifBadge.Width - flyout.Width, pnlNotifBadge.Height + 4));
             flyout.Location = bellScreen;
 
-            //  Header 
             var pnlH = new Panel { Dock = DockStyle.Top, Height = 44, BackColor = Color.Maroon };
             pnlH.Controls.Add(new Label
             {
@@ -322,7 +390,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             });
             flyout.Controls.Add(pnlH);
 
-            //  Notification list 
             var flp = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -331,78 +398,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                 AutoScroll = true,
                 Padding = new Padding(8)
             };
-
-            int rowW = 388; // flyout is 420 wide; minus scroll bar padding
-
-            foreach (var n in _notifications)
-            {
-                var row = new Panel
-                {
-                    Width = rowW,
-                    Height = 72,
-                    BackColor = n.IsRead ? Color.White : Color.FromArgb(254, 248, 248),
-                    Margin = new Padding(0, 0, 0, 4),
-                    Padding = new Padding(10, 8, 10, 8)
-                };
-                row.Paint += (s, e) =>
-                {
-                    using var pen = new Pen(Color.FromArgb(230, 230, 230));
-                    e.Graphics.DrawRectangle(pen, 0, 0, row.Width - 1, row.Height - 1);
-                };
-
-                string icon = n.Kind switch
-                {
-                    "returned" => "\u21A9",
-                    "deadline" => "\u23F0",
-                    "feedback" => "\uD83D\uDCDD",
-                    _ => "\uD83D\uDCCB"
-                };
-                Color iconColor = n.Kind switch
-                {
-                    "returned" => Color.FromArgb(30, 60, 180),
-                    "deadline" => Color.OrangeRed,
-                    "feedback" => Color.Purple,
-                    _ => Color.Maroon
-                };
-
-                row.Controls.Add(new Label
-                {
-                    Text = icon,
-                    Font = new Font("Segoe UI", 14F),
-                    ForeColor = iconColor,
-                    Location = new Point(8, 14),
-                    Size = new Size(28, 28),
-                    TextAlign = ContentAlignment.MiddleCenter
-                });
-                row.Controls.Add(new Label
-                {
-                    Text = n.Title,
-                    Font = new Font("Segoe UI", 9F, FontStyle.Bold),
-                    ForeColor = Color.FromArgb(30, 30, 30),
-                    Location = new Point(44, 8),
-                    Size = new Size(rowW - 54, 18)
-                });
-                row.Controls.Add(new Label
-                {
-                    Text = n.Body,
-                    Font = new Font("Segoe UI", 8F),
-                    ForeColor = Color.FromArgb(80, 80, 80),
-                    Location = new Point(44, 27),
-                    Size = new Size(rowW - 54, 28),
-                    AutoEllipsis = true
-                });
-                row.Controls.Add(new Label
-                {
-                    Text = FormatTimeAgo(n.Time),
-                    Font = new Font("Segoe UI", 7.5F, FontStyle.Italic),
-                    ForeColor = Color.Gray,
-                    Location = new Point(44, 54),
-                    AutoSize = true
-                });
-
-                flp.Controls.Add(row);
-                n.IsRead = true;
-            }
+            int rowW = 388;
 
             if (_notifications.Count == 0)
             {
@@ -415,14 +411,85 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
                     AutoSize = true
                 });
             }
+            else
+            {
+                foreach (var n in _notifications)
+                {
+                    var row = new Panel
+                    {
+                        Width = rowW,
+                        Height = 72,
+                        BackColor = n.IsRead ? Color.White : Color.FromArgb(254, 248, 248),
+                        Margin = new Padding(0, 0, 0, 4),
+                        Padding = new Padding(10, 8, 10, 8)
+                    };
+                    row.Paint += (s, e) =>
+                    {
+                        using var pen = new Pen(Color.FromArgb(230, 230, 230));
+                        e.Graphics.DrawRectangle(pen, 0, 0, row.Width - 1, row.Height - 1);
+                    };
+
+                    string icon = n.Kind switch
+                    {
+                        "returned" => "\u21A9",
+                        "deadline" => "\u23F0",
+                        "feedback" => "\uD83D\uDCDD",
+                        _ => "\uD83D\uDCCB"
+                    };
+                    Color iconColor = n.Kind switch
+                    {
+                        "returned" => Color.FromArgb(30, 60, 180),
+                        "deadline" => Color.OrangeRed,
+                        "feedback" => Color.Purple,
+                        _ => Color.Maroon
+                    };
+
+                    row.Controls.Add(new Label
+                    {
+                        Text = icon,
+                        Font = new Font("Segoe UI", 14F),
+                        ForeColor = iconColor,
+                        Location = new Point(8, 14),
+                        Size = new Size(28, 28),
+                        TextAlign = ContentAlignment.MiddleCenter
+                    });
+                    row.Controls.Add(new Label
+                    {
+                        Text = n.Title,
+                        Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                        ForeColor = Color.FromArgb(30, 30, 30),
+                        Location = new Point(44, 8),
+                        Size = new Size(rowW - 54, 18)
+                    });
+                    row.Controls.Add(new Label
+                    {
+                        Text = n.Body,
+                        Font = new Font("Segoe UI", 8F),
+                        ForeColor = Color.FromArgb(80, 80, 80),
+                        Location = new Point(44, 27),
+                        Size = new Size(rowW - 54, 28),
+                        AutoEllipsis = true
+                    });
+                    row.Controls.Add(new Label
+                    {
+                        Text = FormatTimeAgo(n.Time),
+                        Font = new Font("Segoe UI", 7.5F, FontStyle.Italic),
+                        ForeColor = Color.Gray,
+                        Location = new Point(44, 54),
+                        AutoSize = true
+                    });
+
+                    flp.Controls.Add(row);
+                    n.IsRead = true;
+                }
+            }
 
             lblNotifCount.Visible = false;
             flyout.Controls.Add(flp);
-
-            // Close on click-away
             flyout.Deactivate += (s, e) => flyout.Close();
             flyout.Show(this);
         }
+
 
         private static string FormatTimeAgo(DateTime t)
         {
@@ -432,8 +499,6 @@ namespace PUPAcadPortal.PortalContents.Student.LMS.Course
             if (span.TotalHours < 24) return $"{(int)span.TotalHours}h ago";
             return t.ToString("MMM dd");
         }
-
-        //  Events 
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {

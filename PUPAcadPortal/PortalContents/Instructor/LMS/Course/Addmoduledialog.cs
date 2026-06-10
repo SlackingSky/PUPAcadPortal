@@ -9,27 +9,47 @@ namespace PUPAcadPortal
 {
     public partial class AddModuleDialog : Form
     {
-        // ── Outputs ────────────────────────────────────────────────────────────
         public string ModuleTitle { get; private set; } = string.Empty;
         public string ModuleDescription { get; private set; } = string.Empty;
         public List<ModuleFile> InitialFiles { get; private set; } = new();
 
-        // ── Constants & State ──────────────────────────────────────────────────
+        //  Constants & State 
         private static readonly Color Maroon = Color.FromArgb(139, 0, 0);
         private static readonly Color BgGray = Color.FromArgb(248, 248, 250);
         private readonly int _moduleNumber;
-
+        private readonly bool _isEditMode;
         public AddModuleDialog(int nextModuleNumber)
-        {
-            _moduleNumber = nextModuleNumber;
+            : this(nextModuleNumber, string.Empty, string.Empty, isEdit: false) { }
 
-            // Required for Designer support
+        //  EDIT constructor 
+        public AddModuleDialog(int moduleNumber, string existingTitle, string existingDescription)
+            : this(moduleNumber, existingTitle, existingDescription, isEdit: true) { }
+
+        //  Private shared constructor 
+        private AddModuleDialog(
+            int moduleNumber,
+            string existingTitle,
+            string existingDescription,
+            bool isEdit)
+        {
+            _moduleNumber = moduleNumber;
+            _isEditMode = isEdit;
+
             InitializeComponent();
 
-            // Setup dynamic properties
-            _txtTitle.Text = $"Module {_moduleNumber}";
+            // Title + description pre-fill
+            _txtTitle.Text = string.IsNullOrWhiteSpace(existingTitle)
+                ? $"Module {_moduleNumber}"
+                : existingTitle;
+            _txtDesc.Text = existingDescription;
 
-            // Apply initial focus
+            // Adjust dialog heading when editing
+            if (_isEditMode)
+            {
+                this.Text = "Edit Module";
+                btnOk.Text = "Save Changes";
+            }
+
             this.Load += (s, e) =>
             {
                 _txtTitle.Focus();
@@ -37,7 +57,6 @@ namespace PUPAcadPortal
             };
         }
 
-        // ── Custom Paint Handlers ──────────────────────────────────────────────
         private void IconPanel_Paint(object sender, PaintEventArgs pe)
         {
             pe.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
@@ -46,7 +65,11 @@ namespace PUPAcadPortal
 
             using var font = new Font("Segoe UI", 10F, FontStyle.Bold);
             using var fb = new SolidBrush(Maroon);
-            var sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
+            var sf = new StringFormat
+            {
+                Alignment = StringAlignment.Center,
+                LineAlignment = StringAlignment.Center
+            };
             pe.Graphics.DrawString("M", font, fb, new RectangleF(0, 0, 32, 32), sf);
         }
 
@@ -63,14 +86,17 @@ namespace PUPAcadPortal
             pen.DashStyle = DashStyle.Dash;
             g.DrawRectangle(pen, 1, 1, pnl.Width - 3, pnl.Height - 3);
 
-            // Small upload icon on the left
             using var iconBrush = new SolidBrush(Color.FromArgb(170, 170, 185));
             using var iconFont = new Font("Segoe UI", 18F);
-            var sf = new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center };
+            var sf = new StringFormat
+            {
+                Alignment = StringAlignment.Near,
+                LineAlignment = StringAlignment.Center
+            };
             g.DrawString("⬆", iconFont, iconBrush, new RectangleF(14, 0, 44, pnl.Height), sf);
         }
 
-        // ── Interaction & Logic ────────────────────────────────────────────────
+        //  & Logic 
         private void TxtTitle_Enter(object sender, EventArgs e)
         {
             if (_txtTitle.ForeColor == Color.FromArgb(30, 30, 35))
@@ -95,6 +121,9 @@ namespace PUPAcadPortal
 
         private void BrowseFiles(object sender, EventArgs e)
         {
+            // File browsing only makes sense when creating a new module
+            if (_isEditMode) return;
+
             using var ofd = new OpenFileDialog
             {
                 Title = "Attach Files to Module",
@@ -109,7 +138,8 @@ namespace PUPAcadPortal
                 var fi = new FileInfo(path);
                 if (fi.Length > 10_485_760)
                 {
-                    MessageBox.Show($"\"{fi.Name}\" exceeds the 10 MB limit and was skipped.",
+                    MessageBox.Show(
+                        $"\"{fi.Name}\" exceeds the 10 MB limit and was skipped.",
                         "File Too Large", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     continue;
                 }
@@ -118,6 +148,7 @@ namespace PUPAcadPortal
                     Name = fi.Name,
                     SizeBytes = fi.Length,
                     Type = fi.Extension.TrimStart('.').ToUpper(),
+                    LocalPath = path,   // retain local path so BtnAddModule_Click can upload
                 });
             }
 

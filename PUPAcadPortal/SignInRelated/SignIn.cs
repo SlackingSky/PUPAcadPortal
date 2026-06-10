@@ -191,6 +191,8 @@ namespace PUPAcadPortal
             // Gets credentials
             await DBConnectService.GetDecryptedConnectionStringAsync();
             await FileServerConnectService.GetDecryptedCredentialsAsync();
+            CloudinaryService.Initialise();
+            
             this.Size = _usableScreenSize;
             this.Location = _usableScreenLoc;
             txtUsername.Select();
