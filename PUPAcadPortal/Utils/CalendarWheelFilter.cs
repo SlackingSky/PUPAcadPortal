@@ -58,6 +58,16 @@ namespace PUPAcadPortal
             if (!IsEnabled || m.Msg != WM_MOUSEWHEEL)
                 return false;
 
+            // ============================================================
+            // FIX: SAFETY CHECK ADDED HERE
+            // If the watchControl has been closed/disposed, ignore the message
+            // otherwise it will throw "ObjectDisposedException"
+            // ============================================================
+            if (_watchControl == null || _watchControl.IsDisposed)
+            {
+                return false;
+            }
+
             // Identify which window the cursor is over
             var cursor = Cursor.Position;
             var hitCtrl = FindControlAtPoint(_watchControl, _watchControl.PointToClient(cursor));
@@ -89,11 +99,13 @@ namespace PUPAcadPortal
 
         private static Control? FindControlAtPoint(Control root, System.Drawing.Point pt)
         {
-            if (!root.ClientRectangle.Contains(pt)) return null;
+            // Added extra safety check here as well
+            if (root == null || root.IsDisposed || !root.ClientRectangle.Contains(pt))
+                return null;
 
             foreach (Control child in root.Controls)
             {
-                if (!child.Visible) continue;
+                if (child == null || child.IsDisposed || !child.Visible) continue;
                 var childPt = new System.Drawing.Point(pt.X - child.Left, pt.Y - child.Top);
                 var hit = FindControlAtPoint(child, childPt);
                 if (hit != null) return hit;

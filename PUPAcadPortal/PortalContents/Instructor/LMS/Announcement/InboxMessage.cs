@@ -5,6 +5,7 @@ namespace PUPAcadPortal
     public class InboxMessage
     {
         public int Id { get; set; }
+        public int TargetRoleId { get; set; }
         public string Subject { get; set; } = string.Empty;
         public string Body { get; set; } = string.Empty;
         public string SenderName { get; set; } = "Admin Office";

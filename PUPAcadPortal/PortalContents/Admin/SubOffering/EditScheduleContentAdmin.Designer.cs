@@ -28,16 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             pnlEditSchedule = new Panel();
             panel1 = new Panel();
+            btnLoadPrevious = new Button();
+            buttonRounded1 = new buttonRounded();
+            cmbYearLevel = new ComboBox();
+            lblCurrentSem = new Label();
             btnClearSchedule = new Button();
             btnSaveSchedule = new Button();
             lblESYearLevel = new Label();
             lblESCurrentSem = new Label();
-            cmbESYearLevel = new ComboBox();
             dgvEditSchedule = new DataGridView();
+            cms1 = new ContextMenuStrip(components);
+            DupeRowToolStripMenuItem = new ToolStripMenuItem();
+            Tip1 = new ToolTip(components);
             ESCourseCode = new DataGridViewTextBoxColumn();
             ESCourseTitle = new DataGridViewTextBoxColumn();
             ESLab = new DataGridViewTextBoxColumn();
@@ -48,10 +55,11 @@
             ESStartTime = new DataGridViewTextBoxColumn();
             EsEndTime = new DataGridViewTextBoxColumn();
             ESRoom = new DataGridViewComboBoxColumn();
-            ESInstructor = new DataGridViewTextBoxColumn();
+            ESInstructor = new DataGridViewComboBoxColumn();
             pnlEditSchedule.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEditSchedule).BeginInit();
+            cms1.SuspendLayout();
             SuspendLayout();
             // 
             // pnlEditSchedule
@@ -73,16 +81,69 @@
             // 
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(btnLoadPrevious);
+            panel1.Controls.Add(buttonRounded1);
+            panel1.Controls.Add(cmbYearLevel);
+            panel1.Controls.Add(lblCurrentSem);
             panel1.Controls.Add(btnClearSchedule);
             panel1.Controls.Add(btnSaveSchedule);
             panel1.Controls.Add(lblESYearLevel);
             panel1.Controls.Add(lblESCurrentSem);
-            panel1.Controls.Add(cmbESYearLevel);
             panel1.Location = new Point(0, 0);
             panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1471, 72);
+            panel1.Size = new Size(1471, 105);
             panel1.TabIndex = 7;
+            // 
+            // btnLoadPrevious
+            // 
+            btnLoadPrevious.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnLoadPrevious.BackColor = Color.Maroon;
+            btnLoadPrevious.Cursor = Cursors.Hand;
+            btnLoadPrevious.FlatAppearance.BorderSize = 0;
+            btnLoadPrevious.FlatStyle = FlatStyle.Flat;
+            btnLoadPrevious.ForeColor = Color.White;
+            btnLoadPrevious.Location = new Point(1040, 36);
+            btnLoadPrevious.Margin = new Padding(3, 2, 3, 2);
+            btnLoadPrevious.Name = "btnLoadPrevious";
+            btnLoadPrevious.Size = new Size(140, 27);
+            btnLoadPrevious.TabIndex = 8;
+            btnLoadPrevious.Text = "Load Previous Schedule";
+            btnLoadPrevious.UseVisualStyleBackColor = false;
+            // 
+            // buttonRounded1
+            // 
+            buttonRounded1.BackColor = Color.FromArgb(128, 0, 0);
+            buttonRounded1.BorderRadius = 20;
+            buttonRounded1.FlatAppearance.BorderSize = 0;
+            buttonRounded1.FlatStyle = FlatStyle.Flat;
+            buttonRounded1.ForeColor = Color.White;
+            buttonRounded1.Location = new Point(892, 84);
+            buttonRounded1.Name = "buttonRounded1";
+            buttonRounded1.Size = new Size(8, 8);
+            buttonRounded1.TabIndex = 7;
+            buttonRounded1.Text = "buttonRounded1";
+            buttonRounded1.UseVisualStyleBackColor = false;
+            // 
+            // cmbYearLevel
+            // 
+            cmbYearLevel.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbYearLevel.FormattingEnabled = true;
+            cmbYearLevel.Items.AddRange(new object[] { "All", "1st", "2nd", "3rd", "4th", "5th" });
+            cmbYearLevel.Location = new Point(102, 40);
+            cmbYearLevel.Name = "cmbYearLevel";
+            cmbYearLevel.Size = new Size(121, 23);
+            cmbYearLevel.TabIndex = 6;
+            // 
+            // lblCurrentSem
+            // 
+            lblCurrentSem.AutoSize = true;
+            lblCurrentSem.Font = new Font("Arial", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblCurrentSem.Location = new Point(232, 10);
+            lblCurrentSem.Name = "lblCurrentSem";
+            lblCurrentSem.Size = new Size(108, 29);
+            lblCurrentSem.TabIndex = 5;
+            lblCurrentSem.Text = "Loading";
             // 
             // btnClearSchedule
             // 
@@ -136,17 +197,6 @@
             lblESCurrentSem.TabIndex = 0;
             lblESCurrentSem.Text = "Current Semester:";
             // 
-            // cmbESYearLevel
-            // 
-            cmbESYearLevel.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbESYearLevel.FormattingEnabled = true;
-            cmbESYearLevel.Items.AddRange(new object[] { "All", "1", "2", "3", "4" });
-            cmbESYearLevel.Location = new Point(123, 41);
-            cmbESYearLevel.Margin = new Padding(3, 2, 3, 2);
-            cmbESYearLevel.Name = "cmbESYearLevel";
-            cmbESYearLevel.Size = new Size(70, 23);
-            cmbESYearLevel.TabIndex = 2;
-            // 
             // dgvEditSchedule
             // 
             dgvEditSchedule.AllowUserToAddRows = false;
@@ -176,7 +226,7 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             dgvEditSchedule.DefaultCellStyle = dataGridViewCellStyle2;
             dgvEditSchedule.EnableHeadersVisualStyles = false;
-            dgvEditSchedule.Location = new Point(26, 89);
+            dgvEditSchedule.Location = new Point(26, 110);
             dgvEditSchedule.Margin = new Padding(3, 2, 3, 2);
             dgvEditSchedule.Name = "dgvEditSchedule";
             dgvEditSchedule.RowHeadersVisible = false;
@@ -185,6 +235,20 @@
             dgvEditSchedule.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvEditSchedule.Size = new Size(1446, 495);
             dgvEditSchedule.TabIndex = 6;
+            // 
+            // cms1
+            // 
+            cms1.ImageScalingSize = new Size(20, 20);
+            cms1.Items.AddRange(new ToolStripItem[] { DupeRowToolStripMenuItem });
+            cms1.Name = "cmdDupeRow";
+            cms1.Size = new Size(151, 26);
+            // 
+            // DupeRowToolStripMenuItem
+            // 
+            DupeRowToolStripMenuItem.Name = "DupeRowToolStripMenuItem";
+            DupeRowToolStripMenuItem.Size = new Size(150, 22);
+            DupeRowToolStripMenuItem.Text = "Duplicate Row";
+            DupeRowToolStripMenuItem.Click += DupeRowToolStripMenuItem_Click;
             // 
             // ESCourseCode
             // 
@@ -236,6 +300,7 @@
             // 
             // ESDay
             // 
+            ESDay.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
             ESDay.FillWeight = 60.0069923F;
             ESDay.HeaderText = "Day";
             ESDay.Items.AddRange(new object[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" });
@@ -258,6 +323,7 @@
             // 
             // ESRoom
             // 
+            ESRoom.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
             ESRoom.FillWeight = 74.04477F;
             ESRoom.HeaderText = "Room";
             ESRoom.Items.AddRange(new object[] { "101", "102", "ComLab 1", "ComLab 2" });
@@ -266,11 +332,13 @@
             // 
             // ESInstructor
             // 
+            ESInstructor.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
             ESInstructor.FillWeight = 130.421341F;
             ESInstructor.HeaderText = "Instructor";
             ESInstructor.MinimumWidth = 6;
             ESInstructor.Name = "ESInstructor";
-            ESInstructor.ReadOnly = true;
+            ESInstructor.Resizable = DataGridViewTriState.True;
+            ESInstructor.SortMode = DataGridViewColumnSortMode.Automatic;
             // 
             // EditScheduleContentAdmin
             // 
@@ -283,6 +351,7 @@
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEditSchedule).EndInit();
+            cms1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -295,8 +364,14 @@
         private Button btnSaveSchedule;
         private Label lblESYearLevel;
         private Label lblESCurrentSem;
-        private ComboBox cmbESYearLevel;
         private DataGridView dgvEditSchedule;
+        private ContextMenuStrip cms1;
+        private ToolStripMenuItem DupeRowToolStripMenuItem;
+        private ToolTip Tip1;
+        private Label lblCurrentSem;
+        private ComboBox cmbYearLevel;
+        private Button btnLoadPrevious;
+        private buttonRounded buttonRounded1;
         private DataGridViewTextBoxColumn ESCourseCode;
         private DataGridViewTextBoxColumn ESCourseTitle;
         private DataGridViewTextBoxColumn ESLab;
@@ -307,6 +382,6 @@
         private DataGridViewTextBoxColumn ESStartTime;
         private DataGridViewTextBoxColumn EsEndTime;
         private DataGridViewComboBoxColumn ESRoom;
-        private DataGridViewTextBoxColumn ESInstructor;
+        private DataGridViewComboBoxColumn ESInstructor;
     }
 }

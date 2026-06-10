@@ -133,7 +133,7 @@
             pnlProfRegistrationContainer.Location = new Point(160, 118);
             pnlProfRegistrationContainer.Name = "pnlProfRegistrationContainer";
             pnlProfRegistrationContainer.Size = new Size(915, 912);
-            pnlProfRegistrationContainer.TabIndex = 5;
+            pnlProfRegistrationContainer.TabIndex = 0;
             // 
             // btnProfClearForm
             // 

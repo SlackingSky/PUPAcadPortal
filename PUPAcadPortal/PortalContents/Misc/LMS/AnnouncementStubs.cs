@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace PUPAcadPortal.PortalContents.Misc.LMS
 {
@@ -18,9 +19,10 @@ namespace PUPAcadPortal.PortalContents.Misc.LMS
         public DateTime PostDate { get; set; } = DateTime.Now;
         public bool IsUrgent { get; set; }
         public bool IsPinned { get; set; }
-        public bool NotifyStudents { get; set; }        // NEW
-        public bool NotifyInstructors { get; set; }        // NEW
-        public string AttachmentPath { get; set; } = string.Empty;   // NEW – local path chosen by admin
+        public bool NotifyStudents { get; set; }        
+        public bool NotifyInstructors { get; set; }        
+        public string AttachmentPath { get; set; } = string.Empty;   
+        public int TargetRoleId { get; set; }
         public List<string> Courses { get; set; } = new List<string>();
     }
 
@@ -40,18 +42,18 @@ namespace PUPAcadPortal.PortalContents.Misc.LMS
         public bool IsUrgent { get; set; }
         public int ViewedCount { get; set; }
         public int TotalStudents { get; set; } = 40;
-        public string? AttachedFile { get; set; }   // file name / path stored after upload
-        public bool NotifyStudents { get; set; }   // NEW
-        public bool NotifyInstructors { get; set; }   // NEW
+        public string? AttachedFile { get; set; }   
+        public bool NotifyStudents { get; set; }   
+        public bool NotifyInstructors { get; set; }   
     }
 
-    // ----------------------------------------------------------
-    //  CreateAnnouncement  (functional stub)
-    // ----------------------------------------------------------
+    
     public partial class CreateAnnouncementAdmin : UserControl
     {
         public event EventHandler<AnnouncementDataAdmin>? AnnouncementPosted;
         public event EventHandler? CloseRequested;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public int TargetRoleId { get; set; } = 1;
 
         // ── Categories (single source of truth) ─────────────────
         public static readonly string[] Categories =
@@ -381,6 +383,7 @@ namespace PUPAcadPortal.PortalContents.Misc.LMS
                 NotifyStudents = _chkNotifyStudents.Checked,
                 NotifyInstructors = _chkNotifyInstructors.Checked,
                 AttachmentPath = _attachmentPath,
+                TargetRoleId = this.TargetRoleId
             };
 
             // Build a human-readable summary of who gets notified
@@ -675,9 +678,7 @@ namespace PUPAcadPortal.PortalContents.Misc.LMS
         }
     }
 
-    // ----------------------------------------------------------
-    //  AnnouncementLayout  (stub — AdminPortal uses inline cards)
-    // ----------------------------------------------------------
+    
     public partial class AnnouncementLayoutAdmin : UserControl
     {
         public event EventHandler<int>? CardClicked;

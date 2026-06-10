@@ -5,6 +5,8 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
+using PUPAcadPortal.Models;
+using PUPAcadPortal.Services;
 
 namespace PUPAcadPortal.PortalContents.Student.LMS
 {
@@ -13,6 +15,7 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
     {
         public string FileName { get; set; } = string.Empty;
         public string FileType { get; set; } = "pdf";   // pdf, docx, pptx, img
+        public string FilePath { get; set; } = string.Empty;
         public long FileSizeBytes { get; set; } = 0;
 
         public string SizeLabel => FileSizeBytes >= 1_048_576
@@ -44,6 +47,8 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             /// <summary>True when posted within the last 3 days and not yet read.</summary>
             public bool IsNew { get; set; }
             /// <summary>Simulated viewer count (out of TotalStudents).</summary>
+
+            public string OriginalFileName { get; set; } = string.Empty;
             public int ViewedCount { get; set; } = 0;
             public int TotalStudents { get; set; } = 40;
             public string Status { get; set; } = "active";
@@ -798,29 +803,76 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
         }
 
         //  View: open with the system's default viewer 
-        private static void HandleViewFile(AnnouncementAttachment att)
+        private static async void HandleViewFile(AnnouncementAttachment att)
         {
-            // If you store real file paths in att, replace the MessageBox with:
-            //   System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
-            //   { FileName = att.FilePath, UseShellExecute = true });
-            MessageBox.Show(
-                $"Opening \"" + att.FileName + "\" with the default viewer.\n\n"
-                + "To activate: set att.FilePath and call Process.Start().",
-                "View File", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (string.IsNullOrWhiteSpace(att.FilePath) ||
+                !att.FilePath.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show("No cloud file is linked to this attachment.",
+                    "View File", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // Determine extension from the stored file name
+            string ext = Path.GetExtension(att.FileName);
+            if (string.IsNullOrEmpty(ext))
+                ext = "." + att.FileType.ToLower();
+
+            string tempPath = Path.Combine(Path.GetTempPath(),
+                                  $"pup_view_{Guid.NewGuid():N}{ext}");
+
+            // Show a waiting cursor while downloading + decrypting
+            Cursor.Current = Cursors.WaitCursor;
+            try
+            {
+                bool ok = await CloudinaryUploadService.DownloadDecryptedFileAsync(
+                              att.FilePath, tempPath);
+
+                if (!ok || !File.Exists(tempPath))
+                {
+                    MessageBox.Show(
+                        "Could not download or decrypt the file.\n" +
+                        "Please check your internet connection and try again.",
+                        "View File", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Open with the default application
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = tempPath,
+                    UseShellExecute = true
+                });
+
+                // Note: temp file will be cleaned up by the OS eventually.
+                // For stricter cleanup you could delete after a delay.
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to open file:\n{ex.Message}",
+                    "View File", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Diagnostics.Debug.WriteLine($"HandleViewFile error: {ex}");
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
+            }
         }
 
         // ── Save: opens SaveFileDialog with the correct extension pre-filled ──
-        private static void HandleSaveFile(AnnouncementAttachment att)
+        private static async void HandleSaveFile(AnnouncementAttachment att)
         {
-            string ext = att.FileType.ToLower() switch
+            if (string.IsNullOrWhiteSpace(att.FilePath) ||
+                !att.FilePath.StartsWith("http", StringComparison.OrdinalIgnoreCase))
             {
-                "pdf" => "pdf",
-                "docx" => "docx",
-                "pptx" => "pptx",
-                "img" => "png",
-                _ => "bin",
-            };
-            string filter = att.FileType.ToLower() switch
+                MessageBox.Show("No cloud file is linked to this attachment.",
+                    "Save File", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // Build SaveFileDialog filter from the attachment type
+            string ext = att.FileType.ToLower();
+            string filter = ext switch
             {
                 "pdf" => "PDF Files (*.pdf)|*.pdf|All Files (*.*)|*.*",
                 "docx" => "Word Documents (*.docx)|*.docx|All Files (*.*)|*.*",
@@ -828,23 +880,50 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
                 "img" => "Image Files (*.png;*.jpg)|*.png;*.jpg|All Files (*.*)|*.*",
                 _ => "All Files (*.*)|*.*",
             };
+            string defaultExt = ext == "img" ? "png" : ext;
 
             using var dlg = new SaveFileDialog
             {
-                Title = "Save File",
+                Title = "Save Decrypted File",
                 FileName = att.FileName,
                 Filter = filter,
-                DefaultExt = ext,
+                DefaultExt = defaultExt,
             };
 
-            if (dlg.ShowDialog() == DialogResult.OK)
+            if (dlg.ShowDialog() != DialogResult.OK)
+                return;
+
+            string destinationPath = dlg.FileName;
+
+            Cursor.Current = Cursors.WaitCursor;
+            try
             {
-                // To activate: copy the actual file bytes to dlg.FileName
-                // File.Copy(att.FilePath, dlg.FileName, overwrite: true);
-                MessageBox.Show(
-                    $"Ready to save to:\n" + dlg.FileName + "\n\n"
-                    + "To activate: wire att.FilePath and use File.Copy().",
-                    "Save File", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                bool ok = await CloudinaryUploadService.DownloadDecryptedFileAsync(
+                              att.FilePath, destinationPath);
+
+                if (ok && File.Exists(destinationPath))
+                {
+                    MessageBox.Show(
+                        $"File saved successfully:\n{destinationPath}",
+                        "Save File", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Could not download or decrypt the file.\n" +
+                        "Please check your internet connection and try again.",
+                        "Save File", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to save file:\n{ex.Message}",
+                    "Save File", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Diagnostics.Debug.WriteLine($"HandleSaveFile error: {ex}");
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
             }
         }
 
@@ -1043,194 +1122,90 @@ namespace PUPAcadPortal.PortalContents.Student.LMS
             AddRow("With Files", withFiles.ToString(), 142, Color.FromArgb(50, 100, 180));
         }
 
-        //  SEED DATA  (with attachments)
+        //  LOAD ANNOUNCEMENTS FROM DATABASE
         private void SeedAnnouncements()
         {
-            _announcements = new List<StudentAnnouncement>
+            _announcements.Clear();
+
+            try
             {
-                new() {
-                    Id = 1, Title = "Updated Travel Reimbursement Policy",
-                    Description    = "Please note that the mileage reimbursement rate for university-related travel has been adjusted. All reimbursement claims submitted after May 1, 2026 must use the new rate of ₱12.00 per km.",
-                    Category = "Administrative", CourseName = "", OfficeName = "Admin Office", InstructorName = "Dr. Reyes",
-                    Date = new DateTime(2026, 4, 15, 10, 30, 0), IsUrgent = true, IsPinned = true, IsRead = false,
-                    ViewedCount = 28, TotalStudents = 40,
-                    Attachments = new()
+                using (var context = new AppDbContext())
+                {
+                    var dbAnnouncements = context.Announcements.ToList();
+
+                    foreach (var ann in dbAnnouncements)
                     {
-                        new() { FileName = "Travel_Reimbursement_Policy_2026.pdf",  FileType = "pdf",  FileSizeBytes = 512_000 },
-                        new() { FileName = "Reimbursement_Form_v3.docx",             FileType = "docx", FileSizeBytes = 124_000 },
-                    },
-                },
-                new() {
-                    Id = 2, Title = "Midterm Examination Schedule Released",
-                    Description    = "The official midterm examination schedule for all BSIT 2nd year subjects is now available. Please check the LMS for your room assignments and bring your student ID on exam day.",
-                    Category = "Examinations", CourseName = "BSIT 2nd Year", OfficeName = "Registrar's Office", InstructorName = "Prof. Santos",
-                    Date = new DateTime(2026, 4, 20, 8, 0, 0), IsUrgent = true, IsPinned = true, IsRead = false,
-                    ViewedCount = 32, TotalStudents = 40,
-                    Attachments = new()
-                    {
-                        new() { FileName = "Midterm_Schedule_AY2026.pdf",   FileType = "pdf",  FileSizeBytes = 320_000 },
-                        new() { FileName = "Room_Assignments_Midterm.xlsx", FileType = "docx", FileSizeBytes = 88_000  },
-                    },
-                },
-                new() {
-                    Id = 3, Title = "Programming 1 – Lab Activity This Friday",
-                    Description    = "Bring your laptops for the graded lab activity covering Modules 4 and 5. The activity will be conducted using Visual Studio 2022. No borrowing of equipment will be allowed.",
-                    Category = "Academic", CourseName = "CC111 – Programming 1", OfficeName = "CCIS Department", InstructorName = "Prof. Santos",
-                    Date = new DateTime(2026, 4, 18, 9, 0, 0), IsUrgent = false, IsPinned = false, IsRead = true,
-                    ViewedCount = 36, TotalStudents = 40,
-                    Attachments = new()
-                    {
-                        new() { FileName = "Lab_Activity_4_Instructions.pdf", FileType = "pdf",  FileSizeBytes = 210_000 },
-                        new() { FileName = "StarterCode_Module4.zip",         FileType = "docx", FileSizeBytes = 1_048_576 },
-                    },
-                },
-                new() {
-                    Id = 4, Title = "PUP Foundation Day Celebration – May 17",
-                    Description    = "Join us for the PUP Foundation Day celebration. Activities include a student showcase, cultural performances, and a technology exhibit. Attendance is encouraged for all students.",
-                    Category = "Events", CourseName = "", OfficeName = "Student Affairs Office", InstructorName = "Dr. Cruz",
-                    Date = new DateTime(2026, 4, 10, 14, 0, 0), IsUrgent = false, IsPinned = false, IsRead = false,
-                    ViewedCount = 35, TotalStudents = 40,
-                    Attachments = new()
-                    {
-                        new() { FileName = "Foundation_Day_Program.pptx",  FileType = "pptx", FileSizeBytes = 2_097_152 },
-                        new() { FileName = "Event_Poster_2026.png",        FileType = "img",  FileSizeBytes = 450_000  },
-                    },
-                },
-                new() {
-                    Id = 5, Title = "Reminder: Submit Assignment Outputs",
-                    Description    = "All pending assignment outputs for Information Management must be submitted via the LMS portal before May 15 at 11:59 PM. Late submissions will not be accepted under any circumstance.",
-                    Category = "Academic", CourseName = "IT222 – Information Management", OfficeName = "CCIS Department", InstructorName = "Prof. Santos",
-                    Date = new DateTime(2026, 4, 8, 11, 0, 0), IsUrgent = false, IsPinned = false, IsRead = true,
-                    ViewedCount = 15, TotalStudents = 40,
-                    Attachments = new(),
-                },
-                new() {
-                    Id = 6, Title = "Library Hours Extended Until June",
-                    Description    = "The university library will extend its operating hours to 8:00 AM – 9:00 PM on weekdays starting May 1 through June 30, 2026 to support students during the examination period.",
-                    Category = "General", CourseName = "", OfficeName = "Library Services", InstructorName = "Librarian Gomez",
-                    Date = new DateTime(2026, 4, 5, 7, 30, 0), IsUrgent = false, IsPinned = false, IsRead = false,
-                    ViewedCount = 38, TotalStudents = 40,
-                    Attachments = new()
-                    {
-                        new() { FileName = "Library_Extended_Hours_Notice.pdf", FileType = "pdf", FileSizeBytes = 95_000 },
-                    },
-                },
-                new() {
-                    Id = 7, Title = "Enrollment for 2nd Semester Now Open",
-                    Description    = "Online enrollment for the 2nd semester of Academic Year 2026–2027 is now open. Students must settle all outstanding balances and secure their assessment forms before enrolling.",
-                    Category = "General", CourseName = "", OfficeName = "Registrar's Office", InstructorName = "Registrar Dela Torre",
-                    Date = new DateTime(2026, 5, 2, 8, 0, 0), IsUrgent = false, IsPinned = false, IsRead = false,
-                    ViewedCount = 22, TotalStudents = 40,
-                    Attachments = new()
-                    {
-                        new() { FileName = "Enrollment_Guide_2ndSem.pdf",   FileType = "pdf",  FileSizeBytes = 680_000  },
-                        new() { FileName = "Assessment_Form_Template.docx", FileType = "docx", FileSizeBytes = 120_000  },
-                    },
-                },
-                new() {
-                    Id = 8, Title = "Scholarship Application Deadline – May 20",
-                    Description    = "All students applying for the CHED Scholarship and PUP Internal Scholarship must submit their complete documentary requirements to the Scholarship Office no later than May 20, 2026 at 5:00 PM.",
-                    Category = "Administrative", CourseName = "", OfficeName = "Scholarship Office", InstructorName = "Dr. Valdez",
-                    Date = new DateTime(2026, 5, 5, 9, 0, 0), IsUrgent = true, IsPinned = false, IsRead = false,
-                    ViewedCount = 28, TotalStudents = 40,
-                    Attachments = new()
-                    {
-                        new() { FileName = "Scholarship_Requirements_Checklist.pdf", FileType = "pdf",  FileSizeBytes = 400_000 },
-                        new() { FileName = "Application_Form_CHED_2026.docx",        FileType = "docx", FileSizeBytes = 190_000 },
-                    },
-                },
-                new() {
-                    Id = 9, Title = "Campus-Wide Maintenance: May 14 (No Classes)",
-                    Description    = "There will be no classes on May 14, 2026 due to scheduled campus-wide electrical maintenance. All LMS deadlines falling on this date are automatically extended by 24 hours.",
-                    Category = "Schedule", CourseName = "", OfficeName = "Facilities Management Office", InstructorName = "Engr. Bautista",
-                    Date = new DateTime(2026, 5, 8, 7, 0, 0), IsUrgent = true, IsPinned = true, IsRead = false,
-                    ViewedCount = 18, TotalStudents = 40,
-                    Attachments = new(),
-                },
-                new() {
-                    Id = 10, Title = "Intramural Sports Registration Open",
-                    Description    = "Registration for the Annual PUP Intramural Sports Festival is now open. Students interested in joining basketball, volleyball, badminton, or swimming events must register through their respective department coordinators before May 22, 2026.",
-                    Category = "Events", CourseName = "", OfficeName = "Student Affairs Office", InstructorName = "Coach Mendoza",
-                    Date = new DateTime(2026, 5, 6, 10, 0, 0), IsUrgent = false, IsPinned = false, IsRead = true,
-                    ViewedCount = 30, TotalStudents = 40,
-                    Attachments = new()
-                    {
-                        new() { FileName = "Intramural_Sports_Registration_Form.docx", FileType = "docx", FileSizeBytes = 150_000 },
-                        new() { FileName = "Sports_Fest_Schedule_2026.pptx",           FileType = "pptx", FileSizeBytes = 3_145_728 },
-                    },
-                },
-                new() {
-                    Id = 11, Title = "Final Examination Coverage Posted",
-                    Description    = "The official final examination coverage for all BSIT subjects has been posted on the LMS. Students are advised to review the coverage carefully and contact their respective professors for any clarifications. Good luck on your finals!",
-                    Category = "Examinations", CourseName = "BSIT – All Subjects", OfficeName = "CCIS Department", InstructorName = "Prof. Santos",
-                    Date = new DateTime(2026, 5, 9, 8, 30, 0), IsUrgent = false, IsPinned = false, IsRead = false,
-                    ViewedCount = 20, TotalStudents = 40,
-                    Attachments = new()
-                    {
-                        new() { FileName = "Finals_Coverage_BSIT_1stYear.pdf",  FileType = "pdf", FileSizeBytes = 760_000 },
-                        new() { FileName = "Finals_Coverage_BSIT_2ndYear.pdf",  FileType = "pdf", FileSizeBytes = 820_000 },
-                        new() { FileName = "Study_Guide_Summary.docx",          FileType = "docx", FileSizeBytes = 210_000 },
-                    },
-                },
-                new() {
-                    Id = 12, Title = "Academic Integrity Seminar – May 16",
-                    Description    = "All students are required to attend the Academic Integrity and Anti-Plagiarism Seminar on May 16, 2026 at 1:00 PM via Zoom. Attendance will be recorded and counted toward your class standing.",
-                    Category = "Academic", CourseName = "All BSIT Sections", OfficeName = "CCIS Department", InstructorName = "Dr. Reyes",
-                    Date = new DateTime(2026, 5, 10, 9, 0, 0), IsUrgent = true, IsPinned = false, IsRead = false,
-                    ViewedCount = 25, TotalStudents = 40,
-                    Attachments = new()
-                    {
-                        new() { FileName = "Academic_Integrity_Seminar_Slides.pptx", FileType = "pptx", FileSizeBytes = 4_194_304 },
-                        new() { FileName = "Zoom_Meeting_Details.pdf",               FileType = "pdf",  FileSizeBytes = 60_000   },
-                    },
-                },
-                new() {
-                    Id = 13, Title = "Lost & Found: Items at Security Office",
-                    Description    = "Several items including IDs, umbrellas, and a laptop bag have been turned over to the Security Office near Gate 1. Owners may claim their belongings by presenting valid identification.",
-                    Category = "General", CourseName = "", OfficeName = "Security Office", InstructorName = "Guard Navarro",
-                    Date = new DateTime(2026, 5, 7, 14, 0, 0), IsUrgent = false, IsPinned = false, IsRead = true,
-                    ViewedCount = 10, TotalStudents = 40,
-                    Attachments = new()
-                    {
-                        new() { FileName = "LostAndFound_Photo_May7.jpg", FileType = "img", FileSizeBytes = 380_000 },
-                    },
-                },
-                new() {
-                    Id = 14, Title = "IT Career Fair – May 22 at PUP Gymnasium",
-                    Description    = "The PUP Career Services Office invites all BSIT students to the annual IT Career Fair on May 22, 2026 from 9:00 AM to 4:00 PM at the university gymnasium. Over 30 technology companies will be present.",
-                    Category = "Events", CourseName = "BSIT – All Years", OfficeName = "Career Services Office", InstructorName = "Dr. Cruz",
-                    Date = new DateTime(2026, 5, 8, 10, 0, 0), IsUrgent = false, IsPinned = true, IsRead = false,
-                    ViewedCount = 32, TotalStudents = 40,
-                    Attachments = new()
-                    {
-                        new() { FileName = "IT_CareerFair_2026_Program.pdf",    FileType = "pdf",  FileSizeBytes = 530_000 },
-                        new() { FileName = "Career_Fair_Poster_Official.png",   FileType = "img",  FileSizeBytes = 620_000 },
-                        new() { FileName = "Resume_Workshop_Slides.pptx",       FileType = "pptx", FileSizeBytes = 2_621_440 },
-                    },
-                },
-                new() {
-                    Id = 15, Title = "Class Schedule Adjustment – May 13",
-                    Description    = "Due to the university-wide convocation, all morning classes on May 13, 2026 are moved to the afternoon session. Students with afternoon conflicts are advised to coordinate with their respective professors.",
-                    Category = "Schedule", CourseName = "", OfficeName = "Registrar's Office", InstructorName = "Registrar Dela Torre",
-                    Date = new DateTime(2026, 5, 10, 7, 30, 0), IsUrgent = true, IsPinned = false, IsRead = false,
-                    ViewedCount = 14, TotalStudents = 40,
-                    Attachments = new(),
-                },
-                new() {
-                    Id = 16, Title = "Capstone Project Defense Schedule Released",
-                    Description    = "The official schedule for 4th-year BSIT Capstone Project defenses has been published on the departmental bulletin board and LMS. All groups are required to submit their final manuscripts and slide decks at least three days before their assigned defense date.",
-                    Category = "Academic", CourseName = "BSIT 4th Year – Capstone", OfficeName = "CCIS Department", InstructorName = "Prof. Santos",
-                    Date = new DateTime(2026, 5, 11, 8, 0, 0), IsUrgent = false, IsPinned = true, IsRead = false,
-                    ViewedCount = 36, TotalStudents = 40,
-                    Attachments = new()
-                    {
-                        new() { FileName = "Capstone_Defense_Schedule_2026.pdf",  FileType = "pdf",  FileSizeBytes = 420_000 },
-                        new() { FileName = "Defense_Manuscript_Template.docx",    FileType = "docx", FileSizeBytes = 300_000 },
-                        new() { FileName = "Capstone_Presentation_Guide.pptx",   FileType = "pptx", FileSizeBytes = 1_887_437 },
-                    },
-                },
-            };
+                        var studentAnn = new StudentAnnouncement
+                        {
+                            Id = ann.AnnouncementId,
+                            Title = ann.Title,
+                            Description = ann.Content,
+                            Category = ann.Category,
+                            CourseName = "",
+                            OfficeName = "Admin Office",
+                            InstructorName = ann.CreatedByUser?.FirstName + " " + ann.CreatedByUser?.LastName ?? "Administrator",
+                            Date = ann.PostedDate,
+                            IsUrgent = ann.IsUrgent,
+                            IsPinned = ann.IsPinned,
+                            IsRead = false,
+                            ViewedCount = 0,
+                            TotalStudents = 40,
+                            Status = "active",
+                            OriginalFileName = ann.OriginalFileName ?? string.Empty,
+                            Attachments = new(),
+                        };
+
+                        if (!string.IsNullOrWhiteSpace(ann.AttachedFile))
+                        {
+                            // --- FIX STARTS HERE ---
+                            string displayFileName;
+                            if (!string.IsNullOrWhiteSpace(ann.OriginalFileName))
+                            {
+                                displayFileName = ann.OriginalFileName;
+                            }
+                            else
+                            {
+                                // If we have no original name, get the extension from the URL 
+                                // and call it "downloaded_file" instead of using the URL string.
+                                string ext = System.IO.Path.GetExtension(ann.AttachedFile);
+                                displayFileName = "downloaded_file" + (string.IsNullOrEmpty(ext) ? ".dat" : ext);
+                            }
+                            // --- FIX ENDS HERE ---
+
+                            string fileExt = System.IO.Path.GetExtension(displayFileName).ToLower().TrimStart('.');
+                            string fileType = fileExt switch
+                            {
+                                "pdf" => "pdf",
+                                "docx" => "docx",
+                                "doc" => "docx",
+                                "pptx" => "pptx",
+                                "ppt" => "pptx",
+                                "png" => "img",
+                                "jpg" => "img",
+                                "jpeg" => "img",
+                                "gif" => "img",
+                                _ => "file",
+                            };
+
+                            studentAnn.Attachments.Add(new AnnouncementAttachment
+                            {
+                                FileName = displayFileName, // Now this is either the real name or "downloaded_file.ext"
+                                FileType = fileType,
+                                FilePath = ann.AttachedFile, // Keep the URL here for the actual download
+                                FileSizeBytes = 0,
+                            });
+                        }
+
+                        _announcements.Add(studentAnn);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error loading announcements: {ex.Message}");
+            }
         }
+
 
         //  SNAPSHOT  (for responsive scaling)
         private void SnapshotControls(Control.ControlCollection controls)

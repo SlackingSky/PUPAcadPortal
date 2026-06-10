@@ -59,5 +59,14 @@ namespace PUPAcadPortal.Data
             ProfessorID = null;
             AdminID = null;
         }
+
+        public static void UpdateProfile(string username, int userId, string firstName, string lastName, string role)
+        {
+            Username= username ;
+            UserID= userId ;
+            FirstName= firstName ;
+            LastName= lastName ;
+            Role = role;
+        }
     }
 }
