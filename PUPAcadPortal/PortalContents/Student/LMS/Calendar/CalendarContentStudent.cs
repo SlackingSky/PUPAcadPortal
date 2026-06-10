@@ -1,4 +1,4 @@
-﻿using PUPAcadPortal.Data;
+using PUPAcadPortal.Data;
 using PUPAcadPortal.PortalForms;
 using PUPAcadPortal.Utils;
 using System;
@@ -633,6 +633,11 @@ namespace PUPAcadPortal
             }
 
             ResizeMonthCells();
+
+            // Restore selection highlight after grid rebuild
+            foreach (Control c in _fpMonth.Controls)
+                if (c is UrDay ud)
+                    ud.IsSelected = (ud.CellDate == _lastSelectedDate);
         }
 
         //   WEEKLY VIEW 
@@ -1886,9 +1891,13 @@ namespace PUPAcadPortal
         //  Day detail / upcoming refresh
         private void OnDaySelected(DateTime date)
         {
+            _lastSelectedDate = date;
+
+            // Update selection highlight on all monthly-view cells
             if (_fpMonth != null)
                 foreach (Control ctrl in _fpMonth.Controls)
-                    if (ctrl is UrDay ud) ud.IsSelected = false;
+                    if (ctrl is UrDay ud)
+                        ud.IsSelected = (ud.CellDate == date);
 
             RefreshDayDetail(date);
             RefreshUpcoming();

@@ -28,10 +28,6 @@ public partial class Announcement
 
     public DateTime PostedDate { get; set; }
 
-    public string? OriginalFileName { get; set; }
-
-    public int? TargetRoleId { get; set; }
-
     public virtual User CreatedByUser { get; set; } = null!;
 
     public virtual SubjectOffering? SubjectOffering { get; set; }
